@@ -1,0 +1,2325 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>第4章 时序逻辑电路 · 逐页讲解 (p1-p10)</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>第4章 时序逻辑电路</h1>
+  <p style="color:#7a6f5e;font-size:12px;margin:0 0 8px;">第一讲 · 概述 (p1–p10)</p>
+  <ol>
+    <li class="group">引入</li>
+    <li><a href="#bg0" class="bg">背景：从组合到时序</a></li>
+    <li><a href="#p1" class="skip">1. 第4章封面</a></li>
+    <li><a href="#p2">2. 导读·分流图</a></li>
+    <li><a href="#p3">3. 导读·温控例子</a></li>
+    <li><a href="#p4" class="skip">4. 第一讲封面</a></li>
+
+    <li class="group">A · 状态机与时序逻辑</li>
+    <li><a href="#bg1" class="bg">背景：什么是"状态"</a></li>
+    <li><a href="#p5">5. 时序 vs 组合</a></li>
+    <li><a href="#bg2" class="bg">背景：FSM 入门</a></li>
+    <li><a href="#p6">6. FSM 状态图例</a></li>
+    <li><a href="#p7">7. 用数字逻辑实现 FSM</a></li>
+
+    <li class="group">B · 电路结构</li>
+    <li><a href="#bg3" class="bg">背景：Mealy vs Moore</a></li>
+    <li><a href="#p8">8. Mealy 型结构</a></li>
+    <li><a href="#p9">9. Moore 型 + 同步/异步</a></li>
+
+    <li class="group">C · 时钟与定时</li>
+    <li><a href="#bg4" class="bg">背景：时钟信号</a></li>
+    <li><a href="#p10">10. 边沿触发</a></li>
+  
+    <li class="group">承上启下</li>
+    <li><a href="#p11">11. 概述图再看一眼</a></li>
+    <li><a href="#p12" class="skip">12. 第二讲封面</a></li>
+
+    <li class="group">A · 双稳态原理</li>
+    <li><a href="#bgs1" class="bg">背景：双稳态为何能"卡住"</a></li>
+    <li><a href="#p13">13. 双稳态元件</a></li>
+    <li><a href="#p14">14. 激励信号 + 两种触发</a></li>
+    <li><a href="#bgs2" class="bg">背景：latch vs flip-flop</a></li>
+
+    <li class="group">B · SR 锁存器</li>
+    <li><a href="#p15">15. SR 电平波形</a></li>
+    <li><a href="#p16">16. flip-flop 波形</a></li>
+    <li><a href="#p17">17. SR 电路 + 真值表</a></li>
+    <li><a href="#p18">18. SR 状态图/表 + 延迟</a></li>
+    <li><a href="#p19">19. 特征方程</a></li>
+
+    <li class="group">C · D 锁存器与 D 触发器</li>
+    <li><a href="#bgs3" class="bg">背景:从 SR 走到 D 的动机</a></li>
+    <li><a href="#p20">20. D 锁存器电路</a></li>
+    <li><a href="#p21">21. D 锁存器时序</a></li>
+    <li><a href="#bgs4" class="bg">背景：主从结构 → 边沿触发</a></li>
+    <li><a href="#p22">22. D 触发器</a></li>
+    <li><a href="#p23">23. setup / hold / t_CQ</a></li>
+    <li><a href="#bgs5" class="bg">背景：地铁刷卡比喻</a></li>
+    <li><a href="#p24" class="skip">24. 前情回顾</a></li>
+    <li><a href="#p25">25. 带 EN 的 D 触发器</a></li>
+    <li><a href="#p26">26. 带 PR/CLR 的 D 触发器</a></li>
+
+    <li class="group">D · JK / T</li>
+    <li><a href="#p27">27. JK 触发器</a></li>
+    <li><a href="#p28">28. T 触发器</a></li>
+  
+    <li class="group">引入</li>
+    <li><a href="#p29" class="skip">29. 第三讲封面</a></li>
+    <li><a href="#p30">30. F/G 函数视角</a></li>
+    <li><a href="#bgd1" class="bg">背景：六步流水线全景</a></li>
+    <li><a href="#p31">31. 设计六步</a></li>
+
+    <li class="group">A · 状态图/表设计</li>
+    <li><a href="#p32">32. 101 检测器需求</a></li>
+    <li><a href="#p33">33. 构建状态图</a></li>
+    <li><a href="#p34">34. 状态表</a></li>
+    <li><a href="#p35">35. 互斥性/完备性</a></li>
+
+    <li class="group">B · 状态化简与编码</li>
+    <li><a href="#bgd2" class="bg">背景：等价状态怎么看</a></li>
+    <li><a href="#p36">36. 化简 4→3 状态</a></li>
+    <li><a href="#p37">37. 等价四模式</a></li>
+    <li><a href="#p38">38. 相邻法编码</a></li>
+
+    <li class="group">C · 电路设计</li>
+    <li><a href="#bgd3" class="bg">背景:卡诺图复习</a></li>
+    <li><a href="#p39">39. 状态转移表</a></li>
+    <li><a href="#p40">40. 推导逻辑函数</a></li>
+    <li><a href="#p41">41. 激励函数对比</a></li>
+    <li><a href="#p42">42. 画最终电路</a></li>
+
+    <li class="group">D · 电路分析</li>
+    <li><a href="#bgd4" class="bg">背景：未用状态/挂起</a></li>
+    <li><a href="#p43">43. 挂起与自启动</a></li>
+    <li><a href="#p44">44. 未用状态实例</a></li>
+
+    <li class="group">E · 定时分析</li>
+    <li><a href="#bgd5" class="bg">背景：组合延迟链</a></li>
+    <li><a href="#p45">45. 四个关键参数</a></li>
+    <li><a href="#p46">46. 容限波形</a></li>
+    <li><a href="#p47">47. 两条约束公式</a></li>
+    <li><a href="#p48">48. 回到 101 电路</a></li>
+  
+    <li class="group">引入</li>
+    <li><a href="#p49" class="skip">49. 第四讲封面</a></li>
+
+    <li class="group">A · 计数器</li>
+    <li><a href="#bgt1" class="bg">背景：计数器 = PC 的雏形</a></li>
+    <li><a href="#p50">50. 计数器分类</a></li>
+    <li><a href="#bgt2" class="bg">背景：T 触发器为何天生适合</a></li>
+    <li><a href="#p51">51. 异步行波加法</a></li>
+    <li><a href="#p52">52. 异步状态推导</a></li>
+    <li><a href="#p53">53. 同步并行加法</a></li>
+    <li><a href="#p54">54. 同步并行延迟分析</a></li>
+    <li><a href="#p55">55. 异步行波减法</a></li>
+
+    <li class="group">B · 寄存器与寄存器堆</li>
+    <li><a href="#bgt3" class="bg">背景：CPU 内的寄存器</a></li>
+    <li><a href="#p56">56. CPU 数据通路图</a></li>
+    <li><a href="#p57">57. N 位寄存器 + 三态总线</a></li>
+    <li><a href="#p58">58. 寄存器堆定位</a></li>
+    <li><a href="#p59">59. 寄存器堆端口</a></li>
+    <li><a href="#p60">60. 寄存器堆内部结构</a></li>
+
+    <li class="group">C · 移位寄存器</li>
+    <li><a href="#bgt4" class="bg">背景：移位寄存器有什么用</a></li>
+    <li><a href="#p61">61. 4 位串入串出右移</a></li>
+    <li><a href="#p62">62. 74X194 功能表</a></li>
+    <li><a href="#p63">63. 74X194 内部结构</a></li>
+    <li><a href="#p64">64. 每位 4 选 1 MUX 方程</a></li>
+    <li><a href="#p65">65. 桶形移位寄存器</a></li>
+
+    <li class="group">结尾</li>
+    <li><a href="#p66" class="skip">66. 全章总结</a></li>
+  </ol></aside>
+
+<main>
+
+<!-- ================== BG0 ================== -->
+<section class="page bg" id="bg0">
+  <h2>从组合电路到时序电路 — 为什么我们需要"记忆"</h2>
+  <div class="pgnum">补充背景 · 进入正文之前必看</div>
+  <div class="explain">
+    <h3>你在第 3 章见过的电路有个共同点</h3>
+    <p>加法器、译码器、MUX —— <b>同样的输入永远给出同样的输出</b>。它们本质上是一个纯函数 <code>y = f(x)</code>，按一下输入端，输出端立刻就对应变了。这种电路叫<b>组合逻辑（combinational logic）</b>。</p>
+
+    <h3>但现实世界很多需求不是"纯函数"</h3>
+    <ul>
+      <li>电梯按 5 楼按钮：现在在 1 楼就上去，现在已经在 5 楼则不动 —— 同样按 5，行为不同。</li>
+      <li>空调按一下"+":温度从 22 变 23，再按一下变 24 —— 同样按"+"，输出不同。</li>
+      <li>密码锁输入 <code>1-2-3-4</code> 才开 —— 第 4 次按 4 是否开锁，要看前 3 次按了什么。</li>
+    </ul>
+    <p>这些场景共同的特征：<b>电路必须"记得"过去发生过什么</b>，否则无法决定当前该输出什么。</p>
+
+    <div class="tip">能"记住过去"的这种属性，我们叫它 <b>状态（state）</b>。带状态的数字电路 = <b>时序逻辑电路（sequential logic）</b> = 本章主角。</div>
+
+    <h3>本章你将学到的东西，分三层</h3>
+    <ol>
+      <li><b>理论层</b>：状态机（FSM）— 描述"过去综合 + 当前输入 → 下一动作"的纯数学模型。</li>
+      <li><b>元件层</b>：锁存器、触发器 — 能在硬件里把一个 0/1 "存住"的最小单元。</li>
+      <li><b>系统层</b>：把元件搭起来 + 时钟节拍，造出寄存器、计数器、移位寄存器这些"看起来有记忆"的部件。</li>
+    </ol>
+    <div class="note">类比编程：组合逻辑像<code>return x+y</code>这种纯函数；时序逻辑像带 <code>self.counter</code> 字段的对象，方法的返回值取决于内部状态。</div>
+  </div>
+</section>
+
+<!-- ================== p1 (skip) ================== -->
+<section class="page" id="p1">
+  <h2>第 4 章 时序逻辑电路 · 封面</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p01.png" alt="p1">
+  <p style="color:var(--mute);">章节封面，列出本章四讲：① 概述 ② 锁存器和触发器 ③ 同步时序电路设计 ④ 典型部件设计。我们这一份讲稿先吃掉<b>第一讲（概述）</b>，约 p2–p10。</p>
+</section>
+
+<!-- ================== p2 ================== -->
+<section class="page" id="p2">
+  <h2>时序电路导读：把"计算需求"分成两类</h2>
+  <div class="pgnum">PDF 第 2 页</div>
+  <img class="slide" src="pages_chap4/p02.png" alt="p2">
+  <div class="explain">
+    <h3>这页在说什么</h3>
+    <p>所有数字系统都做一件事：<b>输入 → 处理 → 输出</b>。但根据"输出是怎么决定的"，能分成两类：</p>
+    <table class="tbl">
+      <tr><th>类型</th><th>输出由谁决定</th><th>电路类别</th></tr>
+      <tr><td>类型 ①</td><td class="l">仅由<b>当前输入</b>决定</td><td>组合逻辑（第 3 章）</td></tr>
+      <tr><td>类型 ②</td><td class="l">由<b>当前输入 + 电路状态</b>共同决定</td><td>时序逻辑（本章）</td></tr>
+    </table>
+    <div class="tip">第二行多出来的"<b>电路状态</b>"四个字，就是<u>组合逻辑做不到、时序逻辑能做</u>的根本原因。整章的所有工程问题，都在解决"状态怎么存、怎么变"。</div>
+  </div>
+</section>
+
+<!-- ================== p3 ================== -->
+<section class="page" id="p3">
+  <h2>导读：温控例子 — 为什么组合逻辑搞不定</h2>
+  <div class="pgnum">PDF 第 3 页</div>
+  <img class="slide" src="pages_chap4/p03.png" alt="p3">
+  <div class="explain">
+    <h3>例子：空调上有两个按钮 <code>+</code> 和 <code>-</code></h3>
+    <p>当前温度 22°。按一下 <code>+</code> → 变 23°；再按一下 <code>+</code> → 变 24°。<b>同样的输入「按+」，却得到不同的输出</b>。这是纯组合逻辑没法实现的，因为组合逻辑里"同输入永远同输出"。</p>
+    <div class="note">编程类比：这正是 <code>counter++</code> 的硬件版本。<code>counter</code> 这个变量的当前值，就是电路的"状态"。</div>
+
+    <h3>本章要回答的四个核心问题</h3>
+    <ol>
+      <li><b>有哪些状态？</b> —— 比如温度可以是 16/17/…/30，共 15 个状态。</li>
+      <li><b>状态怎么记录/保持？</b> —— 用什么硬件元件把当前温度"存住"？（答：触发器，第二讲）</li>
+      <li><b>什么时候处于什么状态？</b> —— 何时该切换？由谁触发？（答：时钟边沿，本讲 §1.3）</li>
+      <li><b>状态怎么流转？</b> —— 从 22 按 + 应该去哪个状态？（答：状态机的转移函数，§1.1）</li>
+    </ol>
+    <p>这四问构成本章的骨架：状态集 / 存储 / 定时 / 转移。后面所有内容都是在某一格里填细节。</p>
+  </div>
+</section>
+
+<!-- ================== p4 (skip) ================== -->
+<section class="page" id="p4">
+  <h2>第一讲 时序逻辑电路概述 · 标题页</h2>
+  <div class="pgnum">PDF 第 4 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p04.png" alt="p4">
+  <p style="color:var(--mute);">第一讲的内部三小节：① 时序逻辑与有限状态机 ② 基本结构 ③ 定时。下面正式开讲。</p>
+</section>
+
+<!-- ================== BG1 ================== -->
+<section class="page bg" id="bg1">
+  <h2>什么是"状态"（State） — 用程序变量打比方</h2>
+  <div class="pgnum">补充背景 · 进入 p5 前必看</div>
+  <div class="explain">
+    <h3>软件里的"状态"你早就会用</h3>
+    <pre>int counter = 0;
+void on_button_plus() {
+    counter = counter + 1;     // 新值依赖旧值
+}</pre>
+    <p>这里 <code>counter</code> 就是状态。它有三个关键属性：</p>
+    <ul>
+      <li><b>能存值</b>：函数返回后，<code>counter</code> 的值还在。</li>
+      <li><b>能读旧值</b>：下次计算 <code>counter + 1</code> 用的是上次留下的值。</li>
+      <li><b>能被写新值</b>：赋值发生在某个"时刻"。</li>
+    </ul>
+
+    <h3>硬件里没有变量，只有线和门</h3>
+    <p>那"存一个值"这件事怎么办？答案是用一种特殊电路 —— 它有<b>反馈</b>，能让一个 0 或 1 "卡住"不动，直到主动写入新值。这就是<b>锁存器/触发器</b>（latch/flip-flop），下一讲的主角。本讲你只要记住：硬件世界里"状态" = 一组触发器里存着的 0/1 组合。</p>
+
+    <h3>两个必记术语</h3>
+    <table class="tbl">
+      <tr><th>术语</th><th>含义</th><th>程序类比</th></tr>
+      <tr><td>现态 (current state)</td><td class="l">触发器里此刻存着的值</td><td><code>counter</code> 当前值</td></tr>
+      <tr><td>次态 (next state)</td><td class="l">下一个时钟边沿后，触发器将变成的值</td><td><code>counter+1</code> 算出的新值</td></tr>
+    </table>
+    <div class="tip">整个时序电路设计就是在回答：<b>给定现态和输入，次态应该是什么？</b>这条规则一旦定下来，电路就能跑了。</div>
+  </div>
+</section>
+
+<!-- ================== p5 ================== -->
+<section class="page" id="p5">
+  <h2>组合逻辑 vs 时序逻辑 — 正式定义</h2>
+  <div class="pgnum">PDF 第 5 页</div>
+  <img class="slide" src="pages_chap4/p05.png" alt="p5">
+  <div class="explain">
+    <h3>把两类电路的定义并排放</h3>
+    <table class="tbl">
+      <tr><th></th><th>组合逻辑</th><th>时序逻辑</th></tr>
+      <tr><td>输出</td><td class="l">= f(当前输入)</td><td class="l">= f(当前输入, <b>当前状态</b>)</td></tr>
+      <tr><td>有无存储元件</td><td>无</td><td><b>有</b>（用于存"过去"）</td></tr>
+      <tr><td>同输入同输出？</td><td>是</td><td>不一定</td></tr>
+    </table>
+
+    <h3>幻灯片末尾的三个关键词</h3>
+    <ul>
+      <li><b>表征工具</b> — 用什么数学模型来描述？答：有限状态机（FSM），下页讲。</li>
+      <li><b>状态记忆</b> — 用什么硬件来存？答：锁存器/触发器，第二讲。</li>
+      <li><b>状态流转</b> — 状态之间怎么切换？答：在时钟边沿，按预定规则。本讲 §1.2、§1.3。</li>
+    </ul>
+    <div class="note">这页本质上是 BG0 那个"为什么需要记忆"的总结版。如果你能把上面的表自己默写一遍，本节就过了。</div>
+  </div>
+</section>
+
+<!-- ================== BG2 ================== -->
+<section class="page bg" id="bg2">
+  <h2>有限状态机（FSM） — 不依赖硬件的纯数学模型</h2>
+  <div class="pgnum">补充背景 · 进入 p6 前必看</div>
+  <div class="explain">
+    <h3>FSM 是什么</h3>
+    <p>FSM (Finite State Machine) 是一个抽象模型，<b>跟电路无关</b>，你可以用纸笔画、用 Python 写、用电路实现。它捕获了"状态 + 输入 → 下一状态"这种行为的本质。</p>
+
+    <h3>形式定义（教科书五元组）</h3>
+    <div class="formula">M = (Q, Σ, δ, q₀, F)</div>
+    <ul>
+      <li><b>Q</b>：所有可能状态的集合（有限个）。例：{开门, 关门, 锁定}。</li>
+      <li><b>Σ</b>：输入字母表。例：{投币, 按钮, 钥匙}。</li>
+      <li><b>δ: Q × Σ → Q</b>：转移函数。"当前在 q，看到输入 a，下一秒去哪？"</li>
+      <li><b>q₀</b>：初始状态。开机时从哪开始。</li>
+      <li><b>F ⊆ Q</b>：接受/终止状态集（数字电路里通常不用，理论模型才关心）。</li>
+    </ul>
+
+    <h3>生活例子：红绿灯</h3>
+    <p>Q = {红, 黄, 绿}；输入 Σ = {计时器到}；转移 δ：红→绿→黄→红 循环；q₀ = 红。这就是一个最简单的 FSM，硬件实现就是一个 2 位计数器 + 译码器。</p>
+
+    <h3>怎么画状态图</h3>
+    <ul>
+      <li>每个状态画一个圆圈。</li>
+      <li>箭头 = 转移，箭头上标注 <b>"输入/输出"</b>（如 <code>1/0</code> 表示输入 1 时输出 0）。</li>
+      <li>初始状态额外标一下（有些书在状态圈里放个特殊符号或加一个无源箭头）。</li>
+    </ul>
+    <div class="tip">下一页 PDF 用一个"检测连续 4 个 1"的实例把状态图走一遍，你照着对就行。</div>
+  </div>
+</section>
+
+<!-- ================== p6 ================== -->
+<section class="page" id="p6">
+  <h2>FSM 实例：检测序列中是否出现连续 4 个 "1"</h2>
+  <div class="pgnum">PDF 第 6 页</div>
+  <img class="slide" src="pages_chap4/p06.png" alt="p6">
+  <div class="explain">
+    <h3>题目设定</h3>
+    <p>电路逐位读入一串 0/1。<b>只要看到"连续 4 个 1"</b>就在那一刻输出 1，其余时刻输出 0。看到任何一个 0，"连续计数"清零。</p>
+
+    <h3>状态怎么设计</h3>
+    <table class="tbl">
+      <tr><th>状态</th><th>含义</th></tr>
+      <tr><td>A</td><td class="l">初始 / 刚刚见到 0（连续 1 计数=0）</td></tr>
+      <tr><td>B</td><td class="l">已经连续见到 1 个 1</td></tr>
+      <tr><td>C</td><td class="l">已经连续见到 2 个 1</td></tr>
+      <tr><td>D</td><td class="l">已经连续见到 3 个或更多 1</td></tr>
+    </table>
+
+    <h3>转移规则（看图中箭头标 "输入/输出"）</h3>
+    <ul>
+      <li>A 看到 1 → B (输出 0)；A 看到 0 → A (输出 0)。</li>
+      <li>B 看到 1 → C (输出 0)；B 看到 0 → A (输出 0)。</li>
+      <li>C 看到 1 → D (输出 0)；C 看到 0 → A (输出 0)。</li>
+      <li>D 看到 1 → D 不动 (<b>输出 1</b>，第 4 个及以后的连 1)；D 看到 0 → A (输出 0)。</li>
+    </ul>
+
+    <h3>手工跑一遍：输入序列 <code>1 1 0 1 1 1 1 0 1 1 1 1</code></h3>
+    <table class="tbl">
+      <tr><th>步</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr>
+      <tr><td>输入</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr><td>现态</td><td>A</td><td>B</td><td>C</td><td>A</td><td>B</td><td>C</td><td>D</td><td>D</td><td>A</td><td>B</td><td>C</td><td>D</td></tr>
+      <tr><td>次态</td><td>B</td><td>C</td><td>A</td><td>B</td><td>C</td><td>D</td><td>D</td><td>A</td><td>B</td><td>C</td><td>D</td><td>D</td></tr>
+      <tr><td>输出</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1</b></td><td><b>1</b></td><td>0</td><td>0</td><td>0</td><td><b>1</b></td></tr>
+    </table>
+    <div class="note">注意第 7 步是关键：现态 C + 输入 1 → 下次态 D，<b>但输出 1 标在<u>这一步的箭头上</u></b>。这是因为它是 <b>Mealy 型</b>（输出依赖输入）。如果改成 Moore 型，输出会标在 D 的圆圈里，意思是"只要处在 D 就输出 1"。p8、p9 会专门讲这个区别。</div>
+  </div>
+</section>
+
+<!-- ================== p7 ================== -->
+<section class="page" id="p7">
+  <h2>用数字逻辑实现 FSM —— 三件事</h2>
+  <div class="pgnum">PDF 第 7 页</div>
+  <img class="slide" src="pages_chap4/p07.png" alt="p7">
+  <div class="explain">
+    <h3>从"画在纸上的 FSM"到"焊在板上的电路"，要做三件事</h3>
+    <ol>
+      <li><b>选一种能记状态的硬件元件</b>。
+        <ul>
+          <li>常用：SR 锁存器、D 触发器、JK 触发器（第二讲讲细节，这页只提名字）。</li>
+          <li>"双稳态"= 这个元件天然有两个稳定状态，正好对应 0 和 1。</li>
+        </ul>
+      </li>
+      <li><b>给状态做二进制编码</b>。例如 4 个状态 A/B/C/D 编成 00/01/10/11，要 2 个触发器（2 位）才能存下。
+        <div class="tip">编码不唯一，挑得好能让后续布尔函数更简单。这是第三讲的重要话题。</div>
+      </li>
+      <li><b>推导两组函数</b>：
+        <ul>
+          <li><b>激励函数</b>：告诉触发器在下一个时钟沿应该被写成什么 → 即"次态 = F(现态, 输入)"。</li>
+          <li><b>输出函数</b>：告诉电路对外输出什么 → "输出 = G(现态, 输入)" 或 "输出 = G(现态)"。</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="note">这三步对应教材后面三讲的内容：先讲元件，再讲编码与函数推导，最后讲实例（计数器、移位寄存器等）。第一讲只要在认知上"知道有这三步"就行。</div>
+  </div>
+</section>
+
+<!-- ================== BG3 ================== -->
+<section class="page bg" id="bg3">
+  <h2>Mealy 型 vs Moore 型 — 一句话区分</h2>
+  <div class="pgnum">补充背景 · 进入 p8 前必看</div>
+  <div class="explain">
+    <h3>区别只在一处：输出函数 G 的参数</h3>
+    <div class="formula">Mealy:  输出 = G(<b>现态, 输入</b>)<br>Moore:  输出 = G(<b>现态</b>)</div>
+    <ul>
+      <li>Mealy 输出会随输入<b>立刻</b>变化（在同一个时钟周期内，输入一变输出可能就变）。</li>
+      <li>Moore 输出只跟现态走，输入变化必须等到下一个时钟沿、把状态切换了，输出才会变。Moore 更稳，但反应慢一拍。</li>
+    </ul>
+
+    <h3>生活类比：自动门</h3>
+    <ul>
+      <li><b>Mealy 风格</b>：传感器一感应到人（输入=1），<u>同一瞬间</u>就给开门信号，状态可能还没更新。</li>
+      <li><b>Moore 风格</b>：传感器感应到人 → 下一拍状态变成"开门中" → 这时候才输出开门信号。</li>
+    </ul>
+
+    <h3>状态图上怎么区分</h3>
+    <table class="tbl">
+      <tr><th></th><th>输出标在哪</th></tr>
+      <tr><td>Mealy</td><td class="l">标在<b>转移箭头上</b>（"输入/输出"）</td></tr>
+      <tr><td>Moore</td><td class="l">标在<b>状态圆圈里</b></td></tr>
+    </table>
+    <div class="tip">同一个功能两种型都能实现，工程上多数同步设计倾向 Moore（不容易出毛刺），但 Mealy 状态数往往更少。</div>
+  </div>
+</section>
+
+<!-- ================== p8 ================== -->
+<section class="page" id="p8">
+  <h2>时序电路基本结构 · Mealy 型</h2>
+  <div class="pgnum">PDF 第 8 页</div>
+  <img class="slide" src="pages_chap4/p08.png" alt="p8">
+  <div class="explain">
+    <h3>三模块结构</h3>
+    <ul>
+      <li><b>次态激励逻辑 F</b>：纯组合电路。输入 = 外部输入 + 现态，输出 = 次态值（送给状态记忆）。</li>
+      <li><b>状态记忆模块</b>：一组触发器。<u>只在时钟边沿</u>把次态写入，平时不动。</li>
+      <li><b>输出逻辑 G</b>：也是纯组合电路。它的输入决定了型别 → 见下。</li>
+    </ul>
+
+    <h3>为什么这张图是 Mealy</h3>
+    <p>注意图中红圈位置：<b>外部输入这根线绕到了 G 模块里</b>。也就是说<code>输出 = G(现态, 输入)</code> —— 符合 Mealy 定义。</p>
+
+    <div class="tip">把这张图看懂了，整本书后面所有时序电路你都能拆成这三块。可以把它当"时序电路的 Hello World 模板"。</div>
+
+    <h3>时钟 Clk 的角色</h3>
+    <p>Clk 只连到状态记忆模块。F 和 G 都是纯组合，没有时钟。<b>"啥时候切换状态"完全由 Clk 边沿说了算</b> —— 这就是 §1.3 要展开的"定时"。</p>
+  </div>
+</section>
+
+<!-- ================== p9 ================== -->
+<section class="page" id="p9">
+  <h2>Moore 型结构 + 同步/异步分类</h2>
+  <div class="pgnum">PDF 第 9 页</div>
+  <img class="slide" src="pages_chap4/p09.png" alt="p9">
+  <div class="explain">
+    <h3>跟 p8 的 Mealy 图比，差在哪</h3>
+    <p>外部输入<b>不再</b>接进 G。G 只看现态。所以 <code>输出 = G(现态)</code>，这就是 Moore。其它两块（F 和状态记忆）和 Mealy 一模一样。</p>
+
+    <h3>同步 vs 异步（按状态切换方式分）</h3>
+    <table class="tbl">
+      <tr><th></th><th>同步时序电路</th><th>异步时序电路</th></tr>
+      <tr><td>切换时刻</td><td class="l">所有触发器在<b>同一个时钟边沿</b>统一切换</td><td class="l">无统一时钟，各部分各自切换</td></tr>
+      <tr><td>设计复杂度</td><td>低，主流</td><td>高，易竞争冒险</td></tr>
+      <tr><td>用途</td><td>CPU、寄存器组、计数器等几乎一切</td><td>专用高速场景、握手协议</td></tr>
+    </table>
+    <div class="warn">本课程（包括第三讲"同步时序电路设计"）<b>只重点讲同步</b>。异步只作了解，工程实践极少手写。</div>
+  </div>
+</section>
+
+<!-- ================== BG4 ================== -->
+<section class="page bg" id="bg4">
+  <h2>时钟信号 (Clock) — 硬件世界的节拍器</h2>
+  <div class="pgnum">补充背景 · 进入 p10 前必看</div>
+  <div class="explain">
+    <h3>为什么数字电路需要时钟</h3>
+    <p>每个门、每根线都有<b>传播延迟</b>（信号从输入端走到输出端要花一点时间，纳秒级）。如果让电路自由跑，不同路径延迟不一样，状态就会乱。<b>时钟是"全场对表"的节拍</b>：所有触发器都只在 Clk 边沿那一刻同步动作，前一拍走完才进入下一拍，秩序就来了。</p>
+
+    <h3>三个必背术语</h3>
+    <table class="tbl">
+      <tr><th>名称</th><th>含义</th><th>例：1 GHz CPU</th></tr>
+      <tr><td>周期 t<sub>per</sub></td><td class="l">一次完整高低电平循环的时长</td><td>1 ns</td></tr>
+      <tr><td>频率 f</td><td class="l">1 / 周期</td><td>1 GHz</td></tr>
+      <tr><td>占空比</td><td class="l">高电平时间 / 周期 = t<sub>H</sub> / t<sub>per</sub></td><td>多数为 50 %</td></tr>
+    </table>
+
+    <h3>"什么时刻动"的两种方式</h3>
+    <ul>
+      <li><b>电平触发</b>：只要时钟保持在高（或低）电平，触发器就"敞开门"，输入变化会立刻穿过去。简单但<u>在电平期间任何抖动都会传进去</u>，容易出错。</li>
+      <li><b>边沿触发</b>：只在时钟"上升那一瞬"或"下降那一瞬"采样一次。每个周期严格只动一次，主流方案。</li>
+    </ul>
+    <div class="tip">大白话：电平触发像"门开着随便进"，边沿触发像"地铁刷卡，到点才放一拨人"。CPU 里的寄存器几乎全是边沿触发。</div>
+  </div>
+</section>
+
+<!-- ================== p10 ================== -->
+<section class="page" id="p10">
+  <h2>时序电路的定时 · 上升沿 / 下降沿</h2>
+  <div class="pgnum">PDF 第 10 页</div>
+  <img class="slide" src="pages_chap4/p10.png" alt="p10">
+  <div class="explain">
+    <h3>读懂两幅波形图</h3>
+    <ul>
+      <li>顶部 <b>CLK</b>：标准时钟。红色短线表示<b>上升沿（0→1 的那一瞬）</b>，绿色短线是下降沿。"state changes occur here" 指向上升沿 —— 状态切换在那一刻发生。</li>
+      <li>底部 <b>CLK_L</b>：反相时钟，状态切换发生在<b>下降沿</b>。t<sub>L</sub>（低电平时间）与 t<sub>H</sub>（高电平时间）位置和上图相反，占空比 = t<sub>L</sub>/t<sub>per</sub>。</li>
+    </ul>
+
+    <h3>关键结论</h3>
+    <ol>
+      <li>时序电路的状态切换<b>多数采用边沿触发</b>。</li>
+      <li>边沿分上升沿和下降沿两种；同一电路里通常统一用一种（混用会让分析变复杂）。</li>
+      <li><b>同一个时钟周期内只能切换一次</b>。这就保证了：在两个边沿之间，组合逻辑 F 有完整一个周期的时间去算次态，电路稳定后下一沿一到就锁存。</li>
+    </ol>
+    <div class="note">第二讲（锁存器和触发器）会看到：早期 SR 锁存器是<b>电平触发</b>，后来发展出 D 触发器才把方案统一到<b>边沿触发</b>。所以这一页其实也是在为下一讲埋伏笔。</div>
+
+    <h3>第一讲到这里收尾</h3>
+    <p>你应该带着这几句话进入第二讲：</p>
+    <ul>
+      <li>时序逻辑 = 组合逻辑 + 状态记忆 + 时钟。</li>
+      <li>状态机（FSM）是描述工具；触发器是实现工具；时钟边沿是时刻控制。</li>
+      <li>结构上分 Mealy / Moore，切换方式上分同步 / 异步。<b>本课程主线 = 同步 + 边沿触发</b>。</li>
+    </ul>
+  </div>
+</section>
+
+
+
+<!-- p11 -->
+<section class="page" id="p11">
+  <h2>承上启下：再看一眼时序电路结构</h2>
+  <div class="pgnum">PDF 第 11 页</div>
+  <img class="slide" src="pages_chap4/p11.png" alt="p11">
+  <div class="explain">
+    <h3>这页和上一讲的 p10 内容重复，但放在第二讲开头有用意</h3>
+    <p>结构图里高亮的<b>"状态记忆模块"</b> + 时钟接入位置标注的"上升沿/正边沿"——这两个就是第二讲要打开的黑盒：</p>
+    <ul>
+      <li>"状态记忆模块"里面到底装的是什么元件？ → <b>锁存器 / 触发器</b>。</li>
+      <li>"上升沿触发"在硬件上是如何做到的？ → <b>主从结构</b>。</li>
+    </ul>
+    <p>本讲会从最简单的"两个反相器卡住一个值"开始，逐步搭出工程上真正用的 D 触发器，再扩展到 JK、T。</p>
+  </div>
+</section>
+
+<!-- BG S1 -->
+<section class="page bg" id="bgs1">
+  <h2>双稳态原理 — 为什么"反馈环路"能记住一个值</h2>
+  <div class="pgnum">补充背景 · 进入 p13 前必看</div>
+  <div class="explain">
+    <h3>从"组合电路不能记"出发</h3>
+    <p>组合电路是个 DAG（有向无环图），信号从输入流向输出，水流不回头，自然不会"留下点什么"。要让电路"记住"，<b>必须有反馈环</b> —— 让输出绕回来当输入。</p>
+
+    <h3>最简单的反馈环：两个反相器首尾相接</h3>
+    <p>设第一个反相器输入 A，输出 B = ¬A；第二个反相器输入 B，输出 = ¬B = A。把第二个反相器的输出再接回 A —— 整圈走完是 <code>A → ¬A → A</code>，<b>自洽</b>。</p>
+
+    <h3>两个稳态</h3>
+    <ul>
+      <li><b>状态 1</b>：A=0, B=1 —— 自洽，永远卡在这里。</li>
+      <li><b>状态 0</b>：A=1, B=0 —— 也自洽。</li>
+    </ul>
+    <p>没有第三个状态（中间值很快会被反相器放大到 0 或 1 中的一个），所以叫"<b>双稳态</b>"。这两个稳态之一就用来表示存储的 0 或 1。</p>
+
+    <h3>软件类比</h3>
+    <pre>x = False
+while True:
+    x = not (not x)   # x 永远不变</pre>
+    <p>反馈环就是把这个循环硬件化。区别是软件需要主动赋值才能改 x；硬件这边要"改值"就得加额外输入端（激励信号），强行打破自洽 —— 这正是后面 SR/D 要做的事。</p>
+  </div>
+</section>
+
+<!-- p12 -->
+<section class="page" id="p12">
+  <h2>第二讲封面</h2>
+  <div class="pgnum">PDF 第 12 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p12.png" alt="p12">
+  <p style="color:var(--mute);">列出本讲要造的五种元件：双稳态原型 → SR 锁存器 → D 锁存器 → D 触发器 → T 触发器。<b>注意演化关系</b>：每一个都是为了修补前一个的缺陷而设计的，按顺序学最不绕。</p>
+</section>
+
+<!-- p13 -->
+<section class="page" id="p13">
+  <h2>2.1 双稳态元件 — 两个反相器的电路实现</h2>
+  <div class="pgnum">PDF 第 13 页</div>
+  <img class="slide" src="pages_chap4/p13.png" alt="p13">
+  <div class="explain">
+    <h3>左图：串联 → 右图：交叉耦合</h3>
+    <p>左边是教学起点：两个反相器串联成环（A→B→A）。右边把它"摊开"画成<b>交叉耦合</b>对（两个反相器你给我我给你），输出端命名为 Q 和 Q̄ ——<b>互补</b>。互补是双稳态元件最重要的外特征。</p>
+
+    <div class="flow">
+      <p><b>稳态 1（Q=1, Q̄=0）：</b>上面反相器输入 0 → 输出 1（这就是 Q=1）；这个 1 喂给下面反相器，下面输出 0 → 也就是 Q̄=0；这个 0 又喂回上面 —— 与假设一致，<b>自洽</b>，一直卡住。</p>
+      <p><b>稳态 0（Q=0, Q̄=1）：</b>同理对称。</p>
+      <p><b>状态 1 与 0 之间怎么切换？</b> —— 自己切不了。这就是裸双稳态的功能局限，下一页（p14）会引出"激励信号"来打破自洽。</p>
+    </div>
+
+    <h3>两个状态的命名</h3>
+    <table class="tbl">
+      <tr><th>状态</th><th>Q 电平</th><th>含义</th></tr>
+      <tr><td>1</td><td>高</td><td>置位 (Set)，存"1"</td></tr>
+      <tr><td>0</td><td>低</td><td>复位 (Reset)，存"0"</td></tr>
+    </table>
+    <div class="note">这里"置位/复位"是术语，记住即可，后面 SR 锁存器的 S/R 命名就由此而来。</div>
+  </div>
+</section>
+
+<!-- p14 -->
+<section class="page" id="p14">
+  <h2>激励信号 + 锁存器 vs 触发器</h2>
+  <div class="pgnum">PDF 第 14 页</div>
+  <img class="slide" src="pages_chap4/p14.png" alt="p14">
+  <div class="explain">
+    <h3>关键概念：激励信号 (excitation input)</h3>
+    <p>裸双稳态元件没法被外部"改写" —— 加电时不知道停在 0 还是 1，且永远不变。要让它实用，必须开一两个"接口"，让外界能强行把它推到指定稳态。这些接口就叫<b>激励信号</b>。</p>
+
+    <h3>不同激励 → 不同元件</h3>
+    <table class="tbl">
+      <tr><th>命名</th><th>激励信号</th></tr>
+      <tr><td>SR</td><td class="l">Set, Reset 两根线</td></tr>
+      <tr><td>D</td><td class="l">Data 一根线（互补自动生成）</td></tr>
+      <tr><td>JK</td><td class="l">J, K 两根（修复 SR 的禁止态）</td></tr>
+      <tr><td>T</td><td class="l">Toggle 一根（每拍翻转）</td></tr>
+    </table>
+
+    <h3>另一个分类维度：什么时候允许写入？</h3>
+    <table class="tbl">
+      <tr><th></th><th>锁存器 latch</th><th>触发器 flip-flop</th></tr>
+      <tr><td>触发方式</td><td><b>电平</b>触发</td><td><b>边沿</b>触发</td></tr>
+      <tr><td>响应</td><td>使能高电平期间一直透传</td><td>仅在时钟边沿瞬间采样</td></tr>
+    </table>
+    <div class="warn">中文教材一律把 latch 和 flip-flop 都叫"触发器"是翻译史遗留问题。本课程严格按英文区分：<b>latch=锁存器, flip-flop=触发器</b>。期末考试也按这个区分。</div>
+  </div>
+</section>
+
+<!-- BG S2 -->
+<section class="page bg" id="bgs2">
+  <h2>锁存器 vs 触发器 — 全章最容易混的一对名词</h2>
+  <div class="pgnum">补充背景 · 进入 p15 前必看</div>
+  <div class="explain">
+    <h3>一张图记住两者的区别</h3>
+    <pre>           使能高    使能低           ↑沿    其他时刻
+锁存器  ：  透明      锁住            ——     ——
+触发器  ：  ——        ——             采样    锁住</pre>
+
+    <h3>用门的比喻</h3>
+    <ul>
+      <li><b>锁存器 (latch)</b> = 旋转栅门，<u>抬起</u>的时候任何人都能穿过去（输入 D 一变，Q 就变）；<u>放下</u>的时候关死。</li>
+      <li><b>触发器 (flip-flop)</b> = 地铁闸机，平时关闭，<u>仅在你刷卡那一瞬</u>放一个人过去，刷完立刻关闭。这"一瞬"就是时钟边沿。</li>
+    </ul>
+
+    <h3>为什么硬件普遍用触发器</h3>
+    <p>设想一个反馈电路：触发器 Q 输出经过组合逻辑算出新值 D'，又接回触发器输入。如果是锁存器（使能期间透明），新值 D' 立刻又传回去成为输入，再变 D'' …… <b>一个时钟周期里电路会一直绕圈</b>，状态不可控。</p>
+    <p>边沿触发把"采样"压缩到时钟边沿的一瞬，剩下整个周期组合电路慢慢算，下一沿到来再吃下一份。整齐、可分析、能流水。所以 CPU 里的寄存器几乎清一色是边沿触发的 D 触发器。</p>
+    <div class="tip"><b>这一段把它读懂，第三讲的时序约束（setup/hold/t_clk）就有了直觉地基。</b></div>
+  </div>
+</section>
+
+<!-- p15 -->
+<section class="page" id="p15">
+  <h2>2.1 双稳态 — SR 锁存器的电平触发波形</h2>
+  <div class="pgnum">PDF 第 15 页</div>
+  <img class="slide" src="pages_chap4/p15.png" alt="p15">
+  <div class="explain">
+    <h3>看图三步</h3>
+    <ol>
+      <li><b>Set 来一个高脉冲</b> → Q 跟着拉高（置 1）。</li>
+      <li>Set 落下后 Q 保持高 —— 双稳态自维持。</li>
+      <li><b>Reset 来一个高脉冲</b> → Q 拉低（置 0）。</li>
+      <li>再下一次 Set 又拉高，循环。</li>
+    </ol>
+    <div class="flow">
+      <p>观察 Q 的变化时刻 —— 是<b>紧跟着 Set/Reset 脉冲的<u>电平</u>到达</b>，不需要时钟。这就是"电平触发"的含义：激励信号一变化，输出立即响应。</p>
+      <p>所以 SR 锁存器没有时钟端 Clk。它本身就是个"异步"元件。</p>
+    </div>
+  </div>
+</section>
+
+<!-- p16 -->
+<section class="page" id="p16">
+  <h2>给 SR 加上时钟 — flip-flop 雏形</h2>
+  <div class="pgnum">PDF 第 16 页</div>
+  <img class="slide" src="pages_chap4/p16.png" alt="p16">
+  <div class="explain">
+    <h3>对比上一页</h3>
+    <p>波形多了一条 Clock。Set 即使为高，Q 也<b>不立即响应</b> —— 必须等到 Clock 的边沿到来时才把 Set/Reset 的当前值"吃进去"。</p>
+    <div class="flow">
+      <p>时刻 1：Set=1，但 Clock 仍是低 → Q 不动。</p>
+      <p>时刻 2：Clock 上升沿来了 → Q 锁存 Set=1 的状态 → Q 变高。</p>
+      <p>时刻 3：Reset=1 出现，Clock 还没动 → Q 仍保持。</p>
+      <p>时刻 4：Clock 又一次边沿 → 此时 Reset=1 被采样 → Q 变低。</p>
+    </div>
+    <div class="tip">这就是 flip-flop（触发器）的雏形。整本教材后面用到的"寄存器、计数器、状态机"全部都是基于这种"时钟边沿才动"的模型。</div>
+  </div>
+</section>
+
+<!-- p17 -->
+<section class="page" id="p17">
+  <h2>2.2 SR 锁存器 — 电路、真值表、符号</h2>
+  <div class="pgnum">PDF 第 17 页</div>
+  <img class="slide" src="pages_chap4/p17.png" alt="p17">
+  <div class="explain">
+    <h3>电路结构详解</h3>
+    <p>左图：两个<b>或非门 (NOR)</b> 交叉耦合。一根门的输出连到另一根门的一个输入端。S 接下面那根 NOR 的另一输入，R 接上面那根 NOR 的另一输入。两根 NOR 的输出分别是 Q 和 Q̄。</p>
+    <p>右图：把同样的电路换种画法（"交叉耦合"形式）。两幅图完全等价。</p>
+
+    <h3>NOR 真值表小复习</h3>
+    <p><code>NOR(a,b) = ¬(a ∨ b)</code>，只有两个输入都为 0 时输出才是 1。</p>
+
+    <div class="flow">
+      <p><b>情形 ① S=0, R=0（保持）</b></p>
+      <p>两个 NOR 各有一个输入是 0，输出由<u>另一个输入</u>（即对方 NOR 的输出）决定。设当前 Q=1, Q̄=0 → 上 NOR: NOR(0, 0)=1=Q̄? 不对。让我重新对应：图中上 NOR 输出 Q，输入 R 和 Q̄。如果 Q=1, Q̄=0，则上 NOR = NOR(R=0, Q̄=0) = 1 = Q ✓。下 NOR = NOR(S=0, Q=1) = 0 = Q̄ ✓。自洽，状态不变。</p>
+
+      <p><b>情形 ② S=1, R=0（置位）</b></p>
+      <p>下 NOR = NOR(S=1, Q=任) = 0 → Q̄ 必为 0。上 NOR = NOR(R=0, Q̄=0) = 1 → Q=1。强制 Q=1。</p>
+
+      <p><b>情形 ③ S=0, R=1（复位）</b></p>
+      <p>对称：强制 Q=0。</p>
+
+      <p><b>情形 ④ S=1, R=1（禁止！）</b></p>
+      <p>两个 NOR 都至少有一个输入是 1 → 两个输出都被强拉为 0 → Q=Q̄=0。<b>违反互补</b>。更糟的是：如果此时 S、R 同时撤回到 0，由于电路对称，最终落到 Q=0 还是 Q=1 取决于哪个门快一点 —— <b>不可预测</b>。所以这种输入组合是"禁止"的。</p>
+    </div>
+
+    <h3>逻辑符号</h3>
+    <p>右下角两个方框：<code>S Q</code>/<code>R Q̄</code> 是标准 SR 符号。带小圆圈的是低电平有效版本（Q̄ 输出端的小圆圈）。</p>
+  </div>
+</section>
+
+<!-- p18 -->
+<section class="page" id="p18">
+  <h2>2.2 SR 锁存器 — 状态图、状态表、触发延迟</h2>
+  <div class="pgnum">PDF 第 18 页</div>
+  <img class="slide" src="pages_chap4/p18.png" alt="p18">
+  <div class="explain">
+    <h3>状态图怎么读</h3>
+    <p>两个圆圈分别是状态"0"和状态"1"。圆圈上的自环表示"保持"，箭头上的 <code>S=?, R=?</code> 表示触发该转移的输入条件。X 是 don't care（任意）。</p>
+    <ul>
+      <li>状态 0 → 1：需要 S=1, R=0。</li>
+      <li>状态 1 → 0：需要 S=0, R=1。</li>
+      <li>自环（保持）：<code>S=0, R=X</code> 在状态 0；<code>S=X, R=0</code> 在状态 1（约束 S·R≠1 隐含）。</li>
+    </ul>
+
+    <h3>状态表怎么读</h3>
+    <p>表中 <code>0*</code> 标红表示禁止态对应的"次态未定义"。这种含义和卡诺图里的无关项 <code>d</code> 类似 —— 化简时可以拿来当任意。</p>
+
+    <h3>触发延迟（重要工程量）</h3>
+    <p>"在置位态下若 R 输入变高，经过两级门延迟变为复位态" —— 这就是<b>触发延迟（锁存延迟）</b>。物理上一个门有几纳秒延迟，信号在两个 NOR 之间绕一圈需要时间。所以：</p>
+    <div class="formula">激励信号有效 → 输出稳定 ：要等约 2·t_gate</div>
+    <div class="tip">这个延迟到了 D 触发器叫 <code>t_CQ</code> 或 <code>t_pHL/t_pLH</code>，是第三讲时序分析的核心参数之一。</div>
+  </div>
+</section>
+
+<!-- p19 -->
+<section class="page" id="p19">
+  <h2>2.2 SR 锁存器 — 特征方程</h2>
+  <div class="pgnum">PDF 第 19 页</div>
+  <img class="slide" src="pages_chap4/p19.png" alt="p19">
+  <div class="explain">
+    <h3>三种表示之间能互转</h3>
+    <p>状态图、状态表、特征方程都在描述<b>同一行为</b>，看哪个方便用哪个：</p>
+    <ul>
+      <li>需求阶段：状态图（直观）。</li>
+      <li>编码后推电路：特征方程（代数化简）。</li>
+      <li>调试 / 教学：状态表（一眼穷举）。</li>
+    </ul>
+
+    <h3>怎么推出 <code>Q* = S + R̄·Q</code></h3>
+    <p>看右边的状态转移表（穷举 S/R/Q 共 8 行）：</p>
+    <ul>
+      <li>S=1（无论 R 如何，先看 R=0 行）→ 次态恒为 1。所以表达式里出现"<code>S</code>"项。</li>
+      <li>S=0, R=0 → 保持原态 Q。所以再加一个"<code>R̄·Q</code>"项（R=0 且现态=1）。</li>
+      <li>S=0, R=1 → 强制为 0。两项都为 0，正好。</li>
+      <li>S=1, R=1 → 禁止，标 0* 当无关项。</li>
+    </ul>
+    <p>合起来：<code>Q* = S + R̄·Q</code>，约束 <code>S·R ≠ 1</code>。这就是 SR 锁存器的<b>特征方程</b>。</p>
+
+    <h3>典型用途</h3>
+    <p>幻灯片底栏说"SR 锁存器常用来设置标志位"。例如 CPU 内部某个错误标志位：发生错误时由错误检测电路置 S=1 把标志位置 1；软件读完后通过另一路 R=1 清零。这种"两根线分别管置/清"的场景就是 SR 最自然的用武之地。</p>
+  </div>
+</section>
+
+<!-- BG S3 -->
+<section class="page bg" id="bgs3">
+  <h2>为什么从 SR 走到 D — SR 的两大缺陷</h2>
+  <div class="pgnum">补充背景 · 进入 p20 前必看</div>
+  <div class="explain">
+    <h3>缺陷 ①：S=R=1 禁止态</h3>
+    <p>用户/电路必须自己保证"绝不同时把 S 和 R 拉高"。万一软硬件接错或竞争冒险出现毛刺，电路就跑飞。这是设计上的潜在地雷。</p>
+
+    <h3>缺陷 ②：要存一个数据位，需要把 1 拆成 (S=1, R=0)，把 0 拆成 (S=0, R=1)</h3>
+    <p>外面给数据的电路要做"互补"工作，等于多了一层。</p>
+
+    <h3>解决思路：让 R 永远是 S 的反</h3>
+    <p>把一个输入 D（数据）送进去，自动派生 <code>S = D</code>、<code>R = ¬D</code>。一根反相器就行。这样：</p>
+    <ul>
+      <li>S 和 R 永远互补 → 永远不会同时为 1 → 禁止态被消除。</li>
+      <li>用户只看到一个输入端 D —— 想存 1 就送 1，想存 0 就送 0，直观。</li>
+    </ul>
+    <p>这就是 D 锁存器（D = Data）的设计动机。p20 就是这个改造的电路图。</p>
+
+    <h3>再加一个使能端 C</h3>
+    <p>但 D 锁存器还有一个新问题：只要 D 一变，Q 就跟着变。我们希望它"在该写的时候才写"。所以再加一根使能控制线 C：</p>
+    <ul>
+      <li>C=0：锁存器"关门"，Q 保持。</li>
+      <li>C=1：锁存器"开门"，Q 跟着 D 变化（透明）。</li>
+    </ul>
+    <p>这就是 p20 真正画的电路 ——<b>带使能的 D 锁存器</b>，俗称"透明锁存器"。</p>
+  </div>
+</section>
+
+<!-- p20 -->
+<section class="page" id="p20">
+  <h2>2.3 D 锁存器 — 电路结构与逻辑</h2>
+  <div class="pgnum">PDF 第 20 页</div>
+  <img class="slide" src="pages_chap4/p20.png" alt="p20">
+  <div class="explain">
+    <h3>电路图逐部分拆解</h3>
+    <p>从左到右扫一遍图：</p>
+    <ol>
+      <li>最左边一根线 D，分两路：一路直接接到上面一个<b>与非门 (NAND)</b> 的输入；另一路经过<b>反相器</b>送到下面一个 NAND 的输入。这就是 BG-S3 说的"D 派生互补对"。</li>
+      <li>使能线 C，分别送到这两个 NAND 的另一输入端 —— C 是<b>共同的看门人</b>。</li>
+      <li>两个 NAND 的输出再去喂后面的交叉耦合 NOR 对（即 SR 锁存器内核），分别充当 S 和 R。</li>
+      <li>最终输出 Q 和 Q̄。</li>
+    </ol>
+
+    <div class="flow">
+      <p><b>C=0 时（保持）：</b>两个 NAND 不管 D 是什么，输出都被 C=0 强制为 1（NAND 任一输入为 0 → 输出 1）。送给 SR 内核的就是 S=1, R=1 …… <b>等下，这不是禁止态吗？</b></p>
+      <p><b>关键陷阱：</b>这里送进 SR 内核的实际是<u>低电平有效</u>版本 —— 即 S'=NAND 输出。当上下两个 NAND 输出都为 1 时，<u>真正的 S 和 R 都被认为是 0</u>（因为内核期望低电平有效输入）。所以 SR 在"保持"模式。Q 不变。</p>
+      <p>简化版理解：C=0 → 切断了 D 到内核的通路 → 内核处于"保持"。</p>
+
+      <p><b>C=1, D=1 时（置位）：</b>上 NAND 两输入都是 1 → 输出 0；下 NAND（输入 ¬D=0, C=1）→ 输出 1。送给内核 (S, R) = (低电平=有效, 高电平=无效) → 强制 Q=1。</p>
+
+      <p><b>C=1, D=0 时（复位）：</b>对称分析，强制 Q=0。</p>
+
+      <p><b>结论：</b>C=1 期间，<code>Q = D</code>（输出"透明"跟随）；C=0 期间，Q 锁住不变。所以又叫<b>透明锁存器 (transparent latch)</b>。</p>
+    </div>
+
+    <h3>功能表（右上角）</h3>
+    <table class="tbl">
+      <tr><th>C</th><th>D</th><th>Q</th><th>说明</th></tr>
+      <tr><td>0</td><td>X</td><td>保持</td><td>锁住</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td><td>透传 D=0</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td><td>透传 D=1</td></tr>
+    </table>
+    <div class="warn">"透明"听起来很好，其实是个雷：C=1 期间 D 上任何抖动都会传到 Q。要解决这个，下一节的 D 触发器登场。</div>
+  </div>
+</section>
+
+<!-- p21 -->
+<section class="page" id="p21">
+  <h2>2.3 D 锁存器 — 状态图 + 特征方程 + 时序波形</h2>
+  <div class="pgnum">PDF 第 21 页</div>
+  <img class="slide" src="pages_chap4/p21.png" alt="p21">
+  <div class="explain">
+    <h3>特征方程</h3>
+    <div class="formula">Q* = D （当 C=1 时）</div>
+    <p>简洁。C=0 时方程"不激活"，Q 维持。</p>
+
+    <h3>时序波形怎么读</h3>
+    <div class="flow">
+      <p>D 有一个长方形脉冲（先 1 后 0）。C 在中段拉高一段。</p>
+      <p>第一个蓝箭头：C 拉高的瞬间，发现 D=1 → Q 立即跟到 1。</p>
+      <p>C=1 期间 D 保持 1 → Q 也保持 1。</p>
+      <p>C 下降到 0 → Q 锁住，<b>不再随 D 变化</b>。注意此后即使 D 跌回 0，Q 仍保持 1。</p>
+      <p>第二段 C 又拉高 → Q 重新跟 D（D=0）→ Q 变 0。</p>
+      <p>典型"开门-跟随-关门-锁住"模式。</p>
+    </div>
+  </div>
+</section>
+
+<!-- BG S4 -->
+<section class="page bg" id="bgs4">
+  <h2>主从结构 — 从"透明"到"边沿触发"的关键发明</h2>
+  <div class="pgnum">补充背景 · 进入 p22 前必看</div>
+  <div class="explain">
+    <h3>D 锁存器的痛点</h3>
+    <p>C=1 期间 D 一抖 Q 就抖。如果 Q 接到下一级电路又算出新的 D'，D' 抖动又喂回来 …… 一个时钟周期内可能跑很多圈。无法用作"每周期变一次"的状态记忆。</p>
+
+    <h3>解法：两个锁存器串联 + 时钟反相</h3>
+    <p>用两个 D 锁存器："主"锁存器 + "从"锁存器。</p>
+    <pre>D ─→ [主 D-latch] ─QM─→ [从 D-latch] ─→ Q
+        C=¬CLK         C=CLK</pre>
+    <p>两个的使能信号互为反相。</p>
+
+    <h3>跑一遍 CLK 的一个完整周期</h3>
+    <ul>
+      <li><b>CLK=0</b>：主 latch 使能高 (C=¬0=1) → 主透明，QM 跟着 D 变。从 latch 使能低 → 从锁住，Q 不变。<b>外界看到 Q 没动</b>。</li>
+      <li><b>CLK 上升沿那一瞬</b>：主从同时切换 —— 主立刻关门（QM 锁住当前 D 值），从立刻开门（开始"吃"QM）。</li>
+      <li><b>CLK=1 整个高电平期间</b>：主关着 → QM 不变；从开着 → Q = QM。但 QM 是固定的，所以 Q 也固定。即使此后 D 上抖，QM 已锁，Q 不受影响。</li>
+      <li>CLK 下降沿：从关门，主开门，准备吃下一拍的 D。</li>
+    </ul>
+
+    <h3>对外界的视觉效果</h3>
+    <p>Q 只在 CLK 上升沿那一瞬"采样"了一下 D，之后整个周期都不变。<b>这就是"边沿触发"</b>。从此电路有了清晰的拍子。</p>
+    <div class="tip">这个结构是数字电路史上的关键里程碑。理解它，整章后面的所有"在时钟边沿状态切换一次"就有了硬件支撑。</div>
+  </div>
+</section>
+
+<!-- p22 -->
+<section class="page" id="p22">
+  <h2>2.4 D 触发器 — 主从结构、状态图、特征方程</h2>
+  <div class="pgnum">PDF 第 22 页</div>
+  <img class="slide" src="pages_chap4/p22.png" alt="p22">
+  <div class="explain">
+    <h3>看顶上电路：两个 D 锁存器串联</h3>
+    <p>主锁存器输入 D，输出 QM 接到从锁存器的输入。CLK 经过一个反相器（图中 NOT 门 ⊳○）后接主锁存器的使能 C；CLK 直接接从锁存器的使能 C。所以主从 C 永远反相。</p>
+
+    <h3>表（CLK 三态）</h3>
+    <table class="tbl">
+      <tr><th>CLK</th><th>主锁存器</th><th>从锁存器</th></tr>
+      <tr><td>低 (L)</td><td>写入 (C=1 透明)</td><td>不变 (C=0 锁住)</td></tr>
+      <tr><td>↑ 上升沿</td><td>锁存</td><td>开始写入</td></tr>
+      <tr><td>高 (H)</td><td>不变</td><td>写入（但 QM 已固定）</td></tr>
+    </table>
+    <p>实际外界看到的效果：<b>Q 只在上升沿瞬间被刷新</b>，其余时间锁住。</p>
+
+    <h3>特征方程</h3>
+    <div class="formula">Q* = D  （在 CLK 上升沿时采样）</div>
+    <p>简洁到极致。整个 CPU 寄存器都是这种行为。</p>
+
+    <h3>D 触发器符号</h3>
+    <p>右上角符号：D 输入端 + CLK 输入端（带 ⊳ 三角表示边沿敏感）+ Q 和 Q̄ 输出。这是后面所有电路图里你会反复看到的标准件。</p>
+
+    <h3>状态转移图（右下）</h3>
+    <p>非常简单：D=0 → 次态 0；D=1 → 次态 1。和 D 锁存器形状一样，差别只在<b>"何时采样 D"</b>—— 锁存器是 C=1 期间持续采样，触发器只在边沿采样。</p>
+  </div>
+</section>
+
+<!-- p23 -->
+<section class="page" id="p23">
+  <h2>2.4 D 触发器 — 关键时序参数</h2>
+  <div class="pgnum">PDF 第 23 页</div>
+  <img class="slide" src="pages_chap4/p23.png" alt="p23">
+  <div class="explain">
+    <h3>这页四个参数会贯穿后面所有时序分析</h3>
+    <table class="tbl">
+      <tr><th>参数</th><th>含义</th><th>方向</th></tr>
+      <tr><td>t_pLH(CQ)</td><td class="l">CLK 边沿到 Q 由 0 变 1 的延迟</td><td>越小越好</td></tr>
+      <tr><td>t_pHL(CQ)</td><td class="l">CLK 边沿到 Q 由 1 变 0 的延迟</td><td>越小越好</td></tr>
+      <tr><td><b>t_setup</b> 建立时间</td><td class="l">D 必须在 CLK 边沿<u>之前</u>稳定这么久</td><td>越小越好</td></tr>
+      <tr><td><b>t_hold</b> 保持时间</td><td class="l">D 必须在 CLK 边沿<u>之后</u>再稳定这么久</td><td>越小越好</td></tr>
+    </table>
+
+    <h3>波形怎么读</h3>
+    <div class="flow">
+      <p>前两个 CLK 边沿处的蓝色弯箭头：从 CLK 抬起到 Q 输出变化，量出的就是 t_pLH 或 t_pHL。</p>
+      <p>第三个 CLK 边沿前后那对竖紫线：左边的 t_setup 是 D 必须先稳住的窗口；右边的 t_hold 是边沿过后 D 还得继续稳的窗口。这两段加起来形成一个"采样窗口"，窗口里 D 不许动。</p>
+      <p>最右那个红色虚线椭圆：示意如果 D 在窗口期内变化，<b>触发器进入"亚稳态"</b> —— Q 既不是 0 也不是 1，要过很久才稳定，可能出错。这是工程上要严防的故障。</p>
+    </div>
+
+    <h3>"窗口"的物理来源</h3>
+    <p>主锁存器在 CLK 上升的瞬间要把当前 D 锁住。锁住这个动作本身需要：① D 提前稳定（让信号传过反相器和 NAND，setup）；② 锁住时刻不能正在变（hold）。否则 NAND 输出可能既不是清晰的 0 也不是清晰的 1。</p>
+    <div class="tip">这四个参数是芯片 datasheet 里的关键列。第三讲会拿它们推 t_clk 下界。</div>
+  </div>
+</section>
+
+<!-- BG S5 -->
+<section class="page bg" id="bgs5">
+  <h2>setup / hold 直觉 — 地铁刷卡比喻</h2>
+  <div class="pgnum">补充背景 · 帮你记住 setup/hold</div>
+  <div class="explain">
+    <h3>比喻</h3>
+    <p>把时钟边沿想象成你<b>刷地铁卡</b>那一瞬。卡里的数据 = D，闸机记住的数 = Q。</p>
+    <ul>
+      <li><b>setup（建立时间）</b>：你手得提前一会把卡按稳在感应区，让卡片信号"建立"。如果你刷得太晚（手刚到感应区刚好卡触到的同时门关），机器读不准。</li>
+      <li><b>hold（保持时间）</b>：刷完那一瞬你也不能马上抽手，得再按住一会让机器把数据"消化"完。如果你刷完立刻抽手，机器可能读到一半数据。</li>
+    </ul>
+
+    <h3>违反的代价</h3>
+    <p>真实电路里违反 setup 或 hold 会导致<b>亚稳态 (metastability)</b>：Q 卡在 0.5V 既不是 0 也不是 1，经过随机时间后才稳定。这种状态对后续电路是"病毒"，会传染。所以芯片设计师会拿数据手册的 t_setup / t_hold 当硬约束。</p>
+
+    <h3>数字</h3>
+    <p>典型现代工艺：t_setup ≈ 0.1–0.5 ns，t_hold ≈ 0–0.3 ns，t_CQ ≈ 0.2–1 ns。1 GHz CPU 一个周期 1 ns 全部要塞进 t_CQ + 组合逻辑 + t_setup 之和。这也解释了为什么 CPU 频率上不去 —— 一个周期太短就装不下这串延迟。</p>
+  </div>
+</section>
+
+<!-- p24 -->
+<section class="page" id="p24">
+  <h2>前情回顾</h2>
+  <div class="pgnum">PDF 第 24 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p24.png" alt="p24">
+  <p style="color:var(--mute);">课件中插入的小结页，把第一讲 + 第二讲已学的内容浓缩成一页 mindmap：要解决的问题 / 描述方式 / 控制方式 / 元件实现。读懂这页就说明前面 23 页学到位了。这里不重复展开。</p>
+</section>
+
+<!-- p25 -->
+<section class="page" id="p25">
+  <h2>2.4 D 触发器 — 带使能端 EN</h2>
+  <div class="pgnum">PDF 第 25 页</div>
+  <img class="slide" src="pages_chap4/p25.png" alt="p25">
+  <div class="explain">
+    <h3>动机</h3>
+    <p>纯 D 触发器每个 CLK 上升沿都强制采样一次 D，<b>不写就保持的功能其实不简单</b>：得让 D 端=当前 Q（自反馈）。每个寄存器都这么接太冗。所以工程上加一个使能端 EN：</p>
+    <ul>
+      <li>EN=1：触发器"工作"，正常采样外部 D。</li>
+      <li>EN=0：触发器"休眠"，无论 CLK 多少次上升沿，Q 都不变。</li>
+    </ul>
+
+    <h3>电路实现：在 D 前面塞一个 2 选 1 MUX</h3>
+    <p>图中蓝色方框就是 MUX：</p>
+    <ul>
+      <li>选 1（EN=1）：选外部 D。</li>
+      <li>选 0（EN=0）：选触发器自身的 Q 当作"D"。下一个 CLK 上升沿采样的还是 Q，等于 Q 不变。</li>
+    </ul>
+
+    <div class="flow">
+      <p><b>EN=1 路径</b>：D → MUX 上路 (AND 门，D 与 EN=1 都开)→ OR 门 → 触发器 D 端 → 上升沿采样 → Q=D。</p>
+      <p><b>EN=0 路径</b>：MUX 上路关 (AND 输出 0)，下路开 (Q 与 EN̄=1 都开)→ OR 输出 = Q → 触发器 D 端=Q → 上升沿采样 → Q=Q（不变）。</p>
+    </div>
+
+    <h3>用途预告</h3>
+    <p>CPU 的<b>寄存器写使能</b> WE 就是这个 EN。"R3 ← R1 + R2"这条指令只让 R3 的写使能拉高，其他寄存器 EN=0 → 它们的值在这一拍中纹丝不动。第四讲 4.2 节会展开。</p>
+  </div>
+</section>
+
+<!-- p26 -->
+<section class="page" id="p26">
+  <h2>2.4 D 触发器 — 带预置 PR 和清零 CLR 的版本</h2>
+  <div class="pgnum">PDF 第 26 页</div>
+  <img class="slide" src="pages_chap4/p26.png" alt="p26">
+  <div class="explain">
+    <h3>为什么需要 PR / CLR</h3>
+    <p>电路加电瞬间触发器的初值是<b>随机</b>的（可能是 0 也可能是 1）。系统启动要从已知初态出发，所以需要"<b>强行复位</b>"的能力，最好不依赖时钟（异步复位）。这就是 CLR（Clear）。对称地，有时也希望能强行置 1，这就是 PR（Preset）。</p>
+
+    <h3>电路怎么实现</h3>
+    <p>看复杂的下图，相比 p20 的 D 锁存器多了两根紫色线：PR_L 和 CLR_L（_L 表示低电平有效）。它们分别接在主从两个锁存器的两对交叉门上，<b>越过时钟使能</b>直接强行把 Q 置 1 或置 0。</p>
+
+    <h3>同步 vs 异步</h3>
+    <table class="tbl">
+      <tr><th>类型</th><th>响应时机</th></tr>
+      <tr><td>异步 PR/CLR</td><td class="l">激励一有效立刻动，不等 CLK</td></tr>
+      <tr><td>同步 PR/CLR</td><td class="l">激励有效后，下一个 CLK 边沿才动</td></tr>
+    </table>
+    <p>异步复位用于"开机一键归零"。同步复位用于运行中"按规则归零"，能保持时钟同步分析的简洁性。两者各有用途。</p>
+
+    <h3>符号</h3>
+    <p>右上角的方框符号：上方 PR 输入端（旁有小圆圈表低电平有效），下方 CLR 同样。D/CLK 在中间。这种符号你在 datasheet 上会见到。</p>
+  </div>
+</section>
+
+<!-- p27 -->
+<section class="page" id="p27">
+  <h2>补：JK 触发器 — 修补 SR 禁止态</h2>
+  <div class="pgnum">PDF 第 27 页</div>
+  <img class="slide" src="pages_chap4/p27.png" alt="p27">
+  <div class="explain">
+    <h3>JK 的设计动机</h3>
+    <p>SR 锁存器 S=R=1 时禁止。JK 通过<b>把当前 Q 反馈进激励路径</b>，让 J=K=1 时变成"翻转 (toggle)"，正好填补了那个空格 —— 既没浪费一个输入组合，又消除了"禁止"。</p>
+
+    <h3>电路（左上）</h3>
+    <p>用 D 触发器实现：</p>
+    <ul>
+      <li>D = J·Q̄ + K̄·Q（即特征方程 Q* = JQ̄ + K̄Q）</li>
+      <li>两个 AND 门 + 一个 OR 门 + D 触发器。</li>
+    </ul>
+
+    <h3>功能表四种组合</h3>
+    <table class="tbl">
+      <tr><th>J</th><th>K</th><th>Q*</th><th>语义</th></tr>
+      <tr><td>0</td><td>0</td><td>Q</td><td>保持</td></tr>
+      <tr><td>0</td><td>1</td><td>0</td><td>复位</td></tr>
+      <tr><td>1</td><td>0</td><td>1</td><td>置位</td></tr>
+      <tr><td>1</td><td>1</td><td>Q̄</td><td><b>翻转</b></td></tr>
+    </table>
+
+    <div class="flow">
+      <p><b>当 J=K=1，Q=0 时</b>：D = 1·1 + 0·0 = 1 → 下个上升沿 Q 变 1。</p>
+      <p><b>下一拍 J=K=1 仍然，Q=1</b>：D = 1·0 + 0·1 = 0 → Q 变回 0。</p>
+      <p>所以 J=K 持续为 1 时，Q 每个 CLK 周期翻转一次，频率正好是 CLK 的一半。这种行为正是 T 触发器（下一页）和分频器的基础。</p>
+    </div>
+    <div class="note">实际工程里 D 触发器一统天下，JK 已经少见。教材保留它主要是为了对比和"补全设计史"。</div>
+  </div>
+</section>
+
+<!-- p28 -->
+<section class="page" id="p28">
+  <h2>2.5 T 触发器 — 每个 CLK 翻转一次</h2>
+  <div class="pgnum">PDF 第 28 页</div>
+  <img class="slide" src="pages_chap4/p28.png" alt="p28">
+  <div class="explain">
+    <h3>T 触发器是什么</h3>
+    <p>"T = Toggle"。只有一根输入 T：</p>
+    <ul>
+      <li>T=0：保持。</li>
+      <li>T=1：每个 CLK 上升沿翻转一次 Q。</li>
+    </ul>
+    <p>特征方程：<code>Q* = T ⊕ Q</code>（异或）。或者写成 Q* = TQ̄ + T̄Q。</p>
+
+    <h3>原理图 (a)</h3>
+    <p>用一个 D 触发器实现 —— 把 Q̄ 接回 D。这样每个上升沿 Q 都会变成它自己的反 —— 每拍翻转一次。如果想加 T 控制位，就在 D 输入前加一个 XOR（T⊕Q）或者一个 MUX（T=1 选 Q̄, T=0 选 Q）。</p>
+
+    <div class="flow">
+      <p><b>波形 (d)：</b>T 一直保持高 → 每个 CLK 边沿 Q 翻转一次。<b>看输出频率：Q 的周期 = CLK 周期 × 2 →</b> 这就是"二分频"。</p>
+      <p><b>波形 (e) 带使能：</b>En 控制 T 是否参与。En=1 期间 Q 翻转，En=0 期间 Q 保持。红色箭头标的是实际发生翻转的边沿。</p>
+    </div>
+
+    <h3>典型用途（剧透第四讲）</h3>
+    <ul>
+      <li><b>分频器</b>：1 个 T 触发器把频率减半。串 4 个就能把 16 GHz 分到 1 GHz。</li>
+      <li><b>异步行波计数器</b>：每一位用 T 触发器，低位 Q 充当高位的 CLK。p51 会看到这个电路。</li>
+      <li><b>事件计数</b>：每按一次按钮 → T 翻转一次 → Q 在 0/1 间切换，配合多位形成二进制计数器。</li>
+    </ul>
+
+    <h3>第二讲完结</h3>
+    <p>到这里你已经掌握了"<b>怎么在硬件里造一个能记 1 位状态的元件</b>"。下一讲（第三讲）会把这些元件按照一套<b>设计流程</b>组装成完整的同步时序电路。</p>
+  </div>
+</section>
+
+
+
+<section class="page" id="p29">
+  <h2>第三讲 同步时序逻辑设计 · 封面</h2>
+  <div class="pgnum">PDF 第 29 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p29.png" alt="p29">
+  <p style="color:var(--mute);">第三讲的四个小节：① 设计步骤总览 ② 状态图/表 ③ 化简和编码 ④ 电路设计与分析。本讲是<b>方法论篇</b>，从一句话需求一路推到完整电路加定时分析。我会用同一道"101 序列检测器"贯穿全讲，建议你跟着复现一遍。</p>
+</section>
+
+<section class="page" id="p30">
+  <h2>3.1 设计步骤 · 从 F/G 函数视角看清"要造什么"</h2>
+  <div class="pgnum">PDF 第 30 页</div>
+  <img class="slide" src="pages_chap4/p30.png" alt="p30">
+  <div class="explain">
+    <h3>第一讲的结构图再回顾一次</h3>
+    <p>整个同步时序电路就是三块拼图：</p>
+    <ul>
+      <li><b>F 函数 (次态激励)</b>：由"外部输入 + 现态"算出"<b>触发器下一拍要写入的值</b>"。它是<u>纯组合电路</u>。</li>
+      <li><b>G 函数 (输出)</b>：由"外部输入 + 现态"（Mealy）或仅"现态"（Moore）算出对外输出。也是<u>纯组合</u>。</li>
+      <li><b>状态记忆</b>：一组 D（或 JK / T）触发器，受 CLK 边沿控制。</li>
+    </ul>
+    <h3>所以"设计同步时序电路"= 把 F 和 G 这两个布尔函数推出来</h3>
+    <p>触发器选好就固定了；时钟由外部供。剩下的全部工作是<b>给 F 和 G 写真值表 → 化简 → 画门电路</b>。从这一刻起，时序电路设计就退化为"组合电路设计 + 一点状态规划"。这正是上学期内容的延伸。</p>
+    <h3>F 函数的两步</h3>
+    <p>幻灯片里有个细节：F 函数被画成两步链：</p>
+    <pre>外部输入 + 现态 ──→ 次态值 ──→ 次态的激励信号
+                  (依据状态图)   (依据触发器特征方程)</pre>
+    <p>用 D 触发器时第二步是 trivial 的（D = 次态值），用 JK 触发器时第二步要查激励表。下一讲我们就走一遍。</p>
+  </div>
+</section>
+
+<section class="page bg" id="bgd1">
+  <h2>六步设计流水线 · 全景图</h2>
+  <div class="pgnum">补充背景 · 进入 p31 前看一下全程，避免后面迷路</div>
+  <div class="explain">
+    <h3>整体路径</h3>
+    <pre>① 需求分析     ──→ 一句话需求 → 抽象成"输入/输出/什么时候要响应"
+② 状态图/表    ──→ 画状态机
+③ 状态化简     ──→ 合并等价态，状态数减少 → 触发器数也可能减少
+④ 状态编码     ──→ 每个状态分配二进制串
+⑤ 电路设计     ──→ 推 F 和 G 的布尔表达式 → 画门电路
+⑥ 电路分析     ──→ 检查未用状态/自启动；做定时分析</pre>
+    <h3>各步要解决的关键问题</h3>
+    <table class="tbl">
+      <tr><th>步骤</th><th>核心问题</th><th>本讲页码</th></tr>
+      <tr><td>①</td><td class="l">电路有几个输入几个输出？什么时候要输出 1？</td><td>p32</td></tr>
+      <tr><td>②</td><td class="l">系统"过去"用多少状态能表达？怎么转移？</td><td>p33–p35</td></tr>
+      <tr><td>③</td><td class="l">这些状态里有没有"行为完全一样"可合并的？</td><td>p36–p37</td></tr>
+      <tr><td>④</td><td class="l">编码方案选哪个能让后续布尔函数最简单？</td><td>p38</td></tr>
+      <tr><td>⑤</td><td class="l">F 和 G 是什么？画成门电路长啥样？</td><td>p39–p42</td></tr>
+      <tr><td>⑥</td><td class="l">误入未用状态能爬回来吗？这电路能跑多快？</td><td>p43–p48</td></tr>
+    </table>
+    <h3>提醒</h3>
+    <p>每一步都<b>不可跳过</b>。化简和编码看起来鸡肋，但能让最终电路从 30 个门减到 10 个门、速度更快。第六步定时分析在 FPGA 实战中是吃饭工具。</p>
+  </div>
+</section>
+
+<section class="page" id="p31">
+  <h2>3.1 设计步骤 · 流程图</h2>
+  <div class="pgnum">PDF 第 31 页</div>
+  <img class="slide" src="pages_chap4/p31.png" alt="p31">
+  <div class="explain">
+    <h3>对照背景页里的六步</h3>
+    <p>幻灯片把每步的产出标得很清楚：</p>
+    <ul>
+      <li><b>需求分析 → 数字设计模型</b>：从文字描述抽出"哪些是输入、哪些是输出、要响应什么事件"。</li>
+      <li><b>状态图/表</b>：画原始（可能冗余的）状态机。</li>
+      <li><b>状态化简</b>：合并等价对，减少状态数 → 减少触发器数 → 减少电路面积。</li>
+      <li><b>状态编码</b>：把状态名换成二进制串（编码选哪种非常关键）。</li>
+      <li><b>电路设计</b>：算次态函数、激励函数、输出函数 → 画门电路。</li>
+      <li><b>电路分析</b>：自启动判定 + 定时容限计算。</li>
+    </ul>
+    <p>红色斜箭头 "时序逻辑电路分析" 提醒你：第六步本身就是一个完整子题目（拿到一个已成型的电路反推它行为），后面 p43 会重点展开。</p>
+  </div>
+</section>
+
+<section class="page" id="p32">
+  <h2>3.2 状态图/表设计 · 101 序列检测器 · 需求</h2>
+  <div class="pgnum">PDF 第 32 页</div>
+  <img class="slide" src="pages_chap4/p32.png" alt="p32">
+  <div class="explain">
+    <h3>需求分析三件事</h3>
+    <ol>
+      <li><b>输入接口</b>：1 位串行输入 X（每个 CP 时钟周期吃一位 0 或 1）。</li>
+      <li><b>输出接口</b>：1 位输出 Z。</li>
+      <li><b>什么时候 Z=1</b>：当<u>最近三位</u>恰好构成 "101" 时（重叠也算）。</li>
+    </ol>
+    <h3>看波形找证据</h3>
+    <p>幻灯片下方波形：</p>
+    <ul>
+      <li>周期 1–10 对应 X 输入序列 0,1,1,0,1,1,1,0,1,0。</li>
+      <li>Z 在第 5 周期变 1（因为周期 3–5 看到 1,0,1）。</li>
+      <li>Z 在第 9 周期变 1（周期 7–9 X=1,0,1 又是 101）。</li>
+    </ul>
+    <div class="note">注意 Z 是 Mealy 输出：在第 5 个周期 X=1 来的<u>同一个周期</u>就抬高，不是下一周期。Moore 型则会延迟一拍。</div>
+    <h3>用 Mealy 还是 Moore</h3>
+    <p>本例选 Mealy，状态数会少（不需要为"刚刚检测到"单独造一个状态）。下一页直接画 Mealy 状态图。</p>
+  </div>
+</section>
+
+<section class="page" id="p33">
+  <h2>3.2 构建状态图 · 101 检测器</h2>
+  <div class="pgnum">PDF 第 33 页</div>
+  <img class="slide" src="pages_chap4/p33.png" alt="p33">
+  <div class="explain">
+    <h3>"产生新状态"的递归法</h3>
+    <p>先随便定一个初始状态，然后逐个输入扫描，凡是当前状态遇到某输入"无处可去"就<b>造一个新状态</b>，直到不再产生新状态为止。</p>
+    <h3>四个状态语义</h3>
+    <table class="tbl">
+      <tr><th>状态</th><th>含义（最近看到的有效前缀）</th></tr>
+      <tr><td>S0</td><td class="l">初始 / 完全没匹配上</td></tr>
+      <tr><td>S1</td><td class="l">看到了 "1"（可能是 101 的开头）</td></tr>
+      <tr><td>S2</td><td class="l">看到了 "10"</td></tr>
+      <tr><td>S3</td><td class="l">看到了 "101" ✓ 已经检测到</td></tr>
+    </table>
+    <h3>状态图箭头逐条解读（"X/Z" 标注）</h3>
+    <div class="flow">
+      <p><b>S0：</b> X=0 → S0/Z=0（看到 0 还是没起头）；X=1 → S1/Z=0（看到 1，进入"等待 0"状态）。</p>
+      <p><b>S1：</b> X=0 → S2/Z=0（看到 "10"，距离成功还差一位 1）；X=1 → S1/Z=0（再来个 1 不算重叠，仍然只记"最新一个 1"）。</p>
+      <p><b>S2：</b> X=0 → S0/Z=0（看到 "100"，前缀失效，从头开始）；X=1 → S3/Z=<b>1</b>（看到 "101"！这一刻输出抬高）。</p>
+      <p><b>S3：</b> X=0 → S2/Z=0（看到 "1010"，最后两位 "10" 是新前缀，去 S2）；X=1 → S1/Z=0（看到 "1011"，最后一位是 1，回到 S1 等下一个 0）。</p>
+    </div>
+    <h3>"重叠匹配"的处理</h3>
+    <p>S3 收到 X=1 时去 S1 而不是 S0 —— 因为 "1011" 里最后一个 "1" 仍可作为下一次 "101" 的开头。题目若要求不重叠则 S3 任意输入都回 S0。本课程默认重叠匹配。</p>
+  </div>
+</section>
+
+<section class="page" id="p34">
+  <h2>3.2 由状态图构建状态表</h2>
+  <div class="pgnum">PDF 第 34 页</div>
+  <img class="slide" src="pages_chap4/p34.png" alt="p34">
+  <div class="explain">
+    <h3>状态表 = 状态图的二维表格化</h3>
+    <table class="tbl">
+      <tr><th rowspan="2">现态 S</th><th colspan="2">S*/Z</th></tr>
+      <tr><th>X=0</th><th>X=1</th></tr>
+      <tr><td>S0</td><td>S0/0</td><td>S1/0</td></tr>
+      <tr><td>S1</td><td>S2/0</td><td>S1/0</td></tr>
+      <tr><td>S2</td><td>S0/0</td><td>S3/<b>1</b></td></tr>
+      <tr><td>S3</td><td>S2/0</td><td>S1/0</td></tr>
+    </table>
+    <p>表里每一格写"<b>次态/输出</b>"。S3 行/X=1 列那个 "S3/1" 是唯一让 Z=1 的格子，对应"刚刚检测到完整 101"。p36 化简时这格的特殊性很关键。</p>
+    <div class="tip">建议你把这张表抄一遍并对照状态图复核 —— 后面所有推导都基于它，<u>这一步错了下面全错</u>。</div>
+  </div>
+</section>
+
+<section class="page" id="p35">
+  <h2>3.2 状态图必须满足的两条约束</h2>
+  <div class="pgnum">PDF 第 35 页</div>
+  <img class="slide" src="pages_chap4/p35.png" alt="p35">
+  <div class="explain">
+    <h3>互斥性 (mutually exclusive)</h3>
+    <p>从同一个状态出发的所有转移箭头，<b>转移条件不能重叠</b>。形式化：任意两条转移表达式的逻辑与 = 0。否则给定某输入电路不知道去哪。</p>
+    <h3>完备性 (complete)</h3>
+    <p>从同一个状态出发，所有可能输入<b>都得有去处</b>。从同状态出发所有转移条件的逻辑或 = 1（真）。否则某种输入组合下电路"卡死无去处"。</p>
+    <h3>本例验证</h3>
+    <p>每个状态都只有两条出箭头，分别标 X=0 和 X=1。互斥（X=0 ∧ X=1 = 0 ✓），完备（X=0 ∨ X=1 = 1 ✓）。</p>
+    <div class="warn">如果输入有 n 位，组合数会变多；这时常用<b>逻辑表达式</b>（如 X̄、X̄Y）当转移条件，要小心确保完备 + 互斥。一旦违反，电路或者非法或者输出未定义。</div>
+  </div>
+</section>
+
+<section class="page bg" id="bgd2">
+  <h2>等价状态怎么判 — 一句话直觉</h2>
+  <div class="pgnum">补充背景 · 进入 p36 前</div>
+  <div class="explain">
+    <h3>定义</h3>
+    <p>两个状态 P 和 Q "<b>等价</b>"⟺ 对<u>任何</u>输入序列，从 P 和从 Q 出发，每一步看到的输出都相同。</p>
+    <h3>一步判等（实操）</h3>
+    <ol>
+      <li>P 和 Q 在所有输入下输出相同；并且</li>
+      <li>P 和 Q 在所有输入下的次态对，要么相同，要么是另一对等价状态。</li>
+    </ol>
+    <p>第二条递归。所以通常先假设若干对状态等价，迭代检验。</p>
+    <h3>合并的价值</h3>
+    <p>合并 1 对等价状态 → 状态数减 1 → 可能让触发器数减 1（如果跨过了 2 的幂边界）。本例从 4 状态减到 3 状态，触发器数还是 2 个，<b>但无关项变多 → 布尔函数化简空间更大 → 门电路更小</b>。</p>
+    <h3>本例提前预告</h3>
+    <p>看 p34 状态表，S1 行和 S3 行：</p>
+    <ul>
+      <li>S1 行：X=0→S2/0, X=1→S1/0</li>
+      <li>S3 行：X=0→S2/0, X=1→S1/0</li>
+    </ul>
+    <p><b>两行一模一样！</b>S1 和 S3 等价 → 可以合并。p36 就做这事。</p>
+  </div>
+</section>
+
+<section class="page" id="p36">
+  <h2>3.3 状态化简 · 合并 S1 与 S3</h2>
+  <div class="pgnum">PDF 第 36 页</div>
+  <img class="slide" src="pages_chap4/p36.png" alt="p36">
+  <div class="explain">
+    <h3>两张表对比</h3>
+    <p>左侧 4 状态表中橙色高亮的 S1 行和 S3 行确实<b>完全一致</b>。合并为一个新状态（仍叫 S1）。合并后右侧 3 状态表 —— S3 在原表中所有指向都改写成指向 S1。</p>
+    <h3>合并后的语义重新解读</h3>
+    <table class="tbl">
+      <tr><th>新状态</th><th>语义</th></tr>
+      <tr><td>S0</td><td class="l">没匹配</td></tr>
+      <tr><td>S1</td><td class="l">最近一位是 1（可能是 101 的开头，<b>也可能是 101 检测后剩下的那个 1</b>）</td></tr>
+      <tr><td>S2</td><td class="l">最近两位是 10</td></tr>
+    </table>
+    <p>原来的"已检测到 S3"不再单独存在 —— 检测成功的"事件"在 Mealy 输出 Z 上即时反映（S2 + X=1 那一格），状态本身则直接迁回 S1。<b>更紧凑、信息没丢</b>。</p>
+    <div class="note">这是 Mealy 相对 Moore 的"省状态"优势：检测事件不需单独留状态，只需在转移箭头上标 Z=1。</div>
+  </div>
+</section>
+
+<section class="page" id="p37">
+  <h2>3.3 等价判定 · 四种典型图模式</h2>
+  <div class="pgnum">PDF 第 37 页</div>
+  <img class="slide" src="pages_chap4/p37.png" alt="p37">
+  <div class="explain">
+    <h3>四张小图分别对应四种典型情况</h3>
+    <ol>
+      <li><b>次态相同</b>：从 S_i 和 S_j 在所有输入下都去同一个 S_k → 立即判定等价（前提是输出也相同）。</li>
+      <li><b>次态交错</b>：S_i 和 S_j 互为对方的次态 → 等价（这种情况叫"对偶"）。</li>
+      <li><b>次态循环</b>：S_i、S_j、S_k、S_l 形成一个环且对应输入下输出相同 → 整环等价。</li>
+      <li><b>次态对等价</b>：S_i 和 S_j 的次态分别是 (S_k, S_l)，而 (S_k, S_l) 本身也是等价对 → 等价关系递归成立。</li>
+    </ol>
+    <div class="tip">考试不太会要求手算四种复杂情况，掌握"次态相同 + 输出相同 → 等价"这条最基础的，加上等价关系的<u>传递性</u>就够用了。复杂情况一般用<b>隐含表法</b>，本课程不强求。</div>
+  </div>
+</section>
+
+<section class="page" id="p38">
+  <h2>3.3 状态编码 · 相邻法三准则</h2>
+  <div class="pgnum">PDF 第 38 页</div>
+  <img class="slide" src="pages_chap4/p38.png" alt="p38">
+  <div class="explain">
+    <h3>"编码"是什么</h3>
+    <p>3 个状态各分配一个二进制串。2 位就够（4 种组合用 3 个）。<b>不同方案 → 不同布尔函数 → 不同电路面积</b>。找"最优"编码是 NP 难题，工程上用<b>相邻法</b>找次优。</p>
+    <h3>相邻法三准则</h3>
+    <table class="tbl">
+      <tr><th>准则</th><th>含义</th></tr>
+      <tr><td>① 同次态</td><td class="l">若两状态的次态相同，编码应相邻（仅 1 位不同）</td></tr>
+      <tr><td>② 同现态各次态</td><td class="l">同一现态下"X=0 次态"和"X=1 次态"编码应相邻</td></tr>
+      <tr><td>③ 同输出</td><td class="l">输出相同的两个现态，编码应相邻</td></tr>
+    </table>
+    <h3>本例可选编码方案</h3>
+    <ul>
+      <li>方案 A：<code>S0=00, S1=01, S2=11</code></li>
+      <li>方案 B：<code>S0=00, S1=01, S2=10</code></li>
+    </ul>
+    <p>后续推导用 A 方案，留下 <code>10</code> 作为未用状态 → 这就是 p43 "挂起"分析的来源。</p>
+    <div class="warn">未用状态在卡诺图里是无关项 d，让函数化简空间更大；但代价是要做自启动分析。<b>一定要分析</b>，否则电路可能加电后卡死。</div>
+  </div>
+</section>
+
+<section class="page bg" id="bgd3">
+  <h2>从状态表到布尔表达式 — 卡诺图复习</h2>
+  <div class="pgnum">补充背景 · 进入 p39 前</div>
+  <div class="explain">
+    <h3>核心步骤</h3>
+    <ol>
+      <li>把状态表每行/列展开成<b>三变量真值表</b>（输入 X + 现态两位 Y1Y0）。</li>
+      <li>对每个输出位（Y1*、Y0*、Z）填卡诺图。</li>
+      <li>圈最大组（2、4、8……），写最简积之和。</li>
+      <li>无关项 d 可以圈也可以不圈，怎么让圈更大怎么用。</li>
+    </ol>
+    <h3>注意</h3>
+    <ul>
+      <li>本例的"无关项"来自未用状态 Y1Y0=10。所有"现态=10"的行都填 d。</li>
+      <li>X=1 时 S2/Z 输出 1 → 这是<u>唯一非零</u>的 Z 输出格，要圈最小。其它都是 0。</li>
+    </ul>
+    <h3>结果预告</h3>
+    <p>p40 直接给最终化简结果。你最好自己画一遍卡诺图，理解为什么 <code>Z = Y1·X</code> 是最简（Y1=1 表示现态 S2，X=1 → 检测到 101）。</p>
+  </div>
+</section>
+
+<section class="page" id="p39">
+  <h2>3.4 电路设计 · 生成状态转移表</h2>
+  <div class="pgnum">PDF 第 39 页</div>
+  <img class="slide" src="pages_chap4/p39.png" alt="p39">
+  <div class="explain">
+    <h3>把状态表"翻译"成位级真值表</h3>
+    <p>编码方案 A：S0=00, S1=01, S2=11。现态用 Y1Y0 两位表示，次态用 Y1*Y0* 两位表示。三个输入变量（X, Y1, Y0）→ 共 2³=8 行。Y1Y0=10 不出现在状态机里，标"无关项 d"。</p>
+    <table class="tbl">
+      <tr><th>X</th><th>Y1</th><th>Y0</th><th>Y1*</th><th>Y0*</th><th>Z</th><th>对应</th></tr>
+      <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>S0→S0/0</td></tr>
+      <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>S1→S2/0</td></tr>
+      <tr><td>0</td><td>1</td><td>0</td><td>d</td><td>d</td><td>d</td><td>未用</td></tr>
+      <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>S2→S0/0</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>S0→S1/0</td></tr>
+      <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>S1→S1/0</td></tr>
+      <tr><td>1</td><td>1</td><td>0</td><td>d</td><td>d</td><td>d</td><td>未用</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td><b>1</b></td><td>S2→S1/<b>1</b></td></tr>
+    </table>
+    <div class="note">编码方案 A 下，从 S2=11 出发 X=1 时次态是 S1=01。所以那行 Y1*Y0* = 01，Z=1。这就是<u>唯一让 Z=1 的格子</u>。</div>
+  </div>
+</section>
+
+<section class="page" id="p40">
+  <h2>3.4 推导次态函数和输出函数</h2>
+  <div class="pgnum">PDF 第 40 页</div>
+  <img class="slide" src="pages_chap4/p40.png" alt="p40">
+  <div class="explain">
+    <h3>结果一览（已化简）</h3>
+    <div class="formula">Y1* = Ȳ1 · Y0 · X̄<br>
+Y0* = Ȳ1 · Y0 + X<br>
+Z = Y1 · X</div>
+    <h3>分别理解</h3>
+    <p><b>Y1* = Ȳ1·Y0·X̄</b>：Y1 在下一拍变 1 <u>当且仅当</u>现态是 S1（Y1Y0=01）且 X=0。对应：S1 + X=0 → S2（编码 11，Y1=1）。✓</p>
+    <p><b>Y0* = Ȳ1·Y0 + X</b>：</p>
+    <ul>
+      <li>Ȳ1·Y0 项：现态 S1 时 Y0* 总是 1（S1+X=0→S2=11；S1+X=1→S1=01；Y0 都是 1）。</li>
+      <li>X 项：只要 X=1，Y0* 总是 1（X=1 下所有次态最低位都是 1）。</li>
+    </ul>
+    <p>把无关项 Y1Y0=10 拿进来化简，能让 Y0* 表达式更简洁。</p>
+    <p><b>Z = Y1·X</b>：Y1=1 表示现态是 S2 或未用态。未用态作为无关项参与化简，因此 Z = Y1·X。合法状态下只对应 S2+X=1（检测到 101）。<b>但未用态 10 + X=1 时也会 Z=1 → 误输出！</b>这正是 p44 要修复的问题。</p>
+    <div class="tip">把这三个公式抄到笔记本上 —— 后面 p41~p44 一直在用它们。</div>
+  </div>
+</section>
+
+<section class="page" id="p41">
+  <h2>3.4 激励函数 · D 触发器 vs JK 触发器</h2>
+  <div class="pgnum">PDF 第 41 页</div>
+  <img class="slide" src="pages_chap4/p41.png" alt="p41">
+  <div class="explain">
+    <h3>什么是"激励函数"</h3>
+    <p>触发器要让 Q 变成次态值 Q*，必须给它一个合适输入（D 触发器的 D，或 JK 触发器的 J、K）。这个"输入应该是什么"就是激励函数。</p>
+    <h3>D 触发器：trivial</h3>
+    <p>D 触发器特征方程 Q*=D。所以 <code>D1 = Y1*</code>, <code>D0 = Y0*</code>。<b>次态函数 = 激励函数</b>。</p>
+    <div class="formula">D1 = Ȳ1·Y0·X̄<br>D0 = Ȳ1·Y0 + X</div>
+    <h3>JK 触发器：要查激励表</h3>
+    <p>JK 特征方程 Q* = JQ̄ + K̄Q。给定 (Q, Q*) 能反推出最简 (J, K)：</p>
+    <table class="tbl">
+      <tr><th>Q → Q*</th><th>J</th><th>K</th></tr>
+      <tr><td>0 → 0</td><td>0</td><td>d</td></tr>
+      <tr><td>0 → 1</td><td>1</td><td>d</td></tr>
+      <tr><td>1 → 0</td><td>d</td><td>1</td></tr>
+      <tr><td>1 → 1</td><td>d</td><td>0</td></tr>
+    </table>
+    <p>JK 比 D 多了无关项 → 化简后表达式可能更简，但需要两根线（J 和 K）→ 综合下来工程界普遍偏好 D。</p>
+    <div class="note">本例后续电路图都用 D 触发器版本。你只需知道 JK 也能实现，了解过程即可。</div>
+  </div>
+</section>
+
+<section class="page" id="p42">
+  <h2>3.4 画最终电路图（D 触发器版）</h2>
+  <div class="pgnum">PDF 第 42 页</div>
+  <img class="slide" src="pages_chap4/p42.png" alt="p42">
+  <div class="explain">
+    <h3>整体结构拆三块</h3>
+    <p>对照<b>蓝色 = 次态激励 F</b>、<b>橙色 = 状态记忆</b>、<b>黄色 = 输出 G</b>：</p>
+    <ul>
+      <li><b>F 部分（蓝框）</b>：实现 D1 = Ȳ1·Y0·X̄ 和 D0 = Ȳ1·Y0 + X。需要一个反相器（产生 X̄ 和 Ȳ1）、一个 3 输入 AND、一个 2 输入 AND、一个 2 输入 OR。</li>
+      <li><b>记忆（橙框）</b>：两个 D 触发器 D1、D0，CLK 共用同一根时钟线（同步设计的核心）。</li>
+      <li><b>G 部分（黄框）</b>：实现 Z = Y1·X。只需要一个 2 输入 AND。</li>
+    </ul>
+    <h3>信号流向</h3>
+    <p>X 进入 F 块；Y1 和 Y0 是触发器输出，分两路：一路反馈回 F 块当现态输入；一路送到 G 块算输出。所有触发器共用一根 CLK。这就是<b>同步时序电路</b>的典型样子。</p>
+    <div class="flow">
+      <p><b>跑一遍完整序列 X = 1, 0, 1（最简单的成功匹配）</b></p>
+      <p>假设初始：Y1Y0=00 (S0)，CLK 上升沿前各信号就位。</p>
+      <p><b>周期 1（X=1）</b>：F 算出 D1=Ȳ1·Y0·X̄=1·0·0=0；D0=Ȳ1·Y0+X=0+1=1。G 算出 Z=Y1·X=0·1=<b>0</b>。CLK ↑ → Y1Y0 变成 01 (S1)。</p>
+      <p><b>周期 2（X=0）</b>：现态 01。D1=1·1·1=<b>1</b>；D0=1·1+0=1。Z=0·0=<b>0</b>。CLK ↑ → Y1Y0 变成 11 (S2)。</p>
+      <p><b>周期 3（X=1）</b>：现态 11。D1=0·1·0=0；D0=0·1+1=1。Z=1·1=<b>1</b> ✓ <b>检测到 101 输出抬高！</b>CLK ↑ → Y1Y0 变成 01 (S1)，准备好接收下一个 101。</p>
+      <p>注意 Z 是<u>组合输出</u>，<b>在 CLK 上升沿之前就已经稳定为 1</b>（Mealy 特征）。这一拍 X 拉低或 CLK 过去后，Z 又会迅速变 0。</p>
+    </div>
+  </div>
+</section>
+
+<section class="page bg" id="bgd4">
+  <h2>未用状态 & "挂起"现象 — 加电时的隐患</h2>
+  <div class="pgnum">补充背景 · 进入 p43 前</div>
+  <div class="explain">
+    <h3>问题来源</h3>
+    <p>本例编码空间 2²=4，实际状态 3 个，<b>留了一个"10"作为未用</b>。但 D 触发器加电时初始值是<b>随机</b>的（PR/CLR 没有强制复位的话）。万一上电后 Y1Y0=10，电路会发生什么？</p>
+    <h3>两种结局</h3>
+    <ol>
+      <li><b>自启动 (self-starting)</b>：未用状态下电路<b>能在几拍内自动跳回合法状态</b>，且过程中没有"假输出"。良性。</li>
+      <li><b>挂起 (hang)</b>：电路<u>困在未用状态之间循环</u>，永远进不了合法状态。恶性。</li>
+    </ol>
+    <h3>解决方案</h3>
+    <ol>
+      <li><b>预防</b>：触发器加 CLR 端，加电时强制清零回 S0=00。最常用。</li>
+      <li><b>分析后修补</b>：算未用状态在当前 F、G 表达式下的去向。能自启动则放心；若挂起或错误输出，调整 F 或 G 表达式（往往是给 G 加几个项消除假输出）。</li>
+    </ol>
+    <h3>本例预告</h3>
+    <p>p44 会算：未用状态 Y1Y0=10 在当前公式下 X=0 时下一拍去 00（合法 S0），X=1 时去 01（合法 S1）→<b>下一拍就到合法状态了，能自启动</b>。但 X=1 时 Z = Y1·X = 1·1 = <b>1</b>，是错误输出 —— 没检测到 101 却抬高 Z。所以要修 G 函数。</p>
+  </div>
+</section>
+
+<section class="page" id="p43">
+  <h2>3.4 电路分析 · 未用状态与"挂起"现象</h2>
+  <div class="pgnum">PDF 第 43 页</div>
+  <img class="slide" src="pages_chap4/p43.png" alt="p43">
+  <div class="explain">
+    <h3>主要结论</h3>
+    <ul>
+      <li>编码 2 位 → 4 种 → 用了 3 种 → 1 个未用 Y1Y0=10。</li>
+      <li>"挂起"= 加电后落进未用状态，且互相循环不出来。</li>
+      <li>解决路径之一：让触发器有 PR/CLR，加电时直接强制初态 → 不依赖运气。</li>
+      <li>解决路径之二：分析未用状态行为，<u>若会出错则修改 F 或 G</u>。</li>
+    </ul>
+    <h3>"自启动"的形式化定义</h3>
+    <p>从任意一个未用状态出发，<b>经过有限个时钟周期</b>能进入合法工作状态，且过程中<b>不产生错误输出</b> → 称该电路"具有自启动能力"。</p>
+    <div class="tip">考试常考：给你一个电路图，问"分析它是否能自启动" → 把未用状态填入 F/G 表达式，看次态是否落回合法集合 + 输出是否合理。</div>
+  </div>
+</section>
+
+<section class="page" id="p44">
+  <h2>3.4 未用状态分析 · 本例实操</h2>
+  <div class="pgnum">PDF 第 44 页</div>
+  <img class="slide" src="pages_chap4/p44.png" alt="p44">
+  <div class="explain">
+    <h3>把 Y1Y0=10 代进 F/G 公式</h3>
+    <div class="formula">Y1* = Ȳ1·Y0·X̄ = 0·0·X̄ = 0<br>
+Y0* = Ȳ1·Y0 + X = 0·0 + X = X<br>
+Z = Y1·X = 1·X = X</div>
+    <table class="tbl">
+      <tr><th>X</th><th>Y1*Y0* (次态)</th><th>Z</th><th>评价</th></tr>
+      <tr><td>0</td><td>00 (S0)</td><td>0</td><td>✓ 回到 S0，无错</td></tr>
+      <tr><td>1</td><td>01 (S1)</td><td><b>1</b></td><td>✗ <b>误输出！</b> 没检测到 101 却抬高 Z</td></tr>
+    </table>
+    <h3>问题在哪</h3>
+    <p>未用状态下 Y1=1，加上 X=1，刚好满足 Z=Y1·X=1 的条件 → 错报。状态会在下一拍自动跑到合法 S1，所以电路<b>状态层面能自启动</b>，但<u>输出层面有 1 拍假阳性</u>。</p>
+    <h3>修复方法：重新设计 G</h3>
+    <p>原 G = Y1·X 在合法状态下只有 S2 (=11) 命中。我们想让它<u>只在 Y1Y0=11 时</u>命中，未用态 Y1Y0=10 不命中。</p>
+    <div class="formula">Z = Y1 · Y0 · X</div>
+    <p>多加一个 Y0=1 条件。代入未用态：Z = 1·0·X = 0 ✓ 不再误输出。代入合法 S2 (Y1Y0=11)：Z = 1·1·X = X ✓ 行为不变。</p>
+    <div class="warn">修复后的 G 比原版多用一个输入（变成 3 输入 AND），<b>代价是一点点门电路面积</b>，换来健壮性。典型的工程权衡：化简 vs 健壮性。生产环境一般偏向后者。</div>
+  </div>
+</section>
+
+<section class="page bg" id="bgd5">
+  <h2>组合延迟链 — 时钟周期的"下界"是怎么来的</h2>
+  <div class="pgnum">补充背景 · 进入 p45 前</div>
+  <div class="explain">
+    <h3>一个周期里电路做了什么</h3>
+    <ol>
+      <li>CLK ↑ → 触发器 Y1Y0 输出新值（用时 <b>t_ffpd</b>）。</li>
+      <li>新值进入组合电路 F，算出 Y1*, Y0*（用时 <b>t_comb</b>）。</li>
+      <li>Y1*, Y0* 必须在<u>下一个 CLK ↑ 来之前</u> <b>稳定 t_setup</b> 这么久。</li>
+    </ol>
+    <p>所以一个周期 t_clk 至少要装下：<b>t_ffpd + t_comb + t_setup</b>。否则触发器还没把数据吃稳就来了下一个 CLK，电路出错。</p>
+    <h3>这就是 CPU 频率的上限来源</h3>
+    <p>主频 = 1 / t_clk。要把主频做高，就得：</p>
+    <ul>
+      <li>用更快的工艺（缩小晶体管 → t_ffpd、t_comb 减小）；</li>
+      <li>把组合逻辑切成多级流水（每级 t_comb 减小）；</li>
+      <li>用 setup 更小的触发器。</li>
+    </ul>
+    <h3>hold 是另一条约束</h3>
+    <p>同一个 CLK 边沿采样后，<u>新值不能太快就传到触发器输入端</u>，否则会破坏当前 CLK 边沿采的"老值"的 hold 窗口。要求：t_ffpd + t_comb &gt; t_hold。<b>这里取最小延迟</b>，因为"最坏情况"是延迟最小（信号最快传过去）。</p>
+  </div>
+</section>
+
+<section class="page" id="p45">
+  <h2>3.4 电路定时分析 · 四个关键参数</h2>
+  <div class="pgnum">PDF 第 45 页</div>
+  <img class="slide" src="pages_chap4/p45.png" alt="p45">
+  <div class="explain">
+    <h3>结构图标注的四个时间</h3>
+    <table class="tbl">
+      <tr><th>记号</th><th>含义</th><th>来源</th></tr>
+      <tr><td><b>t_clk</b></td><td class="l">时钟周期</td><td>外部供给</td></tr>
+      <tr><td><b>t_ffpd</b></td><td class="l">触发器传播延迟（CLK→Q）</td><td>触发器内部</td></tr>
+      <tr><td><b>t_comb</b></td><td class="l">组合电路（F 模块）的延迟</td><td>布尔逻辑链</td></tr>
+      <tr><td><b>t_setup / t_hold</b></td><td class="l">触发器输入端要求的稳定窗口</td><td>触发器内部</td></tr>
+    </table>
+    <h3>四个参数在电路里的位置</h3>
+    <p>从一个 D 触发器的输出端 Q1 出发：<b>t_ffpd → 经过组合 → t_comb → 到下一个触发器的 D 输入 → t_setup</b>。<u>这条链就是同步时序电路最长路径</u>。CLK 周期必须不小于它。</p>
+    <div class="note">真实电路里"组合电路 F"可能很复杂（CPU 加法器、MUX 等），t_comb 是延迟链最大值。计时分析工具（PrimeTime、Quartus TimeQuest）会自动遍历所有路径找最差。</div>
+  </div>
+</section>
+
+<section class="page" id="p46">
+  <h2>3.4 时序波形 · 建立/保持容限</h2>
+  <div class="pgnum">PDF 第 46 页</div>
+  <img class="slide" src="pages_chap4/p46.png" alt="p46">
+  <div class="explain">
+    <h3>波形分四行</h3>
+    <ol>
+      <li>CLOCK：周期性时钟。</li>
+      <li>触发器输出：每个 CLK 上升沿后经 t_ffpd 变化，然后保持。</li>
+      <li>组合电路输出：触发器输出经过 t_comb 后变化。</li>
+      <li>触发器输入：=组合输出，需要在下一个 CLK ↑ 前 t_setup 稳定，CLK ↑ 后 t_hold 内不变。</li>
+    </ol>
+    <h3>两个"容限"</h3>
+    <div class="formula">建立时间容限 = t_clk − t_ffpd(max) − t_comb(max) − t_setup ≥ 0<br>
+保持时间容限 = t_ffpd(min) + t_comb(min) − t_hold ≥ 0</div>
+    <p>所谓"容限"= 留出的安全余量。两个都必须 ≥ 0，否则电路无法正常工作。</p>
+    <div class="flow">
+      <p>左侧紫色 t_hold 段：触发器吃完上一拍数据后，<u>新数据不许立刻冲过来</u>。所以"新值传到触发器输入"必须经过至少 t_ffpd(min) + t_comb(min) 时间 —— 这段时间要 ≥ t_hold。</p>
+      <p>右侧红色 t_setup 段：下一次 CLK ↑ 之前 t_setup 内信号必须稳。所以从上一次 CLK ↑ 算起，最多用掉 t_clk − t_setup 去等数据传播。即 t_ffpd + t_comb ≤ t_clk − t_setup。</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="p47">
+  <h2>3.4 时序约束 · 两条公式总结</h2>
+  <div class="pgnum">PDF 第 47 页</div>
+  <img class="slide" src="pages_chap4/p47.png" alt="p47">
+  <div class="explain">
+    <h3>两条硬约束</h3>
+    <div class="formula">(1) t_clk &gt; t_ffpd(max) + t_comb(max) + t_setup<br>
+(2) t_hold &lt; t_ffpd(min) + t_comb(min)</div>
+    <h3>意义</h3>
+    <ul>
+      <li><b>(1) 时钟下界</b>：决定电路<u>能跑多快</u>。要做高频电路就得让右边变小。这就是"流水线"技术诞生的原因 —— 把长 t_comb 切成多段，每段后面塞一个触发器 → 每段 t_comb 短了 → t_clk 能压更小。</li>
+      <li><b>(2) hold 约束</b>：决定电路<u>能不能正常工作</u>。和频率无关，但如果触发器→组合→下一触发器这条链太短（少于 t_hold），<b>无论时钟多慢都会出错</b>。这就是"短路径问题"。修复方法是在快路径上故意加缓冲门拖慢一点。</li>
+    </ul>
+    <div class="warn">FPGA 综合时如果时序工具报"hold violation"，一定要修。不像 setup 违例还能降频救命，hold 违例和频率无关，必须改电路。</div>
+  </div>
+</section>
+
+<section class="page" id="p48">
+  <h2>3.4 回到 101 检测器 · 实际定时关系</h2>
+  <div class="pgnum">PDF 第 48 页</div>
+  <img class="slide" src="pages_chap4/p48.png" alt="p48">
+  <div class="explain">
+    <h3>电路图再看一遍</h3>
+    <p>同 p42 的图，分蓝/橙/黄三块。问"CLK 和 X 的时序关系"和"Z 何时为 1"。</p>
+    <h3>X 的输入要求</h3>
+    <p>X 是<u>外部输入</u>。它要求在每个 CLK 上升沿之前 t_setup 稳定，且边沿后 t_hold 内不变 —— 就像 D 触发器对它的 D 端要求那样。<b>但 X 是间接的：</b>X 经过 F 块（组合）后才喂触发器，所以"X 对 CLK 的提前量"还要加上 F 块的传播时间。</p>
+    <div class="formula">X 必须在 CLK ↑ 前 (t_setup + t_comb(max)) 时间稳定<br>
+CLK ↑ 后 (t_hold − t_comb(min)) 时间不变（若右边 ≤ 0 则无需等）</div>
+    <h3>Z 何时为 1</h3>
+    <p>Z = Y1·Y0·X（修过 G 之后）。当现态 Y1Y0=11（=S2）且 X=1 时 Z=1。</p>
+    <div class="flow">
+      <p>① 上一个 CLK ↑ 之后，触发器输出新 Y1Y0 → 经过 t_ffpd 稳定到 11（如果当时刚好进了 S2）。</p>
+      <p>② X 此时若为 1，Z = Y1·Y0·X 在经过 G 块的 AND 门延迟（≈一两个门）后变 1。</p>
+      <p>③ Z 保持 1 直到 X 改变或下一个 CLK ↑ 让状态切到 S1。</p>
+      <p>所以 Z 是<b>组合输出</b>，<u>不需要等下一个时钟边沿</u>就能反映"刚刚识别成功"，这是 Mealy 输出的特征。</p>
+    </div>
+    <h3>第三讲到此结束</h3>
+    <p>你现在拥有一套完整的"从一句话需求 → 跑起来的同步时序电路"流程。第四讲会把这套流程应用到三类<b>典型部件</b>：计数器、寄存器堆、移位寄存器 —— 全是 CPU 数据通路里立刻就用得上的砖块。</p>
+  </div>
+</section>
+
+
+
+<section class="page" id="p49">
+  <h2>第四讲 典型时序逻辑部件设计 · 封面</h2>
+  <div class="pgnum">PDF 第 49 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p49.png" alt="p49">
+  <p style="color:var(--mute);">第四讲讲三类常见时序部件：① 计数器 ② 寄存器和寄存器堆 ③ 移位寄存器。这一讲<b>偏应用</b>，把前三讲的工具拿来造 CPU 数据通路里立刻就要用到的砖块。下学期数字逻辑设计、再后面计算机组成原理都直接复用这一讲的部件。</p>
+</section>
+
+<section class="page bg" id="bgt1">
+  <h2>计数器是干嘛的 — 它就是 CPU 里 PC 的硬件原型</h2>
+  <div class="pgnum">补充背景 · 进入 p50 前</div>
+  <div class="explain">
+    <h3>"计数器"看似简单</h3>
+    <p>每收到一个时钟脉冲，计数值 +1。看起来像 <code>i++</code>，没啥意思。但在 CPU 里它扮演了至少三个关键角色：</p>
+    <ol>
+      <li><b>程序计数器 (PC, Program Counter)</b>：CPU 里专门追踪"下一条指令地址"的寄存器，每执行完一条指令 PC 自动 +4（32 位指令）或 +1（按字节算）。它就是一个能自增的计数器。</li>
+      <li><b>循环计数</b>：硬件级别的循环（如 DMA 控制器要传输 N 字节，N 由一个计数器递减到 0 才停）。</li>
+      <li><b>分频器</b>：把高频时钟一分多频出多种慢时钟（用于 USB、串口等不同接口）。</li>
+    </ol>
+
+    <h3>分类维度（p50 会展开）</h3>
+    <table class="tbl">
+      <tr><th>维度</th><th>选项</th><th>取舍</th></tr>
+      <tr><td>时钟方式</td><td>同步 / 异步</td><td>同步快、稳；异步省门</td></tr>
+      <tr><td>计数方式</td><td>加 / 减 / 可逆</td><td>看用途</td></tr>
+      <tr><td>编码方式</td><td>二进制 / BCD / 循环码</td><td>二进制最常见</td></tr>
+      <tr><td>进位方式</td><td>行波(串行) / 并行</td><td>并行延迟小但门多</td></tr>
+    </table>
+
+    <h3>本讲会展开三种实例</h3>
+    <ul>
+      <li>p51-52：异步行波加法（最经典教学例，结构最简单）。</li>
+      <li>p53-54：同步并行加法（实战常用，速度快）。</li>
+      <li>p55：异步行波减法（对称设计）。</li>
+    </ul>
+    <p>看的时候注意对比 —— 同步比异步多了一组 AND 门，但延迟从 n·t_TQ 降到 1 个 AND + t_TQ。<b>这是典型的"用面积换速度"</b>。</p>
+  </div>
+</section>
+
+<section class="page" id="p50">
+  <h2>4.1 计数器 · 分类总览</h2>
+  <div class="pgnum">PDF 第 50 页</div>
+  <img class="slide" src="pages_chap4/p50.png" alt="p50">
+  <div class="explain">
+    <h3>核心定义</h3>
+    <ul>
+      <li><b>"模"</b> = 最大计数值。模十 = 0..9（10 个状态）；模八 = 0..7。</li>
+      <li>从 0 开始计，达到模时输出"计数完成"信号并归零（或饱和、或翻转，根据设计）。</li>
+    </ul>
+
+    <h3>分类四个维度</h3>
+    <table class="tbl">
+      <tr><th>维度</th><th>取值</th></tr>
+      <tr><td>按时钟方式</td><td class="l"><b>同步</b>（统一 CLK）/ <b>异步</b>（低位输出当高位 CLK）</td></tr>
+      <tr><td>按计数方向</td><td class="l">加 / 减 / 可逆（一根方向控制线）</td></tr>
+      <tr><td>按编码方式</td><td class="l">二进制 / BCD / 循环码（Gray 码等）</td></tr>
+      <tr><td>按进位方式</td><td class="l">行波（串行）/ 并行（并行进位逻辑）</td></tr>
+    </table>
+
+    <div class="note">"行波" = 进位信号像水波一样从低位逐级传到高位，每级 1 个门延迟。位数多了就慢。"并行" = 一次性把所有位的"该不该翻转"算出来，所以快。p51 vs p53 正好就是这两种的对比。</div>
+  </div>
+</section>
+
+<section class="page bg" id="bgt2">
+  <h2>为什么 T 触发器是计数器的天生材料</h2>
+  <div class="pgnum">补充背景 · 进入 p51 前</div>
+  <div class="explain">
+    <h3>观察二进制计数的最低位</h3>
+    <pre>计数  Q3 Q2 Q1 Q0
+0:    0  0  0  0
+1:    0  0  0  1
+2:    0  0  1  0
+3:    0  0  1  1
+4:    0  1  0  0
+...</pre>
+    <p>看 Q0 这一列：0,1,0,1,0,1,... 每一拍翻转一次。再看 Q1：0,0,1,1,0,0,1,1，每两拍翻转一次。Q2 每四拍翻转一次。Q3 每八拍翻转一次。</p>
+
+    <h3>规律</h3>
+    <p>第 i 位 Qᵢ"该不该翻转"<u>当且仅当</u>它下面所有位都是 1（要进位上来）。具体地：</p>
+    <ul>
+      <li>Q0：每拍都翻转。</li>
+      <li>Q1：只在 Q0=1 时下一拍翻转（产生进位）。</li>
+      <li>Q2：只在 Q1=Q0=1 时下一拍翻转。</li>
+      <li>Q_i：只在 Q_{i-1}·Q_{i-2}·…·Q_0 = 1 时下一拍翻转。</li>
+    </ul>
+
+    <h3>T 触发器的角色</h3>
+    <p>T 触发器（第二讲 p28）的语义恰好是：<b>T=1 时下一个 CLK 沿翻转，T=0 时保持</b>。所以把"该不该翻转"的条件直接接到每位的 T 端，就成了计数器。</p>
+    <ul>
+      <li><b>同步并行</b>实现：把 Q_{i-1}·...·Q_0 用 AND 门一次算出，接到 T_i。CLK 共用。所有位同一边沿统一翻转。</li>
+      <li><b>异步行波</b>实现：偷懒做法 —— 每位 T=1 永远开着，但把 <u>低位的 Q 输出当作高位的 CLK</u>。Q_i 翻转就把 Q_{i+1} 的"时钟"踢一下。结构最简单，但每翻一位需要 1 个 t_TQ 延迟，多位累积。</li>
+    </ul>
+    <p>p51 用异步思路，p53 用同步思路。</p>
+  </div>
+</section>
+
+<section class="page" id="p51">
+  <h2>4.1 异步行波加法计数器 · 电路 + 波形</h2>
+  <div class="pgnum">PDF 第 51 页</div>
+  <img class="slide" src="pages_chap4/p51.png" alt="p51">
+  <div class="explain">
+    <h3>电路结构（顶部）</h3>
+    <p>4 个 T 触发器串联：</p>
+    <ul>
+      <li>每个 T 触发器的 T 端始终接 1（永远翻转模式）—— 但要看 CLK 端的边沿。</li>
+      <li>第 0 位 T 触发器的 CLK 接外部 CLK。</li>
+      <li>第 1 位 T 触发器的 CLK 接 <b>Q0</b>（注意：教材这里"Q̄0 也行"，看的是下降沿/上升沿设定，但本图用 Q0 输出当下一位 CLK，要配合下降沿触发器）。</li>
+      <li>依次类推：Q1 当 Q2 的 CLK，Q2 当 Q3 的 CLK。</li>
+    </ul>
+    <p>因此每一级触发器的"时钟"来自下一级低位的输出 —— <b>低位每翻转一次（具体：1→0 那个边沿）就把高位踢一下</b>。这就是"行波"。</p>
+
+    <div class="flow">
+      <p><b>看波形跑一遍</b>（假设初始 Q3Q2Q1Q0 = 0000）</p>
+      <p><b>第 1 个 CLK ↑</b>：Q0 (永远翻) → 1→0 不，初始是 0 → Q0 翻到 1。Q1/Q2/Q3 的 CLK 来自下游 Q，没有 1→0 边沿 → 保持 0。结果 = 0001。</p>
+      <p><b>第 2 个 CLK ↑</b>：Q0 翻到 0（出现 1→0 边沿，踢 Q1）。Q1 翻到 1。Q2/Q3 不动。结果 = 0010。</p>
+      <p><b>第 3 个 CLK ↑</b>：Q0 翻到 1（0→1 边沿，不踢）。Q1 不动。结果 = 0011。</p>
+      <p><b>第 4 个 CLK ↑</b>：Q0 翻到 0（踢 Q1）→ Q1 也翻到 0（踢 Q2）→ Q2 翻到 1。结果 = 0100。<u>注意这次连续两次"翻转 + 踢下一级"，整个过程经过了 3 个 t_TQ 才稳定到 0100。</u></p>
+      <p>波形图最下面的紫色双向箭头标注的就是这种"<b>多级翻转累积延迟</b>"。</p>
+    </div>
+
+    <h3>关键结论（页底红框）</h3>
+    <ul>
+      <li>"Q_{i+1} 总是在 Q_i 由 1 变 0 时开始改变状态" —— 这就是行波的本质。</li>
+      <li>"第 n 位状态变换最长要经过 n × t_TQ 的延迟" —— 4 位计数器最坏要 4 个 t_TQ。位数多了就吃不消，所以行波计数器很少用于 8 位以上。</li>
+    </ul>
+    <div class="warn">行波计数器的"中间状态"是<b>毛刺百出</b>的（4→5 过程中可能短暂经过 0010、0000 才稳定到 0100）。直接拿它的输出去触发别的电路会出问题。所以严肃设计都用同步计数器（下一页）。</div>
+  </div>
+</section>
+
+<section class="page" id="p52">
+  <h2>4.1 异步行波 · 完整状态转换过程</h2>
+  <div class="pgnum">PDF 第 52 页</div>
+  <img class="slide" src="pages_chap4/p52.png" alt="p52">
+  <div class="explain">
+    <h3>16 个状态轮换</h3>
+    <pre>0000 → 0001 → 0010 → 0011 → 0100 → 0101 → 0110 → 0111
+   → 1000 → 1001 → ... → 1111 → (回到) 0000</pre>
+    <p>每个 CLK 一拍。1111 之后再来一个 CLK，Q0 1→0 踢 Q1，Q1 1→0 踢 Q2，Q2 1→0 踢 Q3，Q3 1→0 输出（这就是"溢出/进位完成"信号，可以拿去做更大计数器的输入）。最终回到 0000。</p>
+
+    <h3>幻灯片右上角红框警告</h3>
+    <p>"当编码为 1111 时下个时钟到达后，经过 n·t_TQ 延时又回到 0000"。<b>这段延迟期间整个电路的输出是不稳定的</b>。如果某个高频系统抢在延迟期间读取了 Q3Q2Q1Q0，可能读到 1110、1100、1000 等中间状态 —— 全是错的。</p>
+
+    <div class="flow">
+      <p><b>详细走第 4 个 CLK 那一刻（0011 → 0100）—— 教材列了 4 行解释</b></p>
+      <p><b>① 第 1 个 CLK：</b>最低位 Q0：0→1（其他位的 CLK 来自下游，0→1 不触发，因此其他位不变）→ 编码 0001。</p>
+      <p><b>② 第 2 个 CLK：</b>Q0：1→0，产生下降沿喂给 Q1；Q1：0→1。其他位不变。Q1 的 0→1 不触发 Q2。结果 = 0010。</p>
+      <p><b>③ 第 3 个 CLK：</b>Q0：0→1，0→1 不踢 Q1。其他位不变。结果 = 0011。</p>
+      <p><b>④ 第 4 个 CLK：</b>Q0：1→0（踢 Q1）→ Q1：1→0（踢 Q2）→ Q2：0→1。Q3 没动。结果 = 0100。<b>这一拍内有 3 级翻转，累计延迟 3·t_TQ</b>。</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="p53">
+  <h2>4.1 同步并行加法计数器 · 电路结构</h2>
+  <div class="pgnum">PDF 第 53 页</div>
+  <img class="slide" src="pages_chap4/p53.png" alt="p53">
+  <div class="explain">
+    <h3>关键差别：所有触发器共用同一根 CLK</h3>
+    <p>这是"同步"的核心。每位的"该不该翻转"<u>不再靠下游 CLK 踢</u>，而是通过 AND 门预先算好，然后让带使能端的 T 触发器在 CLK 边沿到达时决定动或不动。</p>
+
+    <h3>电路逐位分析</h3>
+    <ul>
+      <li><b>Q0（最低位）</b>：T 触发器 En 直接接 CntEN（计数使能）。每个 CLK 都翻。</li>
+      <li><b>Q1</b>：En = CntEN · Q0。意思是"使能开着且 Q0=1"时才允许 Q1 翻转。</li>
+      <li><b>Q2</b>：En = CntEN · Q0 · Q1。所有低位都为 1 才翻。</li>
+      <li><b>Q3</b>：En = CntEN · Q0 · Q1 · Q2。</li>
+    </ul>
+    <p>这些 AND 门同时算出所有 En 信号，触发器同步响应 CLK ↑。</p>
+
+    <div class="flow">
+      <p><b>跑 0011 → 0100 这一拍（关键，对比 p52 看延迟差异）</b></p>
+      <p>CLK ↑ 前一刻 Q3Q2Q1Q0=0011，CntEN=1：</p>
+      <ul>
+        <li>Q0 的 En = 1 → Q0 准备翻转 (1→0)。</li>
+        <li>Q1 的 En = 1·Q0 = 1·1 = 1 → Q1 准备翻转 (1→0)。</li>
+        <li>Q2 的 En = 1·Q0·Q1 = 1·1·1 = 1 → Q2 准备翻转 (0→1)。</li>
+        <li>Q3 的 En = 1·Q0·Q1·Q2 = 1·1·1·0 = 0 → Q3 不翻。</li>
+      </ul>
+      <p>所有 En 在 CLK ↑ 之前 t_setup 时间就已经算好稳定。CLK ↑ 到来 → 所有触发器<b>同时</b>动：Q3Q2Q1Q0 一拍内整齐切到 0100。</p>
+      <p><b>总延迟仅 1 个 AND 门 + 1 个 t_TQ</b>。相比异步 4·t_TQ，速度提升数倍。</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="p54">
+  <h2>4.1 同步并行 · 延迟优势</h2>
+  <div class="pgnum">PDF 第 54 页</div>
+  <img class="slide" src="pages_chap4/p54.png" alt="p54">
+  <div class="explain">
+    <h3>红框结论</h3>
+    <p>"当编码为 1111 时，只要经过一个 AND 门 + t_TQ 延时就可回到 0000，比行波（串行）加法计数器快得多！"</p>
+
+    <h3>状态转换序列一致</h3>
+    <p>0000 → 0001 → ... → 1111 → 0000，与异步行波完全一样（因为是同一个计数语义）。区别只在<b>切换时刻的物理细节</b>：</p>
+    <table class="tbl">
+      <tr><th></th><th>异步行波</th><th>同步并行</th></tr>
+      <tr><td>所有位的"翻转判断"</td><td class="l">靠下游 CLK 踢，串行触发</td><td class="l">AND 门并行算好</td></tr>
+      <tr><td>最坏延迟</td><td>n × t_TQ</td><td>≈ 1 × t_AND + t_TQ</td></tr>
+      <tr><td>中间毛刺</td><td>有，输出多瞬变</td><td>无，所有位同步切换</td></tr>
+      <tr><td>电路面积</td><td>小，无 AND</td><td>多 n-1 个 AND 门</td></tr>
+      <tr><td>用途</td><td>简单分频、教学</td><td>实际工程主流</td></tr>
+    </table>
+
+    <div class="tip">这种"面积 vs 速度"的权衡是数字电路设计的永恒主题。FPGA 工具综合时也会自动做类似选择。</div>
+  </div>
+</section>
+
+<section class="page" id="p55">
+  <h2>4.1 二进制异步行波减法计数器</h2>
+  <div class="pgnum">PDF 第 55 页</div>
+  <img class="slide" src="pages_chap4/p55.png" alt="p55">
+  <div class="explain">
+    <h3>结构改动：用 D 触发器 + Q̄ 反馈</h3>
+    <p>看图：4 个上升沿 D 触发器。每个 D 触发器把自己的 Q̄ 接回 D（这种接法等价于 T=1 的 T 触发器，每拍 Q 翻转）。CLK 链：第 0 位接外部 CLK；第 1 位的 CLK 接 <b>Q̄0</b>（上一位的反相输出）。依此类推。</p>
+
+    <h3>为什么改"减"</h3>
+    <p>关键差别：高位 CLK 不再接 Q_i 而是接 Q̄_i。这样 Q_i 0→1 时 Q̄_i 1→0（不触发上升沿），Q_i 1→0 时 Q̄_i 0→1（触发上升沿，踢高位翻转）。这正好和加法相反。</p>
+
+    <div class="flow">
+      <p><b>初始 Clear → 0000。开始一拍一拍跑（CLK ↑）</b></p>
+      <p>第 1 拍：Q0 翻到 1。Q̄0：1→0，不踢 Q1。结果 = 0001。<u>等等，这是加法吧？</u></p>
+      <p>嗯不对，让我重新看图：图里 D 触发器的 D 端接 Q̄，所以 Q* = Q̄，即每个 CLK 翻转。但 CLK 链从图上看是 Q0（不是 Q̄0）作为 Q1 的 CLK 端 —— 但触发器是<b>上升沿触发</b>。</p>
+      <p>所以：Q0 0→1 时，Q1 看到上升沿 → 翻转。这种连接下计数序列其实是：</p>
+      <pre>0000 → 0001(Q0翻) → 0010+0001 同时? ...</pre>
+      <p>看页底教材给的"状态转换序列"：<code>0000 → 1111 → 1110 → 1101 → 1100 → 1011 → ... → 0001 → 0000</code>。</p>
+      <p><b>所以教材在第一拍就直接跳到 1111，这是因为初始 0000 接 Clear 后，第一个 CLK 上升沿到来时：</b></p>
+      <ul>
+        <li>Q0 翻：0→1。这同时让所有上游 D（=Q̄）翻：Q1 的 CLK 是 Q0 的上升沿 → Q1 也 0→1。Q2 的 CLK 是 Q1 上升沿 → 0→1。Q3 同。</li>
+        <li>所有位都被"传染"翻转 → 0000 → 1111。一步到位。</li>
+      </ul>
+      <p>第 2 拍：Q0 1→0（下降沿，不触发 Q1）。Q1/Q2/Q3 不变。结果 = 1110。</p>
+      <p>第 3 拍：Q0 0→1（触发 Q1）→ Q1 1→0（下降沿，不触发 Q2）。结果 = 1101。</p>
+      <p>……依此 1100, 1011, 1010, 1001, 1000, 0111, ... 0001, 0000，正好倒着数。</p>
+    </div>
+    <p><b>核心机制：</b>加法用 Q 输出做 CLK 链，减法用 Q̄（即换成下降沿触发）。把图中第二根线从 Q 改 Q̄ 就行，结构几乎一样。</p>
+  </div>
+</section>
+
+<section class="page bg" id="bgt3">
+  <h2>CPU 内的寄存器 — 你将来在 chap6 会反复看到</h2>
+  <div class="pgnum">补充背景 · 进入 p56 前</div>
+  <div class="explain">
+    <h3>什么是寄存器</h3>
+    <p>"暂存信息的逻辑部件"——N 位寄存器就是 N 个并联的 D 触发器，共用一根 CLK 和一根 WE（写使能）。一根线进 N 位数据，一根线出 N 位数据。</p>
+
+    <h3>CPU 里你会遇到的几个常驻寄存器</h3>
+    <table class="tbl">
+      <tr><th>名字</th><th>位数</th><th>作用</th></tr>
+      <tr><td>PC (Program Counter)</td><td>32</td><td class="l">指向下一条要执行的指令地址</td></tr>
+      <tr><td>IR (Instruction Register)</td><td>32</td><td class="l">缓存当前正在执行的指令</td></tr>
+      <tr><td>MAR (Memory Address Register)</td><td>32</td><td class="l">送到主存总线的地址</td></tr>
+      <tr><td>MDR (Memory Data Register)</td><td>32</td><td class="l">和主存交换的数据</td></tr>
+      <tr><td>FLAG / Status</td><td>n</td><td class="l">算出来的零标志、进位标志等</td></tr>
+      <tr><td>GPRs (寄存器堆)</td><td>32×32</td><td class="l">通用寄存器组（如 RISC-V 的 x0–x31）</td></tr>
+    </table>
+
+    <h3>寄存器 vs 寄存器堆</h3>
+    <ul>
+      <li><b>独立寄存器</b>：每个有专门用途（PC、IR 等），单独控制。</li>
+      <li><b>寄存器堆 (Register File)</b>：一组按编号访问的寄存器，CPU 用三根线选地址（RA、RB 读端口编号；RW 写端口编号）。一条 ALU 指令 <code>add x3, x1, x2</code> 就是"从 RF[1] 读、从 RF[2] 读、ALU 算、结果写到 RF[3]"。</li>
+    </ul>
+
+    <h3>p56–p60 主线</h3>
+    <p>先看一张完整 CPU 数据通路图（p56），把寄存器全标出来；再看 N 位寄存器内部（p57）；最后聚焦寄存器堆，把端口（p59）和内部结构（p60）拆开讲。<b>这五页是 chap6 的预热，吃透对后续课程帮助极大</b>。</p>
+  </div>
+</section>
+
+<section class="page" id="p56">
+  <h2>4.2 寄存器在 CPU 中的位置</h2>
+  <div class="pgnum">PDF 第 56 页</div>
+  <img class="slide" src="pages_chap4/p56.png" alt="p56">
+  <div class="explain">
+    <h3>这张图你将来会看上百遍</h3>
+    <p>左边的 CPU 框里几个粉色方块全部是寄存器：</p>
+    <ul>
+      <li><b>GPRs（左上的 0/1/2/3 那一列）</b>：通用寄存器堆，存程序中的临时变量。</li>
+      <li><b>IR（OP + addr）</b>：指令寄存器，存当前指令的操作码和地址字段。</li>
+      <li><b>MDR</b>：存储器数据寄存器，CPU 和主存之间的"中转货架"。</li>
+      <li><b>MAR</b>：存储器地址寄存器，送给主存的地址。</li>
+      <li><b>PC</b>：程序计数器。</li>
+      <li><b>标志寄存器</b>：存运算后的零/进位/溢出等状态位。</li>
+    </ul>
+
+    <h3>右边的"存储器"块是主存</h3>
+    <p>编号 0–15 的格子代表内存单元。CPU 通过 MAR 给出地址、通过 MDR 交换数据。控制器发出读写信号。</p>
+
+    <div class="flow">
+      <p><b>跑一条 "从内存读数据"指令的简化流程（预告 chap6）</b></p>
+      <p>① 控制器把 PC 的值送到 MAR（MAR ← PC）。这一拍 MAR 这个寄存器被写。</p>
+      <p>② 主存收到 MAR 的地址，把数据送到数据总线 → MDR ← bus。MDR 寄存器被写。</p>
+      <p>③ 控制器把 MDR 的值送到 IR（IR ← MDR）。</p>
+      <p>④ IR.OP 进入控制器，决定下一拍 ALU 做什么。</p>
+      <p>每一拍都是某一个寄存器的"<b>写使能拉高 + 等 CLK ↑ → 锁存新值</b>"。这就是寄存器在 CPU 里的实际工作方式。</p>
+    </div>
+    <p>本讲不展开微指令，但<b>你必须意识到 CPU 的本质就是"在每个时钟周期里把某些寄存器更新成新值"</b>。第三讲的同步时序设计法到这里就开始有了现实意义。</p>
+  </div>
+</section>
+
+<section class="page" id="p57">
+  <h2>4.2 N 位寄存器结构 + 三态门总线</h2>
+  <div class="pgnum">PDF 第 57 页</div>
+  <img class="slide" src="pages_chap4/p57.png" alt="p57">
+  <div class="explain">
+    <h3>顶部：N 位寄存器内部</h3>
+    <p>就是 N 个 D 触发器并联：</p>
+    <ul>
+      <li>共用一根 CLK。</li>
+      <li>每个触发器的 D 端是输入位 D_i；输出是 Q_i。</li>
+      <li>整体上：N 位输入 D[n-1:0]，N 位输出 Q[n-1:0]，一根 CLK。</li>
+    </ul>
+    <p>右上角的符号 <code>n 位寄存器</code> 就是抽象后的方框 —— N 位线打成一根"粗线"，端口标 /n。后面所有数字逻辑图都会用这种简化画法。</p>
+
+    <h3>底部：多个寄存器挂同一根总线</h3>
+    <p>CPU 内部要在多个寄存器之间传数据，常见做法是<b>用总线 + 三态门</b>：</p>
+    <ul>
+      <li><b>三态门</b>（图中三角形符号）有三种状态：输出 0、输出 1、<b>高阻态 Z（输出和总线断开）</b>。</li>
+      <li>每个寄存器的输出通过一个三态门挂上总线。三态门的使能信号 R_iout 控制"是否把该寄存器的数据送到总线"。</li>
+      <li>红字提醒："任何时刻至多只能一个 Rout 有效" —— 同时多个寄存器抢总线会冲突、烧门。</li>
+    </ul>
+
+    <div class="flow">
+      <p><b>R1 → R3 数据传输的完整时序</b></p>
+      <p>① 控制器拉高 R1out → R1 的内容送上总线（其它寄存器三态门高阻，不干扰）。</p>
+      <p>② 控制器拉高 R3 的写使能 WE3，CLK ↑ 来一个 → R3 从总线锁存数据。</p>
+      <p>③ 同一拍 R1out 拉低 → 总线释放。</p>
+      <p>整个动作在一个时钟周期内完成。CPU 的数据通路设计大量使用这种"三态门 + 总线"结构。</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="p58">
+  <h2>4.2 寄存器堆（Register File / GPRs）定位</h2>
+  <div class="pgnum">PDF 第 58 页</div>
+  <img class="slide" src="pages_chap4/p58.png" alt="p58">
+  <div class="explain">
+    <h3>RF 是什么</h3>
+    <p>CPU 内部一组按"编号"访问的寄存器，统称<b>通用寄存器组 (GPRs)</b>。RISC-V 有 x0–x31（32 个 32 位寄存器）；MIPS 同；x86 历史包袱多一些。</p>
+
+    <h3>访问接口</h3>
+    <p>RF 给 CPU 暴露三个端口：</p>
+    <ul>
+      <li><b>读端口 1</b>：输入 RA（读哪个寄存器的编号），输出该寄存器的数据。</li>
+      <li><b>读端口 2</b>：输入 RB，输出对应数据。</li>
+      <li><b>写端口</b>：输入 RW（要写哪个）+ 数据 + 写使能 WE。</li>
+    </ul>
+
+    <h3>为什么要两个读端口</h3>
+    <p>一条典型 ALU 指令 <code>add rd, rs1, rs2</code> 需要同时读出两个源操作数。如果只有 1 个读端口，得分两拍读完 —— 慢一半。所以现代 CPU 的 RF 至少有 2 读 + 1 写（超标量 CPU 甚至 4 读 2 写）。</p>
+
+    <div class="note">看左图，GPRs 框里画了 0,1,2,3 四个寄存器（图示意，实际 32 个）。下面两根线 A 和 B 通到 ALU 的两个输入端 —— 这正是双读端口的物理体现。</div>
+  </div>
+</section>
+
+<section class="page" id="p59">
+  <h2>4.2 寄存器堆端口详解</h2>
+  <div class="pgnum">PDF 第 59 页</div>
+  <img class="slide" src="pages_chap4/p59.png" alt="p59">
+  <div class="explain">
+    <h3>方框图右侧的端口</h3>
+    <p>设 RF 有 2^k 个寄存器，每个 n 位：</p>
+    <table class="tbl">
+      <tr><th>端口</th><th>位宽</th><th>方向</th><th>作用</th></tr>
+      <tr><td>RA</td><td>k</td><td>输入</td><td>读端口 1 的寄存器编号</td></tr>
+      <tr><td>busA</td><td>n</td><td>输出</td><td>读端口 1 的数据输出</td></tr>
+      <tr><td>RB</td><td>k</td><td>输入</td><td>读端口 2 的寄存器编号</td></tr>
+      <tr><td>busB</td><td>n</td><td>输出</td><td>读端口 2 的数据输出</td></tr>
+      <tr><td>RW</td><td>k</td><td>输入</td><td>写端口的寄存器编号</td></tr>
+      <tr><td>busW</td><td>n</td><td>输入</td><td>写端口的数据输入</td></tr>
+      <tr><td>WE</td><td>1</td><td>输入</td><td>写使能</td></tr>
+      <tr><td>Clk</td><td>1</td><td>输入</td><td>时钟</td></tr>
+    </table>
+
+    <h3>读 vs 写的本质区别</h3>
+    <ul>
+      <li><b>读操作 = 组合逻辑</b>：RA 一变，busA 立即变（经过译码 + MUX 的延迟）。<u>不依赖 CLK</u>。</li>
+      <li><b>写操作 = 时序逻辑</b>：busW 上的数据要在 CLK 上升沿到来时才<u>写入</u> RW 指定的寄存器，且必须 WE=1。</li>
+    </ul>
+    <p>这就是 RF 在时序结构上"半边时序半边组合"的特点。后面 p60 会从内部结构看清原理。</p>
+  </div>
+</section>
+
+<section class="page" id="p60">
+  <h2>4.2 寄存器堆内部结构</h2>
+  <div class="pgnum">PDF 第 60 页</div>
+  <img class="slide" src="pages_chap4/p60.png" alt="p60">
+  <div class="explain">
+    <h3>结构三大块</h3>
+    <p>这张图最关键，一定要看清三部分：</p>
+    <ol>
+      <li><b>左边 地址译码器</b>：输入 RW（5 位），输出 32 根独热线（只有编号匹配的那根是 1）。译码器之前学过（组合逻辑）。</li>
+      <li><b>中间 32 个寄存器</b>：每个是 32 位 D 触发器组。每根独热线接到对应寄存器的"AND 门启用"上 —— 见图中红色小圆圈：地址匹配 ∧ WE ∧ CLK 才能写入。</li>
+      <li><b>右边两个 32 选 1 MUX</b>：分别由 RA 和 RB 控制选哪个寄存器的输出送到 busA / busB。</li>
+    </ol>
+
+    <div class="flow">
+      <p><b>跑一条 <code>add x3, x1, x2</code> 指令的 RF 部分</b></p>
+      <p><b>读阶段（组合电路，无需 CLK ↑）</b>：</p>
+      <ul>
+        <li>① RA=00001（编号 1）→ 右上 MUX 选第 1 个寄存器的输出 → busA = R1 的值（瞬间出现）。</li>
+        <li>② RB=00010 → 右下 MUX 选第 2 个 → busB = R2 的值。</li>
+        <li>③ busA 和 busB 同时送到 ALU 的两个输入端，ALU 算出结果。</li>
+      </ul>
+      <p>这三步是<b>组合电路</b>，从 RA/RB 输入到 busA/busB 稳定输出只经过"译码 + MUX" 的延迟，<u>不需要时钟边沿</u>。所以这条指令的 ALU 计算可以在当前周期完成。</p>
+
+      <p><b>写阶段（时序电路，依赖 CLK ↑）</b>：</p>
+      <ul>
+        <li>④ ALU 算出 R1+R2 的结果，送到 busW。</li>
+        <li>⑤ RW=00011（编号 3）→ 地址译码器输出"第 3 根线 = 1"，其他 31 根 = 0。</li>
+        <li>⑥ WE=1（写使能）。</li>
+        <li>⑦ CLK ↑ 到来 → 只有"第 3 根独热线 ∧ WE ∧ CLK ↑"全部满足的寄存器（即 R3）会从 busW 锁存新值。其他 31 个寄存器的 AND 门都被独热线的 0 卡住，触发器看不到有效的 D 输入 → 不变。</li>
+      </ul>
+      <p><b>整条指令的 RF 部分一拍完成：读读读 → 算 → 写。这就是 single-cycle CPU 的基础。</b></p>
+    </div>
+
+    <div class="note">注意红字提示："写数据时，只要保证时钟信号 clk 到来前，地址 RW、数据 busW 和写使能 WE 信号都已稳定一个 setup time 以上即可" —— 这正是第三讲讲的<b>建立时间约束</b>在 RF 上的体现。</div>
+  </div>
+</section>
+
+<section class="page bg" id="bgt4">
+  <h2>移位寄存器有什么用 — 不是"为了移而移"</h2>
+  <div class="pgnum">补充背景 · 进入 p61 前</div>
+  <div class="explain">
+    <h3>三类典型应用</h3>
+    <ol>
+      <li><b>串行/并行转换</b>：CPU 内部数据是并行的（32 位一起走），但通信接口（UART、SPI、USB）是串行的（一根线一位一位发）。<b>移位寄存器是两者之间的桥</b>：并行装入 → 每个时钟移出一位（变串行）；反过来串行进入 → 攒满 N 拍 → 并行读出。</li>
+      <li><b>乘法/除法</b>：二进制 <code>x &lt;&lt; 1</code> = x×2；<code>x &gt;&gt; 1</code> = x÷2（无符号）。乘法器、除法器内部反复用到移位。</li>
+      <li><b>CRC、LFSR</b>：循环冗余校验、伪随机数生成器，都基于带反馈的移位寄存器结构。</li>
+    </ol>
+
+    <h3>移位 vs 计数器对比</h3>
+    <table class="tbl">
+      <tr><th></th><th>计数器</th><th>移位寄存器</th></tr>
+      <tr><td>每拍的变化</td><td>+1 或 -1</td><td>整体左移/右移一位</td></tr>
+      <tr><td>触发器之间</td><td>逻辑（AND/Carry）相连</td><td>直接 Q→D 串联</td></tr>
+      <tr><td>用途</td><td>计数、分频、PC</td><td>串并转换、移位运算</td></tr>
+    </table>
+
+    <h3>本节学习路径</h3>
+    <ul>
+      <li>p61：最朴素的"4 个 D 触发器串成右移"。</li>
+      <li>p62：商用 74X194 通用移位寄存器的功能（保持/左移/右移/载入 4 模式）。</li>
+      <li>p63-64：揭开 74X194 内部 —— 每位前面塞一个 4 选 1 MUX。</li>
+      <li>p65：桶形移位寄存器（barrel shifter）—— 一拍内移任意位数，但<b>它其实是组合电路</b>，不是时序！</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="p61">
+  <h2>4.3 串入串出右移寄存器 · 4 个 D 触发器串联</h2>
+  <div class="pgnum">PDF 第 61 页</div>
+  <img class="slide" src="pages_chap4/p61.png" alt="p61">
+  <div class="explain">
+    <h3>电路结构</h3>
+    <p>4 个 D 触发器从左到右排列：</p>
+    <ul>
+      <li>最左边触发器的 D 接外部输入 X（串行输入）。</li>
+      <li>第二个触发器的 D 接第一个的 Q（即 Q3 接到第二个的 D）。</li>
+      <li>依此类推：Q3 → D2，Q2 → D1，Q1 → D0。</li>
+      <li>所有触发器共用 CLK。</li>
+    </ul>
+    <p>注意图中触发器是从左到右编号 Q3、Q2、Q1、Q0（即左边是高位）。<b>每个 CLK ↑ 把每个触发器存的值"传给右边的邻居"，左边空出来由 X 填补</b>。这就是右移。</p>
+
+    <div class="flow">
+      <p><b>跑一遍：初始 Q3Q2Q1Q0 = 0000，X 序列 = 1,0,0,1,1,0,1,1（从左向右进入，每拍一位）</b></p>
+      <p><b>CLK ↑ 1 (X=1)</b>：左边触发器吃 X=1 → Q3=1。其它触发器吃左边邻居的<u>上一拍</u>值（都是 0）→ Q2Q1Q0=000。结果 = <b>1000</b>。</p>
+      <p><b>CLK ↑ 2 (X=0)</b>：Q3 ← X=0；Q2 ← 上一拍的 Q3=1；Q1 ← 上一拍的 Q2=0；Q0 ← 上一拍的 Q1=0。结果 = <b>0100</b>。<u>原来的 1 被推到了右边。</u></p>
+      <p><b>CLK ↑ 3 (X=0)</b>：Q3=0, Q2=0(原Q3), Q1=1(原Q2), Q0=0(原Q1)。结果 = <b>0010</b>。</p>
+      <p><b>CLK ↑ 4 (X=1)</b>：Q3=1, Q2=0, Q1=0, Q0=1。结果 = <b>1001</b>。</p>
+      <p><b>CLK ↑ 5 (X=1)</b>：结果 = <b>1100</b>。<u>注意：第 1 拍进来的 1 已经被推到 Q0，第 5 拍 CLK ↑ 后会"掉出"右端 —— 这就是"串行输出"。</u></p>
+      <p>继续：<b>0110, 1011, 1101</b>（对应教材给的序列）。</p>
+    </div>
+
+    <h3>串行输出</h3>
+    <p>Q0 就是"串行输出端" —— 进来的位经过 4 拍后从这里出去。如果只接 Q0 当输出端、不管 Q3Q2Q1，就是一个"<b>4 拍延迟器</b>"。这种结构在数字滤波器、通信协议里频繁出现。</p>
+
+    <h3>串入并出</h3>
+    <p>如果同时把 Q3Q2Q1Q0 引出当并行输出端，移位 4 拍后并行读 → 就是<b>串入并出 (SIPO)</b>，UART 接收器就是这种。</p>
+  </div>
+</section>
+
+<section class="page" id="p62">
+  <h2>4.3 74X194 · 4 位通用移位寄存器</h2>
+  <div class="pgnum">PDF 第 62 页</div>
+  <img class="slide" src="pages_chap4/p62.png" alt="p62">
+  <div class="explain">
+    <h3>什么是"通用"</h3>
+    <p>74X194 集成 4 种操作模式于一身：</p>
+    <table class="tbl">
+      <tr><th>S1</th><th>S0</th><th>功能</th><th>说明</th></tr>
+      <tr><td>0</td><td>0</td><td>Hold 保持</td><td>所有 Q 不变，CLK ↑ 也不动</td></tr>
+      <tr><td>0</td><td>1</td><td>Shift right 右移</td><td>QA ← RIN, QB ← QA, QC ← QB, QD ← QC</td></tr>
+      <tr><td>1</td><td>0</td><td>Shift left 左移</td><td>QD ← LIN, QC ← QD, QB ← QC, QA ← QB</td></tr>
+      <tr><td>1</td><td>1</td><td>Load 载入</td><td>QA ← A, QB ← B, QC ← C, QD ← D（并行装入）</td></tr>
+    </table>
+    <p>另外 CLR=1 时无条件清零（一般是异步清零，开机用）。</p>
+
+    <h3>引脚说明</h3>
+    <ul>
+      <li><b>CLK</b>：时钟。</li>
+      <li><b>S1, S0</b>：模式选择（看上表）。</li>
+      <li><b>RIN / LIN</b>：串行输入端口（右移时从 RIN 进来；左移时从 LIN 进来）。</li>
+      <li><b>A,B,C,D</b>：并行装入端口。</li>
+      <li><b>QA,QB,QC,QD</b>：四位输出。</li>
+    </ul>
+
+    <div class="note">左移/右移的命名容易绕：教材定义 "右移 = 从 QA 移到 QD 向上"，"左移 = 从 QD 移到 QA 向下" —— 看图中蓝色箭头。这种命名是基于触发器在芯片版图上的物理位置，不一定符合数学上的"低位到高位"。期末考试看清楚题目给的定义。</div>
+  </div>
+</section>
+
+<section class="page" id="p63">
+  <h2>4.3 74X194 · 内部结构图</h2>
+  <div class="pgnum">PDF 第 63 页</div>
+  <img class="slide" src="pages_chap4/p63.png" alt="p63">
+  <div class="explain">
+    <h3>每位前面塞了一个 4 选 1 MUX</h3>
+    <p>这张图密度大，但本质就一句话：<b>每个 D 触发器的 D 端接一个 4 选 1 MUX，由 S1S0 选择"该写什么进来"</b>。看右侧从上到下四个触发器，每个前面都有四根候选输入线（标 10/00/11/01）：</p>
+    <table class="tbl">
+      <tr><th>S1S0</th><th>选哪条</th><th>语义</th></tr>
+      <tr><td>00</td><td>当前 Q（自反馈）</td><td>保持</td></tr>
+      <tr><td>01</td><td>左边邻居的 Q</td><td>右移</td></tr>
+      <tr><td>10</td><td>右边邻居的 Q</td><td>左移</td></tr>
+      <tr><td>11</td><td>并行装入 D 输入</td><td>载入</td></tr>
+    </table>
+
+    <h3>关键观察：QB 这根线（图中蓝色箭头）</h3>
+    <p>QB（第二位的 Q 输出）被引到三个地方：</p>
+    <ul>
+      <li>QA 的 MUX 的"右移输入" —— 因为 QA 右移时要吃左邻居 QB 的值。<i>等等，这取决于编号顺序，看下面 p64 详解。</i></li>
+      <li>QC 的 MUX 的"左移输入"。</li>
+      <li>QB 自己的 MUX 的"保持输入"（自反馈）。</li>
+    </ul>
+    <p>这就是为什么"每个 Q 输出都要扇出三根线"。整个芯片的连接看起来复杂，但每位的逻辑都长一个样。</p>
+
+    <div class="tip">看密集电路图的诀窍：<b>只看一位的 MUX 结构搞懂语义，其他三位完全对称复制</b>。不要试图同时看四位。</div>
+  </div>
+</section>
+
+<section class="page" id="p64">
+  <h2>4.3 74X194 · 单位 MUX 方程</h2>
+  <div class="pgnum">PDF 第 64 页</div>
+  <img class="slide" src="pages_chap4/p64.png" alt="p64">
+  <div class="explain">
+    <h3>聚焦一位 (取 QC 为代表) 的 MUX 内部</h3>
+    <p>从图上四个 AND 门 + 一个 OR 门可以读出：</p>
+    <div class="formula">D_i = S̄1·S̄0·Q_i + S̄1·S0·Q_{i-1} + S1·S̄0·Q_{i+1} + S1·S0·IN_i</div>
+
+    <h3>四项分别对应四种模式</h3>
+    <table class="tbl">
+      <tr><th>项</th><th>S1S0</th><th>启用时 D_i 等于</th><th>语义</th></tr>
+      <tr><td>S̄1·S̄0·Q_i</td><td>00</td><td>Q_i（自身）</td><td>保持</td></tr>
+      <tr><td>S̄1·S0·Q_{i-1}</td><td>01</td><td>下标小一位的邻居 Q</td><td>右移（书的定义下，向上移）</td></tr>
+      <tr><td>S1·S̄0·Q_{i+1}</td><td>10</td><td>下标大一位的邻居 Q</td><td>左移（向下移）</td></tr>
+      <tr><td>S1·S0·IN_i</td><td>11</td><td>并行输入 IN_i</td><td>载入</td></tr>
+    </table>
+    <p>四个 AND 项中只有一个会被 S1S0 选通"激活"，其它三个被 0 卡住。OR 把激活的那个汇总输出。</p>
+
+    <div class="flow">
+      <p><b>跑一遍：从 0000 起，S1S0=11（载入）→ S1S0=01（右移）→ 观察</b></p>
+      <p>设 ABCD=1011（并行输入端口）。</p>
+      <p><b>第 1 拍</b> S1S0=11，CLK ↑：每位 MUX 选第 4 项 → 每个 Q_i 锁存 IN_i。QAQBQCQD = <b>1011</b>。</p>
+      <p><b>第 2 拍</b> S1S0=01（右移），RIN=0：每位 MUX 选第 2 项 Q_{i-1}。所以 QA ← RIN=0; QB ← 上拍 QA=1; QC ← 上拍 QB=0; QD ← 上拍 QC=1。结果 = <b>0101</b>。</p>
+      <p><b>第 3 拍</b> S1S0=01，RIN=1：QA ← RIN=1; QB ← 0; QC ← 1; QD ← 0。结果 = <b>1010</b>。</p>
+      <p>整个过程一目了然：S1S0 控制模式，CLK 控制何时动。74X194 是数字逻辑里最经典的"小巧通用部件"之一。</p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="p65">
+  <h2>4.3 桶形移位寄存器 (Barrel Shifter)</h2>
+  <div class="pgnum">PDF 第 65 页</div>
+  <img class="slide" src="pages_chap4/p65.png" alt="p65">
+  <div class="explain">
+    <h3>这页提到"桶形移位寄存器"，但<b>本质上它<u>不是</u>时序电路！</b></h3>
+    <p>注意红字："桶形移位寄存器：<b>组合逻辑电路</b>，采用大量多路选择器实现"。它和前面 74X194 完全不同 ——</p>
+    <table class="tbl">
+      <tr><th></th><th>74X194 移位寄存器</th><th>桶形移位寄存器</th></tr>
+      <tr><td>电路类别</td><td>时序（有触发器）</td><td><b>纯组合</b>（无触发器）</td></tr>
+      <tr><td>每拍能移几位</td><td>1 位</td><td>任意位数（一拍内）</td></tr>
+      <tr><td>核心元件</td><td>D 触发器 + MUX</td><td>纯 MUX 阵列</td></tr>
+      <tr><td>用途</td><td>串并转换、数据暂存</td><td>CPU 的 shifter 单元（如 SLL/SRL 指令）</td></tr>
+    </table>
+
+    <h3>电路结构</h3>
+    <p>4 位桶形移位寄存器 = 4 个并联的 4 选 1 MUX。每个 MUX 的 4 个输入分别接到原始数据的不同位置：</p>
+    <ul>
+      <li>Y0 的 MUX 输入：D0、D1、D2、D3（不旋转/旋转 1/2/3 位时 Y0 应取的来源）。</li>
+      <li>Y1 的 MUX 输入：D1、D2、D3、D0（注意顺序）。</li>
+      <li>……</li>
+    </ul>
+    <p>所有 MUX 共用同一对选择线 S1S0（要移几位）。</p>
+
+    <h3>功能表</h3>
+    <table class="tbl">
+      <tr><th>S1S0</th><th>Y3</th><th>Y2</th><th>Y1</th><th>Y0</th><th>操作</th></tr>
+      <tr><td>00</td><td>D3</td><td>D2</td><td>D1</td><td>D0</td><td>No rotation</td></tr>
+      <tr><td>01</td><td>D2</td><td>D1</td><td>D0</td><td>D3</td><td>Rotate 1</td></tr>
+      <tr><td>10</td><td>D1</td><td>D0</td><td>D3</td><td>D2</td><td>Rotate 2</td></tr>
+      <tr><td>11</td><td>D0</td><td>D3</td><td>D2</td><td>D1</td><td>Rotate 3</td></tr>
+    </table>
+
+    <h3>为什么 CPU 需要它</h3>
+    <p>RISC-V 的 <code>SLL rd, rs1, rs2</code>（左移）指令必须在<b>一个时钟周期内</b>完成"把 rs1 左移 rs2 位"。如果用 74X194 那样的串行移位寄存器，移 31 位要 31 个时钟周期 —— 不可接受。所以 ALU 内部专门有一个桶形移位单元，用纯组合电路<b>一拍出结果</b>。代价是 N 位桶形移位器需要 N×log₂N 量级的 MUX。</p>
+
+    <div class="tip">学完这页要建立一个观念：<b>"移位"作为操作既可以是时序也可以是组合</b>。前者用于数据缓冲，后者用于运算。本课的题目和考点都会区分。</div>
+  </div>
+</section>
+
+<section class="page" id="p66">
+  <h2>第 4 章 时序逻辑电路 · 全章总结</h2>
+  <div class="pgnum">PDF 第 66 页 · 跳过</div>
+  <img class="slide" src="pages_chap4/p66.png" alt="p66">
+  <p style="color:var(--mute);">回到章节封面页，再看一遍四讲：① 概述 ② 锁存器和触发器 ③ 同步时序电路设计 ④ 典型部件设计。下面我把整章的认知地图收个尾：</p>
+  <div class="explain">
+    <h3>整章的"认知地图"</h3>
+    <pre>需求层  ：FSM (状态机) ── 第一讲
+   ↓
+设计层  ：同步时序设计六步流水线 ── 第三讲
+   ↓
+元件层  ：D / JK / T 触发器 ── 第二讲
+   ↓
+部件层  ：计数器 / 寄存器堆 / 移位寄存器 ── 第四讲
+   ↓
+系统层  ：CPU 数据通路（第六章会展开）</pre>
+
+    <h3>本章学完你拥有的能力</h3>
+    <ul>
+      <li>能从一句话需求设计一个完整同步时序电路（含状态化简、编码、F/G 推导、电路图、自启动分析、定时分析）。</li>
+      <li>能看懂任何用 D 触发器搭建的电路并跑出它的时序波形。</li>
+      <li>能识别计数器、寄存器、移位寄存器三大典型部件的内部结构和外部接口。</li>
+      <li>明白 CPU 的本质：每个时钟周期更新一组寄存器的值。</li>
+    </ul>
+
+    <h3>下一步</h3>
+    <p>第 5 章 FPGA 与 HDL 会教你用 Verilog 把本章学的东西敲出来跑在板子上。第 6 章 运算方法和运算部件 会用本章的寄存器/计数器去搭加法器、乘除器、ALU。<b>整章的工具是后面所有课程的地基</b>，值得反复回看。</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>

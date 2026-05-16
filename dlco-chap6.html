@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>第6章 第二讲 定点数运算（完整版 p23–57）</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>第二讲 · 定点数运算</h1>
+  <ol>
+    <li><a href="#p23" class="skip">23. 第二讲目录</a></li>
+    <li class="group">A · 加减运算</li>
+    <li><a href="#bgA0" class="bg">补码到底是个啥</a></li>
+    <li><a href="#p24">24. 补码加减原理</a></li>
+    <li><a href="#p25">25. 加减运算器结构</a></li>
+    <li><a href="#bgA1" class="bg">四个标志位 & 溢出</a></li>
+    <li><a href="#p26">26. 减法举例</a></li>
+    <li><a href="#p27">27. C 减法 ↔ 机器码</a></li>
+    <li><a href="#p28">28. C 加法 ↔ 机器码</a></li>
+    <li class="group">B · 原码加减</li>
+    <li><a href="#bgB0" class="bg">为什么浮点尾数用原码</a></li>
+    <li><a href="#p29">29. 原码加减规则</a></li>
+    <li><a href="#p30">30. 原码加减例题</a></li>
+    <li class="group">C · 移码加减</li>
+    <li><a href="#bgC0" class="bg">移码定义复习</a></li>
+    <li><a href="#p31">31. 移码加减公式</a></li>
+    <li><a href="#p32">32. 移码加减例题</a></li>
+    <li class="group">D · 乘法</li>
+    <li><a href="#p33" class="skip">33. 乘法目录</a></li>
+    <li><a href="#bgD0" class="bg">手工乘法 → 二进制乘法</a></li>
+    <li><a href="#p34">34. 无符号乘（手工）</a></li>
+    <li><a href="#p35">35. 三点硬件改进</a></li>
+    <li><a href="#p36">36. 递推公式推导</a></li>
+    <li><a href="#p37">37. 32位乘法硬件</a></li>
+    <li><a href="#p38">38. 数值例子 14×13</a></li>
+    <li><a href="#p39">39. 原码乘 & 两位乘</a></li>
+    <li><a href="#p40">40. 两位乘法例题</a></li>
+    <li><a href="#bgE0" class="bg">补码为啥不能直接乘</a></li>
+    <li><a href="#p41">41. Booth 算法</a></li>
+    <li><a href="#p42">42. 补码真值速查</a></li>
+  
+    <li class="group">D · 补码乘法（续）</li>
+    <li><a href="#bgBooth" class="bg">Booth 算法直观（连续 1 串）</a></li>
+    <li><a href="#p43">43. Booth 算法实质</a></li>
+    <li><a href="#p44">44. Booth 算法举例</a></li>
+    <li><a href="#p45">45. 补码两位乘法（推导）</a></li>
+    <li><a href="#bgTwo" class="bg">两位乘公式推导细讲</a></li>
+    <li><a href="#p46">46. 补码两位乘法举例</a></li>
+    <li class="group">E · 快速乘法器</li>
+    <li><a href="#p47">47. 快速乘法器综述</a></li>
+    <li><a href="#bgFast" class="bg">三种速度策略对比</a></li>
+    <li><a href="#p48">48. 流水线方式</a></li>
+    <li><a href="#p49">49. 阵列乘法器</a></li>
+    <li class="group">F · 整数乘 & 溢出</li>
+    <li><a href="#bgHilo" class="bg">2n 位结果 vs n 位截断</a></li>
+    <li><a href="#p50">50. 整数乘的两种解读</a></li>
+    <li><a href="#p51">51. 溢出判断规则 + 表格</a></li>
+    <li><a href="#p52">52. x² ≥ 0 吗？</a></li>
+    <li><a href="#p53">53. 真实 ISA 中的乘法指令</a></li>
+    <li class="group">G · 思考题</li>
+    <li><a href="#p54">54. 思考题</a></li>
+    <li><a href="#p55">55. 答案 (1)(2)</a></li>
+    <li><a href="#p56">56. 答案 (3)</a></li>
+    <li><a href="#p57">57. 乘法的几个开放问题</a></li>
+  </ol><p style="color:var(--mute);font-size:11px;margin-top:20px;">PDF p23–57 · 10 张补充背景</p></aside>
+
+<main>
+
+<!-- p23 skip -->
+<section class="page" id="p23">
+  <h2>第二讲目录</h2>
+  <div class="pgnum">PDF 第 23 页 · 跳过</div>
+  <p style="color:var(--mute);">第二讲分三大块：<b>定点数加减</b>（补码 / 原码 / 移码）、<b>定点数乘法</b>（原码 / 补码 / 快速乘法器）、<b>定点数除法</b>。本预览覆盖前两块到 Booth 算法。</p>
+</section>
+
+<!-- ============ A0 背景：补码 ============ -->
+<section class="page bg" id="bgA0">
+  <h2>补码到底是个啥</h2>
+  <div class="pgnum">补充背景 · 进入 p24 前必看</div>
+  <div class="explain">
+    <h3>一句话定义</h3>
+    <p>对一个 n 位的补码 <code>[X]补</code>，它**作为无符号数读**出来的值 = <code>2ⁿ + X (mod 2ⁿ)</code>。</p>
+    <ul>
+      <li>X ≥ 0 时：[X]补 就是 X 本身（最高位是 0）。例 4 位：[+5]补 = 0101。</li>
+      <li>X &lt; 0 时：[X]补 = 2ⁿ + X，也就是"在 2ⁿ 的圆盘上倒回去 |X| 步"。例 4 位：[−5]补 = 16−5 = 11 = 1011。</li>
+    </ul>
+
+    <h3>时钟类比（重点）</h3>
+    <p>把 4 位二进制能表示的 16 个数想象成一只钟的 16 个刻度（0000 到 1111，转回来又是 0000）。补码就是约定："上半圈（0000–0111）代表 0 到 +7，下半圈（1000–1111）代表 −8 到 −1"。</p>
+    <p>关键魔法：<b>钟上做减法 = 钟上做加法</b>。比如要算 5 − 3，等价于"顺时针走 5 步、再顺时针走 13 步（=−3 的位置）"，最后落点一样。所以：</p>
+    <div class="note"><b>补码最大的好处</b>：硬件只需要一个加法器，遇到减法就把减数换成它的相反数的补码再加，电路省一半。这就是为什么整个 p24/p25 都在围绕"求 [−B]补"做文章。</div>
+
+    <h3>两个常用公式（背下来）</h3>
+    <ul>
+      <li><b>真值 → 补码</b>：正数原样；负数 = "绝对值原码各位取反，末位加 1"。
+        <br>例：−6 的绝对值 = 0110 → 取反 1001 → +1 = <b>1010</b>。</li>
+      <li><b>补码 → 真值</b>：最高位看作 −2ⁿ⁻¹，其余位还是正权值。
+        <br>例：1010 = −8 + 0 + 2 + 0 = <b>−6</b>。✓</li>
+    </ul>
+
+    <h3>一个永远不会错的小练习</h3>
+    <p>"求 [−B]补" = 把 [B]补 各位取反，末位加 1。例：[6]补 = 0110，<u>各位取反 1001，+1 得 1010</u> = [−6]补。<br>这个动作硬件上是怎么实现的？—— 一排反相器（取反） + 加法器的 Cin 置 1（末位加 1）。下一页的电路图就是这样设计的。</p>
+  </div>
+</section>
+
+<!-- ============ p24 ============ -->
+<section class="page" id="p24">
+  <h2>n 位整数加/减运算器（原理）</h2>
+  <div class="pgnum">PDF 第 24 页</div>
+  <img class="slide" src="pages/p24.png" alt="p24">
+  <div class="explain">
+    <h3>这页在说什么</h3>
+    <p>从一段 C 代码 <code>int x=9, y=−6; z1=x+y; z2=x−y;</code> 出发，问硬件需要造一个什么样的电路。答案是：<b>一个能把两个补码相加（或相减）、并按 mod 2ⁿ 截断的加法器</b>。</p>
+
+    <h3>核心公式推导（PPT 最后两行的细节）</h3>
+    <p>看第一条：<code>[x+y]补 = 2ⁿ + (x+y)</code> 是补码定义。把它拆成 <code>2ⁿ + x + 2ⁿ + y</code> 时多加了一个 2ⁿ，但因为最终模 2ⁿ，多出的 2ⁿ 自动被丢掉。所以：</p>
+    <p class="mono" style="text-align:center;font-size:15px;">[x+y]补 ≡ [x]补 + [y]补  (mod 2ⁿ)</p>
+    <p>第二条 <code>[x−y]补 = [x]补 + [−y]补 (mod 2ⁿ)</code> 同理。</p>
+
+    <div class="tip"><b>大白话翻译</b>：补码相加，结果<b>截掉超出 n 位的部分</b>，就是正确答案的补码。硬件做加法时，CPU 不需要管 x、y 是正是负——直接当无符号 n 位数加，多出的进位扔掉。<u>正负号的"语义"已经被编码进了补码本身</u>。</div>
+
+    <h3>把 9 和 −6 代进去走一遍（4 位）</h3>
+    <p>[9]补 = 不存在！4 位补码范围 −8…+7。所以课本这里实际假设的是更宽位数（比如 5 位）。我们用 5 位演示：</p>
+    <ul>
+      <li>[9]补 = 01001，[−6]补 = 11010。</li>
+      <li>相加：01001 + 11010 = <b>1</b> 00011（最高位的 1 是溢出的进位，扔掉）→ 00011 = +3 ✓ 正是 9 + (−6)。</li>
+    </ul>
+    <p>这就是 z1 = x+y = 3 的硬件过程。z2 = x − y 留到下一页讲。</p>
+  </div>
+</section>
+
+<!-- ============ p25 ============ -->
+<section class="page" id="p25">
+  <h2>加减运算器：电路怎么搭</h2>
+  <div class="pgnum">PDF 第 25 页</div>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+    <h3>右下那张图怎么读</h3>
+    <p>三个关键零件：</p>
+    <ol>
+      <li><b>一排反相器</b>（图中三角形带圈）：把 B 变成 ~B（按位取反）。</li>
+      <li><b>一个 MUX（多路选择器）</b>：根据 Sub 信号选 B 还是 ~B 送进加法器。
+        <ul><li>Sub=0（加法）：选 B 本身。</li>
+        <li>Sub=1（减法）：选 ~B。</li></ul></li>
+      <li><b>n 位加法器</b>（就是第一讲造的那个 CLA）：A + B' + Cin。其中 Cin 也接到 Sub 信号上。</li>
+    </ol>
+
+    <h3>为什么这样接就能做减法</h3>
+    <p>回忆 A0 背景页：<b>[−B]补 = ~[B]补 + 1</b>。把这个公式映射到电路：</p>
+    <ul>
+      <li>"~[B]补" → 反相器一排，得到 B' = ~B。</li>
+      <li>"+1" → 加法器最低位的 <b>Cin 置 1</b>（这就是为啥 Sub 同时驱动 MUX 和 Cin）。</li>
+    </ul>
+    <p>于是减法时，加法器实际算的是 <b>A + ~B + 1 = A + [−B]补 = [A − B]补</b>。一个加法器同时干加法和减法，省了一半电路。</p>
+
+    <h3>四个输出标志位（下一页详讲）</h3>
+    <ul>
+      <li><b>ZF</b> Zero Flag：结果是不是全 0</li>
+      <li><b>SF</b> Sign Flag：结果最高位（= 带符号意义下的"负号"）</li>
+      <li><b>CF</b> Carry Flag：最高位的进位/借位（无符号溢出）</li>
+      <li><b>OF</b> Overflow Flag：带符号溢出</li>
+    </ul>
+    <div class="note">页面左下那句"在加/减运算部件基础上，加上寄存器、移位器、控制逻辑，就可实现 ALU、乘/除、浮点电路"——这是<b>本章后面所有内容的施工总纲</b>。后面看到的所有花活，硬件骨架都是这一张图加点配件。</div>
+  </div>
+</section>
+
+<!-- ============ A1 背景：标志位 ============ -->
+<section class="page bg" id="bgA1">
+  <h2>四个标志位 & 两种溢出</h2>
+  <div class="pgnum">补充背景 · 进入 p26 前必看</div>
+  <div class="explain">
+    <h3>四个标志位 = ALU 算完顺手记的"备忘录"</h3>
+    <table class="tbl">
+      <tr><th>标志</th><th>定义</th><th>啥时候有用</th></tr>
+      <tr><td><b>ZF</b></td><td>结果 = 0 时为 1</td><td>判等：<code>if (a==b)</code> 编译成 <code>sub; jz</code></td></tr>
+      <tr><td><b>SF</b></td><td>结果最高位</td><td>带符号判正负</td></tr>
+      <tr><td><b>CF</b></td><td>最高位往外的进位（减法时表示借位）</td><td><b>无符号</b>溢出判断 / 比大小</td></tr>
+      <tr><td><b>OF</b></td><td>带符号溢出标志</td><td><b>带符号</b>溢出判断</td></tr>
+    </table>
+
+    <h3>关键观念：同样的 01 串，两种解读</h3>
+    <p>比如 4 位的 <code>1010</code>，无符号读 = 10，带符号读 = −6。<b>硬件不知道你想要哪种</b>——它两种标志都算好放着，程序/编译器自己挑用哪个。</p>
+
+    <h3>带符号溢出（OF）怎么判？两条等价规则</h3>
+    <div class="twocol">
+      <div class="note"><b>规则①</b>：最高位的进位 ⊕ 次高位的进位<br>（异或为 1 → 溢出）<br>
+      <i>直觉</i>：正常情况，"算出来的最高位 = 应该有的符号位"，等价于这两个进位相等。</div>
+      <div class="note"><b>规则②</b>：两加数符号相同 且 与结果符号不同<br>
+      <i>直觉</i>：正+正得负、负+负得正，肯定溢出。一正一负永远不会溢出。</div>
+    </div>
+
+    <h3>无符号溢出（CF）怎么判？</h3>
+    <ul>
+      <li><b>加法</b>：最高位有进位 → CF=1，说明结果超出了 n 位无符号范围。</li>
+      <li><b>减法</b>：最高位有借位 → CF=1（也就是<b>差为负</b>，无符号场景下视为溢出）。</li>
+    </ul>
+
+    <h3>用减法做大小比较（很重要的考点）</h3>
+    <table class="tbl">
+      <tr><th>解读方式</th><th>A &gt; B 判据</th></tr>
+      <tr><td>无符号</td><td>A − B 后 CF = 0</td></tr>
+      <tr><td>带符号</td><td>A − B 后 OF = SF（即 OF ⊕ SF = 0）</td></tr>
+    </table>
+    <p>带符号那条想直白：<b>没溢出时 SF 就是真实正负</b>（A&lt;B 则差是负，SF=1）；<b>溢出时 SF 被反转</b>，所以正确的"差是负"判据要把 SF 和 OF 异或一下还原。</p>
+  </div>
+</section>
+
+<!-- ============ p26 ============ -->
+<section class="page" id="p26">
+  <h2>减法举例（看标志位用法）</h2>
+  <div class="pgnum">PDF 第 26 页</div>
+  <img class="slide" src="pages/p26.png" alt="p26">
+  <div class="explain">
+    <h3>左列：4 位带符号减法 −7−6 vs 9−6</h3>
+    <p>注意 4 位带符号范围只有 −8…+7。所以 <b>−7 − 6 = −13 超出范围</b>，必然溢出。看演算：</p>
+    <pre>  -7 = 1001    (带符号)            9 = 1001 (无符号)
++ -6 = 1010    ([-6]补)        + -6 = 1010
+————————————                  ————————————
+ (1)0011  →   结果=+3，错!       (1)0011 → 结果=3，对!</pre>
+    <p><b>同样的 01 算式，无符号下是对的（9−6=3），带符号下是错的（−7−6 应=−13）</b>。这就是 A1 背景页强调的"两套世界"。</p>
+
+    <p>看标志位（左下框）：最高位进位 = 1，次高位进位 = 0，<b>两个进位不同 → OF=1</b>（带符号溢出）。CF=0（无符号没问题）。<br>所以编译器/CPU 的态度是：<b>谁关心带符号谁看 OF，谁关心无符号谁看 CF</b>。</p>
+
+    <h3>右列：−3−5 vs 13−5</h3>
+    <p>类似分析。带符号 −3−5=−8（刚好在 −8…+7 内），不溢出，OF=0，SF=1 表示负。结果 1000 带符号读 = −8 ✓。无符号 13−5=8 也对。</p>
+
+    <h3>页面下半：用减法比大小</h3>
+    <p>这就是 A1 背景页那张表的实战：</p>
+    <ul>
+      <li>无符号：9&gt;6（13&gt;5）→ 减法后 CF=0 ✓</li>
+      <li>带符号：−7&lt;6 → 验证 OF≠SF（OF=1, SF=0）✓；−3&lt;5 → OF=0, SF=1，仍然 OF≠SF ✓</li>
+    </ul>
+    <div class="tip">考试常考"给一段汇编 / 一组数，问跳转到哪里"，本质上就是<b>认对该看 CF 还是 OF/SF</b>。</div>
+  </div>
+</section>
+
+<!-- ============ p27 ============ -->
+<section class="page" id="p27">
+  <h2>C 减法 ↔ 机器码（同一指令，不同解读）</h2>
+  <div class="pgnum">PDF 第 27 页</div>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+    <h3>这页的核心戏</h3>
+    <p>四个变量：<code>unsigned x=134, y=246; int m=134, n=246;</code>（注意 n=246 在 8 位 int 范围外，会被截成 −10，但 m=x 的机器码相同 = 10000110，n=y 同理 = 11110110）。</p>
+    <p>关键事实：<b>x 和 m 的机器位串完全一样</b>（1000 0110），<b>y 和 n 也完全一样</b>（1111 0110）。区别只在<b>编译器告诉 CPU 用哪条减法规则去解读结果标志</b>。</p>
+
+    <h3>算 z1 = x − y（unsigned）和 k1 = m − n（int）</h3>
+    <p>硬件做的事一模一样：<code>1000 0110 − 1111 0110</code>。先把后者转成补码加：[−n]补 = 0000 1010。</p>
+    <pre>  1000 0110
++ 0000 1010
+————————————
+  1001 0000     →   结果机器码 = 1001 0000</pre>
+    <p>CF=1（高位没进位 = 有借位）、OF=0、SF=1。</p>
+    <ul>
+      <li><b>z1 当无符号读</b>：1001 0000 = 144。验算：134 − 246 = −112，在无符号 8 位里"绕回去" = −112 + 256 = <b>144 ✓</b>。CF=1 告诉我们"溢出了 / 差为负"。</li>
+      <li><b>k1 当带符号读</b>：1001 0000 = −112。验算：m − n = 134 − (−10) = ……等下，n 被截成 −10 后 m−n = 144？这里 PPT 的设置是 m=x=134, n=y 直接看作 int 的 1111 0110 = −10？<br>
+      其实更干净的看法：<b>k1 的机器码也是 1001 0000，带符号读 = −112</b>。和 z1 是同一个 01 串、不同语义。</li>
+    </ul>
+
+    <h3>右下两条 result 公式（背下来）</h3>
+    <div class="twocol">
+      <div class="note"><b>无符号减</b>：<br>
+      x−y &gt; 0 → result = x−y<br>
+      x−y &lt; 0 → result = x−y + 2ⁿ （绕回去）</div>
+      <div class="note"><b>带符号减</b>：<br>
+      在 [−2ⁿ⁻¹, 2ⁿ⁻¹) 内 → 正常<br>
+      ≥ 2ⁿ⁻¹ → <b>正溢出</b>，结果 = 真值 − 2ⁿ<br>
+      &lt; −2ⁿ⁻¹ → <b>负溢出</b>，结果 = 真值 + 2ⁿ</div>
+    </div>
+    <p>这两张表就是 ALU 那个加减部件"在 C 语言眼里"到底干了啥的字典。</p>
+  </div>
+</section>
+
+<!-- ============ p28 ============ -->
+<section class="page" id="p28">
+  <h2>C 加法 ↔ 机器码</h2>
+  <div class="pgnum">PDF 第 28 页</div>
+  <img class="slide" src="pages/p28.png" alt="p28">
+  <div class="explain">
+    <h3>同样一套设定，看加法</h3>
+    <p>算 <code>z2 = x + y</code>（unsigned）和 <code>k2 = m + n</code>（int）。机器执行：<code>1000 0110 + 1111 0110</code>。</p>
+    <pre>  1000 0110
++ 1111 0110
+————————————
+(1)0111 1100   →   结果机器码 = 0111 1100，最高位有进位</pre>
+    <p>CF=1（无符号进位）、OF=1（带符号溢出，因为两加数都是"负"——最高位都是 1——但结果最高位变成 0）、SF=0。</p>
+
+    <ul>
+      <li><b>z2 当无符号</b>：0111 1100 = 124。验算：134+246 = 380，无符号 8 位绕一圈：380 − 256 = <b>124 ✓</b>。CF=1 提示"和超过 255 了"。</li>
+      <li><b>k2 当带符号</b>：m + n 在带符号语义下是 (−122) + (−10) = −132，超出 −128 范围 → 正溢出（包回正区间）。结果 = 124，OF=1 提示"这个 124 是假的，真值是 124 − 256 = −132"。</li>
+    </ul>
+
+    <h3>右下两条 result 公式（背下来）</h3>
+    <div class="twocol">
+      <div class="note"><b>无符号加</b>：<br>
+      x+y &lt; 2ⁿ → result = x+y<br>
+      2ⁿ ≤ x+y &lt; 2ⁿ⁺¹ → result = x+y − 2ⁿ（绕一圈）</div>
+      <div class="note"><b>带符号加</b>：<br>
+      <2ⁿ⁻¹ ≤ x+y →"x+y − 2ⁿ" → 正溢出<br>
+      −2ⁿ⁻¹ ≤ x+y &lt; 2ⁿ⁻¹ → 正常<br>
+      x+y &lt; −2ⁿ⁻¹ →"x+y + 2ⁿ" → 负溢出</div>
+    </div>
+
+    <div class="tip"><b>把 p27/p28 合起来记</b>：CF 和 OF 是两条独立的"溢出警报线"。一段 C 代码用了 unsigned 就听 CF，用了 int 就听 OF。CPU 同时拉响两条，听众挑自己关心的。</div>
+  </div>
+</section>
+
+<!-- ============ B0 背景：原码 ============ -->
+<section class="page bg" id="bgB0">
+  <h2>为什么浮点尾数要用原码</h2>
+  <div class="pgnum">补充背景 · 进入 p29 前必看</div>
+  <div class="explain">
+    <h3>三种编码对比（再复习一遍）</h3>
+    <table class="tbl">
+      <tr><th>编码</th><th>−6（4 位）</th><th>+6（4 位）</th><th>特点</th></tr>
+      <tr><td>原码</td><td>1110</td><td>0110</td><td>符号位 + 绝对值，最直观</td></tr>
+      <tr><td>补码</td><td>1010</td><td>0110</td><td>加减运算最方便</td></tr>
+      <tr><td>移码</td><td>0010</td><td>1110</td><td>大小比较最方便（直接当无符号比）</td></tr>
+    </table>
+
+    <h3>为什么浮点尾数用原码</h3>
+    <p>浮点数标准形式：<code>±1.xxxxx × 2ᵉ</code>。<b>那个 ±</b> 是单独存的符号位，<b>"1.xxxxx"</b> 是<u>纯正的绝对值</u>。<br>这个表示天然就是"符号 + 绝对值"的格式——也就是原码的样子。所以浮点的尾数部分（mantissa）用原码最省转换。</p>
+
+    <h3>原码加减的总思路</h3>
+    <p>因为符号位本身不参与数值大小（它只是个"正负标签"），所以原码加减<b>不能像补码那样直接送 ALU</b>，而要：</p>
+    <ol>
+      <li><b>看符号位</b>：决定到底是要做"绝对值相加"还是"绝对值相减"。</li>
+      <li><b>数值部分送 ALU</b>：算绝对值的加减（这部分本质就是无符号运算）。</li>
+      <li><b>判结果符号</b>：根据"谁绝对值大"或"是否借位"决定。</li>
+    </ol>
+    <p>所以接下来 p29/p30 的"同号求和、异号求差……"这一堆规则，本质是在告诉你 <b>什么时候要做加、什么时候要做减、结果符号怎么填</b>。</p>
+  </div>
+</section>
+
+<!-- ============ p29 ============ -->
+<section class="page" id="p29">
+  <h2>原码加/减运算规则</h2>
+  <div class="pgnum">PDF 第 29 页</div>
+  <img class="slide" src="pages/p29.png" alt="p29">
+  <div class="explain">
+    <h3>2×2 决策表（更直观）</h3>
+    <table class="tbl">
+      <tr><th></th><th>同号</th><th>异号</th></tr>
+      <tr><td><b>做加法</b></td><td>求和（数值直接加）</td><td>求差（小的减大的）</td></tr>
+      <tr><td><b>做减法</b></td><td>求差</td><td>求和</td></tr>
+    </table>
+    <p><b>口诀</b>：加同减异要求和，加异减同要求差。</p>
+
+    <h3>求和（数值位直接相加）</h3>
+    <ul>
+      <li>结果数值位 = 两数数值位相加</li>
+      <li>结果符号 = 被加数（或被减数）的符号</li>
+      <li><b>溢出判定</b>：最高数值位有进位 → 溢出</li>
+    </ul>
+
+    <h3>求差（用"加补码"代替减法）</h3>
+    <p>关键 trick：要算 |X| − |Y| 时，<b>把 |Y| 转成补码再加</b>（套用补码加减原理，硬件复用 ALU）。然后看最高位进位：</p>
+    <ul>
+      <li><b>有进位</b>（情况 a）→ 加法结果就是正确的绝对值，符号 = 被减数符号</li>
+      <li><b>没进位</b>（情况 b）→ 加出来的是"补码形式的负数"，要<b>再求一次补</b>（取反加 1）还原成绝对值；符号 = 被减数符号<b>取反</b></li>
+    </ul>
+    <div class="note"><b>为啥求差不会溢出？</b>因为 |X|、|Y| 都是非负数，差的绝对值不可能超过两者中较大那个。所以做求差时不用担心位数不够。</div>
+  </div>
+</section>
+
+<!-- ============ p30 ============ -->
+<section class="page" id="p30">
+  <h2>原码加/减运算例题</h2>
+  <div class="pgnum">PDF 第 30 页</div>
+  <img class="slide" src="pages/p30.png" alt="p30">
+  <div class="explain">
+    <h3>例 1：[X]原 = 1.0011，[Y]原 = 1.1010，求 [X+Y]原</h3>
+    <p>读题：X = −0.0011（约 −0.1875），Y = −0.1010（约 −0.625）。<b>同号 + 求和</b>。</p>
+    <ul>
+      <li>数值位相加：0011 + 1010 = <b>1101</b>（ALU 当无符号加）</li>
+      <li>符号位 = 被加数符号 = <b>1</b></li>
+      <li>[X+Y]原 = <b>1.1101</b>（真值 ≈ −0.8125 ✓）</li>
+    </ul>
+
+    <h3>例 2：同 X、Y，求 [X−Y]原</h3>
+    <p><b>同号 + 减法 → 求差</b>。要算 |X| − |Y| = 0011 − 1010。用"加补码"trick：</p>
+    <ul>
+      <li>[1010]补 = 0110（取反 0101 + 1 = 0110）</li>
+      <li>0011 + 0110 = <b>1001</b>。<u>最高位没有进位</u> → 落到"情况 b"。</li>
+      <li>对 1001 再求补：取反 0110 + 1 = <b>0111</b>。这才是真正的 |X−Y| 数值位。</li>
+      <li>符号取反：被减数符号是 1（负），取反 → <b>0</b>（正）</li>
+      <li>[X−Y]原 = <b>0.0111</b>（真值 ≈ +0.4375 ✓ 等于 −0.1875 − (−0.625)）</li>
+    </ul>
+
+    <div class="tip"><b>为啥"没进位"代表"加错方向了"？</b>因为 |X|=3 &lt; |Y|=10（十进制比对），3 − 10 应该是负的。我们用"加 [|Y|]补"得到的其实是"|X| + (16 − |Y|) − 16"，没进位意味着没有那个 −16 的减项，结果是 16 − (|Y|−|X|)，正是 |Y|−|X| 的补码形式 —— 所以要再求一次补，把它"翻"回 |Y|−|X|，然后符号给取反。</div>
+
+    <p>页面底部思考题"如何设计基于 ALU 的原码加/减法器？"——答：在 ALU 外面加一圈控制逻辑（看符号 → 决定 Sub 信号 → 看进位 → 决定是否求补回填、符号翻不翻）。</p>
+  </div>
+</section>
+
+<!-- ============ C0 背景：移码 ============ -->
+<section class="page bg" id="bgC0">
+  <h2>移码定义复习</h2>
+  <div class="pgnum">补充背景 · 进入 p31 前必看</div>
+  <div class="explain">
+    <h3>移码 = 真值 + 偏置</h3>
+    <p>n 位移码定义：<code>[E]移 = 2ⁿ⁻¹ + E</code>（其中 −2ⁿ⁻¹ ≤ E &lt; 2ⁿ⁻¹）。直观看就是<b>把数轴整体平移到非负区间</b>，让"最小的负数"对应到 0000…0、"最大的正数"对应到 1111…1。</p>
+
+    <h3>4 位移码全表（背一遍很值）</h3>
+    <table class="tbl">
+      <tr><th>真值</th><td>−8</td><td>−7</td><td>−6</td><td>…</td><td>−1</td><td>0</td><td>+1</td><td>…</td><td>+6</td><td>+7</td></tr>
+      <tr><th>移码</th><td>0000</td><td>0001</td><td>0010</td><td>…</td><td>0111</td><td>1000</td><td>1001</td><td>…</td><td>1110</td><td>1111</td></tr>
+      <tr><th>补码</th><td>1000</td><td>1001</td><td>1010</td><td>…</td><td>1111</td><td>0000</td><td>0001</td><td>…</td><td>0110</td><td>0111</td></tr>
+    </table>
+
+    <h3>移码和补码的关系（核心结论）</h3>
+    <p><b>同一个真值的移码和补码，只差一个"符号位取反"。</b>数值位完全一样！例如 −6：移码 0010、补码 1010，最高位翻一翻，其它三位都是 010。</p>
+
+    <h3>为什么浮点阶码用移码</h3>
+    <p>浮点数比大小时，硬件要先比阶码再比尾数。<b>移码的好处：直接当无符号数比大小就对了</b>（因为它把负阶码也平移到正区间）。补码不行——补码下 1000 是 −8、0000 是 0，无符号比时反而 1000 大。</p>
+  </div>
+</section>
+
+<!-- ============ p31 ============ -->
+<section class="page" id="p31">
+  <h2>移码加/减运算公式</h2>
+  <div class="pgnum">PDF 第 31 页</div>
+  <img class="slide" src="pages/p31.png" alt="p31">
+  <div class="explain">
+    <h3>推导主线（看懂第一行就够了）</h3>
+    <p>把 [E1]移 和 [E2]移 直接当无符号 n 位数加：</p>
+    <pre>[E1]移 + [E2]移
+= (2ⁿ⁻¹ + E1) + (2ⁿ⁻¹ + E2)
+= 2ⁿ + (E1 + E2)                     ← 多了一个 2ⁿ⁻¹
+= [E1+E2]补  (mod 2ⁿ)                ← 减去那个 2ⁿ⁻¹ 才是移码</pre>
+    <p>结论：<b>移码直接相加 = (E1+E2) 的补码</b>。补码和移码差一个符号位翻转，所以只要把<b>结果符号位取反</b>就得到 [E1+E2]移。</p>
+
+    <h3>三条操作规则</h3>
+    <ol>
+      <li><b>加法</b>：移码直接 mod 2ⁿ 相加 → 结果<u>符号位取反</u> = 答案的移码</li>
+      <li><b>减法</b>：先把减数 [E2]移 求补（各位取反 + 末位加 1）→ 再和 [E1]移 相加 → 结果符号位取反</li>
+      <li><b>溢出</b>：两加数符号相同、且与结果符号也相同 → 溢出
+        <div class="note"><b>为啥这条这么"反"？</b>移码的符号位是 0 表示负数、1 表示正数（反着的！）。"两加数符号相同"≈"两个真值同号"，"和的符号又和它们相同"≈"和的真值也同号"——这本来正常啊？不！记住<b>移码符号是反的</b>，所以"看着同号、看着结果也同号"翻译回真值是"两加数同号、结果<u>异号</u>"，这正是溢出的特征。</div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ p32 ============ -->
+<section class="page" id="p32">
+  <h2>移码加/减运算例题</h2>
+  <div class="pgnum">PDF 第 32 页</div>
+  <img class="slide" src="pages/p32.png" alt="p32">
+  <div class="explain">
+    <h3>例 1：用 4 位移码算 −7+(−6) 和 −3+6</h3>
+    <p>先把每个数转成移码（套 C0 背景表）：</p>
+    <ul>
+      <li>[−7]移 = 0001，[−6]移 = 0010，[−3]移 = 0101，[6]移 = 1110</li>
+    </ul>
+
+    <p><b>子例 (a)：</b>[−7]移 + [−6]移 = 0001 + 0010 = <b>0011</b>。<br>
+    符号位看溢出：加数符号都是 0、结果符号也是 0 → <b>溢出</b>（真值 −13 确实超出 4 位移码范围 −8..+7）。</p>
+
+    <p><b>子例 (b)：</b>[−3]移 + [6]移 = 0101 + 1110 = (1)0011，扔掉进位 → 0011。<b>符号位取反</b> → <b>1011</b>。<br>查表：1011 对应真值 = +3 ✓（−3 + 6 = 3）。</p>
+
+    <h3>例 2：减法 −7−(−6) 和 −3−5</h3>
+    <ul>
+      <li><b>(a) −7 − (−6)</b>：[−7]移 + [[−6]移]补。<br>
+      [−6]移 = 0010，求补 → 1110。<br>
+      [−7]移 + 1110 = 0001 + 1110 = <b>1111</b>。符号位取反 → <b>0111</b>。<br>
+      查表：0111 → −1 ✓（−7 − (−6) = −1）。</li>
+      <li><b>(b) −3 − 5</b>：[5]移 = 1101，求补 → 0011。<br>
+      [−3]移 + 0011 = 0101 + 0011 = <b>1000</b>。符号位取反 → <b>0000</b>。<br>
+      查表：0000 → −8 ✓（−3 − 5 = −8，刚好压线）。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ p33 skip ============ -->
+<section class="page" id="p33">
+  <h2>第二讲目录（指向乘法）</h2>
+  <div class="pgnum">PDF 第 33 页 · 跳过</div>
+  <p style="color:var(--mute);">下面进入乘法运算部分。</p>
+</section>
+
+<!-- ============ D0 背景：手工乘法 ============ -->
+<section class="page bg" id="bgD0">
+  <h2>从手工十进制乘法 → 二进制乘法</h2>
+  <div class="pgnum">补充背景 · 进入 p34 前必看</div>
+  <div class="explain">
+    <h3>先回忆小学怎么算 13 × 12</h3>
+    <pre>     1 3
+   × 1 2
+   ————
+     2 6   ← 13 × 2，对齐到个位
+   1 3     ← 13 × 1，对齐到十位（左移一位）
+   ————
+   1 5 6</pre>
+    <p><b>三个动作</b>：① 拿乘数每一位去乘被乘数；② 按位错位（左移）；③ 把所有部分积加起来。</p>
+
+    <h3>二进制乘法 = 手工乘法的退化版</h3>
+    <p>关键观察：<b>二进制乘数的每一位只能是 0 或 1</b>，所以"按位乘"退化成两种情况：</p>
+    <ul>
+      <li>该位是 <b>0</b> → 部分积 = 全 0</li>
+      <li>该位是 <b>1</b> → 部分积 = 被乘数本身（原样抄下来）</li>
+    </ul>
+    <p>也就是说，二进制乘法<b>不需要真正的乘法运算</b>，只需要"看一位 → 决定要不要抄被乘数 → 错位 → 累加"。这一性质让乘法器电路成为可能：只用<b>加法器 + 移位器 + 一个判断位</b> 就行。</p>
+
+    <h3>4 位例子：1000 × 1001（=8×9=72）</h3>
+    <pre>      1 0 0 0    ← X (被乘数)
+    × 1 0 0 1    ← Y (乘数)
+    ————————
+      1 0 0 0    ← Y 第 0 位 = 1，写 X
+    0 0 0 0      ← Y 第 1 位 = 0，写 0（左移 1）
+  0 0 0 0        ← Y 第 2 位 = 0，写 0（左移 2）
+1 0 0 0          ← Y 第 3 位 = 1，写 X（左移 3）
+————————————
+1 0 0 1 0 0 0    ← 求和：十进制 72 ✓</pre>
+    <p>注意：<b>n 位 × n 位 → 最多 2n 位结果</b>（72 不到 2⁷=128 所以是 7 位）。这就是为什么硬件实现中要准备<b>双倍字长</b>的乘积寄存器。</p>
+  </div>
+</section>
+
+<!-- ============ p34 ============ -->
+<section class="page" id="p34">
+  <h2>无符号数乘法（手工计算）</h2>
+  <div class="pgnum">PDF 第 34 页</div>
+  <img class="slide" src="pages/p34.png" alt="p34">
+  <div class="explain">
+    <h3>这页就是 D0 背景的 PPT 版</h3>
+    <p>例子相同：1000 × 1001。乘积 = 0.1001000（PPT 假定小数点位置约定，整数小数都行，不影响算法）。</p>
+
+    <h3>核心公式</h3>
+    <p style="text-align:center;" class="mono">X × Y = Σᵢ₌₁ⁿ (X · yᵢ · 2⁻ⁱ)</p>
+    <p>解读：把每一位的"部分积"（X·yᵢ）按权值 2⁻ⁱ 加权累加。这里 PPT 用的是小数版（2⁻¹、2⁻²……），如果是整数就把 2⁻ⁱ 换成 2ⁿ⁻ⁱ。两者算法完全等价。</p>
+
+    <div class="tip"><b>页面底部那条红字结论</b>：整个乘法只用<b>加法 + 移位</b>两种操作。所以乘法器 = ALU + 移位器 + 控制逻辑。<u>这是本节的"建造路线"——下面要把它真的拼出来</u>。</div>
+  </div>
+</section>
+
+<!-- ============ p35 ============ -->
+<section class="page" id="p35">
+  <h2>把手工乘法搬到机器里：三点改进</h2>
+  <div class="pgnum">PDF 第 35 页</div>
+  <img class="slide" src="pages/p35.png" alt="p35">
+  <div class="explain">
+    <p>手工乘法直接搬硬件有两个问题：① 要同时存 n 个 X·yᵢ 中间结果，<b>太费寄存器</b>；② 部分积要往左错位 n 次，<b>结果有 2n 位宽，加法器也要 2n 位宽</b>，浪费。三点改进就是解决这两点。</p>
+
+    <h3>改进 ①：边乘边加（部分积累加）</h3>
+    <p>不要等所有 X·yᵢ 都算完再加。<b>每算出一个就立刻和"已有部分积"累加</b>，记为 Pᵢ。这样只需要一个寄存器存当前 P，省掉了存 n 个中间结果的开销。</p>
+
+    <h3>改进 ②（最关键）：部分积右移，代替被乘数左移</h3>
+    <p>手工乘法是"被乘数往左错位、累加"。机器里改成<b>被乘数固定不动、部分积每次往右移一位</b>。两者数学等价（相对错位一样），但好处巨大：</p>
+    <div class="note"><b>关键收益</b>：因为加法永远只对"部分积的高 n 位"进行，所以<b>加法器只需要 n 位宽</b>，不用 2n 位宽。下一页 p37 那张电路图能成立全靠这一点。</div>
+
+    <h3>改进 ③：yᵢ = 0 时跳过加法</h3>
+    <p>乘数那一位是 0，部分积乘出来还是 0，加上去等于没加。<b>电路上检测到 0 就只移不加</b>，省一次加法时间。</p>
+  </div>
+</section>
+
+<!-- ============ p36 ============ -->
+<section class="page" id="p36">
+  <h2>递推公式推导</h2>
+  <div class="pgnum">PDF 第 36 页</div>
+  <img class="slide" src="pages/p36.png" alt="p36">
+  <div class="explain">
+    <h3>把累加和写成嵌套形式</h3>
+    <p>从 X×Y = X·y₁·2⁻¹ + X·y₂·2⁻² + … + X·yₙ·2⁻ⁿ 出发，<b>从最高次项开始往外提 2⁻¹</b>：</p>
+    <pre>X×Y = 2⁻¹ ( 2⁻¹ ( ... 2⁻¹ ( 2⁻¹ (0 + X·yₙ) + X·yₙ₋₁ ) ... + X·y₂ ) + X·y₁ )</pre>
+    <p>看清楚了：最里层是 "0 + X·yₙ"（用 yₙ，<b>最低位先用</b>！），每往外一层就"加一个 X·yᵢ 再除以 2"。</p>
+
+    <h3>读出递推公式</h3>
+    <p>设 P₀ = 0，每一步：</p>
+    <p style="text-align:center;" class="mono">Pᵢ₊₁ = 2⁻¹ · (Pᵢ + X · yₙ₋ᵢ)    （i = 0, 1, …, n−1）</p>
+    <p>循环 n 次后，<b>Pₙ = X×Y</b>。</p>
+
+    <div class="tip"><b>大白话流程</b>：从乘数 Y 的<u>最低位</u>开始，每一步做三件事——
+    <ol>
+      <li>看当前位：是 1 就 P+X，是 0 就 P 不变</li>
+      <li>P 整体右移一位（这就是公式里的 2⁻¹）</li>
+      <li>循环 n 次</li>
+    </ol>
+    这正是 p37 那个硬件每个时钟周期干的事。</div>
+  </div>
+</section>
+
+<!-- ============ p37 ============ -->
+<section class="page" id="p37">
+  <h2>32 位乘法硬件结构</h2>
+  <div class="pgnum">PDF 第 37 页</div>
+  <img class="slide" src="pages/p37.png" alt="p37">
+  <div class="explain">
+    <h3>五个零件</h3>
+    <ul>
+      <li><b>X 寄存器（32 位）</b>：放被乘数，整个过程<b>不动</b>。</li>
+      <li><b>P 寄存器（32 位）</b>：放当前部分积。开始 = 0；结束时存的是 64 位结果的<b>高 32 位</b>。</li>
+      <li><b>Y 寄存器（32 位）</b>：开始时放乘数；<b>每右移一位，Y 的最低位被丢弃，原本 P 的最低位填入 Y 的最高位</b>——也就是说 P 和 Y 拼成一个 64 位的大寄存器，整体右移。结束时 Y 存的是<b>结果的低 32 位</b>。</li>
+      <li><b>C 触发器（1 位）</b>：保存 ALU 加法的进位。右移时它也作为 P 的最高位被移进去。</li>
+      <li><b>Cₙ 计数器</b>：初值 32，每次循环减 1，归 0 就停。</li>
+    </ul>
+
+    <h3>一个周期内发生啥（重要！）</h3>
+    <ol>
+      <li><b>看 Y 的最低位</b>：是 1 → ALU 算 P+X 送回 P（同时把进位记到 C）；是 0 → 跳过加法。</li>
+      <li><b>同步右移</b>：{C, P, Y} 这 65 位整体右移 1 位。原本 Y[0]（已经用过）被丢；P[0] 移到 Y[31]；C 移到 P[31]。</li>
+      <li>Cₙ ← Cₙ − 1。</li>
+    </ol>
+
+    <h3>为什么 P 和 Y 拼起来正好</h3>
+    <p>循环 32 次后，原本的乘数 Y 已经"从 Y 寄存器里被一位一位挤掉"，腾出的空间正好被部分积的低位填满。结束态 {P, Y} 就是 64 位乘积。这正是 D0 背景里说的"2n 位结果"——<b>只是把 2n 位"拆"在两个 n 位寄存器里，不需要造 2n 位加法器</b>。</p>
+  </div>
+</section>
+
+<!-- ============ p38 ============ -->
+<section class="page" id="p38">
+  <h2>数值例子：14 × 13 = 182</h2>
+  <div class="pgnum">PDF 第 38 页</div>
+  <img class="slide" src="pages/p38.png" alt="p38">
+  <div class="explain">
+    <p>设 X = 1110 (=14), Y = 1101 (=13)。用 p37 的硬件跑 4 次循环。下面把演算重画成清晰的表格（PDF 上那张表对应我下方每两行 = 一次"加 / 移"）：</p>
+
+    <table class="tbl" style="font-family:Consolas,monospace;">
+      <tr><th>步</th><th>动作</th><th>C</th><th>P (高位)</th><th>R/Y (低位)</th><th>解读 Y 末位</th></tr>
+      <tr><td>0</td><td>初始</td><td>0</td><td>0000</td><td>1101</td><td>—</td></tr>
+      <tr><td rowspan="2">1</td><td>Y[0]=1，P ← P+X</td><td>0</td><td>1110</td><td>1101</td><td>1 → 加</td></tr>
+      <tr><td>{C,P,Y} 整体右移</td><td>0</td><td>0111</td><td>0110</td><td>—</td></tr>
+      <tr><td rowspan="2">2</td><td>Y[0]=0，跳过加法</td><td>0</td><td>0111</td><td>0110</td><td>0 → 不加</td></tr>
+      <tr><td>右移</td><td>0</td><td>0011</td><td>1011</td><td>—</td></tr>
+      <tr><td rowspan="2">3</td><td>Y[0]=1，P ← P+X</td><td>1</td><td>0001</td><td>1011</td><td>1 → 加</td></tr>
+      <tr><td>右移</td><td>0</td><td>1000</td><td>1101</td><td>—</td></tr>
+      <tr><td rowspan="2">4</td><td>Y[0]=1，P ← P+X</td><td>1</td><td>0110</td><td>1101</td><td>1 → 加</td></tr>
+      <tr><td>右移</td><td>0</td><td>1011</td><td>0110</td><td>—</td></tr>
+    </table>
+
+    <p>最终 {P, Y} = <code>1011 0110</code> = <b>182</b> ✓（14 × 13 = 182）。</p>
+
+    <div class="warn"><b>关键观察</b>：右移时是<b>逻辑右移</b>（左边补 0，因为是无符号乘）。例如步 3 的加法产生了进位 C=1，下次右移时这个 1 会落到 P 的最高位，确保高位部分积不丢。<br>
+    PPT 右下角"当 z 取 4 位时，结果发生溢出"——意思是如果 C 程序写 <code>uint8_t z = x*y;</code>（只留低 4 位），那么真值 182 的高 4 位 1011 就丢了，剩下低 4 位 0110 = 6，<b>结果错</b>。这就是 C 里乘法溢出的根源。</div>
+  </div>
+</section>
+
+<!-- ============ p39 ============ -->
+<section class="page" id="p39">
+  <h2>原码乘法 & 两位乘法（加速一倍）</h2>
+  <div class="pgnum">PDF 第 39 页</div>
+  <img class="slide" src="pages/p39.png" alt="p39">
+  <div class="explain">
+    <h3>上半页：原码一位乘法</h3>
+    <p>策略和原码加减一样：<b>符号位和数值位分开</b>。</p>
+    <ul>
+      <li>符号位：两数符号位<b>异或</b>得到积的符号</li>
+      <li>数值位：用上面的"无符号一位乘法"算法</li>
+    </ul>
+    <p>例 [x]原 = 0.1110, [y]原 = 1.1101：数值位 1110 × 1101 = 10110110，符号 0⊕1=1，所以 [x×y]原 = 1.10110110。</p>
+
+    <h3>下半页：两位乘法，速度翻倍</h3>
+    <p><b>核心思路</b>：一次看乘数 2 位（而不是 1 位），循环次数减半（n → n/2）。每次根据这 2 位的组合决定加什么倍数的 X：</p>
+    <table class="tbl">
+      <tr><th>yᵢ₋₁ yᵢ T</th><th>本次操作</th><th>下次 T</th><th>意义</th></tr>
+      <tr><td>00 0</td><td>什么都不加</td><td>0</td><td>00</td></tr>
+      <tr><td>00 1</td><td>+X</td><td>0</td><td>"上次欠的 X 这次还"</td></tr>
+      <tr><td>01 0</td><td>+X</td><td>0</td><td>01</td></tr>
+      <tr><td>01 1</td><td>+2X</td><td>0</td><td>01 + 上次欠的 1 = 10</td></tr>
+      <tr><td>10 0</td><td>+2X</td><td>0</td><td>10</td></tr>
+      <tr><td>10 1</td><td>−X</td><td>1</td><td>下面解释</td></tr>
+      <tr><td>11 0</td><td>−X</td><td>1</td><td>3X = 4X − X，借一个</td></tr>
+      <tr><td>11 1</td><td>0</td><td>1</td><td>11 + 1 = 100 全进位</td></tr>
+    </table>
+
+    <div class="note"><b>"3X = 4X − X" 的小聪明</b>：一次本来要加 3X，但 3X 是非"2 的幂"，电路上麻烦。改成<b>本次 −X、下次再 +X</b>（因为下次部分积右移了 2 位，相当于这个 +X 在高位变成了 +4X）。差额 4X − X = 3X 正好对得上。<br>
+    <b>T 触发器</b>就是用来记"下次要不要补 +X"的——它是这一次有没有"借"过的记忆。</div>
+
+    <p>"+2X"硬件上 = X 左移 1 位；"−X"硬件上 = 加 [−X]补。所以两位乘法依然只用加法器 + 移位器。</p>
+  </div>
+</section>
+
+<!-- ============ p40 ============ -->
+<section class="page" id="p40">
+  <h2>原码两位乘法例题</h2>
+  <div class="pgnum">PDF 第 40 页</div>
+  <img class="slide" src="pages/p40.png" alt="p40">
+  <div class="explain">
+    <h3>题目设定</h3>
+    <p>[X]原 = 0.111001，[Y]原 = 0.100111。数值部分 6 位，要计算 111001 × 100111。<br>
+    [|X|]补 = 000 111001（3 位符号位 + 6 位数值，下面解释为什么 3 位），[−|X|]补 = 111 000111。</p>
+
+    <h3>为什么要 3 位符号位（PPT 红字提醒）</h3>
+    <p>两位乘法每次部分积右移 2 位。如果只用 2 位符号位，"−X"操作后部分积可能跨过 2ⁿ⁻¹ 的边界，<b>符号位不够区分本来的负数和右移后的负数</b>，会把负数误判成正数。所以要扩成 3 位符号位作"缓冲"。</p>
+
+    <h3>逐步走一遍（PPT 表格的翻译）</h3>
+    <p>对照 PDF 截图里那张演算表（标"P, Y, T"三列），从右往左两位一组扫描 Y = 100111：</p>
+    <ul>
+      <li><b>初始</b>：P = 000 000000，Y = 100111，T = 0。</li>
+      <li><b>第 1 轮</b>：看 y₅y₆T = 11<u>0</u> → +[−X]补（行 11 0 是 −X，T 置 1）。加完 P = 111 000111，<b>P 和 Y 一起算术右移 2 位</b>（注意是<b>算术</b>，因为 P 现在是负数，符号位要保持）→ P = 111 110001，Y 的高 2 位接管原来的 P 低 2 位 = 11，所以 Y = 11 1001。这就是 P₁。</li>
+      <li><b>第 2 轮</b>：看 y₃y₄T = 01<u>1</u> → +2X（即 +X·2，左移）。加上 +001110010 后 P = 001 011000……<i>（演算细节同 PDF）</i></li>
+      <li><b>第 3 轮</b>：看 y₁y₂T = 10<u>0</u> → +2X。最终 {P, Y} = 0.100010101111。</li>
+    </ul>
+
+    <div class="tip">这题最大的考点不是算对，是<b>知道每一步该 +X / +2X / −X / 不动</b>，以及<b>右移要用算术右移</b>（保持符号位）。把 p39 那张表贴在手边对照做就行。</div>
+
+    <p>PPT 下方"速度快，但代价也大"——两位乘法把循环从 32 次降到 16 次，但<b>电路里要多一套 −X 通路、多一个 T 触发器、还要多 1 位符号位</b>。这是典型的<b>用面积换时间</b>。</p>
+  </div>
+</section>
+
+<!-- ============ E0 背景：为什么补码不能直接乘 ============ -->
+<section class="page bg" id="bgE0">
+  <h2>为什么补码不能直接当无符号数乘</h2>
+  <div class="pgnum">补充背景 · 进入 p41 前必看</div>
+  <div class="explain">
+    <h3>一个反例</h3>
+    <p>用 4 位补码算 (−5) × (−5) = 25。[−5]补 = 1011。如果<b>当作无符号 4 位数</b>送进刚才的乘法器：</p>
+    <pre>1011 × 1011 = 1011 × (8+2+1)
+            = 88 + 22 + 11
+            = 1111001 (二进制) = 121</pre>
+    <p>结果是 121，<b>不是 25</b>。错了。</p>
+
+    <h3>原因</h3>
+    <p>补码的最高位是<b>负权</b>（−2ⁿ⁻¹）而不是正权（+2ⁿ⁻¹）。直接当无符号乘，把这个负权当成了正权，差值 = 2·2ⁿ⁻¹·(其它位的和) 完全错位。所以补码乘法<b>不能简单复用无符号乘法器</b>，要么先转原码再乘（费一步转换）、要么用专门的<b>Booth 算法</b>。</p>
+
+    <h3>Booth 算法的核心想法（一句话预告）</h3>
+    <p>Booth 注意到：把补码的真值公式 <code>Y = −yₙ₋₁·2ⁿ⁻¹ + yₙ₋₂·2ⁿ⁻² + … + y₀·2⁰</code> 重新组合后，每一项的系数可以写成<b>相邻两位的差 (yᵢ₋₁ − yᵢ)</b>，差值只能是 −1、0、+1。于是：</p>
+    <ul>
+      <li>相邻两位相同（00 或 11）→ 系数 0，<b>不加</b></li>
+      <li>从 1 跳到 0（10）→ 系数 −1，<b>−X</b></li>
+      <li>从 0 跳到 1（01）→ 系数 +1，<b>+X</b></li>
+    </ul>
+    <p>所以 Booth 把"补码乘法"变成"看相邻位变化 → 加 / 减 / 不动"，符号位自动处理，统一用同一套硬件。下一页就是这个推导。</p>
+  </div>
+</section>
+
+<!-- ============ p41 ============ -->
+<section class="page" id="p41">
+  <h2>补码乘法（Booth 算法）</h2>
+  <div class="pgnum">PDF 第 41 页</div>
+  <img class="slide" src="pages/p41.png" alt="p41">
+  <div class="explain">
+    <h3>推导主线（PPT 上的 SKIP 部分我精简讲）</h3>
+    <p><b>起点</b>：补码真值公式（详见 p42 那张速查图）</p>
+    <p class="mono" style="text-align:center;">Y = −yₙ₋₁·2ⁿ⁻¹ + yₙ₋₂·2ⁿ⁻² + … + y₁·2¹ + y₀·2⁰</p>
+
+    <p><b>关键技巧 1</b>：插入虚拟位 <b>y₋₁ = 0</b>（最低位右边再加一位 0）。这一步是为了让公式形式统一。</p>
+
+    <p><b>关键技巧 2</b>：把每一项 <code>yᵢ·2ⁱ</code> 改写成 <code>(yᵢ·2ⁱ⁺¹ − yᵢ·2ⁱ)</code> 然后重新分组，使每项的系数变成 <b>(yᵢ₋₁ − yᵢ)</b>。代数上完全等价，只是换了一种"组合方式"。重排后得到：</p>
+    <p class="mono" style="text-align:center;">Y = (y₋₁ − y₀)·2⁰ + (y₀ − y₁)·2¹ + … + (yₙ₋₂ − yₙ₋₁)·2ⁿ⁻¹</p>
+    <p>注意 <b>最高位项是 (yₙ₋₂ − yₙ₋₁)·2ⁿ⁻¹</b>，<u>它取代了原来的"−yₙ₋₁·2ⁿ⁻¹"那项</u>——符号位被自然地纳入了求和，<b>不再需要特殊处理</b>。</p>
+
+    <h3>递推公式（PPT 底部红字）</h3>
+    <p style="text-align:center;" class="mono">Pᵢ = 2⁻¹ · (Pᵢ₋₁ + (yᵢ₋₁ − yᵢ) · X)</p>
+    <p>从 i=0 开始（用 y₋₁=0, y₀），循环 n 次得到 Pₙ = [X×Y]补。每一步根据相邻两位的差：</p>
+    <table class="tbl">
+      <tr><th>yᵢ₋₁ yᵢ</th><th>差 yᵢ₋₁−yᵢ</th><th>操作</th></tr>
+      <tr><td>00</td><td>0</td><td>不加，只右移</td></tr>
+      <tr><td>01</td><td>−1</td><td><b>P ← P − X</b>，右移</td></tr>
+      <tr><td>10</td><td>+1</td><td><b>P ← P + X</b>，右移</td></tr>
+      <tr><td>11</td><td>0</td><td>不加，只右移</td></tr>
+    </table>
+
+    <div class="tip"><b>右移用算术右移</b>（保持符号），因为 Booth 处理的是带符号数。<br>
+    <b>整个流程和无符号一位乘法器几乎一样</b>，只是：① 加法换成可加可减；② 多看一位上次的乘数位；③ 右移改算术。<u>同一个硬件骨架支持无符号 / 带符号乘法</u>，这就是 Booth 在工业界被广泛采用的原因。</div>
+  </div>
+</section>
+
+<!-- ============ p42 ============ -->
+<section class="page" id="p42">
+  <h2>补码真值速查（p41 的附录）</h2>
+  <div class="pgnum">PDF 第 42 页 · PPT 写的"BACK"指它从 p41 链回</div>
+  <img class="slide" src="pages/p42.png" alt="p42">
+  <div class="explain">
+    <h3>核心公式</h3>
+    <p style="text-align:center;" class="mono">A = −aₙ₋₁·2ⁿ⁻¹ + aₙ₋₂·2ⁿ⁻² + … + a₁·2¹ + a₀·2⁰</p>
+    <p>翻译：<b>最高位权重是负的</b>（−2ⁿ⁻¹），其它位都是正的（按标准二进制位权）。这就是为什么补码的"符号位"是它本身权重符号决定的，而不是约定俗成的标签。</p>
+
+    <h3>例：11010110 = −42</h3>
+    <p>套公式：<code>−128 + 64 + 0 + 16 + 0 + 4 + 2 + 0 = −42</code> ✓<br>
+    或用"求补还原法"：1101 0110 是负数（最高位 1），求补 → 0010 1010 = 42，加负号 → <b>−42</b>。两条路殊途同归。</p>
+
+    <h3>这页和 Booth 的关系</h3>
+    <p>p41 推导第一行就是这条公式。<b>Booth 的全部魔法都源自"最高位权重是负的"这个事实</b>——为了在求和里"消化"掉那个负号，他用了 (yᵢ₋₁ − yᵢ) 的差值组合技巧。</p>
+
+    <hr class="sep"><p style="color:var(--mute);font-size:14px;text-align:center;">—— 加减 & 乘法（前半）讲解结束，下面进入 Booth & 快速乘法器 ——</p>
+  </div>
+</section>
+
+
+
+<!-- ============ bg: Booth 直观 ============ -->
+<section class="page bg" id="bgBooth">
+  <h2>Booth 算法直观：把"一串 1"压扁</h2>
+  <div class="pgnum">补充背景 · 进入 p43 前必看</div>
+  <div class="explain">
+    <h3>上节回顾</h3>
+    <p>在 p41 我们推出了 Booth 的递推公式 <code>Pᵢ = 2⁻¹(Pᵢ₋₁ + (yᵢ₋₁ − yᵢ)·X)</code>，但只是把它当成"数学魔法"接受了。这页换一个完全不同的视角讲<b>为什么 Booth 行得通</b>，看完你会觉得这是个非常自然的想法。</p>
+
+    <h3>关键观察：连续的 1 可以化简</h3>
+    <p>考虑一个含连续 1 的二进制数，比如 8 位的 <code>0011 1100</code>。它等于：</p>
+    <div class="formula">2⁵ + 2⁴ + 2³ + 2² = 60</div>
+    <p>如果按 p35 那个朴素乘法器去乘，看到这 4 个 1 就要做<b>4 次加法</b>。但 60 还可以这样写：</p>
+    <div class="formula">60 = 2⁶ − 2² = 64 − 4</div>
+    <p>也就是说，乘以 <code>0011 1100</code> 等价于"先加 X 左移 6 位，再减 X 左移 2 位"——<b>只用 1 次加 + 1 次减</b>，省掉中间两个 1 的两次加法。</p>
+
+    <div class="note"><b>能这样换的代数依据</b>：等比数列求和公式
+    <div class="formula">2ⁿ + 2ⁿ⁻¹ + … + 2ᵏ = 2ⁿ⁺¹ − 2ᵏ</div>
+    一串从第 k 位到第 n 位的连续 1，等于"在第 n+1 位放一个 1、再在第 k 位减一个 1"。</div>
+
+    <h3>怎么自动发现这种简化</h3>
+    <p>从右往左扫描乘数，<b>盯着相邻两位的变化</b>：</p>
+    <ul>
+      <li><b>0 → 1</b>（看到 1 串的开始）：这一位"应该减"X（因为这是公式右边的 −2ᵏ 项）</li>
+      <li><b>1 → 1</b>（在 1 串中间）：跳过，啥也不干</li>
+      <li><b>1 → 0</b>（看到 1 串的结束）：这一位"应该加"X（这是 +2ⁿ⁺¹ 项）</li>
+      <li><b>0 → 0</b>：跳过</li>
+    </ul>
+
+    <p>例：乘数 <code>0011 1100</code>，扫描相邻位对（右往左、最右边补一个 0）：</p>
+    <pre>位置:    7 6 5 4 3 2 1 0 (-1)
+位值:    0 0 1 1 1 1 0 0  0
+扫描:        ↑       ↑
+       1→0(加)   0→1(减)</pre>
+    <p>结论：在第 6 位 +X、在第 2 位 −X，恰好对应 64X − 4X = 60X ✓</p>
+
+    <h3>所以 Booth 公式就是这个意思</h3>
+    <p>那条 <code>(yᵢ₋₁ − yᵢ)</code> 正是在判断相邻两位的"跳变方向"：</p>
+    <ul>
+      <li>yᵢ₋₁ − yᵢ = +1 → 0→1 跳变 → 减 X</li>
+      <li>yᵢ₋₁ − yᵢ = −1 → 1→0 跳变 → 加 X</li>
+      <li>= 0 → 没跳变 → 啥也不干</li>
+    </ul>
+    <div class="tip"><b>对应关系（容易记反，仔细读）</b>：扫描方向从低位向高位，公式里 yᵢ₋₁ 是<b>右边</b>那位（更低位、上一轮看过的）、yᵢ 是<b>当前</b>位。p43 上的表是<b>当前位</b>与<b>右边位</b>的组合，列法略不同但等价。<br>
+    <b>"在 1 串的开头减，在 1 串结尾加"</b>——这是最容易记的口诀。</div>
+
+    <h3>为什么这个想法叫"Booth"</h3>
+    <p>Andrew Booth 在 1951 年提出这个算法。当时他的机器上<b>移位比加法快</b>，所以"用更多移位、更少加法"是真金白银的提速。即使现在加法器很快了，Booth 的另一个好处仍然成立——<b>它天然支持补码乘法</b>（因为相邻位差的范围 {−1, 0, +1} 让符号位也被纳入统一求和，见 p41 推导）。</p>
+  </div>
+</section>
+
+<!-- ============ p43 ============ -->
+<section class="page" id="p43">
+  <h2>Booth 算法实质</h2>
+  <div class="pgnum">PDF 第 43 页</div>
+  <img class="slide" src="pages/p43.png" alt="p43">
+  <div class="explain">
+    <h3>这页给的就是上面那张直观表</h3>
+    <p>把"当前位 + 右边位"两位组合起来看，决定操作：</p>
+    <table class="tbl">
+      <tr><th>当前位 yᵢ</th><th>右边位 yᵢ₋₁</th><th>操作</th><th>含义</th></tr>
+      <tr><td>1</td><td>0</td><td>−X（减被乘数）</td><td>0→1 跳变，1 串开始</td></tr>
+      <tr><td>1</td><td>1</td><td>啥也不干</td><td>1 串中间</td></tr>
+      <tr><td>0</td><td>1</td><td>+X（加被乘数）</td><td>1→0 跳变，1 串结尾</td></tr>
+      <tr><td>0</td><td>0</td><td>啥也不干</td><td>0 串中间</td></tr>
+    </table>
+
+    <h3>页面上方的图例怎么读</h3>
+    <p>PPT 顶部的 "0 1 1 1 0" 是把乘数中的"一串 1"画出来：</p>
+    <ul>
+      <li><b>beginning of run</b>：从右往左看，第一个 1（最低位的 1）→ 减 X</li>
+      <li><b>middle of run</b>：中间的 1 → 跳过</li>
+      <li><b>end of run</b>：跳到 0 的那个位置（从右往左数最后一个 1 的左边）→ 加 X</li>
+    </ul>
+    <p>合起来：原本要做 3 次加法（每个 1 一次），现在只做 1 加 + 1 减 = 2 次，且 1 串越长越赚。</p>
+
+    <h3>例子（PPT 最右列 Example）</h3>
+    <p>乘数中有"1110"这一段。从最低位往左扫描：</p>
+    <table class="tbl">
+      <tr><th>位置</th><th>当前 / 右边</th><th>操作</th><th>累计效果</th></tr>
+      <tr><td>第 3 位的 1</td><td>1 / 0</td><td>−X</td><td>"借走" X·2³</td></tr>
+      <tr><td>第 4 位的 1</td><td>1 / 1</td><td>跳过</td><td>—</td></tr>
+      <tr><td>第 5 位的 1</td><td>1 / 1</td><td>跳过</td><td>—</td></tr>
+      <tr><td>第 6 位的 0</td><td>0 / 1</td><td>+X</td><td>"补上" X·2⁶</td></tr>
+    </table>
+    <p>合计：+X·2⁶ − X·2³ = X·(64 − 8) = X·56 = X·(32+16+8) = X·(2⁵+2⁴+2³) ✓ 等于直接逐位累加的结果。</p>
+
+    <div class="note"><b>PPT 倒数第二行</b>："最初提出这种想法是因为在 Booth 的机器上移位操作比加法更快"——也就是说 Booth 算法的原始动机是<b>用更多移位换更少加法</b>。现代 CPU 中移位和加法都很快，但这个算法依然有价值，因为它<b>统一处理了带符号数的乘法</b>。</div>
+
+    <p>PPT 底部红字"<b>同前面算法一样，将乘积寄存器右移一位（这里是算术右移）</b>"——再强调一遍：Booth 处理的是带符号数，所以右移必须保符号位，否则负数右移变成大正数就全乱了。</p>
+  </div>
+</section>
+
+<!-- ============ p44 ============ -->
+<section class="page" id="p44">
+  <h2>Booth 算法举例：(−3) × 6</h2>
+  <div class="pgnum">PDF 第 44 页</div>
+  <img class="slide" src="pages/p44.png" alt="p44">
+  <div class="explain">
+    <h3>题目</h3>
+    <p>[X]补 = 1101（X = −3），[Y]补 = 0110（Y = 6），求 [X × Y]补。应该等于 −18，即 8 位补码 1110 1110。<br>
+    准备：[−X]补 = 0011（即 +3 的补码，因为 −X = +3）。</p>
+
+    <h3>把 4 步循环逐步走一遍</h3>
+    <p>初始：P = 0000，Y = 0110，y₋₁ = 0（虚拟最低位补 0）。</p>
+
+    <table class="tbl" style="font-family:Consolas,monospace;font-size:14px;">
+      <tr><th>轮</th><th>y_i y_{i−1}</th><th>判定</th><th>操作前 P</th><th>加什么</th><th>加后 P</th><th>右移后 P / Y / y₋₁</th></tr>
+      <tr><td>1</td><td>0 0</td><td>跳过</td><td>0000</td><td>—</td><td>0000</td><td>0000 / 0011 / 0</td></tr>
+      <tr><td>2</td><td>1 0</td><td>1 串开始 → −X，即 +[−X]补</td><td>0000</td><td>+0011</td><td>0011</td><td>0001 / 1001 / 1</td></tr>
+      <tr><td>3</td><td>1 1</td><td>跳过</td><td>0001</td><td>—</td><td>0001</td><td>0000 / 1100 / 1</td></tr>
+      <tr><td>4</td><td>0 1</td><td>1 串结尾 → +X</td><td>0000</td><td>+1101</td><td>1101</td><td>1110 / 1110 / 0</td></tr>
+    </table>
+
+    <p>最终 {P, Y} = <code>1110 1110</code> = <b>[−18]补</b> ✓</p>
+
+    <h4>每一步细节再补充</h4>
+    <ul>
+      <li><b>轮 1</b> 看 Y 最右两位 <code>y₀y₋₁ = 0 0</code>：两位相同，跳过。然后 P 和 Y <b>一起算术右移 1 位</b>——原本 Y 的最右位 <code>0</code> 变成新的 y₋₁，Y 自己被 P 的最低位（0）填到最高位。所以 Y 从 0110 变成 0011。</li>
+      <li><b>轮 2</b> 看新的 <code>y₀y₋₁ = 1 0</code>：1 串开始，做 P + [−X]补。加完 P = 0011，再右移：P 的最低位 1 进到 Y 最高位，所以新 Y = 1001，新 y₋₁ = 原 Y 的最右位 1。</li>
+      <li><b>轮 3</b> 看 <code>y₀y₋₁ = 1 1</code>：跳过，右移。</li>
+      <li><b>轮 4</b> 看 <code>y₀y₋₁ = 0 1</code>：1 串结尾，做 P + [X]补（X 是负的，[X]补 = 1101）。加完 P = 0000 + 1101 = 1101，注意这里是<b>带符号加</b>，1101 是负数。然后算术右移：<u>最高位的 1 复制到下一位</u>，所以 P 变成 1110（不是 0110！）。</li>
+    </ul>
+
+    <div class="warn"><b>溢出判断</b>（PPT 右下角）：结果是 8 位，截取到 4 位会不会溢出？看高 4 位 = 1110，<b>不全是符号位（应全为 1 才是负数符号扩展）</b>，所以截到 4 位会丢信息。验证：低 4 位 1110 = −2，但真值是 −18，确实不对。结论：4 位×4 位 = −18 需要 8 位结果来存，强制截 4 位就溢出。</div>
+  </div>
+</section>
+
+<!-- ============ p45 ============ -->
+<section class="page" id="p45">
+  <h2>补码两位乘法（推导）</h2>
+  <div class="pgnum">PDF 第 45 页</div>
+  <img class="slide" src="pages/p45.png" alt="p45">
+  <div class="explain">
+    <h3>核心想法</h3>
+    <p>Booth 一位乘要循环 n 次。如果每次能看<b>两位</b>，就能压成 n/2 次。怎么把两次连续的一位 Booth 迭代<b>合并成一次两位迭代</b>？——下面那个公式推导就是干这件事的。先看结论，再看推导。</p>
+
+    <h3>结论：两位乘的操作表</h3>
+    <p>看乘数的<b>三位窗口</b> <code>yᵢ₊₁ yᵢ yᵢ₋₁</code>，按表查操作：</p>
+    <table class="tbl">
+      <tr><th>yᵢ₊₁ yᵢ yᵢ₋₁</th><th>操作</th><th>意义</th></tr>
+      <tr><td>0 0 0</td><td>0（跳过）</td><td>没跳变</td></tr>
+      <tr><td>0 0 1</td><td>+X</td><td>结束 1 串</td></tr>
+      <tr><td>0 1 0</td><td>+X</td><td>独立的 1</td></tr>
+      <tr><td>0 1 1</td><td>+2X</td><td>结束更长的 1 串，且当前位也是 1 → 等价 +X·2 (即 +2X)</td></tr>
+      <tr><td>1 0 0</td><td>+2[−X]补 = −2X</td><td>开始新 1 串，且 yᵢ 是 0 但高位是 1 → 这两位组合是 10 → 减 2X</td></tr>
+      <tr><td>1 0 1</td><td>−X</td><td>"01 → 10"：先 +X 再 −2X，合起来 −X</td></tr>
+      <tr><td>1 1 0</td><td>−X</td><td>1 串中间，加上当前位是 0 那一位的开始 1 串 → −X</td></tr>
+      <tr><td>1 1 1</td><td>0（跳过）</td><td>都在 1 串里面</td></tr>
+    </table>
+    <p>每轮做完后，P 和 Y <b>算术右移 2 位</b>。</p>
+
+    <h3>推导（PPT 上面那个公式块的逐步还原）</h3>
+    <p>从一位 Booth 公式出发：</p>
+    <div class="formula">[Pᵢ₊₁]补 = 2⁻¹([Pᵢ]补 + (yᵢ₋₁ − yᵢ)·[X]补)</div>
+    <p>再迭代一次：</p>
+    <div class="formula">[Pᵢ₊₂]补 = 2⁻¹([Pᵢ₊₁]补 + (yᵢ − yᵢ₊₁)·[X]补)</div>
+    <p>把第一条代入第二条：</p>
+    <pre>[Pᵢ₊₂]补 = 2⁻¹(2⁻¹([Pᵢ]补 + (yᵢ₋₁ − yᵢ)[X]补) + (yᵢ − yᵢ₊₁)[X]补)
+        = 2⁻²[Pᵢ]补 + 2⁻²(yᵢ₋₁ − yᵢ)[X]补 + 2⁻¹(yᵢ − yᵢ₊₁)[X]补
+        = 2⁻²([Pᵢ]补 + ((yᵢ₋₁ − yᵢ) + 2(yᵢ − yᵢ₊₁))[X]补)
+        = 2⁻²([Pᵢ]补 + (yᵢ₋₁ + yᵢ − 2yᵢ₊₁)[X]补)</pre>
+    <p>系数 <code>yᵢ₋₁ + yᵢ − 2yᵢ₊₁</code> 取值范围 {−2, −1, 0, 1, 2}（穷举三位组合），正好对应表里的 −2X / −X / 0 / +X / +2X 五种操作。</p>
+
+    <div class="tip"><b>PPT 提示</b>：开始时 y₋₁ = 0（虚拟最低位），<b>乘积寄存器最高位前再加一个 0 作"附加符号位"</b>。这是 p40 一位原码两位乘那里讲过的——右移 2 位时单一位符号不够用，要扩成 2 位（或者整体多腾出 1 位）。<br>
+    <b>循环次数 = n/2</b>。要求 n 是偶数（计算机字长都是 8 的倍数，自然满足）。</div>
+  </div>
+</section>
+
+<!-- ============ bg-Two: 两位乘公式深化 ============ -->
+<section class="page bg" id="bgTwo">
+  <h2>两位乘的几个细节再啃一遍</h2>
+  <div class="pgnum">补充背景 · 进入 p46 前必看</div>
+  <div class="explain">
+    <h3>那个 (yᵢ₋₁ + yᵢ − 2yᵢ₊₁) 系数怎么解读</h3>
+    <p>系数本质上是<b>乘数那两位 yᵢ₊₁ yᵢ 所代表的"带符号 2 位整数"减去 yᵢ₋₁</b>。换个角度：</p>
+    <ul>
+      <li><b>yᵢ₊₁ yᵢ 看作 2 位补码</b>：00=0、01=+1、10=−2、11=−1</li>
+      <li><b>yᵢ₋₁</b> 是"上一轮借走的 X"的提醒（类似 p39 的 T 触发器）</li>
+      <li>合起来 = (2 位补码值) + yᵢ₋₁ 的修正</li>
+    </ul>
+
+    <p>具体对照表：</p>
+    <table class="tbl">
+      <tr><th>yᵢ₊₁ yᵢ</th><th>2 位补码值</th><th>+ yᵢ₋₁=0</th><th>+ yᵢ₋₁=1</th></tr>
+      <tr><td>00</td><td>0</td><td>0</td><td>+1（结束 1 串）</td></tr>
+      <tr><td>01</td><td>+1</td><td>+1</td><td>+2（11→00 上次借的，本次再加）</td></tr>
+      <tr><td>10</td><td>−2</td><td>−2</td><td>−1</td></tr>
+      <tr><td>11</td><td>−1</td><td>−1</td><td>0（1 串内部）</td></tr>
+    </table>
+
+    <h3>"+2X" 怎么硬件实现</h3>
+    <p>+2X = X 左移 1 位。<b>电路里就是接线时把 X 整体往左挪一格送进加法器</b>，不需要额外移位时钟。所以 +2X 和 +X 在硬件上代价几乎一样。</p>
+
+    <h3>"−2X" 怎么硬件实现</h3>
+    <p>−2X = 2·(−X) = [−X]补 左移 1 位。还是接线问题，不需要额外周期。<br>
+    所以两位 Booth 的硬件只需要在加法器输入端加个 4 选 1 多路器（选 0 / +X / +2X / −X / −2X），加法器本身不变。</p>
+
+    <h3>为什么循环次数是 n/2（不是 (n+1)/2）</h3>
+    <p>第一次循环看的是 <code>y₁ y₀ y₋₁</code>（其中 y₋₁=0），第二次看 <code>y₃ y₂ y₁</code>，依此类推。<b>每次窗口右端的 yᵢ₋₁ 正是上次窗口左端的 yᵢ₊₁</b>，所以 n 位乘数刚好被 n/2 个窗口覆盖完，没有重叠也没有漏。</p>
+
+    <h3>带符号位的处理</h3>
+    <p>因为 [X]补 是带符号的，加法器要做<b>带符号加</b>（其实就是无符号加，但溢出/符号处理略有不同）。右移用<b>算术右移</b>（保留符号位）。<br>
+    P 寄存器要比 n 多 1 位（"附加符号位"）来防止"−X 后右移 2 位"导致的符号丢失。p40 的原码两位乘需要 3 位符号位，是因为它还要处理"无符号数值"的最高位进位；这里补码两位乘只需要 1 位附加。</p>
+  </div>
+</section>
+
+<!-- ============ p46 ============ -->
+<section class="page" id="p46">
+  <h2>补码两位乘法举例</h2>
+  <div class="pgnum">PDF 第 46 页</div>
+  <img class="slide" src="pages/p46.png" alt="p46">
+  <div class="explain">
+    <h3>同 p44 的题：[X]补=1101，[Y]补=0110，用两位乘做</h3>
+    <p>预备：[−X]补 = 0011。注意现在 P 多了一个附加符号位（共 5 位），写作 <code>P_n P P P P</code> 形式。</p>
+
+    <h3>逐步演算</h3>
+    <p>初始：附加位+P = <code>0 0000</code>，Y = 0110，y₋₁ = 0。</p>
+
+    <h4>第 1 轮</h4>
+    <p>看 <code>y₁ y₀ y₋₁ = 1 0 0</code>。查表（参考 p45）：100 → +2[−X]补。</p>
+    <pre>  0 0000
++ 0 0110          (因为 2·[−X]补 = 2·0011 = 0110)
+————————————
+  0 0110</pre>
+    <p>然后 P 和 Y <b>一起算术右移 2 位</b>：<br>
+    P 的低 2 位 <code>10</code> 移到 Y 最高 2 位，Y 的最低 2 位 <code>10</code> 被丢（但其中一位变成新的 y₋₁）。</p>
+    <pre>P = 0 0001     Y = 1001     y₋₁ = 1
+即 [P₂]补</pre>
+
+    <h4>第 2 轮</h4>
+    <p>看 <code>y₃ y₂ y₁ = 0 1 1</code>（注意：是 Y 当前的高 3 位，因为 P 和 Y 已经右移过 2 位）。<br>
+    011 → +2[X]补 = +2·1101 = <code>1 1010</code>（用 5 位带符号表示）</p>
+    <pre>  0 0001
++ 1 1010
+————————————
+  1 1011</pre>
+    <p>算术右移 2 位（注意现在 P 是负数，最高位 1，右移时左边补 1）：</p>
+    <pre>P = 1 1110     Y = 1110     y₋₁ = (上次 Y 的某位)
+即 [P₄]补</pre>
+
+    <h3>结果验证</h3>
+    <p>[X×Y]补 = P 拼 Y = <code>1110 1110</code>（去掉附加符号位）= −18 ✓<br>
+    和 p44 一位 Booth 的结果完全一致，但<b>只用了 2 次循环</b>（一位乘需要 4 次）。</p>
+
+    <div class="tip"><b>PPT 底部确认</b>：−3 × 6 = −18（二进制 −10010B）。两位乘法做对了。<br>
+    <b>注意附加符号位的重要性</b>：第 2 轮加法后 P = <code>1 1011</code>，5 位的最高位 1 表示"这是个负数"。如果没有附加位、只用 4 位，那 1011 既可能是 −5 也可能是+11 的某种状态，右移时根本不知道该补 1 还是 0。</div>
+  </div>
+</section>
+
+<!-- ============ p47 ============ -->
+<section class="page" id="p47">
+  <h2>快速乘法器：为什么还要继续优化</h2>
+  <div class="pgnum">PDF 第 47 页</div>
+  <img class="slide" src="pages/p47.png" alt="p47">
+  <div class="explain">
+    <h3>到目前为止的乘法器有啥问题</h3>
+    <p>不管一位乘还是两位乘，都是<b>一个加法器反复用</b>，靠时钟节拍控制。本质是<b>串行</b>方案：</p>
+    <ul>
+      <li>一位乘：约 n 个时钟周期</li>
+      <li>两位乘：约 n/2 个时钟周期</li>
+    </ul>
+    <p>对 32 位乘法，就算两位乘也要 16 个周期。<b>现代 CPU 流水线一个时钟想做完一条乘法指令</b>，这显然不够快。</p>
+
+    <h3>为啥乘法值得专门提速</h3>
+    <p>PPT 说"大约 1/3 是乘法运算"——这是<b>典型程序中乘法在所有算术运算里的占比</b>。一个常用部件慢一倍，全机性能就直接拉低。所以工业上几乎所有 CPU 都给乘法配了<b>专门的硬件部件</b>，不和 ALU 共享加法器。</p>
+
+    <h3>两条思路</h3>
+    <ul>
+      <li><b>流水线方式</b>：把"加 + 移"展开成 n 级，每级一个 n 位加法器，让多对操作数<b>同时在不同级</b>流动（像汽车装配线）。一条乘法仍然要走 n 级，但平均<b>每个时钟周期能出一个结果</b>（吞吐率高）。</li>
+      <li><b>硬件叠加方式</b>（如阵列乘法器）：把<b>所有部分积</b>都一次性算出来，用一棵全加器树同时累加。<u>整个乘法在组合电路里一次完成，不需要时钟</u>，延迟 = 门级延迟链。</li>
+    </ul>
+
+    <p>两种思路的共同点：<b>用更多的硬件面积换更短的延迟</b>。这是硬件设计的永恒主题。</p>
+  </div>
+</section>
+
+<!-- ============ bg-Fast: 三种策略 ============ -->
+<section class="page bg" id="bgFast">
+  <h2>三种乘法器：用空间换时间</h2>
+  <div class="pgnum">补充背景 · 进入 p48 前必看</div>
+  <div class="explain">
+    <h3>对比表（背下来）</h3>
+    <table class="tbl">
+      <tr><th>方案</th><th>结构</th><th>一次乘法用时</th><th>吞吐率</th><th>硬件成本</th></tr>
+      <tr><td>串行乘法器（前面讲的）</td><td>1 个加法器 + 寄存器 + 控制</td><td>n 周期</td><td>1/n</td><td>低</td></tr>
+      <tr><td>流水线乘法器</td><td>n 个加法器，串成 n 级</td><td>n 周期（但延迟可被流水线填满）</td><td>≈1（每周期出一个）</td><td>中</td></tr>
+      <tr><td>阵列乘法器</td><td>n×n 个全加器，组合电路</td><td>~2n 门延迟（无时钟）</td><td>~1</td><td>高</td></tr>
+    </table>
+
+    <h3>流水线 vs 阵列的关键区别</h3>
+    <p><b>流水线乘法器</b>：仍然有时钟，每级是时序电路。好处是相邻乘法可以"挤"在流水线里同时跑（指令并行）。坏处是<b>单条乘法的延迟没缩短</b>，只是吞吐率上去了。</p>
+    <p><b>阵列乘法器</b>：纯组合电路，没有时钟，信号从输入端进去后<b>一路通过所有全加器</b>就出结果。好处是<b>单条乘法延迟最短</b>。坏处是面积巨大（n² 个全加器），而且无法被其他乘法复用（一台机器跑完一条乘法才能跑下一条）。</p>
+
+    <h3>实际 CPU 怎么选</h3>
+    <p>大多数现代通用 CPU 用<b>流水线乘法器 + Booth 编码</b>组合：</p>
+    <ul>
+      <li>用 Booth（一位或两位、甚至基-4、基-8）<b>减少部分积数量</b></li>
+      <li>用 <b>Wallace 树</b>（一种全加器树）把所有部分积同时压成 2 个数（"和"+"进位")</li>
+      <li>最后用一个快速加法器（如 CLA）把这 2 个数加起来</li>
+      <li>整体用流水线分级</li>
+    </ul>
+    <p>这套组合既快（吞吐 = 1 周期一条）又省（不到纯阵列的 1/2 面积）。</p>
+
+    <div class="note">PPT 上画的"流水线方式"图（p48 左）和"阵列乘法器"图（p49）<b>看上去结构非常像</b>——都是一摞加法器堆叠。区别在于：<br>
+    · <b>流水线</b>：每级加法器后面接寄存器（图上每个加法器输出有"1 bit"标注，那是寄存器锁存），相邻级之间用时钟同步。<br>
+    · <b>阵列</b>：所有全加器直接连，没有锁存，是纯组合电路。<br>
+    看图的时候盯有没有"小方块代表的寄存器"是分辨二者的关键。</div>
+  </div>
+</section>
+
+<!-- ============ p48 ============ -->
+<section class="page" id="p48">
+  <h2>流水线方式快速乘法器</h2>
+  <div class="pgnum">PDF 第 48 页</div>
+  <img class="slide" src="pages/p48.png" alt="p48">
+  <div class="explain">
+    <h3>右边那张图怎么读（自上而下）</h3>
+    <p>每一层都长得一样：<b>梯形 = n 位加法器</b>，左输入接 <code>Mplierᵢ · Mcand</code>（这一位的部分积，是"乘数第 i 位 AND 被乘数"，结果要么全 0、要么是 X 本身），右输入接<b>上一级输出的部分积</b>。每一层下面还有"1 bit"——这就是从加法器输出锁存的<b>本位乘积位</b>。</p>
+
+    <h3>每级加法器干嘛</h3>
+    <ol>
+      <li><b>输入</b>：上次部分积（n 位）+ 本次的 yᵢ·X（n 位）</li>
+      <li><b>加法</b>：得到 n+1 位的和（多出 1 位是进位）</li>
+      <li><b>输出拆成两部分</b>：
+        <ul>
+          <li>和的<b>最低位 (LSB)</b> → 这就是最终乘积的第 i 位，被锁存输出（图右下角的 Product_i）</li>
+          <li>剩下的<b>进位 + 高 31 位</b>（共 32 位）→ 作为下一级的"上次部分积"</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>为啥 LSB 可以直接输出</h3>
+    <p>因为之后的循环里，本次部分积都要右移（或者等价地说，新加进来的 yᵢ₊₁·X 是更高一位的）。本次 LSB <b>之后不会再被加到了</b>，所以可以提前"出栈"作为乘积的对应位。这就是 p35 改进②"部分积右移"在流水线视角下的表现——不是真的去移，而是把<b>不再用的低位提前抠出来</b>。</p>
+
+    <h3>n 级 = n 位乘数处理完</h3>
+    <p>n 位乘数有 n 位，每位对应一级加法器。第 n 级出来的"剩余部分积"（高 32 位）拼上每级抠出的 1 位 LSB（共 n 位），合起来就是 2n 位的乘积（Product_0 到 Product_{2n-1}）。</p>
+
+    <h3>"组合逻辑电路！无需控制器控制"</h3>
+    <p>PPT 蓝字这句话有点歧义。如果每级之间<b>没有锁存器</b>，那确实是纯组合，效果等于阵列乘法器（p49）。如果<b>每级中间有锁存</b>，那才是流水线，需要时钟但不需要复杂的状态机控制。<u>课件这里画的版本看起来是没有锁存的版本，等价于阵列乘法器的"线性"画法</u>（p49 那个二维菱形是同一个东西的另一种排版）。</p>
+  </div>
+</section>
+
+<!-- ============ p49 ============ -->
+<section class="page" id="p49">
+  <h2>阵列乘法器</h2>
+  <div class="pgnum">PDF 第 49 页</div>
+  <img class="slide" src="pages/p49.png" alt="p49">
+  <div class="explain">
+    <h3>左下那张图是这个阵列的"一个单元"</h3>
+    <p>每个小方块包含：</p>
+    <ul>
+      <li><b>一个与门</b>（图中"半圆+点"那个符号）：算 Aᵢ · Bⱼ —— 也就是被乘数的第 i 位 AND 乘数的第 j 位，得到一个部分积位。</li>
+      <li><b>一个全加器</b>：把这个部分积位 + 上方传下来的"上一行部分积" + 左侧传来的"进位"三者相加，输出<b>本位部分积</b>（向下传）和<b>进位</b>（向右传）。</li>
+    </ul>
+
+    <h3>大图的二维阵列：n×n 个这样的单元</h3>
+    <p>4×4 阵列乘法器（图上画的就是 4 位 × 4 位）：</p>
+    <ul>
+      <li>顶部输入：被乘数 X = A₃A₂A₁A₀（垂直流下来）</li>
+      <li>右侧输入：乘数 Y = B₃B₂B₁B₀（水平注入每一行）</li>
+      <li>底部输出：乘积 P₇P₆P₅P₄P₃P₂P₁P₀</li>
+    </ul>
+    <p>每一行处理乘数的一位。第 j 行计算"X·Bⱼ"并加到运行中的部分积上。<b>所有部分积按错位累加，最终在底部得到完整 2n 位结果</b>。</p>
+
+    <h3>性能特点</h3>
+    <p>PPT 右上："速度仅取决于逻辑门和加法器的传输延迟"——因为没有时钟、没有控制状态机，输入一稳定，整个阵列里的信号<b>从左上角传播到右下角</b>，到达 2n−1 级门延迟左右就稳定输出。</p>
+
+    <div class="note"><b>这是真正意义上的"一周期乘法"</b>：信号传播一次就好了，相当于把"n 次串行加 + 移"在空间上铺开一次性算完。代价是 n×n ≈ 1024 个全加器（32 位时），面积巨大。</div>
+
+    <h3>带符号阵列乘法器</h3>
+    <p>上面讲的是<b>无符号</b>。带符号怎么办？两条路：</p>
+    <ol>
+      <li><b>乘前求绝对值、乘后调符号</b>：先把负操作数变成正的（求补），用无符号阵列乘，最后根据"两数符号异或"决定结果符号（必要时再求补）。PPT 右下角说的就是这套：<b>增加符号处理电路 + 乘前/乘后求补电路</b>。</li>
+      <li><b>用 Baugh-Wooley 算法</b>：直接对补码做阵列乘法（不在本课范围）。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ bg-Hilo: 高低位 ============ -->
+<section class="page bg" id="bgHilo">
+  <h2>n 位 × n 位 = 2n 位：高低位都意味着什么</h2>
+  <div class="pgnum">补充背景 · 进入 p50 前必看</div>
+  <div class="explain">
+    <h3>为什么是 2n 位</h3>
+    <p>两个最大的 n 位无符号数相乘：(2ⁿ − 1)² = 2²ⁿ − 2·2ⁿ + 1，不到 2²ⁿ。所以乘积总能塞进 <b>2n 位</b>。比如 8 位 × 8 位 ≤ 255² = 65025，正好 16 位以内。</p>
+
+    <h3>2n 位结果的"高 n 位"和"低 n 位"</h3>
+    <p>把乘积 P 写成 P = P_high · 2ⁿ + P_low：</p>
+    <ul>
+      <li><b>P_low</b>（低 n 位）：模 2ⁿ 的结果。如果 C 程序里 z 也声明为 n 位，编译器存到 z 的就是 P_low。</li>
+      <li><b>P_high</b>（高 n 位）：包含"商"信息——可以理解为 P 超过 n 位部分。<u>这部分平时存在另一个寄存器里，普通乘法指令不一定取，但用来判溢出非常关键</u>。</li>
+    </ul>
+
+    <h3>溢出 = "高 n 位"含信息</h3>
+    <p>如果 C 程序 <code>int z = x * y;</code> 只保留 n 位结果，那么<b>"高 n 位是否能从低 n 位推出来"</b>就是判溢出的标准：</p>
+    <ul>
+      <li><b>无符号</b>：高 n 位应该全 0（结果在 [0, 2ⁿ) 内）。一旦高 n 位有 1 → 溢出。</li>
+      <li><b>带符号</b>：结果应该在 [−2ⁿ⁻¹, 2ⁿ⁻¹) 内。换言之，2n 位结果<b>"符号扩展回 n 位"</b>不能丢信息——即<b>高 n 位每一位都应该等于低 n 位的最高位</b>（全 0 或全 1，且与低位符号一致）。</li>
+    </ul>
+
+    <h3>两个常用结论（后面要反复用）</h3>
+    <ol>
+      <li><b>低 n 位结果，无符号和带符号一样</b>：因为<u>不管把输入解读成无符号还是带符号</u>，乘法的位运算过程完全相同，最低 n 位的位串是同一个东西。所以 RISC-V 的 <code>mul</code> 指令不分"无符号 / 带符号"。</li>
+      <li><b>高 n 位不一样</b>：高 n 位才是真正反映"按哪种解读乘出来"的部分。所以 RISC-V 有两条不同的指令 <code>mulh</code>（带符号）和 <code>mulhu</code>（无符号）。</li>
+    </ol>
+
+    <p>p50 那张图就是把"低 n 位相同、高 n 位不同"这件事画出来。</p>
+  </div>
+</section>
+
+<!-- ============ p50 ============ -->
+<section class="page" id="p50">
+  <h2>整数乘运算：无符号 vs 带符号</h2>
+  <div class="pgnum">PDF 第 50 页</div>
+  <img class="slide" src="pages/p50.png" alt="p50">
+  <div class="explain">
+    <h3>这页用形式化语言重申一遍背景页的结论</h3>
+    <p>设两组数：</p>
+    <ul>
+      <li>无符号：xᵤ, yᵤ（机器数 Xᵤ, Yᵤ），积 pᵤ = xᵤ × yᵤ，存机器数 Pᵤ（n 位）</li>
+      <li>带符号：xₛ, yₛ（机器数 Xₛ, Yₛ），积 pₛ = xₛ × yₛ，存机器数 Pₛ（n 位）</li>
+    </ul>
+    <p>关键结论：<b>如果 Xᵤ = Xₛ 且 Yᵤ = Yₛ，则 Pᵤ = Pₛ</b>。也就是说<u>两种解读下机器数低 n 位相同</u>。</p>
+
+    <h3>但高 n 位不同：Pᵤh ≠ Pₛh</h3>
+    <p>所以图里画了<b>两个不同的乘法器</b>——<b>无符号乘法器</b>和<b>带符号乘法器</b>——每个都输出 (Phigh, Plow)，低位一样、高位不一样。</p>
+
+    <div class="note"><b>实际硬件</b>：现代 CPU 不会做两套独立乘法器，而是<b>共用一个核心阵列</b>，根据指令是 <code>mul</code> / <code>mulhu</code> / <code>mulh</code> 选择不同的输出（或者在阵列外侧加符号扩展逻辑）。这就是 RISC-V 三条乘法指令实际共用底层硬件的设计基础。</div>
+
+    <h3>页面右下两句话</h3>
+    <ul>
+      <li><b>无符号：若 Pᵤh = 0，则不溢出</b>。直觉：高位有 1 意味着结果 ≥ 2ⁿ，n 位塞不下。</li>
+      <li><b>带符号：若 Pₛh 每位都等于 Pₛ 的最高位，则不溢出</b>。这是"符号扩展"的反向验证：如果 2n 位结果能"压回" n 位（高 n 位是符号扩展），那 n 位足够；否则真值要么太大、要么太小。</li>
+    </ul>
+
+    <p>PPT 左下蓝字："可用无符号乘来实现带符号乘，但高 n 位无法得到，故不能判断溢出"——这是一个很重要的工程观察：</p>
+    <p><b>低 n 位</b>用无符号乘法器算出来就对了（按上面的结论）；但<b>溢出判断</b>需要高 n 位的<b>带符号解读</b>，必须用真正的带符号乘法器（或 mulh 这类专用指令）。</p>
+  </div>
+</section>
+
+<!-- ============ p51 ============ -->
+<section class="page" id="p51">
+  <h2>溢出判断规则 + 数值表</h2>
+  <div class="pgnum">PDF 第 51 页</div>
+  <img class="slide" src="pages/p51.png" alt="p51">
+  <div class="explain">
+    <h3>规则正式版（背下来）</h3>
+    <ul>
+      <li><b>无符号溢出</b>：乘积的高 n 位<b>非 0</b> → 溢出</li>
+      <li><b>带符号溢出</b>：乘积高 n 位的<b>每一位</b>都相同、且都等于<b>低 n 位的最高位</b> → 不溢出；否则溢出</li>
+    </ul>
+
+    <h3>逐行读表（这张表是这一节的核心案例库）</h3>
+    <p>把表里关键行翻译一下（注意 4 位 × 4 位，结果是 8 位）：</p>
+
+    <table class="tbl">
+      <tr><th>解读</th><th>x</th><th>X (4 位)</th><th>y</th><th>Y</th><th>x×y</th><th>X×Y (8 位)</th><th>低 4 位 p</th><th>溢出？</th></tr>
+      <tr><td>无符号</td><td>6</td><td>0110</td><td>10</td><td>1010</td><td>60</td><td>0011 1100</td><td>12 (1100)</td><td><b>溢出</b>（高 4 位 0011 ≠ 0）</td></tr>
+      <tr><td>带符号</td><td>6</td><td>0110</td><td>−6</td><td>1010</td><td>−36</td><td>1101 1100</td><td>−4 (1100)</td><td><b>溢出</b>（高 4 位 1101 ≠ 全 1）</td></tr>
+      <tr><td>无符号</td><td>13</td><td>1101</td><td>14</td><td>1110</td><td>182</td><td>1011 0110</td><td>6</td><td><b>溢出</b>（高 4 位 1011 ≠ 0）</td></tr>
+      <tr><td>带符号</td><td>−3</td><td>1101</td><td>−2</td><td>1110</td><td>6</td><td>0000 0110</td><td>6</td><td><b>不溢出</b>（高 4 位 0000，低位最高位 0，相等）</td></tr>
+    </table>
+
+    <h3>看最后两行（PPT 红框那一组）</h3>
+    <p>这是<b>整个这一节最重要的观察</b>：</p>
+    <ul>
+      <li>13×14（无符号）和 −3×−2（带符号）<b>输入机器数完全一样</b>（X=1101, Y=1110）</li>
+      <li>低 4 位结果<b>也一样</b>（都是 0110 = 6 / −4？看带符号读 0110 = 6，无符号读 0110 = 6，对，巧合数值都是 6）</li>
+      <li>但<b>高 4 位完全不同</b>：无符号高位 1011（182 的高位）vs 带符号高位 0000（6 的高位）</li>
+      <li>结果：<b>同一份输入机器数，按哪种解读就有不同的"是否溢出"</b></li>
+    </ul>
+
+    <div class="warn">这个例子的教学意义：<b>溢出不是输入的属性，是"输入 + 解读方式"共同决定的</b>。C 程序里 <code>int z = x*y</code> 和 <code>unsigned z = x*y</code> 即使 x、y 位串一样，溢出标志判定也不一样——所以编译器必须按声明的类型选对应的判溢规则。</div>
+  </div>
+</section>
+
+<!-- ============ p52 ============ -->
+<section class="page" id="p52">
+  <h2>x² ≥ 0 吗？（C 语言里不一定！）</h2>
+  <div class="pgnum">PDF 第 52 页</div>
+  <img class="slide" src="pages/p52.png" alt="p52">
+  <div class="explain">
+    <h3>反直觉的事实</h3>
+    <p>数学上 x² ≥ 0 永远成立。<b>但 C 程序里不一定</b>。看例子：n=4，x = 5（带符号 4 位最大正值是 7，所以 5 还可表示，编码 0101）。</p>
+    <pre>  0 1 0 1
+×       0 1 0 1
+————————————
+        0 1 0 1
+      0 0 0 0
+    0 1 0 1
+  0 0 0 0
+————————————
+0 0 0 1 1 0 0 1   = 25 (8 位)</pre>
+    <p>截到低 4 位 = <code>1001</code>。<b>按带符号读 = −7</b>。所以 <code>(int4_t)5 * (int4_t)5 == -7</code>！</p>
+
+    <p>PPT 上的"取低 4 位的值为 −111B = −7"就是这意思（<code>-111B</code> 是 −0b111 = −7 的中式记法）。</p>
+
+    <h3>页面左下 C 程序：<code>int z = x*y</code>，怎么判 z 是否正确？</h3>
+    <p>PPT 给的高级语言层判法：<code>!x || z/x == y</code> 为真时不溢出。</p>
+    <ul>
+      <li><code>!x</code>：x 是 0，那 z 一定是 0，不可能溢出</li>
+      <li><code>z/x == y</code>：把乘法用除法"反推"一遍，如果反推得到原本的 y，说明乘法没丢信息</li>
+    </ul>
+    <p>这是<b>程序员能写的</b>检测方法，纯软件，不依赖硬件标志。代价是多一条除法（除法很慢）。</p>
+
+    <h3>页面右下：编译器层面怎么判</h3>
+    <p>把<b>2n 位完整乘积</b>算出来（用 <code>mul + mulh</code> 这种指令）：</p>
+    <ul>
+      <li><b>无符号</b>：高 n 位全 0 → 不溢出</li>
+      <li><b>带符号</b>：2n 位结果 <b>高 n+1 位</b>全 0 或全 1 → 不溢出（等价说法：高 n 位每位都等于低 n 位的最高位）</li>
+    </ul>
+
+    <div class="tip"><b>为什么是"高 n+1 位"</b>：因为合法的带符号 n 位数范围是 [−2ⁿ⁻¹, 2ⁿ⁻¹)，对应 2n 位结果的"前 n+1 位都是符号扩展"。最高位（第 2n−1 位）和第 n−1 位（低 n 位的最高位）<b>共 n+1 位</b>都要相同才行。<br>
+    p51 那条规则"高 n 位每位等于低 n 位的最高位"等价于"高 n+1 位全相同"，两种说法一致。</div>
+  </div>
+</section>
+
+<!-- ============ p53 ============ -->
+<section class="page" id="p53">
+  <h2>三种 ISA 的乘法指令</h2>
+  <div class="pgnum">PDF 第 53 页</div>
+  <img class="slide" src="pages/p53.png" alt="p53">
+  <div class="explain">
+    <p>硬件上 2n 位乘积是天然有的；问题是<b>ISA 怎么把它暴露给程序员</b>。三种主流做法：</p>
+
+    <h3>IA-32（x86 32 位）</h3>
+    <p>指令：<code>mul SRC</code>（无符号）/ <code>imul SRC</code>（带符号）。"一个操作数 SRC 显式给出，另一个隐含在累加器里"。结果按字长存到不同寄存器对：</p>
+    <table class="tbl">
+      <tr><th>字长</th><th>隐含源</th><th>结果存放</th></tr>
+      <tr><td>16 位</td><td>AX</td><td>DX:AX（32 位拼成）</td></tr>
+      <tr><td>32 位</td><td>EAX</td><td>EDX:EAX</td></tr>
+      <tr><td>64 位</td><td>RAX</td><td>RDX:RAX</td></tr>
+    </table>
+    <p>溢出后 CF 和 OF 标志置位，应用程序自己检查。</p>
+
+    <h3>MIPS</h3>
+    <p>指令：<code>mult rs, rt</code>（带符号）/ <code>multu rs, rt</code>（无符号）。结果<b>固定存到两个专用寄存器 Hi / Lo</b>（高 32 / 低 32），用 <code>mfhi</code> / <code>mflo</code> 指令取出。</p>
+    <p><b>溢出判断</b>：检查 Hi 里每一位是否等于 Lo 的最高位（套 p51 的规则）。</p>
+
+    <h3>RISC-V（最干净的设计）</h3>
+    <p>三条指令把<u>结果的高低半</u>分开：</p>
+    <ul>
+      <li><code>mul rd, rs1, rs2</code>：得到积的<b>低 32 位</b>。注意：因为低 32 位无符号 / 带符号一样（背景页结论），所以这条指令<b>不分有无符号</b>。</li>
+      <li><code>mulh rd, rs1, rs2</code>：得到<b>带符号</b>乘积的高 32 位</li>
+      <li><code>mulhu rd, rs1, rs2</code>：得到<b>无符号</b>乘积的高 32 位</li>
+      <li>（还有 <code>mulhsu</code>：一个带符号一个无符号，混合乘）</li>
+    </ul>
+
+    <div class="note"><b>RISC-V 的设计哲学</b>：不要"隐含寄存器"、不要"专用寄存器对"，所有结果都进通用寄存器。一条乘法指令一次只写一个寄存器（保持指令简单）；要 2n 位就用两条指令。<br>
+    这也是为什么 p55 答案的 RISC-V 代码会先 <code>mul</code> 再 <code>mulh</code>——拿齐高低两半才能判溢出。</div>
+  </div>
+</section>
+
+<!-- ============ p54 ============ -->
+<section class="page" id="p54">
+  <h2>思考题：写一个 imul_overflow 函数</h2>
+  <div class="pgnum">PDF 第 54 页</div>
+  <img class="slide" src="pages/p54.png" alt="p54">
+  <div class="explain">
+    <h3>题面</h3>
+    <pre>int imul_overflow(int x, int y);
+// 判断 x*y（int 类型）是否溢出
+// 溢出返回非 0，否则返回 0</pre>
+
+    <h3>三个子任务</h3>
+    <ol>
+      <li>说出无符号 / 带符号乘法的溢出判断规则（回顾 p51）</li>
+      <li>用 RISC-V 汇编写出实现（PPT 注：要等到第 7 章学完才能完整写）</li>
+      <li>用 C 语言的 long long 实现（取巧法）</li>
+    </ol>
+
+    <h3>解题思路提示</h3>
+    <p><b>任务 (1)</b> 直接背规则。</p>
+    <p><b>任务 (2)</b> 是 RISC-V 汇编实操，需要会 <code>mul + mulh</code> 这两条指令的配合（取齐高低位）+ 比较高位和低位的最高位是否一致。具体见 p55。</p>
+    <p><b>任务 (3)</b> 借助比 int 更宽的 long long（一般 64 位）"无损"地做乘法，然后看结果是否能塞回 int。具体见 p56。</p>
+
+    <div class="tip">这题的<b>教学目的</b>：让你把<b>硬件溢出规则</b>（高位 vs 低位最高位）和<b>软件实现</b>（汇编指令 / 高级语言技巧）打通，理解为什么编译器要这样生成代码。<br>
+    很多 C 程序员一辈子没意识到 <code>int x*y</code> 可能溢出，写出潜在 bug。<u>这一节就是要让你脱离这个无知状态</u>。</div>
+  </div>
+</section>
+
+<!-- ============ p55 ============ -->
+<section class="page" id="p55">
+  <h2>思考题答案 (1)(2)</h2>
+  <div class="pgnum">PDF 第 55 页</div>
+  <img class="slide" src="pages/p55.png" alt="p55">
+  <div class="explain">
+    <h3>(1) 规则再写一遍（PPT 用的措辞略不同，但等价）</h3>
+    <ul>
+      <li><b>无符号</b>：乘积高 n 位非 0 → 溢出</li>
+      <li><b>带符号</b>：乘积高 n 位<b>每一位</b>都相同 + 都等于低 n 位的<b>符号位</b>（最高位）→ 不溢出，否则溢出</li>
+    </ul>
+
+    <h3>(2) RISC-V 汇编实现</h3>
+    <pre>mul   t0, a0, a1     # t0 = (x * y) 的低 32 位
+mulh  a0, a0, a1     # a0 = (x * y) 的高 32 位（带符号）
+srai  t0, t0, 31     # t0 算术右移 31 位 → 全 0 或全 1
+xor   a0, a0, t0     # a0 ^= t0；若两者相同则 a0 = 0（不溢出）</pre>
+
+    <h3>每一句在干嘛（详细拆）</h3>
+    <ol>
+      <li><b><code>mul t0, a0, a1</code></b>：把 x*y 的低 32 位放到 t0。这一步同时<b>覆盖</b>了不需要的部分，但 a0、a1 还在。<br>
+      <i>等等，a0 是 x 的入参寄存器，被复用做返回值。这里先把低 32 位拿到 t0，下一步要覆盖 a0 了。</i></li>
+      <li><b><code>mulh a0, a0, a1</code></b>：把 x*y 的高 32 位（带符号解读）放到 a0。<u>关键：先做 mul 再做 mulh，因为 mulh 要用 a0 和 a1 作输入，会读取它们的原值</u>。a0 在 mulh 之后才被改写，所以这两条指令的顺序很关键。</li>
+      <li><b><code>srai t0, t0, 31</code></b>：把低 32 位<b>算术右移 31 位</b>，结果只剩"符号扩展"——若低位是负数（最高位 1），t0 变成全 1（0xFFFFFFFF）；否则变成全 0。<br>
+      <i>这一步在制造</i>"<i>低 32 位的符号位重复 32 次</i>"<i>这个值，用来和真正的高 32 位（a0）对比。</i></li>
+      <li><b><code>xor a0, a0, t0</code></b>：异或。若高 32 位（a0）正好等于"低位符号扩展"（t0），异或 = 0 → 不溢出。否则 a0 中有 1 位 → 非 0 → 溢出。<br>
+      返回值就在 a0 里，<b>0 表示不溢出、非 0 表示溢出</b>，与题目契合。</li>
+    </ol>
+
+    <div class="note"><b>这段代码的优雅之处</b>：用<b>"符号扩展 + 异或"</b>同时检查了两件事——"高位每位是否相同" 和 "是否等于低位符号位"。如果高位有任何一位与低位符号不同，异或就会在那个位置留下一个 1，结果就非 0。<br>
+    四条指令完成整个判断，<b>不需要分支、不需要循环</b>，可以塞进流水线一拍完成。这就是为什么编译器爱这种位运算 trick。</div>
+  </div>
+</section>
+
+<!-- ============ p56 ============ -->
+<section class="page" id="p56">
+  <h2>思考题答案 (3)：用 long long 取巧</h2>
+  <div class="pgnum">PDF 第 56 页</div>
+  <img class="slide" src="pages/p56.png" alt="p56">
+  <div class="explain">
+    <h3>代码</h3>
+    <pre>int imul_overflow(int x, int y) {
+    long long prod_64 = (long long) x * y;
+    return prod_64 != (int) prod_64;
+}</pre>
+
+    <h3>分析每一步</h3>
+    <ol>
+      <li><code>(long long) x</code>：把 x 强制提升到 64 位带符号（符号扩展）。
+        <br>这一步关键！否则 <code>x * y</code> 会按 int × int 计算，结果还是 32 位，乘法已经溢出了，再赋给 long long 是"亡羊补牢"，丢了的高位回不来。</li>
+      <li>因为 x 已经是 long long，<b>y 会被隐式提升</b>为 long long（C 的算术转换规则），然后做 64 位 × 64 位（只用低 32 位有效）→ 结果是真正的 64 位带符号乘积，<b>不会溢出</b>（32×32 → 64 永远塞得下）。</li>
+      <li><code>(int) prod_64</code>：把 64 位结果<b>截到低 32 位</b>。这模拟了"原本 C 程序里 int 乘法发生的事"。</li>
+      <li><code>prod_64 != (int) prod_64</code>：左边是真值（64 位），右边是被截断的版本（再隐式扩展回 64 位时用符号扩展）。<b>若两者相等，说明截断没丢信息 → 不溢出</b>；若不等 → 截断丢信息 → 溢出。</li>
+    </ol>
+
+    <h3>这个写法的核心 trick</h3>
+    <p>用<b>更宽的整型</b>当"参照系"——硬件配合编译器，把 32 位乘法在 64 位空间里跑一遍，对比"截断前后"是否丢东西。这是高级语言里<b>最自然的溢出检测套路</b>，许多编译器内置 <code>__builtin_mul_overflow</code> 等内建函数都是基于这种思路实现。</p>
+
+    <div class="warn"><b>常见错误写法</b>：<br>
+    <code>long long prod = x * y;</code>（漏了强制转换）<br>
+    这里 <code>x * y</code> 先按 int 算，溢出后再赋给 long long，已经无法救回。<br>
+    一定要<b>在乘之前</b>就把至少一个操作数转成 long long。</div>
+  </div>
+</section>
+
+<!-- ============ p57 ============ -->
+<section class="page" id="p57">
+  <h2>关于乘法的几个开放问题</h2>
+  <div class="pgnum">PDF 第 57 页</div>
+  <img class="slide" src="pages/p57.png" alt="p57">
+  <div class="explain">
+    <h3>问题 1：CPU 没乘法器，只有 ALU + 移位 + 与/或/非，能不能提供乘法指令？</h3>
+    <p><b>能</b>。这正是 p35–p37 那套串行乘法器的方案——用 ALU 反复做"加+移"。这种 CPU 的乘法指令存在，但<b>执行慢</b>（要 n 个周期），靠微程序或硬连线状态机控制。早期的 8086、6502 就是这样。</p>
+
+    <h3>问题 2：ISA 里没乘法指令，但有加、减、移位、逻辑，能不能执行 <code>x*y</code> 的 C 程序？</h3>
+    <p><b>能</b>。编译器会<b>把 x*y 翻译成一个循环</b>（移位 + 条件加，软件版的串行乘法），效率比硬件乘法慢很多但功能等价。这正是<u>有些极简嵌入式 ISA（早期 ARM Thumb 的某些子集）的处理方式</u>。</p>
+
+    <h3>问题 3：下面两个函数</h3>
+    <pre>int imul(int x, int y) { return x*y; }
+unsigned imul(unsigned x, unsigned y) { return x*y; }</pre>
+    <p>问：机器代码相同吗？返回结果一定相同吗？什么情况下相同？</p>
+
+    <h4>机器代码是否相同？</h4>
+    <p><b>相同</b>。因为编译器只会用<b>一条 mul 指令</b>（取低 32 位），而 mul 不分有无符号——低 n 位结果无符号 / 带符号一样（背景页结论）。<br>
+    <i>不过实际编译器可能会因为函数签名而生成不同的"调用约定"代码（比如返回值的符号扩展、寄存器保存等），核心乘法指令是一样的。</i></p>
+
+    <h4>返回结果是否一定相同？</h4>
+    <p><b>不一定</b>。位串相同但<b>解读不同</b>：</p>
+    <ul>
+      <li>不溢出时：两者返回的整数值相同（都正确）</li>
+      <li>溢出时：低 32 位位串相同，但 int 读出来可能是负数、unsigned 读出来是大正数 → 调用者看到的"值"不同</li>
+    </ul>
+    <p><b>不溢出时结果一定相同</b>。这是这一节最重要的观察的应用。</p>
+
+    <h3>页面底部的三种性能层级（PPT 蓝字 ①②③）</h3>
+    <p>同样要在 C 里算 <code>x*y</code>，三种实现方式的执行时间：</p>
+    <ol>
+      <li><b>① ISA 里没有乘法指令</b>：编译器生成<b>循环代码</b>（软件乘法），最慢</li>
+      <li><b>② ISA 有乘法指令、但靠 ALU 实现</b>（前面说的串行乘法器），中等</li>
+      <li><b>③ ISA 有乘法指令、用专门快速乘法器实现</b>（阵列 / 流水线），最快</li>
+    </ol>
+    <p>不等式：<b>① &gt; ② &gt; ③</b>（执行时间从大到小）。</p>
+
+    <div class="tip"><b>这页是整节的总结</b>：硬件性能、ISA 设计、编译器生成代码三者紧密相关。<b>"有没有乘法指令"是 ISA 设计的选择；"乘法指令多快"是微架构实现的选择</b>。同一段 C 代码在不同 CPU 上跑出来快慢可能差几十倍，根源就在这里。</div>
+
+    <hr class="sep">
+    <p style="color:var(--mute);font-size:14px;text-align:center;">—— 第二讲 p43–p57 讲解结束 ——<br>后续 p58 起将是定点数除法、定点 ALU 综合，再进入第三讲浮点数运算。</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>

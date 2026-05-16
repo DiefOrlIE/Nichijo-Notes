@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>数理逻辑 06 · 一阶逻辑（一）讲解（完整版）</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:240px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  main{margin-left:240px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,"Cambria Math","Times New Roman",monospace;font-size:16px;background:#f8f2dc;padding:10px;border-radius:4px;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>数理逻辑 06 · 一阶逻辑（一）</h1>
+  <div style="font-size:12px;color:#7c6a3f;margin-bottom:8px;">完整版 · 共 51 页</div>
+  <ol>
+    <li class="group">引入</li>
+    <li><a href="#bgA0" class="bg">为什么需要一阶逻辑</a></li>
+    <li><a href="#p1" class="skip">1. 封面（跳过）</a></li>
+    <li><a href="#p3">2. 动机：牛/角推理</a></li>
+    <li><a href="#p4">3. Leibniz 的梦想</a></li>
+
+    <li class="group">A · 字母表</li>
+    <li><a href="#bgB0" class="bg">分层全景图</a></li>
+    <li><a href="#p8">4. 逻辑符</a></li>
+    <li><a href="#p10">5. 非逻辑符</a></li>
+    <li><a href="#p11">6. 字母表 6 条说明</a></li>
+    <li><a href="#bgB1" class="bg">逻辑符 vs 非逻辑符</a></li>
+    <li><a href="#p15">7. 例：初等算术语言 𝒜</a></li>
+    <li><a href="#p16">8. 例：群论语言 𝔊</a></li>
+
+    <li class="group">B · 项</li>
+    <li><a href="#bgB2" class="bg">项 vs 公式心智模型</a></li>
+    <li><a href="#bgC0" class="bg">归纳/闭包/BNF 三件套</a></li>
+    <li><a href="#p17">9. 项的三种定义</a></li>
+
+    <li class="group">C · 公式</li>
+    <li><a href="#p22">10. 公式（分层版）</a></li>
+    <li><a href="#p23">11. 公式（合并版）</a></li>
+    <li><a href="#p24">12. 公式（闭包式）</a></li>
+    <li><a href="#p25">13. 公式（BNF）</a></li>
+    <li><a href="#p27">14. 群论公式简写</a></li>
+    <li><a href="#p28">15. 公式的语法树</a></li>
+    <li><a href="#p29">16. 牛/角推理形式化</a></li>
+
+    <li class="group">D · 结构归纳法</li>
+    <li><a href="#bgC1" class="bg">结构归纳法是什么</a></li>
+    <li><a href="#p30">17. 对项的结构归纳</a></li>
+    <li><a href="#p31">18. 对公式的结构归纳</a></li>
+    <li><a href="#p32">19. 括号引理 & 简写</a></li>
+    <li><a href="#p33">20. 简写例子</a></li>
+
+    <li class="group">E · 自由变元</li>
+    <li><a href="#bgD0" class="bg">自由 / 约束的直觉</a></li>
+    <li><a href="#p34">21. 项的自由变元 FV(t)</a></li>
+    <li><a href="#p35">22. 公式的自由变元 FV(A)</a></li>
+    <li><a href="#p36">23. 自由出现 vs 约束出现</a></li>
+
+    <li class="group">F · 替换</li>
+    <li><a href="#bgD1" class="bg">替换的变量捕获坑</a></li>
+    <li><a href="#p37">24. 项的替换</a></li>
+    <li><a href="#p40">25. 项替换实例</a></li>
+    <li><a href="#p41">26. 公式替换（1–4 条）</a></li>
+    <li><a href="#p42">27. 公式替换（5–7 条，含改名）</a></li>
+    <li><a href="#p43">28. 替换例：约束变元不变</a></li>
+    <li><a href="#p47">29. 替换例：必须改名</a></li>
+    <li><a href="#p48">30. 替换 5 条注记</a></li>
+
+    <li class="group">G · 结构定理 & 小结</li>
+    <li><a href="#bgE0" class="bg">回头看：整章地图</a></li>
+    <li><a href="#p49">31. 定理 3.8 项结构唯一</a></li>
+    <li><a href="#p50">32. 定理 3.9 公式结构唯一</a></li>
+    <li><a href="#p51">33. 小结</a></li>
+  </ol>
+  <div style="font-size:12px;color:#9a8b67;margin-top:14px;border-top:1px solid #e0d5b5;padding-top:8px;">⚠ 用 Chrome 打开<br>等词写作 ≐（等号+上点）</div>
+</aside>
+
+<main>
+
+<!-- ============ A0 ============ -->
+<section class="page bg" id="bgA0">
+  <h2>为什么需要一阶逻辑</h2>
+  <div class="pgnum">补充背景 · 入门导航</div>
+  <div class="explain">
+    <p>你已经学完命题逻辑 + 自然推理系统 G'。命题逻辑用 <code>p, q, r</code> 这种"原子命题"加联结词 <code>¬ ∧ ∨ →</code> 就能机械地判推理对错。<b>问题是：命题原子是个黑盒。</b>"所有的牛都有角"在命题逻辑里只能记成一个字母 <code>p</code>，它内部的"所有"和"牛"全被吞掉了。</p>
+    <h3>本章在干什么：把命题原子拆开</h3>
+    <p>一阶逻辑给你三样新工具，把命题打碎成更细的零件：</p>
+    <ul>
+      <li><b>量词</b> <code>∀</code>（任意）、<code>∃</code>（存在）—— 抓住"所有/有些"</li>
+      <li><b>谓词</b> <code>P(x), Q(x,y)</code> —— 把"x 是牛"、"x 有角"这种性质和关系暴露出来</li>
+      <li><b>项</b> <code>x, c, f(x,y)</code> —— 表示"个体"或"对个体做的运算"，比如 <code>0, S(x), x+y</code></li>
+    </ul>
+    <h3>本章只讲"语法"——下一章才讲"语义"</h3>
+    <p>"语法"只关心"哪些符号串是合法公式"，<b>不关心它什么时候真假</b>。语义（怎么解读真假）放第 7 章。所以这一章你会反复看到：定义（怎么生成）→ 归纳法（怎么证明性质）→ 替换（怎么换变量）。</p>
+    <div class="tip"><b>心法</b>：这一章像学新编程语言的<b>语法</b>。先知道什么字符串合法，运行起来什么意思下章见。</div>
+  </div>
+</section>
+
+<!-- ============ p1 跳过 ============ -->
+<section class="page" id="p1">
+  <h2>封面（跳过）</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <p style="color:var(--mute);">封面无内容。下页起进入正题。</p>
+</section>
+
+<!-- ============ p3 ============ -->
+<section class="page" id="p3">
+  <h2>动机例子：命题逻辑不够用</h2>
+  <div class="pgnum">PDF 第 3 页（合并 p2）</div>
+  <img class="slide" src="pages/p03.png" alt="p3">
+  <div class="explain">
+    <h3>看这个推理</h3>
+    <p>前提 1：所有的牛都有角。<br>前提 2：有些动物是牛。<br>结论：所有动物有角。</p>
+    <p>结论显然是<b>错的</b>——"有些动物是牛"只说一部分动物是牛，推不出全部动物有角。所以这是一个<b>不正确的推理</b>。我们希望逻辑系统能机械地把这种错抓出来。</p>
+    <h3>用命题逻辑能抓到吗？不能</h3>
+    <p>命题逻辑只能把三句各当成一个原子：</p>
+    <div class="formula">p = "所有的牛都有角"&nbsp;&nbsp; q = "有些动物是牛"&nbsp;&nbsp; r = "所有动物有角"</div>
+    <p>整个推理写成 <code>(p ∧ q) → r</code>。但 <code>p, q, r</code> 在命题逻辑里毫无关系，真假可任意指派，判断不了。结构信息（都涉及"动物""牛""角""所有""有些"）全被埋掉。</p>
+    <h3>解药：把句子内部打开</h3>
+    <ul>
+      <li><b>量词</b>：<code>所有</code>→<code>∀</code>，<code>有些</code>→<code>∃</code></li>
+      <li><b>谓词</b>：<code>"xx 有角"</code>、<code>"xx 是牛"</code> —— "带空位的属性"，填上对象才变命题</li>
+    </ul>
+    <div class="note">这就是后面字母表里要加 ∀ ∃ 和谓词符（带"元数"）的原因。</div>
+  </div>
+</section>
+
+<!-- ============ p4 ============ -->
+<section class="page" id="p4">
+  <h2>Leibniz 的梦想：让推理像算术一样机械</h2>
+  <div class="pgnum">PDF 第 4 页</div>
+  <img class="slide" src="pages/p04.png" alt="p4">
+  <div class="explain">
+    <p>17 世纪 Leibniz 说：人推理常错，是因为推理不像数学"看得见摸得着"。要有<b>通用语言</b>+<b>通用计算</b>，吵架的时候说一句"咱算一下"就能见分晓。</p>
+    <h3>命题逻辑+G' 实现了一半</h3>
+    <ul>
+      <li>✅ <b>机械化</b>：G' 推理规则纯语法，按规则套就行</li>
+      <li>❌ <b>不够通用</b>：表达力太弱——"所有/有些"完全套不进去</li>
+    </ul>
+    <h3>一阶逻辑 = G' 的"加强版"</h3>
+    <p>保留命题联结词，再加量词 + 谓词 + 函数 + 等词 + 变元。这样几乎所有数学和日常推理都能形式化。叫"<b>一阶</b>"的原因：量词只<b>量化个体</b>（数、点、人……），不量化谓词或集合（量化谓词的是"二阶"，本课不学）。</p>
+    <div class="tip">剧情线：字母表 → 项 → 公式 → 替换（本章语法机器）；下章语义；再后面接 G' 的升级版"一阶自然推理"。</div>
+  </div>
+</section>
+
+<!-- ============ B0 ============ -->
+<section class="page bg" id="bgB0">
+  <h2>分层全景图：字母表 → 项 → 公式</h2>
+  <div class="pgnum">补充背景 · 扎细节前先看全景</div>
+  <div class="explain">
+    <p>整章在搭一座 4 层金字塔，<b>每层只能用下面那层做积木</b>。</p>
+    <div class="formula" style="text-align:left;line-height:2;">
+      第 4 层 · <b>公式（formula）</b>  ：句子——"有真假"，由原子公式+联结词+量词搭<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+      第 3 层 · <b>原子公式</b>          ：最小的有真假，形如 <code>P(t₁,…,tₙ)</code> 或 <code>s ≐ t</code><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+      第 2 层 · <b>项（term）</b>         ：名词——指对象，由变元/常元/函数搭<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+      第 1 层 · <b>字母表</b>             ：原料——逻辑符 + 非逻辑符
+    </div>
+    <h3>关键比喻：项是"名词"，公式是"句子"</h3>
+    <ul>
+      <li><b>项</b>像 <code>x</code>、<code>3</code>、<code>x+y</code>、<code>f(g(x))</code> ——<b>不能</b>说真假，只"指向某对象"</li>
+      <li><b>公式</b>像 <code>x &lt; y</code>、<code>x ≐ 0</code>、<code>∀x. x+0 ≐ x</code> ——<b>有</b>真假可言</li>
+    </ul>
+    <div class="warn"><b>千万别犯</b>：<code>¬f(x)</code>（否定套到项上）、<code>f(x) ∧ g(x,y)</code>（合取套到项上）—— 语法错误。<b>联结词和量词只能套公式，等词和谓词只能作用在项上</b>。</div>
+    <h3>9 个定义的角色分工</h3>
+    <ul>
+      <li>3.1 字母表 / 3.2 项 / 3.3 原子公式+公式</li>
+      <li>3.4 项的自由变元 / 3.5 公式的自由变元</li>
+      <li>3.6 项替换 / 3.7 公式替换</li>
+      <li>3.8 / 3.9 结构唯一性定理</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ p8 ============ -->
+<section class="page" id="p8">
+  <h2>定义 3.1（1）：逻辑符部分</h2>
+  <div class="pgnum">PDF 第 8 页（合并 p5/6/7）</div>
+  <img class="slide" src="pages/p08.png" alt="p8">
+  <div class="explain">
+    <p>字母表 = <b>逻辑符</b>（所有一阶语言共享）+ <b>非逻辑符</b>（每种语言自己定）。先讲逻辑符。</p>
+    <h3>逐项拆定义</h3>
+    <ul>
+      <li><b>变元集</b> <code>V = {x₀, x₁, x₂, …}</code>。<b>可数无穷</b>个变元——"和自然数 ℕ 一样多"。</li>
+      <li><b>联结词</b>：<code>¬ ∧ ∨ →</code>。</li>
+      <li><b>量词</b>：<code>∀</code>（全称，"对所有"）、<code>∃</code>（存在，"存在某个"）。</li>
+      <li><b>等词</b>：<code>≐</code>（等号上加一点）。表示"两个项指同一个对象"。</li>
+      <li><b>辅助符</b>：<code>( ) . ,</code>。只为消歧、分隔。</li>
+    </ul>
+    <h3>三条容易踩坑的细节</h3>
+    <div class="note"><b>1. 变元符 ≠ 命题符。</b> 命题逻辑里的 <code>p, q</code> 自身有真假；这里的变元 <code>x</code> 只指"某个对象"，本身不是真假，要等谓词包住它才有真假。</div>
+    <div class="note"><b>2. |V| = |ℕ|。</b> 变元个数永远够用。</div>
+    <div class="note"><b>3. 完全子集</b>：理论上 <code>{¬, →}</code> 两个联结词就够（其余可定义出来）。列全 <code>¬ ∧ ∨ →</code> 只是方便。</div>
+    <h3>等词 ≐ 不是双向蕴含 ↔</h3>
+    <div class="warn">等词 <code>≐</code> 在两个<b>项</b>之间，<code>s ≐ t</code> 意思是"s 和 t 是同一个体"。<br>双向蕴含 <code>↔</code> 在两个<b>公式</b>之间，意思是"A 和 B 同真同假"。<br>层级完全不同，别混。书中联结词集没列 ↔，可用 <code>(A → B) ∧ (B → A)</code> 定义。</div>
+    <div class="tip"><b>记忆</b>：逻辑符 = 变元 + 联结词 + 量词 + 等词 + 辅助符 = "通用语法零件"，所有一阶语言共享。</div>
+  </div>
+</section>
+
+<!-- ============ p10 ============ -->
+<section class="page" id="p10">
+  <h2>定义 3.1（2）：非逻辑符部分</h2>
+  <div class="pgnum">PDF 第 10 页（合并 p9）</div>
+  <img class="slide" src="pages/p10.png" alt="p10">
+  <div class="explain">
+    <p>非逻辑符 <code>ℒ</code> 三个子集，每个一阶语言<b>自己挑</b>。"可数"= 有限或可数无穷，可以是空集。</p>
+    <h3>(a) 常元符集 ℒ<sub>c</sub></h3>
+    <p><code>ℒc = {c₀, c₁, …}</code>。<b>常元符</b>代表"固定的具体对象"，比如算术里的 <code>0</code>、群论里的 <code>e</code>。</p>
+    <h3>(b) 函数符集 ℒ<sub>f</sub></h3>
+    <p><code>ℒf = {f₀, f₁, …}</code>。每个 <code>f</code> 配一个<b>正整数 μ(f)</b>，叫<b>元数（arity）</b>，意思"接几个输入"。例：</p>
+    <ul>
+      <li><code>S</code>（后继）μ=1：语义上 <code>S(n) = n+1</code></li>
+      <li><code>+</code>、<code>·</code> μ=2</li>
+    </ul>
+    <div class="note"><b>函数符元数必须 ≥ 1。</b> 0 元函数就是常元，归到常元集。</div>
+    <h3>(c) 谓词符集 ℒ<sub>P</sub></h3>
+    <p><code>ℒP = {P₀, P₁, …}</code>。每个 <code>P</code> 配一个<b>非负整数 μ(P)</b>。1 元谓词 = "属性"，2 元 = "关系"。</p>
+    <h3>四条关键备注</h3>
+    <ol>
+      <li><b>谓词也叫关系符</b>。n 元谓词 = n 元关系。</li>
+      <li><b>等词 ≐ 是特殊的谓词</b>，但属于<b>逻辑符</b>。原因：所有"带等号一阶语言"里 ≐ 解释都一样。记带等号一阶语言为 <code>ℒe</code>。</li>
+      <li><b>μ(P)=0 时 P 称命题符</b>。0 元谓词 = 不接输入就有真假 = 命题原子。所以命题逻辑是一阶逻辑特例。</li>
+      <li><b>ℒf 和 ℒP 可以为空</b>。比如群论不需要谓词符（除 ≐）。</li>
+    </ol>
+    <div class="tip"><b>记法</b>：<code>ℒ = ℒc ∪ ℒf ∪ ℒP</code>。不同一阶语言的区别就在这个 ℒ。</div>
+  </div>
+</section>
+
+<!-- ============ p11 ============ -->
+<section class="page" id="p11">
+  <h2>字母表的 6 条说明</h2>
+  <div class="pgnum">PDF 第 11 页</div>
+  <img class="slide" src="pages/p11.png" alt="p11">
+  <div class="explain">
+    <h4>(1) 变元集与自然数集等势</h4>
+    <p>"等势" = 存在 1-1 对应 = 和 ℕ 一样多 = 可数无穷。</p>
+    <h4>(2) 联结词集的不同版本</h4>
+    <p><code>{¬, →}</code>（最精简）/ <code>{¬, ∧, ∨, →, ↔}</code>（最全）。本书 <code>{¬, ∧, ∨, →}</code>。</p>
+    <h4>(3) ℒe = 带等号的一阶语言</h4>
+    <p>≐ 不算非逻辑符。</p>
+    <h4>(4) 元数 0 的谓词 = 命题符</h4>
+    <p>命题逻辑是一阶特例。</p>
+    <h4>(5) 逻辑符共享，非逻辑符各自定义</h4>
+    <p><b>本节灵魂</b>。差别只在非逻辑符。</p>
+    <h4>(6) <code>ℒ = ℒc ∪ ℒf ∪ ℒP</code></h4>
+    <p>大写花体 <code>ℒ</code> 就指整个非逻辑符集。</p>
+    <div class="tip"><b>比喻</b>：逻辑符像编程语言关键字（if、for……所有语言都一样），非逻辑符像你自己定义的变量名、函数名。</div>
+  </div>
+</section>
+
+<!-- ============ B1 ============ -->
+<section class="page bg" id="bgB1">
+  <h2>为什么把字母表分两类</h2>
+  <div class="pgnum">补充背景 · 例子之前 30 秒澄清</div>
+  <div class="explain">
+    <p>本质：<b>通用 vs 领域专属</b>。</p>
+    <h3>逻辑符：所有一阶语言必须且共享</h3>
+    <ul><li>变元、联结词、量词、≐、辅助符——不涉及具体领域，是"逻辑机器"零件。</li></ul>
+    <h3>非逻辑符：每种一阶语言自己定</h3>
+    <ul>
+      <li><b>常元</b>：领域里的特殊对象（0、e、∅……）</li>
+      <li><b>函数</b>：领域里的运算（+ · S ⁻¹……）</li>
+      <li><b>谓词</b>：领域里的关系（&lt; ∈ ⊆……）</li>
+    </ul>
+    <div class="tip"><b>口诀</b>：<b>逻辑符=语法骨架，非逻辑符=领域血肉</b>。下两页给两个完整例子。</div>
+  </div>
+</section>
+
+<!-- ============ p15 ============ -->
+<section class="page" id="p15">
+  <h2>例：初等算术语言 𝒜</h2>
+  <div class="pgnum">PDF 第 15 页（合并 p12/13/14）</div>
+  <img class="slide" src="pages/p15.png" alt="p15">
+  <div class="explain">
+    <p>把皮亚诺算术（PA）的"操作系统"写成一阶语言。</p>
+    <h3>𝒜 的非逻辑符</h3>
+    <ul>
+      <li><b>常元符集</b> <code>ℒc = {0}</code></li>
+      <li><b>函数符集</b> <code>ℒf = {S, +, ·}</code>
+        <ul>
+          <li><code>S</code>：1 元后继函数。语义上 <code>S(n) = n+1</code>。自然数 1 写作 <code>S(0)</code>，2 写作 <code>S(S(0))</code>。</li>
+          <li><code>+ ·</code>：2 元加法 / 乘法</li>
+        </ul>
+      </li>
+      <li><b>谓词符集</b> <code>ℒP = {&lt;}</code> 一个 2 元谓词"小于"</li>
+    </ul>
+    <h3>𝒜 的表达式举例</h3>
+    <div class="formula">∀x. ·(x, 0) ≐ 0</div>
+    <p>翻译："对所有 x，<code>x · 0 = 0</code>"。<code>·(x, 0)</code> 是"前缀写法"——函数符在前。日常写 <code>x · 0</code> 是中缀（只为人看着顺）。</p>
+    <div class="formula">∃∀S(+(x₀, x₁))</div>
+    <p>这一行<b>看着像有量词又有函数</b>，但<b>不是合法公式</b>。</p>
+    <div class="warn"><b>"表达式 ≠ 公式"</b>。表达式只是符号的某种拼接；公式是按定义 3.3 严格生成的合法拼法。<code>∃∀S(+(x₀, x₁))</code> 量词后没接公式、函数符外又套量词，违反语法。</div>
+    <div class="tip"><b>关键观察</b>：选好非逻辑符，整个数论命题都能写在 𝒜 里。加法交换律：<code>∀x.∀y. +(x,y) ≐ +(y,x)</code>。</div>
+  </div>
+</section>
+
+<!-- ============ p16 ============ -->
+<section class="page" id="p16">
+  <h2>例：群论语言 𝔊</h2>
+  <div class="pgnum">PDF 第 16 页</div>
+  <img class="slide" src="pages/p16.png" alt="p16">
+  <div class="explain">
+    <h3>𝔊 的非逻辑符</h3>
+    <ul>
+      <li><b>常元符集</b> <code>ℒc = {e}</code> —— 单位元</li>
+      <li><b>函数符集</b> <code>ℒf = {·（2 元）, ⁻¹（1 元）}</code></li>
+      <li><b>谓词符集</b> <code>ℒP = {}</code>（空，群论除 ≐ 不需其他关系）</li>
+    </ul>
+    <h3>𝔊 的表达式</h3>
+    <div class="formula">∀x. ( ·(x, e) ≐ x ∧ ·(e, x) ≐ x )</div>
+    <p>"对所有 x，<code>x · e = x</code> 且 <code>e · x = x</code>"——单位元左右恒等律。这是合法公式（下面会严格说）。</p>
+    <h3>对比 𝒜 和 𝔊</h3>
+    <table class="tbl">
+      <tr><th></th><th>𝒜（初等算术）</th><th>𝔊（群论）</th></tr>
+      <tr><td>常元</td><td>0</td><td>e</td></tr>
+      <tr><td>函数</td><td>S(1), +(2), ·(2)</td><td>·(2), ⁻¹(1)</td></tr>
+      <tr><td>谓词</td><td>&lt;</td><td>（空）</td></tr>
+      <tr><td>共用</td><td colspan="2" class="l">变元集、∀∃、¬∧∨→、≐、括号、点、逗号</td></tr>
+    </table>
+    <div class="tip"><b>字母表讲完。</b>下一步：用字母表里的符号搭出"项"。</div>
+  </div>
+</section>
+
+<!-- ============ B2 ============ -->
+<section class="page bg" id="bgB2">
+  <h2>项 vs 公式：心智模型</h2>
+  <div class="pgnum">补充背景 · 进入"项"的定义之前</div>
+  <div class="explain">
+    <p>这是<b>整章最重要的概念区分</b>。一旦在这里搞混，后面公式定义、自由变元、替换全都会乱。</p>
+    <h3>两类语法对象的功能</h3>
+    <table class="tbl">
+      <tr><th></th><th>项（term）</th><th>公式（formula）</th></tr>
+      <tr><td>类比</td><td>名词 / 名词短语</td><td>陈述句</td></tr>
+      <tr><td>指什么</td><td>领域里的某个<b>对象</b></td><td>"某件事"——有真有假</td></tr>
+      <tr><td>例</td><td><code>x</code>, <code>0</code>, <code>S(x)</code>, <code>x+y</code>, <code>f(g(x))</code></td><td><code>x &lt; y</code>, <code>x ≐ 0</code>, <code>∀x. P(x)</code></td></tr>
+      <tr><td>组装积木</td><td>变元、常元、函数符</td><td>项、谓词、≐、联结词、量词</td></tr>
+    </table>
+    <h3>为什么联结词不能套在项上</h3>
+    <p><code>¬f(x)</code> 想说什么？<code>f(x)</code> 是个对象（比如某个数），对"一个数"取否定毫无意义。<b>否定只能否定一个"事"。</b> 同理 <code>f(x) ∧ g(x,y)</code> ——两个对象做"且"也没意义。</p>
+    <h3>分层规则（牢记）</h3>
+    <div class="tip">
+      <b>项 → 项</b>：只能用函数符（<code>f(t₁,…,tₙ)</code>）<br>
+      <b>项 → 原子公式</b>：通过 ≐（<code>s ≐ t</code>）或谓词符（<code>P(t₁,…,tₙ)</code>）<br>
+      <b>公式 → 公式</b>：联结词（<code>¬A, A∧B,…</code>）、量词（<code>∀x.A, ∃x.A</code>）
+    </div>
+    <p>下面定义 3.2、3.3 就在严格落实这套分层规则。</p>
+  </div>
+</section>
+
+<!-- ============ C0 ============ -->
+<section class="page bg" id="bgC0">
+  <h2>归纳定义 / 闭包定义 / BNF：三件套</h2>
+  <div class="pgnum">补充背景 · 看懂"项的三种写法"</div>
+  <div class="explain">
+    <p>定义 3.2 把"项"用<b>三种等价方式</b>定义了一遍。第一次看会觉得"为啥要重复三次？"——因为这是数理逻辑里描述<b>归纳生成集合</b>的三种标准技术，<b>任何归纳定义的对象（命题逻辑公式、项、公式、证明树……）都可以这样三写</b>。后面要反复用。</p>
+    <h3>三种写法对照</h3>
+    <table class="tbl">
+      <tr><th>名称</th><th>表述风格</th><th>读起来像</th></tr>
+      <tr><td><b>归纳生成</b></td><td>"以下方式有限次使用生成的对象"</td><td>逐步构造的过程</td></tr>
+      <tr><td><b>闭包定义</b></td><td>"满足某条件的<b>最小集合</b>"</td><td>静态地描述目标集合</td></tr>
+      <tr><td><b>BNF</b></td><td><code>t ::= x | c | f(t,...,t)</code></td><td>编程语言文法</td></tr>
+    </table>
+    <h3>为什么等价</h3>
+    <ul>
+      <li><b>归纳生成 → 闭包</b>：所有"按规则一步步生出来的对象"恰好就是"包含基础元素+对规则封闭的最小集合"</li>
+      <li><b>闭包 → BNF</b>：把封闭规则改写成产生式</li>
+    </ul>
+    <h3>各自适用场景</h3>
+    <ul>
+      <li>想<b>计算/枚举</b>对象 → 归纳生成</li>
+      <li>想<b>证明性质</b>（如"项 X 必然满足 R"）→ 闭包（用结构归纳法）</li>
+      <li>想<b>写解析器</b>或对照编程语言 → BNF</li>
+    </ul>
+    <div class="tip">命题逻辑公式之前也是这么定义的。这章是"重演同样套路在更复杂对象上"。</div>
+  </div>
+</section>
+
+<!-- ============ p17/18/19 项的三种定义合并 ============ -->
+<section class="page" id="p17">
+  <h2>定义 3.2 项 · 三种等价写法</h2>
+  <div class="pgnum">PDF 第 17、18、19 页（合并讲）</div>
+  <img class="slide" src="pages/p17.png" alt="p17">
+  <img class="slide" src="pages/p18.png" alt="p18">
+  <img class="slide" src="pages/p19.png" alt="p19">
+  <div class="explain">
+    <p><b>项（term）</b> = 一阶语言里"表示对象的名字"。三种等价定义：</p>
+    <h3>(i) 归纳生成式（PDF p17）</h3>
+    <p>项由以下规则<b>有限次使用</b>生成：</p>
+    <ol>
+      <li>每个<b>变元符</b>是项</li>
+      <li>每个<b>常元符</b>是项</li>
+      <li>若 <code>f</code> 是 n 元函数符，<code>t₁,…,tₙ</code> 都已经是项，则 <code>f(t₁,…,tₙ)</code> 也是项</li>
+    </ol>
+    <h3>(ii) 闭包式（PDF p18）</h3>
+    <p>全体项的集合 <code>T</code> 是满足以下条件的<b>最小集合</b>：</p>
+    <ol>
+      <li><code>V ⊆ T</code>（所有变元都在）</li>
+      <li><code>ℒc ⊆ T</code>（所有常元都在）</li>
+      <li>对 n 元函数 <code>f</code>，若 <code>t₁,…,tₙ ∈ T</code>，则 <code>f(t₁,…,tₙ) ∈ T</code>（关于函数符封闭）</li>
+    </ol>
+    <p>"最小集合"——刚好涵盖所有按规则能造出来的项，<b>多一个都不行</b>。</p>
+    <h3>(iii) BNF 式（PDF p19）</h3>
+    <div class="formula">t ::= x | c | f(t₁, …, tₙ)</div>
+    <p>读法："项 <code>t</code> 要么是变元 <code>x</code>，要么是常元 <code>c</code>，要么是 <code>f(t₁,…,tₙ)</code> 这种形式"。<code>|</code> 是"或"，<code>::=</code> 是"被定义为"。</p>
+    <h3>例子</h3>
+    <p>在 𝒜（算术语言）里，下面都是项：</p>
+    <ul>
+      <li><code>x₀</code>（变元）、<code>0</code>（常元）</li>
+      <li><code>S(0)</code>、<code>S(S(0))</code>、<code>+(x₀, 0)</code>、<code>·(x₀, S(x₁))</code></li>
+    </ul>
+    <div class="note"><b>关键</b>：项里<b>没有</b>联结词、量词、≐、谓词。项只是"名词"。</div>
+    <div class="tip"><b>三种写法 = 同一个集合</b>。后面用归纳法证项的性质时通常照 (i)；要严谨说"项的全集"时用 (ii)；要写解析器时用 (iii)。</div>
+  </div>
+</section>
+
+<!-- ============ p22 ============ -->
+<section class="page" id="p22">
+  <h2>定义 3.3 公式 · 分层版（原子公式 + 公式）</h2>
+  <div class="pgnum">PDF 第 22 页（合并 p20/21）</div>
+  <img class="slide" src="pages/p22.png" alt="p22">
+  <div class="explain">
+    <p>公式分两层定义。先定义"原子公式"（最小的有真假），再用它搭出一般公式。</p>
+    <h3>(A) 原子公式（atomic formula）</h3>
+    <ol>
+      <li>若 <code>s, t</code> 为项，则 <code>(s ≐ t)</code> 是原子公式</li>
+      <li>若 <code>R</code> 为 n 元谓词符，<code>t₁,…,tₙ</code> 为项，则 <code>R(t₁,…,tₙ)</code> 是原子公式</li>
+    </ol>
+    <p><b>原子公式 = 项之间的"等于"或"关系"。</b>是公式中最简单、不可再分的那种。</p>
+    <h3>(B) 公式 = 原子公式按联结词、量词搭出来</h3>
+    <ol>
+      <li>原子公式是公式</li>
+      <li>若 <code>A</code> 是公式，则 <code>(¬A)</code> 是公式</li>
+      <li>若 <code>A, B</code> 是公式，则 <code>(A ∗ B)</code> 是公式，其中 <code>∗ ∈ {∧, ∨, →}</code></li>
+      <li>若 <code>A</code> 是公式且 <code>x</code> 是变元，则 <code>∀x.A</code> 和 <code>∃x.A</code> 是公式</li>
+    </ol>
+    <h3>两条灵魂规则</h3>
+    <div class="warn">
+      <b>反例（不是合法公式）</b>：<br>
+      <code>¬f(x)</code> ✗ —— f(x) 是项，不能取否定<br>
+      <code>f(x) ∧ g(x,y)</code> ✗ —— 函数值是对象，不能做合取
+    </div>
+    <div class="tip">
+      <b>1. 等词 ≐ 和谓词作用在项上 → 得到原子公式</b><br>
+      <b>2. 联结词和量词只能作用在公式上 → 得到更大的公式</b>
+    </div>
+    <div class="note">注意量词写法 <code>∀x.A</code>，<b>点号 .</b> 是辅助符，把量词和后面的公式分开（书中风格，有些教材没这个点）。</div>
+  </div>
+</section>
+
+<!-- ============ p23 ============ -->
+<section class="page" id="p23">
+  <h2>定义 3.3 公式 · 合并版（5 条一气写完）</h2>
+  <div class="pgnum">PDF 第 23 页</div>
+  <img class="slide" src="pages/p23.png" alt="p23">
+  <div class="explain">
+    <p>把"原子公式"和"公式"合并到一组归纳规则里。等价写法，结果同。</p>
+    <ol>
+      <li><code>(s ≐ t)</code> 是公式</li>
+      <li><code>R(t₁,…,tₙ)</code> 是公式</li>
+      <li><code>(¬A)</code> 是公式</li>
+      <li><code>(A ∗ B)</code> 是公式，<code>∗ ∈ {∧, ∨, →}</code></li>
+      <li><code>∀x.A</code> 和 <code>∃x.A</code> 是公式</li>
+    </ol>
+    <div class="tip">这版省了"原子公式"这个中间概念，更紧凑。但讲解时分层版易懂，后面证明里再用合并版。</div>
+  </div>
+</section>
+
+<!-- ============ p24 ============ -->
+<section class="page" id="p24">
+  <h2>定义 3.3 公式 · 闭包式</h2>
+  <div class="pgnum">PDF 第 24 页</div>
+  <img class="slide" src="pages/p24.png" alt="p24">
+  <div class="explain">
+    <p>全体公式集 <code>F</code> 是满足以下条件的最小集合：</p>
+    <ol>
+      <li>若 <code>s, t ∈ T</code>（项），则 <code>(s ≐ t) ∈ F</code></li>
+      <li>若 <code>R</code> 是 n 元谓词，<code>t₁,…,tₙ ∈ T</code>，则 <code>R(t₁,…,tₙ) ∈ F</code></li>
+      <li>若 <code>A, B ∈ F</code>，则 <code>(¬A) ∈ F</code></li>
+      <li>若 <code>A, B ∈ F</code>，则 <code>(A ∗ B) ∈ F</code></li>
+      <li>若 <code>A ∈ F</code> 且 <code>x ∈ V</code>，则 <code>(Qx.A) ∈ F</code>，<code>Q ∈ {∀, ∃}</code></li>
+    </ol>
+    <p>注意写成 <code>(Qx.A)</code>，把量词外面套了一层括号——为后面"括号引理"做准备。<code>Q</code> 是"量词变量"，可以是 ∀ 或 ∃。</p>
+  </div>
+</section>
+
+<!-- ============ p25 ============ -->
+<section class="page" id="p25">
+  <h2>定义 3.3 公式 · BNF 式</h2>
+  <div class="pgnum">PDF 第 25 页</div>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+    <div class="formula">A ::= (t₁ ≐ t₂) | R(t₁,…,tₙ) | (¬A) | (A ∧ B) | (A ∨ B) | (A → B) | (∀x.A) | (∃x.A)</div>
+    <p>八种产生式，对应定义 3.3 的八种生成情形——后面定理 3.9 就在说"每个公式恰好属于这 8 种形式之一"。</p>
+    <div class="tip">至此，"公式"这个核心概念被从三个角度（归纳、闭包、BNF）反复夯实。下面看具体例子。</div>
+  </div>
+</section>
+
+<!-- ============ p27 ============ -->
+<section class="page" id="p27">
+  <h2>群论公式与可读简写</h2>
+  <div class="pgnum">PDF 第 27 页（合并 p26）</div>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+    <p>按定义 3.3，群单位元公式严格写成：</p>
+    <div class="formula">(∀x. ((·(x, e) ≐ x) ∧ (·(e, x) ≐ x)))</div>
+    <p>每个 ∧、每对 ≐ 都有外括号。<b>合法但难读</b>。为人类阅读方便，做两件事：</p>
+    <h3>(1) 给函数符起别名</h3>
+    <p>把 <code>·</code> 写成 <code>m</code>（multiply）、<code>⁻¹</code> 写成 <code>i</code>（inverse）：</p>
+    <div class="formula">(∀x. ((m(x, e) ≐ x) ∧ (m(e, x) ≐ x)))</div>
+    <h3>(2) 后面还会引入"括号简写约定"（见 p32）</h3>
+    <p>到那时，上式能进一步精简为 <code>∀x. m(x,e) ≐ x ∧ m(e,x) ≐ x</code>。</p>
+    <div class="note">起别名只是<b>书写记号</b>，不改变形式语言本身。书上经常这么做，要看清楚。</div>
+  </div>
+</section>
+
+<!-- ============ p28 ============ -->
+<section class="page" id="p28">
+  <h2>公式的语法树（生成树）</h2>
+  <div class="pgnum">PDF 第 28 页</div>
+  <img class="slide" src="pages/p28.png" alt="p28">
+  <div class="explain">
+    <p>每个公式都对应一棵<b>语法树（syntax tree / parse tree）</b>：叶子是变元/常元，越往上越复杂，根是整个公式。</p>
+    <h3>读图：从下往上生成</h3>
+    <ul>
+      <li><b>叶子层</b>：<code>m(x,e), x, m(e,x), x</code>（项）</li>
+      <li><b>原子公式层</b>：用 ≐ 把项配对 → <code>(m(x,e) ≐ x)</code>、<code>(m(e,x) ≐ x)</code></li>
+      <li><b>合取层</b>：两个原子公式用 ∧ 连起来</li>
+      <li><b>量词层</b>：外面套 ∀x</li>
+    </ul>
+    <h3>为什么语法树重要</h3>
+    <ul>
+      <li><b>结构归纳法的依据</b>：证明 "所有公式满足性质 R" → 沿语法树自底向上</li>
+      <li><b>结构唯一性（定理 3.9）的直观</b>：每个公式只有一棵语法树</li>
+      <li><b>替换、自由变元</b> 都是沿语法树递归定义</li>
+    </ul>
+    <div class="tip">下次读不懂某条递归定义，就在脑子里画语法树看一遍。</div>
+  </div>
+</section>
+
+<!-- ============ p29 ============ -->
+<section class="page" id="p29">
+  <h2>回扣：牛/角推理的一阶形式化</h2>
+  <div class="pgnum">PDF 第 29 页</div>
+  <img class="slide" src="pages/p29.png" alt="p29">
+  <div class="explain">
+    <p>本章开篇那个推理，现在我们有工具把它写出来了。</p>
+    <h3>选谓词</h3>
+    <ul>
+      <li><code>P(x)</code>：x 是牛</li>
+      <li><code>Q(x)</code>：x 有角</li>
+      <li><code>R(x)</code>：x 是动物</li>
+    </ul>
+    <h3>三句话的形式化</h3>
+    <ul>
+      <li>前提 1（所有牛都有角）：<code>∀x. (P(x) → Q(x))</code></li>
+      <li>前提 2（有些动物是牛）：<code>∃y. (R(y) ∧ P(y))</code></li>
+      <li>结论（所有动物有角）：<code>∀z. (R(z) → Q(z))</code></li>
+    </ul>
+    <h3>整个推理</h3>
+    <div class="formula">((∀x.(P(x)→Q(x))) ∧ (∃y.(R(y)∧P(y)))) → (∀z.(R(z)→Q(z)))</div>
+    <p>到下一章学语义后，会算出这个公式<b>不是永真</b>——也就是确实"推不出"。命题逻辑做不到的事，一阶逻辑做到了。</p>
+    <div class="tip">这是本章语法的"收益预告"：表达力暴涨。</div>
+  </div>
+</section>
+
+<!-- ============ C1 ============ -->
+<section class="page bg" id="bgC1">
+  <h2>结构归纳法是什么</h2>
+  <div class="pgnum">补充背景 · 看懂下面两页的关键</div>
+  <div class="explain">
+    <p>结构归纳法 = 数学归纳法在"递归定义对象"上的版本。</p>
+    <h3>对比</h3>
+    <table class="tbl">
+      <tr><th></th><th>数学归纳法（对 ℕ）</th><th>结构归纳法（对项/公式）</th></tr>
+      <tr><td>基础</td><td>n = 0 成立</td><td>所有最简形式（变元/常元 或 原子公式）成立</td></tr>
+      <tr><td>归纳假设</td><td>n 成立</td><td>子项 / 子公式都成立</td></tr>
+      <tr><td>归纳步骤</td><td>n → n+1</td><td>子项 → 用函数符生成；子公式 → 用联结词/量词生成</td></tr>
+    </table>
+    <h3>为什么有效</h3>
+    <p>项和公式都是<b>有限次</b>规则生成的（看定义里的"有限次使用"）。语法树深度有限。从叶子（基础情形）到根（归纳步骤）走有限步，每步都保性 → 根上的对象也有性。</p>
+    <div class="tip">"对项/公式的结构归纳"会贯穿后面所有定理证明，必须熟练。</div>
+  </div>
+</section>
+
+<!-- ============ p30 ============ -->
+<section class="page" id="p30">
+  <h2>对项的结构归纳</h2>
+  <div class="pgnum">PDF 第 30 页</div>
+  <img class="slide" src="pages/p30.png" alt="p30">
+  <div class="explain">
+    <p>要证：所有项都满足某性质 R。三步：</p>
+    <h3>归纳基础</h3>
+    <ul>
+      <li>证：每个<b>变元符</b>满足 R</li>
+      <li>证：每个<b>常元符</b>满足 R</li>
+    </ul>
+    <h3>归纳假设</h3>
+    <p>假设项 <code>t₁, …, tₙ</code> 都满足 R。</p>
+    <h3>归纳步骤</h3>
+    <p>证：对任意 n 元函数 <code>f</code>，复合项 <code>f(t₁,…,tₙ)</code> 也满足 R。</p>
+    <div class="tip"><b>三步全做到 → 所有项都满足 R</b>。后面定义 3.4（项的自由变元）就是按这个套路递归定义的。</div>
+  </div>
+</section>
+
+<!-- ============ p31 ============ -->
+<section class="page" id="p31">
+  <h2>对公式的结构归纳</h2>
+  <div class="pgnum">PDF 第 31 页</div>
+  <img class="slide" src="pages/p31.png" alt="p31">
+  <div class="explain">
+    <p>要证：所有公式都满足某性质 R。</p>
+    <h3>归纳基础</h3>
+    <p>先对项做归纳，证所有项有 R。然后证原子公式 <code>(s ≐ t)</code>、<code>R(t₁,…,tₙ)</code> 满足性质（这部分用项的结论）。</p>
+    <h3>归纳假设</h3>
+    <p>假设 <code>A</code> 和 <code>B</code> 都满足 R。</p>
+    <h3>归纳步骤（分 7 种情形）</h3>
+    <ul>
+      <li><code>(s ≐ t)</code></li>
+      <li><code>R(t₁,…,tₙ)</code></li>
+      <li><code>(¬A)</code></li>
+      <li><code>(A ∧ B)</code>、<code>(A ∨ B)</code>、<code>(A → B)</code></li>
+      <li><code>∀x.A</code>、<code>∃x.A</code></li>
+    </ul>
+    <p>每种情形都用基础和假设证：生成的新公式仍满足 R。</p>
+    <div class="note">很多课本写成"6 种"或"5 种"——把原子公式两类合一、量词两类合一。本质一样。</div>
+  </div>
+</section>
+
+<!-- ============ p32 ============ -->
+<section class="page" id="p32">
+  <h2>括号引理 & 简写约定</h2>
+  <div class="pgnum">PDF 第 32 页</div>
+  <img class="slide" src="pages/p32.png" alt="p32">
+  <div class="explain">
+    <h3>括号引理</h3>
+    <p>一阶逻辑公式的左括号数 = 右括号数。证法：对公式结构归纳。基础情形原子公式里括号配对，每条生成规则都加配对的左右括号 → 归纳保持平衡。</p>
+    <h3>简写约定（和命题逻辑同款）</h3>
+    <ol>
+      <li><b>省略最外层括号</b>：<code>(A ∧ B)</code> 写成 <code>A ∧ B</code></li>
+      <li><b>省略 (Qx.A) 的外括号</b>：<code>(∀x.A)</code> 写成 <code>∀x.A</code></li>
+      <li><b>用方括号、大括号</b> 区分嵌套层次，便于阅读</li>
+      <li><b>联结词优先级（从高到低）</b>：<code>≐</code> > <code>¬</code> > <code>∧</code> > <code>∨</code> > <code>→</code></li>
+    </ol>
+    <div class="note">优先级意思：在没括号时按优先级解析。比如 <code>A ∧ B → C</code> 等价于 <code>(A ∧ B) → C</code>，因为 ∧ 优先级比 → 高。</div>
+    <div class="warn">简写是<b>书写约定</b>，不改变形式语言本身。证明里要严格时仍要写全括号。</div>
+  </div>
+</section>
+
+<!-- ============ p33 ============ -->
+<section class="page" id="p33">
+  <h2>简写实例</h2>
+  <div class="pgnum">PDF 第 33 页</div>
+  <img class="slide" src="pages/p33.png" alt="p33">
+  <div class="explain">
+    <h3>例 1：群论公式</h3>
+    <div class="formula">(∀x. ((m(x,e) ≐ x) ∧ (m(e,x) ≐ x)))</div>
+    <p>简写为：</p>
+    <div class="formula">∀x. (m(x,e) ≐ x ∧ m(e,x) ≐ x)</div>
+    <h3>例 2：牛/角推理</h3>
+    <div class="formula">((∀x.(P(x)→Q(x))) ∧ (∃y.(R(y)∧P(y)))) → (∀z.(R(z)→Q(z)))</div>
+    <p>简写为：</p>
+    <div class="formula">(∀x. P(x)→Q(x) ∧ ∃y. R(y)∧P(y)) → ∀z. (R(z)→Q(z))</div>
+    <div class="note">省略一些括号确实让公式更短，但<b>遇到歧义还是要把括号补回去</b>。读者解析时要靠"优先级表"心算。</div>
+  </div>
+</section>
+
+<!-- ============ D0 ============ -->
+<section class="page bg" id="bgD0">
+  <h2>自由变元 / 约束变元：语义直觉</h2>
+  <div class="pgnum">补充背景 · 看定义 3.4 / 3.5 之前</div>
+  <div class="explain">
+    <p>"自由"和"约束"是接下来三页的核心概念。先用<b>编程类比</b>把直觉建起来。</p>
+    <h3>编程里的 scope</h3>
+    <pre>def f():
+    total = 0           # x 在外面没出现
+    for x in range(10): # x 在循环里"绑定"
+        total += x      # 这里的 x 是"被绑定的局部变量"
+    return total + y    # 而 y 没在函数内绑定 → 是外部传进来的</pre>
+    <p>对应到一阶逻辑：</p>
+    <ul>
+      <li>循环 <code>for x in …</code> = 量词 <code>∀x.</code>（或 <code>∃x.</code>）—— 它<b>绑定</b>了 x</li>
+      <li>循环内的 <code>x</code> = <b>约束出现</b>（bound）</li>
+      <li>不在量词作用范围内的 <code>y</code> = <b>自由出现</b>（free）—— 像函数的"参数"，等待外面填值</li>
+    </ul>
+    <h3>意义</h3>
+    <ul>
+      <li><b>没有自由变元的公式</b>叫<b>句子（sentence）</b>—— 自带完整真假含义，不需要"额外填值"</li>
+      <li><b>有自由变元的公式</b>真假依赖"自由变元怎么取值"—— 还不是个完整命题</li>
+      <li><b>替换</b>就是把"自由变元"的位置换成具体项；约束位置不动</li>
+    </ul>
+    <div class="tip">下三页（p34/35/36）的定义就是把这个直觉用归纳法严格刻画。</div>
+  </div>
+</section>
+
+<!-- ============ p34 ============ -->
+<section class="page" id="p34">
+  <h2>定义 3.4：项的自由变元 FV(t)</h2>
+  <div class="pgnum">PDF 第 34 页</div>
+  <img class="slide" src="pages/p34.png" alt="p34">
+  <div class="explain">
+    <p>项里没有量词，所以项里的变元<b>全是自由的</b>。<code>FV(t)</code> 记"出现在 t 中的变元集合"。按结构归纳：</p>
+    <ol>
+      <li><code>FV(x) = {x}</code>，<code>x ∈ V</code> ——单个变元的自由变元就是它自己</li>
+      <li><code>FV(c) = ∅</code>，<code>c ∈ ℒc</code> ——常元里没有变元</li>
+      <li><code>FV(f(t₁,…,tₙ)) = ∪ᵢ FV(tᵢ)</code> ——复合项的自由变元 = 各子项自由变元的并</li>
+    </ol>
+    <h3>两个名词</h3>
+    <ul>
+      <li><b>x 是 t 的自由变元</b>：<code>x ∈ FV(t)</code></li>
+      <li><b>t 是闭项（closed term）</b>：<code>FV(t) = ∅</code>，即 t 里没有任何变元（全由常元和函数符搭起来）</li>
+    </ul>
+    <h3>例</h3>
+    <p>取 <code>t = m(x, e)</code>：<code>FV(t) = FV(x) ∪ FV(e) = {x} ∪ ∅ = {x}</code>。所以 t 的自由变元只有 x。</p>
+    <div class="note">闭项例子：<code>S(S(0))</code>、<code>m(e, e)</code>——都不含变元。在语义层面，闭项指代某个<b>确定的</b>对象（如自然数 2）。</div>
+  </div>
+</section>
+
+<!-- ============ p35 ============ -->
+<section class="page" id="p35">
+  <h2>定义 3.5：公式的自由变元 FV(A)</h2>
+  <div class="pgnum">PDF 第 35 页</div>
+  <img class="slide" src="pages/p35.png" alt="p35">
+  <div class="explain">
+    <p>公式里有量词，会"吃掉"变元。按公式结构归纳：</p>
+    <ol>
+      <li><code>FV(t₁ ≐ t₂) = FV(t₁) ∪ FV(t₂)</code></li>
+      <li><code>FV(P(t₁,…,tₙ)) = ∪ᵢ FV(tᵢ)</code></li>
+      <li><code>FV(¬A) = FV(A)</code> ——否定不影响</li>
+      <li><code>FV(A ∗ B) = FV(A) ∪ FV(B)</code></li>
+      <li><code>FV(Qx.A) = FV(A) − {x}</code> ——<b>量词把 x 从自由变元集里移除！</b></li>
+    </ol>
+    <h3>关键就是第 5 条</h3>
+    <p>量词 <code>Qx.</code> <b>绑定</b>了变元 <code>x</code>。从此公式内部的 x 不再"自由"。这正是 D0 背景页里"for 循环吃掉循环变量"的形式化。</p>
+    <h3>两个名词</h3>
+    <ul>
+      <li><b>x 是 A 的自由变元</b>：<code>x ∈ FV(A)</code></li>
+      <li><b>A 是句子（sentence）</b>：<code>FV(A) = ∅</code>，公式里所有变元都被量词绑住</li>
+    </ul>
+    <div class="tip">句子 = 自带完整真假含义的公式。日常数学定理（如"加法交换律"）都是句子。下一章语义就靠"句子是否真"做主线。</div>
+  </div>
+</section>
+
+<!-- ============ p36 ============ -->
+<section class="page" id="p36">
+  <h2>同一变元可同时自由 & 约束</h2>
+  <div class="pgnum">PDF 第 36 页</div>
+  <img class="slide" src="pages/p36.png" alt="p36">
+  <div class="explain">
+    <p>之前讲的"FV(A)"是<b>整个公式</b>视角下的自由变元集。但同一个变元符号 <code>y</code> 可以在公式不同位置出现，<b>有的位置是自由出现，有的是约束出现</b>。看图上的例子：</p>
+    <div class="formula">∃x. ((P(x, y) ∧ ∀y. R(x, y))) → Q(x, z)</div>
+    <ul>
+      <li>第 1 次 y 出现在 <code>P(x, y)</code> 里——<b>没被 ∀y 包住，自由出现</b></li>
+      <li>第 2 次 y 出现在 <code>∀y</code>——它就是量词本身（约束源）</li>
+      <li>第 3 次 y 出现在 <code>R(x, y)</code>——<b>在 ∀y 作用域内，约束出现</b></li>
+    </ul>
+    <h3>"约束出现"的形式定义</h3>
+    <p>在 A 中 x 的第 i 次出现是<b>约束的</b>：存在 A 的子公式 <code>Qx.B</code> 使 A 中 x 的第 i 次出现在 <code>Qx.B</code> 中。</p>
+    <div class="warn"><b>一个变元名可以同时有自由出现和约束出现</b>。在做替换、改名时要小心：替换只动"自由出现"的位置。</div>
+    <div class="note">类比编程：函数里既用全局变量 <code>x</code>（自由），又有 <code>for x in ...</code> 的循环变量（约束）。同名但不同身份。</div>
+  </div>
+</section>
+
+<!-- ============ D1 ============ -->
+<section class="page bg" id="bgD1">
+  <h2>替换为什么会出事：变量捕获</h2>
+  <div class="pgnum">补充背景 · 进入定义 3.6 / 3.7 之前必看</div>
+  <div class="explain">
+    <p>替换 <code>A[t/x]</code> 表示"把 A 中所有<b>自由出现</b>的 x 替换成项 t"。直觉很简单，<b>但在量词附近会出大事</b>。看一个反例：</p>
+    <h3>盲替的灾难</h3>
+    <p>考虑公式 <code>A = ∃y. (x ≐ y)</code>。语义上读："存在 y 使 x = y"——对任何 x 都成立（取 y = x 即可）。</p>
+    <p>现在做替换 <code>A[y/x]</code>——把自由的 x 换成项 <code>y</code>。如果<b>傻替</b>：</p>
+    <div class="formula">∃y. (y ≐ y)</div>
+    <p>这说"存在 y 使 y = y"——废话，永真。<b>但意义和原来不一样了</b>！原公式说"x 等于某个 y"，依赖 x 的取值；新公式什么也不依赖。</p>
+    <h3>问题出在哪</h3>
+    <p>我们替进去的 <code>y</code> <b>被外层的 ∃y 给"捕获"了</b>——本来要传进来的"自由 y"被改造成"循环局部变量"。在编程里这叫<b>变量捕获（variable capture）</b>，是宏展开的经典坑。</p>
+    <h3>解药：先改名</h3>
+    <p>替换前，把 ∃y 改名成 ∃z（z 是新变元）：</p>
+    <div class="formula">∃z. (x ≐ z)</div>
+    <p>再替换：</p>
+    <div class="formula">∃z. (y ≐ z)</div>
+    <p>现在意义没变："存在 z 使 y = z"——还是依赖 y 的值，正确。</p>
+    <div class="tip"><b>定义 3.7 第 (7) 条就是在严格规定"什么时候必须改名 + 怎么挑新变元"。</b>看那条规则时回顾这个例子。</div>
+  </div>
+</section>
+
+<!-- ============ p37 ============ -->
+<section class="page" id="p37">
+  <h2>定义 3.6：项的替换 s[t/x]</h2>
+  <div class="pgnum">PDF 第 37 页</div>
+  <img class="slide" src="pages/p37.png" alt="p37">
+  <div class="explain">
+    <p><b>项替换 <code>s[t/x]</code></b>（书中写作 <code>s[t∕x]</code>，方括号分子分母式）= 把项 <code>s</code> 里<b>所有变元 x 的位置</b>都换成项 <code>t</code>。按 s 结构归纳定义：</p>
+    <ol>
+      <li><code>x[t/x] = t</code> ——是 x 就换</li>
+      <li><code>y[t/x] = y</code>（y 是异于 x 的变元）——不是 x 不动</li>
+      <li><code>c[t/x] = c</code>（c 是常元）——常元不动</li>
+      <li><code>f(t₁,…,tₙ)[t/x] = f(t₁[t/x], …, tₙ[t/x])</code> ——递归往子项里替</li>
+    </ol>
+    <div class="note">项里没有量词，<b>所以项替换没有"约束/改名"麻烦</b>。麻烦留给公式替换。</div>
+  </div>
+</section>
+
+<!-- ============ p40 ============ -->
+<section class="page" id="p40">
+  <h2>项替换实例</h2>
+  <div class="pgnum">PDF 第 40 页（合并 p38/39）</div>
+  <img class="slide" src="pages/p40.png" alt="p40">
+  <div class="explain">
+    <p>取 <code>s = f(f(x, y), 0)</code>，按定义一步步算 <code>s[t/x]</code>：</p>
+    <pre>s[t/x]
+= f(f(x, y), 0) [t/x]                      <span style="color:#7c6a3f">// 整体</span>
+= f( f(x, y)[t/x], 0[t/x] )                <span style="color:#7c6a3f">// 规则 (4)：递归进子项</span>
+= f( f( x[t/x], y[t/x] ), 0 )              <span style="color:#7c6a3f">// 0 是常元，规则 (3)</span>
+= f( f( t, y ), 0 )                        <span style="color:#7c6a3f">// 规则 (1) (2)</span></pre>
+    <p>最终：<code>s[t/x] = f(f(t, y), 0)</code>。</p>
+    <div class="tip">所有 <code>x</code> 都被 <code>t</code> 替了，其他符号原封不动。<b>这就是项替换的全部</b>——朴素递归。</div>
+  </div>
+</section>
+
+<!-- ============ p41 ============ -->
+<section class="page" id="p41">
+  <h2>定义 3.7：公式替换 A[t/x]（第 1–4 条）</h2>
+  <div class="pgnum">PDF 第 41 页</div>
+  <img class="slide" src="pages/p41.png" alt="p41">
+  <div class="explain">
+    <p><b>公式替换 <code>A[t/x]</code></b> = 把公式 A 中<b>所有自由出现</b>的 x 换成 t。按 A 结构归纳，先看前 4 条（不涉及量词）：</p>
+    <ol>
+      <li><code>(t₁ ≐ t₂)[t/x] = (t₁[t/x] ≐ t₂[t/x])</code> ——分别在两个项里替</li>
+      <li><code>R(t₁,…,tₙ)[t/x] = R(t₁[t/x], …, tₙ[t/x])</code></li>
+      <li><code>(¬A)[t/x] = ¬(A[t/x])</code></li>
+      <li><code>(A ∗ B)[t/x] = (A[t/x] ∗ B[t/x])</code></li>
+    </ol>
+    <p>这四条朴素——遇到联结词就递归下去，遇到项就用<b>定义 3.6（项替换）</b>。下页才是关键的量词情形。</p>
+  </div>
+</section>
+
+<!-- ============ p42 ============ -->
+<section class="page" id="p42">
+  <h2>定义 3.7：公式替换（第 5–7 条 · 含改名）</h2>
+  <div class="pgnum">PDF 第 42 页</div>
+  <img class="slide" src="pages/p42.png" alt="p42">
+  <div class="explain">
+    <p>遇到量词 <code>Qx.A</code>（Q ∈ {∀, ∃}），分三种情形：</p>
+    <h3>(5) 量词绑定的变元 = 被替换变元</h3>
+    <div class="formula">(Qx.A)[t/x] = (Qx.A)</div>
+    <p>意思：如果量词正好绑定 x，那 A 里所有 x 都是<b>约束出现</b>，不动。整个公式不变。</p>
+    <h3>(6) 量词绑定异于 x 的变元 y，且 y 不在 t 中自由出现</h3>
+    <div class="formula">(Qy.A)[t/x] = (Qy. A[t/x])</div>
+    <p>把替换递归进 A 即可。无碰撞。</p>
+    <h3>(7) 量词绑定 y，但 y ∈ FV(t) —— 必须先改名</h3>
+    <div class="formula">(Qy.A)[t/x] = (Qz. A[z/y][t/x])</div>
+    <p>这里 z 是<b>足标最小的新变元</b>（不在 FV(t)，也不在 A 中出现）。步骤：</p>
+    <ol>
+      <li>先把 A 中的 y 改名成 z（避免捕获）</li>
+      <li>再把 x 替换成 t</li>
+    </ol>
+    <div class="warn"><b>这是变量捕获坑的形式化解药。</b> 没有第 7 条就会出 D1 背景页里那种灾难。</div>
+    <div class="tip">"取足标最小的新变元"是为了让替换<b>结果确定唯一</b>——否则每次随机挑 z 会得到形式不同的公式。</div>
+  </div>
+</section>
+
+<!-- ============ p43 ============ -->
+<section class="page" id="p43">
+  <h2>替换例 1：约束变元不变（规则 5）</h2>
+  <div class="pgnum">PDF 第 43 页</div>
+  <img class="slide" src="pages/p43.png" alt="p43">
+  <div class="explain">
+    <p>设 <code>A = ∀x. (P(x) → Q(y))</code>。算 <code>A[y/x]</code>：</p>
+    <pre>A[y/x]
+= (∀x. (P(x) → Q(y))) [y/x]
+= ∀x. (P(x) → Q(y))     <span style="color:#7c6a3f">// 规则 (5)：量词绑定的就是 x，整个公式原样</span></pre>
+    <p>注意 <code>A</code> 里的两个 <code>x</code> 都被 <code>∀x</code> 绑住——是约束出现。替换只动自由出现的 x，所以根本不动。结果保持原样。</p>
+    <div class="note">这里 Q(y) 里的 y 也没动——因为我们只替 x，y 不在替换目标里。</div>
+  </div>
+</section>
+
+<!-- ============ p47 ============ -->
+<section class="page" id="p47">
+  <h2>替换例 2：必须改名（规则 7）</h2>
+  <div class="pgnum">PDF 第 47 页（合并 p44/45/46）</div>
+  <img class="slide" src="pages/p47.png" alt="p47">
+  <div class="explain">
+    <p>设 <code>A = P(x) → ∃y. (Q(y) ∧ R(y, x))</code>，算 <code>A[y/x]</code>。<b>替换的项 t = y</b>，要把 A 中自由的 x 全换成 y。但 A 里有 ∃y——会捕获！</p>
+    <pre>A[y/x]
+= (P(x) → ∃y. (Q(y) ∧ R(y, x))) [y/x]
+= P(x)[y/x] → (∃y. (Q(y) ∧ R(y, x))) [y/x]   <span style="color:#7c6a3f">// 规则 (4)</span>
+= P(y) → (∃y. (Q(y) ∧ R(y, x))) [y/x]        <span style="color:#7c6a3f">// 用项替换</span>
+                                              <span style="color:#7c6a3f">// 量词绑定的 y ∈ FV(t) = FV(y) = {y} → 规则 (7) 必须改名</span>
+= P(y) → ∃z. (Q(y) ∧ R(y, x)) [z/y][y/x]
+                                              <span style="color:#7c6a3f">// 先把里面所有 y 改名成 z（z 是不在 FV(y) 也不在 A 中的最小新变元）</span>
+= P(y) → ∃z. (Q(y)[z/y][y/x] ∧ R(y, x)[z/y][y/x])
+= P(y) → ∃z. (Q(z)[y/x] ∧ R(z, x)[y/x])     <span style="color:#7c6a3f">// y → z</span>
+= P(y) → ∃z. (Q(z) ∧ R(z, y))                 <span style="color:#7c6a3f">// x → y</span></pre>
+    <p><b>结果</b>：<code>A[y/x] = P(y) → ∃z. (Q(z) ∧ R(z, y))</code></p>
+    <h3>对比：如果不改名（错误做法）</h3>
+    <p>盲替会得到：<code>P(y) → ∃y. (Q(y) ∧ R(y, y))</code> ——里面 R(y, y) 的第二个 y 本来是想代表"外面传进来的 y"，但被 ∃y 捕获了，含义完全变了。</p>
+    <div class="tip"><b>记住</b>：替换出现 (7) 情形 ⇔ 替换的项里有正在被量词绑定的同名变元。务必先改名。</div>
+  </div>
+</section>
+
+<!-- ============ p48 ============ -->
+<section class="page" id="p48">
+  <h2>替换的 5 条注记</h2>
+  <div class="pgnum">PDF 第 48 页</div>
+  <img class="slide" src="pages/p48.png" alt="p48">
+  <div class="explain">
+    <ol>
+      <li><b>改名</b>：把 <code>∀x.A</code> 改为 <code>∀y. A[y/x]</code>，其中 y 不在 A 中出现。改名不改变公式的"意义"，只换符号。</li>
+      <li><b>先改名后替代</b>：替换流程严格分两步——避免捕获要先重命名，再代入。</li>
+      <li><b>替代不改变约束关系</b>：替换前是自由 x 的位置，替换后位置由 t 占据；约束 x 仍然是约束的，未受影响。</li>
+      <li><b>盲目替代会出错</b>：D1 背景页和 p47 已经反复演示。</li>
+      <li><b>定义 3.7 中的 z 是新变元</b>，取"足标最小"使结果唯一。</li>
+    </ol>
+    <div class="tip">这 5 条是<b>做替换题的检查清单</b>。下次替换公式时按这 5 条过一遍。</div>
+  </div>
+</section>
+
+<!-- ============ E0 ============ -->
+<section class="page bg" id="bgE0">
+  <h2>回头看：整章语法层完整地图</h2>
+  <div class="pgnum">补充背景 · 看结构定理之前总结</div>
+  <div class="explain">
+    <p>到这里，本章语法机器全部装完。把零件再过一遍：</p>
+    <table class="tbl">
+      <tr><th>层次</th><th>对象</th><th>怎么定义</th><th>核心定理</th></tr>
+      <tr><td>1</td><td>字母表</td><td>定义 3.1：逻辑符 + 非逻辑符</td><td>—</td></tr>
+      <tr><td>2</td><td>项</td><td>定义 3.2：变元 / 常元 / f(t,…)</td><td><b>定理 3.8</b>：结构唯一</td></tr>
+      <tr><td>3</td><td>公式</td><td>定义 3.3：原子公式 + 联结词 + 量词</td><td><b>定理 3.9</b>：结构唯一</td></tr>
+      <tr><td>—</td><td>自由变元</td><td>定义 3.4 / 3.5</td><td>判断闭项 / 句子</td></tr>
+      <tr><td>—</td><td>替换</td><td>定义 3.6 / 3.7</td><td>盲替会出错→规则 7 改名</td></tr>
+      <tr><td>—</td><td>归纳法</td><td>结构归纳（对项/对公式）</td><td>证明所有项/公式有性质</td></tr>
+    </table>
+    <h3>接下来两页的两条定理在说什么</h3>
+    <ul>
+      <li><b>定理 3.8（项的结构唯一）</b>：每个项<b>恰好</b>是变元、常元、或 <code>f(...)</code> 之一，且这种形式唯一。意味着语法树确定。</li>
+      <li><b>定理 3.9（公式的结构唯一）</b>：每个公式<b>恰好</b>是 8 种形式之一（≐ / 谓词 / ¬ / ∧ / ∨ / → / ∀ / ∃），且形式唯一。</li>
+    </ul>
+    <p>"形式唯一"是接下来一切归纳证明的<b>合法性前提</b>——保证递归定义无歧义。</p>
+  </div>
+</section>
+
+<!-- ============ p49 ============ -->
+<section class="page" id="p49">
+  <h2>定理 3.8：项的结构唯一</h2>
+  <div class="pgnum">PDF 第 49 页</div>
+  <img class="slide" src="pages/p49.png" alt="p49">
+  <div class="explain">
+    <p><b>定理 3.8</b>：一阶逻辑的项恰好具有以下三种形式之一：</p>
+    <ol>
+      <li>变元符</li>
+      <li>常元符</li>
+      <li><code>f(t₁,…,tₙ)</code>，其中 f 为 n 元函数符</li>
+    </ol>
+    <p>并且<b>项所具有的那种形式是唯一的</b>。</p>
+    <h3>"唯一"意味着</h3>
+    <ul>
+      <li>项 <code>x₀</code> 既不会同时被读成"常元"，也不会被拆成 <code>f(...)</code>——它就是变元。</li>
+      <li>项 <code>f(x, y)</code> 不会被错读成"由变元 f 和某种神秘东西拼起来"——它就是函数 f 应用到 (x, y)。</li>
+    </ul>
+    <div class="tip">证法：<b>对项的结构作归纳</b>（与命题逻辑公式的结构唯一性证明类似）。技术细节看教材。</div>
+    <div class="note">这条定理是<b>所有"按结构递归的定义"（如 FV、替换）合法的前提</b>。否则 <code>f(t)</code> 既可拆成 "f 加 (t)" 又能拆成别的，递归定义就有歧义。</div>
+  </div>
+</section>
+
+<!-- ============ p50 ============ -->
+<section class="page" id="p50">
+  <h2>定理 3.9：公式的结构唯一</h2>
+  <div class="pgnum">PDF 第 50 页</div>
+  <img class="slide" src="pages/p50.png" alt="p50">
+  <div class="explain">
+    <p><b>定理 3.9</b>：一阶逻辑公式恰好具有以下八种形式之一：</p>
+    <ol>
+      <li><code>(s ≐ t)</code></li>
+      <li><code>R(t₁,…,tₙ)</code></li>
+      <li><code>(¬A)</code></li>
+      <li><code>(A ∧ B)</code></li>
+      <li><code>(A ∨ B)</code></li>
+      <li><code>(A → B)</code></li>
+      <li><code>(∀x.A)</code></li>
+      <li><code>(∃x.A)</code></li>
+    </ol>
+    <p>并且<b>公式所具有的那种形式是唯一的</b>。</p>
+    <h3>这条定理为后面铺路</h3>
+    <ul>
+      <li>对公式归纳证明性质时，按这 8 种情形<b>穷举一遍</b>就完整</li>
+      <li>语义解释（下一章）按这 8 种情形分别定义"为真"的条件，不会冲突</li>
+      <li>替换、自由变元等递归定义可以放心写</li>
+    </ul>
+    <div class="tip">证法同上：对公式结构作归纳。注意"形式唯一"要小心证（涉及括号配对、量词作用域不会"撞车"）。</div>
+  </div>
+</section>
+
+<!-- ============ p51 ============ -->
+<section class="page" id="p51">
+  <h2>小结：一阶逻辑的语法</h2>
+  <div class="pgnum">PDF 第 51 页</div>
+  <img class="slide" src="pages/p51.png" alt="p51">
+  <div class="explain">
+    <h3>本章学了什么</h3>
+    <ul>
+      <li><b>符号表（字母表）</b>：逻辑符（共享）+ 非逻辑符（各自定）</li>
+      <li><b>项、原子公式、公式的定义</b>：三种等价写法（归纳/闭包/BNF）</li>
+      <li><b>对项、公式的结构归纳</b>：证明万能套路</li>
+      <li><b>自由变元</b>：FV(t)、FV(A)、闭项、句子；自由 vs 约束出现</li>
+      <li><b>项、公式的替换</b>：定义 3.6 / 3.7，关键是<b>规则 7 的改名</b></li>
+      <li><b>结构唯一性</b>：定理 3.8 / 3.9，让一切递归定义合法</li>
+    </ul>
+    <h3>下章预告</h3>
+    <p>语义。给定一个"结构"（数学模型，如自然数集 + 算术运算），怎么把每个项映射到具体对象，把每个公式映射到真/假？以及"语义后承 ⊨"的定义。</p>
+    <h3>再后面</h3>
+    <p>对应 G' 的一阶版本——一阶自然推理系统。会有命题逻辑里没有的新规则：∀-消去、∀-引入、∃-引入、∃-消去——它们都用到本章的"自由变元"和"替换"。</p>
+    <div class="tip">本章最易出错的两个点：<b>项 vs 公式分层</b>、<b>替换时变量捕获</b>。这两点过关，整章就稳了。</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>

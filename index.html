@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nichijo Notes — 学习笔记入口</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --ink: #2b2620;
+    --muted: #7a6f63;
+    --line: #e4ddd1;
+    --accent: #8b5a3c;
+    --card-bg: #fffdf9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Times New Roman", "宋体", SimSun, "Songti SC", serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 60px 28px 80px; }
+  header { border-bottom: 2px solid var(--line); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { font-size: 2.4em; margin: 0 0 8px; font-weight: 700; letter-spacing: 1px; }
+  .subtitle { color: var(--muted); font-size: 1.05em; font-style: italic; }
+  h2 {
+    font-size: 1.5em;
+    margin: 40px 0 18px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+    font-weight: 600;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    display: block;
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px 22px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 90, 60, 0.12);
+    border-color: var(--accent);
+  }
+  .card-title {
+    font-size: 1.15em;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .card-desc {
+    color: var(--muted);
+    font-size: 0.92em;
+  }
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.88em;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Nichijo Notes</h1>
+    <div class="subtitle">虹鳟鱼的学习笔记 · 阿卡酱整理</div>
+  </header>
+
+  <h2>计算机组成原理 (DLCO)</h2>
+  <div class="grid">
+    <a class="card" href="dlco-chap4.html">
+      <div class="card-title">第 4 章 · 完整讲解</div>
+      <div class="card-desc">指令系统 / 寻址方式 等(1-66 页全)</div>
+    </a>
+    <a class="card" href="dlco-chap6.html">
+      <div class="card-title">第 6 章 · 完整讲解</div>
+      <div class="card-desc">中央处理器相关内容</div>
+    </a>
+  </div>
+
+  <h2>数理逻辑 (Mathematical Logic)</h2>
+  <div class="grid">
+    <a class="card" href="mathlogic-06.html">
+      <div class="card-title">第 6 讲 · 完整讲解</div>
+      <div class="card-desc">命题逻辑 / 推理系统</div>
+    </a>
+    <a class="card" href="mathlogic-07.html">
+      <div class="card-title">第 7 讲 · 完整讲解</div>
+      <div class="card-desc">谓词逻辑 / 一阶逻辑</div>
+    </a>
+  </div>
+
+  <h2>研究报告</h2>
+  <div class="grid">
+    <a class="card" href="sleep-whitepaper.html">
+      <div class="card-title">睡眠白皮书 · 横纵分析</div>
+      <div class="card-desc">睡眠主题深度研究报告</div>
+    </a>
+  </div>
+
+  <footer>
+    Last updated 2026-05-16 · Hosted on GitHub Pages
+  </footer>
+</div>
+</body>
+</html>

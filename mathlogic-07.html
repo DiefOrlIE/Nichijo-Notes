@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>数理逻辑 07 · 一阶逻辑（二）逐页讲解</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  aside .browser-note{font-size:11px;color:#9a3b3b;background:#fff0ed;border:1px dashed #e0a8a0;padding:6px 8px;border-radius:5px;margin-bottom:10px;line-height:1.5;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>第 7 章 · 一阶逻辑（二）</h1>
+  <div class="browser-note">⚠ 请用 <b>Chrome</b> 打开。Edge 对部分逻辑符号（如 ≐ ⊨ ≃）渲染异常。</div>
+  <ol>
+    <li class="group">A · 引入</li>
+    <li><a href="#bg0" class="bg">为什么需要语义？</a></li>
+    <li><a href="#bg1" class="bg">本章全景地图</a></li>
+    <li><a href="#bg2" class="bg">命题逻辑 vs 一阶</a></li>
+    <li><a href="#bg3" class="bg">三个"等"的预告</a></li>
+    <li><a href="#p1" class="skip">1. 封面（跳过）</a></li>
+
+    <li class="group">B · 结构</li>
+    <li><a href="#p10">2–10. 结构定义 𝕄=(M,I)</a></li>
+    <li><a href="#p11">11. 约定 & 记号</a></li>
+
+    <li class="group">C · 赋值与模型</li>
+    <li><a href="#bg4" class="bg">项 vs 公式 两层归纳</a></li>
+    <li><a href="#p14">12–14. 赋值 σ & 模型</a></li>
+    <li><a href="#bg5" class="bg">σ[x:=a] 几何直观</a></li>
+    <li><a href="#p15">15. 记号 σ[x:=a]</a></li>
+
+    <li class="group">D · 项的解释</li>
+    <li><a href="#p17">16–17. 项解释 t_M[σ]</a></li>
+    <li><a href="#p19">18–19. 例：1+S(7)=9</a></li>
+    <li><a href="#p21">20–21. 引理 3.14</a></li>
+
+    <li class="group">E · 命题 / 联结词</li>
+    <li><a href="#p22">22. 0元谓词</a></li>
+    <li><a href="#p23">23. ¬, ∧ 真值表</a></li>
+    <li><a href="#p25">24–25. ∨, → 真值表</a></li>
+
+    <li class="group">F · 公式的解释</li>
+    <li><a href="#p27">26–27. 公式解释 6 条</a></li>
+    <li><a href="#p33">28–33. 例：∀x₃.(x₃&lt;x₁+x₄)</a></li>
+    <li><a href="#p34">34. 引理 3.16'</a></li>
+
+    <li class="group">G · 等价定义 & 性质</li>
+    <li><a href="#bg6" class="bg">⊨ 符号家族总览</a></li>
+    <li><a href="#p35">35. M⊨_σA 等价定义</a></li>
+    <li><a href="#p36">36. 引理 3.16</a></li>
+    <li><a href="#p38">38. 证：项归纳步</a></li>
+    <li><a href="#p39">39. 证：等词</a></li>
+    <li><a href="#p40">40. 证：谓词</a></li>
+    <li><a href="#p41">41. 证：¬, *</a></li>
+    <li><a href="#p42">42. 证：∀, ∃</a></li>
+
+    <li class="group">H · 可满足 / 永真</li>
+    <li><a href="#bg8" class="bg">∀ 与 ∃ 语义对偶</a></li>
+    <li><a href="#p45">43–45. 可满足六种含义</a></li>
+    <li><a href="#p46">46. 永真</a></li>
+    <li><a href="#p47">47. 语义结论 Γ⊨A</a></li>
+
+    <li class="group">I · 三大基本定律</li>
+    <li><a href="#p48">48. 三大律总览</a></li>
+    <li><a href="#p50">49–50. 排中律证明</a></li>
+    <li><a href="#contradiction">★ 矛盾律证明（自补）</a></li>
+    <li><a href="#p52">51–52. 同一律证明</a></li>
+
+    <li class="group">J · 引理 & 综合例</li>
+    <li><a href="#p53">53. 引理 3.20</a></li>
+    <li><a href="#p59">54–59. ∀(A→B) ⊨ ∀A→∀B</a></li>
+
+    <li class="group">K · 逻辑等价</li>
+    <li><a href="#p61">60–61. A ≃ B & 例</a></li>
+    <li><a href="#p62">62. 等值替换定理</a></li>
+
+    <li class="group">L · 收尾</li>
+    <li><a href="#bg9" class="bg">常见误解 & 检验题</a></li>
+    <li><a href="#bg7" class="bg">整章地图回顾</a></li>
+  </ol>
+</aside>
+
+<main>
+
+<!-- ========== BG0 ========== -->
+<section class="page bg" id="bg0">
+  <h2>为什么要"语义"？——从无意义的符号串到真假</h2>
+  <div class="pgnum">补充背景 · 进入正文前必看</div>
+  <div class="explain">
+    <p>上一章你已经能造出像下面这样的"合法字符串"：</p>
+    <div class="formula">∀x. &lt;(x, S(x))</div>
+    <p>但请问：<b>这句话是真是假？</b> ——答不出来。因为到目前为止 <code>∀</code>、<code>&lt;</code>、<code>S</code>、<code>x</code> 都只是字符；连 <code>x</code> 取值范围是什么我们都没说。</p>
+
+    <h3>这一章的任务</h3>
+    <p>给上一章造的纯语法对象（项、公式）一个 <b>解释（interpretation）</b>，即指定：</p>
+    <ul>
+      <li><b>论域</b>（变元跑在哪个集合上，是 ℕ 还是 ℝ 还是某个群？）</li>
+      <li><b>非逻辑符号的含义</b>（<code>S</code> 是后继函数？<code>&lt;</code> 是小于？常元 <code>0</code> 是哪个元素？）</li>
+      <li><b>变元的当前取值</b>（自由变元像 <code>x₁</code> 现在取多少？）</li>
+    </ul>
+    <p>给定这一切后，一个公式就有明确的真假可言了。</p>
+
+    <div class="tip"><b>类比命题逻辑：</b>命题逻辑里一句 <code>p ∧ q</code>，必须先给 <code>p, q</code> 各赋一个真假值才能算 <code>p ∧ q</code> 的真假。一阶逻辑也是同样的需求——只是现在原子不再是裸命题变元，而是 <code>P(t₁,…,tₙ)</code> 和 <code>t₁ ≐ t₂</code>，所以"赋真值"前还要先把 <code>tᵢ</code> 算成论域里的元素。</p></div>
+
+    <div class="note"><b>本章一句话：</b>把上一章的符号串"翻译"成有意义的数学陈述，定义它们对一个具体数学对象（结构+赋值）的真假。这就是<b>模型论</b>的起点。</div>
+  </div>
+</section>
+
+<!-- ========== BG1 ========== -->
+<section class="page bg" id="bg1">
+  <h2>本章全景地图：四层骨架</h2>
+  <div class="pgnum">补充背景</div>
+  <div class="explain">
+    <p>把整章读完，你会发现所有概念其实就是下面这四层往上垒：</p>
+
+    <table class="tbl">
+      <tr><th>层级</th><th>对象</th><th>定义在哪</th><th>给出了什么</th></tr>
+      <tr><td>① 结构 𝕄=(M,I)</td><td>论域 M + 解释 I</td><td>定义 3.10</td><td>每个非逻辑符号→实物</td></tr>
+      <tr><td>② 赋值 σ:V→M</td><td>变元→论域元素</td><td>定义 3.11</td><td>每个变元当前取啥</td></tr>
+      <tr><td>③ 项 / 公式解释</td><td>t_M[σ] ∈ M, A_M[σ] ∈ 𝐁</td><td>定义 3.13、3.15</td><td>按归纳算出值</td></tr>
+      <tr><td>④ 可满足 / 永真 / ⊨</td><td>跨模型的"全称"性质</td><td>3.17–3.19</td><td>逻辑结论关系</td></tr>
+    </table>
+
+    <div class="tip">①+② 合在一起叫"<b>模型 (𝕄, σ)</b>"——上一章的纯语法 + 本章的语义骨架。<br>③ 是机械计算（结构归纳，类似命题逻辑真值表的递归）。<br>④ 才是真正的逻辑学概念："这个公式对所有可能的解释都真吗？"</div>
+
+    <p>下面按这个顺序展开。每讲一节我会在标题旁边标"我们现在在第 ① 层 / 第 ② 层 ..."。</p>
+  </div>
+</section>
+
+<!-- ========== BG2 ========== -->
+<section class="page bg" id="bg2">
+  <h2>命题逻辑 vs 一阶逻辑 · 语义对照表</h2>
+  <div class="pgnum">补充背景</div>
+  <div class="explain">
+    <p>你的命题逻辑直觉大多数都能迁移过来，只是更复杂一点：</p>
+
+    <table class="tbl">
+      <tr><th></th><th>命题逻辑</th><th>一阶逻辑</th></tr>
+      <tr><td class="l">语义骨架</td><td>真值指派 v:Atoms→𝐁</td><td>(𝕄, σ) = 结构 + 赋值</td></tr>
+      <tr><td class="l">原子怎么算</td><td>v 直接查表</td><td>P(t₁,…,tₙ)：先算 tᵢ ∈ M，再查 P_M ⊆ Mⁿ</td></tr>
+      <tr><td class="l">联结词</td><td>真值表 (¬,∧,∨,→)</td><td>完全一样，照搬</td></tr>
+      <tr><td class="l">量词</td><td>无</td><td>∀x.A、∃x.A —— 要"遍历论域"</td></tr>
+      <tr><td class="l">等词</td><td>无</td><td>t₁ ≐ t₂ —— 对照论域里两元素是否相等</td></tr>
+      <tr><td class="l">永真叫法</td><td>tautology（重言式）</td><td>valid（永真 / 普遍有效）</td></tr>
+      <tr><td class="l">语义结论</td><td>Γ⊨A（命题）</td><td>Γ⊨A（一阶，更强）</td></tr>
+    </table>
+
+    <div class="note">从命题逻辑到一阶逻辑，新增的核心难点只有两件事：<b>项要先求值</b>（因为含变元），以及 <b>量词要遍历论域</b>。其他都是直接搬。</div>
+  </div>
+</section>
+
+<!-- ========== BG3 ========== -->
+<section class="page bg" id="bg3">
+  <h2>三个"等"的预告（最容易混淆的字符）</h2>
+  <div class="pgnum">补充背景</div>
+  <div class="explain">
+    <p>这一章会同时出现至少 <b>三种"="</b>，请把它们一开始就在脑子里分清：</p>
+
+    <table class="tbl">
+      <tr><th>记号</th><th>名字</th><th>层级</th><th>含义</th></tr>
+      <tr><td><code>≐</code> (U+2250)</td><td>等词</td><td>对象语言</td><td>一阶逻辑公式里的二元谓词，写在公式中：<code>t₁ ≐ t₂</code></td></tr>
+      <tr><td><code>=</code></td><td>元语言的相等</td><td>元语言</td><td>两个数学对象（数、集合、函数值）在元数学层面相同</td></tr>
+      <tr><td><code>≃</code></td><td>逻辑等价</td><td>元语言</td><td>两个公式 A,B 在所有模型上同真假，定义 3.20</td></tr>
+    </table>
+
+    <div class="warn"><b>渲染陷阱：</b>本讲义所有"对象语言的等词"都写作 <code>≐</code>（U+2250，等号上面一个点）。如果你在 Edge 里看到它变成方块或约等号 ≃ 的样子，<b>请用 Chrome</b>。<br>另：<code>≃</code> 在某些字体里和"约等于"长得很像，但在数理逻辑教材中它表示"逻辑等价"，不是"约等"。</p></div>
+
+    <p>举个三种"等"同时出现的句子（来自 p52 同一律的证明）：</p>
+    <div class="formula">证 ⊨ ∀x.(x ≐ x)：取任意 a∈M，(x ≐ x)<sub>M[σ[x:=a]]</sub> = T 因为 x<sub>M[σ[x:=a]]</sub> <span style="color:#b91c1c">=</span> a <span style="color:#b91c1c">=</span> x<sub>M[σ[x:=a]]</sub>。</div>
+    <p>蓝色 <code>≐</code> 是对象语言里的等词；红色 <code>=</code> 是元语言层面"a 和 a 是同一个元素"。</p>
+  </div>
+</section>
+
+<!-- ========== p1 skip ========== -->
+<section class="page" id="p1">
+  <h2>1. 封面：一阶逻辑（二）</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <p style="color:var(--mute);">章封面，无信息内容。下一页直接进入"结构"的定义。</p>
+</section>
+
+<!-- ========== p10 (累积 p2-p10) ========== -->
+<section class="page" id="p10">
+  <h2>结构 𝕄 = (M, I) ── 给非逻辑符号配"实物"</h2>
+  <div class="pgnum">PDF 第 2–10 页（累积幻灯片，仅讲终态 p10）· 当前在 <b>第 ① 层</b></div>
+  <img class="slide" src="pages/p10.png" alt="p10">
+  <div class="explain">
+    <h3>核心定义（定义 3.10）</h3>
+    <p>固定一阶语言 ℒ。ℒ 的<b>结构 𝕄</b> = 二元组 (M, I)：</p>
+    <ul>
+      <li><b>M</b>（论域 / domain）：非空集合，变元在这里取值。白话：你在哪个世界里讨论问题。</li>
+      <li><b>I</b>（解释 / interpretation）：把 ℒ 的非逻辑符号映射到这个世界里的实物。</li>
+    </ul>
+
+    <h4>I 的四条要求（按符号种类分）</h4>
+    <table class="tbl">
+      <tr><th>符号种类</th><th>I 把它送到哪</th><th>白话</th></tr>
+      <tr><td>(a) 常元 c</td><td>I(c) ∈ M</td><td>常元 → 论域里的一个固定元素</td></tr>
+      <tr><td>(b) n 元函数符 f</td><td>I(f) : Mⁿ → M</td><td>函数符 → 真函数</td></tr>
+      <tr><td>(c) 0 元谓词 P</td><td>I(P) ∈ 𝐁={T,F}</td><td>0 元谓词 = 命题，给个真值</td></tr>
+      <tr><td>(d) n 元谓词 P (n≥1)</td><td>I(P) ⊆ Mⁿ</td><td>n 元谓词 → 一个 n 元关系</td></tr>
+    </table>
+
+    <h3>具体例子：初等算术语言 𝒜 的标准模型 ℕ</h3>
+    <p>𝒜 的非逻辑符号：常元 <code>{0}</code>，函数符 <code>{S, +, ·}</code>（S 是 1 元，+ 和 · 是 2 元），谓词符 <code>{&lt;}</code>（2 元）。</p>
+    <p>取 N = {0,1,2,…}（自然数集），定义解释 I：</p>
+    <div class="formula">I(0)=0，I(S)=suc（后继函数），I(+)=+（自然数加法），I(·)=×（乘法），I(&lt;)={⟨0,1⟩,⟨0,2⟩,⟨1,2⟩,…}（小于关系）</div>
+    <p>这样得到的 <b>ℕ = (N, I)</b> 称为<b>初等算术的标准模型</b>。</p>
+
+    <div class="tip"><b>关键直观：</b>谓词被解释成<b>关系</b>（即满足关系的有序组的集合）。比如要表达"<code>&lt;</code> 在 ℕ 上"，就是列出所有 (a,b) 满足 a&lt;b 的组成的集合。</p></div>
+
+    <h3>群论语言 𝔊 的例子（对照）</h3>
+    <p>𝔊 = ({e}, {·, ⁻¹}, ∅)（一个常元 e，二元运算 ·，一元运算 ⁻¹，没有谓词）。一个 𝔊-结构就是一个具体的群，比如整数加群 (ℤ, +, 0, −·)：M=ℤ，I(e)=0，I(·)=+，I(⁻¹)=负号。同一个语言可以有<b>无穷多种</b>结构。</p>
+
+    <div class="note">"语言 ℒ 给出可写的<b>句子模板</b>，结构 𝕄 给出这些模板说的是<b>哪个具体的数学对象</b>"——这是语法/语义分离的精髓。</div>
+
+    <h3>累积幻灯片说明</h3>
+    <div class="warn">PDF 的 p2 → p10 是同一张定义不断添加注解框：p3-4 加入 𝒜 示例框、p5 加入 I 的类型示意、p6-9 逐步标出 (a)(b)(c)(d) 四个符号种类、p10 加入 <code>&lt;</code> 的具体关系列举。我只讲终态 p10，前面 8 页在侧栏合并。</p></div>
+  </div>
+</section>
+
+<!-- ========== p11 ========== -->
+<section class="page" id="p11">
+  <h2>记号约定 & "M 代表 𝕄"</h2>
+  <div class="pgnum">PDF 第 11 页</div>
+  <img class="slide" src="pages/p11.png" alt="p11">
+  <div class="explain">
+    <h3>下标约定</h3>
+    <p>为了书写方便，I(c)、I(f)、I(P) 分别简记为 <code>c_M</code>、<code>f_M</code>、<code>P_M</code>。<b>下标 M 提示这是"在结构 𝕄 中的解释"</b>。</p>
+    <div class="formula">c<sub>M</sub> := I(c), &nbsp; f<sub>M</sub> := I(f), &nbsp; P<sub>M</sub> := I(P)</div>
+
+    <h3>I 的总像</h3>
+    <p>把所有解释合起来看，I 的取值范围是：</p>
+    <div class="formula">I : ℒ → M ∪ F ∪ 𝐁 ∪ 𝓜</div>
+    <p>其中 F 表 M 上各阶函数的集合，𝓜 表 M 上各阶关系的集合。这一行只是把上面四条要求合并写。</p>
+
+    <h3>滥用记号：M 代表 𝕄</h3>
+    <div class="tip">书写习惯：以后写"<b>结构 M</b>"和"<b>论域 M</b>"是同一个字母，因为论域决定了大半个结构。比如"结构 ℕ"和"自然数集 ℕ"在上下文里通常不区分——只要心里知道结构其实是 (N, I) 的二元组就行。</div>
+  </div>
+</section>
+
+<!-- ========== BG4 ========== -->
+<section class="page bg" id="bg4">
+  <h2>项 vs 公式 ── 两层归纳，次序不能颠倒</h2>
+  <div class="pgnum">补充背景 · 进入项/公式解释前必看</div>
+  <div class="explain">
+    <p>下一节起会同时定义两种"解释"。请先把它们的<b>类型</b>分清：</p>
+
+    <table class="tbl">
+      <tr><th></th><th>项的解释</th><th>公式的解释</th></tr>
+      <tr><td>记号</td><td>t<sub>M[σ]</sub></td><td>A<sub>M[σ]</sub></td></tr>
+      <tr><td>取值集合</td><td>∈ M（论域元素）</td><td>∈ 𝐁 = {T, F}</td></tr>
+      <tr><td>归纳基础</td><td>变元、常元</td><td>原子公式 P(…)、t₁≐t₂</td></tr>
+      <tr><td>归纳步骤</td><td>函数项 f(t₁,…,tₙ)</td><td>¬, ∧/∨/→, ∀x, ∃x</td></tr>
+    </table>
+
+    <div class="tip"><b>为什么必须先项后公式？</b>原子公式形如 <code>P(t₁,…,tₙ)</code> ——它的真假要看 <code>(t₁<sub>M[σ]</sub>,…,tₙ<sub>M[σ]</sub>) ∈ P_M</code>。所以你必须<b>先把里面每个项算成论域元素</b>，才能拿去查关系 P_M。次序错了就无意义。</div>
+
+    <h3>形象比喻</h3>
+    <p>把 t<sub>M[σ]</sub> 想成"<b>表达式求值器</b>"，把 A<sub>M[σ]</sub> 想成"<b>真值判定器</b>"。求值器吐出来的是<b>数</b>（M 的元素），判定器吐出来的是<b>真假</b>。第二个调用第一个。</p>
+  </div>
+</section>
+
+<!-- ========== p14 ========== -->
+<section class="page" id="p14">
+  <h2>赋值 σ 与模型 (𝕄, σ)</h2>
+  <div class="pgnum">PDF 第 12–14 页（累积，讲终态）· 当前在 <b>第 ② 层</b></div>
+  <img class="slide" src="pages/p14.png" alt="p14">
+  <div class="explain">
+    <h3>定义 3.11</h3>
+    <ul>
+      <li><b>赋值</b> σ：从变元集 V={x₀,x₁,…} 到论域 M 的函数 σ: V→M。<br>白话：<b>给每个变元符指一个论域里的具体值</b>。</li>
+      <li><b>模型</b>：二元组 (𝕄, σ)，结构 + 赋值，也写成 (M, σ)。</li>
+    </ul>
+
+    <div class="note">为什么结构里没有把变元解释了？因为变元的值要可以变（量词遍历时需要"换值"），所以单独抽出 σ。结构 𝕄 是"固定的舞台"，赋值 σ 是"演员当前的位置"。</div>
+
+    <h3>𝒜 标准模型上的一个常用赋值</h3>
+    <p>对 ℕ = (N, I)，取 σ(xₙ) = n。这个 σ 在后面大量例题中默认使用——记法：<b>"令 σ(xₙ)=n"</b>。这样 x₀↦0、x₁↦1、x₇↦7…。</p>
+  </div>
+</section>
+
+<!-- ========== BG5 ========== -->
+<section class="page bg" id="bg5">
+  <h2>σ[x:=a] 的几何直观 ── 钉一个变元，其他不变</h2>
+  <div class="pgnum">补充背景 · 进入定义 3.12 前必看</div>
+  <div class="explain">
+    <p>下一页会引入一个超级核心的记号 <code>σ[x:=a]</code>。先看一个图：</p>
+
+    <p>把 σ 想成一张"变元-值"对照表：</p>
+    <div class="formula">σ: x₀↦0, x₁↦1, x₂↦2, x₃↦3, x₄↦4, x₅↦5, …</div>
+
+    <p>那么 σ[x₃ := 99] 就是：</p>
+    <div class="formula">σ[x₃:=99]: x₀↦0, x₁↦1, x₂↦2, <b style="color:#b91c1c">x₃↦99</b>, x₄↦4, x₅↦5, …</div>
+
+    <p>只把第 3 行覆盖成 99，<b>其他都不动</b>。</p>
+
+    <div class="tip"><b>为什么这个记号那么重要？</b>量词 ∀x.A 的语义是"对所有 a∈M，把 x 暂时设为 a 后 A 真"。这个"暂时设为 a"正是 σ[x:=a] —— 别处的变元 (像 x₁, x₂ 中的自由变元) 都不能动，否则就不是"换 x"而是"换整个赋值"了。</div>
+
+    <div class="warn">易错点：σ[x:=a] 不是"把 σ 删了重做"，而是"打补丁"。下面所有量词处理都依赖这个区别。</div>
+  </div>
+</section>
+
+<!-- ========== p15 ========== -->
+<section class="page" id="p15">
+  <h2>定义 3.12：σ[x:=a] 的精确写法</h2>
+  <div class="pgnum">PDF 第 15 页</div>
+  <img class="slide" src="pages/p15.png" alt="p15">
+  <div class="explain">
+    <p>形式定义：</p>
+    <div class="formula">(σ[x<sub>i</sub> := a])(x<sub>j</sub>) = { σ(x<sub>j</sub>) 当 i≠j；&nbsp; a 当 i=j }</div>
+    <p>就是分两种情况：问的变元下标和被覆盖的不一样→原样返回；一样→返回新值 a。完全对应上一页的图。</p>
+  </div>
+</section>
+
+<!-- ========== p17 ========== -->
+<section class="page" id="p17">
+  <h2>定义 3.13：项的解释 t<sub>M[σ]</sub></h2>
+  <div class="pgnum">PDF 第 16–17 页（累积，讲终态）· 当前在 <b>第 ③ 层（项侧）</b></div>
+  <img class="slide" src="pages/p17.png" alt="p17">
+  <div class="explain">
+    <h3>归纳定义（按项的结构）</h3>
+    <table class="tbl">
+      <tr><th>项的形状</th><th>解释</th><th>白话</th></tr>
+      <tr><td>变元 x</td><td>x<sub>M[σ]</sub> = σ(x)</td><td>变元的值=查赋值</td></tr>
+      <tr><td>常元 c</td><td>c<sub>M[σ]</sub> = c<sub>M</sub></td><td>常元的值=结构里固定的实物（不依赖 σ）</td></tr>
+      <tr><td>函数项 f(t₁,…,tₙ)</td><td>= f<sub>M</sub>((t₁)<sub>M[σ]</sub>,…,(tₙ)<sub>M[σ]</sub>)</td><td>先把每个子项算成元素，再用 f_M 这个真函数去算</td></tr>
+    </table>
+
+    <div class="tip">想象一个"求值树"——叶子是变元/常元（直接出值），内部节点是 f，递归往下算每个子树，再用 f_M 把孩子的值算合。这就是项归纳。</div>
+
+    <p>下一页用 𝒜 标准模型走一个具体例子，你看一遍就清楚了。</p>
+  </div>
+</section>
+
+<!-- ========== p19 ========== -->
+<section class="page" id="p19">
+  <h2>项解释例：1 + suc(7) = 9</h2>
+  <div class="pgnum">PDF 第 18–19 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p19.png" alt="p19">
+  <div class="explain">
+    <h3>题目</h3>
+    <p>在 𝒜 的标准模型 (N, σ)，其中 σ(xₙ)=n，求项 <code>+(x₁, S(x₇))</code> 的解释。</p>
+
+    <h3>逐步展开（项归纳）</h3>
+<pre>(+(x₁, S(x₇)))_N[σ]
+  = +_N( (x₁)_N[σ], (S(x₇))_N[σ] )         # 规则 3：拆函数项
+  = σ(x₁) + (S(x₇))_N[σ]                    # x₁ 用规则 1, +_N=+
+  = 1     + suc((x₇)_N[σ])                   # S(x₇) 拆开, S_N=suc
+  = 1     + suc(σ(x₇))                       # x₇ 用规则 1
+  = 1     + suc(7)
+  = 1 + 8
+  = 9
+</pre>
+
+    <div class="note">每一步只动了"一个节点"。这种机械化展开是结构归纳的常见做法。等到熟练后可以一步到位写"=1+8=9"。</div>
+  </div>
+</section>
+
+<!-- ========== p21 ========== -->
+<section class="page" id="p21">
+  <h2>引理 3.14：项的解释一定落在 M 里</h2>
+  <div class="pgnum">PDF 第 20–21 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p21.png" alt="p21">
+  <div class="explain">
+    <h3>引理</h3>
+    <p>对任意项 t、任意模型 (𝕄, σ)：<code>t<sub>M[σ]</sub> ∈ M</code>。</p>
+
+    <h3>证明（对项结构归纳）</h3>
+    <ul>
+      <li>基础：t 是变元 x 时，t<sub>M[σ]</sub> = σ(x)，由 σ:V→M 立得 ∈ M。t 是常元 c 时，t<sub>M[σ]</sub> = c<sub>M</sub> = I(c) ∈ M（定义 3.10(a)）。</li>
+      <li>归纳：t = f(t₁,…,tₙ) 时，由归纳假设 (tᵢ)<sub>M[σ]</sub> ∈ M。由定义 3.10(b) 知 f<sub>M</sub>:Mⁿ→M，所以代入得 t<sub>M[σ]</sub> = f<sub>M</sub>(…) ∈ M。</li>
+    </ul>
+
+    <div class="tip">这条引理看起来废话，但是<b>非常关键</b>：它保证了下一节谓词原子 P(t₁,…,tₙ) 的真假定义不会出问题——你要查的 (t₁<sub>M[σ]</sub>,…) 真的在 Mⁿ 里。</div>
+
+    <p>右边累积框 (1)–(5) 给出了 𝒜 标准模型上的具体计算结果，比如 (S(xᵢ))_N[σ] = σ(xᵢ)+1。和上一页的例子是一回事。</p>
+  </div>
+</section>
+
+<!-- ========== p22 ========== -->
+<section class="page" id="p22">
+  <h2>命题（0 元谓词）的解释</h2>
+  <div class="pgnum">PDF 第 22 页 · 当前在 <b>第 ③ 层（公式侧）</b></div>
+  <img class="slide" src="pages/p22.png" alt="p22">
+  <div class="explain">
+    <p>结构定义里已经规定：0 元谓词 P 的解释 I(P) ∈ 𝐁 = {T,F}。所以一个 0 元谓词在任何模型下直接就是 T 或 F——和命题逻辑里"原子命题"的角色完全一样。</p>
+
+    <div class="note">这是从命题逻辑过渡到一阶逻辑最自然的桥梁：命题逻辑的原子全部对应一阶逻辑的 0 元谓词。</p></div>
+  </div>
+</section>
+
+<!-- ========== p23 ========== -->
+<section class="page" id="p23">
+  <h2>联结词解释 (1)：¬ 和 ∧</h2>
+  <div class="pgnum">PDF 第 23 页</div>
+  <img class="slide" src="pages/p23.png" alt="p23">
+  <div class="explain">
+    <p>把联结词解释成 𝐁 上的真值函数 <code>B<sub>¬</sub>, B<sub>∧</sub>, B<sub>∨</sub>, B<sub>→</sub></code>，<b>跟命题逻辑完全相同</b>。这里只是换了符号：</p>
+    <div class="formula">B<sub>¬</sub>: 𝐁→𝐁，B<sub>∧</sub>,B<sub>∨</sub>,B<sub>→</sub>: 𝐁×𝐁→𝐁</div>
+    <p>真值表你已经背熟了，跳过即可。</p>
+  </div>
+</section>
+
+<!-- ========== p25 ========== -->
+<section class="page" id="p25">
+  <h2>联结词解释 (2)：∨ 和 → · "与命题逻辑一致"</h2>
+  <div class="pgnum">PDF 第 24–25 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+    <p>关键提示就一句：<b>联结词的语义与命题逻辑完全相同</b>。区别只在一阶逻辑里联结词可以作用在"含变元的原子"上，但联结词本身的真值表没动。</p>
+  </div>
+</section>
+
+<!-- ========== p27 ========== -->
+<section class="page" id="p27">
+  <h2>定义 3.15：公式的解释 A<sub>M[σ]</sub> ── 全章核心定义</h2>
+  <div class="pgnum">PDF 第 26–27 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+    <p>对公式 A 按结构归纳定义 A<sub>M[σ]</sub> ∈ 𝐁。<b>六条规则</b>：</p>
+
+    <table class="tbl">
+      <tr><th>公式形状</th><th>解释</th><th>白话</th></tr>
+      <tr><td>(1) P(t₁,…,tₙ)</td><td>T 当 ⟨(t₁)<sub>M[σ]</sub>,…⟩ ∈ P_M；否则 F</td><td>先把项算出来，再查 P_M 这张关系表里有没有这个组</td></tr>
+      <tr><td>(2) t₁ ≐ t₂</td><td>T 当 (t₁)<sub>M[σ]</sub> = (t₂)<sub>M[σ]</sub>；否则 F</td><td>等词 ≐：算出来在 M 里相等就真</td></tr>
+      <tr><td>(3) ¬A</td><td>B<sub>¬</sub>(A<sub>M[σ]</sub>)</td><td>查 ¬ 的真值表</td></tr>
+      <tr><td>(4) A * B</td><td>B<sub>*</sub>(A<sub>M[σ]</sub>, B<sub>M[σ]</sub>)</td><td>* 是 ∧/∨/→ 任一，查二元真值表</td></tr>
+      <tr><td>(5) ∀x.A</td><td>T 当 ∀a∈M, A<sub>M[σ[x:=a]]</sub> = T；否则 F</td><td>遍历整个论域，每个 a 都使内部真才整体真</td></tr>
+      <tr><td>(6) ∃x.A</td><td>T 当 ∃a∈M, A<sub>M[σ[x:=a]]</sub> = T；否则 F</td><td>找到一个 a 让内部真即可</td></tr>
+    </table>
+
+    <div class="warn"><b>易错：等词 ≐ 和元语言相等 = 不要混。</b>(2) 里左边的 <code>≐</code> 是对象语言的二元谓词；右边的 <code>=</code> 是元语言里"两个论域元素是同一个"——一个是公式里的字符，一个是数学陈述。看到 ≐ 渲染异常请用 Chrome。</p></div>
+
+    <div class="tip"><b>(5) (6) 是全章最核心的两条。</b>注意"遍历论域 M"——若论域无穷（如 ℕ），你不能用真值表暴力枚举。所以判定一阶公式真假是<b>不可判定</b>的（哥德尔后续会告诉你）。但在<b>具体证明</b>里，我们通过取任意 a 或构造特定 a 来推理。</div>
+
+    <p>下面一页就拿这条规则跑一个完整例子。</p>
+  </div>
+</section>
+
+<!-- ========== p33 ========== -->
+<section class="page" id="p33">
+  <h2>公式解释例：∀x₃.(x₃ &lt; x₁ + x₄) 在标准模型上的求值</h2>
+  <div class="pgnum">PDF 第 28–33 页（累积 6 张，讲终态）</div>
+  <img class="slide" src="pages/p33.png" alt="p33">
+  <div class="explain">
+    <h3>题目</h3>
+    <p>𝒜 标准模型 ℕ, σ(xₙ)=n。求 <code>(∀x₃. (&lt;(x₃, +(x₁, x₄))))<sub>N[σ]</sub></code>，可读作 <code>∀x₃.(x₃ &lt; x₁+x₄)</code>。</p>
+
+    <h3>分两层展开</h3>
+    <p><b>外层 ∀x₃</b>（用规则 (5)）：值为 T 当且仅当 <b>对所有 a ∈ N</b>，把 σ 在 x₃ 处覆盖成 a 后，内部公式 (x₃ &lt; x₁+x₄)<sub>N[σ[x₃:=a]]</sub> = T。</p>
+
+    <p><b>内层 x₃ &lt; x₁ + x₄</b>（谓词 &lt; 用规则 (1)）：值为 T 当且仅当 ⟨(x₃)<sub>N[σ[x₃:=a]]</sub>, (+(x₁,x₄))<sub>N[σ[x₃:=a]]</sub>⟩ ∈ &lt;<sub>N</sub>。</p>
+
+    <h3>把每个项算出来</h3>
+<pre>(x₃)_N[σ[x₃:=a]]      = (σ[x₃:=a])(x₃) = a       # 关键：被覆盖成 a
+(x₁)_N[σ[x₃:=a]]      = (σ[x₃:=a])(x₁) = σ(x₁) = 1   # x₁ 没被覆盖
+(x₄)_N[σ[x₃:=a]]      = (σ[x₃:=a])(x₄) = σ(x₄) = 4   # x₄ 没被覆盖
+(+(x₁,x₄))_N[σ[x₃:=a]] = 1 + 4 = 5
+</pre>
+
+    <p>所以内层等价于：<code>⟨a, 5⟩ ∈ &lt;_N</code>，即 <b>a &lt; 5</b>。</p>
+
+    <h3>整体结果</h3>
+    <div class="formula">∀a ∈ N，a &lt; 5？ —— 显然不成立（取 a=5,6,7,… 反例无穷多）。所以整体值为 <b>F</b>。</div>
+
+    <div class="tip"><b>关键体感：</b>σ[x₃:=a] 只钉了 x₃，<code>x₁, x₄</code> 还是用旧的 σ 值（1 和 4），所以"+ (x₁,x₄)"算出来是常数 5 与 a 无关。然后量词遍历 a，问"a &lt; 5 是否对所有自然数成立"——很容易看出 F。</div>
+
+    <div class="warn"><b>易混：</b>如果题目是 <code>∃x₃.(x₃ &lt; x₁+x₄)</code>，答案就是 T（取 a=0 即可）。同样的赋值，量词不同，答案完全相反。</div>
+  </div>
+</section>
+
+<!-- ========== p34 ========== -->
+<section class="page" id="p34">
+  <h2>引理 3.16'：公式解释一定是真假之一</h2>
+  <div class="pgnum">PDF 第 34 页</div>
+  <img class="slide" src="pages/p34.png" alt="p34">
+  <div class="explain">
+    <p>对任何公式 A，A<sub>M[σ]</sub> ∈ 𝐁 = {T,F}。证明思路：对公式结构作归纳，每一条规则要么直接给出 T/F，要么经 B<sub>¬</sub>,B<sub>*</sub> 这些真值函数（值域 ⊆ 𝐁）。</p>
+    <div class="note">这条和引理 3.14（项落 M 里）配套——保证整个语义系统是"良定义的"。</p></div>
+  </div>
+</section>
+
+<!-- ========== BG6 ========== -->
+<section class="page bg" id="bg6">
+  <h2>⊨ 符号家族总览表 ── 一图看清五个层级</h2>
+  <div class="pgnum">补充背景 · 全章最易混点</div>
+  <div class="explain">
+    <p>下面几节会冒出一堆带 ⊨ 的记号，提前对照清楚：</p>
+
+    <table class="tbl">
+      <tr><th>记号</th><th>读法</th><th>含义</th><th>谁在变</th></tr>
+      <tr><td>A<sub>M[σ]</sub> = T</td><td>"A 在 M 里 σ 下值为 T"</td><td>语义解释的取值</td><td>固定 M, σ, A</td></tr>
+      <tr><td>M ⊨<sub>σ</sub> A</td><td>"A 在模型 (M,σ) 上可满足"</td><td>等价于 A<sub>M[σ]</sub>=T</td><td>固定 M, σ, A（重写）</td></tr>
+      <tr><td>M ⊨ A</td><td>"M 是 A 的模型"</td><td>对该 M 上<b>所有</b>赋值 σ，M⊨<sub>σ</sub>A</td><td>σ 跑遍 M 上所有赋值</td></tr>
+      <tr><td>⊨ A</td><td>"A 永真 / valid"</td><td>对<b>所有</b> ℒ-模型 (M,σ)，M⊨<sub>σ</sub>A</td><td>M 和 σ 都跑遍</td></tr>
+      <tr><td>Γ ⊨ A</td><td>"A 是 Γ 的语义结论"</td><td>所有满足 Γ 的模型也满足 A</td><td>模型跑遍，但限制在 Γ 真的那些上</td></tr>
+    </table>
+
+    <div class="tip"><b>记住一个口诀：</b>下标 σ 越少，"普适性"越强。<code>⊨<sub>σ</sub></code> 是单点说话；<code>⊨A</code> 是对所有 (M,σ) 都成立。</div>
+
+    <div class="warn"><b>渲染：</b><code>⊨</code> 是 U+22A8（双竖+横线），Edge 偶尔渲染成空白方块，请用 Chrome。否定写作 <code>⊭</code>（U+22AD）。</p></div>
+  </div>
+</section>
+
+<!-- ========== p35 ========== -->
+<section class="page" id="p35">
+  <h2>定义 3.15'：用 ⊨<sub>σ</sub> 重写的等价定义</h2>
+  <div class="pgnum">PDF 第 35 页</div>
+  <img class="slide" src="pages/p35.png" alt="p35">
+  <div class="explain">
+    <p>本质就是把定义 3.15 用 <code>M ⊨<sub>σ</sub> A</code> 代替 <code>A<sub>M[σ]</sub> = T</code> 重新写一遍，更接近逻辑文献的习惯写法。</p>
+
+    <table class="tbl">
+      <tr><th>公式</th><th>⊨<sub>σ</sub> 形式</th></tr>
+      <tr><td>t₁ ≐ t₂</td><td>iff (t₁)<sub>M[σ]</sub> = (t₂)<sub>M[σ]</sub></td></tr>
+      <tr><td>P(t₁,…,tₙ)</td><td>iff ⟨…⟩ ∈ P_M</td></tr>
+      <tr><td>¬A</td><td>iff not M⊨<sub>σ</sub>A</td></tr>
+      <tr><td>A∧B</td><td>iff M⊨<sub>σ</sub>A 且 M⊨<sub>σ</sub>B</td></tr>
+      <tr><td>A∨B</td><td>iff M⊨<sub>σ</sub>A 或 M⊨<sub>σ</sub>B</td></tr>
+      <tr><td>A→B</td><td>iff M⊨<sub>σ</sub>A 蕴含 M⊨<sub>σ</sub>B</td></tr>
+      <tr><td>∀x.A</td><td>iff 对任意 a∈M, M⊨<sub>σ[x:=a]</sub>A</td></tr>
+      <tr><td>∃x.A</td><td>iff 对某个 a∈M, M⊨<sub>σ[x:=a]</sub>A</td></tr>
+    </table>
+
+    <div class="note">这只是换皮肤——以后我们多用 <code>⊨<sub>σ</sub></code> 形式，因为 ¬, ∧, → 的语义可以直接读作"否定 / 且 / 蕴含"，更像数学陈述。</div>
+  </div>
+</section>
+
+<!-- ========== p36 ========== -->
+<section class="page" id="p36">
+  <h2>引理 3.16：公式真值只看自由变元</h2>
+  <div class="pgnum">PDF 第 36 页</div>
+  <img class="slide" src="pages/p36.png" alt="p36">
+  <div class="explain">
+    <h3>引理</h3>
+    <p>设 (M, σ₁), (M, σ₂) 是 ℒ-模型。若 σ₁ 和 σ₂ <b>在 FV(A) 上相同</b>（记 σ₁|FV(A) = σ₂|FV(A)），则 A<sub>M[σ₁]</sub> = A<sub>M[σ₂]</sub>。</p>
+
+    <div class="tip"><b>白话：</b>给公式 A 求真假时，只用得到 A 里<b>自由出现</b>的那些变元的值。约束变元值改了不影响——因为约束变元的值是被量词"局部覆盖"的，外部赋值给它什么没意义。</div>
+
+    <h3>书上的小例</h3>
+    <p><code>(∀x. x ≐ y)<sub>M[σ[z:=a]]</sub> = (∀x. x ≐ y)<sub>M[σ]</sub></code>。<br>因为 FV(∀x. x≐y) = {y}，里面没有 z；所以把 σ 在 z 处改成 a 完全不影响这个公式的值。</p>
+
+    <div class="note"><b>为什么这条引理重要：</b>它把"公式的真假"从依赖整个 σ 退化到"只依赖 FV(A) 上的 σ"。对闭公式（FV(A)=∅），值完全由 M 决定，与 σ 无关——这就是后面 M⊨A 的语义基础。</div>
+
+    <p>接下来 5 页 (p38–p42) 是完整的归纳证明。<b>这是本章最详细的结构归纳示范</b>，强烈建议跟着走一遍。</p>
+  </div>
+</section>
+
+<!-- ========== p38 ========== -->
+<section class="page" id="p38">
+  <h2>证明 (1/5)：先对项归纳证 (*)</h2>
+  <div class="pgnum">PDF 第 37–38 页（p37 与 p38 重复，仅讲 p38）</div>
+  <img class="slide" src="pages/p38.png" alt="p38">
+  <div class="explain">
+    <h3>分两层归纳</h3>
+    <p><b>第一步</b>先证明项版本（记为 (*)）：</p>
+    <div class="formula">若 σ₁|FV(t) = σ₂|FV(t)，则 t<sub>M[σ₁]</sub> = t<sub>M[σ₂]</sub></div>
+
+    <h3>项归纳</h3>
+    <ul>
+      <li><b>基础</b>：t 为变元 x 时，FV(t)={x}，所以 σ₁(x)=σ₂(x)，故 t<sub>M[σ₁]</sub>=σ₁(x)=σ₂(x)=t<sub>M[σ₂]</sub>。t 为常元时 FV(t)=∅，两边都等于 c<sub>M</sub>。</li>
+      <li><b>归纳假设</b>：对 t₁,…,tₙ 都有 (*)。</li>
+      <li><b>归纳步骤</b>：t = f(t₁,…,tₙ) 时，FV(f(t₁,…,tₙ)) = ⋃ FV(tᵢ)。条件 σ₁|FV(t)=σ₂|FV(t) 推出 σ₁|FV(tᵢ)=σ₂|FV(tᵢ)，由 IH 知 (tᵢ)<sub>M[σ₁]</sub>=(tᵢ)<sub>M[σ₂]</sub>，故：<br>
+        <pre>f(t₁,…,tₙ)_M[σ₁] = f_M((t₁)_M[σ₁],…,(tₙ)_M[σ₁])
+                  = f_M((t₁)_M[σ₂],…,(tₙ)_M[σ₂])     # 用 IH
+                  = f(t₁,…,tₙ)_M[σ₂]                  ✓</pre></li>
+    </ul>
+
+    <div class="tip">这就是结构归纳的标准三段套路：基础、IH、归纳步——你已经在第 6 章见过很多次。后面公式归纳完全是同一个模板。</div>
+  </div>
+</section>
+
+<!-- ========== p39 ========== -->
+<section class="page" id="p39">
+  <h2>证明 (2/5)：公式归纳 · 情况 1 等词</h2>
+  <div class="pgnum">PDF 第 39 页</div>
+  <img class="slide" src="pages/p39.png" alt="p39">
+  <div class="explain">
+    <p>有了 (*)，再对公式 A 做结构归纳。<b>归纳基础</b>有两种原子公式：等词和谓词。</p>
+
+    <h3>情况 1：A = (s ≐ t)</h3>
+    <p>FV(A) = FV(s) ∪ FV(t)。前提 σ₁|FV(A)=σ₂|FV(A)，所以 σ₁|FV(s)=σ₂|FV(s) 且 σ₁|FV(t)=σ₂|FV(t)。由 (*) 得 s<sub>M[σ₁]</sub>=s<sub>M[σ₂]</sub>，t<sub>M[σ₁]</sub>=t<sub>M[σ₂]</sub>。则：</p>
+<pre>A_M[σ₁] = (s≐t)_M[σ₁]
+        = { T 若 s_M[σ₁] = t_M[σ₁];  F 否则 }
+        = { T 若 s_M[σ₂] = t_M[σ₂];  F 否则 }   # 项值相等
+        = A_M[σ₂]                                ✓</pre>
+  </div>
+</section>
+
+<!-- ========== p40 ========== -->
+<section class="page" id="p40">
+  <h2>证明 (3/5)：情况 2 谓词</h2>
+  <div class="pgnum">PDF 第 40 页</div>
+  <img class="slide" src="pages/p40.png" alt="p40">
+  <div class="explain">
+    <h3>情况 2：A = P(t₁,…,tₙ)</h3>
+    <p>FV(A) = ⋃ FV(tᵢ)。同样推出 σ₁|FV(tᵢ)=σ₂|FV(tᵢ)，由 (*) 得 (tᵢ)<sub>M[σ₁]</sub>=(tᵢ)<sub>M[σ₂]</sub>。代入：</p>
+<pre>A_M[σ₁] = T iff ⟨(t₁)_M[σ₁],…⟩ ∈ P_M
+        = T iff ⟨(t₁)_M[σ₂],…⟩ ∈ P_M   # 元组逐位相等
+        = A_M[σ₂]                       ✓</pre>
+
+    <div class="note">情况 1, 2 都依赖项侧的 (*)，这就是为什么必须<b>先证项版本再证公式版本</b>——双层归纳的次序不能换。</div>
+  </div>
+</section>
+
+<!-- ========== p41 ========== -->
+<section class="page" id="p41">
+  <h2>证明 (4/5)：情况 3, 4 联结词</h2>
+  <div class="pgnum">PDF 第 41 页</div>
+  <img class="slide" src="pages/p41.png" alt="p41">
+  <div class="explain">
+    <h3>情况 3：A = ¬B</h3>
+    <p>FV(¬B) = FV(B)。由 σ₁|FV(B)=σ₂|FV(B) 和 IH 得 B<sub>M[σ₁]</sub>=B<sub>M[σ₂]</sub>。代入：</p>
+<pre>A_M[σ₁] = B_¬(B_M[σ₁])
+        = B_¬(B_M[σ₂])     # IH
+        = A_M[σ₂]            ✓</pre>
+
+    <h3>情况 4：A = B * C（*∈{∧,∨,→}）</h3>
+    <p>书上写"略"。同理：FV(B*C)=FV(B)∪FV(C)，对 B, C 分别用 IH 得到值相等，再用真值函数 B_*。和情况 3 完全平行。</p>
+  </div>
+</section>
+
+<!-- ========== p42 ========== -->
+<section class="page" id="p42">
+  <h2>证明 (5/5)：情况 5, 6 量词 ── 最关键</h2>
+  <div class="pgnum">PDF 第 42 页</div>
+  <img class="slide" src="pages/p42.png" alt="p42">
+  <div class="explain">
+    <h3>情况 5：A = ∀x.B</h3>
+    <p>FV(∀x.B) = FV(B) − {x}。前提 σ₁|FV(A) = σ₂|FV(A)。<b>关键一步：</b>对任意 a∈M，</p>
+    <div class="formula">σ₁[x:=a] | FV(B) = σ₂[x:=a] | FV(B)</div>
+    <p>为什么？对 x：两边都是 a，相等。对 FV(B)−{x} 中的 y：σ₁(y)=σ₂(y)（来自前提），σ[x:=a] 不动 y，相等。</p>
+
+    <p>所以可以对内部 B 用 IH，得 B<sub>M[σ₁[x:=a]]</sub> = B<sub>M[σ₂[x:=a]]</sub>。再用 ∀ 的语义：</p>
+<pre>A_M[σ₁] = T iff ∀a∈M, B_M[σ₁[x:=a]] = T
+        = T iff ∀a∈M, B_M[σ₂[x:=a]] = T   # IH 对每个 a
+        = A_M[σ₂]                            ✓</pre>
+
+    <h3>情况 6：A = ∃x.B —— 同理</h3>
+
+    <div class="tip"><b>这一步的核心技巧</b>：要对量词内部用归纳假设，必须先证明"打补丁后的赋值在 FV(B) 上仍然相同"。这是处理量词归纳的标准套路，<b>第 8 章证证明系统的可靠性也会重复用到</b>。</div>
+  </div>
+</section>
+
+<!-- ========== BG8 ========== -->
+<section class="page bg" id="bg8">
+  <h2>∀ 与 ∃ 的语义对偶 ── 小结一张表</h2>
+  <div class="pgnum">补充背景 · 进入可满足前的小结</div>
+  <div class="explain">
+    <p>到这里量词的语义你已经完全清楚，但请把对偶性记在脑子里：</p>
+
+    <table class="tbl">
+      <tr><th>记号</th><th>真当且仅当</th><th>假当且仅当</th><th>反例 / 见证</th></tr>
+      <tr><td>∀x.A</td><td>所有 a∈M, A[x:=a] 真</td><td>存在某个 a∈M, A[x:=a] 假</td><td>找一个反例 a₀</td></tr>
+      <tr><td>∃x.A</td><td>存在某个 a∈M, A[x:=a] 真</td><td>所有 a∈M, A[x:=a] 假</td><td>找一个见证 a₀</td></tr>
+    </table>
+
+    <div class="formula">¬∀x.A ≃ ∃x.¬A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¬∃x.A ≃ ∀x.¬A &nbsp;&nbsp; （德摩根的量词版）</div>
+
+    <div class="tip"><b>证题模板</b>：要证 ∀x.A 真→任取 a∈M，证 A[x:=a] 真；要证 ∀x.A 假→构造一个 a₀ 使 A[x:=a₀] 假；要证 ∃x.A 真→构造见证 a₀；要证 ∃x.A 假→任取 a，证 A[x:=a] 假。这套模板贯穿后面所有证题。</div>
+
+    <p>第 1 个等价 <code>¬∀x.A ≃ ∃x.¬A</code> 就是 p61 的标准例题。</p>
+  </div>
+</section>
+
+<!-- ========== p45 ========== -->
+<section class="page" id="p45">
+  <h2>定义 3.17：可满足 ── 六种含义</h2>
+  <div class="pgnum">PDF 第 43–45 页（累积，讲终态）· 当前在 <b>第 ④ 层</b></div>
+  <img class="slide" src="pages/p45.png" alt="p45">
+  <div class="explain">
+    <p>"可满足"四个字根据上下文有<b>六种不同含义</b>，PDF 一次列全：</p>
+
+    <table class="tbl">
+      <tr><th>说法</th><th>记号</th><th>含义</th></tr>
+      <tr><td>(1) 公式 A 对 (M,σ) 可满足</td><td>M⊨<sub>σ</sub>A</td><td>A<sub>M[σ]</sub> = T</td></tr>
+      <tr><td>(2) 公式 A 可满足</td><td>—</td><td>存在 (M,σ) 使 M⊨<sub>σ</sub>A</td></tr>
+      <tr><td>(3) M 满足 A</td><td>M⊨A</td><td>对所有 σ 都有 M⊨<sub>σ</sub>A</td></tr>
+      <tr><td>(4) 公式集 Γ 对 (M,σ) 可满足</td><td>M⊨<sub>σ</sub>Γ</td><td>∀A∈Γ, M⊨<sub>σ</sub>A</td></tr>
+      <tr><td>(5) 公式集 Γ 可满足</td><td>—</td><td>存在 (M,σ) 使 M⊨<sub>σ</sub>Γ</td></tr>
+      <tr><td>(6) M 满足 Γ</td><td>M⊨Γ</td><td>对所有 σ 都有 M⊨<sub>σ</sub>Γ</td></tr>
+    </table>
+
+    <div class="warn"><b>易混点（warn）：</b>"<b>A 可满足</b>"≠"<b>M⊨A</b>"。前者只要找到一个模型就行（弱）；后者要求在这一个 M 下对<b>所有</b>赋值都真（强）。<br>
+    举例：A = (x₀ ≐ x₁)。它"可满足"（取 σ(x₀)=σ(x₁)=0）但 ℕ⊭A（取 σ(x₀)=0, σ(x₁)=1 反例）。</p></div>
+
+    <p>右下角小框：<code>M⊭<sub>σ</sub>A</code> 表示 A<sub>M[σ]</sub>=F；<code>M⊭A</code> 表示存在 σ 使 A<sub>M[σ]</sub>=F；<code>M⊭<sub>σ</sub>Γ</code> 表示 ∃A∈Γ, A<sub>M[σ]</sub>=F；<code>M⊭Γ</code> 表示存在 σ 使 M⊭<sub>σ</sub>Γ。<b>否定记号的层级一定要数清</b>。</p>
+  </div>
+</section>
+
+<!-- ========== p46 ========== -->
+<section class="page" id="p46">
+  <h2>定义 3.18：永真</h2>
+  <div class="pgnum">PDF 第 46 页</div>
+  <img class="slide" src="pages/p46.png" alt="p46">
+  <div class="explain">
+    <ul>
+      <li><b>A 永真</b>，记 ⊨A：对所有模型 (M,σ) 都有 M⊨<sub>σ</sub>A。</li>
+      <li><b>Γ 永真</b>，记 ⊨Γ：对所有模型 (M,σ) 都有 M⊨<sub>σ</sub>Γ。</li>
+    </ul>
+    <div class="tip">"永真"是命题逻辑里"重言式"的一阶推广。<code>⊨A</code> 之所以左侧空白，正对应"无任何假设下 A 总真"。</div>
+  </div>
+</section>
+
+<!-- ========== p47 ========== -->
+<section class="page" id="p47">
+  <h2>定义 3.19：语义结论 Γ⊨A</h2>
+  <div class="pgnum">PDF 第 47 页</div>
+  <img class="slide" src="pages/p47.png" alt="p47">
+  <div class="explain">
+    <p><b>Γ⊨A</b>：对任何模型 (M,σ)，若 M⊨<sub>σ</sub>Γ，则 M⊨<sub>σ</sub>A。<br>白话：<b>Γ 真的模型一定也让 A 真</b>。</p>
+    <ul>
+      <li><b>Γ⊭A</b>：存在反例模型，使 Γ 真但 A 假。</li>
+      <li><b>∅⊨A iff A 永真</b>，即 ⊨A。空前提下的结论恰好是永真。</li>
+    </ul>
+    <div class="note">这是一阶逻辑里"逻辑推理"的语义版本——直接说"从 Γ 真推出 A 真"。下章会有它的语法版本（证明系统），并最终证可靠性 + 完备性。</div>
+  </div>
+</section>
+
+<!-- ========== p48 ========== -->
+<section class="page" id="p48">
+  <h2>三大形式逻辑基本定律</h2>
+  <div class="pgnum">PDF 第 48 页</div>
+  <img class="slide" src="pages/p48.png" alt="p48">
+  <div class="explain">
+    <p>本节用<b>反证法</b>证三条永真公式，全是逻辑学起源时就被亚里士多德指出的"思维基本定律"：</p>
+    <table class="tbl">
+      <tr><th>名字</th><th>形式</th><th>古典动机</th></tr>
+      <tr><td>排中律 LEM</td><td>⊨ A ∨ ¬A</td><td>命题非真即假，没有第三种</td></tr>
+      <tr><td>矛盾律 LNC</td><td>⊨ ¬(A ∧ ¬A)</td><td>同时真又假不可能</td></tr>
+      <tr><td>同一律</td><td>⊨ ∀x.(x ≐ x)</td><td>任何东西等于自己</td></tr>
+    </table>
+    <div class="tip">证法模板完全一样：<b>反证</b> + 推出 <code>A<sub>M[σ]</sub> = T 且 = F</code> 的矛盾。</div>
+  </div>
+</section>
+
+<!-- ========== p50 排中律 ========== -->
+<section class="page" id="p50">
+  <h2>排中律：⊨ A ∨ ¬A</h2>
+  <div class="pgnum">PDF 第 49–50 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p50.png" alt="p50">
+  <div class="explain">
+    <h3>反证</h3>
+    <p>假设存在模型 (M,σ) 使 (A∨¬A)<sub>M[σ]</sub> = F。展开：</p>
+<pre>(A ∨ ¬A)_M[σ] = B_∨(A_M[σ], (¬A)_M[σ])
+              = B_∨(A_M[σ], B_¬(A_M[σ])) = F   ← 假设
+</pre>
+    <p>由 B_∨ 真值表，只有 F∨F=F，所以 A<sub>M[σ]</sub>=F 且 B_¬(A<sub>M[σ]</sub>)=F。<br>
+    后者由 B_¬ 真值表给出 A<sub>M[σ]</sub>=T。<br>
+    于是 A<sub>M[σ]</sub> 同时 =T 又 =F，矛盾。</p>
+
+    <div class="tip">注意整个证明<b>没用到 A 是什么</b>，只用到 B_¬, B_∨ 的真值表——所以排中律对任意公式 A 成立，包括含变元、含量词的。</div>
+  </div>
+</section>
+
+<!-- ========== 矛盾律 自补 ========== -->
+<section class="page" id="contradiction">
+  <h2>★ 矛盾律：⊨ ¬(A ∧ ¬A)（自补 · PDF 略）</h2>
+  <div class="pgnum">PDF 原文略 · 本讲稿补全</div>
+  <div class="explain">
+    <h3>反证</h3>
+    <p>假设存在模型 (M,σ) 使 ¬(A∧¬A)<sub>M[σ]</sub> = F。展开：</p>
+<pre>(¬(A ∧ ¬A))_M[σ] = B_¬((A ∧ ¬A)_M[σ]) = F                              ← 假设
+故 (A ∧ ¬A)_M[σ] = T                                                      # B_¬ 真值表
+即 B_∧(A_M[σ], (¬A)_M[σ]) = T                                            # 展开 ∧
+   B_∧(A_M[σ], B_¬(A_M[σ])) = T                                          # 展开 ¬A
+由 B_∧ 真值表，T∧X=T 仅当 X=T，所以 A_M[σ] = T 且 B_¬(A_M[σ]) = T
+后者由 B_¬ 真值表得 A_M[σ] = F
+矛盾：A_M[σ] 同时 = T 且 = F。 ✓
+</pre>
+
+    <div class="note">和排中律的证明结构完全镜像。本质上排中律和矛盾律是<b>德摩根对偶</b>：<code>A ∨ ¬A</code> 和 <code>¬(¬A ∧ ¬¬A) ≃ ¬(¬A ∧ A)</code> 在经典逻辑里互推。你可以验证它们的"反证树"互为镜像。</div>
+
+    <div class="tip"><b>历史小知识：</b>直觉主义逻辑放弃了排中律但保留矛盾律——这两条在经典逻辑下等价，但在更弱的逻辑系统下不一定等价。第 8 章会接触到这种细致区分。</div>
+  </div>
+</section>
+
+<!-- ========== p52 同一律 ========== -->
+<section class="page" id="p52">
+  <h2>同一律：⊨ ∀x.(x ≐ x)</h2>
+  <div class="pgnum">PDF 第 51–52 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p52.png" alt="p52">
+  <div class="explain">
+    <h3>反证</h3>
+    <p>假设存在模型 (M,σ) 使 (∀x.(x≐x))<sub>M[σ]</sub> = F。<br>
+    由 ∀ 的语义：存在 a∈M，(x≐x)<sub>M[σ[x:=a]]</sub> = F。</p>
+    <p>但 (x≐x)<sub>M[σ[x:=a]]</sub> 要 = F，按 ≐ 的语义需要 x<sub>M[σ[x:=a]]</sub> ≠ x<sub>M[σ[x:=a]]</sub>——这是元语言的<b>自己不等于自己</b>，不可能。所以 (x≐x)<sub>M[σ[x:=a]]</sub> = T 对所有 a 成立，于是 (∀x.(x≐x))<sub>M[σ]</sub> = T，矛盾。</p>
+
+    <div class="tip">同一律本质就是"元语言里 a=a 永远成立"在对象语言里的体现。等词 ≐ 的语义是对照元语言的相等 =，所以左右两边写一样的项 x，必然真。</div>
+  </div>
+</section>
+
+<!-- ========== p53 ========== -->
+<section class="page" id="p53">
+  <h2>引理 3.20：Γ⊨A 等价于 Γ∪{¬A} 不可满足</h2>
+  <div class="pgnum">PDF 第 53 页</div>
+  <img class="slide" src="pages/p53.png" alt="p53">
+  <div class="explain">
+    <p>反证：假设 Γ∪{¬A} 可满足，则存在 (M,σ) 使 M⊨<sub>σ</sub>Γ 且 M⊨<sub>σ</sub>¬A。后者即 A<sub>M[σ]</sub>=F。但 Γ⊨A 要求 M⊨<sub>σ</sub>Γ 蕴含 M⊨<sub>σ</sub>A，矛盾。</p>
+
+    <div class="tip"><b>这条引理是反证法的语义版</b>——"要证 Γ⊨A，等价于证 Γ∪{¬A} 一定矛盾"。后面证明系统讨论"一致性"时是核心工具。</div>
+  </div>
+</section>
+
+<!-- ========== p59 综合例 ========== -->
+<section class="page" id="p59">
+  <h2>综合例：⊨ ∀x.(A→B) → (∀x.A → ∀x.B)</h2>
+  <div class="pgnum">PDF 第 54–59 页（累积 6 张，讲终态）· 本章压轴例题</div>
+  <img class="slide" src="pages/p59.png" alt="p59">
+  <div class="explain">
+    <h3>命题</h3>
+    <p>证 ∀x.(A→B) ⊨ ∀x.A → ∀x.B。<br>白话：如果对所有 x A→B 真，且对所有 x A 真，那对所有 x B 也真。</p>
+
+    <h3>反证 · 完整六步</h3>
+<pre>假设 ∀x.(A→B) ⊭ ∀x.A→∀x.B
+存在模型 (M,σ) 使：
+  (1) (∀x.(A→B))_M[σ] = T                              # 假设前件真
+  (2) (∀x.A → ∀x.B)_M[σ] = F                            # 假设后件假
+
+由 (2) 与 → 真值表：
+  (3) (∀x.A)_M[σ] = T 且 (∀x.B)_M[σ] = F               # → 唯一 F 的情况
+
+展开 (3) 的两部分：
+  (4) 对 ∀a ∈ M, A_M[σ[x:=a]] = T                       # ∀x.A=T
+  (5) 存在 b ∈ M, B_M[σ[x:=b]] = F                       # ∀x.B=F
+
+把 (4) 在 a=b 处实例化：
+  (6) A_M[σ[x:=b]] = T 且 B_M[σ[x:=b]] = F
+
+由 → 的真值表：
+  (7) (A → B)_M[σ[x:=b]] = F                           # T → F = F
+
+但 (1) 给出 ∀a∈M, (A→B)_M[σ[x:=a]] = T，取 a=b：
+  (A → B)_M[σ[x:=b]] = T                                # 与 (7) 矛盾  ✓
+</pre>
+
+    <div class="tip"><b>关键技巧</b>：(4)、(5) 都是"对所有 a / 存在 b"的陈述，要让它们对接，需要<b>在同一个 b 上实例化</b>。这是一阶语义题里最常用的招——把全称语句"实例化到见证"。</div>
+
+    <div class="warn"><b>注意</b>：这个结论的反方向 <code>∀x.A→∀x.B ⊨ ∀x.(A→B)</code> 是<b>不成立</b>的！（思考反例：M=ℕ, A:=(x≐0), B:=(x≐0)；A→B 永真——但若换成 A:=(x≐0), B:=⊥ 就能造反例。）这种细微方向性是一阶逻辑题里的常见坑。</div>
+  </div>
+</section>
+
+<!-- ========== p61 ========== -->
+<section class="page" id="p61">
+  <h2>定义 3.20：逻辑等价 A ≃ B · 例 ¬∀x.A ≃ ∃x.¬A</h2>
+  <div class="pgnum">PDF 第 60–61 页（累积，讲终态）</div>
+  <img class="slide" src="pages/p61.png" alt="p61">
+  <div class="explain">
+    <h3>定义</h3>
+    <p>A 与 B <b>逻辑等价</b>，记 <code>A ≃ B</code>，指对任意模型 (M,σ)，M⊨<sub>σ</sub>A 当且仅当 M⊨<sub>σ</sub>B。</p>
+
+    <div class="warn">⚠ 本讲稿用 ≃（U+2243）表示逻辑等价，对象语言里的等词另用 ≐。Edge 中两个符号可能混在一起，请用 Chrome。</p></div>
+
+    <h3>例题验证：¬∀x.A ≃ ∃x.¬A</h3>
+    <p>左边展开：</p>
+<pre>(¬∀x.A)_M[σ] = B_¬((∀x.A)_M[σ])
+             = { F  若 ∀a∈M, A_M[σ[x:=a]] = T
+                 T  否则 }
+</pre>
+    <p>右边展开：</p>
+<pre>(∃x.¬A)_M[σ] = { T  若 ∃a∈M, (¬A)_M[σ[x:=a]] = T
+                 F  否则 }
+             = { T  若 ∃a∈M, A_M[σ[x:=a]] = F
+                 F  否则 }
+</pre>
+    <p>两边都是"<b>存在某个 a 让 A[x:=a] 假</b>则 T，否则 F"——逻辑等价 ✓。</p>
+
+    <div class="tip"><b>德摩根量词律</b>对偶式：<code>¬∃x.A ≃ ∀x.¬A</code>，证法对偶。把否定"穿过"量词时，量词翻面。这是一阶演算化简的常用招。</div>
+  </div>
+</section>
+
+<!-- ========== p62 ========== -->
+<section class="page" id="p62">
+  <h2>定理 3.21：等值替换</h2>
+  <div class="pgnum">PDF 第 62 页（章末）</div>
+  <img class="slide" src="pages/p62.png" alt="p62">
+  <div class="explain">
+    <p>设 B ≃ C。把 A 中的若干 B 替换成 C 得到 A'，则 A ≃ A'。</p>
+
+    <div class="tip"><b>白话：</b>逻辑等价的子公式可以"无痛替换"——就像数学里 sinx 的某些恒等式可以代入任何含 sinx 的表达式。证明思路：对 A 的结构归纳，每层用 B ≃ C 的语义保持子公式真值。</div>
+
+    <div class="note"><b>意义：</b>有了这条定理 + 一些等价律（德摩根、量词分配、双否消去…），就可以做一阶公式的<b>化简 / 规范化</b>，比如转成"前束范式"。这是后续模型论 / 自动定理证明的基础。</p></div>
+  </div>
+</section>
+
+<!-- ========== BG9 ========== -->
+<section class="page bg" id="bg9">
+  <h2>常见误解 & 自检题</h2>
+  <div class="pgnum">补充背景 · 收尾前自查</div>
+  <div class="explain">
+    <h3>三个最容易栽的坑</h3>
+    <div class="warn"><b>坑 1：把 σ[x:=a] 当成"重置 σ"</b>。它只覆盖 x 一处，其他变元的旧值仍在。p33 的例子里 x₁ 还是 1、x₄ 还是 4 就是这个原因。</div>
+    <div class="warn"><b>坑 2：把"A 可满足"和"M⊨A"混用</b>。前者：存在某个 (M,σ) 使 A 真；后者：在指定的 M 上对所有 σ 都真。后者强得多。</div>
+    <div class="warn"><b>坑 3：把 ⊨ 的层级搞混</b>。<code>A<sub>M[σ]</sub>=T</code> 是单点；<code>⊨A</code> 是普世。看到 ⊨ 先看左侧有没有 Γ、下标有没有 σ。</div>
+
+    <h3>自检题（不交，但应该会做）</h3>
+    <ol>
+      <li>在 𝒜 标准模型 ℕ, σ(xₙ)=n 下，求 (∃x₂.(x₂ ≐ +(x₁,x₁)))<sub>N[σ]</sub>。</li>
+      <li>判断 ⊨ ∃x.(A∨B) ↔ (∃x.A ∨ ∃x.B) 是否成立。给证明或反例。</li>
+      <li>判断 ⊨ ∀x.(A∨B) ↔ (∀x.A ∨ ∀x.B) 是否成立。给证明或反例。</li>
+      <li>用引理 3.20 把"Γ∪{A}⊨B"转换为某个不可满足陈述。</li>
+    </ol>
+    <p>参考答案：1. T（取 x₂=2，因 +(x₁,x₁) 算出 2）。2. 成立。3. 不成立（A,B 分别在不同 x 上真）。4. Γ∪{A,¬B} 不可满足。</p>
+  </div>
+</section>
+
+<!-- ========== BG7 整章回顾 ========== -->
+<section class="page bg" id="bg7">
+  <h2>整章地图回顾 ── 一图串联本章</h2>
+  <div class="pgnum">补充背景 · 收尾</div>
+  <div class="explain">
+    <p>从上到下读：</p>
+<pre>      [第 6 章语法层]
+          │  造出形式公式 A
+          ▼
+┌─────────────────────────────┐
+│  ① 结构 𝕄 = (M, I)            │   定义 3.10  ─ 给非逻辑符号配实物
+│     ↓                         │
+│  ② 赋值 σ : V → M             │   定义 3.11  ─ 给变元配值
+│     ↓                         │
+│  ③ 项解释  t_M[σ] ∈ M         │   定义 3.13  ─ 项归纳
+│     ↓                         │
+│     公式解释 A_M[σ] ∈ 𝐁       │   定义 3.15  ─ 公式归纳，含量词
+│     ↓                         │
+│  ④ 可满足 M⊨_σA / M⊨A         │   定义 3.17  ─ 单点 / 全赋值
+│     ↓                         │
+│     永真 ⊨A                   │   定义 3.18  ─ 全模型
+│     ↓                         │
+│     语义结论 Γ⊨A              │   定义 3.19  ─ 推理关系
+└─────────────────────────────┘
+          │
+          ▼  本章工具：引理 3.16 (自由变元), 形式逻辑三定律,
+                       引理 3.20 (反证), 逻辑等价 ≃, 等值替换
+          ▼
+      [第 8 章：证明论 G' / 一阶演算]
+          —— 形式系统 ⊢A，可靠性、完备性 ⊢A iff ⊨A
+</pre>
+
+    <h3>下一步</h3>
+    <ul>
+      <li><b>第 8 章</b>会给出一阶逻辑的形式证明系统（自然推理 / 希尔伯特系统 / 序列演算），并证<b>可靠性</b>（⊢A ⇒ ⊨A，证明系统不乱推）+<b>完备性</b>（⊨A ⇒ ⊢A，凡是语义真的都能证）。这两个结果合起来叫<b>哥德尔完备性定理</b>，是数理逻辑的两大里程碑之一。</li>
+      <li>之后接<b>哥德尔不完备性定理</b>：表达力足够强的形式系统（如算术）里有真但不可证的语句。和完备性不矛盾——不完备性讲的是特定理论的局限，而完备性讲的是一阶逻辑本身。</li>
+    </ul>
+    <p>到这里本章语义层全部讲完。</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>
