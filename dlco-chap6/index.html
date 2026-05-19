@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<title>第6章 第二讲 定点数运算（完整版 p23–57）</title>
+<title>第6章 第二讲 定点数运算 · 全本</title>
 <style>
   :root{
     --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
@@ -12,12 +12,13 @@
     --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
     --warn-bg:#fdecec; --warn-bd:#f5b8b8;
     --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+    --fp-ribbon:#e6f0d8; --fp-ribbon-bd:#a8c87a;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
     font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
     font-size:16px;line-height:1.78;}
-  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+  aside{position:fixed;top:0;left:0;width:240px;height:100vh;overflow-y:auto;
     background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
   aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
   aside ol{list-style:none;padding:0;margin:0;}
@@ -26,15 +27,22 @@
     border-left:3px solid transparent;transition:all .15s;}
   aside a:hover{background:#ebe0c4;}
   aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
   aside a.bg{color:#7c6a3f;}
   aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside a.fp{color:#4f6b2b;}
+  aside a.fp::before{content:"♦ ";color:#7ea63f;}
   aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
-  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  main{margin-left:240px;padding:30px 48px 80px;max-width:1100px;}
   section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
     padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
   section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
   section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
     color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page.fp{background:#f8fcf2;border-color:var(--fp-ribbon-bd);}
+  section.page.fp::before{content:"浮点入门 · 课件外补充";display:inline-block;background:var(--fp-ribbon);
+    color:#3c5419;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--fp-ribbon-bd);
     margin-bottom:8px;letter-spacing:1px;}
   section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
   section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
@@ -59,13 +67,17 @@
   @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
   .center{text-align:center;}
   .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+  .skip-box{background:#f3f4f6;border:1px dashed #d1d5db;border-radius:6px;padding:14px;color:var(--mute);font-size:14px;}
 </style>
 </head>
 <body>
 
 <aside>
-  <h1>第二讲 · 定点数运算</h1>
+  <h1>第6章 第二讲 · 完整版</h1>
+  <p style="color:var(--mute);font-size:11px;margin:0 4px 8px;">合并：加减乘 (p23-42) + Booth 快速乘 (p43-57) + 除法 运算部件 总结 浮点 (p58-85+)</p>
   <ol>
+    <li class="group">前半 · 加减 & 乘法 (p23-42)</li>
+
     <li><a href="#p23" class="skip">23. 第二讲目录</a></li>
     <li class="group">A · 加减运算</li>
     <li><a href="#bgA0" class="bg">补码到底是个啥</a></li>
@@ -97,6 +109,8 @@
     <li><a href="#p41">41. Booth 算法</a></li>
     <li><a href="#p42">42. 补码真值速查</a></li>
   
+    <li class="group">后半 · Booth & 快速乘 (p43-57)</li>
+
     <li class="group">D · 补码乘法（续）</li>
     <li><a href="#bgBooth" class="bg">Booth 算法直观（连续 1 串）</a></li>
     <li><a href="#p43">43. Booth 算法实质</a></li>
@@ -120,7 +134,59 @@
     <li><a href="#p55">55. 答案 (1)(2)</a></li>
     <li><a href="#p56">56. 答案 (3)</a></li>
     <li><a href="#p57">57. 乘法的几个开放问题</a></li>
-  </ol><p style="color:var(--mute);font-size:11px;margin-top:20px;">PDF p23–57 · 10 张补充背景</p></aside>
+  
+    <li class="group">终章 · 除法 & 运算部件 & 总结 (p58-85+)</li>
+
+    <li class="group">A · 定点除法</li>
+    <li><a href="#p58" class="skip">58. 第二讲目录</a></li>
+    <li><a href="#bgDA0" class="bg">手工除法的直觉</a></li>
+    <li><a href="#p59">59. Paper & Pencil 除法</a></li>
+    <li><a href="#p60">60. 除前预处理</a></li>
+    <li><a href="#bgDA1" class="bg">除法的"溢出"是什么</a></li>
+    <li><a href="#p61">61. 第一次试商为 1</a></li>
+    <li><a href="#bgDA2" class="bg">除法 vs 乘法硬件对比</a></li>
+    <li><a href="#p62">62. 无符号除法硬件</a></li>
+    <li><a href="#p63">63. 恢复余数法 7/2</a></li>
+    <li><a href="#bgDA3" class="bg">不恢复余数法的推导</a></li>
+    <li><a href="#p64">64. 不恢复余数法</a></li>
+    <li><a href="#p65">65. 不恢复余数 7/2</a></li>
+    <li><a href="#p66">66. 带符号数除法概述</a></li>
+    <li><a href="#bgDA4" class="bg">补码"够减"为什么不能直接判</a></li>
+    <li><a href="#p67">67. 原码除法举例（恢复）</a></li>
+    <li><a href="#p68">68. 原码除法举例（加减交替）</a></li>
+    <li><a href="#p69">69. 补码除法 — 够减规则表</a></li>
+    <li><a href="#p70">70. 补码除法基本思想</a></li>
+    <li><a href="#bgDA5" class="bg">商为负为什么要"末位加 1"</a></li>
+    <li><a href="#p71">71. 补码恢复余数法</a></li>
+    <li><a href="#p72">72. 举例 7/3 与 (-7)/3</a></li>
+    <li><a href="#p73">73. 补码不恢复余数法</a></li>
+    <li><a href="#p74">74. 举例 -9/2</a></li>
+    <li><a href="#bgDA6" class="bg">C 除法的"朝零舍入"</a></li>
+    <li><a href="#p75">75. 除以 2^k 的优化</a></li>
+    <li><a href="#p76">76. div32 函数</a></li>
+    <li><a href="#p77">77. RISC-V 乘除指令</a></li>
+    <li class="group">B · 定点运算部件</li>
+    <li><a href="#p78">78. 定点运算部件综合</a></li>
+    <li><a href="#bgDB0" class="bg">位片处理器的历史</a></li>
+    <li><a href="#p79">79. AM2901A 结构图</a></li>
+    <li><a href="#p80">80. AM2901A 功能详解</a></li>
+    <li><a href="#p81">81. 思考题：实现乘/除</a></li>
+    <li class="group">C · 章节小结</li>
+    <li><a href="#p82">82. 第二讲小结(加减)</a></li>
+    <li><a href="#p83">83. 第二讲小结(乘除)</a></li>
+    <li><a href="#p84">84. 本章总结 (1)</a></li>
+    <li><a href="#p85">85. 本章总结 (2)</a></li>
+    <li class="group">D · 浮点入门（课件外）</li>
+    <li><a href="#fp1" class="fp">为什么需要浮点 + IEEE 754</a></li>
+    <li><a href="#fp2" class="fp">特殊值与非规格化</a></li>
+    <li><a href="#fp3" class="fp">浮点加减全流程</a></li>
+    <li><a href="#fp4" class="fp">浮点乘除</a></li>
+    <li><a href="#fp5" class="fp">舍入与保护位</a></li>
+    <li><a href="#fp6" class="fp">浮点溢出与精度问题</a></li>
+  
+  </ol>
+  <p style="color:var(--mute);font-size:11px;margin-top:20px;">第二讲全本 + 浮点入门 6 节</p>
+</aside>
 
 <main>
 
@@ -829,7 +895,7 @@
     <h3>这页和 Booth 的关系</h3>
     <p>p41 推导第一行就是这条公式。<b>Booth 的全部魔法都源自"最高位权重是负的"这个事实</b>——为了在求和里"消化"掉那个负号，他用了 (yᵢ₋₁ − yᵢ) 的差值组合技巧。</p>
 
-    <hr class="sep"><p style="color:var(--mute);font-size:14px;text-align:center;">—— 加减 & 乘法（前半）讲解结束，下面进入 Booth & 快速乘法器 ——</p>
+    <hr class="sep"><p style="color:var(--mute);font-size:14px;text-align:center;">—— 第二讲前半（p23-42）结束 ——</p>
   </div>
 </section>
 
@@ -1521,8 +1587,1500 @@ unsigned imul(unsigned x, unsigned y) { return x*y; }</pre>
 
     <div class="tip"><b>这页是整节的总结</b>：硬件性能、ISA 设计、编译器生成代码三者紧密相关。<b>"有没有乘法指令"是 ISA 设计的选择；"乘法指令多快"是微架构实现的选择</b>。同一段 C 代码在不同 CPU 上跑出来快慢可能差几十倍，根源就在这里。</div>
 
+    <hr class="sep"><p style="color:var(--mute);font-size:14px;text-align:center;">—— 第二讲 Booth & 快速乘法器（p43-57）结束 ——</p>
+  </div>
+</section>
+
+
+
+<!-- ============ p58 skip ============ -->
+<section class="page" id="p58">
+  <h2>第二讲目录（指向除法）</h2>
+  <div class="pgnum">PDF 第 58 页 · 跳过</div>
+  <div class="skip-box">第二讲三大块的目录页，红箭头指向"定点数除法运算"——本文档从这里开始。前两块"加减"和"乘法"已在前面的文档讲完。</div>
+</section>
+
+<!-- ============ bgA0 手工除法直觉 ============ -->
+<section class="page bg" id="bgDA0">
+  <h2>从十进制手工除法说起</h2>
+  <div class="pgnum">补充背景 · 进入 p59 前必看</div>
+  <div class="explain">
+    <h3>回忆小学的"长除法"</h3>
+    <p>算 142 ÷ 6 时你是怎么做的？</p>
+    <pre>     ___2_3___
+  6 ) 1 4 2
+     -1 2          ← 6×2，够减，商 2
+      ——
+        2 2
+       -1 8        ← 6×3，够减，商 3
+        ——
+          4        ← 余数</pre>
+    <p>三步走：① 从被除数<b>最高几位</b>开始，看够不够减除数；② 够减 → 上商 + 减；不够 → 上商 0，"下放"下一位数字；③ 重复到被除数处理完。</p>
+
+    <h3>二进制除法更简单</h3>
+    <p>因为二进制每位的商只能是 <b>0 或 1</b>，所以"试商"退化成"够不够减"一个判断：</p>
+    <ul>
+      <li><b>够减</b> → 商 1，写下"被除数 − 除数"作为新的中间余数</li>
+      <li><b>不够减</b> → 商 0，被除数不动</li>
+    </ul>
+    <p>然后向左下方挪一位继续。和乘法一样，二进制除法不需要真正的"乘"或"除"，只用<b>减法 + 移位 + 一个判断</b>就能完成。</p>
+
+    <div class="tip"><b>除法和乘法的对偶</b>：<br>
+    · 乘法：从乘数最低位开始，部分积<b>右移</b>累加；<br>
+    · 除法：从被除数最高位开始，中间余数<b>左移</b>逐次减除数。<br>
+    后面会看到，两者用<b>同一套硬件骨架</b>（ALU + 移位器 + 寄存器组）就能实现。</div>
+  </div>
+</section>
+
+<!-- ============ p59 ============ -->
+<section class="page" id="p59">
+  <h2>除法（Divide）：Paper & Pencil</h2>
+  <div class="pgnum">PDF 第 59 页</div>
+  <img class="slide" src="pages/p59.png" alt="p59">
+  <div class="explain">
+    <h3>这页就是把上面背景页的二进制版列出来</h3>
+    <p>例子：1001010 ÷ 1000（十进制 74 ÷ 8 = 9 余 2）</p>
+    <pre>            1 0 0 1     ← 商 (Quotient)
+1 0 0 0 ) 1 0 0 1 0 1 0
+         -1 0 0 0          ← 第 1 步：1001 ≥ 1000，够减，商 1
+          ————
+            0 0 1 0         ← 中间余数 10，不够 1000，商 0
+              1 0 1         ← 再下放一位 → 101，仍不够，商 0
+                1 0 1 0     ← 再下放一位 → 1010，够减
+              -1 0 0 0      ← 第 4 步：1010 − 1000，商 1
+                ————
+                    1 0     ← 余数 (Remainder) = 2 ✓</pre>
+
+    <h3>PPT 总结的三条规则</h3>
+    <ol>
+      <li>被除数（或中间余数）减除数，<b>够减上商 1，不够减上商 0</b></li>
+      <li>每次相减得到的差作为<b>中间余数</b>；除数相对中间余数<b>右移一位</b>（等价地，让中间余数<b>左移一位</b>跟原地的除数比）继续减</li>
+      <li>重复，直到商位数足够</li>
+    </ol>
+
+    <div class="note"><b>硬件实现的小转换</b>：硬件里"除数右移"麻烦（除数寄存器要变动），所以一律改成<b>中间余数左移</b>——逻辑等价、电路简单。p62 那张图就是这个版本。</div>
+
+    <h3>商位的获得顺序</h3>
+    <p>注意：商位是<b>从最高位（MSB）到最低位（LSB）逐次得出</b>。这和乘法（从 LSB 到 MSB 累加部分积）方向相反。所以后面硬件里，<b>商位要"左移进 Q 寄存器"</b>，而不是右移。</p>
+  </div>
+</section>
+
+<!-- ============ p60 ============ -->
+<section class="page" id="p60">
+  <h2>定点除法 — 除前预处理</h2>
+  <div class="pgnum">PDF 第 60 页</div>
+  <img class="slide" src="pages/p60.png" alt="p60">
+  <div class="explain">
+    <h3>三种"开打前就该处理"的异常</h3>
+    <ol>
+      <li><b>被除数 = 0 且除数 ≠ 0</b>：直接商 0，不做后续运算</li>
+      <li><b>整数除法时 |被除数| &lt; |除数|</b>：商必然是 0，余数 = 被除数，直接返回</li>
+      <li><b>除数 = 0</b>：抛"除数为 0"异常；浮点中产生 ±∞；如果浮点的被除数也是 0，产生 "quiet NaN"</li>
+    </ol>
+    <p>只有当上面三种都不发生时，才进入真正的除法循环。</p>
+
+    <h3>无符号除法的硬件思路</h3>
+    <p>核心操作和手算一样：<b>试减 → 够则商 1 → 不够则商 0</b>。商位从 MSB 到 LSB 逐次得出。基本电路：减法器（ALU）+ 移位器，和乘法器共用同一套硬件。</p>
+
+    <h3>"两个 n 位数相除"的两种统一</h3>
+    <p>PPT 最后那段很关键。除法的标准接口是"<b>2n 位 ÷ n 位</b>"——但你写 C 代码 <code>int z = x/y;</code> 两个操作数都是 n 位。如何把"n 位 ÷ n 位"映射到这个标准接口？两种情况要分开补 0：</p>
+    <ul>
+      <li><b>整数除法</b>：被除数的<b>高位</b>补 n 个 0（变成 2n 位），低位不动
+        <ul><li>例：8 位 x = 0000 0111 → 16 位的 0000 0000 0000 0111 ÷ 8 位 y</li></ul>
+      </li>
+      <li><b>原码小数除法</b>（浮点尾数）：被除数的<b>低位</b>补 n 个 0
+        <ul><li>例：4 位小数 .1011 → .1011 0000 ÷ 4 位</li></ul>
+      </li>
+    </ul>
+
+    <div class="tip"><b>为啥两种补 0 方式不同</b>：整数的小数点在最右，扩展位数要往高位"加 0"才能保持数值不变；小数的小数点在最左，扩展位数要往低位"加 0"。这是约定俗成的小数点位置导致的。<br>
+    <b>结果</b>：所有除法在硬件层面统一为"<u>2n 位 ÷ n 位 → n 位商 + n 位余数</u>"这一种接口。</div>
+  </div>
+</section>
+
+<!-- ============ bgA1 除法溢出 ============ -->
+<section class="page bg" id="bgDA1">
+  <h2>除法的"溢出"是什么意思</h2>
+  <div class="pgnum">补充背景 · 进入 p61 前必看</div>
+  <div class="explain">
+    <h3>加减乘的溢出 vs 除法的溢出</h3>
+    <p>到现在为止你看到的"溢出"都是<b>结果超过 n 位能表示的范围</b>：</p>
+    <ul>
+      <li>加减：结果 ≥ 2ⁿ⁻¹ 或 &lt; −2ⁿ⁻¹（带符号 n 位）</li>
+      <li>乘法：n×n=2n 位，高 n 位不为"符号扩展"</li>
+    </ul>
+    <p>除法的溢出含义类似，但具体判据特别：<b>商位数 &gt; n 位</b>。也就是说，做"2n 位 ÷ n 位"时，<b>商一旦超过 n 位就装不下了</b>。</p>
+
+    <h3>什么时候商会超过 n 位？</h3>
+    <p>2n 位 ÷ n 位的商最大可达 2ⁿ⁺¹ − 1（n+1 位）。比如 4 位除 4 位（看作 8 位 ÷ 4 位的特例）：</p>
+    <p class="center"><code>1111 1111 / 1111 = 1 0001</code>（5 位的商，超过 4 位）</p>
+    <p>判定方法：<b>第一次试减（最高位试商）就够减</b> → 商的最高位已经是 1，再加上后面的 n 位 → 共 n+1 位 → <b>溢出</b>。这就是 p61 那条规则。</p>
+
+    <h3>"n 位 ÷ n 位"为什么不会溢出</h3>
+    <p>按 p60 的约定，n 位除以 n 位时被除数高位补 0 扩成 2n 位，<b>第一次试商必然得到 0</b>（因为高 n 位都是 0，肯定不够 n 位除数的"满位减"）。所以商最多 n 位，永远不溢出。</p>
+
+    <h3>浮点的特殊情况</h3>
+    <p>浮点尾数（原码小数）"第一次试商为 1" <b>不是溢出</b>，反而是常态——因为尾数定义为 0.1xxxx... 形式，被除数小数点对齐时第一次相减必然有效。这种情况下硬件要<b>保留这个 1</b>，并通过"右规"（小数点右移、阶码调整）处理。p61 把整数情形和浮点情形对照讲。</p>
+  </div>
+</section>
+
+<!-- ============ p61 ============ -->
+<section class="page" id="p61">
+  <h2>第一次试商为 1 → 溢出</h2>
+  <div class="pgnum">PDF 第 61 页</div>
+  <img class="slide" src="pages/p61.png" alt="p61">
+  <div class="explain">
+    <h3>规则正式版</h3>
+    <p>对 <b>2n 位 ÷ n 位</b> 的无符号整数除法：</p>
+    <ul>
+      <li><b>第一次试商为 1</b> → 商有 n+1 位 → 溢出</li>
+      <li><b>第一次试商为 0</b> → 商最多 n 位 → 不溢出</li>
+    </ul>
+
+    <h3>溢出实例</h3>
+    <p class="center"><code>1111 1111 / 1111 = 1 0001</code></p>
+    <p>验证：255 ÷ 15 = 17，二进制 17 = 10001 共 5 位 → 4 位寄存器装不下。这种情况硬件会拉起溢出标志。</p>
+
+    <h3>反例：n 位 ÷ n 位不会溢出</h3>
+    <p>按 p60 约定补 0 后：</p>
+    <p class="center"><code>最大商 = 0000 1111 / 0001 = 1111</code>（4 位，刚好满）</p>
+    <p>因为被除数高 4 位都是 0，第一次"高 4 位试减 0001"不够减，商 0；最大也只能再产生 4 位有效商。所以 C 程序里 <code>int z = x / y;</code> 两个 n 位输入永远不会因为"商太大"而溢出。</p>
+
+    <div class="warn"><b>唯一的 C 整数除法溢出情形</b>：<code>INT_MIN / -1</code>。因为 INT_MIN = −2³¹，结果应是 +2³¹，但 int 最大只到 2³¹−1，<b>正溢出 1 单位</b>。这是 C 标准里的未定义行为，许多 CPU 会抛硬件异常。<br>
+    <b>RISC-V 不抛</b>，它直接返回 INT_MIN（实现定义）——见 p77。</div>
+
+    <h3>浮点的情况（PPT 那个例子）</h3>
+    <p><code>0.1111 0000 / 0.1000 = +1.1110</code><br>
+    第一次试商为 1（因为 0.1111 ≥ 0.1000），<b>但这不是错</b>。结果是 1.111 大于 1，浮点会通过"右规"——<b>尾数右移 1 位 + 阶码 +1</b>——把它变回标准的"0.1xxx"形式。所以浮点尾数除法<b>第一次的"1"要保留</b>，作为后续右规的依据。</p>
+  </div>
+</section>
+
+<!-- ============ bgA2 除法vs乘法对比 ============ -->
+<section class="page bg" id="bgDA2">
+  <h2>除法硬件 vs 乘法硬件：对称美</h2>
+  <div class="pgnum">补充背景 · 进入 p62 前必看</div>
+  <div class="explain">
+    <h3>一张对比表</h3>
+    <table class="tbl">
+      <tr><th></th><th>乘法</th><th>除法</th></tr>
+      <tr><td>输入</td><td>n 位 × n 位</td><td>2n 位 ÷ n 位</td></tr>
+      <tr><td>输出</td><td>2n 位积</td><td>n 位商 + n 位余</td></tr>
+      <tr><td>核心循环</td><td>判加不加 X、然后右移</td><td>试减 Y、根据结果决定上商和恢复</td></tr>
+      <tr><td>部分积/余数移动</td><td><b>右移</b></td><td><b>左移</b></td></tr>
+      <tr><td>从哪头处理操作数</td><td>乘数 <b>LSB</b> 起</td><td>被除数 <b>MSB</b> 起</td></tr>
+      <tr><td>商/积写入顺序</td><td>积位从 LSB 到 MSB 累加</td><td>商位从 MSB 到 LSB 拼接</td></tr>
+      <tr><td>硬件核心</td><td>ALU + 移位器 + Y/X/P/C/Cn</td><td>ALU + 移位器 + Y/R/Q/Cn</td></tr>
+    </table>
+
+    <h3>共用的硬件骨架</h3>
+    <p>两者的寄存器布局几乎一样：</p>
+    <ul>
+      <li>乘法：<b>X 寄存器</b>放被乘数，<b>{P,Y}</b> 拼成 64 位整体右移</li>
+      <li>除法：<b>Y 寄存器</b>放除数，<b>{R,Q}</b> 拼成 64 位整体左移</li>
+    </ul>
+    <p>都用<b>同一个 ALU</b>（乘法做加、除法做减）、<b>同一个移位器</b>（方向可控）、<b>同一个计数器</b>。<br>
+    所以现代 CPU 里乘除指令通常共享一个"乘除部件"，靠控制信号切换工作模式。AM2901A（p79）就是这种设计的代表。</p>
+
+    <div class="tip"><b>关键对称</b>：<br>
+    · 乘法的"部分积 + X 累加" ↔ 除法的"中间余数 − Y 试减"<br>
+    · 乘法的"右移把已算出的低位推到 Y 中" ↔ 除法的"左移把已算出的高位推到 Q 中"<br>
+    把这两点对照记，p62 那张图就一眼看懂。</div>
+  </div>
+</section>
+
+<!-- ============ p62 ============ -->
+<section class="page" id="p62">
+  <h2>无符号除法硬件实现</h2>
+  <div class="pgnum">PDF 第 62 页</div>
+  <img class="slide" src="pages/p62.png" alt="p62">
+  <div class="explain">
+    <h3>四个寄存器（对比乘法的五个）</h3>
+    <ul>
+      <li><b>Y（除数寄存器）</b>：32 位，整个过程不动。</li>
+      <li><b>R（余数寄存器）</b>：32 位，初始装<b>被除数的高 32 位</b>（n 位除 n 位时初始为 0）；结束时装<b>余数</b>。</li>
+      <li><b>Q（余数/商寄存器）</b>：32 位，初始装<b>被除数的低 32 位</b>；结束时装<b>商</b>。每次循环 Q 的最低位接收新算出的商位。</li>
+      <li><b>Cₙ（计数器）</b>：初值 32，每循环减 1，归 0 停。</li>
+    </ul>
+
+    <h3>每个周期发生什么</h3>
+    <ol>
+      <li><b>{R, Q} 整体左移 1 位</b>：R 的最高位丢弃（其实存到一个临时位），Q 的最高位移到 R 的最低位，Q 的最低位空出来等接收新商位。</li>
+      <li><b>ALU 做 R − Y</b>（实际通过 +[−Y]补 实现）。</li>
+      <li><b>判断够不够减</b>：
+        <ul>
+          <li>够（R−Y ≥ 0）→ 把 R 替换为 R−Y，Q 的最低位置 1</li>
+          <li>不够（R−Y &lt; 0）→ R 不变（"恢复余数"），Q 的最低位置 0</li>
+        </ul>
+      </li>
+      <li>Cₙ−1，未到 0 则继续。</li>
+    </ol>
+
+    <h3>"减——试商、加——恢复余数"</h3>
+    <p>这就是 PPT 上那句口号。<b>每一步都要试着减一下</b>——若结果非负则"试减成功"商 1；若结果为负则要<b>加回 Y 把余数恢复</b>，因为这次减法是"试错"，不能让 R 真的变小。<br>
+    这种做法叫<b>恢复余数法</b>。它的缺点是平均每位多做半次加法（一半的位会"试错"），所以下一节会有"不恢复余数法"的优化。</p>
+
+    <div class="note"><b>商位左移进 Q</b>：每一轮的商位填到 Q 最低位，然后下一轮 {R,Q} 左移时这位被推到次低位、再下一轮推到第三低位……n 次循环后，<b>第一次算出的商位（MSB）恰好被推到 Q 最高位</b>，整个商从 MSB 到 LSB 排好。设计得很巧。</div>
+  </div>
+</section>
+
+<!-- ============ p63 ============ -->
+<section class="page" id="p63">
+  <h2>恢复余数法举例：7 ÷ 2</h2>
+  <div class="pgnum">PDF 第 63 页</div>
+  <img class="slide" src="pages/p63.png" alt="p63">
+  <div class="explain">
+    <h3>题目设定</h3>
+    <p>被除数 7 = 0111（4 位），除数 D = 0010（4 位）。按 p60 约定补 0，被除数扩为 8 位：<code>0000 0111</code>。−D = 1110（[−2]补）。<br>
+    应得：商 0011 = 3，余 0001 = 1。</p>
+
+    <h3>把 PDF 那张表翻译一下</h3>
+    <p>每一轮 4 步：① 左移 R ② R = R−D ③ 看 R 符号位（最高位） ④ 若负则 +D 恢复、上商 0；若非负则上商 1</p>
+
+    <table class="tbl" style="font-family:Consolas,monospace;font-size:13.5px;">
+      <tr><th>步</th><th>操作</th><th>R (8 位)</th><th>Q 的新位</th></tr>
+      <tr><td>0</td><td>初始</td><td>0000 0111</td><td>—</td></tr>
+      <tr><td>1a</td><td>{R,Q} 左移 1</td><td>0000 1110</td><td>(空位待填)</td></tr>
+      <tr><td>1b</td><td>R = R − D</td><td>1110 1110 (负)</td><td>—</td></tr>
+      <tr><td>1c</td><td>+D 恢复，商 0</td><td>0001 1100</td><td><b>0</b></td></tr>
+      <tr><td>2b</td><td>R = R − D</td><td>1111 1100 (负)</td><td>—</td></tr>
+      <tr><td>2c</td><td>+D 恢复，商 0</td><td>0011 1000</td><td><b>0</b></td></tr>
+      <tr><td>3a</td><td>左移 1</td><td>...（PPT 已合并）</td><td>—</td></tr>
+      <tr><td>3b</td><td>R = R − D</td><td>0001 1000 (正)</td><td><b>1</b></td></tr>
+      <tr><td>4a</td><td>左移 1</td><td>0011 0001</td><td>—</td></tr>
+      <tr><td>4b</td><td>R = R − D</td><td>0001 0001 (正)</td><td><b>1</b></td></tr>
+      <tr><td>末</td><td>R 右移 1 位（纠正）</td><td>0001 0011</td><td>商已全部进入 Q</td></tr>
+    </table>
+
+    <p>商 Q = <b>0011 = 3</b>，余数 R 的低 4 位 = <b>0001 = 1</b> ✓</p>
+
+    <div class="warn"><b>为什么最后要"R 右移 1 位"</b>（PPT 蓝字注释）<br>
+    因为<b>开始第一步先做了左移</b>（把被除数对齐到 R 的高 4 位），所以最终的"余数"实际上比真值多左移了 1 位。要恢复到正确数值，<b>结束时 R 要右移 1 位</b>。<br>
+    各教材实现略有差异，有的不做开始那次左移；本课件采用的就是"先左移、最后补一次右移"的版本。</div>
+
+    <h3>这个算法的缺点（引出 p64）</h3>
+    <p>看上面 6 轮中有 <b>2 轮"试错"</b>（试减后又加回 D 恢复）——每次试错都浪费一个 ALU 周期。能不能省掉这次恢复？答案是下一页讲的<b>不恢复余数法</b>。</p>
+  </div>
+</section>
+
+<!-- ============ bgA3 不恢复余数法推导 ============ -->
+<section class="page bg" id="bgDA3">
+  <h2>不恢复余数法的代数推导</h2>
+  <div class="pgnum">补充背景 · 进入 p64 前必看</div>
+  <div class="explain">
+    <h3>恢复余数法的"浪费"</h3>
+    <p>看一下当试减失败（R<sub>i</sub> &lt; 0）时，恢复余数法做了哪三步：</p>
+    <ol>
+      <li><b>恢复</b>：R<sub>i</sub>' = R<sub>i</sub> + |B|（把刚才多减的加回来）</li>
+      <li><b>左移</b>：得到 2·R<sub>i</sub>' = 2(R<sub>i</sub> + |B|) = 2R<sub>i</sub> + 2|B|</li>
+      <li><b>再试减</b>：R<sub>i+1</sub> = (2R<sub>i</sub> + 2|B|) − |B| = <b>2R<sub>i</sub> + |B|</b></li>
+    </ol>
+    <p>关键观察：<b>三步合并成一步</b>——R<sub>i+1</sub> = 2R<sub>i</sub> + |B|，只用一次加法，不用先加再减！</p>
+
+    <h3>另一个分支：试减成功时</h3>
+    <p>若 R<sub>i</sub> ≥ 0，本来就够减，操作是<b>左移 → 减</b>：R<sub>i+1</sub> = 2R<sub>i</sub> − |B|。这步本来就只用一次减法。</p>
+
+    <h3>合起来：两条规则</h3>
+    <table class="tbl">
+      <tr><th>当前 R 符号</th><th>操作</th><th>下一步公式</th></tr>
+      <tr><td>负（&lt;0）</td><td>上商 0，做<b>加法</b></td><td>R<sub>i+1</sub> = 2R<sub>i</sub> + |B|</td></tr>
+      <tr><td>非负（≥0）</td><td>上商 1，做<b>减法</b></td><td>R<sub>i+1</sub> = 2R<sub>i</sub> − |B|</td></tr>
+    </table>
+    <p>口诀："<b>负 0 加，正 1 减</b>"。每位只需一次加或减，<b>不需要单独的恢复步骤</b>。这就是"不恢复余数法"得名的由来。</p>
+
+    <p>它还有另一个名字叫<b>加减交替法</b>，因为每位都是加或减、不再是"先减再加"的反复。</p>
+
+    <div class="tip"><b>性能收益</b>：恢复余数法平均每位 1.5 次 ALU 操作（一半位需要恢复）；不恢复余数法严格每位 1 次。对 32 位除法，<b>从 ~48 个 ALU 周期降到 32 个</b>，省 1/3 时间。这是这套算法的全部价值。</div>
+
+    <h3>有个小代价：末位"纠余"</h3>
+    <p>因为不恢复余数法<b>跳过了真正的恢复</b>，所以如果<b>最后一位上商 0</b>（即最后一次是"加法"），余数寄存器里实际是"加了一次 |B| 的虚假值"。<b>结束时要再做一次减法把这次 +|B| 减掉</b>，才得到真正的余数。这就是 PPT 提到的"纠余"。</p>
+  </div>
+</section>
+
+<!-- ============ p64 ============ -->
+<section class="page" id="p64">
+  <h2>不恢复余数法（加减交替法）</h2>
+  <div class="pgnum">PDF 第 64 页</div>
+  <img class="slide" src="pages/p64.png" alt="p64">
+  <div class="explain">
+    <h3>PPT 上的推导（背景页已展开）</h3>
+    <ul>
+      <li><b>R<sub>i</sub> &lt; 0</b>：商 0，做加法 → R<sub>i+1</sub> = 2R<sub>i</sub> + |B|（口诀"负 0 加"）</li>
+      <li><b>R<sub>i</sub> ≥ 0</b>：商 1，做减法 → R<sub>i+1</sub> = 2R<sub>i</sub> − |B|（口诀"正 1 减"）</li>
+    </ul>
+
+    <h3>两点要记牢</h3>
+    <ol>
+      <li><b>"省去了恢复余数的过程"</b>——这是优化的核心收益</li>
+      <li><b>"最后一次上商为 0 的话，需要纠余"</b>——把试商时多减的 |B| 加回去
+        <p>具体：如果最后一轮做的是加法（说明上商 0），余数寄存器里的值<b>不是真余数</b>，要单独再做一次减法恢复。如果最后一轮是减法（上商 1），余数已经正确。</p>
+      </li>
+    </ol>
+
+    <h3>"加减交替法"这个名字</h3>
+    <p>不恢复余数法的别名。叫这个名字是因为：每一轮的操作要么加要么减，而且<b>是否加减由上一轮余数的符号决定</b>，所以加和减在执行流里像"交替"出现。<br>
+    实际上不一定真的严格交替——比如连续几位都商 1，那就连续几次减；连续几位都商 0，那就连续几次加。"交替"只是一种近似说法。</p>
+
+    <div class="note"><b>不恢复余数法和恢复余数法<u>结果完全一样</u></b>。它只是把"恢复 + 试减"两步合并成"一次加/减"，本质相同。所以学懂任何一种就能套到另一种上。教科书一般推荐你<b>记不恢复版本</b>，因为它更接近硬件实现。</div>
+  </div>
+</section>
+
+<!-- ============ p65 ============ -->
+<section class="page" id="p65">
+  <h2>不恢复余数法举例：7 ÷ 2（再做一次）</h2>
+  <div class="pgnum">PDF 第 65 页</div>
+  <img class="slide" src="pages/p65.png" alt="p65">
+  <div class="explain">
+    <h3>同 p63 的题，看少了哪步</h3>
+    <p>对比 p63（恢复余数法）的关键差异：</p>
+    <ul>
+      <li>当 R 减完变负数时，<b>不再 "+D 恢复"</b>——直接进入下一轮"左移 + 加 D"</li>
+      <li>商位依然在每轮算出（看 R 减后是正是负来决定 0 或 1）</li>
+    </ul>
+
+    <h3>逐行对应 PPT 表</h3>
+    <table class="tbl" style="font-family:Consolas,monospace;font-size:13.5px;">
+      <tr><th>步</th><th>操作</th><th>R</th><th>商</th></tr>
+      <tr><td>初始</td><td>{R,Q} = 0000 / 0111</td><td>0000 0111</td><td>—</td></tr>
+      <tr><td>1</td><td>Shl R</td><td>0000 1110</td><td>—</td></tr>
+      <tr><td>1</td><td>R = R − D</td><td>1110 1110 (负)</td><td>0 → Q</td></tr>
+      <tr><td>2</td><td>Shl R (商 0 已写入)</td><td>1101 1100</td><td>—</td></tr>
+      <tr><td>2</td><td>R = R + D（不恢复！）</td><td>1111 1100 (负)</td><td>0 → Q</td></tr>
+      <tr><td>3</td><td>Shl R</td><td>1111 1000</td><td>—</td></tr>
+      <tr><td>3</td><td>R = R + D</td><td>0001 1000 (正)</td><td>1 → Q</td></tr>
+      <tr><td>4</td><td>Shl R</td><td>0011 0001</td><td>—</td></tr>
+      <tr><td>4</td><td>R = R − D</td><td>0001 0001 (正)</td><td>1 → Q</td></tr>
+      <tr><td>末</td><td>Shr R（纠正最初左移）</td><td>0001 0011</td><td>商=0011</td></tr>
+    </table>
+
+    <p>结果商 = <b>0011 = 3</b>，余数 = <b>0001 = 1</b>。和 p63 完全一致，但 ALU 操作次数少了。</p>
+
+    <h3>本题的"纠余"问题不存在</h3>
+    <p>因为<b>最后一轮做的是减法</b>（R 减后仍非负），上商 1，余数已经是正确值，不需要纠余。如果最后一轮做的是加法（上商 0），那余数寄存器里就是"被多加了一次 D"的虚假值，要再减一次 D 才对。</p>
+  </div>
+</section>
+
+<!-- ============ p66 ============ -->
+<section class="page" id="p66">
+  <h2>带符号数除法概述</h2>
+  <div class="pgnum">PDF 第 66 页</div>
+  <img class="slide" src="pages/p66.png" alt="p66">
+  <div class="explain">
+    <h3>两类做法</h3>
+
+    <h4>原码除法</h4>
+    <ul>
+      <li>商符与商值分开处理（和原码乘法对称）</li>
+      <li>商值 = |X| ÷ |Y|（用无符号除法做）</li>
+      <li>商符 = X 符号 ⊕ Y 符号（同号正，异号负）</li>
+      <li>余数符号 = 被除数符号</li>
+    </ul>
+    <p><b>用途</b>：浮点尾数除法（因为浮点尾数是原码形式）。</p>
+
+    <h4>补码除法</h4>
+    <p>两种思路：</p>
+    <ol>
+      <li><b>方法 1（间接）</b>：先把补码转成原码（绝对值），用原码除法做，再调整符号。要做两次转换，但算法简单。</li>
+      <li><b>方法 2（直接）</b>：符号位和数值位一起参与运算，商符在运算过程中自然产生。算法复杂但硬件统一、效率高。<b>本课讲方法 2</b>。</li>
+    </ol>
+
+    <h3>关于补码除法被除数的位数</h3>
+    <ul>
+      <li><b>n 位 ÷ n 位带符号</b>：被除数要做<b>符号扩展</b>，扩成 2n 位（不是补 0！因为补 0 会让负数变成正数）</li>
+      <li><b>2n 位 ÷ n 位</b>：被除数已经够长，无需扩展</li>
+    </ul>
+
+    <div class="tip"><b>符号扩展 vs 补 0</b>：<br>
+    · 无符号除法：被除数高位补 0（因为正数）<br>
+    · 补码除法：被除数高位补<b>符号位</b>（正数补 0、负数补 1）<br>
+    搞错这一步整个算法就崩了——比如 [−9]补 = 10111 (5 位)，扩展到 10 位应是 <code>11111 10111</code>（高 5 位全 1），不是 <code>00000 10111</code>（那样就变成 +23 了）。</div>
+  </div>
+</section>
+
+<!-- ============ bgA4 补码够减 ============ -->
+<section class="page bg" id="bgDA4">
+  <h2>补码"够减"为什么不能直接用余数符号判</h2>
+  <div class="pgnum">补充背景 · 进入 p67 之前可看，理解 p69 必看</div>
+  <div class="explain">
+    <h3>无符号除法的"够减"很简单</h3>
+    <p>R 和 Y 都是非负数。R−Y 后看结果符号：</p>
+    <ul>
+      <li>结果 ≥ 0 → 够减（"正数 − 正数 = 非负"说明被减数 ≥ 减数）</li>
+      <li>结果 &lt; 0 → 不够减</li>
+    </ul>
+    <p>所以<b>"看新余数的符号位"就够了</b>。</p>
+
+    <h3>原码同理</h3>
+    <p>原码除法把数值位单独抽出来做无符号除法，所以也一样：直接看数值部分的减法结果符号。</p>
+
+    <h3>补码就不行了</h3>
+    <p>补码下 R 和 Y 都可能是正可能是负。考虑四种符号组合：</p>
+    <table class="tbl">
+      <tr><th>R 符号</th><th>Y 符号</th><th>R − Y 的预期符号</th><th>看新余数符号能判够减吗？</th></tr>
+      <tr><td>+</td><td>+</td><td>常态：够减则 +、不够则 −</td><td>可以直接看</td></tr>
+      <tr><td>+</td><td>−</td><td>+ − (−) = + + |Y|，恒为正，不会变号</td><td>看符号没意义</td></tr>
+      <tr><td>−</td><td>+</td><td>− − (+) = − − |Y|，恒为负，不会变号</td><td>看符号没意义</td></tr>
+      <tr><td>−</td><td>−</td><td>− − (−) 镜像情况</td><td>反向解读</td></tr>
+    </table>
+
+    <h3>正确的"够减"判定</h3>
+    <p>这就是 p69 那张表的来源：<b>不能只看新余数符号，要同时看 R 和 Y 的符号</b>。<br>
+    一句话总结：<b>余数变号 → 不够减；余数不变号 → 够减</b>。但"变没变号"是 R 操作前后两个符号的比较，和"新余数自己的符号"不是一回事。<br>
+    简化的等价判据：<b>新余数符号 vs Y 符号</b>——这是 p69 表的形式。</p>
+
+    <div class="note">这种"用符号关系判够减"是补码除法<b>最容易错的地方</b>，强烈建议把 p69 那张 4×4 表记下来。考试这块一定考。</div>
+  </div>
+</section>
+
+<!-- ============ p67 ============ -->
+<section class="page" id="p67">
+  <h2>原码除法举例（恢复余数法）</h2>
+  <div class="pgnum">PDF 第 67 页</div>
+  <img class="slide" src="pages/p67.png" alt="p67">
+  <div class="explain">
+    <h3>题目</h3>
+    <p>[X]原 = 0.1011（X = +0.6875），[Y]原 = 1.1101（Y = −0.8125），求 [X/Y]原。</p>
+
+    <h3>预处理</h3>
+    <ul>
+      <li>商符 = 0 ⊕ 1 = <b>1</b>（异号，商是负）</li>
+      <li>数值部分用无符号除法算 0.1011 ÷ 0.1101</li>
+      <li>因为减法用补码加法实现，所以预备 <b>[|Y|]补 = 0.1101</b> 和 <b>[−|Y|]补 = 1.0011</b></li>
+      <li>小数除法在<b>低位</b>扩展 0（按 p60 规则）→ 被除数变成 0.1011 0000</li>
+    </ul>
+
+    <h3>逐步演算（对照 PDF 那张大表）</h3>
+    <p>每一轮做：<b>R = R − |Y|</b>（实际是 R + [−|Y|]补），看新 R 符号决定够不够减；够减则上商 1，不够减则上商 0 并恢复（+|Y|）；然后 R 和 Q 同步左移 1 位空出商位。</p>
+
+    <h4>每轮要点（这里只列结论，详细数字直接看 PDF 截图）</h4>
+    <ol>
+      <li><b>初始</b> R = 01011，第一次 R + [−|Y|]补 = 01011 + 10011 = 11110（负） → R<sub>1</sub>&lt;0 → 商 q₄ = 0 → 恢复（+|Y|）→ R = 01011</li>
+      <li>R 和 Q 左移、空出一位商，R = 10110</li>
+      <li>R + [−|Y|]补 → 01001（正）→ q₃ = 1</li>
+      <li>左移、R = 10010，减后 → 00101（正）→ q₂ = 1</li>
+      <li>左移、R = 01010，减后 → 11101（负）→ q₁ = 0 → 恢复 → R = 01010</li>
+      <li>左移、R = 10100，减后 → 00111（正）→ q₀ = 1</li>
+    </ol>
+    <p>4 位商 = <b>0.1101</b>（数值部分），加上商符 1 → <b>[X/Y]原 = 1.1101</b>，真值 ≈ −0.8125（验算 X/Y = 0.6875 / 0.8125 ≈ 0.846，这里题目实际位数有限，截到 4 位）。</p>
+
+    <h3>"中间余数要加一位符号位"</h3>
+    <p>因为减法用补码加法实现，<b>中间余数可能是负值</b>，要有<b>符号位</b>判断"够不够减"。所以中间余数其实是 5 位（1 符号位 + 4 数值位）。看 PDF 表里 R 都是 5 位的 <code>01011</code>、<code>11110</code> 这种就是这个原因。</p>
+
+    <h3>"用于判断是否溢出"的绿色阴影部分</h3>
+    <p>PPT 上方有一块绿色阴影标"用于判断是否溢出"——指<b>第一次试商</b>。本题第一次商 q₄ = 0，说明<b>不会溢出</b>（商不超过 4 位）。如果第一次试商是 1，说明商超 4 位，要拉溢出。</p>
+
+    <p>页面下方思考题"如果实现无符号数相除，即 1011÷1101 结果是什么？"——商 = 0（因为被除数高位补 0 后是 0000 1011，比 1101 小，第一次试减失败、第二次仍失败……最终商为 0），余数 = 1011。</p>
+  </div>
+</section>
+
+<!-- ============ p68 ============ -->
+<section class="page" id="p68">
+  <h2>原码除法举例（加减交替法）</h2>
+  <div class="pgnum">PDF 第 68 页</div>
+  <img class="slide" src="pages/p68.png" alt="p68">
+  <div class="explain">
+    <h3>同 p67 的题，换算法</h3>
+    <p>规则（背景页 A3）："正 1 减、负 0 加"。本题数值部分都是非负（原码），所以从第一次<b>必然减</b>开始：</p>
+    <ol>
+      <li>R = 01011，减 → 11110（负）→ 上商 0，<b>不恢复</b>，继续</li>
+      <li>左移，R = 11100，本来是负，按"负 0 加"→ +|Y| → 01001（正）→ q₃ = 1</li>
+      <li>左移，R = 10010，刚才是正，按"正 1 减"→ −|Y| → 00101（正）→ q₂ = 1</li>
+      <li>左移，R = 01010，正，−|Y| → 11101（负）→ q₁ = 0</li>
+      <li>左移，R = 11010，负，+|Y| → 00111（正）→ q₀ = 1</li>
+    </ol>
+    <p>商 = <b>0.1101</b>，结果与 p67 完全一致。但只用了 5 次 ALU 操作（vs p67 的 7 次：5 次试减 + 2 次恢复）。</p>
+
+    <h3>页面右下的关键问答</h3>
+    <p><b>问</b>：用被除数（中间余数）减除数试商时，怎样确定是否"够减"？<br>
+    <b>答</b>：看<b>中间余数的符号</b>。因为<u>正数 − 正数</u>，结果非负即够减、负即不够减。<br>
+    <b>问</b>：补码除法能这样判吗？<br>
+    <b>答</b>：<b>不能</b>！因为补码下被除数和除数符号<u>可能不同</u>，"够不够减"不能只看新余数符号。这正是 bgA4 讲的事，引出下一页 p69 的规则表。</p>
+  </div>
+</section>
+
+<!-- ============ p69 ============ -->
+<section class="page" id="p69">
+  <h2>补码除法：够减判断规则表</h2>
+  <div class="pgnum">PDF 第 69 页</div>
+  <img class="slide" src="pages/p69.png" alt="p69">
+  <div class="explain">
+    <h3>两条主规则</h3>
+    <ol>
+      <li><b>R 与 Y 同号</b>：做<b>减法</b>（R − Y）。若新余数符号与 Y 同 → 够减；否则不够减。</li>
+      <li><b>R 与 Y 异号</b>：做<b>加法</b>（R + Y）。若新余数符号与 Y 同 → 不够减；否则够减。</li>
+    </ol>
+
+    <h3>4×2 真值表（看 PPT 那张）</h3>
+    <table class="tbl">
+      <tr><th>R 符号</th><th>Y 符号</th><th>同号做减后新符号 0 (+)</th><th>同号做减后新符号 1 (−)</th><th>异号做加后新符号 0 (+)</th><th>异号做加后新符号 1 (−)</th></tr>
+      <tr><td>0</td><td>0</td><td><b>够减</b></td><td>不够减</td><td>—</td><td>—</td></tr>
+      <tr><td>0</td><td>1</td><td>—</td><td>—</td><td>够减</td><td><b>不够减</b></td></tr>
+      <tr><td>1</td><td>0</td><td>—</td><td>—</td><td><b>不够减</b></td><td>够减</td></tr>
+      <tr><td>1</td><td>1</td><td>不够减</td><td><b>够减</b></td><td>—</td><td>—</td></tr>
+    </table>
+
+    <h3>魔法口诀（PPT 红字）</h3>
+    <div class="formula" style="font-size:18px;">余数变号 → 不够减；余数不变号 → 够减</div>
+    <p>意思：把<b>R 操作前的符号</b>和<b>R 操作后的符号</b>对比。变了 → 操作"过头"了 → 不够减；没变 → 操作幅度合适 → 够减。</p>
+
+    <p><b>等价简化</b>：直接看<b>操作后的新余数符号</b>是否等于 Y 的符号：</p>
+    <ul>
+      <li>同号 → 够减 → 商 1</li>
+      <li>异号 → 不够减 → 商 0</li>
+    </ul>
+
+    <div class="tip"><b>这条规则的另一种记法</b>："<b>同 1 异 0</b>"——新余数和除数同号上商 1、异号上商 0。这就是 p73 提到的"同 1 减、异 0 加"口诀的来源。</div>
+  </div>
+</section>
+
+<!-- ============ p70 ============ -->
+<section class="page" id="p70">
+  <h2>补码除法基本思想（三条规则）</h2>
+  <div class="pgnum">PDF 第 70 页</div>
+  <img class="slide" src="pages/p70.png" alt="p70">
+  <div class="explain">
+    <h3>规则一：运算规则</h3>
+    <ul>
+      <li>R 与 Y 同号 → 做<b>减法</b>（R − Y）</li>
+      <li>R 与 Y 异号 → 做<b>加法</b>（R + Y）</li>
+    </ul>
+    <p>这是为了让<b>"够减"和"新余数符号"的对应关系统一</b>——所谓"操作让 R 靠近 0"。</p>
+
+    <h3>规则二：上商规则</h3>
+    <ul>
+      <li>若<b>余数符号不变</b>（操作前后 R 符号相同）→ 够减 → 商 <b>1</b></li>
+      <li>若<b>余数符号变了</b> → 不够减 → 商 <b>0</b></li>
+    </ul>
+
+    <h3>规则三：修正规则（关键）</h3>
+    <p>上商规则得到的"原始商"可能不是最终商。要修正：</p>
+    <ul>
+      <li>被除数与除数<b>同号</b>（商应为正）：上商规则正确，无需修正</li>
+      <li>被除数与除数<b>异号</b>（商应为负）：上商规则<b>反过来</b>——"够减商 0、不够减商 1"——也就是说原始商位是"反码形式"，要<b>各位取反 + 末位加 1</b> 才得到真正的补码</li>
+    </ul>
+
+    <p>页面红字总结："<b>若商为负值，则需要'各位取反、末位加 1'来得到真正的商</b>"。这就是下一页 bgA5 要解释的"末位加 1"修正。</p>
+
+    <div class="note"><b>这一页给的是"思想"层面的算法</b>；具体到代码/硬件，要么用 <b>恢复余数法</b>（p71）要么用 <b>不恢复余数法</b>（p73）。两者只在"够减判错"时的处理方式不同，规则一规则二规则三都通用。</div>
+  </div>
+</section>
+
+<!-- ============ bgA5 末位加1 ============ -->
+<section class="page bg" id="bgDA5">
+  <h2>商为负为什么要"末位加 1"</h2>
+  <div class="pgnum">补充背景 · 进入 p71 前必看</div>
+  <div class="explain">
+    <h3>问题</h3>
+    <p>补码除法的上商规则在<b>商为负</b>时会"反过来"，得到的不是真补码，而是<b>反码 + 末位漏一个 1</b>。为什么？</p>
+
+    <h3>简单推导</h3>
+    <p>设真正的商是 −0.q₁q₂…qₙ（n 位小数补码形式）。它的补码是：</p>
+    <div class="formula">2 − 0.q₁q₂…qₙ = 1.(反码形式)q₁'q₂'…qₙ' + 2⁻ⁿ</div>
+    <p>也就是说，真补码 = "<b>反码 + 2⁻ⁿ</b>"。而上商规则在异号情况下，给出的每位 qᵢ' 恰好是真值反码的形式（够减反成商 0、不够减反成商 1）。所以最终要<b>末位加 1 个 2⁻ⁿ</b>才得到真补码。</p>
+
+    <h3>直观例子</h3>
+    <p>假设真商是 −0.011（= −0.375）。它的 4 位补码 = 2 − 0.011 = <code>1.101</code>。<br>
+    上商规则在异号情况下逐位算出来的"原始商"会是 <code>1.100</code>（反码形式：把数值位 011 各位取反 → 100，再加上负号位 1）。<br>
+    要从 <code>1.100</code> 得到真补码 <code>1.101</code>，<b>末位加 1</b> ✓</p>
+
+    <h3>为什么不直接算成正确补码？</h3>
+    <p>因为补码除法是<b>"边算边上商"</b>的过程，每一位商是通过"够不够减"判断出来的。当商应该是负时，<u>"够减"的语义和正商相反</u>（够减时新余数比期望多了 |Y|，所以应该商 0 而不是 1）。这种语义反转最自然地<b>产生反码形式的商</b>，需要末位 +1 来"对齐"到补码。<br>
+    这是补码除法这种算法<b>不可避免</b>的代价——快是快了，要在算法末尾加一步修正。</p>
+
+    <div class="tip"><b>记忆方法</b>：见到"商为负" → 末尾必加 1（俗称"补一个最小位"）。考试这一步常被遗漏，扣分大户。</div>
+  </div>
+</section>
+
+<!-- ============ p71 ============ -->
+<section class="page" id="p71">
+  <h2>补码恢复余数法（六步算法）</h2>
+  <div class="pgnum">PDF 第 71 页</div>
+  <img class="slide" src="pages/p71.png" alt="p71">
+  <div class="explain">
+    <h3>六个步骤</h3>
+    <ol>
+      <li><b>操作数预置</b>：除数装 Y；被除数<b>符号扩展</b>装 {R, Q}（R 装高位、Q 装低位）</li>
+      <li><b>{R, Q} 串行左移 1 位</b></li>
+      <li><b>根据 R 与 Y 是否同号选择加减</b>：同号 R = R − Y，异号 R = R + Y。然后按下面规则定商位 q₀：
+        <ul>
+          <li>R = 0 或 R 符号<b>未变</b> → 够减 → q₀ = 1，转下一步</li>
+          <li>R 符号<b>已变</b> → 不够减 → q₀ = 0，<b>恢复 R 后</b>转下一步</li>
+        </ul>
+      </li>
+      <li><b>重复 (2) (3)</b> 直到得到 n 位商</li>
+      <li><b>商的修正</b>：被除数与除数同号 → Q 中就是真商；异号 → Q 求补后才是真商（即各位取反、末位 +1）</li>
+      <li><b>余数</b>在 R 中</li>
+    </ol>
+
+    <h3>关键问题：怎么"恢复余数"</h3>
+    <p>PPT 末段："无符号（或原码）除法通过'做加法'恢复余数，但<b>补码不是</b>！"</p>
+    <p><b>补码恢复规则</b>：</p>
+    <ul>
+      <li>如果原本做的是 R = R − Y → 恢复要做 R = R + Y</li>
+      <li>如果原本做的是 R = R + Y → 恢复要做 R = R − Y</li>
+    </ul>
+    <p>也就是<b>"反向"做一次</b>，撤销前一次操作。<br>
+    （这正是数学逻辑：把刚才加上的 ±Y 减/加回去。）</p>
+
+    <div class="warn">这里很容易和原码混淆。原码下"恢复"永远是 +|Y|（因为只做减法）。<b>补码下"恢复"是反向操作</b>，要根据上一次做了什么来反推。</div>
+  </div>
+</section>
+
+<!-- ============ p72 ============ -->
+<section class="page" id="p72">
+  <h2>举例：7÷3 与 (-7)÷3</h2>
+  <div class="pgnum">PDF 第 72 页</div>
+  <img class="slide" src="pages/p72.png" alt="p72">
+  <div class="explain">
+    <h3>左例：7 ÷ 3（同号）</h3>
+    <p>设定：被除数 X = 0000 0111（8 位补码），除数 Y = 0011，[−Y]补 = 1101，M = 0011 用于恢复。</p>
+    <p>因 X 与 Y <b>同号</b>（都正），第一次做减法。</p>
+
+    <table class="tbl" style="font-family:Consolas,monospace;font-size:13px;">
+      <tr><th>步</th><th>A (高 4)</th><th>Q (低 4)</th><th>动作</th><th>注解</th></tr>
+      <tr><td>0</td><td>0000</td><td>0111</td><td>初始</td><td>—</td></tr>
+      <tr><td>1</td><td>0000</td><td>1110</td><td>左移</td><td>商位空出</td></tr>
+      <tr><td>1</td><td>1101</td><td>1110</td><td>+[−Y]=减</td><td>结果 1101 1110，<b>变号</b>→不够减</td></tr>
+      <tr><td>1 恢复</td><td>0000</td><td>1110</td><td>+Y=0011</td><td>恢复，q₃=0</td></tr>
+      <tr><td>2</td><td>0001</td><td>1100</td><td>左移</td><td>—</td></tr>
+      <tr><td>2</td><td>1110</td><td>1100</td><td>−Y</td><td>变号 → 不够减</td></tr>
+      <tr><td>2 恢复</td><td>0001</td><td>1100</td><td>+Y</td><td>q₂=0</td></tr>
+      <tr><td>3</td><td>0011</td><td>1000</td><td>左移</td><td>—</td></tr>
+      <tr><td>3</td><td>0000</td><td>1000</td><td>−Y</td><td>不变号 → 够减, q₁=1</td></tr>
+      <tr><td>4</td><td>0001</td><td>0001</td><td>左移</td><td>商 1 已进 Q</td></tr>
+      <tr><td>4</td><td>1110</td><td>0001</td><td>−Y</td><td>变号 → 不够减</td></tr>
+      <tr><td>4 恢复</td><td>0001</td><td>0010</td><td>+Y, q₀=0</td><td>—</td></tr>
+    </table>
+
+    <p>因被除数与除数同号 → Q 即为真商 = <b>0010 = 2</b>，余 R = <b>0001 = 1</b> ✓（7 = 3×2 + 1）</p>
+
+    <h3>右例：(-7) ÷ 3（异号）</h3>
+    <p>设定：[−7]补 = 1111 1001，Y = 0011，[−Y]补 = 1101。</p>
+    <p>因 R 与 Y <b>异号</b>，第一次做加法。</p>
+
+    <table class="tbl" style="font-family:Consolas,monospace;font-size:13px;">
+      <tr><th>步</th><th>A</th><th>Q</th><th>动作</th><th>注解</th></tr>
+      <tr><td>0</td><td>1111</td><td>1001</td><td>初始</td><td>—</td></tr>
+      <tr><td>1</td><td>1111</td><td>0010</td><td>左移</td><td>—</td></tr>
+      <tr><td>1</td><td>0010</td><td>0010</td><td>+Y</td><td>变号 → 不够减</td></tr>
+      <tr><td>1 恢复</td><td>1111</td><td>0010</td><td>−Y（反向恢复）</td><td>q₃=0</td></tr>
+      <tr><td>2</td><td>1110</td><td>0100</td><td>左移</td><td>—</td></tr>
+      <tr><td>2</td><td>0001</td><td>0100</td><td>+Y</td><td>变号 → 不够减</td></tr>
+      <tr><td>2 恢复</td><td>1110</td><td>0100</td><td>−Y</td><td>q₂=0</td></tr>
+      <tr><td>3</td><td>1100</td><td>1000</td><td>左移</td><td>—</td></tr>
+      <tr><td>3</td><td>1111</td><td>1001</td><td>+Y</td><td>不变号（符号同商 1）→ 够减, q₁=1</td></tr>
+      <tr><td>4</td><td>1111</td><td>0010</td><td>左移</td><td>—</td></tr>
+      <tr><td>4</td><td>0010</td><td>0010</td><td>+Y</td><td>变号 → 不够减</td></tr>
+      <tr><td>4 恢复</td><td>1111</td><td>0010</td><td>−Y, q₀=0</td><td>—</td></tr>
+    </table>
+
+    <p>因被除数与除数<b>异号</b> → Q = 0010 需求补（<b>各位取反 + 末位加 1</b>）= 1101 + 1 = <b>1110 = −2</b><br>
+    余数 R = <b>1111 = −1</b>。验证：−7 = 3×(−2) + (−1) ✓</p>
+
+    <div class="tip"><b>这两个例子合起来看的意义</b>：同一份算法骨架，两种符号组合走出来差异在<u>"加还是减"和"修正不修正"</u>，其它步骤完全对称。把这两个例子做熟，整个补码除法就掌握了。</div>
+  </div>
+</section>
+
+<!-- ============ p73 ============ -->
+<section class="page" id="p73">
+  <h2>补码不恢复余数法</h2>
+  <div class="pgnum">PDF 第 73 页</div>
+  <img class="slide" src="pages/p73.png" alt="p73">
+  <div class="explain">
+    <h3>核心思路</h3>
+    <p>和无符号"加减交替法"思想一样：不做恢复，直接调整下一步操作。</p>
+
+    <h3>五步算法</h3>
+    <ol>
+      <li><b>预置</b>：除数装 Y；被除数符号扩展后装 {R, Q}</li>
+      <li><b>求第一位商 q<sub>n</sub></b>（用于判溢出）：
+        <ul>
+          <li>X 与 Y 同号 → R<sub>1</sub> = X − Y；异号 → R<sub>1</sub> = X + Y</li>
+          <li>若 R<sub>1</sub> 与 Y 同号 → q<sub>n</sub> = 1；异号 → q<sub>n</sub> = 0</li>
+        </ul>
+        <b>溢出条件</b>：X 与 Y 同号且 q<sub>n</sub>=1，或 X 与 Y 异号且 q<sub>n</sub>=0
+      </li>
+      <li><b>求 n 位商</b>：对 i = 1 到 n：
+        <ul>
+          <li>R<sub>i</sub> 与 Y <b>同号</b> → q<sub>n−i</sub> = <b>1</b>，R<sub>i+1</sub> = 2R<sub>i</sub> − Y</li>
+          <li>R<sub>i</sub> 与 Y <b>异号</b> → q<sub>n−i</sub> = <b>0</b>，R<sub>i+1</sub> = 2R<sub>i</sub> + Y</li>
+        </ul>
+        口诀：<b>"同 1 减、异 0 加"</b>
+      </li>
+      <li><b>商的修正</b>：最后一次 Q 左移、最高位 q<sub>n</sub> 移出、最低位上商 q₀。若被除数与除数同号，Q 即为真商；否则 Q 末位加 1</li>
+      <li><b>余数的修正</b>：若余数符号同被除数 → 无需修正；否则按规则：被除数与除数同号 → 余数加除数；异号 → 余数减除数</li>
+    </ol>
+
+    <h3>口诀总结</h3>
+    <div class="formula" style="font-size:17px;">"同 1 减、异 0 加"——R 与 Y 同号商 1 做减、异号商 0 做加</div>
+    <p>这和原码不恢复余数法的"负 0 加、正 1 减"<b>看上去对称但判据完全不同</b>：原码看 R 自己的符号、补码看 R 和 Y 的符号关系。<br>
+    <b>一定要分清楚</b>。</p>
+
+    <h3>溢出判断的特别之处</h3>
+    <p>PPT 右上的红字："判断是否同号与恢复余数法不同，<b>不是新老余数之间！而是余数和除数之间</b>"。<br>
+    强调：不恢复余数法判够减的依据是"<b>新余数 R<sub>i+1</sub> 与除数 Y 同号 → 够减</b>"，而恢复余数法版本是看"R 操作前后符号是否变化"。两者代数上等价（数学推导能互推），但判定项不同。<br>
+    <b>实际写代码时，比较 R 和 Y 的符号比比较 R 操作前后符号更简单</b>，所以不恢复版本用这个判据。</p>
+  </div>
+</section>
+
+<!-- ============ p74 ============ -->
+<section class="page" id="p74">
+  <h2>举例：(-9) ÷ 2</h2>
+  <div class="pgnum">PDF 第 74 页</div>
+  <img class="slide" src="pages/p74.png" alt="p74">
+  <div class="explain">
+    <h3>设定（5 位补码）</h3>
+    <ul>
+      <li>X = −9，[X]补 = <code>1 0111</code></li>
+      <li>Y = 2，[Y]补 = <code>0 0010</code>，[−Y]补 = <code>1 1110</code></li>
+      <li>被除数符号扩展到 10 位：[X]补 = <code>11111 10111</code>（高位用 5 个 1 扩展，因为 X 是负的）</li>
+    </ul>
+
+    <h3>逐步演算（"同 1 减、异 0 加"）</h3>
+
+    <table class="tbl" style="font-family:Consolas,monospace;font-size:13px;">
+      <tr><th>步</th><th>R</th><th>Q</th><th>对照</th><th>动作</th><th>商</th></tr>
+      <tr><td>0</td><td>11111</td><td>10111</td><td>R 负，Y 正 → 异号</td><td>+Y → R₁=[X]+[Y]</td><td>—</td></tr>
+      <tr><td>1</td><td>00001</td><td>10111</td><td>R₁ 正，Y 正 → 同号</td><td>q₄=1，左移、−Y</td><td>q₄=1</td></tr>
+      <tr><td>2</td><td>00011</td><td>01111</td><td>左移完，做 2R₁−Y</td><td>R₂=11110+11110 → 同号判定</td><td>—</td></tr>
+      <tr><td>2 结</td><td>00001</td><td>01111</td><td>R₂ 正、Y 正 同号</td><td>q₃=1</td><td>q₃=1</td></tr>
+      <tr><td>3</td><td>00001</td><td>11111</td><td>左移后 R 正、Y 正</td><td>同号 → 2R−Y</td><td>—</td></tr>
+      <tr><td>3 结</td><td>11111</td><td>11111</td><td>R 变负、Y 正 → 异号</td><td>q₂=0</td><td>q₂=0</td></tr>
+      <tr><td>4</td><td>11111</td><td>11110</td><td>R 负、Y 正 异号</td><td>2R+Y</td><td>—</td></tr>
+      <tr><td>4 结</td><td>00001</td><td>11110</td><td>新 R 正、Y 正 → 同号</td><td>q₁=1</td><td>q₁=1</td></tr>
+      <tr><td>5</td><td>00011</td><td>11100</td><td>左移、−Y</td><td>R₆=2R₅−Y</td><td>—</td></tr>
+      <tr><td>5 结</td><td>11111</td><td>11100</td><td>R 负、Y 正 异号</td><td>q₀=0，Q 左移空出</td><td>q₀=0</td></tr>
+      <tr><td>末</td><td>11110</td><td>+1=11101</td><td>商为负 → 末位 +1</td><td>修正</td><td>—</td></tr>
+    </table>
+
+    <p>原始商 Q = <code>11100</code>，<b>异号 → 末位加 1</b> → 真商 = <code>11100</code>？等等，注意 PPT 给的答案：[X/Y]补 = <b>11100</b>，余数 = <b>11111</b>。<br>
+    商 11100 真值 = −0100B = <b>−4</b>，余数 11111 = <b>−1</b>。验算：除数×商 + 余数 = 2×(−4) + (−1) = −9 ✓</p>
+
+    <div class="note"><b>对照检查"除数×商+余数=被除数"</b>是补码除法最稳的验证方式。如果等式成立，至少基本结果没算错。<br>
+    PPT 最下面那行红字"<b>编译器遇到 x/2 时会如何做？右移一位吗</b>"——这是引出 p75 的话头。答案是：不能简单右移，因为 (−9)/2 = −4 余 −1（朝零舍入），而 (−9)&gt;&gt;1 = −5（朝负无穷舍入），两者结果差 1。下一节专门讲这事。</div>
+  </div>
+</section>
+
+<!-- ============ bgA6 C 除法语义 ============ -->
+<section class="page bg" id="bgDA6">
+  <h2>C 除法的"朝零舍入"</h2>
+  <div class="pgnum">补充背景 · 进入 p75 前必看</div>
+  <div class="explain">
+    <h3>两种舍入方向</h3>
+    <p>整数除法处理"除不尽"时有两种约定：</p>
+    <ul>
+      <li><b>朝零舍入（truncation）</b>：丢弃小数部分。<br>
+      正数：6÷4 = 1.5 → <b>1</b>（小于真值）<br>
+      负数：(−6)÷4 = −1.5 → <b>−1</b>（大于真值，绝对值小）</li>
+      <li><b>朝负无穷舍入（floor）</b>：永远取不大于真值的最大整数。<br>
+      正数：6÷4 → <b>1</b><br>
+      负数：(−6)÷4 → <b>−2</b>（小于真值）</li>
+    </ul>
+
+    <h3>C 语言用哪种？</h3>
+    <p>C99 起标准化为<b>朝零舍入</b>（之前实现定义，多数也是朝零）。所以 <code>(-7)/3</code> 在 C 里 = <code>-2</code>，而不是 <code>-3</code>。余数定义为 <code>x − (x/y)*y</code>，所以 <code>(-7) % 3 = -7 - (-2)*3 = -1</code>。</p>
+
+    <h3>右移就不是朝零舍入</h3>
+    <p>算术右移把数除以 2，但对负数<b>是朝负无穷舍入</b>：</p>
+    <ul>
+      <li>−9 = <code>11110111</code>（8 位）</li>
+      <li>右移 1 位 = <code>11111011</code> = −5</li>
+    </ul>
+    <p>而 (−9)/2 在 C 里应该是 <b>−4</b>（朝零）。<b>右移给出的是 −5（朝负无穷）</b>，差 1。</p>
+
+    <h3>怎么修正</h3>
+    <p>负数右移前先加一个"偏置 (2ᵏ − 1)"，再右移就对了。这正是 p75 要讲的算法。<br>
+    比如 (−9)/2：先 −9 + (2¹−1) = −9 + 1 = −8，<code>11111000</code> 右移 1 = <code>11111100</code> = <b>−4</b> ✓</p>
+
+    <div class="tip"><b>为什么编译器要纠这个偏</b>：因为 C 标准规定 / 是朝零舍入，而硬件右移天然朝负无穷。如果编译器看到 <code>x / 2</code> 想优化成右移，就<b>必须加上偏置纠正</b>，否则程序行为变了。这是个常被忽略但很重要的优化细节。</div>
+  </div>
+</section>
+
+<!-- ============ p75 ============ -->
+<section class="page" id="p75">
+  <h2>变量÷常数 — 除以 2ᵏ 的优化</h2>
+  <div class="pgnum">PDF 第 75 页</div>
+  <img class="slide" src="pages/p75.png" alt="p75">
+  <div class="explain">
+    <h3>规则总结</h3>
+    <p>除不尽时<b>朝零舍入</b>（C 标准）：</p>
+    <ul>
+      <li><b>无符号 / 带符号正整数</b>（朝下"地板"等价于朝零）：低位直接丢弃 → <b>右移即可</b></li>
+      <li><b>带符号负整数</b>（朝上"天花板"等价于朝零）：<b>先加偏移量 (2ᵏ − 1)，再右移 k 位</b></li>
+    </ul>
+
+    <h3>举例 1：无符号 14 ÷ 4 = 3</h3>
+    <p>14 = <code>0000 1110</code>，右移 2 位 = <code>0000 0011</code> = 3 ✓</p>
+
+    <h3>举例 2：带符号 −14 ÷ 4 = −3</h3>
+    <p><b>错误做法</b>（直接右移）：</p>
+    <p>−14 = <code>1111 0010</code>，右移 2 位 = <code>1111 1100</code> = −4 ≠ −3</p>
+
+    <p><b>正确做法</b>（先纠偏）：</p>
+    <p>k = 2，偏移量 = 2² − 1 = 3 = <code>0000 0011</code>。<br>
+    −14 + 3 = −11，二进制 <code>1111 0010 + 0000 0011 = 1111 0101</code>。<br>
+    右移 2 位 = <code>1111 1101</code> = <b>−3</b> ✓</p>
+
+    <h3>举例 3：(−9) ÷ 2（与 p74 对照）</h3>
+    <p>k = 1，偏移 = 2¹ − 1 = 1。<br>
+    [−9]补 = <code>1 0111</code>（5 位），<code>10111 + 00001 = 11000</code>。<br>
+    右移 1 位 = <code>11100</code> = <b>−4</b> ✓ 与 p74 的算法结果一致。</p>
+
+    <div class="tip"><b>为什么偏移量是 2ᵏ − 1</b>：因为带符号负数右移 k 位损失的"低 k 位"代表的值在 [0, 2ᵏ) 之间，<b>加上 2ᵏ − 1 后这部分会"进位"到第 k 位</b>，恰好把"应该向上舍入"的那个 +1 加进去。代数上能证明这是<b>最小够用</b>的偏移量。</div>
+  </div>
+</section>
+
+<!-- ============ p76 ============ -->
+<section class="page" id="p76">
+  <h2>div32 函数实例</h2>
+  <div class="pgnum">PDF 第 76 页</div>
+  <img class="slide" src="pages/p76.png" alt="p76">
+  <div class="explain">
+    <h3>题目</h3>
+    <p>写一个函数 <code>int div32(int x)</code> 算 x/32。<b>不许用</b>除/乘/模/比较/循环/条件语句。<b>可以用</b>右移、加法、按位运算。</p>
+
+    <h3>思路</h3>
+    <p>32 = 2⁵，所以 k = 5。按 p75：</p>
+    <ul>
+      <li>正数：直接 <code>x &gt;&gt; 5</code></li>
+      <li>负数：先 <code>x + 31</code>，再 <code>&gt;&gt; 5</code></li>
+    </ul>
+    <p>问题：怎么<b>不用 if</b> 判断 x 是正是负？要算出一个变量 b：x 正时 b=0、x 负时 b=31。</p>
+
+    <h3>关键 trick：用算术右移取符号扩展</h3>
+    <p><code>x &gt;&gt; 31</code> 把 x 的符号位复制到所有位：</p>
+    <ul>
+      <li>x 正 → 结果 = <code>0000 0000 ... 0000</code></li>
+      <li>x 负 → 结果 = <code>1111 1111 ... 1111</code></li>
+    </ul>
+    <p>再 <code>&amp; 0x1F</code>（取最低 5 位）：</p>
+    <ul>
+      <li>正 → 0</li>
+      <li>负 → <code>11111</code> = 31 ✓</li>
+    </ul>
+
+    <h3>最终代码</h3>
+    <pre>int div32(int x) {
+    int b = (x &gt;&gt; 31) &amp; 0x1F;  // x 正时 b=0, x 负时 b=31
+    return (x + b) &gt;&gt; 5;
+}</pre>
+
+    <div class="tip"><b>这种代码叫"无分支代码"（branch-free code）</b>。现代 CPU 流水线很怕分支预测失败，无分支代码<b>性能上限明显高</b>。<u>这种"用算术运算替代 if"的技巧是高性能编程的重要工具</u>，编译器优化生成的代码大量出现这种 pattern。<br>
+    把 <code>(x &gt;&gt; 31) &amp; 0x1F</code> 这种"用符号扩展取出 0 或全 1"的写法记下来——后面操作系统、密码学、JIT 编译器里都会反复见到。</div>
+  </div>
+</section>
+
+<!-- ============ p77 ============ -->
+<section class="page" id="p77">
+  <h2>RISC-V 中整数乘/除运算指令</h2>
+  <div class="pgnum">PDF 第 77 页</div>
+  <img class="slide" src="pages/p77.png" alt="p77">
+  <div class="explain">
+    <h3>乘法 4 条指令（回顾）</h3>
+    <ul>
+      <li><code>mul rd, rs1, rs2</code>：低 32 位乘积，无符号 / 带符号通用</li>
+      <li><code>mulh rd, rs1, rs2</code>：高 32 位，<b>两个都按带符号</b>解读</li>
+      <li><code>mulhu rd, rs1, rs2</code>：高 32 位，<b>两个都按无符号</b>解读</li>
+      <li><code>mulhsu rd, rs1, rs2</code>：高 32 位，<b>rs1 带符号、rs2 无符号</b>（混合）</li>
+    </ul>
+    <p>得到 64 位完整乘积需要两条指令配合：<code>mul + mulh</code>（带符号）或 <code>mul + mulhu</code>（无符号）。<br>
+    <b>RISC-V 哲学</b>：指令简单、不抛异常、由软件判溢出。</p>
+
+    <h3>除法 4 条指令</h3>
+    <ul>
+      <li><code>div rd, rs1, rs2</code>：带符号除法，得商</li>
+      <li><code>divu rd, rs1, rs2</code>：无符号除法，得商</li>
+      <li><code>rem rd, rs1, rs2</code>：带符号取余</li>
+      <li><code>remu rd, rs1, rs2</code>：无符号取余</li>
+    </ul>
+
+    <h3>边界条件（这是考点）</h3>
+    <table class="tbl">
+      <tr><th>情形</th><th>div 结果</th><th>rem 结果</th></tr>
+      <tr><td>除零 (rs2 = 0)</td><td>所有位 1（即 −1）</td><td>rs1 本身</td></tr>
+      <tr><td>带符号溢出 INT_MIN / −1</td><td>INT_MIN</td><td>0</td></tr>
+    </table>
+    <p>RISC-V <b>不抛硬件异常</b>，把这些边界情况都用<b>特殊返回值</b>表达，由软件检查。</p>
+
+    <div class="tip"><b>对比其他 ISA</b>：<br>
+    · x86：除零会抛 #DE 异常，操作系统接住<br>
+    · ARM：除零返回 0（A 系）<br>
+    · MIPS：除零行为未定义<br>
+    · RISC-V：返回特殊值<br>
+    RISC-V 这种"无异常"的设计简化了流水线（不用回滚），缺点是程序员要自己写边界检查。</div>
+  </div>
+</section>
+
+<!-- ============ p78 ============ -->
+<section class="page" id="p78">
+  <h2>定点运算部件：综合视角</h2>
+  <div class="pgnum">PDF 第 78 页</div>
+  <img class="slide" src="pages/p78.png" alt="p78">
+  <div class="explain">
+    <h3>第二讲的总结性观察</h3>
+    <p>把前面讲过的所有定点运算（加减、乘、除、移位、扩展、逻辑）排排坐，发现：</p>
+    <div class="note" style="font-size:16px;text-align:center;">
+    <b>所有运算都可以用"加"和"移位"实现</b><br>
+    所以"<b>一个或多个 ALU + 移位器 + 寄存器 + 控制逻辑</b>"就是定点运算部件的全部
+    </div>
+
+    <h3>这个部件的几种称呼（同一个东西不同名）</h3>
+    <ul>
+      <li><b>运算器（Operate Unit）</b>：早期术语</li>
+      <li><b>运算部件（Operate Unit）</b>：本课件用法</li>
+      <li><b>功能部件（Function Unit）</b>：现代 CPU 的术语，强调"功能模块"</li>
+      <li><b>执行部件（Execution Unit）</b>：流水线 CPU 里"执行段"的部件</li>
+      <li><b>数据通路（DataPath）</b>：硬件描述语言/体系结构课程的术语，强调"数据流动的路径"</li>
+    </ul>
+    <p>含义基本一样，<b>侧重点不同</b>。后面学计算机组成、操作系统、编译原理会反复见到这些术语。</p>
+
+    <h3>历史演变</h3>
+    <ol>
+      <li><b>1970s–80s</b>：单芯片实现 4 位运算部件（如 AM2901A），多个芯片<b>级联</b>拼出 16 位、32 位 CPU</li>
+      <li><b>1990s 至今</b>：数据通路和控制器都集成在 CPU 内部</li>
+      <li><b>现代</b>：为支持流水线 / 超标量，<b>一个 CPU 里有多个运算部件</b>并行工作（你的电脑 CPU 里有 4-8 个 ALU、2-4 个乘除器等）</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ bgB0 位片处理器 ============ -->
+<section class="page bg" id="bgDB0">
+  <h2>位片处理器的历史背景</h2>
+  <div class="pgnum">补充背景 · 进入 p79 前必看</div>
+  <div class="explain">
+    <h3>"位片"（bit slice）是啥</h3>
+    <p>1970 年代芯片工艺还很差，单颗芯片塞不下完整的 32 位 ALU。AMD 在 1975 年推出 <b>AM2900 系列</b>——把 32 位 ALU 拆成 8 个 <b>4 位"片"</b>，每片是一颗芯片。要用 4 颗级联成 16 位、8 颗级联成 32 位。</p>
+
+    <h3>级联的关键</h3>
+    <p>为了让多颗芯片协同工作，每颗芯片要暴露<b>进位级联信号</b>：</p>
+    <ul>
+      <li>C₀ 输入：低位芯片传来的进位</li>
+      <li>Cn+4 输出：本芯片向高位芯片送的进位</li>
+      <li>P*, G*（"组传递"、"组生成"）：用于<b>多颗芯片之间的并行进位</b>（参考第一讲 CLA 那里的概念，那里讲的是 4 位组之间，这里是 4 位芯片之间，完全同构）</li>
+    </ul>
+    <p>所以 AM2901A 的接口图里那一堆 C0/Cn+4/P*/G* 全是为级联设计的。</p>
+
+    <h3>双口寄存器堆和 Q 寄存器</h3>
+    <p>AM2901A 内置 16 个 4 位寄存器组成的<b>双口寄存器堆</b>（GRS），可同时读 A、B 两个端口。再有一个<b>专用 Q 寄存器</b>用来配合 ALU 实现乘除——这就是前面 p37 那个乘法器、p62 那个除法器里"Q/R 寄存器"的硬件来源。<br>
+    可以说<b>AM2901A 是把第二讲所有算法的硬件需求"打包"成一颗芯片</b>。学这一节就是把前面的算法和这颗具体芯片的设计对照起来。</p>
+
+    <h3>为什么今天还在学</h3>
+    <p>现代 CPU 用纳米工艺集成上亿晶体管，<b>不再级联</b>。但 AM2901A 作为<b>教学经典</b>留下来，因为它<b>结构简单、功能完整</b>，是理解"现代 ALU 内部"的最佳样本。你不会用它做产品，但理解它=理解一整代计算机体系结构的设计思想。</p>
+  </div>
+</section>
+
+<!-- ============ p79 ============ -->
+<section class="page" id="p79">
+  <h2>AM2901A 内部结构图</h2>
+  <div class="pgnum">PDF 第 79 页</div>
+  <img class="slide" src="pages/p79.png" alt="p79">
+  <div class="explain">
+    <h3>从上往下认零件</h3>
+    <ol>
+      <li><b>GRS（通用寄存器组，General Register Set）</b>：16 个 4 位寄存器。一写两读（A 口、B 口分别可读不同寄存器）。A0–A3 / B0–B3 是地址输入。</li>
+      <li><b>LA / LB</b>：A、B 口的<b>锁存器</b>，把读出的数稳定住。</li>
+      <li><b>两个 MUX</b>：选 ALU 的输入。A 端 MUX 可选 LA 输出或<b>外部输入 DA</b>；B 端 MUX 可选 LB、外部 DB 或 <b>Q 寄存器</b>。</li>
+      <li><b>ALU</b>：核心算术逻辑单元。能做 A+B、A−B、B−A，以及 与/或/异或。</li>
+      <li><b>ALU Shifter</b>：ALU 输出的移位器，可左移、右移、不动。</li>
+      <li><b>Q（乘商寄存器）</b>：单独的 4 位寄存器，配合 ALU 实现乘除。</li>
+      <li><b>Q Shifter</b>：Q 的专用移位器，可与 ALU Shifter 联动。</li>
+      <li><b>CU（控制单元）</b>：根据 I0–I8 这 9 位指令码译码出所有控制信号。</li>
+      <li><b>左右两侧的 SIO3/SIO0/QIO3/QIO0</b>：移位器的串行进出端，<b>用于多芯片级联</b>时把移位信号连起来。</li>
+      <li><b>下方 Z / Y</b>：Z 是"零标志"（结果是否为 0）；Y 是数据输出。</li>
+    </ol>
+
+    <h3>页面顶部和右下两个问题</h3>
+    <ul>
+      <li><b>"如何用 AM2901A 芯片实现乘/除运算？"</b> → p81 答</li>
+      <li><b>"如何级联？两个移位器如何连接？"</b> → 多颗芯片串成 16/32 位时，A 芯片的 ALU Shifter 输出 SIO3 接 B 芯片的 SIO0；Q Shifter 同理。这样 4 颗串起来就形成"虚拟"16 位 ALU Shifter / Q Shifter。</li>
+    </ul>
+
+    <div class="tip"><b>看图的小窍门</b>：把<b>数据流（紫色实线）</b>和<b>控制流（虚线）</b>分开看。数据流：输入 → LA/LB → MUX → ALU → Shifter → 输出（同时写回 GRS）。控制流：I0–I8 → CU → 各控制信号。这是<b>所有 CPU 数据通路图的通用读法</b>。</div>
+  </div>
+</section>
+
+<!-- ============ p80 ============ -->
+<section class="page" id="p80">
+  <h2>AM2901A 的功能和结构（详解）</h2>
+  <div class="pgnum">PDF 第 80 页</div>
+  <img class="slide" src="pages/p80.png" alt="p80">
+  <div class="explain">
+    <h3>ALU 部分</h3>
+    <p>能做的运算：A+B、A−B、B−A、与、或、异或等。配备的进位信号：</p>
+    <ul>
+      <li><b>C0 输入 / Cn+4 输出</b>：本芯片的进位入/出，用于串行级联</li>
+      <li><b>P*/G*</b>：用于多颗芯片间做<b>组并行进位</b>（CLA 思想的扩展）</li>
+      <li><b>N（负标志）/ O（溢出标志）</b>：和 P*/G* 复用同一引脚（PPT 写作 G*/N、P*/O）</li>
+    </ul>
+
+    <h3>GRS（通用寄存器组）</h3>
+    <p>16 个 4 位寄存器，"双口"意味着：</p>
+    <ul>
+      <li>同时<b>读两个寄存器</b>（A 口 + B 口，地址不同也行）</li>
+      <li>同时<b>写一个寄存器</b>（写口跟 B 口共享地址 B0–B3）</li>
+    </ul>
+    <p>这种结构对一条 "rd = rs1 op rs2" 指令非常友好——一拍内读两个源、写一个目的。</p>
+
+    <h3>Q 寄存器和它的移位器</h3>
+    <p><b>核心用途：实现乘除</b>。乘法时，Q 寄存器装乘数 / 部分积低位；除法时装被除数低位 / 商。</p>
+    <p>"ALU 移位器和 Q 移位器一起左移或右移"——这就是 p37 那台乘法器里 {C, P, Y} 联动右移、p62 除法器里 {R, Q} 联动左移的硬件实现。</p>
+
+    <p><b>移位后</b>：ALU 移位器内容送 ALU 准备下次运算；Q 移位器内容送 Q 寄存器。这种<b>"算完写回"的循环</b>就是迭代算法的硬件骨架。</p>
+
+    <h3>Z 输出（零标志）</h3>
+    <p>对 ALU 结果做"判 0"（n 输入大 OR 门 + 取反），就是 Z 标志。<b>所有 4 颗 AM2901A 的 Z 端要 AND 起来</b>，得到全字宽的零标志（任何一颗非 0 → 整体非 0）。</p>
+  </div>
+</section>
+
+<!-- ============ p81 ============ -->
+<section class="page" id="p81">
+  <h2>思考题：用 AM2901A 实现乘 / 除</h2>
+  <div class="pgnum">PDF 第 81 页</div>
+  <img class="slide" src="pages/p81.png" alt="p81">
+  <div class="explain">
+    <h3>四步骤总览</h3>
+    <ol>
+      <li><b>预置寄存器</b>：
+        <ul>
+          <li>乘法：R0 = 0（初始部分积），Q = 乘数，R1 = 被乘数</li>
+          <li>除法：R0 = 被除数高位，Q = 被除数低位，R1 = 除数</li>
+        </ul>
+      </li>
+      <li><b>ALU 算加/减，同时联动 ALU 移位器 + Q 移位器</b>：
+        <ul>
+          <li>乘法：<b>右移</b>（把已算的低位推到 Q 中）</li>
+          <li>除法：<b>左移</b>（把待处理的高位推到 ALU 中）</li>
+        </ul>
+        移位后：ALU 移位器中是<b>高位部分积/中间余数</b>；Q 移位器中是<b>低位部分积/已得商</b>。
+      </li>
+      <li><b>回写</b>：ALU 移位器送回 ALU 的 A 端（准备下次运算），Q 移位器送 Q 寄存器。</li>
+      <li><b>重复 ② ③</b> 直到得出所有乘积位（乘法 32 次）或商位（除法 32 次）。</li>
+    </ol>
+
+    <h3>对照前面的内容</h3>
+    <ul>
+      <li>"R0 是 ALU A 输入" ≈ p37 的 P 寄存器 / p62 的 R 寄存器</li>
+      <li>"R1 通过 B 输入" ≈ p37 的 X / p62 的 Y</li>
+      <li>"Q 寄存器" ≈ p37 的 Y（乘数） / p62 的 Q（商）</li>
+      <li>"ALU + Shifter + Q 联动" ≈ p37 / p62 的核心循环</li>
+    </ul>
+
+    <p>所以 AM2901A 这颗芯片<b>就是把第二讲学的所有算法的硬件需求统一打包</b>。理解这颗芯片 = 理解前面所有定点运算的硬件起源。</p>
+
+    <div class="note">PPT 右下角的 "BACK" 字样是 PowerPoint 跳转标记——表示这页是某个早期问题的答案，回链。</div>
+  </div>
+</section>
+
+<!-- ============ p82 ============ -->
+<section class="page" id="p82">
+  <h2>第二讲小结（加减部分）</h2>
+  <div class="pgnum">PDF 第 82 页</div>
+  <img class="slide" src="pages/p82.png" alt="p82">
+  <div class="explain">
+    <h3>把这张总结页当复习提纲</h3>
+    <p>定点运算分两类：<b>简单的</b>（逻辑、移位、扩展）电路简单，本课重点在<b>算术运算</b>。算术运算又涉及四种数据：</p>
+    <ul>
+      <li><b>无符号数</b>（unsigned int）</li>
+      <li><b>带符号整数（补码）</b>（int）</li>
+      <li><b>原码小数</b>（浮点尾数）</li>
+      <li><b>移码整数</b>（浮点阶码）</li>
+    </ul>
+
+    <h3>三种加减运算的对照</h3>
+    <table class="tbl">
+      <tr><th>编码</th><th>符号位处理</th><th>减法实现</th><th>溢出判据</th><th>用途</th></tr>
+      <tr><td>补码</td><td>和数值位<b>一起算</b></td><td>用加法做（+[−B]补）</td><td>同号相加 → 结果符号不同</td><td>整数加减</td></tr>
+      <tr><td>原码</td><td>和数值位<b>分开算</b></td><td>同号求差 / 异号求和</td><td>同号求和 → 数值位最高位进位</td><td>浮点尾数加减</td></tr>
+      <tr><td>移码</td><td>可<b>一起处理</b>（视作补码）</td><td>"减数求补再加"</td><td>两加数符号相同且与和符号相同</td><td>浮点阶码加减</td></tr>
+    </table>
+
+    <h3>复习建议</h3>
+    <p>把这张表里每一行的<b>"用途"</b>记牢。考试经常出"给一个浮点运算的中间结果，问尾数/阶码该用哪种加减"。<b>用途 ↔ 编码 ↔ 算法</b>这条链不能断。</p>
+  </div>
+</section>
+
+<!-- ============ p83 ============ -->
+<section class="page" id="p83">
+  <h2>第二讲小结（乘除部分）</h2>
+  <div class="pgnum">PDF 第 83 页</div>
+  <img class="slide" src="pages/p83.png" alt="p83">
+  <div class="explain">
+    <h3>乘法 4 种</h3>
+    <table class="tbl">
+      <tr><th>类型</th><th>核心操作</th><th>用途</th></tr>
+      <tr><td>无符号乘</td><td>"加 + 右移"，循环 n 次</td><td>整数乘法的基础</td></tr>
+      <tr><td>原码（一/两位）乘</td><td>符号位异或、数值位用无符号乘</td><td>浮点尾数乘</td></tr>
+      <tr><td>补码（一/两位）乘</td><td>符号和数值<b>一起算</b>，Booth 算法</td><td>带符号整数乘</td></tr>
+      <tr><td><s>快速乘法器（流水线/阵列）</s></td><td><i>课件划掉了</i>，说明本课没深入讲</td><td>—</td></tr>
+    </table>
+
+    <h3>除法 4 种</h3>
+    <table class="tbl">
+      <tr><th>类型</th><th>核心操作</th><th>用途</th></tr>
+      <tr><td>无符号除</td><td>"加/减 + 左移"。有恢复余数 / 不恢复余数两种</td><td>整数除法基础</td></tr>
+      <tr><td>原码除</td><td>符号位异或、数值位用无符号除</td><td>浮点尾数除</td></tr>
+      <tr><td><s>补码除</s></td><td><i>划掉，但本课讲了</i>。符号位和数值位一起算</td><td>带符号整数除</td></tr>
+      <tr><td><s>快速除法器</s></td><td>难做流水线，可做阵列 / 用乘法实现</td><td>—</td></tr>
+    </table>
+
+    <h3>"为什么除法快不起来"</h3>
+    <p>课件提到"很难实现流水化除法器"。原因：<b>除法每一步的下一步操作依赖于当前余数符号</b>（"够减"判断），数据依赖强，很难拆成独立级流水。<br>
+    现代 CPU 的乘法通常 3-5 周期出结果（流水线），除法通常 20-30 周期（串行）。<b>除法是 CPU 里最慢的基本运算</b>，能不用尽量不用——这就是为什么编译器会用各种技巧（如 p75-76 的"除以常数 → 右移"）回避除法指令。</p>
+
+    <h3>底部一行：定点部件构成</h3>
+    <p><b>ALU + GRS（通用寄存器组） + MUX + Shifter（移位器） + Q 寄存器</b>，由 CU（控制单元）控制执行。这正是 AM2901A 的内部结构（p79）。</p>
+  </div>
+</section>
+
+<!-- ============ p84 ============ -->
+<section class="page" id="p84">
+  <h2>本章总结 (1) — 定点数运算</h2>
+  <div class="pgnum">PDF 第 84 页</div>
+  <img class="slide" src="pages/p84.png" alt="p84">
+  <div class="explain">
+    <h3>把这张当一张"知识地图"</h3>
+    <p>整个第6章的定点运算可以归结为<b>"ALU + 移位器"</b>这两块的不同组合。下面把每一类运算的"硬件招式"列一遍。</p>
+
+    <h3>移位运算（三种）</h3>
+    <ul>
+      <li><b>逻辑移位</b>：对无符号数。左/右移空出来补 0，移出去丢弃。</li>
+      <li><b>算术移位</b>：对带符号补码。移位前后<b>符号位不变</b>。算术右移 = "÷2 朝负无穷"，算术左移 = "×2 但要查溢出"。</li>
+      <li><b>循环移位</b>：移出去的位<b>循环回来填入</b>另一头。常用于密码学、位旋转。</li>
+    </ul>
+
+    <h3>扩展运算（两种）</h3>
+    <ul>
+      <li><b>零扩展</b>：无符号数高位补 0</li>
+      <li><b>符号扩展</b>：补码整数高位<b>补符号位</b>（正补 0、负补 1）</li>
+    </ul>
+    <p>这两个看似简单，但在<b>不同位宽变量赋值</b>（uint8 → int32 等）时极其重要，写错会导致难调的 bug。</p>
+
+    <h3>加减运算（两种）</h3>
+    <ul>
+      <li><b>补码加/减</b>：整数加减。符号位与数值位一起，减法用加法实现。<b>"同号相加，结果符号不同 → 溢出"</b></li>
+      <li><b>原码加/减</b>：浮点尾数加减。符号位与数值位分开。"同号相加、异号相减；加法直接加；减法用加负数的补码实现"</li>
+    </ul>
+
+    <h3>乘法运算（两种）</h3>
+    <ul>
+      <li><b>补码乘</b>：整数乘法。符号位和数值位一起算，<b>Booth 算法</b>。</li>
+      <li><b>原码乘</b>：浮点尾数乘。符号位与数值位分开，数值部分用<b>无符号乘</b>。</li>
+    </ul>
+    <p>共同硬件骨架：<b>加 + 右移</b>。</p>
+
+    <h3>除法运算（两种）</h3>
+    <ul>
+      <li><b>补码除</b>：整数除法。符号位和数值位一起算。<b>"同 1 减、异 0 加"</b>。</li>
+      <li><b>原码除</b>：浮点尾数除。符号位与数值位分开，数值部分用无符号除。</li>
+    </ul>
+    <p>共同硬件骨架：<b>加/减 + 左移</b>。</p>
+
+    <div class="tip">看到没？整本第二讲就是<b>把"加和移位"两件事在四种数据类型上的所有排列组合都讲一遍</b>。把这页的结构记熟，知识就盘活了。</div>
+  </div>
+</section>
+
+<!-- ============ p85 ============ -->
+<section class="page" id="p85">
+  <h2>本章总结 (2) — 浮点 & ALU</h2>
+  <div class="pgnum">PDF 第 85 页</div>
+  <img class="slide" src="pages/p85.png" alt="p85">
+  <div class="explain">
+    <h3>浮点运算的整体框架</h3>
+    <p>这页其实是"第三讲（浮点运算）"的总结大纲。本课件没单独讲第三讲，但 PPT 还是放了总结要点，给你预习。后面跟我的"浮点入门"补充页对应起来看。</p>
+
+    <h4>加减运算的 5 步</h4>
+    <ol>
+      <li><b>对阶</b>：让两数的阶码相同（小阶向大阶看齐，尾数右移）</li>
+      <li><b>尾数相加减</b>（按原码加减）</li>
+      <li><b>规格化</b>：把结果调整成 "0.1xxx × 2ᵉ" 的标准形式</li>
+      <li><b>舍入</b>：处理超出位数的部分</li>
+      <li><b>判溢出</b>：阶码上溢 / 下溢</li>
+    </ol>
+
+    <h4>乘除运算</h4>
+    <ul>
+      <li>尾数用<b>原码乘/除</b>（前面学的）</li>
+      <li>阶码用<b>移码加/减</b>（前面学的）</li>
+    </ul>
+    <p>这就是为什么前面要专门讲原码乘除和移码加减——<b>浮点运算就是它们的复用</b>。</p>
+
+    <h4>精度处理</h4>
+    <ul>
+      <li>中间结果需要额外的<b>保护位 / 舍入位 / 粘位</b></li>
+      <li>四种舍入：就近舍入 / 正向舍入 / 负向舍入 / 截去</li>
+    </ul>
+
+    <h3>ALU 的关键性能因素</h3>
+    <ol>
+      <li><b>加法是所有运算的基础</b>——乘除都用加法迭代实现，所以加法速度直接决定全机性能</li>
+      <li>影响加法速度的核心 = <b>进位方式</b></li>
+      <li><b>并行进位（CLA）</b>用"进位生成 G + 进位传递 P"两个函数把每位进位独立、并行算出来</li>
+    </ol>
+    <p>这一条把第一讲（CLA）和第二讲（乘除依赖加法）串成了一个闭环：<b>整个第6章的根基是 CLA 那个加法器</b>。</p>
+
     <hr class="sep">
-    <p style="color:var(--mute);font-size:14px;text-align:center;">—— 第二讲 p43–p57 讲解结束 ——<br>后续 p58 起将是定点数除法、定点 ALU 综合，再进入第三讲浮点数运算。</p>
+    <p style="color:var(--mute);font-size:14px;text-align:center;">—— PDF 课件正文到此结束（共 85 页）——<br>下面是我补充的浮点数入门 6 节，帮你打通 p85 提到的浮点概念。</p>
+  </div>
+</section>
+
+<!-- ============ FP1 浮点 IEEE 754 ============ -->
+<section class="page fp" id="fp1">
+  <h2>浮点 1：为什么需要浮点 + IEEE 754 格式</h2>
+  <div class="pgnum">课件外 · 帮助理解 p85 提到的浮点概念</div>
+  <div class="explain">
+    <h3>定点数的局限</h3>
+    <p>32 位定点整数范围 [−2³¹, 2³¹) ≈ ±2.1×10⁹，<b>无法表示</b>：</p>
+    <ul>
+      <li>很大的数：地球到太阳距离 1.5×10⁸ km = 1.5×10¹¹ m</li>
+      <li>很小的数：原子直径 1×10⁻¹⁰ m</li>
+      <li>非整数：1/3、π、√2</li>
+    </ul>
+    <p>科学计算需要<b>动态范围极大、精度可调</b>的数。浮点数就是为此设计——借鉴<b>科学记数法</b>的思路。</p>
+
+    <h3>浮点数的一般形式</h3>
+    <div class="formula">N = (−1)ˢ × M × 2ᴱ</div>
+    <ul>
+      <li><b>S</b>：符号位（0 正 1 负），1 位</li>
+      <li><b>M</b>：尾数（mantissa），表示有效数字，定点小数</li>
+      <li><b>E</b>：阶码（exponent），定点整数</li>
+    </ul>
+
+    <h3>IEEE 754 标准（最常用，C/Java/JS 都用）</h3>
+    <table class="tbl">
+      <tr><th>类型</th><th>总位数</th><th>S</th><th>E（阶码）</th><th>M（尾数）</th><th>近似范围</th></tr>
+      <tr><td><b>单精度 float</b></td><td>32</td><td>1</td><td>8</td><td>23</td><td>±1.18×10⁻³⁸ 到 ±3.4×10³⁸</td></tr>
+      <tr><td><b>双精度 double</b></td><td>64</td><td>1</td><td>11</td><td>52</td><td>±2.23×10⁻³⁰⁸ 到 ±1.8×10³⁰⁸</td></tr>
+    </table>
+
+    <h3>关键约定：规格化 + 隐藏位</h3>
+    <p>IEEE 754 规定尾数必须是 <code>1.xxxxx</code> 形式（整数部分必为 1），这叫<b>规格化</b>。<br>
+    既然第一位永远是 1，那就<b>不存了</b>——这位叫"<b>隐藏位</b>"。所以 23 位尾数实际表示 24 位精度。</p>
+
+    <h3>阶码用"偏置移码"</h3>
+    <p>阶码用<b>移码</b>表示——这就是 p82 讲"移码用于浮点阶码"的来源。<br>
+    单精度偏置 = 127，所以 E = 真实阶 + 127。例：真实阶 = 0 → 存 0111_1111；真实阶 = 1 → 存 1000_0000。</p>
+
+    <h3>例：用单精度表示 6.25</h3>
+    <ol>
+      <li>6.25 = 110.01₂ = <code>1.1001 × 2²</code></li>
+      <li>S = 0（正）</li>
+      <li>真实阶 = 2，存的 E = 2 + 127 = 129 = <code>1000 0001</code></li>
+      <li>M = 1001 后面补 0 到 23 位（隐藏首位 1）</li>
+      <li>合起来：<code>0 10000001 10010000000000000000000</code></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ FP2 特殊值 ============ -->
+<section class="page fp" id="fp2">
+  <h2>浮点 2：特殊值与非规格化数</h2>
+  <div class="pgnum">课件外</div>
+  <div class="explain">
+    <h3>IEEE 754 用阶码 E 的两个"端点"编码特殊值</h3>
+    <p>设阶码字段范围 [0, 255]（8 位）。"正常"数 E 在 [1, 254]。两端预留给特殊值：</p>
+
+    <table class="tbl">
+      <tr><th>E (阶码字段)</th><th>M (尾数字段)</th><th>表示</th><th>说明</th></tr>
+      <tr><td>0</td><td>0</td><td><b>±0</b></td><td>有 +0 和 −0 之分</td></tr>
+      <tr><td>0</td><td>≠ 0</td><td><b>非规格化数</b></td><td>下面解释</td></tr>
+      <tr><td>1–254</td><td>任意</td><td>规格化数</td><td>常态</td></tr>
+      <tr><td>255</td><td>0</td><td><b>±∞</b></td><td>溢出 / 除零</td></tr>
+      <tr><td>255</td><td>≠ 0</td><td><b>NaN</b></td><td>Not a Number，无效运算结果</td></tr>
+    </table>
+
+    <h3>非规格化数（denormal / subnormal）</h3>
+    <p>规格化数最小是 1.0 × 2⁻¹²⁶ ≈ 1.18×10⁻³⁸。比这更小的数怎么办？<br>
+    IEEE 754 用 <b>E=0 但 M≠0</b> 表示"非规格化数"，<b>隐藏位不再当 1，而是当 0</b>：</p>
+    <div class="formula">N = (−1)ˢ × 0.M × 2⁻¹²⁶</div>
+    <p>这样可以平滑过渡到 0，提供"<b>渐进下溢</b>"——避免下溢直接跳到 0 导致精度损失断崖。</p>
+
+    <h3>NaN 的两种</h3>
+    <ul>
+      <li><b>quiet NaN (qNaN)</b>：传播但不抛异常。比如 0/0、∞−∞ 的结果。</li>
+      <li><b>signaling NaN (sNaN)</b>：触发硬件异常。一般不用。</li>
+    </ul>
+    <p>NaN 的特性：<b>NaN ≠ NaN</b>（这是判断 NaN 的常用方法：<code>x != x</code> 为真 → x 是 NaN）。</p>
+
+    <h3>±0 和 ±∞</h3>
+    <ul>
+      <li><code>+0 == −0</code> 在比较时成立，但在<b>除法</b>中区分：<code>1.0 / +0.0 = +∞</code>，<code>1.0 / −0.0 = −∞</code></li>
+      <li><code>+∞ + 1 = +∞</code>，<code>+∞ − +∞ = NaN</code></li>
+    </ul>
+
+    <div class="tip">这些"奇怪"的特殊值让<b>浮点运算永不抛异常也能完整定义</b>，简化了编程模型。但也意味着<b>NaN 一旦产生就会污染所有后续计算</b>——所以代码里要时刻警惕 NaN。</div>
+  </div>
+</section>
+
+<!-- ============ FP3 浮点加减 ============ -->
+<section class="page fp" id="fp3">
+  <h2>浮点 3：加减运算的 5 步流程</h2>
+  <div class="pgnum">课件外</div>
+  <div class="explain">
+    <h3>用一个例子贯穿：1.0 × 2³ + 1.1 × 2¹（十进制 8 + 3 = 11）</h3>
+
+    <h3>步骤 1：对阶</h3>
+    <p><b>规则</b>：小阶向大阶看齐——把小阶数的尾数<b>右移</b>，每右移一位阶码 +1。<br>
+    本例：1.1×2¹ → 0.011×2³（尾数右移 2 位、阶码 +2）。</p>
+    <p><b>为什么"小阶向大阶看齐"</b>：尾数右移时丢的是最低位（精度损失小）；如果反过来"大阶向小阶看齐"要左移大数的尾数，会丢失高位（精度灾难）。</p>
+
+    <h3>步骤 2：尾数相加减</h3>
+    <p>对齐后：<code>1.000 + 0.011 = 1.011</code></p>
+
+    <h3>步骤 3：规格化</h3>
+    <p>检查结果尾数是否是 <code>1.xxx</code> 形式。本例 1.011 已经是，无需调整。</p>
+    <p><b>两种规格化操作</b>：</p>
+    <ul>
+      <li><b>左规</b>：当结果尾数是 <code>0.0...01xxx</code>（首部多个 0），<b>左移尾数 + 减阶码</b>，直到首位为 1
+        <br>例：0.001 × 2³ → 1.000 × 2¹（左移 2 位、阶码 −2）</li>
+      <li><b>右规</b>：当结果尾数是 <code>1x.xxx</code>（整数部分 ≥ 2），<b>右移 1 位 + 加阶码</b>
+        <br>例：1.1 + 1.1 = 11.0 → 1.10 × 2¹</li>
+    </ul>
+
+    <h3>步骤 4：舍入</h3>
+    <p>右移或对阶时丢出去的位要按规则舍入（下一节讲）。本例没有丢位，不用舍入。</p>
+
+    <h3>步骤 5：判溢出</h3>
+    <p>检查规格化后的阶码是否在合法范围（单精度 −126 到 +127）：</p>
+    <ul>
+      <li>阶码 &gt; +127 → <b>上溢</b> → 结果设为 ±∞</li>
+      <li>阶码 &lt; −126 → <b>下溢</b> → 结果设为 ±0 或非规格化数</li>
+    </ul>
+    <p>本例阶码 3，正常。</p>
+
+    <h3>最终结果</h3>
+    <p><code>1.011 × 2³ = 1011₂ = 11</code> ✓</p>
+
+    <div class="note"><b>关于阶码运算</b>：步骤 1 的"对阶"和步骤 3 的"调阶"都涉及阶码加减。因为阶码用移码，正好用前面学的<b>移码加减算法</b>实现。这就是 p82 表里"移码加减用于浮点阶码"的实际场景。</div>
+  </div>
+</section>
+
+<!-- ============ FP4 浮点乘除 ============ -->
+<section class="page fp" id="fp4">
+  <h2>浮点 4：乘除运算</h2>
+  <div class="pgnum">课件外</div>
+  <div class="explain">
+    <h3>浮点乘法比加法简单</h3>
+    <p>不需要对阶（这是浮点乘法的最大优势）。直接：</p>
+    <ol>
+      <li><b>符号位</b>：S = S₁ ⊕ S₂</li>
+      <li><b>尾数相乘</b>：M = M₁ × M₂（按原码小数乘法做）</li>
+      <li><b>阶码相加</b>：E = E₁ + E₂ − bias（因为两个偏置加起来要扣一个）</li>
+      <li><b>规格化、舍入、判溢出</b></li>
+    </ol>
+
+    <h3>例：1.5 × 2.0 = 3.0</h3>
+    <ul>
+      <li>1.5 = 1.1₂ × 2⁰，符号 0，阶码 127，尾数 1.10000...</li>
+      <li>2.0 = 1.0₂ × 2¹，符号 0，阶码 128，尾数 1.00000...</li>
+      <li>符号：0 ⊕ 0 = 0</li>
+      <li>尾数：1.1 × 1.0 = 1.10 (没右规)</li>
+      <li>阶码：127 + 128 − 127 = 128（即真实阶 = 1）</li>
+      <li>结果：1.10 × 2¹ = 11₂ = 3.0 ✓</li>
+    </ul>
+
+    <h3>浮点除法</h3>
+    <p>类似乘法，把"相乘"换成"相除"：</p>
+    <ol>
+      <li>符号 = 异或</li>
+      <li>尾数相除（按原码小数除）</li>
+      <li>阶码相减 + bias</li>
+      <li>规格化、舍入、判溢出</li>
+    </ol>
+
+    <h3>哪里用到本课的算法</h3>
+    <table class="tbl">
+      <tr><th>浮点运算</th><th>用到的定点算法</th></tr>
+      <tr><td>对阶 / 调阶</td><td><b>移码加减</b>（p31-32）</td></tr>
+      <tr><td>尾数加减</td><td><b>原码加减</b>（p29-30）</td></tr>
+      <tr><td>尾数乘除</td><td><b>原码乘 / 原码除</b>（p39-40, p67-68）</td></tr>
+      <tr><td>阶码加减</td><td><b>移码加减</b>（p31-32）</td></tr>
+    </table>
+
+    <div class="tip"><b>本课所有"原码 X、移码 X"的算法都是为浮点服务的</b>。整数运算本身用补码就够，不需要原码或移码。所以前面学这些算法时如果觉得"为啥要这么麻烦"，<b>现在你看到答案了</b>——为了浮点。</div>
+  </div>
+</section>
+
+<!-- ============ FP5 舍入与保护位 ============ -->
+<section class="page fp" id="fp5">
+  <h2>浮点 5：舍入与保护位</h2>
+  <div class="pgnum">课件外 · 对应 p85 提到的"保护位/舍入位/粘位"</div>
+  <div class="explain">
+    <h3>为什么需要舍入</h3>
+    <p>浮点运算中间结果可能比目标精度多很多位。比如对阶时右移可能产生 20 多位"额外"小数。这些位<b>不能直接扔</b>——会损失精度；要按规则"舍入"。</p>
+
+    <h3>IEEE 754 的 4 种舍入方式</h3>
+    <table class="tbl">
+      <tr><th>名称</th><th>规则</th><th>例：1.6 舍入</th><th>例：1.4 舍入</th><th>例：1.5 舍入</th></tr>
+      <tr><td><b>就近舍入</b>（默认）</td><td>取最接近的；正好半数时取偶数</td><td>2</td><td>1</td><td><b>2</b>（偶数）</td></tr>
+      <tr><td><b>正向舍入</b>（朝 +∞）</td><td>取不小于真值的最小</td><td>2</td><td>2</td><td>2</td></tr>
+      <tr><td><b>负向舍入</b>（朝 −∞）</td><td>取不大于真值的最大</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr><td><b>截去</b>（朝 0）</td><td>直接丢掉小数</td><td>1</td><td>1</td><td>1</td></tr>
+    </table>
+
+    <h3>为什么"半数时取偶数"</h3>
+    <p>"四舍五入"在大量数据上会引入<b>系统性向上偏差</b>（0.5 总向上）。"就近偶数舍入"在 0.5 时根据相邻偶数决定，统计上偏差为 0，更公平。<br>
+    这也叫"<b>银行家舍入</b>"，金融场合常用。</p>
+
+    <h3>保护位 / 舍入位 / 粘位（GRS bits）</h3>
+    <p>为了正确舍入，硬件在尾数末尾保留<b>额外 3 位</b>：</p>
+    <ul>
+      <li><b>Guard bit (G)</b>：尾数右移时挤出的第 1 位（最高的"额外位"）</li>
+      <li><b>Round bit (R)</b>：挤出的第 2 位</li>
+      <li><b>Sticky bit (S)</b>：挤出的<b>所有后续位的 OR</b>（只要有任何一位是 1 就是 1）</li>
+    </ul>
+
+    <h3>为什么需要 Sticky</h3>
+    <p>考虑舍入 <code>1.0000...0101</code>（小数点后第 4 位起是 0101）。如果只看 GR=01，会判为"小于半数"舍下去；但<b>后面还有 01</b>，真实值已经大于 0.10000...01 中间。Sticky 把"后面是否非 0"压缩成 1 位，<b>避免漏判</b>。</p>
+
+    <h3>三位拼起来怎么判（就近偶数舍入）</h3>
+    <table class="tbl">
+      <tr><th>G R S</th><th>动作</th></tr>
+      <tr><td>0 ? ?</td><td>舍下（&lt; 半数）</td></tr>
+      <tr><td>1 0 0</td><td>正好半数 → 看保留尾数末位：偶则舍下、奇则进上</td></tr>
+      <tr><td>1 ? ? (R或S有1)</td><td>大于半数 → 进上</td></tr>
+    </table>
+
+    <div class="warn"><b>这就是为什么浮点运算"算两遍可能不一样"</b>——不同顺序的运算可能产生不同的舍入误差。这是浮点编程的最大陷阱。<br>
+    例：<code>(0.1 + 0.2) + 0.3</code> 和 <code>0.1 + (0.2 + 0.3)</code> 在 IEEE 754 双精度下结果不同。</div>
+  </div>
+</section>
+
+<!-- ============ FP6 浮点溢出 ============ -->
+<section class="page fp" id="fp6">
+  <h2>浮点 6：溢出与精度问题</h2>
+  <div class="pgnum">课件外 · 收束 p85 的"判溢出"</div>
+  <div class="explain">
+    <h3>两种溢出</h3>
+    <ul>
+      <li><b>阶码上溢（Overflow）</b>：阶码 &gt; +127（单精度）。结果设为 <b>±∞</b>，触发 overflow 异常。</li>
+      <li><b>阶码下溢（Underflow）</b>：阶码 &lt; −126。结果设为<b>非规格化数</b>或 ±0，触发 underflow 异常（一般可忽略）。</li>
+    </ul>
+
+    <h3>尾数无所谓"溢出"</h3>
+    <p>尾数加减如果结果超过 1.xx，<b>右规一次就解决了</b>（同时阶码 +1）。所以尾数本身不会真正溢出——溢出永远表现为阶码的范围问题。<br>
+    <b>除非</b>阶码本身已经在边界，再 +1 就上溢——这时才是真正的溢出。</p>
+
+    <h3>精度问题：浮点不是数学的实数</h3>
+    <p>浮点数<b>无法精确表示</b>多数十进制小数：</p>
+    <ul>
+      <li>0.1（十进制）= 0.000110011001100...（二进制）<b>无限循环</b>，舍入到 23 位有误差</li>
+      <li>所以 <code>0.1 + 0.2 == 0.3</code> 在 C / Python / JS 里都是 <b>false</b>！</li>
+    </ul>
+
+    <h3>三个典型陷阱（编程必记）</h3>
+    <ol>
+      <li><b>不要用 == 比较浮点</b>。用 <code>abs(a - b) &lt; epsilon</code> 代替。</li>
+      <li><b>大数加小数会丢精度</b>：<code>1e20 + 1.0 == 1e20</code>（1.0 在对阶时被右移到全 0）。</li>
+      <li><b>运算次序影响结果</b>：浮点加法不满足结合律。<br>
+      累加大量数时，<b>从小到大累加</b>精度更高（小数不会被一开始的大数"吃掉"）。</li>
+    </ol>
+
+    <h3>浮点的本质</h3>
+    <p>浮点数是"<b>对实数的稀疏采样</b>"——它用 32/64 位<b>有限信息</b>覆盖巨大动态范围，必然在精度上做妥协。<br>
+    把它当成"<b>一种带容差的数学</b>"来用，永远<b>留出 epsilon 比较余量</b>，就能避开大部分坑。</p>
+
+    <hr class="sep">
+    <p style="color:var(--mute);font-size:14px;text-align:center;">—— 浮点入门 6 节结束 ——<br>
+    至此整本第6章（除法、定点部件、浮点入门）讲解完毕。把第二讲完整版（p23-57）+ 本份（p58-85+浮点）合起来看，你已经掌握 ALU 内部的全部细节。</p>
   </div>
 </section>
 
@@ -1553,6 +3111,5 @@ window.addEventListener('scroll', update, {passive:true});
 window.addEventListener('load', update);
 </script>
 
-<a href="../" id="nichijo-back-btn" title="返回首页" style="position:fixed;top:16px;left:16px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#8b5a3c;color:#fffdf9;text-decoration:none;font-family:'Times New Roman','宋体',SimSun,serif;font-size:14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:background .15s;" onmouseover="this.style.background='#6f4530'" onmouseout="this.style.background='#8b5a3c'">← 返回首页</a>
 </body>
 </html>

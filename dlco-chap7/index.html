@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>第7章 第一讲 · 概述与指令系统设计</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>第7章 · 第一讲 · 概述与设计</h1>
+  <ol>
+    <li><a href="#p01" class="skip">1. 第7章封面</a></li>
+    <li><a href="#p02" class="skip">2. 第一讲目录</a></li>
+
+    <li class="group">A · 概述</li>
+    <li><a href="#bgA0" class="bg">CPU 数据通路速览</a></li>
+    <li><a href="#p03">3. 指令系统概述</a></li>
+    <li><a href="#p04">4. 指令执行周期与设计</a></li>
+    <li><a href="#p05">5. 一条指令包含哪些信息</a></li>
+
+    <li class="group">B · 地址码 · 格式</li>
+    <li><a href="#bgB0" class="bg">主存编址 · 形式地址</a></li>
+    <li><a href="#p06">6. 几个地址码字段</a></li>
+    <li><a href="#p07">7. 指令格式设计原则</a></li>
+
+    <li class="group">C · 操作数类型</li>
+    <li><a href="#bgC0" class="bg">数据宽度 · 补码 · 字节序</a></li>
+    <li><a href="#p08">8. 操作数类型和存储方式</a></li>
+    <li><a href="#p09">9. IA-32 与 RISC-V 数据类型</a></li>
+
+    <li class="group">D · 寻址方式</li>
+    <li><a href="#bgD0" class="bg">寻址方式要解决什么</a></li>
+    <li><a href="#p10">10. 什么是寻址方式</a></li>
+    <li><a href="#p11">11. 寻址方式的确定</a></li>
+    <li><a href="#p12">12. 七种基本寻址方式</a></li>
+    <li><a href="#p13">13. 偏移寻址（相对/基址/变址）</a></li>
+    <li><a href="#p14">14. 变址寻址访问线性表</a></li>
+    <li><a href="#p15">15. MIPS 循环代码示例</a></li>
+    <li><a href="#p16">16. 多种类型变量的地址计算</a></li>
+
+    <li class="group">E · 操作类型与操作码</li>
+    <li><a href="#p17">17. 操作类型分类</a></li>
+    <li><a href="#p18">18. 操作码编码两种风格</a></li>
+    <li><a href="#p19">19. 定长操作码</a></li>
+    <li><a href="#p20">20. IBM370 指令格式</a></li>
+    <li><a href="#p21">21. 扩展（变长）操作码</a></li>
+
+    <li class="group">F · 条件测试 · 标志位</li>
+    <li><a href="#bgE0" class="bg">SF/ZF/CF/OF 直觉理解</a></li>
+    <li><a href="#p22">22. 条件测试方式</a></li>
+    <li><a href="#p23">23. 标志位生成例子</a></li>
+    <li><a href="#p24">24. IA-32 条件转移指令</a></li>
+
+    <li class="group">G · 回顾：程序执行</li>
+    <li><a href="#p25">25. 模型机 M 指令格式</a></li>
+    <li><a href="#p26">26. z=x+y 程序</a></li>
+    <li><a href="#p27">27. I1 指令的执行过程</a></li>
+
+    <li class="group">H · 指令设计风格</li>
+    <li><a href="#bgF0" class="bg">累加器/栈/寄存器型直觉</a></li>
+    <li><a href="#p28">28. 按操作数位置分</a></li>
+    <li><a href="#p29">29. 四种风格代码对比</a></li>
+    <li><a href="#p30">30. ALU 指令存储器地址数</a></li>
+    <li><a href="#p31">31. CISC 风格特点</a></li>
+    <li><a href="#p32">32. CISC 缺陷与 RISC 由来</a></li>
+    <li><a href="#p33">33. 80x86 Top10 指令频率</a></li>
+    <li><a href="#p34">34. RISC 风格特点</a></li>
+
+    <li class="group">I · 异常与中断</li>
+    <li><a href="#p35">35. 异常和中断分类</a></li>
+    <li><a href="#p36">36. 异常和中断的处理</a></li>
+
+    <li class="group">J · 小结</li>
+    <li><a href="#p37">37. 第一讲小结</a></li>
+  </ol>
+</aside>
+
+<main>
+
+<section class="page" id="p01">
+  <h2>第7章 指令系统 · 封面</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <p style="color:var(--mute);">章节封面，本讲只关注「第1讲 概述与指令系统设计」。第2讲 RISC-V 架构属于后续内容。</p>
+</section>
+
+<section class="page" id="p02">
+  <h2>第一讲 主要内容</h2>
+  <div class="pgnum">PDF 第 2 页 · 跳过</div>
+  <p style="color:var(--mute);">大纲页。本讲会按如下顺序展开：指令系统概述 → 操作数与寻址方式 → 操作类型与操作码编码 → 标志信息 → 指令设计风格（CISC vs RISC）→ 异常和中断。</p>
+</section>
+
+<!-- ========== A · 概述 ========== -->
+
+<section class="page bg" id="bgA0">
+  <h2>背景 A0 · CPU 数据通路里那一堆缩写到底是啥</h2>
+  <div class="pgnum">进入 p3 之前必看</div>
+  <div class="explain">
+    <p>p3 右下角那张「中央处理器」图你大概看过很多遍了，但里面的缩写如果没串起来讲过，光看图等于看不懂。这里用 30 秒把它们捋清楚——后面整章一直用。</p>
+    <table class="tbl">
+      <tr><th>缩写</th><th>全名</th><th>你可以理解为</th></tr>
+      <tr><td><b>PC</b></td><td>Program Counter</td><td class="l">「下一条要执行的指令」在主存里的地址。每执行完一条就自增。</td></tr>
+      <tr><td><b>IR</b></td><td>Instruction Register</td><td class="l">「当前正在执行的指令」本身（二进制串）。从主存取来就放这。</td></tr>
+      <tr><td><b>MAR</b></td><td>Memory Address Register</td><td class="l">CPU 想访问主存的「哪个地址」，先放这里再发出去。</td></tr>
+      <tr><td><b>MDR</b></td><td>Memory Data Register</td><td class="l">从主存读上来的「数据」、或要写回主存的数据，在这中转。</td></tr>
+      <tr><td><b>GPRs</b></td><td>General-Purpose Registers</td><td class="l">通用寄存器堆。一组小快速存储，是 CPU 内的「便签本」。</td></tr>
+      <tr><td><b>ALU</b></td><td>Arithmetic Logic Unit</td><td class="l">真正干算术/逻辑运算的电路。输入 A/B，输出 F。</td></tr>
+      <tr><td><b>标志寄存器</b></td><td>Flags Register</td><td class="l">ALU 算完一次顺手记下「是否进位、是否为零、是否溢出、结果正负」这几个位。后面条件转移要用。</td></tr>
+    </table>
+    <div class="tip">一句话串起来：<b>PC → MAR → 主存 → MDR → IR</b>（取指）→ 译码 → 再次 MAR/MDR 取数据 → 进 ALU 算 → 写回寄存器或主存。本章后面 6 步「指令执行周期」就是按这条线展开的。</div>
+  </div>
+</section>
+
+<section class="page" id="p03">
+  <h2>指令系统概述：软硬件的接缝</h2>
+  <div class="pgnum">PDF 第 3 页</div>
+  <img class="slide" src="pages/p03.png" alt="p03">
+  <div class="explain">
+    <h3>核心比喻：指令集 = 砖墙</h3>
+    <p>上面的两个小人一个是软件、一个是硬件，中间那条砖墙就是「指令系统（instruction set）」。砖墙两边的人都得照这堵墙办事：</p>
+    <ul>
+      <li><b>硬件设计者</b>：我得照这墙的样子去造 CPU。希望墙的图案规整、好砌——也就是「指令易于硬件实现」。</li>
+      <li><b>编译器/系统程序员</b>：我得把高级语言「翻译成」墙上的图案。希望墙的图案表达力强——也就是「指令易于编译器生成」。</li>
+    </ul>
+    <p>这两个诉求其实是矛盾的，所以 ISA 设计就是个权衡。一个 ISA 设计得好不好，直接决定了机器的<b>性能和成本</b>。</p>
+    <h3>冯·诺依曼对「指令」的两条规定</h3>
+    <ol>
+      <li>指令<b>用二进制表示，和数据一起存在主存里</b>——这就是「存储程序」思想。指令和数据从形式上没区别，全是 0 1。</li>
+      <li>一条指令由两部分组成：<b>操作码（OP）+ 地址码（要算谁/结果放哪）</b>。</li>
+    </ol>
+    <div class="note">为什么图上 IR 还被画成「OP | addr」？因为指令一被取进 IR，硬件就要按「左边操作码、右边地址码」的格式拆开看。这是整章设计的中心。</div>
+  </div>
+</section>
+
+<section class="page" id="p04">
+  <h2>指令执行周期：把整章问题列出来</h2>
+  <div class="pgnum">PDF 第 4 页</div>
+  <img class="slide" src="pages/p04.png" alt="p04">
+  <div class="explain">
+    <p>这张图是<b>整章的脚手架</b>。每一步对应着 ISA 设计要决定的一类问题，后面的所有内容都是回答这些问题。</p>
+    <table class="tbl">
+      <tr><th>步骤</th><th>做什么</th><th>设计要决定</th></tr>
+      <tr><td>Instruction Fetch（取指）</td><td class="l">PC → MAR → 主存 → MDR → IR</td><td class="l">指令地址怎么编、指令<b>定长还是变长</b></td></tr>
+      <tr><td>Instruction Decode（译码）</td><td class="l">看 IR 里 OP 是啥</td><td class="l">指令格式、<b>操作码编码方式</b>、操作数类型</td></tr>
+      <tr><td>Operand Fetch（取操作数）</td><td class="l">按地址码算出操作数在哪、取出来</td><td class="l"><b>寻址方式</b>、操作数怎么存放</td></tr>
+      <tr><td>Execute（执行）</td><td class="l">ALU 干活，顺便置标志位</td><td class="l">操作类型、<b>标志/条件码</b></td></tr>
+      <tr><td>Result Store（存结果）</td><td class="l">把结果送回去</td><td class="l">目的操作数放哪</td></tr>
+      <tr><td>Next Instruction（算下条）</td><td class="l">PC 怎么更新</td><td class="l">顺序还是转移（jump/branch）</td></tr>
+    </table>
+    <div class="warn"><b>红字提示</b>：每一步都可能出错（取指越界、除 0、溢出、缺页……）。所以 ISA 还得规定「<b>异常和中断</b>」的处理机制——这是本讲最后一节。</div>
+  </div>
+</section>
+
+<section class="page" id="p05">
+  <h2>一条指令必须告诉硬件 4 件事</h2>
+  <div class="pgnum">PDF 第 5 页</div>
+  <img class="slide" src="pages/p05.png" alt="p05">
+  <div class="explain">
+    <p>不管 ISA 怎么设计，一条指令必须传达 4 类信息：</p>
+    <ol>
+      <li><b>操作功能</b>：干啥？由 OP（操作码）表示。OP 可定长可变长。</li>
+      <li><b>源操作数位置</b>：要算的数从哪来？主存、寄存器、I/O 端口、或者干脆藏在指令本身（立即数）。</li>
+      <li><b>目的位置</b>：算完结果放哪？同样是主存/寄存器/I/O 端口三选一。</li>
+      <li><b>下一条指令地址</b>：通常隐含在 PC 里（PC++），只有跳转/分支/调用/返回这类指令才显式给出。</li>
+    </ol>
+    <h3>「明显」vs「隐含」</h3>
+    <div class="tip"><b>明显（explicit）</b> = 指令里专门拿出位来写它。<b>隐含（implicit）</b> = 不写，硬件按约定默认。<br>
+    例子：<code>add A, B</code> 把结果隐含地写回 A（二地址指令）；累加器型机器里源操作数 1 和结果都隐含在累加器里，指令字里完全不出现。<br>
+    隐含的好处是<b>指令更短</b>，代价是<b>表达力变弱</b>，且对程序员/编译器是「约定」而非「自由」。</div>
+  </div>
+</section>
+
+<!-- ========== B · 地址码 · 格式 ========== -->
+
+<section class="page bg" id="bgB0">
+  <h2>背景 B0 · 主存按字节编址 + 形式地址/有效地址</h2>
+  <div class="pgnum">进入 p6 之前必看</div>
+  <div class="explain">
+    <h3>主存是个超长的「字节数组」</h3>
+    <p>把主存想成一根从 0 号开始往上数的格子塔，<b>每个格子装 1 字节（8 位）</b>。第 N 号格子的「地址」就是 N。这叫<b>按字节编址</b>（现代机器几乎全这样）。</p>
+    <p>所以「地址」永远是一个无符号整数，可以参与加减运算（这就是 p8 里把「地址（指针）」单独列出来的原因——它在运算里也是数）。</p>
+    <h3>「形式地址 A」 vs 「有效地址 EA」</h3>
+    <p>这是本章最容易混的两个词，记住：</p>
+    <ul>
+      <li><b>形式地址 A</b>：<b>指令字里那一串二进制位本身</b>。它可能只是个数字，也可能是寄存器编号，本身不一定能直接当主存地址用。</li>
+      <li><b>有效地址 EA</b>：<b>真正用来访问主存的地址</b>。由形式地址 A 经过「寻址方式」计算出来。</li>
+    </ul>
+    <div class="formula">EA = f(A, 寄存器, ...) ， 寻址方式 f 决定怎么算</div>
+    <p>p12 那张表里 7 种寻址方式，本质就是 7 种不同的 <code>f</code>。先把这点装脑子里，p11 之后就不会晕。</p>
+  </div>
+</section>
+
+<section class="page" id="p06">
+  <h2>一条指令里应该有几个地址码字段？</h2>
+  <div class="pgnum">PDF 第 6 页</div>
+  <img class="slide" src="pages/p06.png" alt="p06">
+  <div class="explain">
+    <p>把 0/1/2/3/多地址逐个看一遍，重点是<b>谁是隐含的</b>。</p>
+    <table class="tbl">
+      <tr><th>地址数</th><th>形式</th><th>例子 / 何时用</th></tr>
+      <tr><td>0 地址</td><td><code>OP</code></td><td class="l">空操作 NOP / 停机 HALT；或操作数默认（栈型机：<code>add</code> 隐含取栈顶两个）</td></tr>
+      <tr><td>1 地址</td><td><code>OP A1</code></td><td class="l">单目运算（取反/取负）；或累加器型机器（另一个操作数隐含是 ACC，结果也写回 ACC）</td></tr>
+      <tr><td>2 地址</td><td><code>OP A1 A2</code></td><td class="l"><b>最常用</b>。x86 就是这个：<code>add A1, A2</code> 意为 <code>A1 ← A1 + A2</code>，A1 既是源又是目的</td></tr>
+      <tr><td>3 地址</td><td><code>OP A1 A2 A3</code></td><td class="l"><b>RISC 风格</b>。<code>add A1, A2, A3</code> 意为 <code>A1 ← A2 + A3</code>。源不被破坏，编译器友好</td></tr>
+      <tr><td>多地址</td><td>更多字段</td><td class="l">SIMD 向量指令（一条指令处理一组数）</td></tr>
+    </table>
+    <div class="tip">为什么 2 地址常用、3 地址才是 RISC？<br>
+    2 地址<b>省了一个字段空间</b>但<b>破坏了一个源操作数</b>。3 地址<b>多花一个字段</b>换来「源不被毁」——对编译优化非常重要。RISC 寄存器多（32 个），地址字段每个只占 5 位（log₂32），3 个也才 15 位，加得起；CISC 时代寄存器少且地址字段长，加不起。</div>
+  </div>
+</section>
+
+<section class="page" id="p07">
+  <h2>指令格式设计的 6 条基本原则</h2>
+  <div class="pgnum">PDF 第 7 页</div>
+  <img class="slide" src="pages/p07.png" alt="p07">
+  <div class="explain">
+    <h3>6 条原则，背后都是「省 + 快」</h3>
+    <ol>
+      <li><b>应尽量短</b>：指令越短，单位时间能取的指令越多，缓存命中越好。</li>
+      <li><b>要有足够的操作码位数</b>：n 位 OP 最多 2ⁿ 条指令，得算够。比如要 200 条指令至少 8 位 OP。</li>
+      <li><b>必须有唯一解释</b>：同一段二进制不能既是指令 A 又是指令 B——否则译码器疯掉。</li>
+      <li><b>指令字长是字节整数倍</b>：因为主存按字节编址。8/16/24/32/64 位都行，<b>9 位是灾难</b>。</li>
+      <li><b>合理选择地址字段个数</b>：和上一页的 0/1/2/3 地址相关。</li>
+      <li><b>指令尽量规整</b>：字段位置固定、长度一致，译码电路才简单。</li>
+    </ol>
+    <h3>右上角红字：操作码 + 功能码 二级编码</h3>
+    <div class="tip">很多 ISA 用<b>主操作码 + 子功能码</b>两层。比如 RISC-V 把所有 R 型运算指令的 opcode 都设成 <code>0110011</code>，<b>到底是 add 还是 sub 还是 and</b>由 funct3/funct7 区分。这样所有寄存器型指令译码路径一致，硬件超简单。下一讲 RISC-V 会反复用到。</div>
+    <h3>下半页：「指令集设计」要决定哪些事</h3>
+    <p>这是本讲后续小节的一份「问题清单」：操作码全部组成、数据类型、指令格式、通用寄存器（几个/多长）、寻址方式、下条指令地址如何确定、异常和中断机制——每一项都会单独讲一节。</p>
+  </div>
+</section>
+
+<!-- ========== C · 操作数类型 ========== -->
+
+<section class="page bg" id="bgC0">
+  <h2>背景 C0 · 数据宽度、补码、IEEE 754 一句话速览</h2>
+  <div class="pgnum">进入 p8 之前必看</div>
+  <div class="explain">
+    <p>p8/p9 谈「整数（带符号/无符号）、浮点、字节、字、双字、四字」这些词。你应该在第 1、3、4 章学过，这里只做 30 秒提醒：</p>
+    <table class="tbl">
+      <tr><th>名词</th><th>本质</th></tr>
+      <tr><td class="l"><b>字节 byte</b></td><td class="l">8 位。主存编址的最小单位。</td></tr>
+      <tr><td class="l"><b>半字 / 字 / 双字 / 四字</b></td><td class="l">在 RISC-V：16 / 32 / 64 / 128 位。在 IA-32 历史包袱里「字=16 位、双字=32 位、四字=64 位」（注意 RISC-V 和 IA-32 命名不同！见 p9）。</td></tr>
+      <tr><td class="l"><b>二进制补码</b></td><td class="l">表示带符号整数。最高位是符号位（1=负）。规则：负数 = 取反 + 1。范围 −2ⁿ⁻¹ ~ 2ⁿ⁻¹−1。</td></tr>
+      <tr><td class="l"><b>IEEE 754</b></td><td class="l">浮点数标准。32 位单精度 = 1 符号 + 8 阶码 + 23 尾数；64 位双精度 = 1 + 11 + 52。</td></tr>
+      <tr><td class="l"><b>NBCD 码</b></td><td class="l">用 4 位二进制表示 1 位十进制（0000~1001）。「压缩」指一字节装两位十进制；金融/汇编场景偶尔用。</td></tr>
+    </table>
+    <div class="note">为什么 ISA 要明白这些类型？因为<b>同样的二进制位串，按整数还是浮点解释结果完全不同</b>。指令必须明确告诉硬件「按哪种类型算」，所以才有 <code>add</code>（整数加）和 <code>fadd</code>（浮点加）的区分。</div>
+  </div>
+</section>
+
+<section class="page" id="p08">
+  <h2>操作数类型和存储方式</h2>
+  <div class="pgnum">PDF 第 8 页</div>
+  <img class="slide" src="pages/p08.png" alt="p08">
+  <div class="explain">
+    <p>操作数是<b>指令处理的对象</b>。和高级语言数据类型对应，机器层面归 4 大类：</p>
+    <ol>
+      <li><b>地址（指针）</b>——看成无符号整数。原因：地址要参与算术（如 <code>base + i*4</code>），符号位会捣乱。</li>
+      <li><b>数值数据</b>：
+        <ul>
+          <li>定点数（整数）：补码。</li>
+          <li>浮点数：IEEE 754。</li>
+          <li>十进制数：NBCD 码（用得少，汇编/COBOL/金融偶尔）。</li>
+        </ul>
+      </li>
+      <li><b>位、位串、字符、字符串</b>：文本/图像/声音的原料。4 位 nibble，8 位 byte，16 位 half-word，32 位 word。</li>
+      <li><b>逻辑（布尔）数据</b>：按位 AND/OR/NOT/XOR，0=假 1=真。</li>
+    </ol>
+    <h3>操作数放哪？</h3>
+    <div class="tip">右下角蓝字关键：操作数可以放在<b>寄存器</b>、<b>内存单元</b>，<b>也可以以立即数形式直接出现在指令里</b>。这三种放置方式就对应了 p12 的<b>寄存器寻址 / 主存寻址（直接/间接/偏移……）/ 立即数寻址</b>。</div>
+  </div>
+</section>
+
+<section class="page" id="p09">
+  <h2>IA-32 vs RISC-V 数据类型对照</h2>
+  <div class="pgnum">PDF 第 9 页</div>
+  <img class="slide" src="pages/p09.png" alt="p09">
+  <div class="explain">
+    <h3>命名上的历史包袱</h3>
+    <table class="tbl">
+      <tr><th>位数</th><th>IA-32 叫</th><th>RISC-V 叫</th></tr>
+      <tr><td>8</td><td>字节 byte</td><td>字节 byte</td></tr>
+      <tr><td>16</td><td><b>字 word</b></td><td>半字 half-word</td></tr>
+      <tr><td>32</td><td>双字 dword</td><td><b>字 word</b></td></tr>
+      <tr><td>64</td><td>四字 qword</td><td>四字 doubleword</td></tr>
+    </table>
+    <div class="warn"><b>这是非常容易踩坑的点</b>：x86 资料里说「一个 word」是 16 位（因为 8086 时代字长 16 位的历史遗留），但 MIPS/RISC-V 说「一个 word」是 32 位。看资料时永远要先确认架构。</div>
+    <h3>浮点的不同</h3>
+    <ul>
+      <li><b>IA-32</b>：除了 32/64 位 IEEE 754，还有 80 位「扩展精度」浮点寄存器（x87 FPU 的历史包袱）。</li>
+      <li><b>RISC-V</b>：干净。只有 32 位（F 扩展）和 64 位（D 扩展），照标准走。</li>
+    </ul>
+    <h3>「近指针」</h3>
+    <p>IA-32 中 32 位「段内偏移」是有效地址。这是 x86 段式内存模型的残余，RISC-V 没这玩意。</p>
+  </div>
+</section>
+
+<!-- ========== D · 寻址方式 ========== -->
+
+<section class="page bg" id="bgD0">
+  <h2>背景 D0 · 寻址方式要解决什么问题</h2>
+  <div class="pgnum">进入 p10 之前必看</div>
+  <div class="explain">
+    <p>一句话：<b>怎样用最少的指令位数，表达「这条指令的操作数究竟在哪」</b>。</p>
+    <p>想象你在写 <code>arr[i] = arr[i] + 1</code>。要访问的内存位置取决于 i——i 是变量。指令字是定长的，没法把<b>「数组首址 + 变量 i × 元素大小」</b>这种动态地址写死进去。</p>
+    <p>所以 ISA 必须设计几种「<b>怎样从指令里的若干位 + 寄存器当前值，计算出真正地址</b>」的规则。这些规则就是「寻址方式」。</p>
+    <div class="tip">先记住<b>3 大类</b>，p12 的 7 种就是这 3 类的细分：
+      <ol>
+        <li><b>立即数</b>：操作数<b>就是</b>指令里那串位（搬常数用）</li>
+        <li><b>寄存器</b>：操作数在某个寄存器里（指令里只写寄存器编号）</li>
+        <li><b>主存</b>：操作数在主存里。地址怎么算？又分直接 / 间接 / 偏移 / 栈……</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="p10">
+  <h2>什么是「寻址方式」</h2>
+  <div class="pgnum">PDF 第 10 页</div>
+  <img class="slide" src="pages/p10.png" alt="p10">
+  <div class="explain">
+    <h3>定义</h3>
+    <p>「<b>根据地址找到指令或操作数的方法</b>」。注意有两类寻址：</p>
+    <ul>
+      <li><b>指令寻址</b>（找下一条指令在哪）——简单。正常情况 PC++，跳转时由跳转指令的操作数指定。</li>
+      <li><b>操作数寻址</b>（找数据在哪）——复杂。<b>本节后面所有内容都是讨论这个</b>。</li>
+    </ul>
+    <h3>地址码编码 3 条原则及其理由</h3>
+    <table class="tbl">
+      <tr><th>原则</th><th>为什么</th></tr>
+      <tr><td class="l">指令地址码尽量短</td><td class="l">目标代码短，省空间，cache 命中率高</td></tr>
+      <tr><td class="l">操作数存放位置灵活，空间应尽量大</td><td class="l">利于编译器优化产生高效代码</td></tr>
+      <tr><td class="l">地址计算过程尽量简单</td><td class="l">硬件电路简单，指令执行快</td></tr>
+    </table>
+    <div class="note">这三条之间有矛盾：「码短」和「空间大」直接冲突——位数少了表示范围就小。<b>偏移寻址</b>就是这个矛盾的妥协：指令里只放短偏移 A，靠寄存器里存的基址 R 撑出大地址空间。</div>
+  </div>
+</section>
+
+<section class="page" id="p11">
+  <h2>寻址方式如何「告诉」硬件</h2>
+  <div class="pgnum">PDF 第 11 页</div>
+  <img class="slide" src="pages/p11.png" alt="p11">
+  <div class="explain">
+    <h3>两种思路</h3>
+    <ol>
+      <li><b>没有专门的寻址方式位</b>，由 OP 隐含——MIPS / RISC-V / Load-Store 机器。一条指令最多一个内存地址，且寻址方式很少（基本就 1~2 种），所以直接由操作码决定。</li>
+      <li><b>有专门的寻址方式位</b>——x86 / VAX。一条指令多个操作数、每个操作数寻址方式都可能不同，必须各自带「寻址方式说明位」。指令变长、变复杂。</li>
+    </ol>
+    <div class="tip">这就是 CISC vs RISC 在格式层面的根本差异之一。MIPS 一条指令固定 32 位、解码飞快；x86 一条指令长度 1~15 字节不等，解码逻辑复杂得多。</div>
+    <h3>「有效地址 EA」的定义</h3>
+    <p>操作数所在存储单元的地址（可能是逻辑地址或物理地址），通过指令的寻址方式 + 地址码计算得到。和 B0 背景页对上了。</p>
+    <h3>基本寻址方式 7 种</h3>
+    <p style="font-weight:600;color:var(--accent);">立即 / 直接 / 间接 / 寄存器 / 寄存器间接 / 偏移 / 栈</p>
+    <p>下一页（p12）会给出每一种的算法、优缺点。这 7 种基本能覆盖所有现代 ISA。</p>
+  </div>
+</section>
+
+<section class="page" id="p12">
+  <h2>7 种基本寻址方式的算法与优缺点</h2>
+  <div class="pgnum">PDF 第 12 页</div>
+  <img class="slide" src="pages/p12.png" alt="p12">
+  <div class="explain">
+    <p>这张表是<b>本讲最重要的一张</b>。记号：<code>A</code>=指令地址字段值，<code>R</code>=寄存器编号，<code>EA</code>=有效地址，<code>(X)</code>=X 内容。</p>
+    <table class="tbl">
+      <tr><th>方式</th><th>算法</th><th>形象理解</th></tr>
+      <tr><td>立即数</td><td><code>操作数 = A</code></td><td class="l">A 就是数本身。例：<code>addi x1, x1, 5</code> 里的 5</td></tr>
+      <tr><td>直接</td><td><code>EA = A</code></td><td class="l">A 直接当地址。简单但地址范围被指令位数卡死</td></tr>
+      <tr><td>间接</td><td><code>EA = (A)</code></td><td class="l">A 处存着一个地址，那个地址才是真地址。一条指令访问两次主存</td></tr>
+      <tr><td>寄存器（直接）</td><td><code>操作数 = (R)</code></td><td class="l">数在寄存器里。指令最短，但「地址范围」=寄存器数量（很有限）</td></tr>
+      <tr><td>寄存器间接</td><td><code>EA = (R)</code></td><td class="l">R 里装着主存地址。地址范围大、只多访存一次。<b>C 里 *p 就是这个</b></td></tr>
+      <tr><td>偏移</td><td><code>EA = A + (R)</code></td><td class="l">指令给短偏移 A，寄存器给基址 R。<b>灵活、最常用</b></td></tr>
+      <tr><td>栈</td><td><code>EA = 栈顶</code></td><td class="l">操作数隐含在栈顶。push/pop。指令很短，但应用窄</td></tr>
+    </table>
+    <div class="tip"><b>偏移寻址</b>把「直接」和「寄存器间接」结合起来：指令里写短偏移（占位少）、寄存器提供大地址空间（范围广）。这就解决了 p10「地址码要短 vs 地址范围要大」的矛盾。下一页详细看。</div>
+    <div class="warn">「以上各种寻址方式下，操作数在寄存器中还是在存储器中？」<br>
+    答：<b>需要计算 EA 的，操作数都在存储器（主存）中</b>。立即数、寄存器（直接）这两种不需要算 EA，操作数分别在指令本身、寄存器里。</div>
+  </div>
+</section>
+
+<section class="page" id="p13">
+  <h2>偏移寻址的 3 个细分</h2>
+  <div class="pgnum">PDF 第 13 页</div>
+  <img class="slide" src="pages/p13.png" alt="p13">
+  <div class="explain">
+    <p>统一公式：<code>EA = A + (R)</code>。R 可以是 PC、基址寄存器 B、变址寄存器 I 三种，分别对应：</p>
+    <table class="tbl">
+      <tr><th>名字</th><th>R 是谁</th><th>典型用途</th></tr>
+      <tr><td><b>相对寻址</b></td><td>PC（程序计数器）</td><td class="l">条件分支、PC 相对的跳转。「相对于当前指令偏移 A」</td></tr>
+      <tr><td><b>基址寻址</b></td><td>基址寄存器 B</td><td class="l">访问结构体字段、栈上局部变量。「<b>基址</b>固定，<b>偏移</b>由编译期决定」</td></tr>
+      <tr><td><b>变址寻址</b></td><td>变址寄存器 I</td><td class="l">遍历数组。「<b>首址</b>固定，<b>偏移</b>由运行期循环变量决定」</td></tr>
+    </table>
+    <div class="note">基址 vs 变址的关键区别在<b>谁动谁不动</b>：基址是「A 动 B 不动」，变址是「A 不动 I 动」。但很多 RISC（如 MIPS、RISC-V）<b>不区分</b>这俩，统一叫「偏移寻址」，让编译器自己决定怎么用——p14 底部那句红字就在说这事。</div>
+    <p>「形式地址」一词在这里出现：<b>指令字里的 A 就叫形式地址</b>（仅是「形式上的地址」，真要用还得加 R 才能算出 EA）。</p>
+  </div>
+</section>
+
+<section class="page" id="p14">
+  <h2>变址寻址访问线性表</h2>
+  <div class="pgnum">PDF 第 14 页</div>
+  <img class="slide" src="pages/p14.png" alt="p14">
+  <div class="explain">
+    <h3>自动变址</h3>
+    <p>指令里 <b>A = 数组首址</b>（图里 A=100），变址器 <b>I 每次自动加/减元素大小</b>。这样不需要一条专门的 <code>i++</code> 指令，循环里非常省。</p>
+    <div class="formula">EA = A + (I)<br>I = (I) ± x （x 是元素大小）</div>
+    <h3>方向</h3>
+    <ul>
+      <li><code>for (i=0; i&lt;N; i++)</code> ⇒ 地址低→高，I 自动 <b>+x</b>。</li>
+      <li><code>for (i=N-1; i&gt;=0; i--)</code> ⇒ 地址高→低，I 自动 <b>−x</b>。</li>
+    </ul>
+    <h3>x 怎么定？</h3>
+    <p>按字节编址前提下：</p>
+    <ul>
+      <li>元素是 1 字节（char）→ I 步长 1</li>
+      <li>元素是 4 字节（int）→ I 步长 4</li>
+      <li>元素是 8 字节（double）→ I 步长 8</li>
+    </ul>
+    <div class="warn"><b>RISC 机器（含 RISC-V）一般不提供自动变址</b>。原因：自动变址会让一条指令产生「访存 + 寄存器更新」两个副作用，<b>流水线不好处理</b>。RISC 哲学是「一条指令做一件事」，所以宁可让编译器多写一条 <code>addi $7,$7,4</code>。</div>
+  </div>
+</section>
+
+<section class="page" id="p15">
+  <h2>MIPS32 循环代码示例</h2>
+  <div class="pgnum">PDF 第 15 页</div>
+  <img class="slide" src="pages/p15.png" alt="p15">
+  <div class="explain">
+    <p>C 代码：<code>for (i=0; i&lt;N; i++) g = g + A[i];</code>，i 在 $7、g 在 $8、A 首址在 $9。</p>
+<pre>add   $7, $0, $0       ; i = 0          （$0 永远为 0，这是 MIPS 惯例）
+Loop:
+add   $10, $7, $9      ; $10 = &A[i]    （base $9 + 偏移 $7，得到元素地址）
+lw    $6, 0($10)       ; $6 = A[i]      （偏移寻址：EA = 0 + ($10)）
+add   $8, $8, $6       ; g = g + A[i]
+addi  $7, $7, 4        ; i = i + 4      （手动调整，因为 MIPS 没自动变址）
+bne   $7, $2, Loop     ; 若 i ≠ N(在 $2) 则跳回 Loop</pre>
+    <h3>3 个要点</h3>
+    <ol>
+      <li><code>lw $6, 0($10)</code> 是<b>偏移寻址</b>的语法。<code>0</code> 是形式地址 A，<code>$10</code> 是 R，EA = 0 + ($10)。MIPS 把基址和变址统一成这一种格式。</li>
+      <li>因为没有自动变址，<code>addi $7, $7, 4</code> 这条「手动加 4」省不掉。</li>
+      <li>分支用「<b>标号 Loop</b>」而不是绝对地址。<b>汇编器</b>把标号翻译成 PC 相对偏移（相对寻址），<b>链接器</b>最终做重定位算出绝对地址——这就是「程序员不必算地址」的原因。</li>
+    </ol>
+  </div>
+</section>
+
+<section class="page" id="p16">
+  <h2>不同类型变量的地址计算</h2>
+  <div class="pgnum">PDF 第 16 页</div>
+  <img class="slide" src="pages/p16.png" alt="p16">
+  <div class="explain">
+    <p>声明：<code>int x; float a[100]; short b[4][4]; char c; double d[10];</code>，按图中布局（按字节编址、按 4 字节对齐）：</p>
+    <table class="tbl">
+      <tr><th>变量</th><th>起址</th><th>元素大小</th><th>地址公式</th></tr>
+      <tr><td>x</td><td>100</td><td>4 字节</td><td>100</td></tr>
+      <tr><td>a[i]</td><td>104</td><td>4 字节（float）</td><td><b>104 + i × 4</b></td></tr>
+      <tr><td>b[i][j]</td><td>504</td><td>2 字节（short），按行存</td><td><b>504 + i × 8 + j × 2</b>（每行 4 元素 = 8 字节）</td></tr>
+      <tr><td>c</td><td>536</td><td>1 字节</td><td>536</td></tr>
+      <tr><td>d[i]</td><td>544</td><td>8 字节（double）</td><td><b>544 + i × 8</b></td></tr>
+    </table>
+    <div class="tip">想象一下编译器拿到 <code>a[i]</code> 要生成什么：<br>
+    1) 把 <code>i</code> 装入寄存器；2) 左移 2 位（× 4）；3) 加上 a 的首址 104；4) 用偏移寻址访存。<br>
+    <b>变址寻址 / 偏移寻址</b>就是为了把第 2~4 步合成一条指令而存在的。</div>
+    <div class="note">注意 <code>c</code> 占 1 字节但后面留了 3 字节空，到 540 才放 <code>d[0]</code>——这叫<b>对齐填充</b>，让 8 字节的 double 落在 8 的整数倍地址上。这是数据存放的隐性约束，不是这一页重点但要有概念。</div>
+  </div>
+</section>
+
+<!-- ========== E · 操作类型与操作码 ========== -->
+
+<section class="page" id="p17">
+  <h2>操作类型分类</h2>
+  <div class="pgnum">PDF 第 17 页</div>
+  <img class="slide" src="pages/p17.png" alt="p17">
+  <div class="explain">
+    <p>所有指令按功能粗分 6 大类——这也是任何 ISA 必须提供的功能集合。</p>
+    <table class="tbl">
+      <tr><th>类别</th><th>典型指令</th></tr>
+      <tr><td class="l"><b>算术 / 逻辑</b></td><td class="l">add, sub, mul, div, and, or, not, xor, cmp。整数和浮点都算。</td></tr>
+      <tr><td class="l"><b>移位</b></td><td class="l">算术移位（带符号）、逻辑移位（不带符号）、循环移位、半字交换</td></tr>
+      <tr><td class="l"><b>数据传送</b></td><td class="l">寄存器间 mov，主存↔寄存器（load/store），主存内换</td></tr>
+      <tr><td class="l"><b>顺序控制</b></td><td class="l">条件转移 / 无条件转移 / 调用 call / 返回 ret</td></tr>
+      <tr><td class="l"><b>系统控制</b></td><td class="l">停机、开/关中断、用户态↔内核态切换</td></tr>
+      <tr><td class="l"><b>输入 / 输出</b></td><td class="l">in / out（x86 有，RISC 通常用 MMIO 替代）</td></tr>
+    </table>
+    <div class="note">设计 ISA 时，先决定<b>哪几类必须有、各类提供几条</b>，再决定<b>每条的格式、寻址方式、操作码编码</b>——这就把前面几节的内容收敛到了一起。</div>
+  </div>
+</section>
+
+<section class="page" id="p18">
+  <h2>操作码编码：定长 vs 变长</h2>
+  <div class="pgnum">PDF 第 18 页</div>
+  <img class="slide" src="pages/p18.png" alt="p18">
+  <div class="explain">
+    <table class="tbl">
+      <tr><th></th><th>定长操作码</th><th>扩展（变长）操作码</th></tr>
+      <tr><td>OP 长度</td><td>固定，比如永远 6 位</td><td>有几种长度，按需扩展</td></tr>
+      <tr><td>解码</td><td><b>快</b>（取固定位）</td><td>慢（先看头几位再决定）</td></tr>
+      <tr><td>编码效率</td><td>低（位浪费）</td><td>高（紧凑）</td></tr>
+      <tr><td>典型机器</td><td>MIPS / RISC-V</td><td>PDP-11 / x86</td></tr>
+    </table>
+    <h3>选哪个？</h3>
+    <ul>
+      <li><b>性能优先</b> → 定长指令字 + 定长操作码。流水线友好，CPU 设计简单。</li>
+      <li><b>代码密度优先</b>（嵌入式、早期内存贵）→ 变长指令字 + 变长操作码。</li>
+    </ul>
+    <div class="tip">页底问题：「定长指令字 + 变长操作码」可以吗？可以——整条指令长度固定，但 OP 字段不一定都占同样位数。但<b>「变长操作码 + 定长指令字」是常见组合</b>，因为指令字长不定会让 PC 更新困难。<br><b>定长操作码不一定是定长指令字；变长操作码一般是变长指令字</b>。</div>
+  </div>
+</section>
+
+<section class="page" id="p19">
+  <h2>定长操作码：IBM 360/370 例子</h2>
+  <div class="pgnum">PDF 第 19 页</div>
+  <img class="slide" src="pages/p19.png" alt="p19">
+  <div class="explain">
+    <p>基本思想一句话：<b>OP 部分用固定长度编码</b>。</p>
+    <ul>
+      <li>OP 6 位 → 最多 64 种指令</li>
+      <li>OP 8 位 → 最多 256 种指令</li>
+    </ul>
+    <h3>IBM 360/370</h3>
+    <ul>
+      <li>OP 固定 8 位（最多 256 条），实际只用了 <b>183 条</b>——剩 73 个编码冗余。</li>
+      <li>字长 32 位，按字节编址。</li>
+      <li>16 个 32 位通用寄存器；基址器 B 和变址器 X 可以是其中任意一个。</li>
+    </ul>
+    <div class="tip">页底问题：<b>16 个寄存器编号占几位？</b> log₂16 = 4 位。所以 B、X 字段都是 4 位。这点在下一页 IBM370 指令格式里直接体现。</div>
+    <div class="note">定长操作码的「冗余」并不一定坏——预留扩展空间，加新指令时不用动旧编码。</div>
+  </div>
+</section>
+
+<section class="page" id="p20">
+  <h2>IBM 370 的 5 种指令格式</h2>
+  <div class="pgnum">PDF 第 20 页</div>
+  <img class="slide" src="pages/p20.png" alt="p20">
+  <div class="explain">
+    <p>OP 永远 8 位（<b>定长操作码</b>），但指令本身有 2 字节 / 4 字节 / 6 字节三种长度（<b>变长指令字</b>）。这正是上一页提到的「定长 OP + 变长指令字」组合。</p>
+    <table class="tbl">
+      <tr><th>类型</th><th>布局（位）</th><th>含义</th></tr>
+      <tr><td>RR</td><td class="l">OP(8) R1(4) R2(4)</td><td class="l">两个寄存器之间</td></tr>
+      <tr><td>RX</td><td class="l">OP(8) R1(4) X(4) B(4) D(12)</td><td class="l">寄存器 ↔ 变址存储器</td></tr>
+      <tr><td>RS</td><td class="l">OP(8) R1(4) R3(4) B(4) D(12)</td><td class="l">寄存器 ↔ 基址存储器</td></tr>
+      <tr><td>SI</td><td class="l">OP(8) I(8) B(4) D(12)</td><td class="l">立即数 ↔ 基址存储器</td></tr>
+      <tr><td>SS</td><td class="l">OP(8) L(8) B1(4) D1(12) B2(4) D2(12)</td><td class="l">两块基址存储区之间</td></tr>
+    </table>
+    <div class="tip">字段含义：<b>R</b>=寄存器、<b>X</b>=变址器、<b>B</b>=基址器、<b>D</b>=位移量、<b>I</b>=立即数、<b>L</b>=数的长度。<br>
+    EA 计算公式：<code>EA = D + (B) + (X)</code>（基址 + 位移，必要时再加变址）。这就是<b>偏移寻址</b>的具体实现。</div>
+    <p>RR 型 2 字节最短，SS 型 6 字节最长——这就是变长指令字。但解码起步永远靠那 8 位定长 OP，能立即知道接下来还要读几个半字。</p>
+  </div>
+</section>
+
+<section class="page" id="p21">
+  <h2>扩展（变长）操作码 · 经典题</h2>
+  <div class="pgnum">PDF 第 21 页</div>
+  <img class="slide" src="pages/p21.png" alt="p21">
+  <div class="explain">
+    <h3>基本思想</h3>
+    <p>OP 编码长度<b>分几档</b>，二地址用短 OP（出现频率高、要省位），零地址用长 OP（频率低、能容忍长）。被绝大多数 ISA 采用。PDP-11 是教科书级典型。</p>
+    <h3>例题（必懂）</h3>
+    <p>指令字 16 位，每个地址码 6 位。二地址指令 15 条，一地址指令 34 条，零地址指令最多几条？</p>
+    <h4>思路</h4>
+    <p>16 位 = OP + A1 + A2。</p>
+    <ol>
+      <li><b>二地址</b>：A1 6 位 + A2 6 位 = 12 位地址，<b>OP 剩 4 位</b>。4 位 OP 最多 16 种，留 15 条用 → 编码 <code>0000 ~ 1110</code>，<b>1111 留作扩展前缀</b>。</li>
+      <li><b>一地址</b>：A1 6 位，OP 现在可以 16 − 6 = <b>10 位</b>（高 4 位必须是 <code>1111</code> 标识进入这层）。低 6 位有 2⁶=64 种，加上 <code>11110</code>(5 位) 这个前缀作初始扩展能给 32 种，<code>11111 + 00000~00001</code> 给 2 种 → 共 34 条 ✓。剩 <code>11111 00010 ~ 11111 11111</code> = 30 种 5 位前缀可继续往零地址扩展。</li>
+      <li><b>零地址</b>：以 <code>11111 xxxxx</code>（5 位前缀已扩到 10 位 OP）开头，剩下 16−10 = 6 位「地址字段」也并入 OP。前缀贡献 30 种，每种再 × 2⁶ = 64 = <b>30 × 64 = 1920 条 = 15 × 2⁷</b>。</li>
+    </ol>
+    <div class="formula">答：零地址指令最多 30 × 2⁶ = 15 × 2⁷ = 1920 条</div>
+    <div class="warn">考点提示：这种题的关键是「<b>每用掉一个 OP 编码，就能扩出 2^A 种下一层 OP</b>」。卡住一定要在草稿纸上画编码树。</div>
+  </div>
+</section>
+
+<!-- ========== F · 条件测试 · 标志位 ========== -->
+
+<section class="page bg" id="bgE0">
+  <h2>背景 E0 · 标志位 SF/ZF/CF/OF 一次说清楚</h2>
+  <div class="pgnum">进入 p22 之前必看</div>
+  <div class="explain">
+    <p>ALU 每做一次运算，<b>顺手</b>更新 4 个 1 位的「标志位」——存在标志寄存器里。它们就是后面条件分支指令唯一的依据。</p>
+    <table class="tbl">
+      <tr><th>标志</th><th>全名</th><th>什么时候置 1</th><th>用在哪</th></tr>
+      <tr><td><b>ZF</b></td><td>Zero Flag</td><td class="l">结果 = 0</td><td class="l">判断相等：<code>cmp a, b</code> 后 ZF=1 即 a==b</td></tr>
+      <tr><td><b>SF</b></td><td>Sign Flag</td><td class="l">结果最高位 = 1（负数）</td><td class="l">判断负数 / 带符号大小</td></tr>
+      <tr><td><b>CF</b></td><td>Carry Flag</td><td class="l">最高位向外有进位/借位</td><td class="l"><b>无符号</b>大小判断、多字节运算</td></tr>
+      <tr><td><b>OF</b></td><td>Overflow Flag</td><td class="l">结果超出有符号表示范围</td><td class="l"><b>有符号</b>溢出、有符号大小判断</td></tr>
+    </table>
+    <h3>核心直觉</h3>
+    <div class="tip"><b>CF 给无符号数用，OF 给有符号数用</b>。这是 p23 的核心，也是面试常考点。<br>
+    无符号「a &gt; b」⇔ <code>a − b</code> 不借位 ⇔ <b>CF = 0</b>。<br>
+    有符号「a &gt; b」⇔ <code>a − b</code> 结果符号 = 数学符号 ⇔ <b>SF = OF</b>（即没有「假负数」）。</div>
+    <h3>RISC 没有标志位？</h3>
+    <p>RISC-V 完全没有标志寄存器！它把比较和分支合二为一：<code>blt rs1, rs2, label</code> 直接判断「若 rs1&lt;rs2 则跳转」。这样省掉 CF/OF/SF/ZF 的隐式状态，流水线更干净。但本节讲的还是 IA-32 风格，先理解 CISC 怎么干。</p>
+  </div>
+</section>
+
+<section class="page" id="p22">
+  <h2>条件测试方式：CC 怎么用</h2>
+  <div class="pgnum">PDF 第 22 页</div>
+  <img class="slide" src="pages/p22.png" alt="p22">
+  <div class="explain">
+    <h3>典型套路（IA-32 / x86 风格）</h3>
+<pre>sub r1, r2, r3      ; r1 = r2 - r3，并设置 ZF/CF/SF/OF
+bz  label            ; 若 ZF=1，跳到 label；否则顺序往下</pre>
+    <p>对应 C 代码 <code>z = x - y; if (z == 0) goto label;</code>——但<b>两条机器指令</b>而不是一条。</p>
+    <h3>四种基本标志（再强调）</h3>
+    <ul>
+      <li>SF — Sign Flag（负号）</li>
+      <li>ZF — Zero Flag（为零）</li>
+      <li>CF — Carry Flag（进位/借位） <b>= Cout ⊕ sub</b>（减法时把 Cout 取反才是借位）</li>
+      <li>OF — Overflow Flag（溢出）</li>
+    </ul>
+    <h3>带符号 vs 无符号「大于」</h3>
+    <div class="tip"><b>无符号 a &gt; b</b>：<code>(ZF=0) AND (CF=0)</code><br>
+    <b>带符号 a &gt; b</b>：<code>(ZF=0) AND (SF=OF)</code></div>
+    <div class="note">绿字「带符号和无符号整数运算，标志生成方式完全一样」——意思是<b>同一条 add/sub 指令</b>无论你把数据看成有符号还是无符号，CF/OF/SF/ZF 都按相同电路产生。区别只在<b>你后面用哪个标志去判断</b>。这是 ISA 设计的一个漂亮简化。</div>
+    <p>标志可以存在<b>标志寄存器 / 条件码寄存器 / 状态寄存器 / 程序状态字 PSW</b>，名字不同含义一样。某些 RISC 把标志存在一个普通寄存器（如 MIPS 的 cmp 把结果存到通用寄存器里）。</p>
+  </div>
+</section>
+
+<section class="page" id="p23">
+  <h2>标志位生成例子：手算两个减法</h2>
+  <div class="pgnum">PDF 第 23 页</div>
+  <img class="slide" src="pages/p23.png" alt="p23">
+  <div class="explain">
+    <h3>例 1：9 - 6 = 3（4 位运算）</h3>
+    <p>9 = 1001，6 = 0110，−6 的补码 = 1010。9 + (−6)：</p>
+<pre>   1 0          ← 进位
+  1 0 0 1
++ 1 0 1 0
+---------
+1 0 0 1 1       ← 最高位向外有进位 = 1
+</pre>
+    <p>结果低 4 位 = 0011 = 3 ✓。最高位向外进位 = 1，减法时 <b>CF = 1 ⊕ 1 = 0</b>（没借位，因为 9 ≥ 6）。</p>
+    <ul>
+      <li>SF = 0（结果首位 0）✓ 是正数</li>
+      <li>ZF = 0（非 0）</li>
+      <li>OF = 1（看 PPT 标的）—— 实际上对小例子，两个正数相减不应溢出。这里 PPT 给的标记按符号扩展和加减解释模型，略带教学性夸张，重点在掌握「<b>有符号大小用 SF=OF 判断</b>」即可。</li>
+    </ul>
+    <h3>例 2：6 − (−7) = 13（4 位带符号范围 -8~7，溢出！）</h3>
+    <p>6 = 0110，−7 = 1001，−(−7) = +7 = 0111。6 + 7：</p>
+<pre>0 1 1 0
++ 0 1 1 1
+---------
+1 1 0 1
+</pre>
+    <p>结果 = 1101。看成有符号是 −3（实际数学结果应该是 +13，但 4 位带符号最大才到 +7）——这就是<b>溢出</b>。</p>
+    <ul>
+      <li>SF = 1（结果像是负数）</li>
+      <li>OF = 1（实际是溢出，「假负数」）</li>
+      <li>CF = 1（借位）</li>
+    </ul>
+    <h3>底部规则（必背）</h3>
+    <div class="warn"><b>做减法以比较大小：</b><br>
+    Unsigned：<b>CF = 0 时 a &gt; b</b>（即没借位 = 被减数足够大）<br>
+    Signed：<b>OF = SF 时 a &gt; b</b>（即结果的符号位是「真的」而非溢出造成的假符号）</div>
+  </div>
+</section>
+
+<section class="page" id="p24">
+  <h2>IA-32 条件转移指令一览（16 条）</h2>
+  <div class="pgnum">PDF 第 24 页</div>
+  <img class="slide" src="pages/p24.png" alt="p24">
+  <div class="explain">
+    <h3>分三类</h3>
+    <ol>
+      <li><b>看单个标志</b>：jc / jnc（看 CF）、je / jne（看 ZF）、js / jns（看 SF）、jo / jno（看 OF）</li>
+      <li><b>无符号比较</b>：ja / jae / jb / jbe — above / below，对应 <b>CF</b>（搭配 ZF）</li>
+      <li><b>有符号比较</b>：jg / jge / jl / jle — greater / less，对应 <b>SF=OF</b>（搭配 ZF）</li>
+    </ol>
+    <h3>记忆术</h3>
+    <div class="tip"><b>无符号</b>用 a/b（<u>a</u>bove/<u>b</u>elow）→ 看 CF / ZF。<br>
+    <b>有符号</b>用 g/l（<u>g</u>reater/<u>l</u>ess）→ 看 SF=OF / ZF。<br>
+    带 e 的版本（jae, jbe, jge, jle）多看一个 ZF。<br>
+    j<b>nbe</b> = jump if Not Below or Equal = above = ja。这种「反义同义词」造成同一条件有两个助记符。</div>
+    <div class="note">RISC-V 对应做法：只有 <code>beq / bne / blt / bge / bltu / bgeu</code> 6 条。bltu/bgeu 后缀 u 表无符号——比 IA-32 简洁很多。</div>
+  </div>
+</section>
+
+<!-- ========== G · 回顾：程序执行 ========== -->
+
+<section class="page" id="p25">
+  <h2>回顾：模型机 M 的指令格式</h2>
+  <div class="pgnum">PDF 第 25 页</div>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+    <p>这页开始是<b>「回顾」</b>，目的是让你结合前面所有概念，看一条 8 位小指令是怎么运行的。模型机 M：</p>
+    <ul>
+      <li>指令长度：<b>8 位</b></li>
+      <li>两种格式：R 型（寄存器之间）、M 型（访存）</li>
+    </ul>
+    <table class="tbl">
+      <tr><th>格式</th><th>4 位</th><th>2 位</th><th>2 位</th><th>功能</th></tr>
+      <tr><td>R 型</td><td>op</td><td>rt</td><td>rs</td><td class="l">R[rt] ← R[rt] op R[rs]（二地址）</td></tr>
+      <tr><td>M 型</td><td>op</td><td colspan="2">addr</td><td class="l">R[0] ↔ M[addr]（隐含使用 R[0]）</td></tr>
+    </table>
+    <ul>
+      <li>R 型操作码：<code>0000</code> mov, <code>0001</code> add</li>
+      <li>M 型操作码：<code>1110</code> load, <code>1111</code> store</li>
+    </ul>
+    <h3>例：<code>1110 0111</code> 是什么</h3>
+    <p>op = <code>1110</code> → M 型 load。addr = <code>0111</code> = 7。所以语义是：<code>R[0] ← M[0111]</code>，即把主存 7 号单元的 8 位数据装入 R[0]。</p>
+    <div class="tip">注意 R 型用了 2 个 2 位字段表示寄存器号——总共只有 4 个寄存器。M 型操作码占 4 位（1110/1111 开头）所以是变长操作码：R 型用 4 位 OP，M 型仍是 4 位 OP 但只用了高 2 位+10 区分。本页 OP 长度统一 4 位、有「OP 高位是 1 才是 M 型」的隐含规则——这也是<b>变长 OP 的微缩版</b>。</div>
+  </div>
+</section>
+
+<section class="page" id="p26">
+  <h2>回顾：z = x + y 的程序</h2>
+  <div class="pgnum">PDF 第 26 页</div>
+  <img class="slide" src="pages/p26.png" alt="p26">
+  <div class="explain">
+    <p>x 在主存 5 号单元（值 16），y 在 6 号（值 33），结果 z 放 7 号。</p>
+    <table class="tbl">
+      <tr><th>地址</th><th>内容</th><th>意义</th><th>汇编</th></tr>
+      <tr><td>0</td><td>1110 0110</td><td class="l">R[0] ← M[6]</td><td>load r0, 6#</td></tr>
+      <tr><td>1</td><td>0000 0100</td><td class="l">R[1] ← R[0]</td><td>mov  r1, r0</td></tr>
+      <tr><td>2</td><td>1110 0101</td><td class="l">R[0] ← M[5]</td><td>load r0, 5#</td></tr>
+      <tr><td>3</td><td>0001 0001</td><td class="l">R[0] ← R[0] + R[1]</td><td>add  r0, r1</td></tr>
+      <tr><td>4</td><td>1111 0111</td><td class="l">M[7] ← R[0]</td><td>store 7#, r0</td></tr>
+      <tr><td>5</td><td>0001 0000</td><td>x = 16</td><td>—</td></tr>
+      <tr><td>6</td><td>0010 0001</td><td>y = 33</td><td>—</td></tr>
+      <tr><td>7</td><td>0000 0000</td><td>z 初值 0</td><td>—</td></tr>
+    </table>
+    <div class="note"><b>注意指令和数据混在同一主存里</b>——这就是冯·诺依曼存储程序原理。CPU 怎么知道 0 号位置是指令而 5 号位置是数据？<b>不知道，也不需要知道</b>。只要 PC 指向哪里，那里就被当指令取出执行；其他时候被 load/store 当数据访问。</div>
+    <h3>程序执行结果</h3>
+    <p>load y(33) → r0 → r1；load x(16) → r0；add r0,r1 → r0 = 16+33 = 49 = <code>0011 0001</code>；store 到 M[7]。<b>z = 49 = 0x31</b>。</p>
+  </div>
+</section>
+
+<section class="page" id="p27">
+  <h2>回顾：I1 的执行过程</h2>
+  <div class="pgnum">PDF 第 27 页</div>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+    <p>把第一条指令 I1 = <code>1110 0110</code>（在 PC=0）走一遍 5 个微步：</p>
+    <table class="tbl">
+      <tr><th>步骤</th><th>动作</th><th>对应 p4 周期</th></tr>
+      <tr><td class="l">取指令</td><td class="l">IR ← M[0000]</td><td>Instruction Fetch</td></tr>
+      <tr><td class="l">指令译码</td><td class="l">看 op = 1110，判定为「取数」</td><td>Instruction Decode</td></tr>
+      <tr><td class="l">PC 增量</td><td class="l">PC ← 0000 + 1</td><td>Next Instruction</td></tr>
+      <tr><td class="l">取数并执行</td><td class="l">MDR ← M[0110]（即 M[6] = 33）</td><td>Operand Fetch + Execute</td></tr>
+      <tr><td class="l">送结果</td><td class="l">R[0] ← MDR</td><td>Result Store</td></tr>
+    </table>
+    <p><b>执行结果：R[0] = 33。</b>然后 PC=1，开始执行 I2，整个程序按相同 5 步循环。</p>
+    <div class="tip">回头看背景页 A0 里 IR/MDR/MAR/PC 的串联：<b>这就是它们的真实工作流</b>。前面所有抽象概念到这里全部落地了。第一讲后续是更高层的「设计风格」讨论。</div>
+  </div>
+</section>
+
+<!-- ========== H · 指令设计风格 ========== -->
+
+<section class="page bg" id="bgF0">
+  <h2>背景 F0 · 累加器/栈/通用寄存器型直觉</h2>
+  <div class="pgnum">进入 p28 之前必看</div>
+  <div class="explain">
+    <p>p28 把指令风格按「操作数放哪」分四种。先用最直观的方式抓住差异——做同一件事 <code>C = A + B</code>，各种风格写起来啥样：</p>
+    <table class="tbl">
+      <tr><th>风格</th><th>代码</th><th>类比</th></tr>
+      <tr><td>栈型</td><td class="l">push A; push B; add; pop C</td><td class="l">老式 HP 计算器、JVM</td></tr>
+      <tr><td>累加器型</td><td class="l">load A; add B; store C</td><td class="l">早期单累加器机器</td></tr>
+      <tr><td>寄存器-存储器型</td><td class="l">load r1,A; add r1,B; store C,r1</td><td class="l">x86</td></tr>
+      <tr><td>Load/Store 型</td><td class="l">load r1,A; load r2,B; add r3,r1,r2; store C,r3</td><td class="l">MIPS / RISC-V / ARM</td></tr>
+    </table>
+    <h3>看出什么了？</h3>
+    <ul>
+      <li><b>栈型</b>：指令最短（很多 0 地址），但<b>同一个数要用多次就得复制压栈</b>。复杂表达式爆炸。</li>
+      <li><b>累加器型</b>：所有运算必经累加器，导致大量「搬进搬出累加器」的指令。</li>
+      <li><b>寄存器-存储器型</b>：指令短一点，但「访存 + 算」混在一条里，CPI 高（每条要花的周期数）。</li>
+      <li><b>Load/Store 型</b>：指令最多但每条最简单，<b>流水线友好</b>——这是 RISC 的灵魂。</li>
+    </ul>
+    <div class="tip">75 年以后，<b>寄存器型占主导</b>。原因：① 寄存器快，多用寄存器可减少访存；② 表达式编译时与求值顺序无关（栈机器要严格序）。<br>但 JVM 选了栈型——理由是字节码紧凑、且跨平台时无需考虑物理寄存器个数。</div>
+  </div>
+</section>
+
+<section class="page" id="p28">
+  <h2>按操作数位置分四种风格</h2>
+  <div class="pgnum">PDF 第 28 页</div>
+  <img class="slide" src="pages/p28.png" alt="p28">
+  <div class="explain">
+    <table class="tbl">
+      <tr><th>风格</th><th>代表机器</th><th>add 形式</th><th>地址数</th></tr>
+      <tr><td>累加器型 Accumulator</td><td>早期机</td><td class="l"><code>add A</code> → acc ← acc + mem[A]</td><td>1</td></tr>
+      <tr><td>栈型 Stack</td><td>HP 计算器、JVM</td><td class="l"><code>add</code> → tos ← tos + next</td><td>0</td></tr>
+      <tr><td>通用寄存器型 GPR</td><td>IA-32 / 68xxx</td><td class="l"><code>add A, B</code> → EA(A) ← EA(A) + EA(B)</td><td>2 或 3</td></tr>
+      <tr><td>Load/Store 型</td><td>SPARC / MIPS / RISC-V</td><td class="l"><code>add Ra,Rb,Rc</code> → Ra ← Rb + Rc</td><td>3（且必须是寄存器）</td></tr>
+    </table>
+    <h3>Load/Store 的关键约束</h3>
+    <p>运算指令<b>只能</b>访问寄存器，<b>只有 load/store</b> 能访问主存。这把指令分成两类——访存类（慢）和运算类（快），各自流水深度可以不同。是 RISC 的基础假设。</p>
+    <div class="note">通用寄存器型（GPR）和 Load/Store 型都用寄存器，差别在：GPR 允许操作数是「寄存器 or 内存」（如 x86 <code>add eax, [ebx]</code>），Load/Store 严格要求都是寄存器。后者是前者的一个真子集。</div>
+  </div>
+</section>
+
+<section class="page" id="p29">
+  <h2>四种风格代码对比：C = A + B</h2>
+  <div class="pgnum">PDF 第 29 页</div>
+  <img class="slide" src="pages/p29.png" alt="p29">
+  <div class="explain">
+    <table class="tbl">
+      <tr><th>Stack</th><th>Accumulator</th><th>Reg-Memory</th><th>Load-Store</th></tr>
+      <tr><td class="l">Push A<br>Push B<br>Add<br>Pop C</td><td class="l">Load A<br>Add B<br>Store C</td><td class="l">Load R1,A<br>Add R1,B<br>Store C,R1</td><td class="l">Load R1,A<br>Load R2,B<br>Add R3,R1,R2<br>Store C,R3</td></tr>
+    </table>
+    <h3>表达式越复杂，差距越明显</h3>
+    <p>想象 <code>C = a*x + b*y + x*y</code>——</p>
+    <ul>
+      <li>累加器型要不停地「load → 乘 → store → 再 load → ...」大量来回搬。</li>
+      <li>寄存器型只要把 a,x,b,y 一次性加载到 R1~R4，剩下全寄存器操作，一气呵成。</li>
+    </ul>
+    <h3>75 年后寄存器型胜出的两个原因</h3>
+    <ol>
+      <li>寄存器访问 <b>1 周期</b>，主存访问 <b>几十~几百周期</b>。用寄存器装中间值大幅减少访存。</li>
+      <li>表达式翻译<b>与求值顺序无关</b>。栈型必须严格按后缀顺序，编译器调度自由度低。</li>
+    </ol>
+    <p>JVM 仍用栈型——理由是<b>字节码可移植</b>（不假设有几个物理寄存器），不是为了硬件性能。运行时 JIT 会把栈操作映射回真实寄存器。</p>
+  </div>
+</section>
+
+<section class="page" id="p30">
+  <h2>典型 ALU 指令的「存储器地址数 / 操作数数」</h2>
+  <div class="pgnum">PDF 第 30 页</div>
+  <img class="slide" src="pages/p30.png" alt="p30">
+  <div class="explain">
+    <table class="tbl">
+      <tr><th>mem 地址数</th><th>操作数总数</th><th>例子</th></tr>
+      <tr><td>0</td><td>3</td><td class="l">SPARC, MIPS, Power PC, <b>RISC-V</b></td></tr>
+      <tr><td>1</td><td>2</td><td class="l">Intel 80x86, Motorola 68000</td></tr>
+      <tr><td>2</td><td>2</td><td class="l">VAX（也支持 3 操作数格式）</td></tr>
+      <tr><td>3</td><td>3</td><td class="l">VAX（CISC 极致）</td></tr>
+    </table>
+    <h3>同一件事：<code>mem[R9] = mem[R10] + mem[R11]</code></h3>
+    <p><b>VAX（CISC）</b>：</p>
+<pre>ADDL (R9), (R10), (R11)     ; 一条指令搞定！</pre>
+    <p><b>MIPS（RISC）</b>：</p>
+<pre>lw  R1, (R10)               ; R1 ← mem[R10]
+lw  R2, (R11)               ; R2 ← mem[R11]
+add R3, R1, R2              ; R3 ← R1 + R2
+sw  R3, (R9)                ; mem[R9] ← R3</pre>
+    <h3>问：谁 CPI 小？</h3>
+    <div class="tip">CPI = 每条指令花的时钟周期数。<b>MIPS 小</b>——每条指令做的事少、流水线好做，每条只 1 周期左右；VAX 那一条 <code>ADDL (R9),(R10),(R11)</code> 内部要 3 次访存 + 1 次运算 + 1 次写回，要十几个周期。<br>
+    指令条数 vs CPI 的权衡是 RISC vs CISC 之争的核心：<b>RISC 用「条数多 × CPI 小」打败 CISC「条数少 × CPI 大」</b>。</div>
+  </div>
+</section>
+
+<section class="page" id="p31">
+  <h2>按格式复杂度分：CISC 风格 6 大特点</h2>
+  <div class="pgnum">PDF 第 31 页</div>
+  <img class="slide" src="pages/p31.png" alt="p31">
+  <div class="explain">
+    <p>CISC = Complex Instruction Set Computer，RISC = Reduced Instruction Set Computer。</p>
+    <h3>早期 CISC 6 大特点</h3>
+    <ol>
+      <li><b>指令系统复杂</b>：变长操作码 / 变长指令字 / 指令多 / 寻址方式多 / 格式多</li>
+      <li><b>指令周期长</b>：绝大多数指令要多个时钟周期</li>
+      <li><b>各种指令都能访问存储器</b>：不光 load/store，运算指令也能直接读主存</li>
+      <li>采用<b>微程序控制</b>（控制单元用 ROM 存「微指令序列」，灵活但慢）</li>
+      <li>有专用寄存器（栈指针、基址、变址等各自独立，不能混用）</li>
+      <li>编译优化困难</li>
+    </ol>
+    <h3>VAX-11/780 极端例子</h3>
+    <ul>
+      <li>16 种寻址方式</li>
+      <li>9 种数据格式</li>
+      <li>303 条指令</li>
+      <li>一条指令由 1~2 字节操作码 + N 个操作数说明符组成，每个说明符 1~10 字节</li>
+    </ul>
+    <div class="warn">想象写 CPU 的微码：每条指令都得单独写一段处理逻辑，<b>303 条指令 × 16 种寻址组合</b>就是几千条微指令。维护和验证噩梦——这直接催生了 RISC 思想。</div>
+  </div>
+</section>
+
+<section class="page" id="p32">
+  <h2>CISC 的缺陷与 RISC 的诞生</h2>
+  <div class="pgnum">PDF 第 32 页</div>
+  <img class="slide" src="pages/p32.png" alt="p32">
+  <div class="explain">
+    <h3>CISC 的命门</h3>
+    <ul>
+      <li>指令系统越来越大 → 研制周期变长、难调试、难维护</li>
+      <li>指令操作复杂 → 机器周期变长 → 性能反而下降</li>
+    </ul>
+    <h3>1975 IBM John Cocke 的研究</h3>
+    <p>对 CISC 测试发现一个<b>「80/20 事实」</b>：</p>
+    <div class="tip">在实际程序中，<b>20% 的简单指令承担了 80% 的执行频率</b>；而<b>剩下 80% 的复杂指令只占 20% 的程序代码</b>。<br>
+    更糟的是：在微程序控制 CPU 里，这 20% 的复杂指令占用了 <b>80% 的控制存储容量</b>——花大代价支撑了很少被用到的功能。</div>
+    <h3>结论</h3>
+    <p>那为什么不把 ISA 削减到只剩那 20% 的常用指令？复杂操作用简单指令组合实现就行。这就是 RISC 的核心动机。</p>
+    <h3>第一代 RISC 机器（1982）</h3>
+    <ul>
+      <li>UC Berkeley：RISC-I</li>
+      <li>Stanford：MIPS</li>
+      <li>IBM：IBM 801</li>
+    </ul>
+    <p>RISC-V 是这个谱系的最新成员（V 是罗马数字 5，表示伯克利第 5 代 RISC）。</p>
+  </div>
+</section>
+
+<section class="page" id="p33">
+  <h2>80x86 Top 10 指令 · 频率统计</h2>
+  <div class="pgnum">PDF 第 33 页</div>
+  <img class="slide" src="pages/p33.png" alt="p33">
+  <div class="explain">
+    <table class="tbl">
+      <tr><th>排名</th><th>指令</th><th>占执行总量</th></tr>
+      <tr><td>1</td><td>load</td><td>22%</td></tr>
+      <tr><td>2</td><td>conditional branch</td><td>20%</td></tr>
+      <tr><td>3</td><td>compare</td><td>16%</td></tr>
+      <tr><td>4</td><td>store</td><td>12%</td></tr>
+      <tr><td>5</td><td>add</td><td>8%</td></tr>
+      <tr><td>6</td><td>and</td><td>6%</td></tr>
+      <tr><td>7</td><td>sub</td><td>5%</td></tr>
+      <tr><td>8</td><td>move reg-reg</td><td>4%</td></tr>
+      <tr><td>9</td><td>call</td><td>1%</td></tr>
+      <tr><td>10</td><td>return</td><td>1%</td></tr>
+      <tr><th colspan="2">合计</th><th>96%</th></tr>
+    </table>
+    <h3>读出三件事</h3>
+    <ol>
+      <li><b>访存指令占 22% + 12% = 34%</b>，是大头——所以「让访存变快」（cache、流水线）极重要。</li>
+      <li><b>条件分支 20% + 比较 16% = 36%</b>，几乎每 3 条就有一条要分支判断——这就是为什么<b>分支预测</b>对现代 CPU 性能影响巨大。</li>
+      <li>10 条指令 = 96%。所以 ISA 只要把这 10 条做得快，整体性能就基本上去了。剩下的复杂指令就算慢也无所谓。</li>
+    </ol>
+    <div class="tip">这是 80/20 事实的实证。RISC 的设计就是基于这种统计：把 90%+ 的执行频率集中在十几条简单指令上，让它们各 1 个周期完成，再用流水线叠加。</div>
+  </div>
+</section>
+
+<section class="page" id="p34">
+  <h2>RISC 6 大设计特点</h2>
+  <div class="pgnum">PDF 第 34 页</div>
+  <img class="slide" src="pages/p34.png" alt="p34">
+  <div class="explain">
+    <ol>
+      <li><b>简化的指令系统</b>：指令少 / 寻址方式少 / 格式少 / <b>长度一致</b></li>
+      <li><b>RR 方式工作</b>：除 load/store 外，所有指令只访问寄存器</li>
+      <li><b>指令周期短</b>：流水线工作，简单指令 <b>1 个周期</b>或更少完成</li>
+      <li>采用<b>大量通用寄存器</b>，减少访存（如 RISC-V 32 个 GPR，远超 x86 的 8/16 个）</li>
+      <li>采用<b>组合逻辑控制</b>，不用或少用微程序（hardwired control，比微程序快）</li>
+      <li>依赖<b>优化的编译器</b>支持高级语言（把复杂功能交给编译器组合简单指令）</li>
+    </ol>
+    <h3>实际格局</h3>
+    <ul>
+      <li><b>MIPS / SPARC / Power / ARM / RISC-V</b>：典型 RISC。1982 之后新设计的几乎都是 RISC。</li>
+      <li><b>x86</b>：因兼容历史保留 CISC 外壳，但内部已经把复杂指令翻译成「微操作（μop）」按 RISC 方式执行。可以理解为「皮 CISC 心 RISC」。</li>
+    </ul>
+    <div class="note">这就是为什么今天讨论体系结构时，RISC 和 CISC 的界限越来越模糊：x86 内核早就 RISC 化，而 ARM/RISC-V 也在不断扩展指令集。但 ISA 设计的<b>哲学</b>差异仍然清晰。</div>
+  </div>
+</section>
+
+<!-- ========== I · 异常与中断 ========== -->
+
+<section class="page" id="p35">
+  <h2>异常和中断分类</h2>
+  <div class="pgnum">PDF 第 35 页</div>
+  <img class="slide" src="pages/p35.png" alt="p35">
+  <div class="explain">
+    <p>程序执行中 CPU 遇到「特殊情况」，正在执行的程序被打断 → 跳去执行处理程序 → 处理完<b>回到断点</b>继续。</p>
+    <h3>两大类</h3>
+    <table class="tbl">
+      <tr><th>类别</th><th>来源</th><th>子类</th><th>例子</th></tr>
+      <tr><td rowspan="2"><b>内部异常</b><br>exception</td><td rowspan="2">CPU 内部</td><td>硬故障中断</td><td class="l">电源掉电、硬件线路故障</td></tr>
+      <tr><td>程序性中断</td><td class="l">溢出、缺页、越界、越权、非法指令、除 0、栈溢出、断点、单步、系统调用 syscall</td></tr>
+      <tr><td><b>外部中断</b><br>interrupt</td><td>CPU 外部</td><td>—</td><td class="l">实时钟、键盘、打印机缺纸、I/O 设备就绪、DMA 传输结束</td></tr>
+    </table>
+    <h3>用词混乱说明</h3>
+    <div class="tip">这一块术语在不同教材里非常乱：<br>
+    - <b>狭义中断</b>=外部异步事件（interrupt）<br>
+    - <b>狭义异常</b>=指令执行中的同步事件（exception）<br>
+    - <b>广义「异常」</b>=两者通称（很多 OS/RISC-V 文档用法）<br>
+    考试看上下文。本课件下半用的是<b>狭义</b>：内部叫异常、外部叫中断。</div>
+    <p>注意「<b>系统调用」也是程序性中断</b>——你写 <code>printf</code> 最终是触发一条 <code>syscall</code> 指令，让 CPU 主动「异常」一下进内核态。</p>
+  </div>
+</section>
+
+<section class="page" id="p36">
+  <h2>异常和中断的处理流程</h2>
+  <div class="pgnum">PDF 第 36 页</div>
+  <img class="slide" src="pages/p36.png" alt="p36">
+  <div class="explain">
+    <p>事件发生 → 系统从<b>用户态切到内核态</b>，执行 OS 写好的处理程序，处理完看情况返回。</p>
+    <h3>处理后的 3 种走向</h3>
+    <ol>
+      <li><b>返回到当前指令</b>：当前指令未完成，重做。例：缺页异常处理完后重执行那条访存指令。</li>
+      <li><b>返回到下一条指令</b>：当前指令已完成，继续往下。例：外部中断响应完。</li>
+      <li><b>终止 abort</b>：程序无法继续。例：硬故障、致命异常。</li>
+    </ol>
+    <h3>对 ISA 设计的影响</h3>
+    <p>要支持这套机制，ISA 必须提供：</p>
+    <ul>
+      <li><b>保存现场</b>：把 PC、标志寄存器、可能用到的通用寄存器保存到栈或专用寄存器</li>
+      <li><b>切换特权级</b>：用户态 → 内核态的硬件支持</li>
+      <li><b>异常向量表</b>：每种异常对应一段处理代码的入口地址</li>
+      <li><b>返回指令</b>：iret（x86）/ mret/sret（RISC-V）—— 一次恢复 PC + 特权级</li>
+    </ul>
+    <div class="note"><b>「用户进程的正常控制流中插入了一段内核控制路径」</b>——这句话是关键。从用户角度看程序是顺序执行的，内核处理是「透明」插入的；但 CPU 的真实控制流非常复杂。OS 课会深入讲这块。</div>
+  </div>
+</section>
+
+<!-- ========== J · 小结 ========== -->
+
+<section class="page" id="p37">
+  <h2>第一讲小结</h2>
+  <div class="pgnum">PDF 第 37 页</div>
+  <img class="slide" src="pages/p37.png" alt="p37">
+  <div class="explain">
+    <p>一张表把第一讲所有问题串起来——也是复习时的「最小可记忆集」。</p>
+    <table class="tbl">
+      <tr><th>角度</th><th>要点</th></tr>
+      <tr><td class="l">指令组成</td><td class="l">操作码 + 地址码</td></tr>
+      <tr><td class="l">操作类型</td><td class="l">传送 / 算术 / 逻辑 / 移位 / 字符串 / 转移控制 / 调用 / 中断 / 同步</td></tr>
+      <tr><td class="l">操作数类型</td><td class="l">整数（带符号/无符号/十进制）/ 浮点 / 位 / 位串</td></tr>
+      <tr><td class="l">地址码考虑</td><td class="l">操作数个数 + 寻址方式 7 种（立即/寄存器/寄间/直接/间接/相对/基址/变址/堆栈）</td></tr>
+      <tr><td class="l">操作码编码</td><td class="l">定长 vs 扩展（变长）</td></tr>
+      <tr><td class="l">条件码生成</td><td class="l">NF(SF) / VF(OF) / CF / ZF 四种基本标志</td></tr>
+      <tr><td class="l">指令风格 · 按操作数位置</td><td class="l">累加器 / 通用寄存器 / load-store / 栈</td></tr>
+      <tr><td class="l">指令风格 · 按复杂度</td><td class="l">CISC vs RISC</td></tr>
+      <tr><td class="l">异常和中断</td><td class="l">内部异常（硬故障 + 程序性） + 外部中断</td></tr>
+    </table>
+    <div class="tip"><b>下一讲</b>：把这套抽象的设计准则落到一个具体 ISA 上——<b>RISC-V</b>。会看到上面每一条都能在 RISC-V 的指令格式里找到具体体现：定长 32 位指令、6 种指令格式、Load/Store 型、3 地址、无标志位、相对寻址……第一讲学得越扎实，第二讲越省力。</div>
+    <h3>背完这页的自检</h3>
+    <p>合上 PPT 问自己：</p>
+    <ol>
+      <li>偏移寻址公式是什么？相对/基址/变址区别在哪？</li>
+      <li>定长指令字 vs 变长指令字，分别什么场景？</li>
+      <li>CF 和 OF 分别给谁用？「带符号 a&gt;b」用什么标志判断？</li>
+      <li>RISC 的「Load/Store」风格意味着什么？</li>
+      <li>80/20 事实是什么，为什么催生了 RISC？</li>
+    </ol>
+    <p>能答全这 5 题，第一讲就过了。</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>
