@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>数理逻辑 第 10 讲｜一阶逻辑的自然推理系统 G — 讲解</title>
+<style>
+  :root{
+    --bg:#fbf7ee; --ink:#1f1a14; --muted:#6b5d49; --line:#d8cdb6;
+    --tip:#e7f0fb; --tipB:#7aa4d6;
+    --warn:#fbe7e3; --warnB:#cc6a55;
+    --note:#fbf3d6; --noteB:#c8a64a;
+    --formula:#f1ead9;
+    --bg-ribbon:#cdb98a;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px; line-height:1.75;}
+  #nav{position:fixed;left:0;top:0;width:220px;height:100vh;overflow-y:auto;
+    background:#f3ecd9;border-right:1px solid var(--line);padding:18px 12px;box-sizing:border-box;}
+  #nav h2{font-size:14px;color:var(--muted);margin:0 0 8px 0;font-weight:normal;letter-spacing:1px;}
+  #nav .chap{font-size:13px;color:#3b3424;font-weight:bold;margin:12px 0 4px 0;}
+  #nav a{display:block;font-size:12.5px;color:#4a4030;text-decoration:none;padding:3px 6px;border-radius:3px;}
+  #nav a:hover{background:#e6dbbf;}
+  #nav a.active{background:#dac99a;color:#1f1a14;font-weight:bold;}
+  #nav a.bg{color:#7a5a2a;}
+  #nav a.skip{color:#a89880;font-size:11.5px;padding-left:14px;font-style:italic;}
+  #nav a.merged{color:#9c8c66;font-size:11.5px;padding-left:18px;}
+  #nav a.merged::before{content:"↳ ";color:#bba883;}
+  #nav .browser-note{font-size:11px;color:#993333;margin-top:18px;padding:6px;border:1px dashed #cc6a55;border-radius:4px;}
+  main{margin-left:240px;padding:36px 48px 120px 48px;max-width:920px;}
+  h1{font-size:30px;margin-top:0;color:#2a2418;border-bottom:2px solid var(--line);padding-bottom:10px;}
+  h2{font-size:23px;color:#3b3424;margin-top:48px;border-left:5px solid #b08a4a;padding-left:12px;}
+  h3{font-size:18px;color:#4a3a20;margin-top:30px;}
+  section{margin-top:36px;padding-top:8px;}
+  section.bg{background:linear-gradient(to right, rgba(205,185,138,0.18), transparent 60%);
+    border-left:6px solid var(--bg-ribbon); padding:18px 22px; border-radius:0 8px 8px 0;}
+  section.bg::before{content:"★ 补充背景"; display:inline-block; background:var(--bg-ribbon); color:#fff;
+    font-size:12px; padding:2px 10px; border-radius:10px; margin-bottom:8px;}
+  .page-img{display:block;margin:14px auto;max-width:100%;border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+  .skip-info{font-size:13px;color:var(--muted);background:#efe7d0;padding:6px 10px;border-radius:4px;margin:8px 0;}
+  .tip{background:var(--tip);border-left:4px solid var(--tipB);padding:10px 14px;margin:14px 0;border-radius:0 4px 4px 0;}
+  .warn{background:var(--warn);border-left:4px solid var(--warnB);padding:10px 14px;margin:14px 0;border-radius:0 4px 4px 0;}
+  .note{background:var(--note);border-left:4px solid var(--noteB);padding:10px 14px;margin:14px 0;border-radius:0 4px 4px 0;}
+  .formula{background:var(--formula);text-align:center;padding:10px 8px;margin:12px 0;border-radius:4px;font-size:17px;}
+  pre{background:#f4ecd6;padding:14px 18px;border-radius:4px;overflow-x:auto;font-family:"Consolas","Cascadia Code","Courier New",monospace;font-size:14px;line-height:1.65;}
+  table{border-collapse:collapse;margin:14px 0;width:100%;font-size:14.5px;}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;}
+  th{background:#ede3c5;}
+  code{background:#efe7d0;padding:1px 5px;border-radius:3px;font-family:"Consolas","Courier New",monospace;font-size:14px;}
+  .small{font-size:13px;color:var(--muted);}
+  .rule-name{color:#a64a4a;font-weight:bold;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<nav id="nav">
+  <h2>数理逻辑 · 第十讲<br>一阶逻辑的自然推理系统 G</h2>
+  <div class="browser-note">⚠ 部分数理逻辑字符 (⊢ ⊨ ≐ 等) 在 Edge 中渲染异常，请用 <b>Chrome</b> 打开。</div>
+
+  <div class="chap">0 · 导言</div>
+  <a href="#bg1" class="bg">A0 · 本讲地图与第 9 章承接</a>
+  <a href="#bg2" class="bg">A1 · 命题 G' vs 一阶 G 对照</a>
+
+  <div class="chap">1 · G 的公理与规则</div>
+  <a href="#s1-skip" class="skip">1. 封面（跳过）</a>
+  <a href="#s1-rules" class="merged">2-3.（合并到 p4）</a>
+  <a href="#s1-rules">4. 公理 + 全部规则</a>
+  <a href="#bg3" class="bg">B0 · 四条量词规则的差异</a>
+  <a href="#bg4" class="bg">B1 · 三大常见陷阱</a>
+
+  <div class="chap">2 · 证明树与可证</div>
+  <a href="#s2-tree" class="merged">5-6.（合并到 p7）</a>
+  <a href="#s2-tree">7. 证明树定义 4.3</a>
+  <a href="#s2-prov" class="merged">8.（合并到 p9）</a>
+  <a href="#s2-prov">9. 可证定义 4.4 + 例 4.1</a>
+
+  <div class="chap">3 · 例题串讲</div>
+  <a href="#s3-ex42">10. 例 4.2 题目</a>
+  <a href="#s3-ex42-1" class="merged">11.（合并到 p12）</a>
+  <a href="#s3-ex42-1">12. 例 4.2 (1) ⊢ ∀x.A → A(t)</a>
+  <a href="#s3-ex42-2" class="merged">13.（合并到 p14）</a>
+  <a href="#s3-ex42-2">14. 例 4.2 (2) ⊢ A(t) → ∃x.A</a>
+  <a href="#s3-ex42-3" class="merged">15.（合并到 p16）</a>
+  <a href="#s3-ex42-3">16. 例 4.2 (3) 三段论形</a>
+  <a href="#s3-ex43" class="merged">17.（合并到 p18）</a>
+  <a href="#s3-ex43">18. 例 4.3 新变元 y₁</a>
+  <a href="#s3-ex44" class="merged">19.（合并到 p20）</a>
+  <a href="#s3-ex44">20. 例 4.4 Cut 链接</a>
+
+  <div class="chap">4 · 命题 4.5 矢列折叠</div>
+  <a href="#s4-prop45" class="merged">21-23.（合并到 p24）</a>
+  <a href="#s4-prop45">24. 命题 4.5 ⋀⋁ 双向</a>
+
+  <div class="chap">5 · 导出规则工具箱</div>
+  <a href="#bg5" class="bg">C0 · 导出规则全景表</a>
+  <a href="#s5-rae" class="merged">25-26.（合并到 p27）</a>
+  <a href="#s5-rae">27. (1) 反证法规则</a>
+  <a href="#s5-case" class="merged">28.（合并到 p29）</a>
+  <a href="#s5-case">29. (2) 分情况规则</a>
+  <a href="#s5-contra" class="merged">30.（合并到 p31）</a>
+  <a href="#s5-contra">31. (3) 逆否推演</a>
+  <a href="#s5-mao" class="merged">32.（合并到 p33）</a>
+  <a href="#s5-mao">33. (4) 矛盾规则 (ex falso)</a>
+  <a href="#s5-mp" class="merged">34.（合并到 p35）</a>
+  <a href="#s5-mp">35. (5) MP 分离规则</a>
+  <a href="#s5-syll" class="merged">36-37.（合并到 p38）</a>
+  <a href="#s5-syll">38. (6) 三段论</a>
+
+  <div class="chap">6 · G 的语义性质</div>
+  <a href="#bg6" class="bg">D0 · 矢列语义 ⊨ 桥接</a>
+  <a href="#s6-def46">39. 定义 4.6 矢列有效</a>
+  <a href="#s6-p47" class="merged">40.（合并到 p41）</a>
+  <a href="#s6-p47">41. 命题 4.7 有效/反例改写</a>
+  <a href="#s6-l48">42. 引理 4.8 公理有效</a>
+  <a href="#s6-l49" class="merged">43-44.（合并到 p45）</a>
+  <a href="#s6-l49">45. 引理 4.9 + ∀R 对偶</a>
+  <a href="#s6-l410" class="merged">46.（合并到 p47）</a>
+  <a href="#s6-l410">47. 引理 4.10 Cut 单向</a>
+
+  <div class="chap">7 · 可靠性定理</div>
+  <a href="#bg7" class="bg">E0 · 可靠性证明骨架</a>
+  <a href="#s7-sound" class="merged">48-49.（合并到 p50）</a>
+  <a href="#s7-sound">50. 定理 4.11 Soundness</a>
+
+  <div class="chap">8 · 弱化定理</div>
+  <a href="#s8-weak" class="merged">51-52.（合并到 p53）</a>
+  <a href="#s8-weak">53. 命题 4.12 Weakening</a>
+
+  <div class="chap">9 · 怎么证不可证</div>
+  <a href="#bg8" class="bg">F0 · 反例 + 可靠性套路</a>
+  <a href="#s9-ex">54. 两道题题目</a>
+  <a href="#s9-1" class="merged">55-56.（合并到 p57）</a>
+  <a href="#s9-1">57. (1) ⊢ P(y)→∃x.P 可证</a>
+  <a href="#s9-2" class="merged">58-59.（合并到 p60）</a>
+  <a href="#s9-2">60. (2) ⊢ P(y)→∀x.P 不可证 + 反例补全</a>
+
+  <div class="chap">10 · 收尾</div>
+  <a href="#s10-summary">61. 本讲小结</a>
+  <a href="#bg9" class="bg">G0 · 全书逻辑闭环 + 下一讲预告</a>
+
+  <div style="margin-top:14px;font-size:11.5px;color:#9c8c66;border-top:1px solid var(--line);padding-top:8px;line-height:1.5;">
+    符号约定：<br>
+    ⊢ 句法推导<br>
+    ⊨ 语义结论<br>
+    ≐ 等词（本讲未用）<br>
+    ≃ 逻辑等价
+  </div>
+</nav>
+
+<main>
+
+<h1>数理逻辑 第 10 讲｜一阶逻辑的自然推理系统 G</h1>
+<p class="small">承接第 6-9 章：已经有了一阶逻辑的语法（第 6 章）、语义（第 7 章）、可靠性 / 完备性的<b>陈述</b>（第 8 章）、以及完备性所需的项模型机器（第 9 章 Hintikka 集）。<br>
+本讲补的缺口：给一阶逻辑配一个真正能"写"出来的句法演算系统 <b>G</b>（Gentzen 矢列演算 LK 风格），并证明 <b>可靠性</b>（Γ⊢Δ ⇒ Γ⊨Δ）。完备性留到下一讲。</p>
+
+<!-- ============ BG1 ============ -->
+<section class="bg" id="bg1">
+<h2>★ BG1 · 本讲地图 &amp; 与前章的承接</h2>
+
+<p><b>从哪儿来：</b></p>
+<ul>
+<li>第 6 章给了一阶逻辑的<b>语法</b>：项、公式、自由 / 约束变元、项替换 A[t/x]、结构归纳法。</li>
+<li>第 7 章给了一阶逻辑的<b>语义</b>：结构 𝕄=(M,I)、赋值 σ、t<sub>𝕄</sub>[σ]、A<sub>𝕄</sub>[σ]、语义结论 Γ ⊨ A、可满足、引理 3.16 / 3.20、逻辑等价 ≃。</li>
+<li>第 8 章：<b>陈述</b>了一阶逻辑形式系统 + 可靠性 + 完备性（但具体演算系统留白）。</li>
+<li>第 9 章：给出了完备性的"半成品"——Hintikka 集 → 项模型 → 引理 3.41「任何 Hintikka 集必可满足」。</li>
+</ul>
+
+<p><b>本讲做什么：</b></p>
+<ol>
+<li>把第 8 章留白的"形式系统"用 Gentzen 矢列演算 <b>G</b> 实例化（命题 G' 升级到一阶）。</li>
+<li>给出 G 的所有规则、证明树、可证性的精确定义。</li>
+<li>积累一批<b>导出规则</b>（反证法、MP、三段论 ……）以便实战写证明。</li>
+<li>把矢列 Γ⊢Δ 的<b>语义</b> Γ⊨Δ 严格定义出来。</li>
+<li>证明<b>可靠性定理</b>：G 里可证的矢列都是有效的。</li>
+</ol>
+
+<p><b>到哪儿去（预告）：</b>下一讲要证完备性 —— 把一个一致集扩张为 Hintikka 集（Lindenbaum-Henkin 风格，要往字母表里新加常元作为 witness），然后接第 9 章的项模型。本讲<b>不</b>涉及这一步。</p>
+
+<div class="tip"><b>一句话定位：</b>本讲是"句法这一半"的全套基础设施 + 把它跟语义对齐的可靠性方向。</div>
+</section>
+
+<!-- ============ BG2 ============ -->
+<section class="bg" id="bg2">
+<h2>★ BG2 · 命题 G' 与一阶 G 的对照表</h2>
+
+<p>你已经学过的命题自然推理系统 G' 是矢列演算 LK 的命题片段。一阶 G 在 G' 基础上加了量词规则，整体形式几乎照搬。</p>
+
+<table>
+<tr><th>成分</th><th>命题 G'</th><th>一阶 G</th><th>差异</th></tr>
+<tr><td>矢列 Γ⊢Δ</td><td>两边都是命题公式有穷集</td><td>两边都是一阶公式有穷集</td><td>仅"公式"概念升级</td></tr>
+<tr><td>公理</td><td>Γ,A,Δ ⊢ Λ,A,Θ</td><td>同上</td><td>无变化</td></tr>
+<tr><td>¬L, ¬R, ∨L, ∨R, ∧L, ∧R, →L, →R</td><td>八条</td><td>八条形式完全一致</td><td>无变化</td></tr>
+<tr><td>量词规则</td><td>无</td><td>新增 ∀L, ∀R, ∃L, ∃R</td><td>本讲新内容</td></tr>
+<tr><td>Cut</td><td>有，可消去</td><td>有，可消去（定理 4.2 陈述）</td><td>陈述照搬</td></tr>
+</table>
+
+<div class="note"><b>矢列读法（白话）：</b>Γ⊢Δ 直觉上等价于"若 Γ 里所有公式都真，则 Δ 里至少有一个公式真"——也就是 <b>(⋀Γ) → (⋁Δ)</b>。这一直觉到 §6 命题 4.5 会被严格化。</div>
+</section>
+
+<!-- ============ Chapter 1 ============ -->
+<h2>1 · G 系统的公理和规则</h2>
+
+<section id="s1-rules">
+<h3>原 PPT p2-p4（累积三页，只讲完整版 p4）</h3>
+<div class="skip-info" id="s1-skip">📎 累积合并：p2（仅"矢列"定义 + 公理）、p3（加上 ¬/∨/∧ 六条规则）已在 p4 完整呈现，故略过。</div>
+<img class="page-img" src="pages/p04.png" alt="p4 G 的公理和规则完整版">
+
+<p><b>定义 4.1：</b>设 Γ, Δ, Λ, Θ 都是一阶公式的<b>有穷集合</b>。Γ ⊢ Δ 称为<b>矢列</b>，Γ 是其<b>前件</b>，Δ 是其<b>后件</b>。</p>
+
+<div class="tip"><b>注意"集合"二字：</b>因为是集合（不是列表），所以矢列里公式的<b>顺序无关</b>、<b>重复自动吸收</b>——这就是为什么 G 不需要单独列"交换"和"收缩"结构规则。</div>
+
+<p><b>公理：</b></p>
+<div class="formula">Γ, A, Δ ⊢ Λ, A, Θ</div>
+<p>左右两侧共享同一个公式 A，就直接是公理（"假设 A 真，结论可以是 A"，trivially 成立）。</p>
+
+<p><b>逻辑联结词规则（与命题 G' 完全同形）：</b></p>
+
+<table>
+<tr><th>规则</th><th>左规则 (L)</th><th>右规则 (R)</th></tr>
+<tr><td>¬</td><td>Γ, Δ ⊢ Λ, A &nbsp;⇒&nbsp; Γ, ¬A, Δ ⊢ Λ</td><td>Γ, A ⊢ Λ, Θ &nbsp;⇒&nbsp; Γ ⊢ Λ, ¬A, Θ</td></tr>
+<tr><td>∨</td><td>Γ, A, Δ ⊢ Λ &nbsp;且&nbsp; Γ, B, Δ ⊢ Λ &nbsp;⇒&nbsp; Γ, A∨B, Δ ⊢ Λ</td><td>Γ ⊢ Λ, A, B, Θ &nbsp;⇒&nbsp; Γ ⊢ Λ, A∨B, Θ</td></tr>
+<tr><td>∧</td><td>Γ, A, B, Δ ⊢ Λ &nbsp;⇒&nbsp; Γ, A∧B, Δ ⊢ Λ</td><td>Γ ⊢ Λ, A, Θ &nbsp;且&nbsp; Γ ⊢ Λ, B, Θ &nbsp;⇒&nbsp; Γ ⊢ Λ, A∧B, Θ</td></tr>
+<tr><td>→</td><td>Γ, Δ ⊢ Λ, A &nbsp;且&nbsp; Γ, B, Δ ⊢ Λ &nbsp;⇒&nbsp; Γ, A→B, Δ ⊢ Λ</td><td>Γ, A ⊢ Λ, B, Θ &nbsp;⇒&nbsp; Γ ⊢ Λ, A→B, Θ</td></tr>
+</table>
+
+<p><b>量词规则（本讲新增）：</b></p>
+<table>
+<tr><th>规则</th><th>形式</th><th>条件</th></tr>
+<tr><td>∀L</td><td>Γ, A[t/x], ∀x.A(x), Δ ⊢ Λ &nbsp;⇒&nbsp; Γ, ∀x.A(x), Δ ⊢ Λ</td><td>t 为<b>任意项</b></td></tr>
+<tr><td>∀R</td><td>Γ ⊢ Λ, A[y/x], Θ &nbsp;⇒&nbsp; Γ ⊢ Λ, ∀x.A(x), Θ</td><td>y 为<b>新变元</b></td></tr>
+<tr><td>∃L</td><td>Γ, A[y/x], Δ ⊢ Λ &nbsp;⇒&nbsp; Γ, ∃x.A(x), Δ ⊢ Λ</td><td>y 为<b>新变元</b></td></tr>
+<tr><td>∃R</td><td>Γ ⊢ Λ, A[t/x], ∃x.A(x), Θ &nbsp;⇒&nbsp; Γ ⊢ Λ, ∃x.A(x), Θ</td><td>t 为<b>任意项</b></td></tr>
+</table>
+
+<p><b>Cut 规则：</b></p>
+<div class="formula">Γ ⊢ Λ, A &nbsp;&nbsp;且&nbsp;&nbsp; Δ, A ⊢ Θ &nbsp;⇒&nbsp; Γ, Δ ⊢ Λ, Θ</div>
+
+<p><b>定理 4.2（Cut 消去定理 / Gentzen Hauptsatz 陈述）：</b>Cut 规则可由其他规则导出。也就是说，<b>任何用了 Cut 的证明都能改写成不用 Cut 的证明</b>。</p>
+<div class="note">完整证明属于 Gentzen 主定理（Hauptsatz），技术比较重，超出本讲范围，PPT 只给陈述。但下面在导出规则里你会看到：很多便利规则都是"用 Cut 拼出来的"——Cut 消去定理说这些便利其实可以"翻译回"基本规则。</div>
+</section>
+
+<!-- ============ BG3 ============ -->
+<section class="bg" id="bg3">
+<h2>★ BG3 · 四条量词规则的核心差异</h2>
+
+<p>这是本章<b>最容易栽</b>的地方。先把直觉摆清楚：</p>
+
+<table>
+<tr><th>规则</th><th>使用的项</th><th>直觉</th><th>数学语言里对应的话</th></tr>
+<tr><td>∀L</td><td>任意项 t</td><td>"已知 ∀x.A(x) 可用，那对任何具体 t 都能取一个特例 A[t/x]"</td><td>"由全称引理，特别地取 t=…"</td></tr>
+<tr><td>∃R</td><td>任意项 t</td><td>"要证 ∃x.A(x)，只要找到一个具体见证 t 使 A[t/x] 成立"</td><td>"取 x = t 即可"</td></tr>
+<tr><td><span class="rule-name">∀R</span></td><td><b>新变元 y</b></td><td>"要证 ∀x.A(x)，就引入一个<b>没人用过</b>的 y，证明 A[y/x]"</td><td>"任取 y …… 证之"</td></tr>
+<tr><td><span class="rule-name">∃L</span></td><td><b>新变元 y</b></td><td>"已知 ∃x.A(x)，给那个未知的见证起一个<b>没人用过</b>的名字 y，假设 A[y/x] 用之"</td><td>"令 a 为满足 A(a) 的元素 ……"</td></tr>
+</table>
+
+<div class="tip"><b>"新变元"的含义：</b>y 是原字母表 ℒ 里<b>已有</b>的某个自由变元，但它<b>不在该规则结论矢列中自由出现</b>（包括 Γ, Λ, Θ, A 等）。新变元 ≠ Henkin 意义上的新加常元。后者要等下一讲讲完备性时才出现，到时我会再次显式标注。</div>
+
+<div class="warn"><b>陷阱：</b>如果 y 在结论里已经出现了，∀R / ∃L 就<b>不能用</b>，否则会推出明显不成立的结论（比如本讲末例题 (2) 就是反例）。</div>
+
+<p><b>为什么 ∀R / ∃L 必须用新变元，∀L / ∃R 却可以任意 t？</b><br>
+直觉：右边的 ∀x.A(x) 和左边的 ∃x.A(x) 是"强"的（断言"对所有 / 存在"），证它就要用任意 / 取一个名字；左边的 ∀x.A(x) 和右边的 ∃x.A(x) 是"弱"地"用 / 提供"，所以可以为任意具体 t 提供一个例化版本。</p>
+</section>
+
+<!-- ============ BG4 ============ -->
+<section class="bg" id="bg4">
+<h2>★ BG4 · 三大常见陷阱（预告）</h2>
+
+<div class="warn"><b>陷阱 1：违反新变元约束。</b><br>
+用 ∀R 或 ∃L 时，引入的 y 必须不在结论矢列任何公式中自由出现。否则就能假装"证"出 ⊢ P(x)[y/x] → ∀x.P(x) 这种<b>不可证</b>的矢列（本讲末例 (2)）。</div>
+
+<div class="warn"><b>陷阱 2：项替换不合法（变量捕获）。</b><br>
+∀L / ∃R 用项 t 代入时，需要满足 t <b>对 x 在 A 中可代入</b>（第 6 章 §2.5）—— 即 t 中的变量在替换位置不会被 A 中的量词意外捕获。如果不可代入，必须先对 A 中冲突的约束变元改名再替换。</div>
+
+<div class="warn"><b>陷阱 3：误读公理。</b><br>
+公理是"<b>两侧各出现同一个公式 A</b>"，而不是"前件包含后件全部"。例如 P, Q ⊢ P, R 是公理（共享 P），但 P, Q ⊢ R 不是。</div>
+</section>
+
+<!-- ============ Chapter 2 ============ -->
+<h2>2 · 证明树与可证</h2>
+
+<section id="s2-tree">
+<h3>原 PPT p5-p7（累积 → 只讲 p7）</h3>
+<div class="skip-info">📎 p5（仅条款 (1)）、p6（加上单前提情况 (2)）已在 p7 完整呈现。</div>
+<img class="page-img" src="pages/p07.png" alt="p7 证明树定义">
+
+<p><b>定义 4.3：</b>设 Γ⊢Δ 为矢列。T 是 Γ⊢Δ 的<b>证明树</b>，归纳定义如下：</p>
+<ol>
+<li>若 Γ⊢Δ 是 G 的公理，则单点树 T={Γ⊢Δ} 就是证明树（叶子 = 公理）。</li>
+<li>若 (Γ'⊢Δ')/(Γ⊢Δ) 是 G 的某条单前提规则、且 T' 是 Γ'⊢Δ' 的证明树，则把 T' 接在 Γ⊢Δ 上方得到的树 T 是 Γ⊢Δ 的证明树。</li>
+<li>若 (Γ₁⊢Δ₁ &nbsp;Γ₂⊢Δ₂)/(Γ⊢Δ) 是 G 的某条双前提规则、且 Tᵢ 是 Γᵢ⊢Δᵢ 的证明树，则两棵子树合并接在 Γ⊢Δ 上方得到的 T 是 Γ⊢Δ 的证明树。</li>
+</ol>
+
+<div class="note">证明树 <b>叶子全是公理</b>，根是要证的矢列，节点之间是 G 的规则。这是 Gentzen 风格的"自顶向下"读法（往下读是"由前提得结论"，往上读是"分析目标"——后者是实际写证明时的思考方向）。</div>
+</section>
+
+<section id="s2-prov">
+<h3>原 PPT p8-p9（累积 → 只讲 p9）</h3>
+<div class="skip-info">📎 p8（仅定义 4.4）已在 p9 完整呈现。</div>
+<img class="page-img" src="pages/p09.png" alt="p9 可证 + 例 4.1">
+
+<p><b>定义 4.4：</b>设 Γ⊢Δ 为矢列。Γ⊢Δ <b>可证</b>，是指存在一棵 Γ⊢Δ 的证明树。</p>
+
+<div class="tip"><b>p9 红框「如何证明不可证？」：</b>这是本讲后面的伏笔。光在 G 内部"凑不出"证明树并不能<b>证明</b>它不可证（因为搜索空间无穷）。真正的方法是：构造一个让矢列<b>无效</b>的模型 + 用可靠性定理（4.11）反证。本讲末 §9 例 (2) 就是模板。</div>
+
+<p><b>例 4.1：</b>下列矢列都可证（命题级，演示用）：</p>
+<ul>
+<li>⊢ A → A &nbsp;&nbsp;<span class="small">（→R 后即 A ⊢ A，公理）</span></li>
+<li>⊢ A ∨ ¬A &nbsp;&nbsp;<span class="small">（∨R → ¬R → A ⊢ A, ¬A 之类，公理）</span></li>
+<li>⊢ ¬(A ∧ ¬A) &nbsp;&nbsp;<span class="small">（¬R → ∧L → A, ¬A ⊢，再用 ¬L 把 ¬A 翻到右边变公理）</span></li>
+</ul>
+</section>
+
+<!-- ============ Chapter 3 ============ -->
+<h2>3 · 例题串讲</h2>
+
+<section id="s3-ex42">
+<h3>原 PPT p10：例 4.2 题目</h3>
+<img class="page-img" src="pages/p10.png" alt="p10 例 4.2 题目">
+<p>三道经典量词推理题，分别考察 ∀L、∃R、混合规则。约定 A(t) 是 A[t/x] 的简写。</p>
+</section>
+
+<section id="s3-ex42-1">
+<h3>例 4.2 (1)：⊢ ∀x.A(x) → A(t)（PPT p11-p12，p11 略）</h3>
+<img class="page-img" src="pages/p12.png" alt="p12 例 4.2 (1) 证明">
+
+<pre>
+A(t), ∀x.A(x) ⊢ A(t)        ← 公理 (左右共享 A(t))
+———————————————————————— ∀L  (取 t)
+∀x.A(x) ⊢ A(t)
+———————————————————————— →R
+⊢ ∀x.A(x) → A(t)
+</pre>
+
+<div class="note">关键一步：∀L 把 ∀x.A(x) "实例化"为 A(t) —— 取的项 t 正是结论里要见的那个 t。</div>
+</section>
+
+<section id="s3-ex42-2">
+<h3>例 4.2 (2)：⊢ A(t) → ∃x.A(x)（PPT p13-p14，p13 略）</h3>
+<img class="page-img" src="pages/p14.png" alt="p14 例 4.2 (2) 证明">
+
+<pre>
+A(t) ⊢ A(t), ∃x.A(x)         ← 公理
+———————————————————————— ∃R  (取 t)
+A(t) ⊢ ∃x.A(x)
+———————————————————————— →R
+⊢ A(t) → ∃x.A(x)
+</pre>
+
+<div class="tip">∃R 是 ∀L 的镜像：要证右边的 ∃x.A(x)，提供见证 t 即可。</div>
+</section>
+
+<section id="s3-ex42-3">
+<h3>例 4.2 (3)：⊢ (∀x.(P(x)→Q(x)) ∧ P(t)) → Q(t)（PPT p15-p16，p15 略）</h3>
+<img class="page-img" src="pages/p16.png" alt="p16 例 4.2 (3) 证明">
+
+<pre>
+∀x.(P(x)→Q(x)), P(t) ⊢ P(t), Q(t)     Q(t), ∀x.(P(x)→Q(x)), P(t) ⊢ Q(t)
+   (左右共享 P(t))                          (左右共享 Q(t))
+————————————————————————————————————————————————————————————— →L
+P(t)→Q(t), ∀x.(P(x)→Q(x)), P(t) ⊢ Q(t)
+————————————————————————————————————————— ∀L  (取 t)
+∀x.(P(x)→Q(x)), P(t) ⊢ Q(t)
+————————————————————————————————————————— ∧L
+∀x.(P(x)→Q(x)) ∧ P(t) ⊢ Q(t)
+————————————————————————————————————————— →R
+⊢ (∀x.(P(x)→Q(x)) ∧ P(t)) → Q(t)
+</pre>
+
+<div class="note">这是<b>三段论的矢列演算版</b>：大前提 ∀x.(P→Q)、小前提 P(t)、结论 Q(t)。后面 §5(6) 把这个证明抽象成一条专门的"三段论"导出规则。</div>
+</section>
+
+<section id="s3-ex43">
+<h3>例 4.3：∀x.P(x) ∧ ∃y.Q(y) ⊢ P(f(v)) ∧ ∃z.Q(z)（PPT p17-p18，p17 略）</h3>
+<img class="page-img" src="pages/p18.png" alt="p18 例 4.3 证明">
+
+<p><b>关键步骤：引入新变元 y₁。</b></p>
+
+<pre>
+P(f(v)), ∀x.P(x), ∃y.Q(y) ⊢ P(f(v))     ∀x.P(x), Q(y₁) ⊢ Q(y₁), ∃z.Q(z)
+                                              ────────────────────────── ∃R (取 y₁)
+                                              ∀x.P(x), Q(y₁) ⊢ ∃z.Q(z)
+─────────────────────── ∀L (取 f(v))            ────────────────────────── ∃L  ★ y₁ 是新变元
+∀x.P(x), ∃y.Q(y) ⊢ P(f(v))                   ∀x.P(x), ∃y.Q(y) ⊢ ∃z.Q(z)
+─────────────────────────────────────────────────────────────────────────── ∧R
+∀x.P(x), ∃y.Q(y) ⊢ P(f(v)) ∧ ∃z.Q(z)
+─────────────────────────────────────── ∧L
+∀x.P(x) ∧ ∃y.Q(y) ⊢ P(f(v)) ∧ ∃z.Q(z)
+</pre>
+
+<div class="warn"><b>y₁ 必须新：</b>它不能在 ∀x.P(x)、∃z.Q(z)、f(v) 中自由出现。这里随便挑一个新名字（比如 y₁）即可——前提里只有 v, x, y, z 在游荡，y₁ 是干净的。</div>
+</section>
+
+<section id="s3-ex44">
+<h3>例 4.4：Cut 的直接应用（PPT p19-p20，p19 略）</h3>
+<img class="page-img" src="pages/p20.png" alt="p20 例 4.4 证明">
+
+<p><b>命题：</b>若 Γ₁ ⊢ A 和 A ⊢ Γ₃ 都可证，则 Γ₁ ⊢ Γ₃ 可证。</p>
+
+<pre>
+Γ₁ ⊢ A     A ⊢ Γ₃
+————————————————— Cut
+Γ₁ ⊢ Γ₃
+</pre>
+
+<div class="tip">Cut 就是"中间桥梁公式 A"的拼接。这是把"链式推理"做形式化的标准武器，下面所有导出规则的证明都用它。</div>
+</section>
+
+<!-- ============ Chapter 4 ============ -->
+<h2>4 · 命题 4.5：矢列折叠为单公式</h2>
+
+<section id="s4-prop45">
+<h3>原 PPT p21-p24（累积 → 只讲 p24）</h3>
+<div class="skip-info">📎 p21（⇒ 方向）、p22-23（⇐ 方向逐段累积）已在 p24 完整呈现。</div>
+<img class="page-img" src="pages/p24.png" alt="p24 命题 4.5 完整">
+
+<p><b>命题 4.5：</b> A₁,…,Aₘ ⊢ B₁,…,Bₙ 可证 ⇔ ⋀ᵢAᵢ ⊢ ⋁ⱼBⱼ 可证。</p>
+
+<p><b>(⇒) 方向：</b>累用 ∧L 把左侧合并、∨R 把右侧合并。</p>
+<pre>
+A₁,…,Aₘ ⊢ B₁,…,Bₙ
+———————————————————— ∧L 累用
+⋀Aᵢ ⊢ B₁,…,Bₙ
+———————————————————— ∨R 累用
+⋀Aᵢ ⊢ ⋁Bⱼ
+</pre>
+
+<p><b>(⇐) 方向：</b>需要把单边合取/析取"拆开"。直接拆不出，要先证两个辅助矢列，再 Cut 拼装。</p>
+<pre>
+辅助 1：A₁,…,Aₘ ⊢ ⋀Aᵢ          （由 A₁,…,Aₘ ⊢ A₁,…,Aₘ 公理 + ∧R 累用得到）
+辅助 2：⋁Bⱼ ⊢ B₁,…,Bₙ           （由每个 Bᵢ ⊢ B₁,…,Bₙ 公理 + ∨L 累用得到）
+
+A₁,…,Aₘ ⊢ ⋀Aᵢ      ⋀Aᵢ ⊢ ⋁Bⱼ
+——————————————————————————————— Cut (桥梁 = ⋀Aᵢ)
+A₁,…,Aₘ ⊢ ⋁Bⱼ                              ⋁Bⱼ ⊢ B₁,…,Bₙ
+——————————————————————————————————————————————————————— Cut (桥梁 = ⋁Bⱼ)
+A₁,…,Aₘ ⊢ B₁,…,Bₙ
+</pre>
+
+<div class="note">这条命题是后面 G 的语义定义（定义 4.6）的句法对应：语义上把矢列编码成 (⋀Aᵢ)→(⋁Bⱼ)，命题 4.5 告诉我们这种编码在<b>句法</b>层面也是双向可证的。</div>
+</section>
+
+<!-- ============ Chapter 5 ============ -->
+<h2>5 · 一些导出规则（实战工具箱）</h2>
+
+<!-- BG5 -->
+<section class="bg" id="bg5">
+<h2>★ BG5 · 导出规则全景表</h2>
+
+<table>
+<tr><th>编号</th><th>规则名</th><th>前提</th><th>结论</th><th>核心手法</th></tr>
+<tr><td>(1)</td><td>反证法</td><td>¬A,Γ⊢B 且 ¬A,Γ⊢¬B</td><td>Γ⊢A</td><td>¬R + ¬L + Cut</td></tr>
+<tr><td>(2)</td><td>分情况</td><td>A,Γ⊢B 且 ¬A,Γ⊢B</td><td>Γ⊢B</td><td>¬R + Cut</td></tr>
+<tr><td>(3)</td><td>逆否推演</td><td>Γ⊢A→B</td><td>Γ⊢¬B→¬A</td><td>→L + ¬L + ¬R + →R + Cut</td></tr>
+<tr><td>(4)</td><td>矛盾规则 (ex falso)</td><td>Γ⊢A 且 Γ⊢¬A</td><td>Γ⊢B（任意 B）</td><td>¬L + Cut + Cut</td></tr>
+<tr><td>(5)</td><td>MP (分离规则)</td><td>Γ⊢A 且 Γ⊢A→B</td><td>Γ⊢B</td><td>→L + Cut + Cut</td></tr>
+<tr><td>(6)</td><td>三段论</td><td>Γ⊢A(t) 且 Γ⊢∀x.(A(x)→B(x))</td><td>Γ⊢B(t)</td><td>∀L + Cut + MP</td></tr>
+</table>
+
+<div class="tip">这些规则<b>都用 Cut</b>。所以 PPT 上来就给出 Cut 消去定理的陈述很重要：从理论上讲，G 是"无 Cut 也够用"的；但从实用上讲，这些规则极大缩短证明。后面写一阶推导，看到 MP、三段论就当 G 的"内置语法糖"用。</div>
+</section>
+
+<section id="s5-rae">
+<h3>(1) 反证法规则（PPT p25-p27，p25-26 略）</h3>
+<div class="skip-info">📎 p25（仅规则陈述）、p26（半步证明）已在 p27 完整呈现。</div>
+<img class="page-img" src="pages/p27.png" alt="p27 反证法证明">
+
+<p><b>规则：</b> 若 ¬A,Γ⊢B 与 ¬A,Γ⊢¬B 都可证，则 Γ⊢A 可证。</p>
+
+<pre>
+¬A, Γ ⊢ B                        ¬A, Γ ⊢ ¬B
+———————————— ¬R (B→¬¬B), ¬L      ———————————— ¬L (把 ¬B 移右去 ⊥)
+¬A, Γ ⊢ ¬¬B                      ¬A, Γ, ¬¬B ⊢
+————————————————————————————————————————————— Cut
+¬A, Γ ⊢
+————————————— ¬R    (空右 ⇒ ¬¬A 在右)             A ⊢ A
+Γ ⊢ ¬¬A                                          ————— ¬L,¬R
+                                                  ¬¬A ⊢ A
+————————————————————————————————————————————— Cut
+Γ ⊢ A
+</pre>
+</section>
+
+<section id="s5-case">
+<h3>(2) 分情况规则（PPT p28-p29，p28 略）</h3>
+<img class="page-img" src="pages/p29.png" alt="p29 分情况证明">
+
+<p><b>规则：</b> A,Γ⊢B 与 ¬A,Γ⊢B 都可证 ⇒ Γ⊢B 可证。</p>
+<pre>
+A, Γ ⊢ B
+————————— ¬R
+Γ ⊢ B, ¬A        ¬A, Γ ⊢ B
+———————————————————————————— Cut
+Γ ⊢ B
+</pre>
+</section>
+
+<section id="s5-contra">
+<h3>(3) 逆否推演（PPT p30-p31，p30 略）</h3>
+<img class="page-img" src="pages/p31.png" alt="p31 逆否推演">
+
+<p><b>规则：</b> Γ⊢A→B ⇒ Γ⊢¬B→¬A。</p>
+
+<pre>
+A ⊢ A, B    A, B ⊢ B
+—————————————————————— →L
+A, A→B ⊢ B
+—————————— ¬L
+¬B, A, A→B ⊢
+—————————— ¬R
+¬B, A→B ⊢ ¬A
+—————————— →R
+A→B ⊢ ¬B → ¬A             Γ ⊢ A→B
+—————————————————————————————————————— Cut (桥梁 = A→B)
+Γ ⊢ ¬B → ¬A
+</pre>
+</section>
+
+<section id="s5-mao">
+<h3>(4) 矛盾规则 (ex falso)（PPT p32-p33，p32 略）</h3>
+<img class="page-img" src="pages/p33.png" alt="p33 矛盾规则">
+
+<p><b>规则：</b> Γ⊢A 与 Γ⊢¬A 都可证 ⇒ Γ⊢B（任意 B）可证。</p>
+<pre>
+Γ ⊢ A      A ⊢ A, B
+—————————————————— Cut
+Γ ⊢ A, B
+—————————— ¬L
+¬A, Γ ⊢ B           Γ ⊢ ¬A    ¬A ⊢ ¬A, B
+                    —————————————————————— Cut
+                    Γ ⊢ ¬A, B
+————————————————————————————————————————— Cut
+Γ ⊢ B
+</pre>
+<div class="note">"自相矛盾的前提可以推出任何东西"——经典逻辑的核心特征，在矢列演算里就是两次 Cut 的产物。</div>
+</section>
+
+<section id="s5-mp">
+<h3>(5) MP (分离规则)（PPT p34-p35，p34 略）</h3>
+<img class="page-img" src="pages/p35.png" alt="p35 MP">
+
+<p><b>规则：</b> Γ⊢A 与 Γ⊢A→B 都可证 ⇒ Γ⊢B 可证。</p>
+<pre>
+            A ⊢ A, B    A, B ⊢ B
+            ——————————————————— →L
+Γ ⊢ A       A, A→B ⊢ B
+———————————————————————————— Cut (桥梁 = A)
+Γ, A→B ⊢ B                            Γ ⊢ A→B
+—————————————————————————————————————————————— Cut (桥梁 = A→B)
+Γ ⊢ B
+</pre>
+<div class="tip">MP 在希尔伯特式系统里是基本规则，在 G 里却是导出规则——这是矢列演算"规则更对称、原始规则更少"的体现。</div>
+</section>
+
+<section id="s5-syll">
+<h3>(6) 三段论（PPT p36-p38，p36-37 略）</h3>
+<img class="page-img" src="pages/p38.png" alt="p38 三段论">
+
+<p><b>规则：</b> Γ⊢A(t) 与 Γ⊢∀x.(A(x)→B(x)) 都可证 ⇒ Γ⊢B(t) 可证。</p>
+
+<p><b>第一步：先用 ∀L + Cut 得到 Γ⊢A(t)→B(t)。</b></p>
+<pre>
+                       A(t)→B(t), ∀x.(A(x)→B(x)) ⊢ A(t)→B(t)   ← 公理
+                       —————————————————————————————— ∀L (取 t)
+                       ∀x.(A(x)→B(x)) ⊢ A(t)→B(t)
+Γ ⊢ ∀x.(A(x)→B(x))
+———————————————————————————————————————————————— Cut
+Γ ⊢ A(t)→B(t)
+</pre>
+
+<p><b>第二步：再用上一条 MP 完成。</b></p>
+<pre>
+Γ ⊢ A(t)→B(t)    Γ ⊢ A(t)
+———————————————————————— MP
+Γ ⊢ B(t)
+</pre>
+
+<div class="note">"凡人皆有死、苏格拉底是人 ⇒ 苏格拉底有死"这套两千年老梗，在 G 里被精确成两步 Cut / MP。</div>
+</section>
+
+<!-- ============ Chapter 6 ============ -->
+<h2>6 · G 的语义性质</h2>
+
+<!-- BG6 -->
+<section class="bg" id="bg6">
+<h2>★ BG6 · 矢列语义 ⊨ 与第 7 章 Γ⊨A 的桥接</h2>
+
+<p>第 7 章定义的语义结论是 <b>Γ ⊨ A</b>：左边 Γ 是有限多公式、右边只有<b>一个</b>公式 A。但矢列 Γ ⊢ Δ 的右边可以是有限<b>多个</b>公式。怎么把"右边一堆公式"的有效性也接入旧定义？</p>
+
+<p><b>桥梁公式：</b>把整个矢列编码成<b>一个</b>公式</p>
+<div class="formula">(⋀ᵢAᵢ) → (⋁ⱼBⱼ)</div>
+<p>然后沿用旧 ⊨：矢列<b>有效</b>就定义为这个单公式被任意模型满足（即永真）。</p>
+
+<table>
+<tr><th>边界情况</th><th>左 Γ 空 (n=0)</th><th>右 Δ 空 (m=0)</th><th>两侧都空</th></tr>
+<tr><td>语义</td><td>⊨ ⋁Bⱼ（"必须有一个 B 真"）</td><td>⊨ ¬(⋀Aᵢ)（"前件不能全真"）</td><td>{}⊨{} 约定<b>非有效</b></td></tr>
+</table>
+
+<div class="note">空合取 ≡ ⊤、空析取 ≡ ⊥ 的代数惯例在这里依然管用，只是对 {}⊨{} 这种最退化情况单独约定。</div>
+</section>
+
+<section id="s6-def46">
+<h3>原 PPT p39：定义 4.6（矢列的"有效"）</h3>
+<img class="page-img" src="pages/p39.png" alt="p39 定义 4.6">
+
+<p>设 Γ⊢Δ 为矢列，Γ = {A₁,…,Aₙ}，Δ = {B₁,…,Bₘ}。称 Γ⊢Δ <b>有效</b>（记为 Γ⊨Δ），指 ⊨ (⋀ᵢAᵢ) → (⋁ⱼBⱼ)。边界情况见 BG6。</p>
+<p><b>注：</b>Γ⊢Δ <b>有反例</b>指 Γ⊨Δ 不成立。</p>
+</section>
+
+<section id="s6-p47">
+<h3>原 PPT p40-p41：命题 4.7（有效 / 有反例 的等价改写，累积 → p41）</h3>
+<div class="skip-info">📎 p40（仅条款 (1)）已在 p41 完整呈现。</div>
+<img class="page-img" src="pages/p41.png" alt="p41 命题 4.7">
+
+<p><b>(1) 有效 iff</b> 对任何模型 (𝕄,σ)，要么存在某个 i 使 𝕄⊨<sub>σ</sub>¬Aᵢ，要么存在某个 j 使 𝕄⊨<sub>σ</sub>Bⱼ。</p>
+<p><b>(2) 有反例 iff</b> 存在模型 (𝕄,σ) 使得所有 i 都 𝕄⊨<sub>σ</sub>Aᵢ 且所有 j 都 𝕄⊨<sub>σ</sub>¬Bⱼ。</p>
+
+<div class="tip">把蕴含式 (⋀Aᵢ)→(⋁Bⱼ) 拆解：永真 ⇔ 在任何模型里"前件假"或"后件真"；有反例 ⇔ 找到一个模型让"前件全真且后件全假"。<b>(2) 是后面证不可证的核心武器：构造一个反例模型。</b></div>
+</section>
+
+<section id="s6-l48">
+<h3>原 PPT p42：引理 4.8（公理有效）</h3>
+<img class="page-img" src="pages/p42.png" alt="p42 引理 4.8">
+
+<p><b>引理 4.8：</b>G 的公理（Γ,A,Δ ⊢ Λ,A,Θ）有效。</p>
+<p><b>证明：</b>显然——左右都有 A，所以任何模型 (𝕄,σ) 下，要么 𝕄⊭<sub>σ</sub>A（则左侧 A 让 ⋀Aᵢ 为假，前件假⇒蕴含真），要么 𝕄⊨<sub>σ</sub>A（则右侧 A 让 ⋁Bⱼ 为真，后件真⇒蕴含真）。两种情况都让 (⋀Aᵢ)→(⋁Bⱼ) 真。 □</p>
+</section>
+
+<section id="s6-l49">
+<h3>原 PPT p43-p45：引理 4.9（除 Cut 外，前提有效 ⇔ 结论有效，累积 → p45）+ ∀R 对偶补全</h3>
+<div class="skip-info">📎 p43（仅引理陈述 + 思路句）、p44（∀L 情况开头）已在 p45 完整呈现。</div>
+<img class="page-img" src="pages/p45.png" alt="p45 引理 4.9 完整 ∀L 情况">
+
+<p><b>引理 4.9：</b>对于除 Cut 外的 G 中所有规则，<b>所有前提有效 iff 结论有效</b>。</p>
+<p><b>证明策略：</b>只需证"结论有反例 iff 至少一个前提有反例"（即命题 4.7(2) 的对偶形式）。这样取反就得到"全前提有效 ⇒ 结论有效"以及反方向。</p>
+
+<h4>情况 ∀L（PPT 完整展示）</h4>
+<p>规则形式：(Γ, A[t/x], ∀x.A(x), Δ ⊢ Λ) / (Γ, ∀x.A(x), Δ ⊢ Λ)。设 Γ ∪ Δ = {A₁,…,Aₘ}、Λ = {B₁,…,Bₙ}。</p>
+
+<pre>
+结论 Γ, ∀x.A(x), Δ ⊢ Λ 有反例
+⇔ 存在模型 (𝕄,σ)：所有 Aᵢ 真、所有 ¬Bᵢ 真、且 𝕄⊨<sub>σ</sub> ∀x.A(x)
+
+  ← 关键引理 (第 7 章): (A[t/x])<sub>𝕄[σ]</sub> = A<sub>𝕄[σ[x:=t<sub>𝕄[σ]</sub>]]</sub>
+  ← 从 𝕄⊨<sub>σ</sub> ∀x.A(x) 可知对所有 a∈M 都 𝕄⊨<sub>σ[x:=a]</sub> A
+  ← 特别地取 a = t<sub>𝕄[σ]</sub>，得 𝕄⊨<sub>σ</sub> A[t/x]
+
+⇔ 存在模型 (𝕄,σ)：所有 Aᵢ 真、所有 ¬Bᵢ 真、且 𝕄⊨<sub>σ</sub> ∀x.A(x) 且 𝕄⊨<sub>σ</sub> A[t/x]
+⇔ 前提 Γ, A[t/x], ∀x.A(x), Δ ⊢ Λ 有反例   □
+</pre>
+
+<div class="note">关键调用：<b>第 7 章项替换引理（公式版）</b> (A[t/x])<sub>𝕄[σ]</sub> = A<sub>𝕄[σ[x:=t<sub>𝕄[σ]</sub>]]</sub>。这是连接"句法的代换"和"语义的赋值修改"的核心桥。</div>
+
+<h4>补充：∀R 情况的对偶证明（PPT「其他情况同理」展开）</h4>
+<p>规则形式：(Γ ⊢ Λ, A[y/x], Θ) / (Γ ⊢ Λ, ∀x.A(x), Θ)，其中 y 为新变元。</p>
+
+<pre>
+结论 Γ ⊢ Λ, ∀x.A(x), Θ 有反例
+⇔ 存在 (𝕄,σ)：所有 Aᵢ 真、所有 ¬Bᵢ 真（含 ¬∀x.A(x)）
+
+   ← ¬∀x.A(x) 真 ⇔ 存在 a∈M 使 𝕄⊨<sub>σ[x:=a]</sub> ¬A
+   ← 因 y 是新变元（不在结论任何公式中自由出现）⇒ 把 σ 改为 σ' = σ[y:=a]
+     不影响 Γ, Λ, Θ, A 里其他公式的真值（引理 3.16，第 7 章「真值只依自由变元」）
+   ← 由项替换引理，A<sub>𝕄[σ'[x:=σ'(y)]]</sub> = (A[y/x])<sub>𝕄[σ']</sub>
+   ← 故 𝕄⊨<sub>σ'</sub> ¬A[y/x]
+
+⇔ 存在 (𝕄,σ')：所有 Aᵢ 真、所有 ¬Bᵢ 真、且 𝕄⊨<sub>σ'</sub> ¬A[y/x]
+⇔ 前提 Γ ⊢ Λ, A[y/x], Θ 有反例   □
+</pre>
+
+<div class="tip"><b>对偶速查表</b>（其他三种"同理"——只列哪条规则配哪个第 7 章引理）：</div>
+<table>
+<tr><th>规则</th><th>用的项</th><th>关键调用</th></tr>
+<tr><td>∀L</td><td>任意 t</td><td>项替换引理 + ∀ 语义条款</td></tr>
+<tr><td>∀R</td><td>新变元 y</td><td>项替换引理 + 引理 3.16（新变元改赋值不影响其他公式）</td></tr>
+<tr><td>∃L</td><td>新变元 y</td><td>同 ∀R 的对偶（"存在 a 使 A 真" 把 a 命名为 y）</td></tr>
+<tr><td>∃R</td><td>任意 t</td><td>同 ∀L 的对偶（提供见证 t）</td></tr>
+</table>
+
+<p>命题联结词 ¬/∨/∧/→ 八条规则的有效性双向等价，是命题 G' 早就处理过的，逐条验证即可，不再展开。</p>
+</section>
+
+<section id="s6-l410">
+<h3>原 PPT p46-p47：引理 4.10（Cut 仅单向，累积 → p47）</h3>
+<div class="skip-info">📎 p46（仅推导前半）已在 p47 完整呈现。</div>
+<img class="page-img" src="pages/p47.png" alt="p47 引理 4.10">
+
+<p><b>引理 4.10：</b>对于 Cut 规则 (Γ⊢Λ,A &nbsp; Δ,A⊢Θ) / (Γ,Δ⊢Λ,Θ)，若两前提都有效，则结论有效；<b>反之不然</b>。</p>
+
+<p><b>正方向证明（对偶取反）：</b></p>
+<pre>
+Γ, Δ ⊢ Λ, Θ 有反例
+⇒ 存在 (𝕄,σ): Γ, Δ 全真、Λ, Θ 全假
+⇒ 看 A 的真假分两种情况：
+    若 𝕄⊨<sub>σ</sub>A   ⇒ Δ, A ⊢ Θ 有反例（A 真、Δ 真、Θ 假）
+    若 𝕄⊨<sub>σ</sub>¬A  ⇒ Γ ⊢ Λ, A 有反例（Γ 真、Λ 真、Λ ∪ {A} 全假）
+⇒ 至少一个前提有反例   □ (取反即得：两前提有效 ⇒ 结论有效)
+</pre>
+
+<p><b>反方向反例：</b> 考虑 Cut 实例</p>
+<div class="formula">⊢ ¬A &nbsp; &nbsp; ¬A ⊢ A &nbsp;&nbsp; / &nbsp;&nbsp; ⊢ A</div>
+<p>当 A 是某个永真公式（比如 A = (P → P)），结论 ⊢ A 有效，但前提 ⊢ ¬A 显然不有效。</p>
+
+<div class="warn"><b>这是 Cut 在可靠性证明里需要"特别对待"的原因：</b>不能像其他规则那样双向归纳，只能用"前提有效 ⇒ 结论有效"这一单向。</div>
+</section>
+
+<!-- ============ Chapter 7 ============ -->
+<h2>7 · G 的可靠性</h2>
+
+<!-- BG7 -->
+<section class="bg" id="bg7">
+<h2>★ BG7 · 可靠性证明骨架</h2>
+
+<p><b>目标：</b>Γ⊢Δ 在 G 中可证 ⇒ Γ⊨Δ。</p>
+
+<p><b>方法：</b>对 Γ⊢Δ 的<b>证明树</b>做结构归纳（呼应第 6 章 §3 结构归纳法）。证明树就是"叶子是公理 + 节点是规则"的有限树。</p>
+
+<table>
+<tr><th>归纳步骤</th><th>依赖</th></tr>
+<tr><td>基础（叶子 = 公理）</td><td>引理 4.8：公理有效</td></tr>
+<tr><td>单前提规则节点</td><td>引理 4.9：前提有效 ⇒ 结论有效（双向）</td></tr>
+<tr><td>双前提规则节点（非 Cut）</td><td>引理 4.9：双前提有效 ⇒ 结论有效</td></tr>
+<tr><td>Cut 节点</td><td>引理 4.10：双前提有效 ⇒ 结论有效（仅单向就够）</td></tr>
+</table>
+
+<div class="tip">为什么 Cut 只需单向就够？因为可靠性是 ⊢ ⇒ ⊨，沿着证明树<b>自下而上</b>归纳，每个节点只需"前提性质能传给结论"这一方向。Cut 的反方向不成立不影响可靠性。</div>
+</section>
+
+<section id="s7-sound">
+<h3>原 PPT p48-p50：定理 4.11 (Soundness)（累积 → 完整 p50）</h3>
+<div class="skip-info">📎 p48（仅定理陈述）、p49（情况 1 单前提规则）已在 p50 完整呈现。</div>
+<img class="page-img" src="pages/p50.png" alt="p50 可靠性证明 情况 2">
+
+<p><b>定理 4.11（Soundness）：</b>若 Γ⊢Δ 在 G 中可证，则 Γ⊨Δ。</p>
+
+<p><b>证明：</b>对 Γ⊢Δ 的证明树结构做归纳。</p>
+
+<ul>
+<li><b>归纳基础：</b>Γ⊢Δ 是公理 ⇒ 由引理 4.8，Γ⊨Δ。</li>
+<li><b>归纳假设：</b>证明树中比当前节点高的所有前提矢列都有效。</li>
+<li><b>归纳步骤 情况 1（单前提规则 R₁）：</b>
+<pre>
+Γ₁ ⊢ Δ₁
+————————— (R₁)
+Γ ⊢ Δ
+</pre>
+由归纳假设知 Γ₁⊢Δ₁ 有效 ⇒ 由引理 4.9 知 Γ⊢Δ 有效（R₁ 不是 Cut，4.9 双向适用）。
+</li>
+<li><b>归纳步骤 情况 2（双前提规则 R₂）：</b>
+<pre>
+Γ₁ ⊢ Δ₁    Γ₂ ⊢ Δ₂
+———————————————————— (R₂)
+Γ ⊢ Δ
+</pre>
+由归纳假设知 Γ₁⊢Δ₁ 和 Γ₂⊢Δ₂ 都有效。
+<ul>
+<li>若 R₂ 不是 Cut ⇒ 用引理 4.9 推出 Γ⊢Δ 有效。</li>
+<li>若 R₂ 是 Cut ⇒ 用引理 4.10 的单向部分推出 Γ⊢Δ 有效。</li>
+</ul>
+</li>
+</ul>
+<p>结构归纳完成，故定理成立。 □</p>
+
+<div class="note"><b>对照第 8 章：</b>第 8 章只<b>陈述</b>了一阶逻辑的可靠性。本讲到此为止，把陈述背后所需的"演算系统 + 完整证明"全部补齐。</div>
+</section>
+
+<!-- ============ Chapter 8 ============ -->
+<h2>8 · 命题 4.12：弱化定理</h2>
+
+<section id="s8-weak">
+<h3>原 PPT p51-p53（累积 → 完整 p53）</h3>
+<div class="skip-info">📎 p51（仅陈述）、p52（示意图）已在 p53 完整呈现。</div>
+<img class="page-img" src="pages/p53.png" alt="p53 命题 4.12 完整">
+
+<p><b>命题 4.12（弱化 / Weakening）：</b>若 Γ⊢Λ 可证，则 Γ, Δ ⊢ Λ, Θ 可证（左右两侧都可任意"加塞"公式）。</p>
+
+<p><b>直觉：</b>把原证明树<b>原封不动复制</b>，把每个节点矢列的左侧加 Δ、右侧加 Θ。每条 G 规则仍然适用（因为规则只看"活动公式"，背景的 Γ, Λ 可任意带）。</p>
+
+<p><b>形式证明：</b>对原 Γ⊢Λ 的证明树做结构归纳。</p>
+<ul>
+<li><b>基础：</b>Γ⊢Λ 是公理 (含同一公式 A 在两侧) ⇒ Γ, Δ ⊢ Λ, Θ 仍含 A 在两侧，仍是公理。</li>
+<li><b>归纳：</b>原证明树最后一步形如 (Γ₁⊢Λ₁) / (Γ⊢Λ) 或双前提情况，每个 Γᵢ⊢Λᵢ 由归纳假设可证 Γᵢ, Δ ⊢ Λᵢ, Θ，再用同样的规则就得到 Γ, Δ ⊢ Λ, Θ。</li>
+</ul>
+
+<div class="tip"><b>p52 的示意图想说什么：</b>例 4.2(1) 那个 ⊢ ∀x.A(x) → A(t) 的证明，每个节点左加 Δ、右加 Θ，整棵树合法性不变。</div>
+</section>
+
+<!-- ============ Chapter 9 ============ -->
+<h2>9 · 怎么证不可证？</h2>
+
+<!-- BG8 -->
+<section class="bg" id="bg8">
+<h2>★ BG8 · 证不可证的标准套路</h2>
+
+<p><b>武器组合：</b></p>
+<ol>
+<li>用<b>可靠性定理 4.11</b> 的逆否：Γ⊭Δ ⇒ Γ⊬Δ。<br>"<b>不有效则不可证</b>"——只要能在<b>语义层</b>构造反例，就在<b>句法层</b>说明不可证。</li>
+<li>用<b>命题 4.7(2)</b>：找一个具体模型 (𝕄,σ)，让 Γ 全真、Δ 全假。</li>
+</ol>
+
+<div class="tip">这是"句法 ↔ 语义"的<b>第一次大用场</b>。否定的力量：找模型比搜索证明树容易得多。</div>
+</section>
+
+<section id="s9-ex">
+<h3>原 PPT p54：题目</h3>
+<img class="page-img" src="pages/p54.png" alt="p54 两道题">
+
+<p>P 是一元谓词，问下列矢列是否可证：</p>
+<ol>
+<li>⊢ P(x)[y/x] → ∃x.P(x)</li>
+<li>⊢ P(x)[y/x] → ∀x.P(x)</li>
+</ol>
+<p>注意 P(x)[y/x] 就是 P(y)（把 P(x) 中所有自由 x 替换为 y），两道题前件都是 P(y)，差别只在后件 ∃/∀。</p>
+</section>
+
+<section id="s9-1">
+<h3>(1) 可证（PPT p55-p57，p55-p56 略）</h3>
+<div class="skip-info">📎 p55-p56 是 p57 的累积阶段。</div>
+<img class="page-img" src="pages/p57.png" alt="p57 (1) 完整证明">
+
+<pre>
+P(x)[y/x] ⊢ P(x)[y/x], ∃x.P(x)        ← 公理 (左右共享 P(y))
+———————————————————————————————————— ∃R (取 t = y)
+P(x)[y/x] ⊢ ∃x.P(x)
+———————————————————————————————————— →R
+⊢ P(x)[y/x] → ∃x.P(x)
+</pre>
+
+<div class="note">∃R 用任意项 t，取 t=y 即可，没有"新变元"约束需要满足，直接走通。</div>
+</section>
+
+<section id="s9-2">
+<h3>(2) 不可证（PPT p58-p60，p58-p59 略）+ 反例模型补全</h3>
+<div class="skip-info">📎 p58-p59 演示"想直接用 ∀R 但失败"的尝试，逻辑在 p60。</div>
+<img class="page-img" src="pages/p60.png" alt="p60 (2) 不可证">
+
+<p><b>错误尝试（p59）：</b>想直接对结论用 ∀R 把 ∀x.P(x) 拆开成 P(x)[y/x] —— 即要构造</p>
+<pre>
+P(x)[y/x] ⊢ P(x)[y/x]   ← 看起来像公理 ✘
+—————————————————————— ∀R   ← 但这里 y 必须是"新变元"，
+P(x)[y/x] ⊢ ∀x.P(x)         然而 P(x)[y/x] = P(y) 中 y 自由出现！
+—————————————————————— →R
+⊢ P(x)[y/x] → ∀x.P(x)
+</pre>
+<p>违反 ∀R 的新变元约束（y 在结论里自由出现）⇒ 这条路堵死。但<b>"我证不出来"不等于"不可证"</b>，还要严格说明。</p>
+
+<p><b>正确论证（用可靠性反证）：</b></p>
+<ol>
+<li>假设 ⊢ P(x)[y/x] → ∀x.P(x) 可证。</li>
+<li>由可靠性定理 4.11，该矢列<b>有效</b>，即 ⊨ P(y) → ∀x.P(x)。</li>
+<li>下面构造一个反例模型，使 P(y) 真但 ∀x.P(x) 假，矛盾。</li>
+</ol>
+
+<p><b>反例模型（补全 PPT p60 的「……」）：</b></p>
+<pre>
+取结构 𝕄 = (M, I)，M = {a, b}, I(P) = {a}（即 P 只在 a 上为真）。
+取赋值 σ，σ(y) = a。
+
+则：
+  P(y)_𝕄[σ]    = (a ∈ I(P)) = 真    ✓ 前件真
+  ∀x.P(x)_𝕄[σ] = (∀c∈M, c ∈ I(P)) = (a∈I(P) 且 b∈I(P)) = 假
+                                                          ✓ 后件假
+故 𝕄⊨<sub>σ</sub> P(y) 但 𝕄⊭<sub>σ</sub> ∀x.P(x)
+⇒ 𝕄⊭<sub>σ</sub> P(y) → ∀x.P(x)
+⇒ 该矢列<b>无效</b>，与可靠性导出的"有效"矛盾   □
+</pre>
+
+<div class="warn"><b>哲学小记：</b>这道题示范了句法约束（"新变元"）背后的语义必要性 —— 如果允许 ∀R 用已在结论里自由出现的变元，G 立刻不可靠。</div>
+</section>
+
+<!-- ============ Chapter 10 ============ -->
+<h2>10 · 收尾</h2>
+
+<section id="s10-summary">
+<h3>原 PPT p61：本讲小结</h3>
+<img class="page-img" src="pages/p61.png" alt="p61 本讲小结">
+
+<ul>
+<li>G 系统的公理和规则（含四条量词规则）</li>
+<li>证明树与可证</li>
+<li>一些导出规则（反证 / 分情况 / 逆否 / 矛盾 / MP / 三段论）</li>
+<li>G 的语义性质（矢列"有效"的定义 + 引理 4.8/4.9/4.10）</li>
+<li>G 的可靠性（定理 4.11）</li>
+</ul>
+</section>
+
+<section class="bg" id="bg9">
+<h2>★ BG9 · 全书逻辑闭环回顾</h2>
+
+<table>
+<tr><th>层</th><th>语法</th><th>语义</th><th>句法系统</th><th>可靠性</th><th>完备性</th></tr>
+<tr><td>命题</td><td>命题字母 / 公式</td><td>赋值 / 真值表</td><td>G'</td><td>✓</td><td>✓</td></tr>
+<tr><td>一阶</td><td>第 6 章：项、公式、自由/约束、替换</td><td>第 7 章：结构 𝕄、赋值 σ、⊨<sub>σ</sub>、Γ⊨A</td><td><b>第 10 章（本讲）：G</b></td><td><b>第 10 章（本讲，定理 4.11）✓</b></td><td>下一讲（接第 9 章 Hintikka 集 + Henkin 常元扩张）</td></tr>
+</table>
+
+<p><b>本讲在全书的位置：</b>把第 8 章的"陈述"实例化为<b>真正的演算 G</b>，并完成可靠性方向。</p>
+
+<p><b>下一讲会做什么（预告）：</b></p>
+<ol>
+<li>从一致集 Γ（G 内推不出 ⊥）出发。</li>
+<li>用 Lindenbaum 风格的"极大一致扩张"加 Henkin 风格的"常元 witness 引入"（这一步要往 ℒ 里<b>新加常元</b>，区别于本讲 ∀R/∃L 里用的"新变元"！）。</li>
+<li>把扩张后的集合证为 Hintikka 集 ⇒ 用第 9 章的项模型机器 + 引理 3.41 得到一个满足它的模型。</li>
+<li>组合起来得：Γ⊨A ⇒ Γ⊢A —— 完备性定理。</li>
+</ol>
+
+<div class="tip"><b>一句话送别：</b>第 6 章给了语法骨架，第 7 章给了语义灵魂，第 9 章给了一台模型构造机器，第 10 章给了一套句法演算 + 句法↔语义的"上半句"（可靠性）。下一讲补完"下半句"，全书闭合。</div>
+</section>
+
+</main>
+
+<script>
+  // scrollspy
+  const links = document.querySelectorAll('#nav a');
+  const sections = Array.from(document.querySelectorAll('section, h2[id]'));
+  function onScroll(){
+    const y = window.scrollY + 100;
+    let cur = null;
+    document.querySelectorAll('[id]').forEach(el=>{
+      if(el.offsetTop <= y) cur = el.id;
+    });
+    links.forEach(a=>{
+      a.classList.toggle('active', a.getAttribute('href') === '#'+cur);
+    });
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+</script>
+
+</body>
+</html>

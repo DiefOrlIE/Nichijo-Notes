@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>数理逻辑 第 9 讲 · 一阶逻辑（四）讲解</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  aside .browser-warn{font-size:11.5px;color:#a04020;background:#fff0e6;border:1px solid #f0c8a8;padding:6px 8px;border-radius:4px;margin:8px 0 12px;line-height:1.4;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,"Cambria Math","Times New Roman",serif;font-size:16px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<aside>
+  <h1>数理逻辑 09 · 一阶逻辑（四）</h1>
+  <div class="browser-warn">⚠ 请用 <b>Chrome</b> 打开<br>Edge 对 ⊨/⊢/≐/Ψ 等数理逻辑字符渲染不稳。</div>
+  <ol>
+    <li><a href="#p01" class="skip">1. 封面（跳过）</a></li>
+
+    <li class="group">A · 序列数（编码工具）</li>
+    <li><a href="#bgA0" class="bg">整章地图</a></li>
+    <li><a href="#bgA1" class="bg">与第 8 章的承接</a></li>
+    <li><a href="#bgA2" class="bg">为什么要序列数</a></li>
+    <li><a href="#p02">2. 定义 3.26 · 序列数</a></li>
+    <li><a href="#p03">3. 算数基本定理</a></li>
+    <li><a href="#p04">4. 命题 3.27 · 唯一性</a></li>
+    <li><a href="#p05" class="skip">5. ep 例（累积）</a></li>
+    <li><a href="#p06">6. 定义 3.28 · ep 函数</a></li>
+    <li><a href="#p07">7. 命题 3.29 · 解码</a></li>
+    <li><a href="#bgB0" class="bg">编码 / 解码小结</a></li>
+
+    <li class="group">B · 一阶语言的 Gödel 码</li>
+    <li><a href="#p08">8. 一阶语言符号集</a></li>
+    <li><a href="#p09">9. 逻辑符 Gödel 码</a></li>
+    <li><a href="#p10">10. 非逻辑符 + 项</a></li>
+    <li><a href="#bgC0" class="bg">编码首位对照表</a></li>
+    <li><a href="#p11">11. 公式 Gödel 码</a></li>
+    <li><a href="#p12">12. Gödel 码例子</a></li>
+    <li><a href="#p13">13. 定理 3.32 · 唯一对应</a></li>
+
+    <li class="group">C · Hintikka 集</li>
+    <li><a href="#bgD0" class="bg">Hintikka 集动机</a></li>
+    <li><a href="#bgD1" class="bg">α/β/γ/δ/ε 分类</a></li>
+    <li><a href="#p14" class="skip">14. Hintikka 1-6（累积）</a></li>
+    <li><a href="#p15" class="skip">15. Hintikka 7-12（累积）</a></li>
+    <li><a href="#p16" class="skip">16. Hintikka 13-16（累积）</a></li>
+    <li><a href="#p17">17. Hintikka 集完整 17 条</a></li>
+    <li><a href="#p18">18. 定理 3.34 · 必可满足</a></li>
+    <li><a href="#p19">19. 等价类 ~</a></li>
+    <li><a href="#bgE0" class="bg">为什么要等价类</a></li>
+    <li><a href="#p20" class="skip">20. 引理 3.38（累积）</a></li>
+    <li><a href="#p21" class="skip">21. 引理 3.38（累积）</a></li>
+    <li><a href="#p22" class="skip">22. 引理 3.38（累积）</a></li>
+    <li><a href="#p23">23. 引理 3.38 · congruence</a></li>
+    <li><a href="#bgF0" class="bg">𝕄 vs ℍ 对照</a></li>
+    <li><a href="#p24" class="skip">24. 模型 ℍ（累积）</a></li>
+    <li><a href="#p25">25. 定义 3.39 · 模型 ℍ + 引理 3.40</a></li>
+    <li><a href="#bgG0" class="bg">引理 3.41 证明地图</a></li>
+    <li><a href="#p26">26. 3.41 · 原子谓词</a></li>
+    <li><a href="#p27">27. 3.41 · 等词 + 否定</a></li>
+    <li><a href="#p28">28. 3.41 · 合取 / 析取 / 蕴含</a></li>
+    <li><a href="#p29">29. 3.41 · ∀ 情况 (a)</a></li>
+    <li><a href="#p30" class="skip">30. ∀(b)+∃（累积）</a></li>
+    <li><a href="#p31">31. 3.41 · ∀ (b) + ∃ + 收官</a></li>
+    <li><a href="#bgH0" class="bg">收尾 + 下章承接</a></li>
+  </ol>
+</aside>
+
+<main>
+
+<!-- ========== 封面 ========== -->
+<section class="page" id="p01">
+  <h2>一阶逻辑（四）</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <p style="color:var(--mute);">封面页，跳过。本讲将搭建从语法编码到 Hintikka 集模型构造的完整链条。</p>
+</section>
+
+<!-- ========== 背景 A0 整章地图 ========== -->
+<section class="page bg" id="bgA0">
+  <h2>整章地图 · 第 9 章在干嘛</h2>
+  <div class="pgnum">补充背景 · 在跳进任何技术细节前必看</div>
+  <div class="explain">
+    <p>这一章的核心目标只有一句话：</p>
+    <div class="tip"><b>模型存在性定理</b>：只要一个公式集合 Ψ 在<b>语法层面看起来自洽</b>（即所谓 Hintikka 集），那么 Ψ 一定<b>真有一个模型让它全为真</b>。</p>
+    <p>它是后续完备性定理（⊨ ⇒ ⊢）的关键引擎。完备性的证法套路是反证：假设 Γ ⊬ A，把 Γ ∪ {¬A} 系统性地扩张成 Hintikka 集，再用本章方法造一个模型 → 就得到 Γ ⊭ A 的反例 → 矛盾。</p>
+    <h3>本讲流程（按顺序）</h3>
+    <ol>
+      <li><b>序列数</b> ⟨a₀,…,aₙ⟩：把有限自然数序列编成一个自然数。<i>（编码工具）</i></li>
+      <li><b>Gödel 码</b> #X：把语言里的项 / 公式 / 符号都编成自然数。<i>（语法 → 算术）</i></li>
+      <li><b>Hintikka 集</b>：定义一种"分解封闭"的公式集合。<i>（语法上的自洽）</i></li>
+      <li><b>项模型 ℍ</b>：用项的等价类当论域，造出一个具体模型。<i>（语法变语义）</i></li>
+      <li><b>引理 3.41</b>：归纳证明这个 ℍ 满足整个 Ψ。<i>（兑现承诺）</i></li>
+    </ol>
+    <div class="note">流程图：<span class="mono">序列数 → Gödel 码 → Hintikka 集 ⇒ 项模型 ℍ ⊨ Ψ</span></div>
+  </div>
+</section>
+
+<!-- ========== 背景 A1 与第 8 章承接 ========== -->
+<section class="page bg" id="bgA1">
+  <h2>与第 8 章的承接 · 完备性证明在哪一步</h2>
+  <div class="pgnum">补充背景</div>
+  <div class="explain">
+    <p>第 8 章你已经学完了：</p>
+    <ul>
+      <li>形式系统（公理 + 推理规则）+ 推导 Γ ⊢ A 的定义</li>
+      <li><b>可靠性</b>：Γ ⊢ A ⇒ Γ ⊨ A（语法对就是语义对）</li>
+      <li><b>完备性</b>：Γ ⊨ A ⇒ Γ ⊢ A（语义对必有语法证明）—— 只给了陈述，未证</li>
+    </ul>
+    <p>完备性的标准证法（Henkin 风格）逻辑结构如下：</p>
+    <table class="tbl">
+      <tr><th>步骤</th><th>属于</th></tr>
+      <tr><td class="l">① 反设 Γ ⊬ A，则 Γ ∪ {¬A} <b>一致</b></td><td>第 8 章（下一讲会讲）</td></tr>
+      <tr><td class="l">② 把一致集扩张成 <b>Hintikka 集</b> Ψ</td><td>下一讲</td></tr>
+      <tr><td class="l">③ <b>Hintikka 集必有模型</b>（本章核心）</td><td><b>第 9 章</b></td></tr>
+      <tr><td class="l">④ ⇒ Γ ∪ {¬A} 可满足 ⇒ Γ ⊭ A，与前提矛盾</td><td>合成</td></tr>
+    </table>
+    <p>所以第 9 章只负责其中的 ③ —— "Hintikka 集 → 模型"这一段。其它环节下一讲补。</p>
+  </div>
+</section>
+
+<!-- ========== 背景 A2 为什么要序列数 ========== -->
+<section class="page bg" id="bgA2">
+  <h2>为什么要序列数和 Gödel 码</h2>
+  <div class="pgnum">补充背景</div>
+  <div class="explain">
+    <p>本章看似从一个奇怪的地方（素数乘积）开始，要先理解动机：</p>
+    <ul>
+      <li>一个项可能像 <code>f(g(x, h(y)), c)</code> 这样层层嵌套，结构是一棵树。</li>
+      <li>我们要把<b>整个树</b>编成<b>一个</b>自然数，而且<b>能机械地还原</b>回原树。</li>
+    </ul>
+    <p>Gödel 的天才一招：用素数指数携带信息。</p>
+    <div class="formula">⟨a₀, a₁, …, aₙ⟩ ≜ 2<sup>a₀</sup> · 3<sup>a₁</sup> · 5<sup>a₂</sup> · 7<sup>a₃</sup> · …</div>
+    <p>由算数基本定理（每个 N&gt;1 唯一分解为素数乘积），<b>这个数和这个序列是一一对应的</b>。</p>
+    <div class="tip">这套技术是 Gödel 不完备定理的奠基技巧。本章只用它做"语法对象 → 自然数"的机械编码，铺垫"哪些元定理是可计算 / 递归可枚举的"这一类深问题。</div>
+    <div class="note">类比：JSON 序列化 ↔ 这里的 Gödel 码 #。区别是：JSON 用文本作为承载，Gödel 码用<b>一个自然数</b>作为承载。</div>
+  </div>
+</section>
+
+<!-- ========== p2 定义 3.26 ========== -->
+<section class="page" id="p02">
+  <h2>定义 3.26 · 序列数</h2>
+  <div class="pgnum">PDF 第 2 页</div>
+  <img class="slide" src="pages/p02.png" alt="p02">
+  <div class="explain">
+    <h3>定义</h3>
+    <div class="formula">⟨a₀, …, aₙ⟩ ≜ ∏<sub>i=0</sub><sup>n</sup> P<sub>i</sub><sup>aᵢ</sup>，其中 Pᵢ 是第 i 个素数（P₀=2, P₁=3, P₂=5, P₃=7, …）</div>
+    <h3>白话翻译</h3>
+    <p>把一串自然数 (a₀, a₁, …, aₙ) 装进"素数指数"里。一个序列对应一个具体的乘积数。</p>
+    <h4>具体例子</h4>
+    <ul>
+      <li>⟨3⟩ = 2³ = 8</li>
+      <li>⟨3, 1⟩ = 2³ · 3¹ = 24</li>
+      <li>⟨3, 1, 0, 2⟩ = 2³ · 3¹ · 5⁰ · 7² = 8 · 3 · 1 · 49 = 1176</li>
+      <li>⟨0, 0⟩ = 2⁰ · 3⁰ = 1</li>
+    </ul>
+    <div class="note">右侧的素数表（前 168 个素数）说明这个编码<b>无论序列多长都有素数可用</b>——素数有无穷个。</div>
+    <div class="warn">注意 ⟨a₀⟩ 和 a₀ 不是同一个数。⟨3⟩=8，不是 3。"⟨·⟩" 是一个把序列变成单一数的<b>函数</b>。</div>
+  </div>
+</section>
+
+<!-- ========== p3 算数基本定理 ========== -->
+<section class="page" id="p03">
+  <h2>算数基本定理（铺垫）</h2>
+  <div class="pgnum">PDF 第 3 页</div>
+  <img class="slide" src="pages/p03.png" alt="p03">
+  <div class="explain">
+    <h3>定理</h3>
+    <p>给定 ∀N ∈ ℕ 且 N &gt; 1，N 可以<b>唯一</b>分解为有限个素数的乘积：N = p₁<sup>a₁</sup> × … × pₙ<sup>aₙ</sup>。</p>
+    <h3>白话</h3>
+    <p>"每个大于 1 的自然数都有<b>独一无二</b>的素因子分解。" 这是序列数能成立的全部基础——只有唯一性才让"从数还原序列"是良定义的。</p>
+
+    <h3>证明 · 存在性</h3>
+    <p>对 N 做强归纳。若 N 是素数，结束。若 N 不是素数，则 N = a · b，其中 1 &lt; a, b &lt; N。由归纳假设 a, b 都能写成素数乘积 → N 也能。</p>
+
+    <h3>证明 · 唯一性</h3>
+    <p>反证法。假设 N 有两种分解：</p>
+    <div class="formula">N = p₁<sup>a₁</sup> p₂<sup>a₂</sup> … pₙ<sup>aₙ</sup> = q₁<sup>b₁</sup> q₂<sup>b₂</sup> … q<sub>m</sub><sup>b<sub>m</sub></sup></div>
+
+    <h4>关键引理：若素数 p | ab，则 p | a 或 p | b</h4>
+    <p>由<b>裴蜀定理</b>（Bézout）证。若 p ∤ a，则 gcd(p, a) = 1（因为 p 是素数，因子只有 1 和 p），由裴蜀有整数 x, y 使 px + ay = 1。两边同乘 b：pbx + aby = b。因为 p | ab，所以 p | aby；又 p | pbx；所以 p | b。✓</p>
+
+    <h4>主体推导</h4>
+    <p>看 p₁ | N = q₁<sup>b₁</sup> q₂<sup>b₂</sup> … q<sub>m</sub><sup>b<sub>m</sub></sup>。反复用引理（p₁ | XY ⇒ p₁ | X 或 p₁ | Y）：</p>
+<pre>p₁ | q₁^b₁ · (q₂^b₂ … q_m^b_m)
+  ⇒ p₁ | q₁^b₁    或    p₁ | q₂^b₂ … q_m^b_m   ← 引理
+继续展开右支
+  ⇒ 最终 ∃ k, p₁ | q_k^b_k
+因为 p₁ 是素数, 反复用引理
+  ⇒ p₁ | q_k        ← 引理（p | q_k · q_k^(b_k-1)）
+q_k 也是素数, 只有因子 1 和 q_k
+  ⇒ p₁ = q_k        ← 素数的定义</pre>
+    <p>重新排序 q 使 p₁ = q₁。比较 p₁ 的次数：</p>
+<pre>若 a₁ &gt; b₁:  两边除以 p₁^b₁
+  p₁^(a₁-b₁) · p₂^a₂ … p_n^a_n = q₂^b₂ … q_m^b_m   ← 消去
+左边仍含因子 p₁ (因 a₁-b₁ ≥ 1)
+但右边的 q₂,…,q_m 都 ≠ p₁ (前面已让 q₁=p₁ 排到第一)
+⇒ 右边 p₁ 的次数 = 0, 矛盾。</pre>
+    <p>若 a₁ &lt; b₁，对称矛盾。所以 a₁ = b₁。两边消去 p₁<sup>a₁</sup>，对剩下的项归纳重复，最终得 n = m 且各对 (pᵢ, aᵢ) 与 (qᵢ, bᵢ) 一一对应。<span style="float:right;">∎</span></p>
+    <div class="tip">把这条定理记住一句话：<b>自然数 → 素数指数序列</b> 是双射。这就是为什么 ⟨a₀, …, aₙ⟩ 能"唯一还原"。</div>
+  </div>
+</section>
+
+<!-- ========== p4 命题 3.27 ========== -->
+<section class="page" id="p04">
+  <h2>命题 3.27 · 序列数唯一性</h2>
+  <div class="pgnum">PDF 第 4 页</div>
+  <img class="slide" src="pages/p04.png" alt="p04">
+  <div class="explain">
+    <h3>命题</h3>
+    <p>若 ⟨a₀, …, aₙ⟩ = ⟨b₀, …, b<sub>m</sub>⟩，则 n = m 且对所有 i ≤ n，aᵢ = bᵢ。</p>
+    <h3>白话</h3>
+    <p>序列数是序列的"指纹"——指纹相同必是同一序列。</p>
+    <h3>证明</h3>
+    <p>左边 = ∏ Pᵢ<sup>aᵢ</sup>，右边 = ∏ Pⱼ<sup>bⱼ</sup>。两边是同一个自然数的两种素因子分解。由算数基本定理的<b>唯一性</b>，每个素数（即每个 Pᵢ）在两边的指数必相等。<span style="float:right;">∎</span></p>
+    <div class="tip">这一句"由算数基本定理即得"是真"显然"——因为序列数本身就是写成素数乘积的形式。</div>
+  </div>
+</section>
+
+<!-- ========== p5 跳过累积 ========== -->
+<section class="page" id="p05">
+  <h2>ep 例（累积）</h2>
+  <div class="pgnum">PDF 第 5 页 · 跳过</div>
+  <p style="color:var(--mute);">这是 p6 的不完整累积版（只写到 "例，设 x=2²·3·11,"，还没列具体值）。直接跳到 p6 看完整版。</p>
+</section>
+
+<!-- ========== p6 定义 3.28 ep ========== -->
+<section class="page" id="p06">
+  <h2>定义 3.28 · ep 函数（解码）</h2>
+  <div class="pgnum">PDF 第 6 页</div>
+  <img class="slide" src="pages/p06.png" alt="p06">
+  <div class="explain">
+    <h3>定义</h3>
+    <div class="formula">ep(x, n) ≜ x 的素因子分解中 P<sub>n</sub> 的幂次</div>
+    <h3>白话</h3>
+    <p>给一个数 x 和一个下标 n，告诉你"第 n 个素数 P<sub>n</sub> 在 x 里的指数是多少"。</p>
+
+    <h3>具体例子（x = 2² · 3 · 11）</h3>
+    <p>先把 x 补全成"完整素数排列"：</p>
+    <div class="formula">x = 2² · 3¹ · 5⁰ · 7⁰ · 11¹</div>
+    <table class="tbl">
+      <tr><th>n</th><th>P<sub>n</sub></th><th>ep(x, n)</th><th>解读</th></tr>
+      <tr><td>0</td><td>2</td><td>2</td><td>2 的指数</td></tr>
+      <tr><td>1</td><td>3</td><td>1</td><td>3 的指数</td></tr>
+      <tr><td>2</td><td>5</td><td>0</td><td>没出现 → 0</td></tr>
+      <tr><td>3</td><td>7</td><td>0</td><td>没出现 → 0</td></tr>
+      <tr><td>4</td><td>11</td><td>1</td><td>11 的指数</td></tr>
+    </table>
+    <div class="note">ep 是序列数 ⟨·⟩ 的"反操作"：⟨·⟩ 把序列藏进素数指数里，ep 把它读出来。</div>
+  </div>
+</section>
+
+<!-- ========== p7 命题 3.29 ========== -->
+<section class="page" id="p07">
+  <h2>简写 + 命题 3.29 · 机械解码</h2>
+  <div class="pgnum">PDF 第 7 页</div>
+  <img class="slide" src="pages/p07.png" alt="p07">
+  <div class="explain">
+    <h3>约定</h3>
+    <p>ep(x, n) 简写为 ep<sub>n</sub>(x)。下标移到了 ep 上，看着像"取第 n 个元素"。</p>
+    <h3>命题 3.29</h3>
+    <div class="formula">ep<sub>i</sub>⟨a₀, …, aₙ⟩ = aᵢ ，i ≤ n</div>
+    <h3>证明（一行）</h3>
+    <p>ep<sub>i</sub>⟨a₀, …, aₙ⟩ = ep<sub>i</sub>( ∏<sub>j=0</sub><sup>n</sup> Pⱼ<sup>aⱼ</sup> ) = "这个数中 P<sub>i</sub> 的指数" = aᵢ。<span style="float:right;">∎</span></p>
+    <div class="tip">至此，⟨·⟩ 和 ep<sub>·</sub>(·) 构成完美的<b>编码 / 解码对</b>。重要的是这两个操作都是<b>可计算的</b>——给你一个序列数和下标，你就能机械地算出第 i 个元素。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 B0 编码/解码小结 ========== -->
+<section class="page bg" id="bgB0">
+  <h2>编码 / 解码 小结</h2>
+  <div class="pgnum">补充背景 · 序列数总结，准备进入 Gödel 码</div>
+  <div class="explain">
+    <table class="tbl">
+      <tr><th>操作</th><th>符号</th><th>作用</th><th>方向</th></tr>
+      <tr><td>编码</td><td class="l">⟨a₀, …, aₙ⟩ ≜ ∏ Pᵢ<sup>aᵢ</sup></td><td class="l">序列 → 自然数</td><td>有限序列 ⟶ 一个数</td></tr>
+      <tr><td>解码</td><td class="l">ep<sub>i</sub>(x) = x 中 Pᵢ 的指数</td><td class="l">自然数 → 第 i 个元素</td><td>一个数 ⟶ 任意位置</td></tr>
+    </table>
+    <p>这两个操作满足：<span class="mono">ep<sub>i</sub>⟨a₀, …, aₙ⟩ = aᵢ</span>（命题 3.29）。</p>
+    <div class="tip">关键性质：编码和解码<b>都能用一个算法机械完成</b>。这就是 Gödel 码"语法可计算"的全部技术基础。</div>
+    <p>有了这套底座，下一节我们就把它叠到一阶语言的<b>每一个</b>符号、项、公式上。</p>
+  </div>
+</section>
+
+<!-- ========== p8 一阶语言符号集 ========== -->
+<section class="page" id="p08">
+  <h2>定义 3.30 · 一阶语言的符号集</h2>
+  <div class="pgnum">PDF 第 8 页</div>
+  <img class="slide" src="pages/p08.png" alt="p08">
+  <div class="explain">
+    <h3>回炉：一阶语言由哪些符号构成</h3>
+    <h4>(1) 逻辑符（语言无关）</h4>
+    <ul>
+      <li><b>V</b> = {x<sub>n</sub> | n ∈ ℕ}：变元集，无穷可数</li>
+      <li><b>C</b> = {¬, ∧, ∨, →}：连接词</li>
+      <li><b>Q</b> = {∀, ∃}：量词</li>
+      <li><b>E</b> = {≐}：等号（注意是 <code>≐</code>，<b>不是</b> ≃ 也不是 =）</li>
+      <li><b>P</b> = { (, ), ., , }：标点（左括号、右括号、点、逗号）</li>
+    </ul>
+    <h4>(2) 非逻辑符（语言相关）</h4>
+    <ul>
+      <li><b>ℒ<sub>f</sub></b> = { f<sub>ij</sub> | i ∈ ℕ, j ∈ I<sub>i</sub> }：函数符。<i>i 是元数</i>，<i>j 是序号</i>。当 i = 0 时 f<sub>0j</sub> 是常元符。</li>
+      <li><b>ℒ<sub>P</sub></b> = { P<sub>ij</sub> | i ∈ ℕ, j ∈ J<sub>i</sub> }：谓词符。当 i = 0 时 P<sub>0j</sub> 是命题符（0 元谓词）。</li>
+    </ul>
+    <h3>具体例子</h3>
+    <p>算术语言 𝒜 里的常元 0、1，函数符 +、×，谓词符 &lt; ——在这套形式里写成：</p>
+    <table class="tbl">
+      <tr><th>𝒜 中习惯写法</th><th>形式 (i, j)</th></tr>
+      <tr><td>0</td><td>f<sub>0,0</sub></td></tr>
+      <tr><td>1</td><td>f<sub>0,1</sub></td></tr>
+      <tr><td>+</td><td>f<sub>2,0</sub></td></tr>
+      <tr><td>×</td><td>f<sub>2,1</sub></td></tr>
+      <tr><td>&lt;</td><td>P<sub>2,0</sub></td></tr>
+    </table>
+    <div class="warn">符号区分（务必）：<br>
+    · <b>≐</b>（U+2250）：一阶语言里的"等词"（语法符号）<br>
+    · <b>≃</b>：逻辑等价（如 A ≃ B，第 7 章引入）<br>
+    · <b>=</b>：元语言里的等于（如 #X = ⟨…⟩）</div>
+  </div>
+</section>
+
+<!-- ========== p9 Gödel 码 逻辑符 ========== -->
+<section class="page" id="p09">
+  <h2>定义 3.31 · Gödel 码（逻辑符部分）</h2>
+  <div class="pgnum">PDF 第 9 页</div>
+  <img class="slide" src="pages/p09.png" alt="p09">
+  <div class="explain">
+    <p>记 #X 为 X 的 Gödel 码（X 可以是符号 / 项 / 公式）。逻辑符每个都赋一个序列数：</p>
+    <table class="tbl">
+      <tr><th>符号</th><th>#</th><th>解读（首位 = 类型标签）</th></tr>
+      <tr><td>x<sub>n</sub></td><td>⟨0, n⟩</td><td>0 = 变元</td></tr>
+      <tr><td>¬</td><td>⟨1, 0⟩</td><td rowspan="4">1 = 连接词</td></tr>
+      <tr><td>∧</td><td>⟨1, 1⟩</td></tr>
+      <tr><td>∨</td><td>⟨1, 2⟩</td></tr>
+      <tr><td>→</td><td>⟨1, 3⟩</td></tr>
+      <tr><td>∀</td><td>⟨2, 0⟩</td><td rowspan="2">2 = 量词</td></tr>
+      <tr><td>∃</td><td>⟨2, 1⟩</td></tr>
+      <tr><td>≐</td><td>⟨3, 0⟩</td><td>3 = 等号</td></tr>
+      <tr><td>(</td><td>⟨4, 0⟩</td><td rowspan="4">4 = 标点</td></tr>
+      <tr><td>)</td><td>⟨4, 1⟩</td></tr>
+      <tr><td>.</td><td>⟨4, 2⟩</td></tr>
+      <tr><td>,</td><td>⟨4, 3⟩</td></tr>
+    </table>
+    <div class="note">每个符号都是<b>一个二元组 ⟨类型, 序号⟩ 的序列数</b>。例如 #(¬) = ⟨1, 0⟩ = 2¹ · 3⁰ = 2。</div>
+    <div class="tip">"首位"承担类型识别：解码时一看头位就知道这是变元还是连词还是量词。</div>
+  </div>
+</section>
+
+<!-- ========== p10 非逻辑符 + 项 ========== -->
+<section class="page" id="p10">
+  <h2>Gödel 码（非逻辑符 + 项）</h2>
+  <div class="pgnum">PDF 第 10 页</div>
+  <img class="slide" src="pages/p10.png" alt="p10">
+  <div class="explain">
+    <h3>(2) 非逻辑符</h3>
+    <ul>
+      <li>#(f<sub>ij</sub>) = ⟨5, i, j⟩  ← 5 = 函数符</li>
+      <li>#(P<sub>ij</sub>) = ⟨6, i, j⟩  ← 6 = 谓词符</li>
+    </ul>
+    <div class="note">注意这里是<b>三元组</b>（首位 + 元数 + 序号），不是二元组。</div>
+
+    <h3>(3) 项的 Gödel 码（对项结构归纳）</h3>
+    <p>回炉第 6 章：项要么是变元 / 常元，要么是 f(t₁, …, t<sub>i</sub>) 形式。</p>
+    <ul>
+      <li><b>(a) 基础</b>：t 为变元或常元时，#t 已被定义（前面已给）。</li>
+      <li><b>(b) 归纳</b>：t = f<sub>ij</sub>(t₁, …, t<sub>i</sub>)，定义
+        <div class="formula">#t = ⟨ #f<sub>ij</sub>, #t₁, …, #t<sub>i</sub> ⟩</div>
+      特别地 f<sub>0j</sub> 是常元，#f<sub>0j</sub> 已被定义。</li>
+    </ul>
+    <h3>例</h3>
+    <p>设 t = f<sub>2,0</sub>(x₀, x₁)（即 𝒜 中的 x₀ + x₁）。</p>
+<pre>#t = ⟨ #f₂,₀,         #x₀,   #x₁  ⟩
+    = ⟨ ⟨5, 2, 0⟩,    ⟨0,0⟩, ⟨0,1⟩ ⟩</pre>
+    <div class="tip">这就是结构归纳法在"编码"上的应用：项的语法树深下去，Gödel 码就嵌套深下去——但因为每层都是序列数，整体仍是单一自然数。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 C0 编码首位对照表 ========== -->
+<section class="page bg" id="bgC0">
+  <h2>Gödel 码 · 首位对照速查表</h2>
+  <div class="pgnum">补充背景</div>
+  <div class="explain">
+    <p>把"首位 → 符号类型"的对照集中起来，方便看到一个 Gödel 码立刻判类型。</p>
+    <table class="tbl">
+      <tr><th>首位</th><th>类型</th><th>结构</th><th>例子</th></tr>
+      <tr><td>0</td><td>变元</td><td>⟨0, n⟩</td><td>x<sub>n</sub></td></tr>
+      <tr><td>1</td><td>连接词</td><td>⟨1, k⟩ 或递归 ⟨1, …, #A, #B⟩</td><td>¬, ∧, ∨, →</td></tr>
+      <tr><td>2</td><td>量词 / 量化公式</td><td>⟨2, k⟩ 或 ⟨2, …, #x, #., #A⟩</td><td>∀, ∃</td></tr>
+      <tr><td>3</td><td>等号 / 等式</td><td>⟨3, 0⟩ 或 ⟨3, …, #t, #s⟩</td><td>≐</td></tr>
+      <tr><td>4</td><td>标点</td><td>⟨4, k⟩</td><td>(  )  .  ,</td></tr>
+      <tr><td>5</td><td>函数符 / 项</td><td>⟨5, i, j⟩ 或 ⟨5, …, #t₁, …⟩</td><td>f<sub>ij</sub>(…)</td></tr>
+      <tr><td>6</td><td>谓词符 / 原子公式</td><td>⟨6, i, j⟩ 或 ⟨6, …, #t₁, …⟩</td><td>P<sub>ij</sub>(…)</td></tr>
+    </table>
+    <div class="tip">关键 idea：<b>首位 = 类型 tag</b>。看到 #X 后用 ep₀(#X) 就能机械地判别 X 是什么种类。</div>
+  </div>
+</section>
+
+<!-- ========== p11 公式 Gödel 码 ========== -->
+<section class="page" id="p11">
+  <h2>定义 3.31 (4) · 公式的 Gödel 码</h2>
+  <div class="pgnum">PDF 第 11 页</div>
+  <img class="slide" src="pages/p11.png" alt="p11">
+  <div class="explain">
+    <p>同样对公式结构归纳定义 #A：</p>
+    <ul>
+      <li><b>(a) 等式</b>：#(t ≐ s) = ⟨ #(≐), #t, #s ⟩</li>
+      <li><b>(b) 谓词公式</b>：#(P<sub>ij</sub>(t₁, …, t<sub>i</sub>)) = ⟨ #P<sub>ij</sub>, #t₁, …, #t<sub>i</sub> ⟩。特别地命题符 #(P<sub>0j</sub>) 已被定义。</li>
+      <li><b>(c) 连接词复合</b>：
+        <div class="formula">#(¬A) = ⟨ #(¬), #A ⟩<br>
+        #(A * B) = ⟨ #(*), #A, #B ⟩，其中 * ∈ {∧, ∨, →}</div>
+      </li>
+      <li><b>(d) 量化公式</b>：
+        <div class="formula">#(∀x . A) = ⟨ #(∀), #x, #(.), #A ⟩<br>
+        #(∃x . A) = ⟨ #(∃), #x, #(.), #A ⟩</div>
+      </li>
+    </ul>
+    <div class="note">"."在量化公式语法里是分隔符（∀x . A 而不是 ∀x A），所以编码里要带上 #(.) = ⟨4, 2⟩。</div>
+    <div class="tip">⚠ 这是<b>第 6 章「结构唯一性定理」的算术化版本</b>：原本说"公式从子公式唯一构造"，现在变成"Gödel 码从子码唯一确定的嵌套序列数"。两者本质同一件事。</div>
+  </div>
+</section>
+
+<!-- ========== p12 例子 ========== -->
+<section class="page" id="p12">
+  <h2>例 · #(∀x₀ P<sub>2,6</sub>(x₀, x₁))</h2>
+  <div class="pgnum">PDF 第 12 页</div>
+  <img class="slide" src="pages/p12.png" alt="p12">
+  <div class="explain">
+    <h3>逐层展开</h3>
+<pre>#(∀x₀ P₂,₆(x₀, x₁))
+= ⟨ #(∀),  #(x₀),  #(P₂,₆(x₀, x₁)) ⟩           ← 量化公式规则 (d)，省略了 #(.)
+= ⟨ ⟨2,0⟩, ⟨0,0⟩, ⟨ #(P₂,₆),  #(x₀), #(x₁) ⟩ ⟩  ← 谓词公式规则 (b)
+= ⟨ ⟨2,0⟩, ⟨0,0⟩, ⟨ ⟨6, 2, 6⟩, ⟨0,0⟩, ⟨0,1⟩ ⟩ ⟩ ← 非逻辑符 #(P_ij) = ⟨6, i, j⟩
+最里层 ⟨6,2,6⟩, ⟨0,0⟩, ⟨0,1⟩ 各自展开成具体数:
+  ⟨6,2,6⟩ = 2⁶ · 3² · 5⁶ = 9 000 000
+  ⟨0,0⟩  = 2⁰ · 3⁰ = 1
+  ⟨0,1⟩  = 2⁰ · 3¹ = 3
+所以最里层 = ⟨9000000, 1, 3⟩ = 2^9000000 · 3¹ · 5³
+最外层 = 2⁴ · 3 · 5^(2^9000000 · 3 · 5³)              ← 怪兽数</pre>
+    <div class="warn">⚠ 这个数<b>大到天文级别</b>（2 的 9 百万次方……再做指数）。但它仍然是一个<b>良定义</b>的自然数；不需要算它，只需要知道它存在且唯一。</div>
+    <div class="tip">"数字大"不重要，重要的是"<b>从这个数能机械还原出公式</b>"——这就是下一页定理 3.32 要总结的。</div>
+  </div>
+</section>
+
+<!-- ========== p13 定理 3.32 ========== -->
+<section class="page" id="p13">
+  <h2>定理 3.32 · 唯一对应</h2>
+  <div class="pgnum">PDF 第 13 页</div>
+  <img class="slide" src="pages/p13.png" alt="p13">
+  <div class="explain">
+    <p>ℒ 中的符号、项和公式对应<b>唯一</b>的一个自然数（其 Gödel 码），且<b>存在一个算法</b>从 Gödel 码机械还原原 ℒ 语法对象。</p>
+    <h3>白话</h3>
+    <p>语法对象 ↔ 自然数 是<b>双射</b>，且<b>可计算可逆</b>。</p>
+    <h3>为什么</h3>
+    <ul>
+      <li><b>唯一性</b>：每个序列数 ⟨…⟩ 由素数指数唯一确定（命题 3.27）。整个嵌套结构是序列数套序列数，每层都唯一。</li>
+      <li><b>可计算还原</b>：用 ep₀(·) 取首位 → 知道是哪类符号 → 用 ep₁(·), ep₂(·) … 取出子部分 → 递归。终止条件是首位 0/1/2/3/4 的原子符号。</li>
+    </ul>
+    <div class="tip">这一条定理是"<b>语法是算术的</b>"的精确说法。它使得"哪些公式可证 / 不可证"这类元问题，原则上可以用算术工具研究——这是 Gödel 不完备性定理的入口。</div>
+    <div class="note">本章用到这一条的"双射 + 可计算"事实，至于完整算法的伪代码，下一讲（讲可计算性时）才会展开。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 D0 Hintikka 动机 ========== -->
+<section class="page bg" id="bgD0">
+  <h2>Hintikka 集 · 动机（重要！）</h2>
+  <div class="pgnum">补充背景 · 必看，否则后面 17 条定义看似随意</div>
+  <div class="explain">
+    <p>接下来要登场的"Hintikka 集"是一个公式集合 Ψ，它的<b>定义看起来非常长</b>（17 条规则），但<b>动机非常简单</b>：</p>
+    <div class="tip"><b>Hintikka 集 = 一个公式集合，里面的复合公式都已经"分解到底"了。</b></div>
+    <h3>什么叫"分解到底"</h3>
+    <p>意思是：如果一个复合公式 X 在 Ψ 里，那么它的"语义构件"也必须在 Ψ 里。例如：</p>
+    <ul>
+      <li>A ∧ B ∈ Ψ ⇒ A ∈ Ψ <b>且</b> B ∈ Ψ ←（分解成两个证人）</li>
+      <li>A ∨ B ∈ Ψ ⇒ A ∈ Ψ <b>或</b> B ∈ Ψ ←（至少一个证人）</li>
+      <li>∀x. A ∈ Ψ ⇒ <b>对所有项 t</b>，A[t/x] ∈ Ψ ←（穷举所有实例）</li>
+      <li>∃x. A ∈ Ψ ⇒ <b>存在某项 t</b>，A[t/x] ∈ Ψ ←（至少一个见证）</li>
+    </ul>
+    <p>再加上一致性的最弱要求："原子公式 A 和 ¬A 不能都在里面"（规则 1）。</p>
+
+    <h3>为什么这种集合能造出模型</h3>
+    <p>因为既然每个复合公式都已经被拆到原子级别，那我们只要让模型中"原子公式 ∈ Ψ"的为真、否则的为假，整个 Ψ 就<b>自动</b>逐级为真——这正是引理 3.41 要证的。</p>
+    <div class="note">这一类"向下饱和的语法封闭集"也叫 <b>downward saturated set</b>。Hintikka 集 = 一阶版本的 downward saturated set + 等词规则。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 D1 α/β/γ/δ/ε 分类 ========== -->
+<section class="page bg" id="bgD1">
+  <h2>Hintikka 17 条 · α/β/γ/δ/ε 分类</h2>
+  <div class="pgnum">补充背景 · 17 条规则的认知地图</div>
+  <div class="explain">
+    <p>17 条规则按 Smullyan 经典分类：</p>
+    <table class="tbl">
+      <tr><th>类</th><th>含义</th><th>规则</th><th>分解方式</th></tr>
+      <tr><td><b>α</b></td><td>"合取式"<br>都成立</td><td>2 (¬¬), 5 (A∧B), 8 (¬(A∨B)), 4 (¬(A→B))</td><td>两支都必须 ∈ Ψ</td></tr>
+      <tr><td><b>β</b></td><td>"析取式"<br>至少一</td><td>3 (A→B), 6 (¬(A∧B)), 7 (A∨B)</td><td>至少一支 ∈ Ψ</td></tr>
+      <tr><td><b>γ</b></td><td>"全称型"<br>对所有 t</td><td>9 (∀x.A), 12 (¬∃x.A)</td><td>∀t∈T, 实例 ∈ Ψ</td></tr>
+      <tr><td><b>δ</b></td><td>"存在型"<br>见证 t</td><td>11 (∃x.A), 10 (¬∀x.A)</td><td>∃t∈T, 实例 ∈ Ψ</td></tr>
+      <tr><td><b>ε</b></td><td>"等词公理"</td><td>13 (自反), 14 (对称), 15 (传递), 16 (函数相容), 17 (谓词相容)</td><td>等词必须按一致关系</td></tr>
+      <tr><td>1</td><td>"原子一致"</td><td>规则 1：A 与 ¬A 不能都 ∈ Ψ</td><td>最低一致要求</td></tr>
+    </table>
+    <div class="tip">把 17 条看成"按公式形式做分类的规则总集"就不再难记。规则 1 单独负责"底层一致"，规则 13-17 单独负责"等词的良行为"。</div>
+    <p><b>γ 和 δ 的区别</b>（重要！）：γ 要求<b>所有 t</b> 都被实例化（即 ∀x.A 的"全部见证"都要在 Ψ 里）；δ 只要求<b>至少一个 t</b> 见证（即 ∃x.A 的"某个证人"在 Ψ 里）。</p>
+  </div>
+</section>
+
+<!-- ========== p14-16 跳过 ========== -->
+<section class="page" id="p14">
+  <h2>Hintikka 集定义 1-6（累积）</h2>
+  <div class="pgnum">PDF 第 14 页 · 跳过</div>
+  <p style="color:var(--mute);">17 条规则的累积幻灯。直接看 p17 完整版。</p>
+</section>
+<section class="page" id="p15">
+  <h2>Hintikka 集定义 7-12（累积）</h2>
+  <div class="pgnum">PDF 第 15 页 · 跳过</div>
+  <p style="color:var(--mute);">累积幻灯，跳过。</p>
+</section>
+<section class="page" id="p16">
+  <h2>Hintikka 集定义 13-16（累积）</h2>
+  <div class="pgnum">PDF 第 16 页 · 跳过</div>
+  <p style="color:var(--mute);">累积幻灯，跳过。</p>
+</section>
+
+<!-- ========== p17 Hintikka 完整 ========== -->
+<section class="page" id="p17">
+  <h2>定义 3.33 · Hintikka 集（完整 17 条）</h2>
+  <div class="pgnum">PDF 第 17 页 · 含全部 17 条</div>
+  <img class="slide" src="pages/p17.png" alt="p17">
+  <div class="explain">
+    <p>设 ℒ 为一阶语言，Ψ 为 ℒ 的公式集，令 T 为全体 ℒ 项的集合。<b>Ψ 是 Hintikka 集</b> 指：</p>
+
+    <h3>① 原子一致（必须）</h3>
+    <p>1. 若公式 A 为原子公式，则 A 和 ¬A 不能都 ∈ Ψ。<span style="color:#888;">（最弱一致性）</span></p>
+
+    <h3>② α 型 · 双支都 ∈ Ψ</h3>
+    <p>2. 若 ¬¬A ∈ Ψ，则 A ∈ Ψ。<span style="color:#888;">（双否消去）</span></p>
+    <p>4. 若 ¬(A → B) ∈ Ψ，则 A ∈ Ψ 且 ¬B ∈ Ψ。</p>
+    <p>5. 若 A ∧ B ∈ Ψ，则 A ∈ Ψ 且 B ∈ Ψ。</p>
+    <p>8. 若 ¬(A ∨ B) ∈ Ψ，则 ¬A ∈ Ψ 且 ¬B ∈ Ψ。</p>
+
+    <h3>③ β 型 · 至少一支 ∈ Ψ</h3>
+    <p>3. 若 A → B ∈ Ψ，则 ¬A ∈ Ψ 或 B ∈ Ψ。</p>
+    <p>6. 若 ¬(A ∧ B) ∈ Ψ，则 ¬A ∈ Ψ 或 ¬B ∈ Ψ。</p>
+    <p>7. 若 A ∨ B ∈ Ψ，则 A ∈ Ψ 或 B ∈ Ψ。</p>
+
+    <h3>④ γ 型 · 对全体项实例化</h3>
+    <p>9. 若 ∀x. A ∈ Ψ，则 ∀t ∈ T，A[t/x] ∈ Ψ。</p>
+    <p>12. 若 ¬∃x. A ∈ Ψ，则 ∀t ∈ T，¬A[t/x] ∈ Ψ。</p>
+
+    <h3>⑤ δ 型 · 存在见证项</h3>
+    <p>10. 若 ¬∀x. A ∈ Ψ，则 ∃t ∈ T，¬A[t/x] ∈ Ψ。</p>
+    <p>11. 若 ∃x. A ∈ Ψ，则 ∃t ∈ T，A[t/x] ∈ Ψ。</p>
+
+    <h3>⑥ ε 型 · 等词公理</h3>
+    <p>13. t ≐ t ∈ Ψ <span style="color:#888;">（自反）</span></p>
+    <p>14. t ≐ s → s ≐ t ∈ Ψ <span style="color:#888;">（对称）</span></p>
+    <p>15. t ≐ s → (s ≐ u → t ≐ u) ∈ Ψ <span style="color:#888;">（传递）</span></p>
+    <p>16. 若 f 为 n 元函数，<span class="mono">(⋀ᵢ tᵢ ≐ sᵢ) → f(t₁,…,tₙ) ≐ f(s₁,…,sₙ) ∈ Ψ</span> <span style="color:#888;">（函数同应于相等参数 = 相等结果）</span></p>
+    <p>17. 若 P 为 n 元谓词，<span class="mono">(⋀ᵢ tᵢ ≐ sᵢ) → (P(t₁,…,tₙ) → P(s₁,…,sₙ)) ∈ Ψ</span> <span style="color:#888;">（等参数下谓词同真）</span></p>
+
+    <div class="warn">⚠ 区分 γ 和 δ：<br>· 9, 12 要求"<b>对所有</b> t ∈ T"<br>· 10, 11 要求"<b>存在</b> t ∈ T"<br>这是后面引理 3.41 ∀ / ∃ 两条情况的分水岭。</div>
+    <div class="tip">17 条规则可以看作一张"语法层面的检查表"：把任何复合公式扔进去都能机械地继续拆下去。</div>
+  </div>
+</section>
+
+<!-- ========== p18 定理 3.34 ========== -->
+<section class="page" id="p18">
+  <h2>定理 3.34 · Hintikka 集必可满足</h2>
+  <div class="pgnum">PDF 第 18 页</div>
+  <img class="slide" src="pages/p18.png" alt="p18">
+  <div class="explain">
+    <h3>定理</h3>
+    <p>若 Ψ 为 Hintikka 集，则 Ψ <b>可满足</b>（即存在结构和赋值使 Ψ 中每个公式都为真）。</p>
+    <h3>这条定理为什么是本章核心</h3>
+    <p>"语法上看起来自洽"（Hintikka 性质）⟹ "语义上真的有模型"。这就是把<b>语法对应到语义</b>的关键桥梁。</p>
+    <h3>证明思路（接下来 p19-p31 都在做这件事）</h3>
+    <ol>
+      <li>p19 · 在项集 T 上定义等价关系 ~（s ~ t ⇔ s ≐ t ∈ Ψ）。</li>
+      <li>p20-p23 · 证明 ~ 对函数 / 谓词有"良行为"（引理 3.38，congruence）。</li>
+      <li>p25 · 用项的等价类 [t] 作为论域，定义模型 ℍ。</li>
+      <li>p26-p31 · 对公式结构归纳，证 ℍ ⊨_σ Ψ。</li>
+    </ol>
+    <div class="tip">这种"用语法对象本身造模型"的构造叫 <b>项模型 / Henkin 模型</b>。它的精妙在于：模型完全由 Ψ 决定，所以 Ψ 当然在它上为真。</div>
+  </div>
+</section>
+
+<!-- ========== p19 等价类 ========== -->
+<section class="page" id="p19">
+  <h2>定义 3.35-3.37 · 项上的等价关系</h2>
+  <div class="pgnum">PDF 第 19 页</div>
+  <img class="slide" src="pages/p19.png" alt="p19">
+  <div class="explain">
+    <h3>定义 3.35 · 二元关系 ~</h3>
+    <div class="formula">s ~ t  指  s ≐ t ∈ Ψ</div>
+    <p>白话：在项集 T 上定义"我们认为相等"的关系——若 Ψ 里写明 "s ≐ t"，那这两个项就被认作等价。</p>
+    <h3>命题 3.36</h3>
+    <p>~ 是<b>等价关系</b>（自反 / 对称 / 传递）。证明留作习题——但你可以一眼看到这正是 Hintikka 规则 13-15 兜住的：</p>
+    <ul>
+      <li>自反：t ≐ t ∈ Ψ（规则 13）→ t ~ t ✓</li>
+      <li>对称：t ≐ s → s ≐ t ∈ Ψ（规则 14）→ 若 s ≐ t ∈ Ψ 则 s ≐ t → t ≐ s 用规则 3（β）展开得 t ≐ s ∈ Ψ。<i>（需要小心规则 3 的"或"分支：若 ¬(s≐t)∈Ψ 则与前提矛盾，所以只能取右支）</i></li>
+      <li>传递：类似用规则 15。</li>
+    </ul>
+    <h3>定义 3.37 · 等价类 [t]</h3>
+    <p>设 t ∈ T。令 [t] = { s ∈ T | s ~ t } 为 t 关于 ~ 的等价类。则 [s] = [t] ⇔ s ~ t。</p>
+    <div class="tip">这一步是 Henkin 项模型构造的关键技巧：把 Ψ 中"被认为相等的项"打包成一个对象。下一步定义模型时，论域 = 全部等价类的集合。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 E0 为什么要等价类 ========== -->
+<section class="page bg" id="bgE0">
+  <h2>为什么要等价类</h2>
+  <div class="pgnum">补充背景 · 等价类不是技巧，是必需</div>
+  <div class="explain">
+    <p>来用算术语言 𝒜 举一个具体例子：</p>
+    <div class="note">假设 Ψ 里包含 "2 + 2 ≐ 4"（在 𝒜 中是常元 + 函数符的项）。<br>
+    "2+2" 和 "4" 在 ℒ 里是<b>两个不同的项</b>（语法形式不一样）。</div>
+    <h3>如果直接拿"项集 T 当论域"会怎样</h3>
+    <ul>
+      <li>论域里会同时有 "2+2" 和 "4" 两个不同对象</li>
+      <li>但 Ψ 要求 "2+2 ≐ 4" 为真</li>
+      <li>而等词 ≐ 的语义恰恰要求两边解释为<b>同一个</b>对象</li>
+      <li>矛盾 → 模型造不出来</li>
+    </ul>
+    <h3>解决</h3>
+    <p>把"被 Ψ 声明相等"的项<b>合并</b>成一个等价类 [t]。论域用 H = {[t] | t ∈ T}。这样：</p>
+    <ul>
+      <li>[2+2] 和 [4] 是<b>同一个</b>对象（因为 2+2 ~ 4）</li>
+      <li>等词的语义 [s] = [t] 自动满足</li>
+    </ul>
+    <div class="tip">这就是为什么要定义 ~，再用 [t] 当论域元素：让"语法相等" ≅ "语义相等"。</div>
+    <div class="warn">⚠ 这种把项打包成类的做法是 <b>商结构 / quotient construction</b>。要让它良定义，必须证明所有函数 / 谓词都"尊重" ~ —— 这就是下一页引理 3.38。</div>
+  </div>
+</section>
+
+<!-- ========== p20-22 跳过 ========== -->
+<section class="page" id="p20">
+  <h2>引理 3.38 (累积)</h2>
+  <div class="pgnum">PDF 第 20 页 · 跳过</div>
+  <p style="color:var(--mute);">引理 3.38 证明的累积版（只到第一步）。直接看 p23 完整版。</p>
+</section>
+<section class="page" id="p21">
+  <h2>引理 3.38 (累积)</h2>
+  <div class="pgnum">PDF 第 21 页 · 跳过</div>
+  <p style="color:var(--mute);">累积幻灯，跳过。</p>
+</section>
+<section class="page" id="p22">
+  <h2>引理 3.38 (累积)</h2>
+  <div class="pgnum">PDF 第 22 页 · 跳过</div>
+  <p style="color:var(--mute);">累积幻灯，跳过。</p>
+</section>
+
+<!-- ========== p23 引理 3.38 完整 ========== -->
+<section class="page" id="p23">
+  <h2>引理 3.38 · ~ 对函数 / 谓词是 congruence</h2>
+  <div class="pgnum">PDF 第 23 页 · 含完整证明 + 规则标注</div>
+  <img class="slide" src="pages/p23.png" alt="p23">
+  <div class="explain">
+    <h3>引理</h3>
+    <p>设 [tᵢ] = [sᵢ]（i = 1, …, n）。则：</p>
+    <ol>
+      <li>任何 n 元函数 f，<b>[f(t₁, …, tₙ)] = [f(s₁, …, sₙ)]</b>。</li>
+      <li>任何 n 元谓词 P，若 <b>P(t₁, …, tₙ) ∈ Ψ</b>，则 <b>P(s₁, …, sₙ) ∈ Ψ</b>。</li>
+    </ol>
+    <h3>白话翻译</h3>
+    <ul>
+      <li>(1) "相等的输入给函数 → 输出也相等"。这让 f<sub>H</sub> 对等价类作用是<b>良定义</b>的。</li>
+      <li>(2) "相等的输入下谓词同真同假"。这让 P<sub>H</sub> 对等价类作用是<b>良定义</b>的。</li>
+    </ul>
+    <h3>证明 · (1)</h3>
+    <p>要证 [f(t)] = [f(s)]，即 f(t₁,…,tₙ) ≐ f(s₁,…,sₙ) ∈ Ψ。</p>
+<pre>由 [tᵢ] = [sᵢ]
+  ⇒ tᵢ ~ sᵢ                         ← 等价类的定义 3.37
+  ⇒ tᵢ ≐ sᵢ ∈ Ψ                     ← ~ 的定义 3.35
+  ⇒ ¬(tᵢ ≐ sᵢ) ∉ Ψ                  ← Hintikka 规则 1（原子一致）
+
+又 Hintikka 规则 16:
+  (⋀ᵢ tᵢ ≐ sᵢ) → f(t₁,…,tₙ) ≐ f(s₁,…,sₙ) ∈ Ψ
+
+把这个蕴含式记为 X → Y, 其中
+  X = ⋀ᵢ tᵢ ≐ sᵢ
+  Y = f(t₁,…,tₙ) ≐ f(s₁,…,sₙ)
+
+应用 Hintikka 规则 3 (A → B ∈ Ψ ⇒ ¬A ∈ Ψ 或 B ∈ Ψ):
+  ¬X ∈ Ψ  或  Y ∈ Ψ
+但 ¬X = ¬⋀ᵢ tᵢ ≐ sᵢ; 若它 ∈ Ψ, 用规则 6 (¬∧) 反复展开
+  ⇒ 某个 ¬(tᵢ ≐ sᵢ) ∈ Ψ              ← 与上面 ¬(tᵢ ≐ sᵢ) ∉ Ψ 矛盾
+所以必为右支:
+  Y = f(t₁,…,tₙ) ≐ f(s₁,…,sₙ) ∈ Ψ   ← (1) 得证 ∎</pre>
+
+    <h3>证明 · (2)</h3>
+    <p>"与 1 同理"：用 Hintikka 规则 17（谓词相容）代替规则 16，其余推理结构相同。</p>
+<pre>由 [tᵢ] = [sᵢ] ⇒ tᵢ ≐ sᵢ ∈ Ψ ⇒ ¬(tᵢ ≐ sᵢ) ∉ Ψ   ← 规则 1
+Hintikka 规则 17:
+  (⋀ᵢ tᵢ ≐ sᵢ) → (P(t₁,…,tₙ) → P(s₁,…,sₙ)) ∈ Ψ
+用规则 3 拆外层蕴含 → 右支必成立:
+  P(t₁,…,tₙ) → P(s₁,…,sₙ) ∈ Ψ
+再用规则 3 拆这个蕴含 → ¬P(t₁,…,tₙ) ∈ Ψ 或 P(s₁,…,sₙ) ∈ Ψ
+但前提 P(t₁,…,tₙ) ∈ Ψ ⇒ ¬P(t₁,…,tₙ) ∉ Ψ           ← 规则 1
+所以 P(s₁,…,sₙ) ∈ Ψ                                ← (2) 得证 ∎</pre>
+    <div class="tip">这就是 Henkin 项模型能成立的"良定义性"基石：Hintikka 规则 16, 17 + 规则 1 一起保证了"商结构是合法的"。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 F0 𝕄 vs ℍ ========== -->
+<section class="page bg" id="bgF0">
+  <h2>𝕄 = (M, I) vs ℍ = (H, σ) · 对照表</h2>
+  <div class="pgnum">补充背景 · 与第 7 章的对照</div>
+  <div class="explain">
+    <p>第 7 章学的标准结构 𝕄 = (M, I)：M 是一个抽象论域，I 把符号解释到 M 上。<br>
+    本章造的项模型 ℍ：论域<b>就是项的等价类</b>，解释由 Ψ 决定——一切都来自语法本身。</p>
+    <table class="tbl">
+      <tr><th>对照项</th><th>第 7 章 标准结构 𝕄</th><th>第 9 章 项模型 ℍ</th></tr>
+      <tr><td>论域</td><td>M（抽象集合）</td><td>H = { [t] | t ∈ T }</td></tr>
+      <tr><td>常元 c 解释</td><td>I(c) = 某 a ∈ M</td><td>c<sub>H</sub> = [c]</td></tr>
+      <tr><td>n 元函数 f 解释</td><td>I(f): Mⁿ → M</td><td>f<sub>H</sub>([t₁], …, [tₙ]) = [f(t₁, …, tₙ)]</td></tr>
+      <tr><td>n 元谓词 P 解释</td><td>I(P) ⊆ Mⁿ</td><td>P<sub>H</sub>([t₁],…,[tₙ]) 真 iff P(t₁,…,tₙ) ∈ Ψ</td></tr>
+      <tr><td>赋值 σ</td><td>σ: V → M 任意</td><td>σ(x) = [x]（把变元送到它自己的类）</td></tr>
+      <tr><td>等词</td><td>I 在 = 上是真等于</td><td>[s] = [t] ⇔ s ~ t ⇔ s ≐ t ∈ Ψ</td></tr>
+    </table>
+    <div class="tip">这种构造叫 <b>term model / Henkin model</b>。它的奇妙在于：模型完全由 Ψ 决定 → Ψ 自然在它上面真。</div>
+    <p>要让这种构造合法，必须先保证 f<sub>H</sub> 和 P<sub>H</sub> 不依赖于代表元的选择——这就是引理 3.38 的作用。</p>
+  </div>
+</section>
+
+<!-- ========== p24 跳过 ========== -->
+<section class="page" id="p24">
+  <h2>定义 3.39 · 模型 ℍ（累积）</h2>
+  <div class="pgnum">PDF 第 24 页 · 跳过</div>
+  <p style="color:var(--mute);">p25 加了引理 3.40，是 p24 的完整后继。直接看 p25。</p>
+</section>
+
+<!-- ========== p25 定义 3.39 + 引理 3.40 ========== -->
+<section class="page" id="p25">
+  <h2>定义 3.39 · 模型 ℍ + 引理 3.40</h2>
+  <div class="pgnum">PDF 第 25 页 · 含引理 3.40</div>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+    <h3>定义 3.39 · 项模型 ℍ = (H, σ)</h3>
+    <ol>
+      <li><b>论域</b>：H = {[t] | t ∈ T}（所有项的等价类构成的集合）</li>
+      <li><b>常元解释</b>：c 为常元 ⇒ c<sub>H</sub> = [c]</li>
+      <li><b>函数解释</b>：f 为 n 元函数 ⇒ f<sub>H</sub>([t₁],…,[tₙ]) = [f(t₁,…,tₙ)] <span style="color:#888;">（合法性由引理 3.38(1) 保证）</span></li>
+      <li><b>谓词解释</b>：P 为 n 元谓词 ⇒ P<sub>H</sub>([t₁],…,[tₙ]) 真 iff P(t₁,…,tₙ) ∈ Ψ；即
+        <div class="formula">P<sub>H</sub> = { ⟨[t₁], …, [tₙ]⟩ | P(t₁,…,tₙ) ∈ Ψ } ⊆ Hⁿ</div>
+        <span style="color:#888;">（合法性由引理 3.38(2) 保证）</span>
+      </li>
+      <li><b>赋值</b>：σ(x) = [x]（变元送到它本身的等价类）</li>
+    </ol>
+    <div class="note">注："引理 3.38 保证定义的合法性"指：用"代表元 t" 还是"另一个 ~等价的 s"来定义 f<sub>H</sub>/P<sub>H</sub> 不会冲突。</div>
+
+    <h3>引理 3.40</h3>
+    <p>对任何项 t，<b>t<sub>H[σ]</sub> = [t]</b>。</p>
+    <h3>白话</h3>
+    <p>在项模型 ℍ 中，<b>项的解释就是它自己的等价类</b>——非常优雅地"语法 = 语义"。</p>
+    <h3>证明（对 t 结构归纳）</h3>
+<pre>基础:
+  · t = x 变元: x_H[σ] = σ(x) = [x]               ← σ 的定义
+  · t = c 常元: c_H[σ] = c_H = [c]                ← 常元解释
+
+归纳: t = f(t₁,…,tₙ)
+  f(t₁,…,tₙ)_H[σ]
+    = f_H( (t₁)_H[σ], …, (tₙ)_H[σ] )              ← 项解释的归纳规则
+    = f_H( [t₁], …, [tₙ] )                        ← 归纳假设
+    = [ f(t₁,…,tₙ) ]                              ← 定义 3.39(3) ∎</pre>
+    <div class="tip">这条引理是连接"语法项 t" 与"语义对象 [t]" 的关键桥梁。下一步证 3.41 时反复要用。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 G0 引理 3.41 证明地图 ========== -->
+<section class="page bg" id="bgG0">
+  <h2>引理 3.41 证明地图</h2>
+  <div class="pgnum">补充背景 · 接下来 6 页都在做归纳，先看路线</div>
+  <div class="explain">
+    <h3>要证</h3>
+    <p>ℍ ⊨_σ Ψ，即 Ψ 中每个公式在 ℍ 中赋值 σ 下都为真。</p>
+    <h3>策略 · 对公式 A 的结构作归纳，同时证两条</h3>
+    <ul>
+      <li>(a) 若 A ∈ Ψ，则 A<sub>H[σ]</sub> = T <span style="color:#888;">（在里面的为真）</span></li>
+      <li>(b) 若 ¬A ∈ Ψ，则 A<sub>H[σ]</sub> = F <span style="color:#888;">（被否定在里面的为假）</span></li>
+    </ul>
+    <div class="note">为什么要同时证 (a) 和 (b)？因为 Hintikka 集是<b>不完全的</b>——一个公式可能 A ∉ Ψ 也 ¬A ∉ Ψ（这种情况引理不要求任何事）。但只要 A 或 ¬A 在里面，模型就得给出对应真值。</div>
+
+    <h3>归纳大纲</h3>
+    <table class="tbl">
+      <tr><th>情况</th><th>PDF 页</th><th>用到的核心工具</th></tr>
+      <tr><td>A = P(t) 原子谓词</td><td>p26</td><td>规则 1，P<sub>H</sub> 的定义</td></tr>
+      <tr><td>A = s ≐ t 等词</td><td>p27</td><td>~ 的定义，等价类</td></tr>
+      <tr><td>A = ¬B 否定</td><td>p27</td><td>规则 2（¬¬），归纳假设</td></tr>
+      <tr><td>A = B ∧ C 等连接词</td><td>p28</td><td>规则 5, 6 等</td></tr>
+      <tr><td>A = ∀x. B 全称</td><td>p29-31</td><td>规则 9, 10, 替换引理, 引理 3.40</td></tr>
+      <tr><td>A = ∃x. B 存在</td><td>p31 镜像</td><td>规则 11, 12, 同上</td></tr>
+    </table>
+    <div class="tip">关注 ∀ 情况：要用到第 6 章的"替换引理"（项替换前后语义不变）+ 引理 3.40（项 = 等价类）+ Hintikka 规则 9/10（对所有 / 存在见证项）的协同。</div>
+  </div>
+</section>
+
+<!-- ========== p26 原子谓词 ========== -->
+<section class="page" id="p26">
+  <h2>引理 3.41 证明 · 情况 A = p(t) 原子谓词</h2>
+  <div class="pgnum">PDF 第 26 页</div>
+  <img class="slide" src="pages/p26.png" alt="p26">
+  <div class="explain">
+    <p>引理 3.41: ℍ ⊨_σ Ψ，即 Ψ 可满足。下面对公式 A 结构归纳证明：</p>
+    <ul>
+      <li>(a) 若 A ∈ Ψ，则 A<sub>H[σ]</sub> = T</li>
+      <li>(b) 若 ¬A ∈ Ψ，则 A<sub>H[σ]</sub> = F</li>
+    </ul>
+
+    <h3>情况 A = p(t) （n 元同理可证）</h3>
+<pre>(a) 由 A ∈ Ψ
+  ⇒ p(t) ∈ Ψ
+  ⇒ p_H([t]) 真                        ← P_H 的定义 (定义 3.39(4))
+  ⇒ p(t)_H[σ] = T                      ← 公式语义定义 (第 7 章), 注意 [t] = t_H[σ] (引理 3.40)
+  得 (a) 成立。
+
+(b) 由 ¬A ∈ Ψ
+  ⇒ ¬p(t) ∈ Ψ
+  ⇒ p(t) ∉ Ψ                           ← Hintikka 规则 1 (原子一致)
+  ⇒ p_H([t]) 假                        ← P_H 定义反向 (P_H 只收 ∈ Ψ 的)
+  ⇒ p(t)_H[σ] = F                      ← 同上
+  得 (b) 成立。</pre>
+    <div class="tip">关键：(a) 用 P<sub>H</sub> 的"⇐"方向，(b) 用 P<sub>H</sub> 的"⇒"方向（结合规则 1）。两个方向都用到了。</div>
+  </div>
+</section>
+
+<!-- ========== p27 等词 + 否定 ========== -->
+<section class="page" id="p27">
+  <h2>引理 3.41 证明 · 情况 s ≐ t 和 ¬B</h2>
+  <div class="pgnum">PDF 第 27 页</div>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+    <h3>情况 A = s ≐ t（等词原子）</h3>
+<pre>(a) 由 s ≐ t ∈ Ψ
+  ⇒ s ~ t                              ← ~ 的定义 (定义 3.35)
+  ⇒ [s] = [t]                          ← 等价类的定义 (定义 3.37)
+  ⇒ s_H[σ] = t_H[σ]                    ← 引理 3.40 (t_H[σ] = [t])
+  ⇒ (s ≐ t)_H[σ] = T                   ← 等词的语义 (第 7 章)
+  得 (a) 成立。
+
+(b) 由 ¬(s ≐ t) ∈ Ψ
+  ⇒ s ≐ t ∉ Ψ                          ← Hintikka 规则 1 (原子一致)
+  ⇒ [s] ≠ [t]                          ← ~ 和等价类定义 (反向)
+  ⇒ s_H[σ] ≠ t_H[σ]                    ← 引理 3.40
+  ⇒ (¬(s ≐ t))_H[σ] = T                ← 等词语义 + ¬ 语义
+  即 (s ≐ t)_H[σ] = F, 得 (b) 成立。</pre>
+
+    <h3>情况 ¬ · A = ¬B</h3>
+<pre>(a) A ∈ Ψ
+  ⇒ ¬B ∈ Ψ
+  ⇒ B_H[σ] = F                         ← 对子公式 B 的归纳假设的 (b)
+  ⇒ A_H[σ] = (¬B)_H[σ] = T             ← ¬ 的语义
+
+(b) ¬A ∈ Ψ
+  ⇒ ¬¬B ∈ Ψ
+  ⇒ B ∈ Ψ                              ← Hintikka 规则 2 (双否消去)
+  ⇒ B_H[σ] = T                         ← 对子公式 B 的归纳假设的 (a)
+  ⇒ A_H[σ] = (¬B)_H[σ] = F             ← ¬ 的语义</pre>
+    <div class="tip">连接词情况都是这种模式：用 Hintikka 规则把外层结构剥掉，落到子公式上 → 用归纳假设。</div>
+  </div>
+</section>
+
+<!-- ========== p28 合取 / 析取 / 蕴含 ========== -->
+<section class="page" id="p28">
+  <h2>引理 3.41 证明 · 情况 ∧ / ∨ / →</h2>
+  <div class="pgnum">PDF 第 28 页</div>
+  <img class="slide" src="pages/p28.png" alt="p28">
+  <div class="explain">
+    <h3>情况 ∧ · A = B ∧ C</h3>
+<pre>(a) A ∈ Ψ
+  ⇒ B ∧ C ∈ Ψ
+  ⇒ B ∈ Ψ 且 C ∈ Ψ                     ← Hintikka 规则 5 (α 型)
+  ⇒ B_H[σ] = C_H[σ] = T                ← 对 B, C 的归纳假设 (a)
+  ⇒ (B ∧ C)_H[σ] = T                   ← ∧ 的语义
+  ⇒ A_H[σ] = T。
+
+(b) ¬A ∈ Ψ
+  ⇒ ¬(B ∧ C) ∈ Ψ
+  ⇒ ¬B ∈ Ψ 或 ¬C ∈ Ψ                   ← Hintikka 规则 6 (β 型)
+  ⇒ B_H[σ] = F 或 C_H[σ] = F           ← 对 B, C 的归纳假设 (b)
+  ⇒ (B ∧ C)_H[σ] = F                   ← ∧ 的语义
+  ⇒ A_H[σ] = F。</pre>
+    <h3>情况 ∨, → · 同理可证</h3>
+    <p>结构一模一样：(a) 用 α / β 规则展开 + 归纳假设；(b) 用对偶规则。</p>
+    <table class="tbl">
+      <tr><th>公式</th><th>(a) 用规则</th><th>(b) 用规则</th></tr>
+      <tr><td>B ∧ C</td><td>5 (α)</td><td>6 (β)</td></tr>
+      <tr><td>B ∨ C</td><td>7 (β)</td><td>8 (α)</td></tr>
+      <tr><td>B → C</td><td>3 (β)</td><td>4 (α)</td></tr>
+    </table>
+    <div class="tip">证明的<b>对称美</b>：每个连接词都有 α/β 配对——一边拆成"都得真"，另一边拆成"至少一真"。</div>
+  </div>
+</section>
+
+<!-- ========== p29 ∀ 情况 (a) ========== -->
+<section class="page" id="p29">
+  <h2>引理 3.41 证明 · 情况 ∀ (a)</h2>
+  <div class="pgnum">PDF 第 29 页</div>
+  <img class="slide" src="pages/p29.png" alt="p29">
+  <div class="explain">
+    <h3>情况 ∀ · A = ∀x. B</h3>
+    <p>这是整个证明里最精妙的一步——要让"语法上的对所有项 t"对接到"语义上的对所有论域元素 u"。看每一行用了哪条工具：</p>
+<pre>(a) ∀x. B ∈ Ψ
+  ⇒ B[t/x] ∈ Ψ, 对 ∀t ∈ T                            ← Hintikka 规则 9 (γ)
+  ⇒ B[t/x]_H[σ] = T, 对 ∀t ∈ T                       ← 对 B[t/x] 的归纳假设 (a)
+  ⇒ B_H[σ[x := t_H[σ]]] = T, 对 ∀t ∈ T               ← 替换引理 (第 7 章)
+  ⇒ B_H[σ[x := [t]]] = T, 对 ∀t ∈ T                  ← 引理 3.40 (t_H[σ] = [t])
+  ⇒ B_H[σ[x := u]] = T, 对 ∀u ∈ H                    ← H = {[t] | t ∈ T}, 即遍历 t 就是遍历 u
+  ⇒ (∀x. B)_H[σ] = T                                  ← ∀ 的语义定义 (第 7 章)
+  ⇒ A_H[σ] = T。</pre>
+    <h3>每一步的关键</h3>
+    <ul>
+      <li><b>① Hintikka 规则 9</b>：把 ∀x. B 实例化到 Ψ 中"所有项"上 — 这是"语法的全称展开"。</li>
+      <li><b>② 归纳假设</b>：B[t/x] 是比 ∀x. B 简单的公式（结构归纳的有效性来自第 6 章），所以可以用归纳假设把"∈ Ψ"转成"真"。</li>
+      <li><b>③ 替换引理</b>（第 7 章学过）：B[t/x]_H[σ] = B_H[σ[x := t_H[σ]]]。<br>白话：用项 t 替换变元 x，等价于先解释 t、再把这个语义对象赋给 x。</li>
+      <li><b>④ 引理 3.40</b>：t_H[σ] = [t]。把"项的语义" 改写成"项的等价类"。</li>
+      <li><b>⑤ 关键观察</b>：因为 H = {[t] | t ∈ T}，遍历所有项 t 给出的 [t] 恰好<b>就是</b>整个论域 H。所以"对所有 t" 等于"对所有 u ∈ H"。</li>
+      <li><b>⑥ ∀ 的语义</b>：对所有论域元素都真 ⇒ ∀x. B 在 σ 下为真。</li>
+    </ul>
+    <div class="warn">⚠ 第 ⑤ 步是项模型的<b>精髓</b>。在一般结构里，"对所有项 t" 和"对所有论域元素 u" 是两个不同的概念（论域元素可能没有项命名它）。但在项模型 ℍ 里两者恰好一致——这就是为什么 Hintikka 规则 9 的"对所有 t" 足以兑现 ∀ 的语义。</div>
+  </div>
+</section>
+
+<!-- ========== p30 跳过 ========== -->
+<section class="page" id="p30">
+  <h2>∀ (b) + ∃ (累积)</h2>
+  <div class="pgnum">PDF 第 30 页 · 跳过</div>
+  <p style="color:var(--mute);">p30 与 p31 仅差最后一个右下角的小注释框（定理 3.34 收官）。直接看 p31。</p>
+</section>
+
+<!-- ========== p31 ∀ (b) + ∃ + 收官 ========== -->
+<section class="page" id="p31">
+  <h2>引理 3.41 证明 · ∀ (b) + ∃ + 收官</h2>
+  <div class="pgnum">PDF 第 31 页 · 含定理 3.34 收尾</div>
+  <img class="slide" src="pages/p31.png" alt="p31">
+  <div class="explain">
+    <h3>情况 ∀ 续 · (b) ¬(∀x. B) ∈ Ψ</h3>
+<pre>(b) ¬(∀x. B) ∈ Ψ
+  ⇒ ¬B[t/x] ∈ Ψ, ∃t ∈ T                              ← Hintikka 规则 10 (δ, 存在见证)
+  ⇒ B[t/x]_H[σ] = F, ∃t ∈ T                          ← 对 B[t/x] 的归纳假设 (b)
+  ⇒ B_H[σ[x := t_H[σ]]] = F, ∃t ∈ T                  ← 替换引理
+  ⇒ B_H[σ[x := [t]]] = F, ∃t ∈ T                     ← 引理 3.40
+  ⇒ B_H[σ[x := u]] = F, ∃u ∈ H                       ← H = {[t]}, 见证类
+  ⇒ (∀x. B)_H[σ] = F                                  ← ∀ 的语义 (有一个反例则全假)
+  ⇒ A_H[σ] = F。</pre>
+    <div class="note">注意把 (a) 中所有"∀t" 换成"∃t" 即得 (b)。Hintikka 规则 9/10 的对偶就在这里。</div>
+
+    <h3>情况 ∃ · A = ∃x. B（PDF 说"同理可证"，这里补完整推导）</h3>
+<pre>(a) ∃x. B ∈ Ψ
+  ⇒ B[t/x] ∈ Ψ, ∃t ∈ T                               ← Hintikka 规则 11 (δ)
+  ⇒ B[t/x]_H[σ] = T, ∃t ∈ T                          ← 归纳假设 (a)
+  ⇒ B_H[σ[x := t_H[σ]]] = T, ∃t ∈ T                  ← 替换引理
+  ⇒ B_H[σ[x := [t]]] = T, ∃t ∈ T                     ← 引理 3.40
+  ⇒ B_H[σ[x := u]] = T, ∃u ∈ H                       ← 见证类
+  ⇒ (∃x. B)_H[σ] = T                                  ← ∃ 的语义 (有一个见证即真)
+  ⇒ A_H[σ] = T。
+
+(b) ¬(∃x. B) ∈ Ψ
+  ⇒ ¬B[t/x] ∈ Ψ, ∀t ∈ T                              ← Hintikka 规则 12 (γ)
+  ⇒ B[t/x]_H[σ] = F, ∀t ∈ T                          ← 归纳假设 (b)
+  ⇒ B_H[σ[x := t_H[σ]]] = F, ∀t ∈ T                  ← 替换引理
+  ⇒ B_H[σ[x := [t]]] = F, ∀t ∈ T                     ← 引理 3.40
+  ⇒ B_H[σ[x := u]] = F, ∀u ∈ H                       ← 遍历类
+  ⇒ (∃x. B)_H[σ] = F                                  ← ∃ 的语义 (无任何见证则假)
+  ⇒ A_H[σ] = F。</pre>
+
+    <div class="tip">∀ 与 ∃ 的证明结构完全对偶：把 9↔11、10↔12、∀↔∃、T↔F、归纳假设 (a)↔(b) 全部对调即可。</div>
+
+    <h3>定理 3.34 收官</h3>
+    <p>对公式结构归纳完成，所以 H ⊨_σ Ψ。即 Ψ 可满足。<b>定理 3.34 证毕</b>。<span style="float:right;">∎</span></p>
+    <div class="note">这里的 ℍ 就是 Henkin 项模型。它的论域、解释完全由 Ψ 自身决定 → Ψ 自然在它上真。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 H0 收尾 + 下章承接 ========== -->
+<section class="page bg" id="bgH0">
+  <h2>整章收尾 + 下一讲承接</h2>
+  <div class="pgnum">补充背景 · 把成果贴回大图</div>
+  <div class="explain">
+    <h3>本章得到了什么</h3>
+    <div class="tip"><b>定理 3.34</b>：每个 Hintikka 集 Ψ 都有模型（项模型 ℍ ⊨ Ψ）。</div>
+    <p>本章具体路径：</p>
+    <table class="tbl">
+      <tr><th>步骤</th><th>关键定义 / 定理</th></tr>
+      <tr><td>编码工具</td><td>序列数 ⟨·⟩, ep<sub>i</sub>, 算数基本定理, 命题 3.27, 3.29</td></tr>
+      <tr><td>语法 → 算术</td><td>Gödel 码 #X, 定理 3.32（双射 + 可计算）</td></tr>
+      <tr><td>语法自洽集</td><td>定义 3.33 · Hintikka 集 17 条</td></tr>
+      <tr><td>语义对接</td><td>~, 等价类 [t] (def 3.35-3.37), 引理 3.38 congruence</td></tr>
+      <tr><td>项模型</td><td>定义 3.39 · ℍ = (H, σ), 引理 3.40</td></tr>
+      <tr><td>主定理</td><td><b>引理 3.41 · ℍ ⊨_σ Ψ ⇒ 定理 3.34</b></td></tr>
+    </table>
+
+    <h3>下一讲会做什么</h3>
+    <ol>
+      <li>说明"任何一致集都可以扩张成 Hintikka 集"（Lindenbaum-Henkin 式构造）。可能涉及加入新的常元（Henkin witness）使 ∃ 公式都能找到见证项。</li>
+      <li>把"一致集有模型"和"⊢ ⇒ ⊨ 可靠性"结合 → <b>完备性定理</b>：Γ ⊨ A ⇒ Γ ⊢ A。</li>
+      <li>之后可能转向<b>紧致性定理</b>、<b>Löwenheim-Skolem 定理</b>等推论。</li>
+    </ol>
+
+    <h3>对前几章承接点</h3>
+    <table class="tbl">
+      <tr><th>第 9 章用到</th><th>来自</th></tr>
+      <tr><td>结构归纳法（项 / 公式）</td><td>第 6 章 · 结构唯一性定理</td></tr>
+      <tr><td>项替换 A[t/x] 的合法性</td><td>第 6 章 · 替换 + 改名</td></tr>
+      <tr><td>𝕄 = (M, I) 结构与赋值 σ</td><td>第 7 章 · 语义定义</td></tr>
+      <tr><td>替换引理（A[t/x] 的语义 = σ[x:=t_M[σ]] 下 A 的语义）</td><td>第 7 章</td></tr>
+      <tr><td>引理 3.20（Γ ⊨ A ⇔ Γ ∪ {¬A} 不可满足）</td><td>第 7 章 · 在下一讲完备性证明中用到</td></tr>
+      <tr><td>可靠性 ⊢ ⇒ ⊨</td><td>第 8 章 · 在下一讲完备性证明中是另一半</td></tr>
+    </table>
+    <div class="tip">第 6 章给"语法存在"，第 7 章给"语义解释"，第 8 章给"语法 ⇒ 语义"，第 9 章给"语义 ⇐ 语法"（的关键引擎）。整本书的逻辑闭环正在合拢。</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>

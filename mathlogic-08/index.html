@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>数理逻辑 · 第八章 · 一阶逻辑（三）替换引理 讲解</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"◦ ";color:#b8a560;}
+  aside a.merged{color:#9c8c66;font-size:12px;padding-left:18px;}
+  aside a.merged::before{content:"↳ ";color:#bba883;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:left;vertical-align:top;}
+  table.tbl th{background:#f1e7c8;text-align:center;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15.5px;background:#f8f2dc;padding:10px;border-radius:4px;margin:10px 0;}
+  .kbd{font-family:Consolas,monospace;background:#eee2c4;padding:1px 5px;border-radius:3px;border:1px solid #d2c393;font-size:13px;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<aside>
+  <h1>数理逻辑 · 第八章<br>一阶逻辑（三）替换引理</h1>
+  <div style="font-size:12px;color:#7c6a3f;margin-bottom:8px;line-height:1.5;">
+    部分逻辑符号 Edge 渲染不全 ——<br>请用 <b>Chrome</b> 打开。
+  </div>
+  <ol>
+    <li class="group">导言</li>
+    <li><a href="#bg-A0" class="bg">A0 · 全章地图与承接</a></li>
+    <li><a href="#bg-A1" class="bg">A1 · 动机：为何需要</a></li>
+
+    <li class="group">A · 句法替换（复习）</li>
+    <li><a href="#p01" class="skip">1. 封面</a></li>
+    <li><a href="#p02">2. 项的替换</a></li>
+    <li><a href="#p03" class="merged">3.（合并到 p4）</a></li>
+    <li><a href="#p04">4. 公式的替换</a></li>
+
+    <li class="group">B · 引理 3.24（项）</li>
+    <li><a href="#bg-B0" class="bg">B0 · 句法 vs 语义对比</a></li>
+    <li><a href="#p05" class="merged">5.（合并到 p6）</a></li>
+    <li><a href="#p06">6. 引理 3.24 陈述</a></li>
+    <li><a href="#bg-C0" class="bg">C0 · 归纳表怎么读</a></li>
+    <li><a href="#p07" class="merged">7–11.（合并到 p12）</a></li>
+    <li><a href="#p12">12. 项归纳表证明</a></li>
+
+    <li class="group">C · 引理 3.25（公式）</li>
+    <li><a href="#p13" class="merged">13.（合并到 p14）</a></li>
+    <li><a href="#p14">14. 引理 3.25 与策略</a></li>
+    <li><a href="#bg-D0" class="bg">D0 · 7 情况路线图</a></li>
+    <li><a href="#p15" class="merged">15–16.（合并到 p17）</a></li>
+    <li><a href="#p17">17. 情况 1：u ≐ v</a></li>
+    <li><a href="#p18" class="merged">18.（合并到 p19）</a></li>
+    <li><a href="#p19">19. 情况 2：P(t₁,…,tₙ)</a></li>
+    <li><a href="#p20" class="merged">20–21.（合并到 p22）</a></li>
+    <li><a href="#p22">22. 情况 3：¬B</a></li>
+    <li><a href="#p23" class="merged">23–24.（合并到 p25）</a></li>
+    <li><a href="#p25">25. 情况 4：B ∧ C（+ 5）</a></li>
+
+    <li class="group">D · 量词：三个子情况</li>
+    <li><a href="#bg-E0" class="bg">E0 · ∀ 为什么分三支</a></li>
+    <li><a href="#p26" class="merged">26.（合并到 p27）</a></li>
+    <li><a href="#p27">27. 情况 6.1：y = x</a></li>
+    <li><a href="#p28" class="merged">28.（合并到 p29）</a></li>
+    <li><a href="#p29">29. 情况 6.2：无冲突</a></li>
+    <li><a href="#p30" class="merged">30–31.（合并到 p32）</a></li>
+    <li><a href="#p32">32. 情况 6.3：要改名</a></li>
+    <li><a href="#bg-F0" class="bg">F0 · 变量捕获反例</a></li>
+    <li><a href="#p33">33. 情况 7：∃，证毕</a></li>
+
+    <li class="group">E · 推论与收尾</li>
+    <li><a href="#p34">34. 推论：⊨ ∀x.A → A[t/x]</a></li>
+    <li><a href="#bg-G0" class="bg">G0 · 第 9 章预告</a></li>
+  </ol>
+  <div style="margin-top:14px;font-size:12px;color:#9c8c66;border-top:1px solid var(--softline);padding-top:8px;">
+    符号约定：<br>
+    ≐ 等词（U+2250）<br>
+    ≃ 逻辑等价<br>
+    ⊢ 推导（句法）<br>
+    ⊨ 语义结论
+  </div>
+</aside>
+
+<main>
+
+<!-- ========== A0 ========== -->
+<section class="page bg" id="bg-A0">
+  <h2>A0 · 全章地图与第 7 章承接</h2>
+  <div class="pgnum">补充背景 · 进入正文前必看</div>
+  <div class="explain">
+
+    <h3>我们走到哪一步了？</h3>
+<pre>
+第 6 章（语法层）        第 7 章（语义层）          第 8 章（本章）        第 9 章及以后
+─────────────         ─────────────          ─────────────         ─────────────
+字母表 / 项 / 公式     结构 𝕄=(M,I) / 赋值 σ      <b>替换引理</b>             形式推演系统
+自由 / 约束变元        解释 t_M[σ], A_M[σ]        (Lemma 3.24, 3.25)    一阶 G' 类系统
+项替换 s[t/x]          可满足 / 永真              变量捕获的语义证据      ⊢ 与 ⊨ 的桥
+公式替换 A[t/x]        Γ ⊨ A                                            可靠性 / 完备性
+变量捕获 + 改名规则     逻辑等价 ≃ / 等值替换
+</pre>
+
+    <h3>一句话定位</h3>
+    <p>第 6 章我们在「<b>符号串</b>」上定义了句法替换 <code>A[t/x]</code>；第 7 章我们在「<b>数学结构</b>」上定义了赋值 <code>σ</code> 和它的修改 <code>σ[x:=a]</code>。第 8 章要做的事，就是<b>把这两件看似很像、定义却完全独立的东西，正式钉死它们是等价的</b>。这是从「语法操作」过渡到「语义证明」的最后一块拼图。</p>
+
+    <h3>为什么这件事不平凡</h3>
+    <ul>
+      <li>句法替换 <code>A[t/x]</code> 是在 <b>符号串上</b> 做文章——拿剪刀和胶水，把 A 里出现 <code>x</code> 的位置换成项 <code>t</code> 的符号串。</li>
+      <li>语义修改 <code>σ[x:=t_M[σ]]</code> 是在 <b>函数 σ 上</b> 做文章——不动公式 A，只是把赋值函数在 <code>x</code> 这一点的值改成 <code>t</code> 解释出来的那个元素。</li>
+      <li>两件事的载体、操作方式都不一样。它们的结果碰巧总相等，<b>需要证明</b>。</li>
+    </ul>
+
+    <h3>接下来两条主角</h3>
+    <table class="tbl">
+      <tr><th></th><th>引理 3.24（项版本）</th><th>引理 3.25（公式版本）</th></tr>
+      <tr><td>对象</td><td>项 <code>t</code></td><td>公式 <code>A</code></td></tr>
+      <tr><td>等式</td><td><code>(t[s/x])_M[σ] = t_M[σ[x:=s_M[σ]]]</code></td><td><code>(A[t/x])_M[σ] = A_M[σ[x:=t_M[σ]]]</code></td></tr>
+      <tr><td>证法</td><td>对项 t 结构归纳</td><td>对公式 A 结构归纳，分 7 情况</td></tr>
+      <tr><td>难点</td><td>无；机械展开</td><td>量词分 3 子情况，对应改名规则</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ========== A1 ========== -->
+<section class="page bg" id="bg-A1">
+  <h2>A1 · 动机：为什么需要替换引理</h2>
+  <div class="pgnum">补充背景 · 用全称消去当例子</div>
+  <div class="explain">
+
+    <h3>目标场景：全称消去</h3>
+    <p>设 <code>∀x. (x+0 ≐ x)</code> 在算术结构 𝒩 里为真（这是「加零不变」公理）。直觉上我们想说：「既然对所有 x 都成立，那把 x 换成具体项 <code>S(y)·S(y)</code>（即 (y+1)²）也成立」：</p>
+    <div class="formula">𝒩 ⊨ ∀x.(x+0 ≐ x)  &nbsp; ⇒ &nbsp; 𝒩 ⊨ (S(y)·S(y)) + 0 ≐ S(y)·S(y)</div>
+    <p>后者就是 <code>A[t/x]</code> 的形式，其中 <code>A</code> 是 <code>x+0 ≐ x</code>，<code>t</code> 是 <code>S(y)·S(y)</code>。</p>
+
+    <h3>这一步语义上要怎么说清楚？</h3>
+    <ul>
+      <li><code>∀x.A</code> 在 (𝒩, σ) 下为真 = 对任意 <code>a ∈ N</code>，<code>A_𝒩[σ[x:=a]] = T</code>。</li>
+      <li>而我们想要 <code>A[t/x]</code> 为真——这是「<b>把 t 句法上代进去再解释</b>」。</li>
+      <li><code>∀x.A</code> 那条只能直接给我们「<b>把任意元素 a 直接塞给 x 解释 A</b>」。</li>
+    </ul>
+
+    <p>要让这两件事对得上，就需要这么一条断言：</p>
+    <div class="tip">「把 t 句法上代进 A 再解释」恰好等于「<b>先把 t 解释成元素 a = t_M[σ]，再用 σ[x:=a] 解释 A</b>」。</div>
+
+    <p>写成符号：<code>(A[t/x])_M[σ] = A_M[σ[x := t_M[σ]]]</code>。<b>这就是引理 3.25。</b></p>
+
+    <div class="note">后面（第 9 章）一阶推演系统里 ∀⁻ 规则的可靠性，<b>整个就靠这一条</b>。</div>
+  </div>
+</section>
+
+<!-- ========== p1 SKIP ========== -->
+<section class="page" id="p01">
+  <h2>1. 封面</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <p style="color:var(--mute);">「一阶逻辑（三）」标题页，无内容。下一节正式进入「项的替换（复习）」。</p>
+</section>
+
+<!-- ========== p2 ========== -->
+<section class="page" id="p02">
+  <h2>2. 项的替换（复习）</h2>
+  <div class="pgnum">PDF 第 2 页</div>
+  <img class="slide" src="pages/p02.png" alt="p02">
+  <div class="explain">
+
+    <h3>复述：<code>s[t/x]</code> 是什么</h3>
+    <p>「在项 <code>s</code> 中，把所有出现的变元 <code>x</code> 换成项 <code>t</code>」。对 <code>s</code> 的结构归纳定义 4 条：</p>
+
+    <table class="tbl">
+      <tr><th>规则</th><th>形式</th><th>白话</th></tr>
+      <tr><td>(1)</td><td><code>x[t/x] = t</code></td><td>命中要换的变元 → 就换</td></tr>
+      <tr><td>(2)</td><td><code>y[t/x] = y</code>（<code>y ≠ x</code>）</td><td>不是要换的变元 → 不动</td></tr>
+      <tr><td>(3)</td><td><code>c[t/x] = c</code></td><td>常元 → 不动</td></tr>
+      <tr><td>(4)</td><td><code>f(t₁,…,tₙ)[t/x] = f(t₁[t/x],…,tₙ[t/x])</code></td><td>钻进函数应用，逐分量替换</td></tr>
+    </table>
+
+    <h3>算术语言 𝒜 的最小例子</h3>
+    <p>计算 <code>(S(x+y))[S(0)/x]</code>：</p>
+<pre>
+(S(x+y))[S(0)/x]
+= S( (x+y)[S(0)/x] )                规则 (4)，钻进 S
+= S( x[S(0)/x] + y[S(0)/x] )        规则 (4)，钻进 +
+= S( S(0) + y )                     规则 (1) 命中 x；规则 (2) 跳过 y
+</pre>
+
+    <div class="tip"><b>关键提醒</b>：项里 <b>没有量词</b>，所以项的替换 <b>不会有变量捕获问题</b>——纯机械替换，跟字符串替换一样无脑。<br>变量捕获是公式（带量词）才有的烦恼。</div>
+  </div>
+</section>
+
+<!-- ========== p4 (merged p3+p4) ========== -->
+<section class="page" id="p04">
+  <h2>3–4. 公式的替换（复习）</h2>
+  <div class="pgnum">PDF 第 3–4 页（合并到 p4 最终态）</div>
+  <img class="slide" src="pages/p04.png" alt="p04">
+  <div class="explain">
+
+    <h3>前 4 条（原子 + 命题联结词）</h3>
+    <p>和项替换思路一样，钻进去逐个替换：</p>
+    <table class="tbl">
+      <tr><th>规则</th><th>形式</th><th>说明</th></tr>
+      <tr><td>(1)</td><td><code>(t₁ ≐ t₂)[t/x] = (t₁[t/x] ≐ t₂[t/x])</code></td><td>等词原子，左右分别替换</td></tr>
+      <tr><td>(2)</td><td><code>R(t₁,…,tₙ)[t/x] = R(t₁[t/x],…,tₙ[t/x])</code></td><td>关系原子</td></tr>
+      <tr><td>(3)</td><td><code>(¬A)[t/x] = ¬(A[t/x])</code></td><td>钻进否定</td></tr>
+      <tr><td>(4)</td><td><code>(A * B)[t/x] = (A[t/x]) * (B[t/x])</code></td><td>* 取 ∧/∨/→，钻进二元联结词</td></tr>
+    </table>
+
+    <h3>后 3 条（量词）—— 真正的麻烦</h3>
+    <p><code>Q</code> 取 ∀ 或 ∃：</p>
+    <table class="tbl">
+      <tr><th>规则</th><th>条件</th><th>定义</th><th>直觉</th></tr>
+      <tr><td>(5)</td><td>绑变元就是 <code>x</code></td><td><code>(Qx.A)[t/x] = Qx.A</code></td><td>x 已被 Qx 绑死，外面的替换够不着</td></tr>
+      <tr><td>(6)</td><td><code>y ≠ x</code> 且 <code>y ∉ FV(t)</code></td><td><code>(Qy.A)[t/x] = Qy.(A[t/x])</code></td><td>绑的是别的变元、t 里没 y → 安全，直接钻进去</td></tr>
+      <tr><td>(7)</td><td><code>y ≠ x</code> 且 <code>y ∈ FV(t)</code></td><td><code>(Qy.A)[t/x] = Qz.(A[z/y][t/x])</code><br>z 是 ∉ FV(t) 且不在 A 中的最小新变元</td><td>必须改名，否则 t 里的自由 y 会被外层 Qy「捕获」</td></tr>
+    </table>
+
+    <div class="warn"><b>变量捕获预告（详见 F0）</b>：规则 (7) 的条件就是为了防"捕获"。<br>反例：<code>A = ∀y.(x &lt; y)</code>、<code>t = y</code>。<br>若不改名直接套规则 (6)：<code>(∀y.x&lt;y)[y/x] = ∀y.(y&lt;y)</code> ——把原本"对所有 y，x 都比 y 小"扭曲成了"对所有 y，y 都比自己小"。原来自由的 <code>y</code> 被 <code>∀y</code> 抓走了。</div>
+  </div>
+</section>
+
+<!-- ========== B0 ========== -->
+<section class="page bg" id="bg-B0">
+  <h2>B0 · 句法替换 <code>A[t/x]</code> vs 语义修改 <code>σ[x:=a]</code></h2>
+  <div class="pgnum">补充背景 · 整章最容易混的对比</div>
+  <div class="explain">
+    <p>这是整章最容易混的地方。后面所有证明都在这两个东西之间穿梭，先画清楚再继续。</p>
+
+    <table class="tbl">
+      <tr><th>维度</th><th>句法替换 <code>A[t/x]</code></th><th>语义修改 <code>σ[x := a]</code></th></tr>
+      <tr><td>作用对象</td><td>公式（符号串）</td><td>赋值（函数 V → M）</td></tr>
+      <tr><td>是个什么东西</td><td>又一个公式（新符号串）</td><td>又一个赋值（新函数）</td></tr>
+      <tr><td>怎么"算"</td><td>按 7 条句法规则递归剪贴</td><td>在 x 这一点改取 a，其它不变</td></tr>
+      <tr><td>里面的 t / a</td><td><code>t</code> 是一个<b>项</b>（符号）</td><td><code>a</code> 是一个<b>论域元素</b>（数学对象）</td></tr>
+      <tr><td>会"捕获"吗</td><td>会——所以需要规则 (7) 改名</td><td>不会——函数修改没有"捕获"概念</td></tr>
+      <tr><td>典型用法</td><td>表达「把符号 x 换成项 t」</td><td>表达「解释时把 x 临时设为元素 a」</td></tr>
+      <tr><td>何时被定义</td><td>第 6 章语法层</td><td>第 7 章语义层（处理 ∀/∃ 时用）</td></tr>
+    </table>
+
+    <h3>桥</h3>
+    <p>引理 3.24 / 3.25 说的是——「<b>句法替换后再解释</b>」恰好等于「<b>先把那个项解释成具体元素 a，再用语义修改塞给 x</b>」。两条路径殊途同归：</p>
+
+<pre>
+                   ┌──── 句法替换 ────┐
+                   │                  │
+       A ─────────┤                   ├───── 同一个真值 / 同一个元素
+                   │                  │
+                   └──── 语义修改 ────┘
+                              ↑
+                  （t 先解释成 a = t_M[σ]）
+</pre>
+  </div>
+</section>
+
+<!-- ========== p6 (merged p5+p6) ========== -->
+<section class="page" id="p06">
+  <h2>5–6. 替换引理 · 项版本（引理 3.24）</h2>
+  <div class="pgnum">PDF 第 5–6 页（合并到 p6 最终态）</div>
+  <img class="slide" src="pages/p06.png" alt="p06">
+  <div class="explain">
+
+    <h3>引理 3.24</h3>
+    <p>设 (𝕄, σ) 为 ℒ-模型，<code>t, s</code> 为 ℒ-项，则</p>
+    <div class="formula">(t[s/x])<sub>M[σ]</sub> &nbsp;=&nbsp; t<sub>M[σ[x := s<sub>M[σ]</sub>]]</sub></div>
+
+    <p><b>白话</b>：<br>左边——先把项 <code>t</code> 里的 <code>x</code> 换成 <code>s</code>（句法），再在 (𝕄, σ) 下算值。<br>右边——先把 <code>s</code> 在 (𝕄, σ) 下算出值 <code>a = s_M[σ]</code>，再在「σ 改成 σ[x:=a]」的赋值下算 <code>t</code> 的值。<br>两条路径得到 M 中同一个元素。</p>
+
+    <h3>算术语言 𝒜 上验证（PDF 例子）</h3>
+    <p>取 <code>t = S(x+y)</code>、<code>s</code> 留作一般项。</p>
+
+    <h4>左边</h4>
+<pre>
+(S(x+y)[s/x])_M[σ]
+= S(s + y)_M[σ]                    （项替换：x→s，y 不动）
+= s_M[σ] + σ(y) + 1                （项解释：先算 +，外面套 S）
+</pre>
+
+    <h4>右边</h4>
+    <p>令 <code>ρ = σ[x := s_M[σ]]</code>：</p>
+<pre>
+S(x+y)_M[ρ]
+= ρ(x) + ρ(y) + 1                  （项解释）
+= s_M[σ] + σ(y) + 1                （ρ(x) = s_M[σ]；ρ(y) = σ(y) 因 y ≠ x）
+</pre>
+    <p>两边一致。✓</p>
+
+    <h3>预备：项的解释 3 条（用于证明）</h3>
+    <ol>
+      <li><code>x_M[σ] = σ(x)</code>（变元：查赋值表）</li>
+      <li><code>c_M[σ] = c_M</code>（常元：查结构里的常元解释）</li>
+      <li><code>(f(t₁,…,tₙ))_M[σ] = f_M((t₁)_M[σ],…,(tₙ)_M[σ])</code>（函数：先算子项，再喂给结构里的函数解释）</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ========== C0 ========== -->
+<section class="page bg" id="bg-C0">
+  <h2>C0 · 怎么读 p12 那张归纳表</h2>
+  <div class="pgnum">补充背景 · 结构归纳法套路提醒</div>
+  <div class="explain">
+
+    <h3>结构归纳法的本质</h3>
+    <p>项是按 4 条规则递归造出来的——变元 / 常元 / 函数应用。所以要证「所有项 t 都有性质 P」，<b>对这 4 条规则各证一遍</b>就够了。</p>
+
+    <h3>p12 那张表的组织方式</h3>
+<pre>
+左列  =  项 t 的形态（5 种：x, y(≠x), c, f(u), f(t₁,…,tₙ)）
+中列  =  待证等式左边「先句法替换再解释」(t[s/x])_M[σ]
+右列  =  待证等式右边「修改赋值再解释」 t_M[σ[x:=s_M[σ]]]
+</pre>
+
+    <h3>逐行做什么</h3>
+    <p><b>把中列和右列算到同一个东西</b>。</p>
+    <ul>
+      <li>基础情况（变元 / 常元）：一两步直接展开就完事。</li>
+      <li>归纳步（函数应用）：调归纳假设（IH）——「子项 u 上已经成立」——再把外层 f 套回来。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== p12 (merged p7-p12) ========== -->
+<section class="page" id="p12">
+  <h2>7–12. 引理 3.24 的证明 · 归纳表</h2>
+  <div class="pgnum">PDF 第 7–12 页（逐行累积表，合并到 p12 最终态）</div>
+  <img class="slide" src="pages/p12.png" alt="p12">
+  <div class="explain">
+
+    <h3>完整归纳表</h3>
+    <table class="tbl">
+      <tr><th><code>t</code></th><th><code>(t[s/x])_M[σ]</code></th><th><code>t_M[σ[x:=s_M[σ]]]</code></th></tr>
+      <tr>
+        <td><code>x</code></td>
+        <td><code>(x[s/x])_M[σ] = s_M[σ]</code></td>
+        <td><code>σ[x:=s_M[σ]](x) = s_M[σ]</code> ✓</td>
+      </tr>
+      <tr>
+        <td><code>y (≠x)</code></td>
+        <td><code>(y[s/x])_M[σ] = y_M[σ] = σ(y)</code></td>
+        <td><code>σ[x:=s_M[σ]](y) = σ(y)</code>（因 y ≠ x）✓</td>
+      </tr>
+      <tr>
+        <td><code>c</code></td>
+        <td><code>(c[s/x])_M[σ] = c_M[σ] = c_M</code></td>
+        <td><code>c_M[σ[x:=s_M[σ]]] = c_M</code> ✓</td>
+      </tr>
+      <tr>
+        <td><code>f(u)</code></td>
+        <td>
+          <pre style="background:#2a2118;color:#f3ead2;padding:8px;font-size:12.5px;margin:0;">(f(u)[s/x])_M[σ]
+= (f(u[s/x]))_M[σ]
+= f_M( (u[s/x])_M[σ] )
+= f_M( u_M[σ[x:=s_M[σ]]] )  【IH 用在 u 上】</pre>
+        </td>
+        <td><code>f(u)_M[σ[x:=s_M[σ]]] = f_M(u_M[σ[x:=s_M[σ]]])</code> ✓</td>
+      </tr>
+      <tr>
+        <td><code>f(t₁,…,tₙ)</code></td>
+        <td>
+          <pre style="background:#2a2118;color:#f3ead2;padding:8px;font-size:12.5px;margin:0;">(f(t₁,…,tₙ)[s/x])_M[σ]
+= (f(t₁[s/x],…,tₙ[s/x]))_M[σ]
+= f_M( (t₁[s/x])_M[σ],…,(tₙ[s/x])_M[σ] )
+= f_M( (t₁)_M[ρ],…,(tₙ)_M[ρ] )
+  【对每个 tᵢ 用 IH，ρ=σ[x:=s_M[σ]]】</pre>
+        </td>
+        <td><code>f(t₁,…,tₙ)_M[ρ] = f_M((t₁)_M[ρ],…,(tₙ)_M[ρ])</code> ✓</td>
+      </tr>
+    </table>
+
+    <div class="note"><b>PDF 取舍说明</b>：PDF 用 <code>f(u)</code>（一元）代表归纳步的核心思路，最后一行 <code>f(t₁,…,tₙ)</code> 写"同理"。我们这里把多元情况也写出来——本质就是逐个分量分别用 IH，没有新东西。</div>
+
+    <p>归纳证毕。 □</p>
+  </div>
+</section>
+
+<!-- ========== p14 (merged p13+p14) ========== -->
+<section class="page" id="p14">
+  <h2>13–14. 替换引理 · 公式版本（引理 3.25）</h2>
+  <div class="pgnum">PDF 第 13–14 页（合并到 p14 最终态）</div>
+  <img class="slide" src="pages/p14.png" alt="p14">
+  <div class="explain">
+
+    <h3>引理 3.25</h3>
+    <div class="formula">(A[t/x])<sub>M[σ]</sub> &nbsp;=&nbsp; A<sub>M[σ[x := t<sub>M[σ]</sub>]]</sub></div>
+
+    <p><b>白话</b>：和引理 3.24 一模一样的等式，只是把项 <code>t</code>（结果是 M 中元素）换成公式 <code>A</code>（结果是 T/F）。先句法替换再算真值 = 先解释项再修改赋值再算真值。</p>
+
+    <h3>证明策略</h3>
+    <ol>
+      <li>令 <code>ρ = σ[x := t_M[σ]]</code>，目标变成 <code>(A[t/x])_M[σ] = A_M[ρ]</code>。</li>
+      <li>两边取值都在 <code>{T, F}</code> 中，所以<b>只需证两边同真同假</b>：</li>
+    </ol>
+
+    <div class="formula">(*) &nbsp; M ⊨<sub>σ</sub> A[t/x] &nbsp;当且仅当&nbsp; M ⊨<sub>ρ</sub> A</div>
+
+    <p>接下来对公式 <code>A</code> 的结构作归纳证明 (*)。分 7 个情况。</p>
+
+    <div class="tip"><b>为什么换成"同真同假"更好证？</b><br>因为 <code>M ⊨_σ B</code> 的展开形式是一个<b>逻辑命题</b>（"对所有 / 存在 …"、"… 且 …"），可以用归纳假设直接打通；而 <code>B_M[σ] = T</code> 是个元素等式，链式 iff 写起来不顺畅。</div>
+  </div>
+</section>
+
+<!-- ========== D0 ========== -->
+<section class="page bg" id="bg-D0">
+  <h2>D0 · 公式归纳 7 情况路线图</h2>
+  <div class="pgnum">补充背景 · 整个引理 3.25 证明的导航</div>
+  <div class="explain">
+<pre>
+情况 1：A 为 u ≐ v        （原子：等词）          ── 用引理 3.24 直接打通
+情况 2：A 为 P(t₁,…,tₙ)    （原子：关系）          ── 同上，分量上用引理 3.24
+情况 3：A 为 ¬B            （否定）                ── 用 IH 翻一下号
+情况 4：A 为 B ∧ C         （合取）                ── 拆两边，各用一次 IH
+情况 5：A 为 B ∨ C / B → C （析取/蕴含）           ── "同理可证"，略
+情况 6：A 为 ∀y.B           （全称）                ── 三个子情况！
+        6.1  y = x          （绑变元就是 x）         ── 用句法替换规则 (5)
+        6.2  y ≠ x 且 y ∉ FV(t)                    ── 用规则 (6)
+        6.3  y ≠ x 且 y ∈ FV(t)（要改名 z）         ── 用规则 (7)
+情况 7：A 为 ∃y.B           （存在）                ── "同理可证"，略
+</pre>
+    <div class="warn"><b>注意 6.1 / 6.2 / 6.3 三个分支</b>——它们和句法替换规则 (5)(6)(7) <b>一一对应</b>。这是这章最深的设计：句法层为了避免变量捕获引入的三条规则，每条都在语义证明里<b>单独走一个分支</b>，并各自调用不同的语义引理（3.17 自由变元决定真值、IH、改名）。</div>
+  </div>
+</section>
+
+<!-- ========== p17 (case 1, merged p15-17) ========== -->
+<section class="page" id="p17">
+  <h2>15–17. 情况 1：A 为 <code>u ≐ v</code></h2>
+  <div class="pgnum">PDF 第 15–17 页（合并到 p17 最终态）</div>
+  <img class="slide" src="pages/p17.png" alt="p17">
+  <div class="explain">
+
+    <h3>句法规则回顾</h3>
+    <div class="formula">(u ≐ v)[t/x] &nbsp;=&nbsp; (u[t/x] ≐ v[t/x])</div>
+
+    <h3>链式推演</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ (u[t/x] ≐ v[t/x])                       （句法替换规则 (1)）
+iff (u[t/x])_M[σ] = (v[t/x])_M[σ]                 （公式解释：≐ 取 T iff 左右解释相等）
+iff u_M[σ[x:=t_M[σ]]] = v_M[σ[x:=t_M[σ]]]         （<b>引理 3.24</b>，左右各一次）
+iff u_M[ρ] = v_M[ρ]                               （记号：ρ = σ[x:=t_M[σ]]）
+iff M ⊨_ρ (u ≐ v)                                 （公式解释，反着读）
+iff M ⊨_ρ A
+</pre>
+
+    <div class="tip"><b>关键</b>：第 3 行调用引理 3.24——这就是为什么先证 3.24 再证 3.25。原子公式情况里 3.24 直接给出答案。</div>
+  </div>
+</section>
+
+<!-- ========== p19 (case 2) ========== -->
+<section class="page" id="p19">
+  <h2>18–19. 情况 2：A 为 <code>P(t₁,…,tₙ)</code></h2>
+  <div class="pgnum">PDF 第 18–19 页（合并到 p19 最终态）</div>
+  <img class="slide" src="pages/p19.png" alt="p19">
+  <div class="explain">
+
+    <h3>句法规则回顾</h3>
+    <div class="formula">P(t₁,…,tₙ)[t/x] &nbsp;=&nbsp; P(t₁[t/x],…,tₙ[t/x])</div>
+
+    <h3>链式推演</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ P(t₁[t/x],…,tₙ[t/x])                   （句法替换规则 (2)）
+iff ⟨(t₁[t/x])_M[σ],…,(tₙ[t/x])_M[σ]⟩ ∈ P_M      （公式解释：关系原子查 P_M）
+iff ⟨(t₁)_M[ρ],…,(tₙ)_M[ρ]⟩ ∈ P_M                （对每分量用<b>引理 3.24</b>）
+iff M ⊨_ρ P(t₁,…,tₙ)
+iff M ⊨_ρ A
+</pre>
+
+    <p><b>和情况 1 几乎一样</b>，只是把"二元等"换成"n 元元组属于关系"。</p>
+  </div>
+</section>
+
+<!-- ========== p22 (case 3, merged p20-22) ========== -->
+<section class="page" id="p22">
+  <h2>20–22. 情况 3：A 为 <code>¬B</code></h2>
+  <div class="pgnum">PDF 第 20–22 页（合并到 p22 最终态）</div>
+  <img class="slide" src="pages/p22.png" alt="p22">
+  <div class="explain">
+
+    <h3>句法规则回顾</h3>
+    <div class="formula">(¬B)[t/x] &nbsp;=&nbsp; ¬(B[t/x])</div>
+
+    <h3>链式推演</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ ¬(B[t/x])                              （句法替换规则 (3)）
+iff (B[t/x])_M[σ] = F                            （公式解释：¬B 真 iff B 假）
+iff B_M[ρ] = F                                   （<b>归纳假设</b>：B 上引理 3.25 成立）
+iff (¬B)_M[ρ] = T
+iff M ⊨_ρ ¬B
+iff M ⊨_ρ A
+</pre>
+
+    <div class="tip"><b>这是第一个用到归纳假设（IH）的地方</b>：<br><code>B</code> 比 <code>A</code> 更"简单"（结构小一层），按结构归纳法 <code>B</code> 上已经有结论，可以直接用。</div>
+  </div>
+</section>
+
+<!-- ========== p25 (case 4, merged p23-25, +case 5 note) ========== -->
+<section class="page" id="p25">
+  <h2>23–25. 情况 4：A 为 <code>B ∧ C</code>（含情况 5 略证）</h2>
+  <div class="pgnum">PDF 第 23–25 页（合并到 p25 最终态）</div>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+
+    <h3>句法规则回顾</h3>
+    <div class="formula">(B * C)[t/x] &nbsp;=&nbsp; (B[t/x]) * (C[t/x])　&nbsp;&nbsp; * ∈ {∧, ∨, →}</div>
+
+    <h3>链式推演（取 * = ∧）</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ (B[t/x]) ∧ (C[t/x])                    （句法替换规则 (4)）
+iff M ⊨_σ B[t/x]  且  M ⊨_σ C[t/x]               （公式解释：∧ 真 iff 两边都真）
+iff M ⊨_ρ B  且  M ⊨_ρ C                         （<b>对 B 和 C 各用一次 IH</b>）
+iff M ⊨_ρ B ∧ C
+iff M ⊨_ρ A
+</pre>
+
+    <h3>情况 5（∨ / →）</h3>
+    <p>同理。把"且"换成"或" / "如果…那么…"即可，结构完全一样。略。</p>
+  </div>
+</section>
+
+<!-- ========== E0 ========== -->
+<section class="page bg" id="bg-E0">
+  <h2>E0 · ∀ 三个子情况为什么必须这样分</h2>
+  <div class="pgnum">补充背景 · 量词情况的设计动机</div>
+  <div class="explain">
+
+    <h3>核心问题</h3>
+    <p>要证 <code>(∀y.B)[t/x]</code> 的语义等于 <code>(∀y.B)_M[ρ]</code>，其中 <code>ρ = σ[x:=t_M[σ]]</code>。</p>
+    <p>句法层的替换规则在 <code>∀y.B</code> 上 <b>分三种情况</b> 给出不同的"重写结果"——所以语义证明必须 <b>分三种情况</b> 分别打通。</p>
+
+    <table class="tbl">
+      <tr><th>子情况</th><th>句法替换给出</th><th>语义证明的关键工具</th></tr>
+      <tr>
+        <td><b>6.1</b> <code>y = x</code><br>（绑变元恰是要替换的 x）</td>
+        <td><code>(∀x.B)[t/x] = ∀x.B</code><br>替换无效（x 已被 ∀x 绑死）</td>
+        <td>论证 <code>σ[x:=a] = ρ[x:=a]</code> —— 后续 ∀x 又覆盖了 ρ 在 x 处的值</td>
+      </tr>
+      <tr>
+        <td><b>6.2</b> <code>y ≠ x</code> 且 <code>y ∉ FV(t)</code><br>（无冲突）</td>
+        <td><code>(∀y.B)[t/x] = ∀y.(B[t/x])</code><br>直接钻进去</td>
+        <td>用引理 3.17（真值只依自由变元）把 <code>t_M[σ[y:=a]] = t_M[σ]</code>；再交换两个 update 的顺序</td>
+      </tr>
+      <tr>
+        <td><b>6.3</b> <code>y ≠ x</code> 且 <code>y ∈ FV(t)</code><br>（冲突！要捕获了）</td>
+        <td><code>(∀y.B)[t/x] = ∀z.(B[z/y])[t/x]</code><br>z 是全新变元</td>
+        <td>先用 6.2 把 ∀z 处理掉（因 z 不冲突），再用 IH 处理 <code>B[z/y]</code></td>
+      </tr>
+    </table>
+
+    <div class="warn"><b>6.3 是整章的难点</b> —— 它对应"避免变量捕获"那条改名规则。语义上的证明也要绕一圈：先改名、再套娃。</div>
+  </div>
+</section>
+
+<!-- ========== p27 (case 6.1, merged p26+27) ========== -->
+<section class="page" id="p27">
+  <h2>26–27. 情况 6.1：<code>y = x</code></h2>
+  <div class="pgnum">PDF 第 26–27 页（合并到 p27 最终态）</div>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+
+    <p><b>子情况</b>：A 是 <code>∀x.B</code>（绑变元恰是要替换的 x）。</p>
+
+    <h3>关键观察</h3>
+    <div class="formula">对任意 a ∈ M，&nbsp; σ[x := a] &nbsp;=&nbsp; ρ[x := a]</div>
+    <p>因为 <code>ρ</code> 仅在 x 处与 <code>σ</code> 不同，但 <code>[x:=a]</code> 又把 x 处覆盖了。</p>
+
+    <h3>链式推演（句法规则 (5)：<code>(∀x.B)[t/x] = ∀x.B</code>）</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ ∀x.B                                   （句法替换规则 (5)，<b>未发生替换</b>）
+iff (∀x.B)_M[σ] = T
+iff B_M[σ[x:=a]] = T 对所有 a ∈ M                （公式解释：∀ 展开）
+iff B_M[ρ[x:=a]] = T 对所有 a ∈ M                （<b>关键观察</b>：σ[x:=a] = ρ[x:=a]）
+iff M ⊨_ρ ∀x.B
+iff M ⊨_ρ A
+</pre>
+
+    <div class="note"><b>这一情况没有用到 IH</b> —— 本质是：x 一旦被 ∀x 绑住，外层在 x 上做的所有"修改"（不管是 σ→ρ 还是 [t/x]）都被屏蔽了。</div>
+  </div>
+</section>
+
+<!-- ========== p29 (case 6.2, merged p28+29) ========== -->
+<section class="page" id="p29">
+  <h2>28–29. 情况 6.2：<code>y ≠ x</code> 且 <code>y ∉ FV(t)</code></h2>
+  <div class="pgnum">PDF 第 28–29 页（合并到 p29 最终态）</div>
+  <img class="slide" src="pages/p29.png" alt="p29">
+  <div class="explain">
+
+    <p><b>子情况</b>：A 是 <code>∀y.B</code>，y 不是 x，且 t 里没有自由的 y（无冲突）。</p>
+
+    <h3>句法规则 (6)</h3>
+    <div class="formula">(∀y.B)[t/x] &nbsp;=&nbsp; ∀y.(B[t/x])</div>
+
+    <h3>链式推演</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ ∀y.(B[t/x])                                              （规则 (6)）
+iff (B[t/x])_M[σ[y:=a]] = T 对所有 a ∈ M                            （公式解释：∀ 展开）
+iff B_M[ σ[y:=a][x := t_M[σ[y:=a]]] ] = T 对所有 a               （<b>IH</b>：B 上 3.25 成立）
+iff B_M[ σ[y:=a][x := t_M[σ]] ] = T 对所有 a                      （<b>y ∉ FV(t)、引理 3.17</b>：t 不依赖 y）
+iff B_M[ σ[x := t_M[σ]][y:=a] ] = T 对所有 a                      （<b>y ≠ x</b>：两 update 可交换）
+iff B_M[ ρ[y:=a] ] = T 对所有 a ∈ M                                （记号 ρ）
+iff M ⊨_ρ ∀y.B
+iff M ⊨_ρ A
+</pre>
+
+    <h3>三个关键步骤</h3>
+    <ul>
+      <li><b>IH</b>：把 <code>B[t/x]</code> 在 <code>σ[y:=a]</code> 下的真值，搬到 B 在「σ[y:=a] 再 update x」下的真值。</li>
+      <li><b>引理 3.17</b>：「公式 / 项的真值只依赖于自由变元」。因 <code>y ∉ FV(t)</code>，改 σ 在 y 处的值不影响 t 的解释，故 <code>t_M[σ[y:=a]] = t_M[σ]</code>。</li>
+      <li><b>update 交换</b>：当 <code>y ≠ x</code> 时，<code>σ[y:=a][x:=b] = σ[x:=b][y:=a]</code>（两 update 独立）。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== p32 (case 6.3, merged p30-32) ========== -->
+<section class="page" id="p32">
+  <h2>30–32. 情况 6.3：<code>y ≠ x</code> 且 <code>y ∈ FV(t)</code></h2>
+  <div class="pgnum">PDF 第 30–32 页（合并到 p32 最终态）</div>
+  <img class="slide" src="pages/p32.png" alt="p32">
+  <div class="explain">
+
+    <p><b>子情况</b>：A 是 <code>∀y.B</code>，y 不是 x，<b>且 t 里有自由的 y</b> —— 直接钻进去会"捕获"。</p>
+
+    <h3>句法规则 (7)</h3>
+    <div class="formula">(∀y.B)[t/x] &nbsp;=&nbsp; ∀z.(B[z/y])[t/x]　&nbsp; z 是 ∉ FV(t) 且不出现在 A 中的最小变元</div>
+
+    <h3>链式推演</h3>
+<pre>
+M ⊨_σ A[t/x]
+iff M ⊨_σ ∀z.(B[z/y])[t/x]                                        （规则 (7)）
+iff M ⊨_ρ ∀z.(B[z/y])                                              （<b>用情况 6.2</b>：z ≠ x 且 z ∉ FV(t)，符合 6.2 前提）
+iff (B[z/y])_M[ρ[z:=a]] = T 对所有 a ∈ M                           （公式解释：∀ 展开）
+iff B_M[ ρ[z:=a][y := z_M[ρ[z:=a]]] ] = T 对所有 a               （<b>IH</b>：B 上 3.25 成立，把 z 当作"t"，y 当作"x"）
+iff B_M[ ρ[z:=a][y := a] ] = T 对所有 a                          （z_M[ρ[z:=a]] = ρ[z:=a](z) = a）
+iff B_M[ ρ[y := a] ] = T 对所有 a                                （<b>z ∉ FV(B)、引理 3.17</b>：z 上的修改对 B 真值无影响）
+iff M ⊨_ρ ∀y.B
+iff M ⊨_ρ A
+</pre>
+
+    <div class="warn"><b>这是整章最复杂的一步</b>。四层套娃：
+      <ol>
+        <li>句法层先把 <code>∀y</code> 改名成 <code>∀z</code>（z 全新）；</li>
+        <li>用 6.2（合法因为 z 不冲突）把外层 <code>[t/x]</code> 处理掉；</li>
+        <li>再用 IH 把内层 <code>[z/y]</code> 处理掉；</li>
+        <li>用引理 3.17 把临时引入的 z 抹掉。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ========== F0 ========== -->
+<section class="page bg" id="bg-F0">
+  <h2>F0 · 变量捕获 —— 为什么 6.3 必须改名</h2>
+  <div class="pgnum">补充背景 · 具体反例</div>
+  <div class="explain">
+
+    <h3>反例（最简单的）</h3>
+    <p>考虑公式 <code>A = ∃y.(¬(x ≐ y))</code>，意思是"存在某个 y 不等于 x"。在论域至少有 2 个元素的结构里这是永真的。</p>
+    <p>现在做替换 <code>A[y/x]</code>，即把 <code>x</code> 替换成项 <code>y</code>。</p>
+
+    <ul>
+      <li><b>正确做法</b>（按规则 (7)，因为 <code>y ∈ FV(t) = FV(y) = {y}</code>）：先改名 <code>∃y → ∃z</code>，得到 <code>∃z.(¬(x ≐ z))</code>，再替换 <code>x → y</code>，结果 <code>∃z.(¬(y ≐ z))</code> —— 意思是"存在某个 z 不等于 y"，<b>仍然永真</b>。 ✓</li>
+      <li><b>错误做法</b>（违反 (7)，直接套规则 (6)）：得到 <code>∃y.(¬(y ≐ y))</code> —— 意思是"存在某个 y 不等于自己"，<b>永假！</b></li>
+    </ul>
+
+    <div class="warn"><b>这就是"变量捕获"</b>：自由的 y（在替换进来的项里）被外层的 ∃y 抓走，从"自由"变成"绑定"，含义完全扭曲。</div>
+
+    <h3>为什么语义证明里 6.3 一定要改名？</h3>
+    <p>因为只有改了名（z 不在任何地方冲突），我们才能调用情况 6.2 + IH 这两个工具；不改名的话，量词上的赋值修改 <code>σ[y:=a]</code> 会作用到 t 的解释上（因为 <code>y ∈ FV(t)</code>），引理 3.17 那一步就跨不过去了。</p>
+  </div>
+</section>
+
+<!-- ========== p33 (case 7) ========== -->
+<section class="page" id="p33">
+  <h2>33. 情况 7：A 为 <code>∃y.B</code>，同理可证 □</h2>
+  <div class="pgnum">PDF 第 33 页</div>
+  <img class="slide" src="pages/p33.png" alt="p33">
+  <div class="explain">
+
+    <p><b>对偶</b>：∃ 和 ∀ 是对偶的——前者要求"<b>存在</b> a"，后者要求"<b>对所有</b> a"。证明结构完全一样，把"对所有 a 真"换成"存在某个 a 真"即可。三个子情况 7.1 / 7.2 / 7.3 与 6.1 / 6.2 / 6.3 完全平行。</p>
+
+    <h3>关键一行（让你看个意思）</h3>
+<pre>
+M ⊨_σ (∃y.B)[t/x]
+  → ...（按 7.1 / 7.2 / 7.3 分支，各调对应工具）...
+  → 存在 a ∈ M 使 B_M[ρ[y:=a]] = T
+iff M ⊨_ρ ∃y.B
+</pre>
+
+    <p>至此 7 种情况全部走完。<b>引理 3.25 证毕。</b> □</p>
+  </div>
+</section>
+
+<!-- ========== p34 corollary ========== -->
+<section class="page" id="p34">
+  <h2>34. 推论：<code>⊨ ∀x.A → A[t/x]</code></h2>
+  <div class="pgnum">PDF 第 34 页 · 全称消去的语义版</div>
+  <img class="slide" src="pages/p34.png" alt="p34">
+  <div class="explain">
+
+    <h3>命题</h3>
+    <p>对任何公式 <code>A</code>、项 <code>t</code>、变元 <code>x</code>：</p>
+    <div class="formula">⊨ &nbsp; ∀x.A &nbsp;→&nbsp; A[t/x]</div>
+    <p>即：在任何结构 (𝕄, σ) 下，<code>(∀x.A → A[t/x])_M[σ] = T</code>。</p>
+
+    <h3>证明（反证法）</h3>
+    <p>假设存在 (𝕄, σ) 使 <code>(∀x.A → A[t/x])_M[σ] = F</code>。由蕴含的真值条件：</p>
+    <ul>
+      <li><code>(∀x.A)_M[σ] = T</code>，且</li>
+      <li><code>(A[t/x])_M[σ] = F</code>。</li>
+    </ul>
+
+    <h4>情况 1（PDF 写出的）</h4>
+    <p>展开：</p>
+    <ul>
+      <li><code>(∀x.A)_M[σ] = T</code> 意味着对所有 <code>a ∈ M</code>，<code>A_M[σ[x:=a]] = T</code>。</li>
+      <li><code>(A[t/x])_M[σ] = F</code>，由<b>引理 3.25</b>，等于 <code>A_M[σ[x:=t_M[σ]]] = F</code>。</li>
+    </ul>
+    <p>取 <code>a = t_M[σ]</code>（论域里一个具体元素），第一条给出 <code>A_M[σ[x:=t_M[σ]]] = T</code>，第二条给出 <code>= F</code>，<b>矛盾</b>。</p>
+
+    <h4>情况 2（PDF 写"同理可证"）</h4>
+    <p>情况 1 已经完整覆盖了反证假设。PDF 那一句"同理可证"是对替换的另一种代换记号写法（把 x 改作 y）的对偶分析，本质就是上面这一句话。<b>证毕。</b> □</p>
+
+    <div class="tip"><b>这就是后续 ∀⁻ 规则的语义依据</b>：从 <code>Γ ⊨ ∀x.A</code>，立即得到 <code>Γ ⊨ A[t/x]</code>（对任何 t）。</div>
+  </div>
+</section>
+
+<!-- ========== G0 ========== -->
+<section class="page bg" id="bg-G0">
+  <h2>G0 · 收尾 · 第 9 章预告</h2>
+  <div class="pgnum">补充背景 · 替换引理在哪里被用</div>
+  <div class="explain">
+
+    <h3>第 9 章会引入一阶量词的引入 / 消除规则</h3>
+<pre>
+∀⁻ (全称消去):     ∀x.A
+                  ─────────
+                   A[t/x]
+
+∃⁺ (存在引入):     A[t/x]
+                  ─────────
+                    ∃x.A
+
+∀⁺ (全称引入)、∃⁻ (存在消除)：另有"特征变元"侧条件
+</pre>
+
+    <h3>这些规则的可靠性证明（"语法上能推出的，语义上一定成立"）几乎全部直接调用引理 3.25</h3>
+    <ul>
+      <li><code>∀⁻</code> 的可靠性 = 推论 p34；</li>
+      <li><code>∃⁺</code> 的可靠性 = p34 的对偶；</li>
+      <li><code>∀⁺</code>、<code>∃⁻</code> 的可靠性还要配合引理 3.17 处理"特征变元不在自由变元中"那条侧条件。</li>
+    </ul>
+
+    <h3>一句话总结全章</h3>
+    <div class="tip">第 8 章看似只证了两条引理，但它<b>钉死了「句法替换」和「语义赋值修改」在每一处都对得上</b>——这是后面写「语法 ⊢ 推得语义 ⊨」的证明时，每次遇到量词都要拿出来用的核心引理。<br>没有它，一阶逻辑的可靠性 / 完备性证明都迈不开第一步。</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>

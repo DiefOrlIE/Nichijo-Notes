@@ -14,6 +14,9 @@
 ### 数理逻辑 (Mathematical Logic)
 - `mathlogic-06/` — 第 6 讲 一阶逻辑(一)
 - `mathlogic-07/` — 第 7 讲 一阶逻辑(二)
+- `mathlogic-08/` — 第 8 讲 一阶逻辑(三) 替换引理
+- `mathlogic-09/` — 第 9 讲 一阶逻辑(四)
+- `mathlogic-10/` — 第 10 讲 一阶逻辑的自然推理系统 G
 
 ### 研究报告
 - `sleep-whitepaper.html` — 睡眠白皮书 · 横纵分析
