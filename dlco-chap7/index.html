@@ -164,12 +164,12 @@
   <h2>背景：什么是"指令"——从 C 到机器码</h2>
   <div class="pgnum">补充背景 · 进入全章前先建立直觉</div>
   <div class="explain">
-    <p>你写的一行 <code>c = a + b;</code>，CPU 根本看不懂。它最终被编译成一串 0/1，CPU 一次拿出一小段来执行——<b>这一小段就是"一条指令"</b>。</p>
+    <p>你写的一行 <code>c = a + b;</code>，CPU（Central Processing Unit，中央处理器）根本看不懂。它最终被编译成一串 0/1，CPU 一次拿出一小段来执行——<b>这一小段就是"一条指令"</b>。</p>
     <h3>一条指令长什么样</h3>
-    <p>指令由两部分拼起来：<b>操作码（OP）</b>说"要干什么"（加、减、取数、跳转……），<b>地址码</b>说"对谁干 / 结果放哪"。例如 <code>add r0, r1</code> ≈ "把 r1 加到 r0"。</p>
+    <p>指令由两部分拼起来：<b>操作码（OP，Operation Code）</b>说"要干什么"（加、减、取数、跳转……），<b>地址码</b>说"对谁干 / 结果放哪"。例如 <code>add r0, r1</code> ≈ "把 r1 加到 r0"。</p>
     <div class="tip">类比：指令集就是一本"菜谱"，每条指令是一个标准化的操作步骤。CPU 是只会照菜谱机械执行的厨师——菜谱写得越规整，厨师做得越快。</div>
     <h3>为什么要专门学"指令系统设计"</h3>
-    <p>指令系统（ISA）处在<b>软件和硬件的交界面</b>：上面是程序员/编译器，下面是电路。设计它要同时讨好两边——既要硬件好实现、跑得快，又要编译器好生成代码。这一章讲的就是"怎么设计这套约定"。</p>
+    <p>指令系统（ISA，Instruction Set Architecture，指令集体系结构）处在<b>软件和硬件的交界面</b>：上面是程序员/编译器，下面是电路。设计它要同时讨好两边——既要硬件好实现、跑得快，又要编译器好生成代码。这一章讲的就是"怎么设计这套约定"。</p>
   </div>
 </section>
 
@@ -180,12 +180,12 @@
     <p>不用懂电路，只需记住几个"零件"的名字和作用，后面就不会懵：</p>
     <table class="tbl">
       <tr><th>部件</th><th>作用（一句话）</th></tr>
-      <tr><td>PC</td><td class="l">程序计数器：存"下一条指令的地址"，正常每次自动+指令长度</td></tr>
-      <tr><td>IR</td><td class="l">指令寄存器：存"当前正在执行的这条指令"</td></tr>
-      <tr><td>GPRs</td><td class="l">通用寄存器堆：CPU 里一小批超快的"草稿格子"（如 x0~x31）</td></tr>
-      <tr><td>ALU</td><td class="l">算术逻辑单元：真正做加减与或的地方，顺带产生标志位</td></tr>
+      <tr><td>PC</td><td class="l">程序计数器（Program Counter）：存"下一条指令的地址"，正常每次自动+指令长度</td></tr>
+      <tr><td>IR</td><td class="l">指令寄存器（Instruction Register）：存"当前正在执行的这条指令"</td></tr>
+      <tr><td>GPRs</td><td class="l">通用寄存器堆（General-Purpose Registers）：CPU 里一小批超快的"草稿格子"（如 x0~x31）</td></tr>
+      <tr><td>ALU</td><td class="l">算术逻辑单元（Arithmetic Logic Unit）：真正做加减与或的地方，顺带产生标志位</td></tr>
       <tr><td>标志寄存器</td><td class="l">记录上次运算的"副作用"：有没有进位/溢出/为零/为负</td></tr>
-      <tr><td>MAR/MDR</td><td class="l">访存的两个门卫：MAR 放"要访问的地址"，MDR 放"读写的数据"</td></tr>
+      <tr><td>MAR/MDR</td><td class="l">访存的两个门卫：MAR（Memory Address Register，存储器地址寄存器）放"要访问的地址"，MDR（Memory Data Register，存储器数据寄存器）放"读写的数据"</td></tr>
     </table>
     <h3>一条指令的一生（执行周期）</h3>
     <p>取指 → 译码 → 取操作数 → 执行 → 写回结果 → 更新 PC，然后循环。这正是下一页 p4 那张大图要讲的事，先有个印象即可。</p>
@@ -207,7 +207,7 @@
     <ul>
       <li><b>指令系统概述</b>——它是干嘛的</li>
       <li><b>指令系统设计</b>（核心）——操作数及寻址方式 / 操作类型与操作码编码 / 标志信息</li>
-      <li><b>指令设计风格</b>——累加器型 / 栈型 / 通用寄存器型，以及 CISC vs RISC</li>
+      <li><b>指令设计风格</b>——累加器型 / 栈型 / 通用寄存器型，以及 CISC（Complex Instruction Set Computer，复杂指令集计算机）vs RISC（Reduced Instruction Set Computer，精简指令集计算机）</li>
       <li><b>异常和中断机制</b></li>
     </ul>
   </div>
@@ -276,7 +276,7 @@
       <tr><td>一地址</td><td class="l">OP A1</td><td class="l">A1 既是源也是结果；单目运算，或双目时另一数默认在累加器</td></tr>
       <tr><td>二地址</td><td class="l">OP A1 A2</td><td class="l">最常用；两个操作数，其中一个兼作结果地址</td></tr>
       <tr><td>三地址</td><td class="l">OP A1 A2 A3</td><td class="l">RISC 风格；两源一目，互不覆盖</td></tr>
-      <tr><td>多地址</td><td class="l">OP A1 A2 A3 …</td><td class="l">成批数据，如向量/矩阵 SIMD 指令</td></tr>
+      <tr><td>多地址</td><td class="l">OP A1 A2 A3 …</td><td class="l">成批数据，如向量/矩阵 SIMD（Single Instruction Multiple Data，单指令多数据流）指令</td></tr>
     </table>
     <div class="hw">💡 <b>关联习题 6 & 8</b>：地址码个数直接决定操作码占几位。例如 16 位指令、地址码 6 位/个：二地址 OP=16−12=4 位，一地址 OP=16−6=10 位。算"最多多少条指令"全靠这个换算。</div>
   </div>
@@ -303,7 +303,7 @@
     <p>操作数就是指令处理的对象，和高级语言的数据类型对应：</p>
     <ul>
       <li><b>地址(指针)</b>：当无符号整数用来算地址；</li>
-      <li><b>数值</b>：定点数(补码)、浮点数(IEEE754)、十进制(NBCD码)；</li>
+      <li><b>数值</b>：定点数(补码)、浮点数(IEEE754，电气电子工程师学会浮点数标准)、十进制(NBCD 码，Natural Binary Coded Decimal，自然二进制编码的十进制)；</li>
       <li><b>位/位串/字符串</b>：表示文本声音图像。记住单位换算 👇</li>
       <li><b>逻辑(布尔)</b>：按位操作，0假1真。</li>
     </ul>
@@ -319,7 +319,7 @@
   <div class="explain">
     <p>一张对比表，注意两点容易混的地方：</p>
     <ul>
-      <li><b>"字"的定义不同</b>：IA-32 里"字"=16 位（历史包袱，8086 时代定的）；RISC-V 里"字"=32 位。所以看到"字"先问是谁家的。</li>
+      <li><b>"字"的定义不同</b>：IA-32（Intel Architecture 32-bit，英特尔 32 位架构）里"字"=16 位（历史包袱，8086 时代定的）；RISC-V 里"字"=32 位。所以看到"字"先问是谁家的。</li>
       <li>IA-32 浮点用 <b>80 位</b>扩展精度寄存器；RISC-V 用规规矩矩的 32/64 位 IEEE754。</li>
     </ul>
     <div class="note">这页了解即可，不必背全。核心就一句：术语"字"在不同架构下位数不同。</div>
@@ -370,10 +370,10 @@
   <div class="explain">
     <h3>怎么告诉 CPU 用哪种寻址？两条路线</h3>
     <ul>
-      <li><b>(1) 没有专门的寻址方式位</b>：由操作码隐含决定。如 MIPS，一条指令最多一个主存地址、寻址方式就一两种，Load/Store 型机器属于这类。</li>
+      <li><b>(1) 没有专门的寻址方式位</b>：由操作码隐含决定。如 MIPS（Microprocessor without Interlocked Pipeline Stages，无内部互锁流水级的微处理器，一种经典 RISC 架构），一条指令最多一个主存地址、寻址方式就一两种，Load/Store 型机器属于这类。</li>
       <li><b>(2) 有专门的寻址方式位</b>：如 x86，一条指令多个操作数、各自寻址方式不同，所以每个操作数带自己的寻址方式位。</li>
     </ul>
-    <h3>有效地址 EA</h3>
+    <h3>有效地址 EA（Effective Address）</h3>
     <p>EA = 操作数所在存储单元的地址，通过"寻址方式 + 地址码"计算得到。<b>七种基本寻址</b>：立即/直接/间接/寄存器(直接)/寄存器间接/偏移/栈——下一页给出算法和优缺点。</p>
     <div class="hw">💡 <b>习题 8</b> 的指令格式里 Ms/Md 字段，正是"专门的寻址方式位"路线（每个操作数 3 位指定寻址方式）。</div>
   </div>
@@ -569,7 +569,7 @@ Loop: add  $10, $7, $9    <span class="c"># $10 = &amp;A[i]</span>
   <div class="pgnum">补充背景 · 进入 p22 前打通"为什么 if 要先 cmp"</div>
   <div class="explain">
     <p>C 里 <code>if(a&gt;b)</code> 一句，到机器层面要拆成两步：先 <code>cmp</code>（其实是做 a−b 减法），再根据结果跳转。<b>CPU 没有"比较器"，比较 = 减法 + 看标志位。</b></p>
-    <h3>四个标志位（条件码 CC）</h3>
+    <h3>四个标志位（条件码 CC，Condition Code）</h3>
     <table class="tbl">
       <tr><th>标志</th><th>名</th><th>含义</th></tr>
       <tr><td>ZF</td><td>Zero</td><td class="l">结果为 0 则 1</td></tr>
@@ -594,7 +594,7 @@ bz  label        <span class="c"># ZF=1 时转 label，否则顺序执行</span>
       <li>无符号数：A&gt;B ⟺ (ZF=0)·(CF=0)；</li>
       <li>带符号数：A&gt;B ⟺ (ZF=0)·(SF=OF)。</li>
     </ul>
-    <div class="note">标志可存于标志/条件码/状态/PSW 寄存器，也可由指定的通用寄存器存放。还可把"比较+转移"合成一条（如 <code>bgt r1,r2,label</code>）。</div>
+    <div class="note">标志可存于标志/条件码/状态/PSW（Program Status Word，程序状态字）寄存器，也可由指定的通用寄存器存放。还可把"比较+转移"合成一条（如 <code>bgt r1,r2,label</code>）。</div>
   </div>
 </section>
 
@@ -707,7 +707,7 @@ bz  label        <span class="c"># ZF=1 时转 label，否则顺序执行</span>
       <tr><td>通用寄存器型</td><td class="l">操作数可寄存器或存储器</td><td>add A B C</td></tr>
       <tr><td>Load/Store型</td><td class="l">只有 load/store 访存，运算只对寄存器</td><td>add Ra Rb Rc</td></tr>
     </table>
-    <div class="note">代表机器：累加器=最早期机器；栈型=HP 计算器/JVM；通用寄存器型=IA-32/68xxx；Load/Store=SPARC/MIPS/RISC-V。</div>
+    <div class="note">代表机器：累加器=最早期机器；栈型=HP 计算器/JVM（Java Virtual Machine，Java 虚拟机）；通用寄存器型=IA-32/68xxx；Load/Store=SPARC/MIPS/RISC-V。</div>
   </div>
 </section>
 
@@ -730,14 +730,14 @@ bz  label        <span class="c"># ZF=1 时转 label，否则顺序执行</span>
   <div class="pgnum">PDF 第 30 页</div>
   <img class="slide" src="pages/p30.png" alt="p30">
   <div class="explain">
-    <p>按"每条 ALU 指令最多几个存储器地址 / 几个操作数"分类。VAX(CISC) vs MIPS(RISC) 实现 mem[R9]←mem[R10]+mem[R11]：</p>
+    <p>按"每条 ALU 指令最多几个存储器地址 / 几个操作数"分类。VAX（Virtual Address eXtension，DEC 公司经典 CISC 小型机）(CISC) vs MIPS(RISC) 实现 mem[R9]←mem[R10]+mem[R11]：</p>
     <pre>VAX(CISC):  ADDL (R9),(R10),(R11)   <span class="c"># 一条指令！</span>
 
 MIPS(RISC): lw  R1,(R10)
             lw  R2,(R11)
             add R3,R1,R2
             sw  R3,(R9)              <span class="c"># 四条指令</span></pre>
-    <div class="tip">谁 CPI 小？MIPS。CISC 一条指令包山包海但单条很慢；RISC 拆成多条简单指令，每条都快、能流水线。这就是下面 CISC/RISC 之争的起点。</div>
+    <div class="tip">谁 CPI（Cycles Per Instruction，每条指令平均时钟周期数）小？MIPS。CISC 一条指令包山包海但单条很慢；RISC 拆成多条简单指令，每条都快、能流水线。这就是下面 CISC/RISC 之争的起点。</div>
   </div>
 </section>
 
@@ -819,7 +819,7 @@ MIPS(RISC): lw  R1,(R10)
           <li>程序性中断（Exception）：溢出、缺页、越界、越权、非法指令、除数为 0、栈溢出、断点、单步、系统调用等。</li>
         </ul>
       </li>
-      <li><b>外部"中断"</b>（CPU 外部，靠中断请求信号）：实时钟、打印机缺纸、外设就绪、DMA 结束等。</li>
+      <li><b>外部"中断"</b>（CPU 外部，靠中断请求信号）：实时钟、打印机缺纸、外设就绪、DMA（Direct Memory Access，直接存储器存取）结束等。</li>
     </ul>
     <div class="hw">💡 <b>习题 2(1)</b> 概念题里的"内部异常、外部中断、故障(fault)、自陷(trap)、断点"全在这页。</div>
   </div>
@@ -830,7 +830,7 @@ MIPS(RISC): lw  R1,(R10)
   <div class="pgnum">PDF 第 36 页</div>
   <img class="slide" src="pages/p36.png" alt="p36">
   <div class="explain">
-    <p>发生异常/中断后进入 OS 内核处理，处理器状态从<b>用户态→内核态</b>。处理完有三种去向：</p>
+    <p>发生异常/中断后进入 OS（Operating System，操作系统）内核处理，处理器状态从<b>用户态→内核态</b>。处理完有三种去向：</p>
     <ul>
       <li>返回<b>当前</b>指令（重新执行，如缺页处理完）；</li>
       <li>返回<b>下条</b>指令（如系统调用）；</li>
@@ -879,10 +879,10 @@ MIPS(RISC): lw  R1,(R10)
   <h2>背景：为什么学 RISC-V</h2>
   <div class="pgnum">补充背景 · 进入第二讲前的动机</div>
   <div class="explain">
-    <p>第一讲讲的是"通用设计原则"，第二讲拿 <b>RISC-V</b> 当活体标本。为什么挑它？</p>
+    <p>第一讲讲的是"通用设计原则"，第二讲拿 <b>RISC-V</b>（第五代精简指令集，由加州大学伯克利分校发起的开源 ISA）当活体标本。为什么挑它？</p>
     <ul>
       <li><b>开源免费</b>：x86 是 Intel/AMD 的，ARM 要授权费，RISC-V 谁都能用、能改；</li>
-      <li><b>模块化</b>：一个小而稳的核心（RV32I）+ 可选扩展（M 乘除/F 浮点/A 原子/C 压缩…），按需拼装；</li>
+      <li><b>模块化</b>：一个小而稳的核心（RV32I，RISC-V 32-bit base Integer，32 位整数基础指令集）+ 可选扩展（M 乘除/F 浮点/A 原子/C 压缩…），按需拼装；</li>
       <li><b>学术界事实标准</b>：教材、考试都用它，结构干净没历史包袱，适合学原理。</li>
     </ul>
     <div class="tip">设计哲学"大道至简"：基础指令集固定不变，扩展时不影响基础。这正好印证第一讲的 RISC 思想——少而精、规整。你的习题 9~16 几乎全是 RV32I。</div>
@@ -940,7 +940,7 @@ MIPS(RISC): lw  R1,(R10)
   <div class="pgnum">PDF 第 42 页 · ★高频</div>
   <img class="slide" src="pages/p42.png" alt="p42">
   <div class="explain">
-    <p>32 个通用寄存器 x0~x31，每个有个"ABI 别名"。<b>必记这几行</b>：</p>
+    <p>32 个通用寄存器 x0~x31，每个有个"ABI（Application Binary Interface，应用程序二进制接口）别名"。<b>必记这几行</b>：</p>
     <table class="tbl">
       <tr><th>寄存器</th><th>ABI名</th><th>用途</th><th>调用保存?</th></tr>
       <tr><td>x0</td><td>zero</td><td class="l">硬编码 0（读永远是0）</td><td>—</td></tr>
@@ -1014,10 +1014,10 @@ MIPS(RISC): lw  R1,(R10)
       <tr><th>大类</th><th>包含</th></tr>
       <tr><td>整数运算</td><td class="l">移位 Shifts / 算术 / 逻辑 / 比较</td></tr>
       <tr><td>控制转移</td><td class="l">分支 Branch / 跳转链接 Jump&amp;Link</td></tr>
-      <tr><td>系统控制</td><td class="l">同步 / 环境 / 控制状态寄存器 CSR</td></tr>
+      <tr><td>系统控制</td><td class="l">同步 / 环境 / 控制状态寄存器 CSR（Control and Status Register）</td></tr>
       <tr><td>存储访问</td><td class="l">取数 Load / 存数 Store</td></tr>
     </table>
-    <div class="warn"><b>RTL 记号必须看懂</b>（读所有代码题的基础）：<code>R[r]</code>=寄存器 r 内容；<code>M[addr]</code>=存储单元内容；<code>M[R[r]]</code>=以寄存器内容为地址的存储单元；<code>SEXT[imm]</code>=符号扩展，<code>ZEXT[imm]</code>=零扩展；箭头 ← 表示传送（源在右、目的在左）。</div>
+    <div class="warn"><b>RTL（Register Transfer Language，寄存器传输语言）记号必须看懂</b>（读所有代码题的基础）：<code>R[r]</code>=寄存器 r 内容；<code>M[addr]</code>=存储单元内容；<code>M[R[r]]</code>=以寄存器内容为地址的存储单元；<code>SEXT[imm]</code>=符号扩展，<code>ZEXT[imm]</code>=零扩展；箭头 ← 表示传送（源在右、目的在左）。</div>
   </div>
 </section>
 
@@ -1028,10 +1028,10 @@ MIPS(RISC): lw  R1,(R10)
   <div class="explain">
     <p>这张是整数运算的编码全表（U/I/R 型）。不用背编码，但要会"按表查/填"。重点掌握这些指令的<b>功能</b>：</p>
     <ul>
-      <li>算术：<code>add/sub/addi</code>；</li>
-      <li>逻辑：<code>and/or/xor</code> 及其立即数版 <code>andi/ori/xori</code>；</li>
-      <li>移位：<code>sll/srl/sra</code>（逻辑左移/逻辑右移/算术右移）及立即数版 <code>slli/srli/srai</code>；</li>
-      <li>比较：<code>slt/sltu</code>（带符号/无符号小于则置 1）。</li>
+      <li>算术：<code>add/sub/addi</code>（add 加 / sub=subtract 减 / addi=add immediate 加立即数）；</li>
+      <li>逻辑：<code>and/or/xor</code>（and 与 / or 或 / xor=exclusive OR 异或）及其立即数版 <code>andi/ori/xori</code>（带 i 即 immediate 立即数版）；</li>
+      <li>移位：<code>sll/srl/sra</code>（sll=shift left logical 逻辑左移 / srl=shift right logical 逻辑右移 / sra=shift right arithmetic 算术右移）及立即数版 <code>slli/srli/srai</code>；</li>
+      <li>比较：<code>slt/sltu</code>（slt=set less than 带符号小于则置 1 / sltu=set less than unsigned 无符号小于则置 1）。</li>
     </ul>
     <div class="hw">💡 <b>习题 15</b> 全靠这页：<code>b=31&amp;a</code> → <code>andi t1,t0,31</code>；<code>b=65535&amp;a</code> 超出立即数范围 → 用 <code>slli t1,t0,16</code> + <code>srli t1,t1,16</code>（左移再逻辑右移，把高 16 位清零）。</div>
   </div>
@@ -1044,8 +1044,8 @@ MIPS(RISC): lw  R1,(R10)
   <div class="explain">
     <p>U 型共 2 条，专门装"大立即数的高位"：</p>
     <ul>
-      <li><code>lui rd, imm20</code>：把 20 位立即数放进 rd 的<b>高 20 位</b>，低 12 位补 0。配合 <code>addi</code> 可给 32 位变量赋初值。</li>
-      <li><code>auipc rd, imm20</code>：把 imm20 加到 PC 的高 20 位，结果存 rd。<code>auipc x10,0</code> 可取当前 PC。</li>
+      <li><code>lui rd, imm20</code>（lui=load upper immediate，加载高位立即数）：把 20 位立即数放进 rd 的<b>高 20 位</b>，低 12 位补 0。配合 <code>addi</code> 可给 32 位变量赋初值。</li>
+      <li><code>auipc rd, imm20</code>（auipc=add upper immediate to PC，把高位立即数加到 PC）：把 imm20 加到 PC 的高 20 位，结果存 rd。<code>auipc x10,0</code> 可取当前 PC。</li>
     </ul>
     <p>例：<code>int x=-8191;</code> → <code>lui x5,1048574</code> 然后 <code>addi x5,x5,1</code>。</p>
     <div class="hw">💡 <b>习题 9、10 直接考 lui/auipc</b>。理解"高 20 位 + 低 12 位"的拼装是关键，下一页讲它最大的坑。</div>
@@ -1059,7 +1059,7 @@ MIPS(RISC): lw  R1,(R10)
   <div class="explain">
     <p>I 型共 9 条，opcode 都是 <code>0010011</code>，靠 funct3 区分功能：</p>
     <ul>
-      <li>funct3 选 addi/slti/sltiu/xori/ori/andi；</li>
+      <li>funct3 选 addi/slti/sltiu/xori/ori/andi（slti=set less than immediate 立即数小于则置 1，sltiu 为其无符号版）；</li>
       <li>三条移位 slli/srli/srai 用 <b>shamt</b>(5位)指定移位位数（最多移 31 位）；funct3=101 时再由高 7 位区分算术右移(srai)还是逻辑右移(srli)；</li>
       <li><code>imm[11:0]</code> 是 12 位立即数，<b>符号扩展为 32 位</b>后与 R[rs1] 运算，结果存 rd。</li>
     </ul>
@@ -1113,9 +1113,9 @@ MIPS(RISC): lw  R1,(R10)
   <img class="slide" src="pages/p52.png" alt="p52">
   <div class="explain">
     <ul>
-      <li><b>J 型 jal</b>：<code>R[rd]←PC+4; PC←PC+SEXT(imm)&lt;&lt;1</code>。rd=x1(ra) 时是<b>过程调用</b>；rd=x0 时是<b>无条件跳转</b>（因为 x0 丢弃返回地址）。</li>
-      <li><b>I 型 jalr</b>：<code>R[rd]←PC+4; PC←R[rs1]+SEXT(imm)</code>。<code>jalr x0,0(x1)</code> 即<b>过程返回</b>（ret）。</li>
-      <li><b>B 型分支</b>：beq/bne/blt/bge/bltu/bgeu。bltu/bgeu 是无符号比较。目标=PC+SEXT(imm)&lt;&lt;1。</li>
+      <li><b>J 型 jal（jump and link，跳转并链接）</b>：<code>R[rd]←PC+4; PC←PC+SEXT(imm)&lt;&lt;1</code>。rd=x1(ra) 时是<b>过程调用</b>；rd=x0 时是<b>无条件跳转</b>（因为 x0 丢弃返回地址）。</li>
+      <li><b>I 型 jalr（jump and link register，寄存器版跳转并链接）</b>：<code>R[rd]←PC+4; PC←R[rs1]+SEXT(imm)</code>。<code>jalr x0,0(x1)</code> 即<b>过程返回</b>（ret）。</li>
+      <li><b>B 型分支</b>：beq/bne/blt/bge/bltu/bgeu（beq=branch if equal 相等转移、bne=branch if not equal 不等、blt=branch if less than 小于、bge=branch if greater or equal 大于等于，bltu/bgeu 为对应无符号版）。bltu/bgeu 是无符号比较。目标=PC+SEXT(imm)&lt;&lt;1。</li>
     </ul>
     <div class="hw">💡 <b>习题 2(9) + 13 的命门</b>：jal 存返回地址(PC+4 进 ra)=调用；jalr x0 取 ra=返回（<b>返回不需要地址码，地址在 ra</b>）；j label=jal x0=纯跳转。习题 13 里的 <code>j loop</code> 就是 <code>jal x0,loop</code>。<code>&lt;&lt;1</code> 因为指令地址总是 2 的倍数。</div>
   </div>
@@ -1139,8 +1139,8 @@ MIPS(RISC): lw  R1,(R10)
   <img class="slide" src="pages/p54.png" alt="p54">
   <div class="explain">
     <ul>
-      <li><b>I 型 Load（5 条）</b>：<code>R[rd]←M[R[rs1]+SEXT(imm)]</code>。lb/lh/lw 取字节/半字/字（符号扩展）；<b>lbu/lhu</b> 按 0 扩展。</li>
-      <li><b>S 型 Store（3 条）</b>：<code>M[R[rs1]+SEXT(imm)]←R[rs2]</code>。sb/sh 分别写低 8/16 位，sw 写整字。</li>
+      <li><b>I 型 Load（5 条）</b>：<code>R[rd]←M[R[rs1]+SEXT(imm)]</code>。lb（load byte 取字节）/lh（load halfword 取半字）/lw（load word 取字）按符号扩展；<b>lbu/lhu</b> 按 0 扩展。</li>
+      <li><b>S 型 Store（3 条）</b>：<code>M[R[rs1]+SEXT(imm)]←R[rs2]</code>。sb（store byte）/sh（store halfword）分别写低 8/16 位，sw（store word）写整字。</li>
       <li><b>汇编写法</b>：存储地址写成 <code>imm12(rs1)</code>，如 <code>lw t0, 0(a0)</code>。</li>
     </ul>
     <div class="hw">💡 <b>习题 14、16、18</b> 全是 Load/Store 数组遍历。看到 <code>lw t0,0(t1)</code> 就翻译成"以 t1 为地址取一个字到 t0"。Load/Store 是 RISC 唯一能访存的指令——呼应第一讲 RR 工作方式。</div>
@@ -1153,8 +1153,8 @@ MIPS(RISC): lw  R1,(R10)
   <img class="slide" src="pages/p55.png" alt="p55">
   <div class="explain">
     <ul>
-      <li><b>fence / fence.i</b>：屏障指令，RISC-V 用宽松一致性模型，靠它保证存储访问顺序；</li>
-      <li><b>ecall / ebreak</b>：陷阱(trap)指令（自陷），从用户程序陷入 OS 内核(ecall)或调试环境(ebreak)，属"环境"类；</li>
+      <li><b>fence / fence.i</b>（fence=内存屏障 memory fence）：屏障指令，RISC-V 用宽松一致性模型，靠它保证存储访问顺序；</li>
+      <li><b>ecall / ebreak</b>（ecall=environment call 环境调用、ebreak=environment break 环境断点）：陷阱(trap)指令（自陷），从用户程序陷入 OS 内核(ecall)或调试环境(ebreak)，属"环境"类；</li>
       <li><b>csrxxx</b>（6 条）：读写控制状态寄存器 CSR。</li>
     </ul>
     <div class="note">这页对应第一讲 p35 的"自陷/系统调用"。ecall 就是程序主动触发的内部异常（系统调用）。了解功能即可，习题没细考。</div>
@@ -1214,8 +1214,8 @@ addi a0, a0, 1280 <span class="c"># 低 12 位</span></pre>
   <img class="slide" src="pages/p58.png" alt="p58">
   <div class="explain">
     <ul>
-      <li><b>乘法</b> mul/mulh/mulhu/mulhsu：mul 取低 32 位积；mulh(带符号)/mulhu(无符号)/mulhsu(混合)取高 32 位积。</li>
-      <li><b>除法</b> div/divu（商）、rem/remu（余数），带符号/无符号各一套。</li>
+      <li><b>乘法</b> mul/mulh/mulhu/mulhsu（mul=multiply 乘法取低位、mulh=multiply high 取积高位、mulhu 无符号、mulhsu 混合符号）：mul 取低 32 位积；mulh(带符号)/mulhu(无符号)/mulhsu(混合)取高 32 位积。</li>
+      <li><b>除法</b> div（divide 除法，得商）/divu（无符号除）、rem（remainder 余数）/remu（无符号余数），带符号/无符号各一套。</li>
       <li>关键：<b>乘除指令都不检测溢出/异常</b>，直接写结果，由软件自行判断处理。</li>
     </ul>
     <div class="tip">"硬件不管溢出，交给软件"是 RISC 简化哲学的体现。习题 11（乘法实现）、思考题（p60）都与此相关。</div>

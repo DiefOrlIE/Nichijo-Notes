@@ -489,7 +489,7 @@
     </ul>
     <p><b>读操作（组合）</b>：地址有效后经过 access time，DataOut 上数据有效。<br>
     <b>写操作（时序）</b>：WE=1 且 Clk 边沿到，Data In 写入 Address 指定单元。</p>
-    <div class="note">RV32I 把指令和数据放<b>同一个内存</b>（冯·诺依曼）还是<b>分开</b>（哈佛）？<b>本章讲数据通路时分开</b>——单独画"指令存储器 IMem"和"数据存储器 DMem"，因为流水线需要同时读取指令和数据，分开避免冲突。</div>
+    <div class="note">RV32I 把指令和数据放<b>同一个内存</b>（冯·诺依曼）还是<b>分开</b>（哈佛）？<b>本章讲数据通路时分开</b>——单独画"指令存储器 IMem（Instruction Memory）"和"数据存储器 DMem（Data Memory）"，因为流水线需要同时读取指令和数据，分开避免冲突。</div>
   </div>
 </section>
 
@@ -848,7 +848,7 @@
   <div class="explain">
     <h3>五步流水线（设计流程，不是执行流程！）</h3>
     <ol>
-      <li>分析每条指令的功能，用 <b>RTL</b> 描述</li>
+      <li>分析每条指令的功能，用 <b>RTL</b>（Register Transfer Language，寄存器传输语言）描述</li>
       <li>根据功能列出所需元件，考虑互连</li>
       <li>确定每个元件需要哪些控制信号、取啥值</li>
       <li>汇总成<b>"指令 × 控制信号"真值表</b>（控制器设计的核心）</li>
@@ -1903,7 +1903,7 @@
       <li><b>硬连线</b>：直接用组合逻辑电路实现 FSM。<b>速度快，但复杂指令集时电路庞杂。</b></li>
       <li><b>微程序</b>：把每个状态的控制信号编码成微指令，存在 ROM 里，像跑程序一样按 μPC 顺序读出。<b>规整、易修改，但慢。</b></li>
     </ul>
-    <div class="tip"><b>历史背景</b>：CISC 时代（x86、VAX）指令集复杂，普遍用微程序；RISC 时代指令简单，硬连线更快、更主流。现代高性能 CPU 用混合方式。</div>
+    <div class="tip"><b>历史背景</b>：CISC（Complex Instruction Set Computer，复杂指令集）时代（x86、VAX）指令集复杂，普遍用微程序；RISC 时代指令简单，硬连线更快、更主流。现代高性能 CPU 用混合方式。</div>
   </div>
 </section>
 
@@ -2010,7 +2010,7 @@
     <table class="tbl">
       <tr><th>类型</th><th>来源</th><th>例子</th></tr>
       <tr><td><b>内部异常</b></td><td class="l">CPU 内部</td><td class="l">硬故障中断（掉电、线路故障）<br>程序性中断（溢出、缺页、越界、非法指令、除零、系统调用）</td></tr>
-      <tr><td><b>外部中断</b></td><td class="l">CPU 外部</td><td class="l">实时钟、控制台、打印机缺纸、外设就绪、DMA 结束</td></tr>
+      <tr><td><b>外部中断</b></td><td class="l">CPU 外部</td><td class="l">实时钟、控制台、打印机缺纸、外设就绪、DMA（Direct Memory Access，直接存储器存取）结束</td></tr>
     </table>
     <h3>共同特征</h3>
     <p>CPU 暂停当前程序，转去执行"异常处理程序"，处理完返回断点继续。所有的"中断"在硬件上需要类似的机制：<b>保存现场 → 跳处理程序 → 恢复现场 → 返回</b>。</p>
@@ -2028,7 +2028,7 @@
       <li><b>保护断点和程序状态</b>：
         <ul>
           <li>PC 存入栈或专门的"断点寄存器"（RISC-V 用 <code>mepc/sepc</code>，MIPS 用 <code>EPC</code>，x86 压栈）</li>
-          <li>PSW（程序状态字，含条件码、状态位、中断码）存入 EPSWR 或栈（RISC-V 用 <code>mstatus/sstatus</code>，x86 用 <code>EFLAGS</code>）</li>
+          <li>PSW（Program Status Word，程序状态字，含条件码、状态位、中断码）存入 EPSWR 或栈（RISC-V 用 <code>mstatus/sstatus</code>，x86 用 <code>EFLAGS</code>）</li>
         </ul>
       </li>
       <li><b>识别异常事件</b>：软件识别（查询）或硬件识别（向量中断）</li>
@@ -2354,11 +2354,11 @@
     <h3>以 Load 为准分 5 个阶段</h3>
     <table class="tbl">
       <tr><th>阶段</th><th>名字</th><th>做的事</th><th>用的部件</th></tr>
-      <tr><td>1</td><td><b>IF</b></td><td class="l">取指令、PC+4</td><td class="l">IMem, Adder</td></tr>
-      <tr><td>2</td><td><b>ID</b></td><td class="l">译码、读寄存器、立即数扩展</td><td class="l">Decoder, Reg读口, Extender</td></tr>
-      <tr><td>3</td><td><b>EX</b></td><td class="l">ALU 运算 / 算转移目标</td><td class="l">ALU, Adder</td></tr>
-      <tr><td>4</td><td><b>M</b></td><td class="l">读/写数据存储器（如有）</td><td class="l">DMem</td></tr>
-      <tr><td>5</td><td><b>WB</b></td><td class="l">写回寄存器</td><td class="l">Reg写口</td></tr>
+      <tr><td>1</td><td><b>IF</b>（Instruction Fetch，取指）</td><td class="l">取指令、PC+4</td><td class="l">IMem, Adder</td></tr>
+      <tr><td>2</td><td><b>ID</b>（Instruction Decode，译码）</td><td class="l">译码、读寄存器、立即数扩展</td><td class="l">Decoder, Reg读口, Extender</td></tr>
+      <tr><td>3</td><td><b>EX</b>（Execute，执行）</td><td class="l">ALU 运算 / 算转移目标</td><td class="l">ALU, Adder</td></tr>
+      <tr><td>4</td><td><b>M</b>（Memory，访存）</td><td class="l">读/写数据存储器（如有）</td><td class="l">DMem</td></tr>
+      <tr><td>5</td><td><b>WB</b>（Write Back，写回）</td><td class="l">写回寄存器</td><td class="l">Reg写口</td></tr>
     </table>
     <div class="tip"><b>记住这 5 个英文缩写 IF/ID/EX/M/WB</b>——它们贯穿剩下所有流水线讨论。</div>
   </div>
@@ -2443,7 +2443,7 @@
   <img class="slide" src="pages/p118.png" alt="p118">
   <div class="explain">
     <h3>方法</h3>
-    <p>在 R-type 的 Exec 后<b>插入一个空的 Mem 段 (NOP)</b>，让 Wr 推到第 5 段。所有指令现在都是 5 段（IF/ID/EX/M/WB），Wr 永远在第 5 段发生——<b>规则 ② 满足</b>。</p>
+    <p>在 R-type 的 Exec 后<b>插入一个空的 Mem 段 (NOP，no operation，空操作)</b>，让 Wr 推到第 5 段。所有指令现在都是 5 段（IF/ID/EX/M/WB），Wr 永远在第 5 段发生——<b>规则 ② 满足</b>。</p>
     <h3>代价</h3>
     <p>R-type 多了一个空操作周期，单条指令延迟从 4 变 5。但<b>吞吐率不变</b>（仍然每拍出一条），实际开销很小。</p>
     <div class="note"><b>设计取舍</b>：用"小幅增加单条指令延迟"换"流水线规整、易于实现"。这是流水线设计中常见的权衡——把<b>稀有的复杂性硬塞进规则化框架</b>，让公共情况快速。</div>
