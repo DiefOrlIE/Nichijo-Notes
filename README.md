@@ -18,12 +18,11 @@
 - `mathlogic-08/` — 第 8 讲 一阶逻辑(三) 替换引理
 - `mathlogic-09/` — 第 9 讲 一阶逻辑(四)
 - `mathlogic-10/` — 第 10 讲 一阶逻辑的自然推理系统 G
+- `mathlogic-11/` — 第 11 讲 完全性定理(一) · 协调性与极大协调性
 
-### 研究报告
-- `sleep-whitepaper.html` — 睡眠白皮书 · 横纵分析
-
-### 数学速查 / 解题指南
+### 其他芝士
 - `fourier-guide/` — 傅里叶级数 · 快速计算指导
+- `sleep-whitepaper.html` — 睡眠白皮书 · 横纵分析
 
 ## 结构约定
 每个讲稿一个文件夹,内含 `index.html` + `pages/` 原书页面截图。入口 `index.html` 是各讲稿的卡片导航页。

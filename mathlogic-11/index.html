@@ -1,0 +1,2015 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>数理逻辑11 · 完全性定理（一）协调性与极大协调性 · p2–p20 讲解</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 10px;color:var(--accent);font-weight:700;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.skip{color:#aaa089;font-style:italic;}
+  aside a.bg{color:#7c6a3f;}
+  aside a.bg::before{content:"\25e6 ";color:#b8a560;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page.bg{background:#fefbf2;border-color:var(--bg-ribbon-bd);}
+  section.page.bg::before{content:"补充背景";display:inline-block;background:var(--bg-ribbon);
+    color:#6b5826;font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid var(--bg-ribbon-bd);
+    margin-bottom:8px;letter-spacing:1px;}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .slide{display:block;width:100%;border:1px solid var(--line);border-radius:6px;margin:8px 0 18px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:8px;border-radius:4px;margin:8px 0;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<aside>
+  <h1>完全性定理（一）<br>协调性 · 极大协调性</h1>
+  <ol>
+    <li><a href="#p1" class="skip">1. 封面（跳过）</a></li>
+
+    <li class="group">导引 · 全篇地图</li>
+    <li><a href="#bgA0" class="bg">背景A0：完全性在干什么</a></li>
+    <li><a href="#bgA1" class="bg">背景A1：⊢ 与一阶 G 量词规则 / Cut</a></li>
+
+    <li class="group">A · 协调性 Consistency</li>
+    <li><a href="#p2">2. 引言：Henkin 方法三步走</a></li>
+    <li><a href="#p3">3. 定义6.1 协调 / 矛盾</a></li>
+    <li><a href="#bgA2" class="bg">背景A2：矛盾即爆炸</a></li>
+    <li><a href="#p4">4. 命题6.2 四等价 · 陈述</a></li>
+    <li><a href="#p5">5. (1)⇒(2)：Cut 拆出 A</a></li>
+    <li><a href="#p6">6. (2)⇒(3)：矛盾规则</a></li>
+    <li><a href="#p7">7. (3)⇒(4)：令 A=B∧¬B</a></li>
+    <li><a href="#p8">8. (3)⇒(4) 证明树</a></li>
+    <li><a href="#p9">9. (4)⇒(1) 闭合证明树</a></li>
+    <li><a href="#p10">10. 命题6.3 协调的对偶刻画</a></li>
+
+    <li class="group">B · 极大协调性 Maximal</li>
+    <li><a href="#bgA3" class="bg">背景A3：塞到塞不下</a></li>
+    <li><a href="#p11">11. 定义6.4 极大协调</a></li>
+    <li><a href="#p12">12. 命题6.5 陈述</a></li>
+    <li><a href="#p13">13. 命题6.5（带定义对照）</a></li>
+    <li><a href="#p14">14. 命题6.5 证 ⇒</a></li>
+    <li><a href="#p15">15. 命题6.5 证 ⇐</a></li>
+    <li><a href="#p16">16. 命题6.6 完备性 · 证 ⇒</a></li>
+    <li><a href="#p17">17. 命题6.6 · 证 ⇐</a></li>
+    <li><a href="#p18">18. 命题6.7 演绎闭包</a></li>
+
+    <li class="group">C · 通往语义的桥</li>
+    <li><a href="#bgA4" class="bg">背景A4：⊨、可满足、模型</a></li>
+    <li><a href="#p19">19. 命题6.8 可满足 ⇒ 协调</a></li>
+    <li><a href="#p20">20. 命题6.9 安全扩张</a></li>
+  
+    <li><a href="#bg0" class="bg">背景：为什么要等词 &#8784;</a></li>
+    <li class="group">D &middot; Ge 的定义与基本性质</li>
+    <li><a href="#p21">21. 定义6.10 &mdash; Ge=G+3条等词公理</a></li>
+    <li><a href="#p22">22. 约定6.11 &mdash; 矢量记法</a></li>
+    <li><a href="#p23">23. 命题6.12 &mdash; 5条可证矢列</a></li>
+    <li><a href="#p24">24&ndash;27. 命题6.12(2) 证明树（动画）</a></li>
+    <li class="group">E &middot; Ge 与 G 的归约</li>
+    <li><a href="#bg1" class="bg">背景：对证明树做结构归纳</a></li>
+    <li><a href="#p28">28. 命题6.13 &mdash; Ge⟺G 归约</a></li>
+    <li><a href="#p29">29. 归纳基础 (1) Ge公理→G</a></li>
+    <li><a href="#p30">30. 归纳基础 (2) G公理→Ge</a></li>
+    <li><a href="#p31">31. 例 &mdash; ∀R/→R 归约</a></li>
+    <li><a href="#p32">32. 例 &mdash; 归纳假设视角</a></li>
+    <li><a href="#p33">33. 归纳假设+归纳步骤</a></li>
+    <li><a href="#p34">34. 定理6.14 &mdash; 可靠性+完全性目标</a></li>
+  
+    
+<li><a href="#bgC0" class="bg">总地图：我们要走哪条路</a></li>
+
+<li class="group">F · Henkin集与 Lindenbaum 构造</li>
+<li><a href="#p35">35. 定义6.15 Henkin集</a></li>
+<li><a href="#bgC1" class="bg">背景：可数语言 ℵ₀ 与公式枚举</a></li>
+<li><a href="#p36">36. 定6.16 / 理6.17 Lindenbaum链</a></li>
+<li><a href="#p37">37. 六条性质总览</a></li>
+<li><a href="#p38">38. 性质(2) Con(Ψₙ) 归纳证明</a></li>
+<li><a href="#p39">39. 性质(3) Con(Ψ)</a></li>
+<li><a href="#p40">40. 性质(5) 极大性的判据</a></li>
+<li><a href="#p41">41. 性质(5)(6) 极大协调 + Henkin性</a></li>
+
+<li class="group">G · Henkin ⟹ Hintikka</li>
+<li><a href="#bgC2" class="bg">背景：Hintikka集是什么</a></li>
+<li><a href="#p42">42. 定理6.18 命题条件(1)-(5)</a></li>
+<li><a href="#p43">43. 条件1 原子无矛盾</a></li>
+<li><a href="#p44">44. 条件2 ¬¬消去</a></li>
+<li><a href="#p45">45. 条件3 →的分解</a></li>
+<li><a href="#p46">46. 条件4 ¬→的分解</a></li>
+<li><a href="#p47">47. 条件5 ∧的分解</a></li>
+<li><a href="#p48">48. 条件6 ¬∧（6)-(8)</a></li>
+<li><a href="#p49">49. 条件9 ∀的展开</a></li>
+<li><a href="#p50">50. 条件10 ¬∀（见证性登场）</a></li>
+<li><a href="#p51">51. 条件11-17 量词其余 + 等词</a></li>
+
+<li class="group">H · 完全性定理收口</li>
+<li><a href="#bgC3" class="bg">背景：典范模型 / 项模型</a></li>
+<li><a href="#p52">52. 定理6.19 协调⟹可满足</a></li>
+<li><a href="#p53">53. 6.19 四连跳的依据</a></li>
+<li><a href="#p54">54. 命题6.8 可满足⟹协调</a></li>
+<li><a href="#p55">55. 定理6.20 完全性定理</a></li>
+<li><a href="#p56">56. ⇐方向：语义前提</a></li>
+<li><a href="#p57">57. ⇐方向：收口 + 全篇回望</a></li>
+
+  
+    <li class="group">组 I · 完全性的推论</li>
+    <li><a href="#p58">58. 紧致性定理</a></li>
+    <li class="group">组 J · 一阶逻辑的界限</li>
+    <li><a href="#bgD0" class="bg">背景：可判定 / 算法终止</a></li>
+    <li><a href="#p59">59. 不可判定性 &amp; 半可判定性</a></li>
+    <li class="group">组 K · 走向不完全性</li>
+    <li><a href="#bgD1" class="bg">背景：皮亚诺公理直觉</a></li>
+    <li><a href="#p60">60. 皮亚诺算术 PA</a></li>
+    <li><a href="#bgD2" class="bg">背景：哥德尔编码 #A</a></li>
+    <li><a href="#p61">61. 不完全性定理 · 陈述</a></li>
+    <li><a href="#p62">62. 证明梗概(一) Prf/Prov</a></li>
+    <li><a href="#bgD3" class="bg">背景：对角化 / 自指</a></li>
+    <li><a href="#p63">63. 证明梗概(二) 构造 G_F</a></li>
+    <li><a href="#p64">64. 证明梗概(二) 既不可证也不可否证</a></li>
+    <li><a href="#p65">65. 证明梗概(三) 对角化引理构造</a></li>
+    <li><a href="#p66">66. 证明梗概(三) 推导完成</a></li>
+  </ol></aside>
+
+<main>
+
+<!-- ============ p1 SKIP ============ -->
+<section class="page" id="p1">
+  <h2>封面：完全性定理</h2>
+  <div class="pgnum">PDF 第 1 页 · 跳过</div>
+  <p style="color:var(--mute);">纯封面页，只有大标题「完全性定理」。本段从第 2 页正式开讲。整讲的目标，将在下面的「背景A0」里先用直觉讲清楚：所谓完全性，就是要证明 <code>&#8866;</code>（语法上能证）和 <code>&#8872;</code>（语义上为真）这两件事其实是同一件事。</p>
+</section>
+
+<!-- ============ 背景 A0 ============ -->
+<section class="page bg" id="bgA0">
+  <h2>背景A0：这一整讲到底在干什么？</h2>
+  <div class="pgnum">补充背景 · 进入 p2 前必看 · 全篇地图</div>
+  <div class="explain">
+    <h3>一句话目标：把「能证明」和「真」划等号</h3>
+    <p>数理逻辑里有两套完全不同的「⼯具」，描述同一批公式：</p>
+    <table class="tbl">
+      <tr><th>符号</th><th>读法</th><th>它是什么</th><th>这是哪一侧</th></tr>
+      <tr><td><code>&#915; &#8866; A</code></td><td>Gamma 推出 A</td><td class="l">从 <code>&#915;</code> 出发，按推理系统 G 的规则，<b>能搭出一棵证明树</b>到 A</td><td>语法 (syntax)</td></tr>
+      <tr><td><code>&#915; &#8872; A</code></td><td>Gamma 语义蕴含 A</td><td class="l">凡是让 <code>&#915;</code> 全真的解释，<b>也一定让 A 真</b></td><td>语义 (semantics)</td></tr>
+    </table>
+    <p><code>&#8866;</code> 是「<b>形式游戏</b>」：只看符号、按规则推，不管真假。<code>&#8872;</code> 是「<b>意义</b>」：谈模型、谈真。它们长得毫不相干。</p>
+    <div class="tip"><b>完全性定理（Completeness Theorem）</b>断言：对一阶逻辑，这两套刻画<b>完全重合</b>——<code>&#915; &#8872; A</code> 成立 &#8658; <code>&#915; &#8866; A</code> 也成立（凡是真的都能证出来）。再配上反方向已知的<b>可靠性定理（Soundness）</b><code>&#915;&#8866;A &#8658; &#915;&#8872;A</code>（凡能证的都真），两边合起来就是 <code>&#8866; &#8660; &#8872;</code>。</p>
+    <h3>为什么这很了不起？</h3>
+    <p>它意味着：一台只会机械地按规则拼符号的机器，理论上能证出<b>所有</b>语义上为真的东西，不会有「真但永远证不到」的漏网之鱼。Gödel 在 1929/1930 年证明了它（注意：这是「完全性定理」，和他后来更有名的「不完全性定理」是两码事，不要混）。本讲用的是 <b>Henkin（亨金，美国逻辑学家）</b>在 1949 年给出的更简洁的证法。</p>
+    <h3>本讲的三步路线图（贯穿全篇，先记住）</h3>
+    <p>难点在「<code>&#8872; &#8658; &#8866;</code>」这半边。Henkin 的策略不是直接造证明树，而是<b>绕道造模型</b>。换个等价说法：要证「<code>&#915;&#8866;A</code>」，等价于证「<code>&#915;&#8746;{&#172;A}</code> 不可满足（没有模型）」。于是问题变成——<b>给一个协调的公式集，造出一个模型来</b>。三步：</p>
+    <ol>
+      <li><b>第 1 步 · 协调性（本段 p2–p10）</b>：定义「协调 = 推不出矛盾」，把它的各种等价说法摸清。这是「有模型」的<b>必要前提</b>。</li>
+      <li><b>第 2 步 · 极大协调集 + Henkin 集（本段 p11–p20 起头，后续段落继续）</b>：把协调集<b>撑大</b>到「再加任何一条都会矛盾」的极致状态。这种集合信息完整到可以直接读出一个模型。</li>
+      <li><b>第 3 步 · 完全性（后续段落）</b>：用极大协调 Henkin 集造出模型，收口证明 <code>&#8872; &#8658; &#8866;</code>。</li>
+    </ol>
+    <div class="note">本段（p2–p20）只走<b>第 1 步全部 + 第 2 步的零件</b>。你会反复见到「协调 / 矛盾 / 极大协调」这三个词，它们是后面造模型的砖块。看不到「模型」正式登场没关系——最后两页 p19、p20 才第一次把语义侧的桥搭过来。</div>
+  </div>
+</section>
+
+<!-- ============ 背景 A1 ============ -->
+<section class="page bg" id="bgA1">
+  <h2>背景A1：⊢「可证」精确含义 + 一阶 G 系统量词规则速查 + Cut</h2>
+  <div class="pgnum">补充背景 · 进入 p2 前必看 · 全篇隐藏门槛</div>
+  <div class="explain">
+    <p>你学过<b>命题逻辑</b>的 Gentzen 系统 G&#8242;，但本讲全程在<b>一阶</b>系统 G 里推，多了量词规则；而且证明里 <code>Cut</code> 用得非常勤。这一页把这两块门槛补齐，<b>务必看厚</b>，后面每张证明树都建立在这里。</p>
+
+    <h3>1 · 先把 <code>&#8866;</code>（可证 / provable）钉死</h3>
+    <p>本讲的相继式（sequent）写成 <code>&#916; &#8866; A</code>，意思是「<b>以 <code>&#916;</code> 里的公式为前提，能推出 A</b>」。一个相继式「<b>可证（provable）</b>」=存在一棵<b>证明树</b>：树根是这个相继式，每一步都套用 G 的某条规则，所有叶子都是<b>公理</b>（形如 <code>A &#8866; A</code> 的恒真相继式）。</p>
+    <div class="warn"><b>特别注意「空右边」相继式 <code>&#916; &#8866;</code>（右边什么都没有）。</b>它读作「从 <code>&#916;</code> 推出矛盾 / 推出空」，也就是 <code>&#916;</code> 自相矛盾、不一致。整段 p3 起的「<code>&#916;&#8866;</code> 可证」全是这个意思——<b>右边是空的</b>，别看漏了。它是「矛盾」的形式定义，记牢。</p>
+
+    <h3>2 · 一阶 G 系统的四条量词规则速查</h3>
+    <p>下面表里 <code>A(t)</code> 表示把 <code>A(x)</code> 中的 <code>x</code> 替换成项 <code>t</code>；<code>A(y)</code> 里的 <code>y</code> 是<b>新变元（eigenvariable，本征变元）</b>，要求 <code>y</code> 不在相继式别处自由出现——这个「新鲜」条件是量词规则的灵魂。<code>L</code>=作用在 <code>&#8866;</code> 左边（前提侧），<code>R</code>=作用在右边（结论侧）。</p>
+    <table class="tbl">
+      <tr><th>规则</th><th>形态（上＝前提，下＝结论）</th><th>读法 / 直觉</th></tr>
+      <tr><td><code>&#8704;L</code></td><td class="l"><code>&#916;, A(t) &#8866; &#920;</code> &#8658; <code>&#916;, &#8704;x A(x) &#8866; &#920;</code></td><td class="l">前提里有「所有 x 都 A」，就能取<b>任一具体项 t</b> 实例化用</td></tr>
+      <tr><td><code>&#8704;R</code></td><td class="l"><code>&#916; &#8866; A(y), &#920;</code> &#8658; <code>&#916; &#8866; &#8704;x A(x), &#920;</code></td><td class="l">要证「对所有 x」，只需对一个<b>任取的新变元 y</b> 证出来（y 不许在别处露面）</td></tr>
+      <tr><td><code>&#8707;L</code></td><td class="l"><code>&#916;, A(y) &#8866; &#920;</code> &#8658; <code>&#916;, &#8707;x A(x) &#8866; &#920;</code></td><td class="l">前提「存在 x 使 A」，给那个 x 起个<b>新名字 y</b> 当作已知来用</td></tr>
+      <tr><td><code>&#8707;R</code></td><td class="l"><code>&#916; &#8866; A(t), &#920;</code> &#8658; <code>&#916; &#8866; &#8707;x A(x), &#920;</code></td><td class="l">要证「存在 x」，只需<b>给出一个见证项 t</b> 把 A(t) 证出来</td></tr>
+    </table>
+    <div class="tip">记忆口诀：<b>「左全 / 右存 用具体项 t（可挑），右全 / 左存 用新变元 y（不能挑，被迫任取）」</b>。直觉：你能<b>挑</b>实例的（∀L 的前提随便选 t、∃R 给个见证），就用具体项；你<b>说不准是哪个</b>的（要对所有 x 成立、或只知存在某 x），就引一个干净的新变元 y 代表「任意 / 那个」。<b>这一段 p2–p20 其实几乎不直接动量词规则</b>（命题层面的协调性证明用 ¬L、∧L、∧R 居多），但量词规则是整讲后半造 Henkin 集的核心，先建立印象。</div>
+
+    <h3>3 · Cut 规则——本段的主力武器</h3>
+    <p><code>Cut</code>（割规则）让你把一个<b>中间引理</b>接进证明：</p>
+    <div class="formula">&#916; &#8866; A&nbsp;&nbsp;&nbsp;&nbsp;&#915;, A &#8866; &#920;<br>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; Cut<br>&#916;, &#915; &#8866; &#920;</div>
+    <p>读法：左边证出了 A；右边<b>假设 A 当前提</b>推出了 <code>&#920;</code>。Cut 把 A 当「中转站」消掉，得到不含 A 的合并结论。<b>直觉就是日常推理里的「三段论 / 引理替换」</b>：我先证出 A，再用 A 去证目标，那我整体就证出了目标。</p>
+    <div class="note">本段里 Cut 出现的两个典型姿势，先有个印象，到具体页会再点：<br>· <b>p5</b>：手上有 <code>&#916; &#8866;</code>（矛盾）和 <code>&#916; &#8866; A</code>，用 Cut 把它们拼成 <code>&#916; &#8866; A</code> 形态的扩展——「既然能推出矛盾，那随便什么 A 都能推出来」。<br>· <b>p20</b>：从「<code>&#916;, A &#8866;</code> 可证」配合 <code>&#916; &#8866; A</code>，Cut 出 <code>&#916; &#8866;</code>，说明 <code>&#916;</code> 自身矛盾。</p>
+  </div>
+</section>
+
+<!-- ============ p2 ============ -->
+<section class="page" id="p2">
+  <h2>引言：Henkin 方法与本讲三步</h2>
+  <div class="pgnum">PDF 第 2 页</div>
+  <img class="slide" src="pages/p02.png" alt="p2">
+  <div class="explain">
+    <h3>这页在说什么</h3>
+    <p>本页是全讲的「作者的话」，交代了三件事：<b>谁证的、用谁的方法、分几步走</b>。</p>
+    <ul>
+      <li><b>谁证的</b>：完全性定理由 <b>K. G&ouml;del（哥德尔）</b>在 20 世纪 30 年代证明，是数理逻辑的基本定理之一。</li>
+      <li><b>用谁的方法</b>：本讲证的是「<b>带等词（with equality）的一阶谓词演算</b>」的完全性，采用 <b>Henkin（亨金）</b>20 世纪 50 年代的方法，核心工具是<b>极大协调集</b>。</li>
+      <li><b>「带等词」是什么意思</b>：就是逻辑里多一个特殊的二元谓词 <code>=</code>（相等），并配上它该满足的公理（自反、对称、传递、可替换）。这让我们能谈「两个对象是同一个」。本段不展开等词细节，先知道系统叫 <code>Ge</code>（e = equality，带等词的一阶谓词演算）即可。</li>
+    </ul>
+    <h3>三步路线（和背景A0 完全对应）</h3>
+    <ol>
+      <li>首先引入无穷公式集的<b>协调性（consistency）和极大协调性（maximal consistency）</b> &#8212;&#8594; 本段 p3–p18；</li>
+      <li>然后定义带等词的一阶谓词演算 <code>Ge</code> &#8212;&#8594; 后续段落；</li>
+      <li>最后证明完全性定理 &#8212;&#8594; 后续段落。</li>
+    </ol>
+    <div class="tip">本段（p2–p20）= 第一步「协调性 / 极大协调性」的全部主体。你现在站在地图的起点。</div>
+  </div>
+</section>
+
+<!-- ============ p3 ============ -->
+<section class="page" id="p3">
+  <h2>定义6.1：协调 Con 与矛盾 Incon</h2>
+  <div class="pgnum">PDF 第 3 页</div>
+  <img class="slide" src="pages/p03.png" alt="p3">
+  <div class="explain">
+    <h3>核心定义（本讲的奠基词）</h3>
+    <table class="tbl">
+      <tr><th>术语</th><th>英文全称</th><th>记号</th><th>定义</th></tr>
+      <tr><td>矛盾</td><td>inconsistent</td><td><code>Incon(&#915;)</code></td><td class="l">存在 <code>&#915;</code> 的<b>有穷子集 &#916;</b>，使 <code>&#916; &#8866;</code> 在 G 中<b>可证</b>（右边空！见背景A1）</td></tr>
+      <tr><td>协调</td><td>consistent</td><td><code>Con(&#915;)</code></td><td class="l"><code>&#915;</code> <b>不矛盾</b>，即没有任何有穷子集能推出空（推不出矛盾）</td></tr>
+    </table>
+    <div class="warn"><b>三个易错点，逐一点破：</b><br>① <b>「矛盾」是对相继式 <code>&#916;&#8866;</code> 的可证性下的定义</b>，不是「集合里同时有 A 和 ¬A」这种朴素印象——虽然 <code>{A,¬A}</code> 正是最典型的矛盾集（见下例）。<br>② <b>为什么只要求「有穷子集」？</b> 因为证明树是有限的，一次推导只能用到有限条前提。所以谈矛盾，只需盯住某个有穷子集能否推出空即可，<code>&#915;</code> 本身可以是无穷集。<br>③ <b>Con / Incon 是「集合的性质」</b>，不是某条公式的性质。主语永远是一个公式集 <code>&#915;</code>。</div>
+    <h3>例：<code>{A, &#172;A}</code></h3>
+    <p>它的有穷子集就是自己。直觉上 A 和「非 A」摆在一起当然矛盾——形式上，确实能搭出 <code>A, &#172;A &#8866;</code>（右边空）的证明树。<b>这棵树长什么样，正是 p9 要画的</b>，到那里你会看到它怎么用 <code>&#172;L</code> 一步合上。所以这个例子不是随口举的，它是后面 (4)⇒(1) 证明的原型。</p>
+  </div>
+</section>
+
+<!-- ============ 背景 A2 ============ -->
+<section class="page bg" id="bgA2">
+  <h2>背景A2：为什么「矛盾」=「能证出任何东西」？爆炸原理</h2>
+  <div class="pgnum">补充背景 · 进入 p4 前必看</div>
+  <div class="explain">
+    <p>p4 的命题6.2 会把「矛盾」翻来覆去给出 4 种等价说法，其中最反直觉的是 (3)：<b>「对任何公式 A，都能从 &#916; 推出 A」</b>。第一次看会懵：矛盾怎么会等于「啥都能证」？这一页先用直觉打通。</p>
+    <h3>爆炸原理（Principle of Explosion，拉丁名 ex falso quodlibet「从假可推出任何东西」）</h3>
+    <p>核心断言：<b>一旦系统里能推出矛盾，它就废了——任何公式（包括最荒谬的）都能被证出来。</b></p>
+    <div class="tip">生活化类比：假设你接受了「今天既下雨又没下雨」这个矛盾。那么——「如果今天下雨或者 2+2=5，至少有一个成立」（因为下雨成立）；可你又接受「今天没下雨」；两者一逼，就只能得出「2+2=5」。<b>矛盾像一把万能钥匙，能撬开任何结论的锁。</b>这正是为什么我们如此在意「协调性」：一个会爆炸的系统，证出什么都不稀奇，毫无信息量。</div>
+    <h3>形式上为什么成立（预告 p5）</h3>
+    <p>如果 <code>&#916; &#8866;</code>（推出矛盾 / 空）可证，那么对<b>任意</b> A，把这个矛盾当「左前提」、配上平凡的 <code>&#916;, A &#8866; A</code>，用一次 <code>Cut</code> 就能得到 <code>&#916; &#8866; A</code>。矛盾在手，A 随便挑。<b>这就是 p5 那张 Cut 证明树要干的事</b>，到那页你会看到符号版。</p>
+    <div class="note">记住这条直觉链：<b>矛盾 &#8660; 推出空 &#8660; 能推出任意公式 &#8660; 能推出「任意公式 A 及其否定 ¬A」</b>。命题6.2 的四个等价，本质就是把这条链的每一环写成相继式语言。</div>
+  </div>
+</section>
+
+<!-- ============ p4 ============ -->
+<section class="page" id="p4">
+  <h2>命题6.2：矛盾的 4 个等价刻画（陈述）</h2>
+  <div class="pgnum">PDF 第 4 页</div>
+  <img class="slide" src="pages/p04.png" alt="p4">
+  <div class="explain">
+    <h3>四条等价命题（先读懂在说什么）</h3>
+    <p>命题6.2 说：对公式集 <code>&#915;</code>，下面 4 点<b>互相等价</b>（任一成立则全部成立）。<code>&#916;</code> 一律指 <code>&#915;</code> 的某个有穷子集。</p>
+    <table class="tbl">
+      <tr><th></th><th>内容</th><th>白话</th></tr>
+      <tr><td>(1)</td><td class="l"><code>Incon(&#915;)</code></td><td class="l">&#915; 矛盾（定义本身）</td></tr>
+      <tr><td>(2)</td><td class="l">存在公式 A 与有穷 &#916;，使 <code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 都可证</td><td class="l">能找到<b>某一个</b> A，它和它的否定都能证出来</td></tr>
+      <tr><td>(3)</td><td class="l">对<b>任何</b>公式 A，存在有穷 &#916; 使 <code>&#916;&#8866;A</code> 可证</td><td class="l">啥都能证（爆炸，见背景A2）</td></tr>
+      <tr><td>(4)</td><td class="l">对<b>任何</b>公式 A，存在有穷 &#916; 使 <code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 都可证</td><td class="l">对每个 A，A 和 ¬A 都能证</td></tr>
+    </table>
+    <div class="note"><b>(2) 和 (4) 的差别是「存在一个 A」对「对所有 A」</b>：(2) 只要求找得到某一个自相矛盾的 A；(4) 要求每个 A 都如此。(3) 和 (4) 的差别是「只证 A」对「A 和 ¬A 都证」。环状证明的妙处在于：看似一个比一个强，但绕一圈发现它们等价。</div>
+    <h3>证明策略：环形 (1)⇒(2)⇒(3)⇒(4)⇒(1)</h3>
+    <p>证 4 个命题等价，标准手法是排成一个<b>环</b>，逐个推下去，回到起点即全部打通。本页先迈第一步 <b>(1)⇒(2)</b>，并给出文字版：<code>&#916;&#8866;</code> 可证 &#8658; <code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 可证。<b>怎么从「推出空」变出「推出 A」，下一页 p5 用 Cut 补上那张树。</b></p>
+  </div>
+</section>
+
+<!-- ============ p5 ============ -->
+<section class="page" id="p5">
+  <h2>(1)⇒(2)：用 Cut 从「矛盾」拆出任意 A</h2>
+  <div class="pgnum">PDF 第 5 页 · 本组讲最透的一步</div>
+  <img class="slide" src="pages/p05.png" alt="p5">
+  <div class="explain">
+    <h3>目标</h3>
+    <p>已知 <code>Incon(&#915;)</code>，即有有穷子集 <code>&#916;</code> 使 <code>&#916; &#8866;</code>（空右边）可证。要造出某个 A 使 <code>&#916; &#8866; A</code> 可证（进而 <code>&#172;A</code> 同理，得到 (2)）。</p>
+    <h3>逐行拆解页面那棵 Cut 树</h3>
+    <p>页上的树（记号还原，<code>&#916;<sub>i</sub></code> 是真正用到的那个有穷子集，<code>&#916;&#8726;&#916;<sub>i</sub></code> 是 <code>&#916;</code> 里没用到的部分，靠「弱化」补进来凑齐）：</p>
+    <div class="formula">&#916;&#8726;&#916;<sub>i</sub>, &#916;<sub>i</sub> &#8866;&nbsp;&nbsp;&nbsp;&nbsp;&#916;<sub>i</sub> &#8866; A, &#916;<sub>i</sub><br>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; Cut<br>&#916;&#8726;&#916;<sub>i</sub>, &#916;<sub>i</sub> &#8866; A</div>
+    <ul>
+      <li><b>左前提 <code>&#916; &#8866;</code></b>（即 <code>&#916;&#8726;&#916;<sub>i</sub>, &#916;<sub>i</sub> &#8866;</code>）：这是已知的矛盾证明，右边是空的。它充当 Cut 的「证出了被割公式」那一支——准确说，矛盾相继式可以视作「证出了任意 A」的源头。</li>
+      <li><b>右前提 <code>&#916;<sub>i</sub> &#8866; A, &#916;<sub>i</sub></code></b>：这是平凡可得的（右边出现了想要的 A，靠弱化 / 公理即可凑出），把 A 引进来。</li>
+      <li><b>Cut 一刀</b>：把中间公式消掉，下方得到 <code>&#916; &#8866; A</code>。<b>A 是我们随便挑的</b>——这正兑现了背景A2 的爆炸直觉：矛盾在手，任意 A 可证。</li>
+    </ul>
+    <div class="tip"><b>抓住主线就够了：</b>Cut 的作用是「用一个已证的矛盾，把任意目标 A 接到结论上」。<code>&#916;&#8726;&#916;<sub>i</sub></code> 这种集合切分只是技术上把「实际用到的有穷子集」和「凑数的部分」分开记账，<b>不影响理解</b>，第一次看可以略过细节。把同样的树对 <code>&#172;A</code> 再走一遍，就同时得到 <code>&#916;&#8866;A</code> 和 <code>&#916;&#8866;&#172;A</code>，(2) 成立。</p>
+    <div class="note"><b>这是本组唯一逐行讲透的一步。</b>后面 (2)⇒(3)⇒(4)⇒(1) 三步，PPT 自己也多用「同理」「令 A=…」快速带过，我也照此略讲——重点的 Cut 套路你已经在这页吃透了。</div>
+  </div>
+</section>
+
+<!-- ============ p6 ============ -->
+<section class="page" id="p6">
+  <h2>(2)⇒(3)：矛盾规则一步爆炸</h2>
+  <div class="pgnum">PDF 第 6 页 · 略讲</div>
+  <img class="slide" src="pages/p06.png" alt="p6">
+  <div class="explain">
+    <h3>这步在干什么</h3>
+    <p>已知 (2)：有某个 A 使 <code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 都可证。要得 (3)：对<b>任意</b> B，<code>&#916;&#8866;B</code> 可证。页面三行推导：</p>
+    <ol>
+      <li><code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 可证；</li>
+      <li>&#8658; <code>&#916;&#8866;</code> 可证（<b>矛盾规则</b>：A 和 ¬A 同时被证，就推出空）；</li>
+      <li>&#8658; <code>&#916;&#8866;B</code> 可证，对任何 B。</li>
+    </ol>
+    <div class="tip"><b>「矛盾规则」</b>就是把「同时证出 A 和 ¬A」收口成「证出空（矛盾）」的那条规则——它是 p9 那张 <code>&#172;L + &#8743;R + Cut</code> 组合的打包简称。一旦落到 <code>&#916;&#8866;</code>（空），再套 p5 的 Cut 套路就能挂上任意 B。<b>这正是背景A2 爆炸原理的形式兑现</b>：矛盾 &#8658; 啥都能证。</div>
+    <p>略讲理由：核心机械（矛盾收口 + Cut 挂任意公式）和 p5 同源，无新意，PPT 也只列三行。</p>
+  </div>
+</section>
+
+<!-- ============ p7 ============ -->
+<section class="page" id="p7">
+  <h2>(3)⇒(4)：令 A = B∧¬B 的巧劲</h2>
+  <div class="pgnum">PDF 第 7 页 · 略讲</div>
+  <img class="slide" src="pages/p07.png" alt="p7">
+  <div class="explain">
+    <h3>这步的巧妙代换</h3>
+    <p>已知 (3)：对任意公式都能证。要得 (4)：对任意 B，<code>&#916;&#8866;B</code> 且 <code>&#916;&#8866;&#172;B</code> 都可证。技巧是：</p>
+    <ul>
+      <li>对任意 B，<b>令 A = B&#8743;&#172;B</b>（B 合取非 B，一个内建矛盾的公式），代入 (3) 得 <code>&#916; &#8866; B&#8743;&#172;B</code> 可证。</li>
+      <li>从 <code>&#916;&#8866;B&#8743;&#172;B</code> 出发，<b>拆合取</b>就能分别得到 <code>&#916;&#8866;B</code> 和 <code>&#916;&#8866;&#172;B</code>。</li>
+    </ul>
+    <div class="note"><b>为什么挑 <code>B&#8743;&#172;B</code> 这个怪公式？</b>因为 (3) 给的是「任意单个公式可证」，而 (4) 要的是「B 和 ¬B 成对可证」。把这一对<b>打包进一个合取式</b> <code>B&#8743;&#172;B</code> 喂给 (3)，再用合取规则拆开，就一举得到两半。这是逻辑证明里常见的「用合取把两个目标捆成一个」的手法。<b>怎么从 <code>&#916;&#8866;B&#8743;&#172;B</code> 拆出 <code>&#916;&#8866;B</code>，下一页 p8 给那张 <code>&#8743;L + Cut</code> 的树。</b></div>
+  </div>
+</section>
+
+<!-- ============ p8 ============ -->
+<section class="page" id="p8">
+  <h2>(3)⇒(4)：拆合取的证明树</h2>
+  <div class="pgnum">PDF 第 8 页 · 略讲</div>
+  <img class="slide" src="pages/p08.png" alt="p8">
+  <div class="explain">
+    <h3>页上那棵树读法</h3>
+    <div class="formula">B, &#172;B &#8866; B<br>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; &#8743;L&nbsp;&nbsp;&nbsp;&nbsp;&#916; &#8866; B&#8743;&#172;B<br>B&#8743;&#172;B &#8866; B<br>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; Cut<br>&#916; &#8866; B</div>
+    <ul>
+      <li><b>左上 <code>B,&#172;B &#8866; B</code></b>：是公理（左边出现了 B，右边也是 B，平凡成立）。</li>
+      <li><b><code>&#8743;L</code> 一步</b>：把左边的 <code>B, &#172;B</code> 两条前提合并成一条合取前提 <code>B&#8743;&#172;B</code>，得 <code>B&#8743;&#172;B &#8866; B</code>。<code>&#8743;L</code>（合取左规则）的作用就是「左边有合取式，可拆成它的合取支当前提」，这里反过来用作合并。</li>
+      <li><b>右边 <code>&#916; &#8866; B&#8743;&#172;B</code></b>：来自 p7 把 <code>A=B&#8743;&#172;B</code> 代入 (3) 得到的已证相继式。</li>
+      <li><b>Cut</b>：以 <code>B&#8743;&#172;B</code> 为中转，左右一割，得 <code>&#916; &#8866; B</code>。对 <code>&#172;B</code> 同理另证一棵，(4) 成立。</li>
+    </ul>
+    <div class="tip">看树的通法：<b>从下往上读结论怎么来</b>——最下面是想要的 <code>&#916;&#8866;B</code>，它由一次 Cut 得到，Cut 的两个上方前提分别在左右两支里被证出。只要每支顶端都落到公理或已知，整棵树就成立。</div>
+  </div>
+</section>
+
+<!-- ============ p9 ============ -->
+<section class="page" id="p9">
+  <h2>(4)⇒(1)：闭合环路的完整证明树</h2>
+  <div class="pgnum">PDF 第 9 页 · 略讲</div>
+  <img class="slide" src="pages/p09.png" alt="p9">
+  <div class="explain">
+    <h3>最后一步：回到起点 (1)</h3>
+    <p>已知 (4)：对任意 A，<code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 都可证。要得 (1)：<code>Incon(&#915;)</code>，即 <code>&#916;&#8866;</code>（空）可证。页面这棵树同时用上 <code>&#172;L、&#8743;L、&#8743;R、Cut</code>，是本组最完整的一棵：</p>
+    <div class="formula">A &#8866; A<br>&#8212;&#8212;&#8212;&#8212;&#8212; &#172;L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#916;&#8866;A&nbsp;&nbsp;&#916;&#8866;&#172;A<br>A, &#172;A &#8866;&nbsp;&nbsp;&nbsp;&nbsp;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; &#8743;R<br>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; &#8743;L&nbsp;&nbsp;&nbsp;&#916; &#8866; A&#8743;&#172;A<br>A&#8743;&#172;A &#8866;<br>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; Cut<br>&#916; &#8866;</div>
+    <ul>
+      <li><b>左支</b>：从公理 <code>A&#8866;A</code> 用 <code>&#172;L</code>（否定左规则：把右边的 A 翻到左边变成 ¬A）得 <code>A,&#172;A&#8866;</code>，再用 <code>&#8743;L</code> 合并成 <code>A&#8743;&#172;A &#8866;</code>。这一支证出「<code>A&#8743;&#172;A</code> 自相矛盾」。</li>
+      <li><b>右支</b>：拿 (4) 给的 <code>&#916;&#8866;A</code> 和 <code>&#916;&#8866;&#172;A</code>，用 <code>&#8743;R</code>（合取右规则：两边各证一个合取支，合成合取式）得 <code>&#916; &#8866; A&#8743;&#172;A</code>。这一支证出「<code>&#916;</code> 能推出 <code>A&#8743;&#172;A</code>」。</li>
+      <li><b>Cut 收口</b>：以 <code>A&#8743;&#172;A</code> 为中转，把「<code>&#916;</code> 推出它」和「它自相矛盾」一割，得 <code>&#916; &#8866;</code>（空）&#8212;&#8212; 正是 <code>Incon(&#915;)</code>。环路闭合，4 个命题全部等价。&#9633;</li>
+    </ul>
+    <div class="note"><b>回头看 p3 的例 <code>{A,¬A}</code></b>：这棵树的左支 <code>A&#8866;A &#8658; A,&#172;A&#8866;</code> 正是它矛盾的形式证明。当初埋的伏笔在这里收掉了。</div>
+  </div>
+</section>
+
+<!-- ============ p10 ============ -->
+<section class="page" id="p10">
+  <h2>命题6.3：协调 Con 的对偶 4 刻画</h2>
+  <div class="pgnum">PDF 第 10 页 · 快速带过</div>
+  <img class="slide" src="pages/p10.png" alt="p10">
+  <div class="explain">
+    <h3>「同理可证」是什么意思</h3>
+    <p>命题6.3 把命题6.2 的四条<b>逐条取否定</b>，就得到「协调 <code>Con(&#915;)</code>」的等价刻画。因为 <code>Con = &#172;Incon</code>，对 6.2 两边同时否定即可，无需重证。对照表：</p>
+    <table class="tbl">
+      <tr><th>6.2（矛盾 Incon）</th><th>6.3（协调 Con）= 取否定</th></tr>
+      <tr><td class="l">(1) Incon(&#915;)</td><td class="l">(1) Con(&#915;)</td></tr>
+      <tr><td class="l">(2) <b>存在</b> A 与 &#916;，<code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 可证</td><td class="l">(2) 对任何有穷 &#916;，<code>&#916;&#8866;</code> <b>不可证</b></td></tr>
+      <tr><td class="l">(3) 对任何 A，<code>&#916;&#8866;A</code> 可证</td><td class="l">(3) 对任何 A、任何有穷 &#916;，<code>&#916;&#8866;A</code> 不可证<b>或</b> <code>&#916;&#8866;&#172;A</code> 不可证</td></tr>
+      <tr><td class="l">(4) 对任何 A，<code>&#916;&#8866;A</code> 且 <code>&#916;&#8866;&#172;A</code> 可证</td><td class="l">(4) <b>存在</b> A，使对任何有穷 &#916;，<code>&#916;&#8866;A</code> 不可证</td></tr>
+    </table>
+    <div class="tip"><b>取否定的机械规律</b>：「存在」&#8596;「对任何」对调，「可证」&#8596;「不可证」对调，「且」&#8596;「或」对调（德摩根）。逐条照此翻转即可，所以 PPT 只写「我们同理可证」一句话。<b>读这页只需确认你能把每一条对上号</b>，证明本身就是 6.2 的镜像。</div>
+    <p>到此「<b>组 A · 协调性</b>」结束：你已掌握协调 / 矛盾的定义和它们的多种等价说法。接下来进入<b>组 B · 极大协调性</b>，把协调集往大里撑。</p>
+  </div>
+</section>
+
+<!-- ============ 背景 A3 ============ -->
+<section class="page bg" id="bgA3">
+  <h2>背景A3：极大协调 =「塞到塞不下」的集合</h2>
+  <div class="pgnum">补充背景 · 进入 p11 前必看</div>
+  <div class="explain">
+    <p>接下来三页（p11–p18）围绕「<b>极大协调（maximal consistent）</b>」展开。这个词第一次见容易抽象，先建立一张直觉图。</p>
+    <h3>直觉图：往袋子里塞公式</h3>
+    <p>把公式集 <code>&#915;</code> 想成一个袋子，里面装着一些公式，且<b>保持协调</b>（不打架、推不出矛盾）。现在你不断往里塞新公式，规则是：<b>每塞一条都不能破坏协调性</b>。</p>
+    <ul>
+      <li>能塞的就塞进去；会导致矛盾的就跳过。</li>
+      <li>一直塞，塞到<b>再也塞不进任何一条新公式</b>（任何还没进袋的公式，一塞就矛盾）。</li>
+      <li>这个「<b>满到极限、再加任何一条都会爆</b>」的协调集，就叫<b>极大协调集</b>。</li>
+    </ul>
+    <div class="tip"><b>「极大」不是指元素个数最多，而是指「在协调的前提下，无法再被任何更大的协调集真包含」。</b>形式定义（p11 会给）：<code>Con(&#915;)</code>，且任何协调集 <code>&#916;</code> 只要包含 <code>&#915;</code>，就必有 <code>&#915;=&#916;</code>（你已经到顶，没有更大的协调集能套住你）。</div>
+    <h3>为什么要费劲构造这种集合？</h3>
+    <p>因为极大协调集「<b>信息完整</b>」：对<b>每一个</b>公式 A，它要么含 A、要么含 ¬A，绝不含糊（这正是 p16 命题6.6 的「完备性」）。这种「对一切命题都表了态」的集合，<b>恰好能当成一个模型的蓝图</b>——把「A 在集合里」读成「A 为真」，就读出了一个解释。这是第 3 步造模型的关键砖块。本段先把它的性质摸清，模型留待后续段落。</p>
+    <div class="note">三页的分工预告：<b>p12–15（命题6.5）</b>给一个好用的等价判据「协调 + 凡是能安全加入的就已在里面」；<b>p16–17（命题6.6）</b>给最锋利的判据「协调 + 对每个 A，A 或 ¬A 必居其一」（完备性）；<b>p18（命题6.7）</b>说极大协调集等于自己的演绎闭包（能证出来的都已在里面）。</div>
+  </div>
+</section>
+
+<!-- ============ p11 ============ -->
+<section class="page" id="p11">
+  <h2>定义6.4：极大协调（maximal consistent）</h2>
+  <div class="pgnum">PDF 第 11 页</div>
+  <img class="slide" src="pages/p11.png" alt="p11">
+  <div class="explain">
+    <h3>正式定义</h3>
+    <p><code>&#915;</code> 为<b>极大协调的（maximal consistent）</b>，指同时满足：</p>
+    <ol>
+      <li><b>(1) <code>Con(&#915;)</code></b>：&#915; 本身协调；<b>且</b></li>
+      <li><b>(2)</b> 对任何公式集 <code>&#916;</code>，若 <code>Con(&#916;)</code> 且 <code>&#915; &#8838; &#916;</code>，则 <code>&#915; = &#916;</code>。</li>
+    </ol>
+    <div class="tip">(2) 字面意思：<b>任何协调的「超集」都只能是自己</b>。换言之，没有比 &#915; 更大的协调集真包含它——这就是背景A3「塞到塞不下」的形式化。一个集合若还能在保持协调下扩大，它就<b>不是</b>极大的。</div>
+    <div class="warn"><b>易错</b>：定义里 (2) 量化的是「公式<b>集</b> &#916;」（拿整个集合比较），这是「极大」最原始的刻画。但直接用它判定很笨重（要遍历所有超集）。所以紧接着 p12 的命题6.5 会把它换成只需「逐条公式 A」检验的等价判据，好用得多。<b>定义6.4 是「标准」，命题6.5/6.6 是「趁手的等价工具」。</b></div>
+  </div>
+</section>
+
+<!-- ============ p12 ============ -->
+<section class="page" id="p12">
+  <h2>命题6.5：极大协调的逐条判据（陈述）</h2>
+  <div class="pgnum">PDF 第 12 页</div>
+  <img class="slide" src="pages/p12.png" alt="p12">
+  <div class="explain">
+    <h3>把「比集合」换成「比单条公式」</h3>
+    <p>命题6.5：<code>&#915;</code> 为极大协调 <b>当且仅当</b>：</p>
+    <ol>
+      <li><b>(1) <code>Con(&#915;)</code></b>；<b>且</b></li>
+      <li><b>(2)</b> 对任何公式 A，<b>若 <code>Con(&#915; &#8746; {A})</code>，则 <code>A &#8712; &#915;</code>。</li>
+    </ol>
+    <div class="tip"><b>(2) 的读法（极重要）</b>：「<b>凡是能安全加进来（加了仍协调）的公式 A，其实早就在 &#915; 里了</b>。」这正是「塞不下」的逐条版——如果还有某个 A 能协调地加入却不在袋中，那袋子就没满，不是极大。<b>对比定义6.4</b>：6.4 拿「整个超集 &#916;」比较，6.5 只拿「单条公式 A」比较，后者验证起来轻便得多，是后续证明的实际工具。</div>
+    <p>这页只给陈述。证明分 <b>⇒</b>（p14）和 <b>⇐</b>（p15）两半，p13 先把定义6.4 调出来贴在一起方便对照。</p>
+  </div>
+</section>
+
+<!-- ============ p13 ============ -->
+<section class="page" id="p13">
+  <h2>命题6.5：与定义6.4 并排对照</h2>
+  <div class="pgnum">PDF 第 13 页 · 过渡页</div>
+  <img class="slide" src="pages/p13.png" alt="p13">
+  <div class="explain">
+    <h3>为什么把定义贴出来</h3>
+    <p>本页把<b>定义6.4（极大协调的原始定义，比集合）</b>用虚线框调出来，摆在<b>命题6.5（逐条判据，比单条公式）</b>下方。这是讲义的体贴排版：接下来 p14/p15 要证「6.4 &#8660; 6.5」，证明里会频繁在两个版本间来回引用，并排放着方便随时对照。</p>
+    <div class="note">读这页只需建立一个对应直觉：<br>· 定义6.4 (2)：「任何协调<b>超集</b> &#916; &#8839; &#915; 都等于 &#915;」&#8212;&#8212; 整体视角；<br>· 命题6.5 (2)：「任何能协调加入的<b>单条</b> A 都已在 &#915;」&#8212;&#8212; 逐点视角。<br>两者等价的直觉：一个集合若每一条「能加的」都已加了，它当然没法再被更大的协调集真包含；反之亦然。下面两页把这个直觉做实。</div>
+  </div>
+</section>
+
+<!-- ============ p14 ============ -->
+<section class="page" id="p14">
+  <h2>命题6.5 证明：⇒ 方向</h2>
+  <div class="pgnum">PDF 第 14 页</div>
+  <img class="slide" src="pages/p14.png" alt="p14">
+  <div class="explain">
+    <h3>⇒：设 &#915; 极大协调，证逐条判据成立</h3>
+    <p>要证：若 <code>Con(&#915;&#8746;{A})</code>，则 <code>A&#8712;&#915;</code>。推理链（页面三行）：</p>
+    <ol>
+      <li>&#915; 极大协调 &#8658; 首先 <code>Con(&#915;)</code>（判据的 (1) 直接拿到）。</li>
+      <li>现设 <code>Con(&#915;&#8746;{A})</code>。注意 <code>&#915; &#8838; &#915;&#8746;{A}</code>（加一条 A 后的集合当然包含原 &#915;），且这个超集协调。</li>
+      <li>套<b>定义6.4 的 (2)</b>（协调超集必等于自己）&#8658; <code>&#915;&#8746;{A} = &#915;</code> &#8658; <code>A &#8712; &#915;</code>。&#10003;</li>
+    </ol>
+    <div class="tip"><b>这一步的钥匙</b>：把「<code>&#915;&#8746;{A}</code>」看成定义6.4 里那个「协调超集 &#916;」。极大性逼它等于 &#915;，于是新加的 A 只能本来就在 &#915; 里。<b>逐条判据其实是定义里「比集合」在「单条扩张」这个特例上的直接推论。</b></div>
+  </div>
+</section>
+
+<!-- ============ p15 ============ -->
+<section class="page" id="p15">
+  <h2>命题6.5 证明：⇐ 方向</h2>
+  <div class="pgnum">PDF 第 15 页</div>
+  <img class="slide" src="pages/p15.png" alt="p15">
+  <div class="explain">
+    <h3>⇐：设逐条判据成立，证 &#915; 极大协调</h3>
+    <p>已知 <code>Con(&#915;)</code>，且「对任何 A，<code>Con(&#915;&#8746;{A}) &#8658; A&#8712;&#915;</code>」。要证 &#915; 满足定义6.4，即任何协调超集都等于自己。用<b>反证法</b>：</p>
+    <ol>
+      <li>设 <code>Con(&#916;)</code> 且 <code>&#915; &#8838; &#916;</code>，<b>假设 &#915; &#8800; &#916;</b>（即真包含），那就存在某 <code>A &#8712; &#916; &#8722; &#915;</code>（&#916; 里有、&#915; 里没有的一条）。</li>
+      <li>因为 <code>&#915;&#8746;{A} &#8838; &#916;</code>，而 &#916; 协调，<b>协调集的子集仍协调</b>，故 <code>Con(&#915;&#8746;{A})</code>。</li>
+      <li>套逐条判据 &#8658; <code>A&#8712;&#915;</code>。但我们选的 A 是「&#916; 里有、&#915; 里没有」的，<code>A&#8713;&#915;</code> &#8212;&#8212; <b>矛盾</b>！</li>
+      <li>故假设不成立，<code>&#915;=&#916;</code>，定义6.4 满足。&#10003;</li>
+    </ol>
+    <div class="note"><b>第 2 步用到一个常识却关键的事实</b>：协调集的任何子集仍协调（子集能推出的，超集也能推出；超集都不矛盾，子集更不会）。这条会在后面反复默用。<b>反证法的套路</b>：假设还能真扩张 &#8658; 抓出一条新元素 A &#8658; 用判据证明 A 早该在 &#915; 里 &#8658; 和「A 是新的」打架。</div>
+  </div>
+</section>
+
+<!-- ============ p16 ============ -->
+<section class="page" id="p16">
+  <h2>命题6.6：完备性判据 · ⇒ 方向</h2>
+  <div class="pgnum">PDF 第 16 页</div>
+  <img class="slide" src="pages/p16.png" alt="p16">
+  <div class="explain">
+    <h3>最锋利的判据登场</h3>
+    <p>命题6.6：<code>&#915;</code> 为极大协调 <b>当且仅当</b>：</p>
+    <ol>
+      <li><b>(1) <code>Con(&#915;)</code></b>；<b>且</b></li>
+      <li><b>(2)</b> 对任何公式 A，<b><code>A&#8712;&#915;</code> 或 <code>&#172;A&#8712;&#915;</code></b>。</li>
+    </ol>
+    <div class="tip"><b>(2) 叫「完备性（completeness，此处指集合对每个命题都表了态）」</b>：对<b>每一个</b>公式，&#915; 要么收了它、要么收了它的否定，<b>绝不两头空</b>。这是背景A3 说的「信息完整」的精确版，也是后面把极大协调集读成模型的命根子——每个命题真假都已被钉死。</div>
+    <h3>⇒ 证明（反证法）</h3>
+    <ol>
+      <li>设 &#915; 极大协调。(1) 易见。证 (2)：<b>假设有 A 使 <code>A&#8713;&#915;</code> 且 <code>&#172;A&#8713;&#915;</code></b>（两头空）。</li>
+      <li>由命题6.5（逆否用）：A 不在 &#915; 里 &#8658; <code>Incon(&#915;&#8746;{A})</code>；同理 <code>Incon(&#915;&#8746;{&#172;A})</code>。<b>（两个都加不进去，因为加进去会矛盾）</b></li>
+      <li>于是存在 &#915; 的有穷子集 <code>&#916;<sub>1</sub>, &#916;<sub>2</sub></code>，使 <code>&#916;<sub>1</sub>,A &#8866;</code> 和 <code>&#916;<sub>2</sub>,&#172;A &#8866;</code> 都可证。</li>
+      <li>两者拼起来（A 与 ¬A 各自导致矛盾，合并消去 A）&#8658; <code>&#916;<sub>1</sub>,&#916;<sub>2</sub> &#8866;</code> 可证 &#8658; <code>Incon(&#915;)</code> &#8212;&#8212; 与 &#915; 协调<b>矛盾</b>。</li>
+    </ol>
+    <div class="note">第 4 步的「拼起来」直觉：A 加进去爆炸、¬A 加进去也爆炸，说明 &#915; 自己其实已经卡在一个「A 真假都容不下」的死局——那只能是 &#915; 本身就有毛病（不协调）。这一步背后又是 Cut / 矛盾规则那套，PPT 略去细节。</div>
+  </div>
+</section>
+
+<!-- ============ p17 ============ -->
+<section class="page" id="p17">
+  <h2>命题6.6：完备性判据 · ⇐ 方向</h2>
+  <div class="pgnum">PDF 第 17 页</div>
+  <img class="slide" src="pages/p17.png" alt="p17">
+  <div class="explain">
+    <h3>⇐：由「协调 + 每个 A 表态」推出极大协调</h3>
+    <p>已知 (1) <code>Con(&#915;)</code> 和 (2)「对任何 A，<code>A&#8712;&#915;</code> 或 <code>&#172;A&#8712;&#915;</code>」。要证 &#915; 极大协调。借<b>命题6.5</b>，只需证：若 <code>Con(&#915;&#8746;{A})</code>，则 <code>A&#8712;&#915;</code>。推理：</p>
+    <ol>
+      <li>由 (2)，<code>A&#8712;&#915;</code> 或 <code>&#172;A&#8712;&#915;</code>，二者必居其一。</li>
+      <li>但<b>「<code>&#172;A&#8712;&#915;</code>」和「<code>Con(&#915;&#8746;{A})</code>」打架</b>：若 &#172;A 已在 &#915; 里，那 <code>&#915;&#8746;{A}</code> 就同时含 A 和 ¬A，必矛盾，违反前提 <code>Con(&#915;&#8746;{A})</code>。</li>
+      <li>故 <code>&#172;A&#8713;&#915;</code>，由 (1) 那个「或」只能<b>落在 <code>A&#8712;&#915;</code> 这边</b>。&#10003;</li>
+    </ol>
+    <div class="tip">这半边比上半边轻松：完备性 (2) 给了「A 或 ¬A 必有一个在」的强保证，只要排除掉「¬A 在」的情形（它和「加 A 仍协调」直接冲突），就只剩「A 在」。<b>命题6.6 是 p16+p17 合起来的双向证明</b>，至此「极大协调 &#8660; 协调 + 完备性」打通。</div>
+  </div>
+</section>
+
+<!-- ============ p18 ============ -->
+<section class="page" id="p18">
+  <h2>命题6.7：极大协调集 = 自己的演绎闭包</h2>
+  <div class="pgnum">PDF 第 18 页 · 组 B 收尾</div>
+  <img class="slide" src="pages/p18.png" alt="p18">
+  <div class="explain">
+    <h3>这条性质说什么</h3>
+    <p>命题6.7：设 &#915; 极大协调，A 为公式，则——<b>存在 &#915; 的有穷子集 &#916; 使 <code>&#916;&#8866;A</code> 可证 &#8660; <code>A&#8712;&#915;</code>。</b></p>
+    <div class="tip">白话：<b>对极大协调集来说，「能证出来」和「已经在里面」是一回事。</b>它已经吸收了自己能推出的一切公式，没有「能证但还没收进来」的遗漏。数学上这叫 &#915; 等于自己的<b>演绎闭包（deductive closure，一个集合连同它能推出的所有公式）</b>——极大协调集是<b>演绎闭合</b>的。</div>
+    <h3>⇒ 证明（反证）</h3>
+    <ol>
+      <li>设 <code>&#916;&#8866;A</code> 可证。<b>假设 <code>A&#8713;&#915;</code></b>，由命题6.6/6.5 知 <code>Incon(&#915;&#8746;{A})</code>，即有有穷 <code>&#916;&#8242;&#8838;&#915;</code> 使 <code>&#916;&#8242;,A &#8866;</code> 可证。</li>
+      <li>手上同时有 <code>&#916;&#8866;A</code>（A 能被证）和 <code>&#916;&#8242;,A&#8866;</code>（有了 A 就矛盾），<b>Cut 掉 A</b> &#8658; <code>&#916;,&#916;&#8242; &#8866;</code> 可证 &#8658; <code>Incon(&#915;)</code> &#8212;&#8212; 与 <code>Con(&#915;)</code> <b>矛盾</b>。故 <code>A&#8712;&#915;</code>。</li>
+      <li><b>⇐</b>：若 <code>A&#8712;&#915;</code>，取 <code>&#916;={A}</code>，则 <code>A&#8866;A</code> 即证（易证）。</li>
+    </ol>
+    <div class="note">第 2 步又是<b>背景A1 预告的 Cut 第二姿势</b>：用「A 可证」+「A 当前提致矛盾」割出 &#915; 自身的矛盾。到此<b>组 B · 极大协调性</b>结束，你已集齐它的三套等价刻画和闭包性质。下面两页转入语义侧。</div>
+  </div>
+</section>
+
+<!-- ============ 背景 A4 ============ -->
+<section class="page bg" id="bgA4">
+  <h2>背景A4：语义侧补课 —— ⊨、可满足、模型 (M,σ)</h2>
+  <div class="pgnum">补充背景 · 进入 p19 前必看 · 你没学过这块</div>
+  <div class="explain">
+    <p>前面 18 页全在<b>语法侧</b>（只谈 <code>&#8866;</code>、符号、证明树）。从 p19 起，第一次出现<b>语义侧</b>的符号 <code>&#8872;</code>、「可满足」、「模型」。这套你还没学，这一页专门补，否则 p19 看不懂。</p>
+    <h3>1 · 模型 / 解释 (M, &#963;) 是什么</h3>
+    <p>要谈一阶公式的「真假」，得先指定它在<b>什么世界里、变元代表谁</b>。这两样合起来就是一个<b>解释</b>：</p>
+    <table class="tbl">
+      <tr><th>记号</th><th>英文</th><th>含义</th></tr>
+      <tr><td><code>M</code></td><td>structure / model</td><td class="l"><b>结构（论域 + 各符号的解释）</b>：定一个非空集合 D 当「宇宙」（所有对象），并规定每个常元指谁、每个函数怎么算、每个谓词对哪些对象成立</td></tr>
+      <tr><td><code>&#963;</code></td><td>assignment</td><td class="l"><b>赋值（变元 &#8594; 论域中的对象）</b>：给自由变元 x、y… 各指派 D 里一个具体对象</td></tr>
+      <tr><td><code>(M, &#963;)</code></td><td>—</td><td class="l">结构配赋值，凑成一个完整解释，每个公式在它下面有确定真假</td></tr>
+    </table>
+    <div class="tip">类比：<code>M</code> 是「游戏世界的设定」（有哪些角色、技能怎么生效），<code>&#963;</code> 是「把剧本里的代号 x、y 具体指给哪个角色」。两者齐了，剧本（公式）的每句话就有了确定的真 / 假。</div>
+    <h3>2 · <code>M &#8872;<sub>&#963;</sub> A</code>：满足关系</h3>
+    <p>读作「<b>在结构 M、赋值 &#963; 下，公式 A 为真</b>」，也说「(M,&#963;) <b>满足</b> A」。<code>&#8872;</code>（双横线）是<b>语义</b>符号，和语法的 <code>&#8866;</code>（单横线 turnstile）<b>长得像但意思天差地别</b>，务必分清：<code>&#8866;</code> 谈「能不能证」，<code>&#8872;</code> 谈「是不是真」。把记号推广到公式集：<code>M &#8872;<sub>&#963;</sub> &#915;</code> 表示 &#915; 里每条公式在 (M,&#963;) 下都真。</p>
+    <h3>3 · 可满足（satisfiable）</h3>
+    <p>公式集 <code>&#915;</code> <b>可满足（satisfiable）</b>，指<b>存在</b>某个解释 (M,&#963;) 使 <code>M &#8872;<sub>&#963;</sub> &#915;</code>&#8212;&#8212;即「&#915; 有模型，能在某个世界里同时为真」。不可满足 = 没有任何世界能让它们全真。</p>
+    <div class="warn"><b>把三组概念对照记牢，p19 起全靠它们：</b><br>· 语法侧：<code>&#8866;</code>（可证）、协调 Con（推不出矛盾）、矛盾 Incon；<br>· 语义侧：<code>&#8872;</code>（为真）、可满足（有模型）、不可满足（无模型）。<br><b>完全性定理的灵魂就是把这两列挂钩。</b>p19 的命题6.8 搭<b>第一根桥</b>：「可满足 &#8658; 协调」。</div>
+    <h3>4 · 可靠性定理（Soundness Theorem）—— p19 要用的引理</h3>
+    <p>p19 证明里会引用<b>可靠性定理</b>：<b>凡是能证的都为真</b>，即 <code>&#916;&#8866;A &#8658; &#916;&#8872;A</code>。它是完全性的「反方向」，本讲默认已学 / 已证，当现成工具用。直觉：G 系统的每条规则都「保真」，所以从真前提按规则推出的结论必真。</p>
+  </div>
+</section>
+
+<!-- ============ p19 ============ -->
+<section class="page" id="p19">
+  <h2>命题6.8：可满足 ⇒ 协调</h2>
+  <div class="pgnum">PDF 第 19 页 · 第一根语义桥</div>
+  <img class="slide" src="pages/p19.png" alt="p19">
+  <div class="explain">
+    <h3>命题内容</h3>
+    <ol>
+      <li><b>(1)</b> 若 &#915; 可满足，则 <code>Con(&#915;)</code>。<b>（有模型 &#8658; 协调）</b></li>
+      <li><b>(2)</b> 若 &#915; 矛盾，则 &#915; 不可满足。<b>（(1) 的逆否命题，免证）</b></li>
+    </ol>
+    <h3>(1) 的证明（反证 + 可靠性定理）</h3>
+    <ol>
+      <li>设 &#915; 可满足，即<b>存在模型 (M,&#963;) 满足 &#915;</b>（<code>M&#8872;<sub>&#963;</sub>&#915;</code>）。</li>
+      <li><b>假设 <code>Incon(&#915;)</code></b>，则有有穷子集 &#916; 使 <code>&#916; &#8866; A&#8743;&#172;A</code> 可证（用矛盾推出一个明显假的合取式）。</li>
+      <li>由<b>可靠性定理</b>（背景A4 第 4 点：能证 &#8658; 为真）&#8658; <code>&#916; &#8872; A&#8743;&#172;A</code>（语义上 &#916; 蕴含这个矛盾式）。</li>
+      <li>又因 <code>M&#8872;<sub>&#963;</sub>&#915;</code> 且 <code>&#916;&#8838;&#915;</code>，故 <code>M&#8872;<sub>&#963;</sub>&#916;</code>（模型满足全集，自然满足子集）&#8658; <code>M&#8872;<sub>&#963;</sub> A&#8743;&#172;A</code>。</li>
+      <li>但「A 且 ¬A」在<b>任何</b>解释下都为假（A 真则 ¬A 假，合取必假）&#8212;&#8212; <b>矛盾</b>！故假设不成立，<code>Con(&#915;)</code>。&#10003;</li>
+    </ol>
+    <div class="tip"><b>这步把语法和语义第一次接通</b>，桥梁就是可靠性定理（语法的「可证」翻成语义的「为真」）。逻辑骨架：<b>有模型的集合不可能推出矛盾</b>——因为推出的矛盾式按可靠性也得在该模型里为真，而矛盾式永不真。<br>(2) 是 (1) 的逆否（「可满足&#8658;协调」取逆否即「矛盾&#8658;不可满足」），逻辑等价，无需另证。</div>
+    <div class="note"><b>这条命题在大局里的位置</b>：它是完全性「<code>&#8872;&#8658;&#8866;</code>」那半边的奠基。Henkin 路线要靠「协调集必有模型」（后续段落证），而本命题给出反向保证「有模型必协调」，两者夹住，才把「协调」和「可满足」彻底划等号。</div>
+  </div>
+</section>
+
+<!-- ============ p20 ============ -->
+<section class="page" id="p20">
+  <h2>命题6.9：协调集如何安全扩张</h2>
+  <div class="pgnum">PDF 第 20 页 · 本段收尾 · 为第 3 段埋伏笔</div>
+  <img class="slide" src="pages/p20.png" alt="p20">
+  <div class="explain">
+    <h3>命题内容</h3>
+    <p>设 &#915; 为<b>有穷</b>公式集且 <code>Con(&#915;)</code>：</p>
+    <ol>
+      <li><b>(1)</b> 若 <code>&#915;&#8866;A</code> 可证，则 <code>Con(&#915;&#8746;{A})</code>。<b>（能证出的 A，加进来仍协调）</b></li>
+      <li><b>(2)</b> 若 <code>&#915;&#8866;A</code> 不可证，则 <code>Con(&#915;&#8746;{&#172;A})</code>。<b>（证不出的 A，把 ¬A 加进来仍协调）</b></li>
+    </ol>
+    <h3>(1) 证明（反证 + Cut）</h3>
+    <ol>
+      <li>设 <code>&#915;&#8866;A</code> 可证且 <code>Con(&#915;)</code>。<b>假设 <code>Incon(&#915;&#8746;{A})</code></b>，则有有穷 <code>&#916;&#8838;&#915;</code> 使 <code>&#916;,A &#8866;</code> 可证。</li>
+      <li><b>Cut 掉 A</b>：左有 <code>&#915;&#8866;A</code>、右有 <code>&#916;,A&#8866;</code> &#8658; <code>&#915;&#8866;</code> 可证 &#8658; <code>Incon(&#915;)</code> &#8212;&#8212; 与 <code>Con(&#915;)</code> <b>矛盾</b>。故 <code>Con(&#915;&#8746;{A})</code>。&#10003;</li>
+    </ol>
+    <h3>(2) 证明</h3>
+    <p>若 <code>Incon(&#915;&#8746;{&#172;A})</code>，则 <code>&#915;,&#172;A &#8866;</code> 可证，由此（否定规则）<b>反推出 <code>&#915;&#8866;A</code> 可证</b> &#8212;&#8212; 与「<code>&#915;&#8866;A</code> 不可证」前提<b>矛盾</b>。故加 ¬A 后仍协调。&#10003;</p>
+    <div class="tip"><b>这条命题是「埋伏笔」的零件，看清它要为什么服务：</b>它保证——对<b>任意</b>公式 A，协调集 &#915; 总能在「加 A」和「加 ¬A」之间<b>至少选一个安全方向扩张</b>，扩完仍协调。把全体公式排成一列，逐条这样表态扩张下去，就能把协调集一路撑成<b>极大协调集</b>。这正是后续段落 <b>Lindenbaum（林登鲍姆）引理 / 构造</b>的核心机械。</div>
+    <div class="note"><b>Lindenbaum 构造预告（英文 Lindenbaum's lemma，林登鲍姆引理）</b>：把语言里所有公式枚举为 <code>A&#8321;, A&#8322;, A&#8323;, &#8230;</code>，从协调的 &#915; 出发，逐条用命题6.9 决定「纳入 A&#8345; 还是纳入 ¬A&#8345;」，得到一条递增的协调集链，取并集就得到一个<b>极大协调集</b>。本命题6.9 就是这台机器每一步的「安全阀」。<b>到此本段（p2–p20）结束</b>：协调性 + 极大协调性的全部主体已就位，模型构造与完全性收口留给后续段落。</div>
+  </div>
+</section>
+
+
+
+<!-- ========== 背景 B0 ========== -->
+<section class="page bg" id="bg0">
+  <h2>为什么要专门搞一个「等词 &#8784;」？</h2>
+  <div class="pgnum">补充背景 &middot; 进入 p21 前必看</div>
+  <div class="explain">
+    <p><b>新名词：等词</b>（equality，符号 <code>&#8784;</code>，读作"等于"）。它是写在两个<u>项</u>之间的一个二元谓词，<code>s &#8784; t</code> 的意思是"项 s 和项 t 指的是同一个个体"。本讲（南大数理逻辑第11讲）从这一页起，把它正式加进一阶逻辑。</p>
+
+    <h3>它和"普通谓词"差在哪？——这是整段的动机</h3>
+    <p>在前一讲的 G 系统里，你见过的谓词都是<b>普通谓词</b>，比如 <code>p(x)</code>、<code>R(x,y)</code>。普通谓词的语义<b>完全由模型自己规定</b>：模型说 <code>R(a,b)</code> 成立就成立，逻辑系统对它没有任何"内置脾气"。</p>
+    <p>等词不一样。我们想让 <code>&#8784;</code> 永远表达"真正的相等"，而真正的相等天生带着三条铁律，<b>不管在哪个模型里都必须成立</b>：</p>
+    <ul>
+      <li><b>自反</b>：任何东西都等于它自己 &mdash; <code>s &#8784; s</code>。</li>
+      <li><b>可替换（函数同余）</b>：相等的输入，喂给同一个函数，输出也相等 &mdash; 若 <code>s &#8784; t</code> 则 <code>f(s) &#8784; f(t)</code>。</li>
+      <li><b>可替换（谓词同余）</b>：相等的东西，在任何性质上表现一致 &mdash; 若 <code>s &#8784; t</code> 且 <code>p(s)</code> 成立，则 <code>p(t)</code> 也成立。</li>
+    </ul>
+    <div class="tip"><b>一句话抓住区别：</b>普通谓词的真假是模型"自由发挥"的；等词的真假被这三条铁律"锁死"了。所以不能把 <code>&#8784;</code> 当成又一个 <code>p</code> 来处理 &mdash; 必须把这三条铁律<b>显式写进证明系统</b>，否则系统就证不出"相等该有的行为"。</p></div>
+
+    <h3>为什么前一讲的 G 没有它？</h3>
+    <p>前一讲 G 系统证明的是"纯逻辑有效"的东西（量词、连接词的规律）。等词是一个<b>额外的、带语义承诺的符号</b>，把它加进来会改变"什么算公理"。所以课程的策略是：先把不含等词的 G 讲透，再单独开一讲，把等词作为"附加公理"叠上去，得到新系统 <b>Ge</b>。这就是 p21 第一句"在以前给出的 G 系统中，没有出现等词"的来历。</p>
+
+    <h3>这一段（p21–34）要干的两件事</h3>
+    <ol>
+      <li><b>D 组（p21–27）</b>：把 Ge 定义出来（=G + 3 条等词公理），并演示它能证出"相等该有的全部性质"（对称、传递、同余……），重点用一棵证明树教你<b>怎么自底向上读/造证明树</b>。</li>
+      <li><b>E 组（p28–34）</b>：证一个关键技术结论 &mdash; 在 Ge 里能证的东西，等价于"把那 3 条公理当成普通前提 Γe 摆进来后，在<u>老的 G 系统</u>里能证"。这一步把"带等词的新系统"<b>归约</b>回"不带等词的老系统"，为最后的可靠性与完全性铺路（p34）。</li>
+    </ol>
+    <div class="note">前序段（p2–20）已经讲过的术语，本段直接用：<b>Con/Incon</b>（协调/不协调）、<b>极大协调</b>、<b>&#8866;</b>（可证）、<b>Cut 规则</b>、<b>&#8872;</b>（语义蕴含/可满足）、<b>模型 (M,&#963;)</b>、<b>一阶 G 系统的量词规则 ∀L/∀R/∃L/∃R</b>。遇到时只给一句话提示，不再整段重讲。</div>
+  </div>
+</section>
+
+<!-- ========== p21 ========== -->
+<section class="page" id="p21">
+  <h2>定义 6.10：Ge = G + 3 条等词公理</h2>
+  <div class="pgnum">PDF 第 21 页</div>
+  <img class="slide" src="pages/p21.png" alt="p21">
+  <div class="explain">
+    <h3>先认名字</h3>
+    <table class="tbl">
+      <tr><th>符号</th><th>英文全称</th><th>中文含义</th></tr>
+      <tr><td><b>Ge</b> / <code>G<sub>=</sub></code></td><td class="l">G with equality</td><td class="l">带等词的一阶谓词演算（Gentzen 系统 G 叠加等词公理）</td></tr>
+      <tr><td><code>&#8784;</code></td><td class="l">equality</td><td class="l">等词，"两项指同一个体"</td></tr>
+    </table>
+    <p>这页一句话：<b>Ge 就是老的 G 系统，外加下面 3 条等词公理</b>。注意"公理"在 Gentzen 系统里指<b>无需前提就直接可写</b>的矢列（出现在证明树最顶端的叶子）。</p>
+
+    <h3>逐条读这 3 条公理</h3>
+    <h4>(1) 自反 &mdash; <code>&#8866; s &#8784; s</code></h4>
+    <p>"任何项 s 都等于它自己"。左边空（无前提），右边一个等式，直接成立。</p>
+    <h4>(2) 函数同余 &mdash; <code>s&#8321;&#8784;t&#8321;, …, s&#8345;&#8784;t&#8345; &#8866; f(s&#8321;,…,s&#8345;) &#8784; f(t&#8321;,…,t&#8345;)</code></h4>
+    <p>"如果各个对应位置的输入相等，那么把它们喂给同一个 n 元函数 f，得到的结果也相等"。这是相等的"<b>对函数封闭</b>"性质。<code>f</code> 是任意 n 元函数，每对 <code>s&#7522;, t&#7522;</code> 是任意项。</p>
+    <h4>(3) 谓词同余 &mdash; <code>s&#8321;&#8784;t&#8321;, …, s&#8345;&#8784;t&#8345;, p(s&#8321;,…,s&#8345;) &#8866; p(t&#8321;,…,t&#8345;)</code></h4>
+    <p>"如果各位置输入相等，且谓词 p 对 s 成立，那么 p 对 t 也成立"。这是相等的"<b>性质不可分辨</b>"。原文特别强调 <code>p</code> 可以是<b>任何 n 元谓词（含等词本身）</b> &mdash; 这一点很关键，后面证传递性时要拿 <code>p</code> 取作 <code>&#8784;</code>。</p>
+
+    <div class="tip"><b>为什么挑这 3 条、不多不少？</b>这正好对应背景页说的"相等的三条铁律"：(1) 管自反，(2) 管函数封闭，(3) 管性质封闭。对称和传递<u>没有</u>单列为公理 &mdash; 因为它们能从这 3 条<b>推</b>出来（下一张 p23 命题6.12 就是干这个的）。公理只放"最小够用"的，其余当定理证，是数理逻辑一贯的洁癖。</div>
+    <div class="warn">别把(3)里的"含等词"轻轻放过。它意味着 <code>p</code> 允许就是 <code>&#8784;</code>，于是 (3) 一口气也覆盖了"等式之间互相替换"，这是证对称/传递的弹药。</div>
+  </div>
+</section>
+
+<!-- ========== p22 ========== -->
+<section class="page" id="p22">
+  <h2>约定 6.11：矢量记法（一次写一串）</h2>
+  <div class="pgnum">PDF 第 22 页</div>
+  <img class="slide" src="pages/p22.png" alt="p22">
+  <div class="explain">
+    <h3>这页只是"省字记号"，但很重要</h3>
+    <p><b>新名词：矢量记法</b>（vector notation，箭头记号）。它不是新概念，只是把"一长串项"打包成一个带箭头的字母，免得每次都写一长排下标。</p>
+    <table class="tbl">
+      <tr><th>写法</th><th>展开</th><th>读法</th></tr>
+      <tr><td><code>&#8407;t</code></td><td class="l">(t&#8321;, …, t&#8345;)</td><td class="l">一串项</td></tr>
+      <tr><td><code>&#8407;s</code></td><td class="l">(s&#8321;, …, s&#8345;)</td><td class="l">另一串项</td></tr>
+      <tr><td><code>f(&#8407;t)</code></td><td class="l">f(t&#8321;, …, t&#8345;)</td><td class="l">把这串项喂给 n 元函数 f</td></tr>
+      <tr><td><code>p(&#8407;t)</code></td><td class="l">p(t&#8321;, …, t&#8345;)</td><td class="l">n 元谓词 p 作用在这串项上</td></tr>
+      <tr><td><code>(&#8407;s &#8784; &#8407;t)</code></td><td class="l">(s&#8321;&#8784;t&#8321;) &#8743; (s&#8322;&#8784;t&#8322;) &#8743; … &#8743; (s&#8345;&#8784;t&#8345;)</td><td class="l">两串"逐位相等"再用 &#8743; 连成一个公式</td></tr>
+    </table>
+    <div class="warn"><b>最容易踩的坑是第 (4) 条。</b><code>&#8407;s &#8784; &#8407;t</code> 不是"一个等式"，而是 <b>n 个等式用合取 &#8743; 串起来的一整个公式</b>。后面命题6.12(4)(5) 里 <code>(&#8407;s &#8784; &#8407;t) &#8594; …</code> 的左件就是这一大坨合取，读的时候要展开成"每一位都相等"。</div>
+    <div class="tip">有了这套记号，p21 那 3 条公理可以重写得很短，比如函数同余 = <code>&#8407;s &#8784; &#8407;t &#8866; f(&#8407;s) &#8784; f(&#8407;t)</code>。p28 的归约定理里 Γe 的写法也全靠它。</div>
+  </div>
+</section>
+
+<!-- ========== p23 ========== -->
+<section class="page" id="p23">
+  <h2>命题 6.12：相等"该有的性质"都能证出来</h2>
+  <div class="pgnum">PDF 第 23 页</div>
+  <img class="slide" src="pages/p23.png" alt="p23">
+  <div class="explain">
+    <h3>这页在宣告什么</h3>
+    <p>p21 只给了 3 条公理（自反 + 两条同余）。但我们直觉里"相等"还应该有<b>对称</b>（a=b 则 b=a）和<b>传递</b>（a=b 且 b=c 则 a=c）。命题6.12 说：这些<b>不用另加公理</b>，在 Ge 里<u>都能证</u>。逐条看：</p>
+    <table class="tbl">
+      <tr><th>编号</th><th>矢列</th><th>它是相等的什么性质</th></tr>
+      <tr><td>(1)</td><td class="l"><code>&#8866; s &#8784; s</code></td><td class="l">自反（其实就是公理(1)）</td></tr>
+      <tr><td>(2)</td><td class="l"><code>&#8866; (s&#8784;t) &#8594; (t&#8784;s)</code></td><td class="l"><b>对称</b></td></tr>
+      <tr><td>(3)</td><td class="l"><code>&#8866; (s&#8784;t) &#8594; (t&#8784;u &#8594; s&#8784;u)</code></td><td class="l"><b>传递</b></td></tr>
+      <tr><td>(4)</td><td class="l"><code>&#8866; (&#8407;s &#8784; &#8407;t) &#8594; f(&#8407;s) &#8784; f(&#8407;t)</code></td><td class="l">函数同余的"蕴含版"</td></tr>
+      <tr><td>(5)</td><td class="l"><code>&#8866; (&#8407;s &#8784; &#8407;t) &#8594; (p(&#8407;s) &#8594; p(&#8407;t))</code></td><td class="l">谓词同余的"蕴含版"</td></tr>
+    </table>
+    <div class="note"><b>(4)(5) 和 p21 的公理(2)(3) 长得像，差别在哪？</b>公理把前提放在 <code>&#8866;</code> <u>左边</u>（作为假设）；这里(4)(5) 把它搬到右边变成 <code>&#8594;</code> 的<u>左件</u>，即"内化"成一个蕴含式。两者靠 <code>&#8594;R</code> 规则互相转化 &mdash; 这正是下一页证明树要演示的招式。</div>
+    <p>末行的小字"s,t,u 为任何项，f 为任何 n 元函数，<code>&#8407;s,&#8407;t</code> 长度为 n，p 为任何 n 元谓词" &mdash; 就是说这些结论对所有项/函数/谓词都成立，是 schema（模式）。</p>
+    <div class="tip">接下来 p24–27 会<b>只挑 (2) 对称</b>这一条，把它的证明树一步步搭出来，作为"如何在 Ge 里证东西"的范例。其余 (3)(4)(5) 留作同款练习。</div>
+  </div>
+</section>
+
+<!-- ========== p24-27 合并：证明树动画 ========== -->
+<section class="page" id="p24">
+  <h2>命题 6.12(2) 证明示范 &mdash; 一棵证明树的"分步动画"</h2>
+  <div class="pgnum">PDF 第 24–27 页（同一棵树，自底向上分 4 步长出来）</div>
+  <div class="explain">
+    <div class="tip"><b>怎么读这 4 页：</b>它们画的是<u>同一棵证明树</u>，p24→p27 一步步往上补。Gentzen 证明树的读法是<b>"目标在最下面，自底向上反推"</b>：最下面那行是你<u>想证</u>的结论；往上每一横线是一条规则，横线<u>上方</u>是"要证下方，先得证什么"。一直往上推到顶端全是公理（叶子），整棵树就立住了。我们就跟着这 4 步学会"自底向上造一棵证明树"。</div>
+
+    <h4>目标</h4>
+    <div class="formula">&#8866; (s &#8784; t) &#8594; (t &#8784; s)　　（对称性，命题6.12(2)）</div>
+  </div>
+
+  <h3 style="font-size:16px;color:#b91c1c;border-left:3px solid #b91c1c;padding-left:8px;margin:18px 0 6px;">第 1 步（p24）：先用 →R 把蕴含拆掉</h3>
+  <img class="slide" src="pages/p24.png" alt="p24">
+  <div class="explain">
+    <p>最下面是目标 <code>&#8866; (s&#8784;t) &#8594; (t&#8784;s)</code>。它的主连接词是 <code>&#8594;</code>，在<b>右边（succedent）</b>，所以用 <b><code>&#8594;R</code></b>（右蕴含规则，implication-right）。</p>
+    <div class="note"><b>回忆 →R 规则：</b>要在右边证一个 <code>A &#8594; B</code>，只需把 <code>A</code> 挪到左边当假设，去证 <code>A &#8866; B</code>。即 <code>A &#8866; B</code> ⟹ <code>&#8866; A&#8594;B</code>。</p></div>
+    <p>所以横线上方"应该"出现 <code>s&#8784;t &#8866; t&#8784;s</code> &mdash; 但 p24 故意先留空，只画出横线和 <code>&#8594;R</code> 标签，让你自己想"上面该填什么"。</p>
+  </div>
+
+  <h3 style="font-size:16px;color:#b91c1c;border-left:3px solid #b91c1c;padding-left:8px;margin:18px 0 6px;">第 2 步（p25）：补上 →R 上方的子目标，并标出下一招 Cut</h3>
+  <img class="slide" src="pages/p25.png" alt="p25">
+  <div class="explain">
+    <p>现在上方填好了：<code>s &#8784; t &#8866; t &#8784; s</code>。这就是脱掉蕴含后真正要证的核心矢列："假设 s=t，证 t=s"。</p>
+    <p>它头顶又标了一条 <b><code>Cut</code></b>（割规则）。回忆：<b>Cut 允许引入一个"中间命题" C</b> &mdash; 若能证 <code>&#915; &#8866; C</code> 且 <code>C, &#915; &#8866; &#916;</code>，就能拼出 <code>&#915; &#8866; &#916;</code>。这里要引入的中间命题是 <b><code>s &#8784; s</code></b>（自反，一个我们手里有的公理）。</p>
+    <div class="tip"><b>为什么要 Cut 进一个 <code>s&#8784;s</code>？</b>因为对称性的证明本质是："由 s=t 和 <u>s=s</u>，用谓词同余把第二个等式里的一个 s 替换成 t，得到 t=s"。那个 <code>s&#8784;s</code> 是替换的"原料"，凭空不在前提里，所以用 Cut 把它请进来。</div>
+  </div>
+
+  <h3 style="font-size:16px;color:#b91c1c;border-left:3px solid #b91c1c;padding-left:8px;margin:18px 0 6px;">第 3 步（p26）：展开 Cut 的两个分支</h3>
+  <img class="slide" src="pages/p26.png" alt="p26">
+  <div class="explain">
+    <p>Cut 把 <code>s&#8784;t &#8866; t&#8784;s</code> 劈成左右两个上分支：</p>
+    <ul>
+      <li><b>右分支</b> <code>&#8866; s &#8784; s</code>：就是公理(1) 自反，<u>直接是叶子</u>，封顶。</li>
+      <li><b>左分支</b> <code>s &#8784; t, s &#8784; s &#8866; t &#8784; s</code>：把刚 Cut 进来的 <code>s&#8784;s</code> 加进左边假设后，要证 <code>t&#8784;s</code>。</li>
+    </ul>
+    <div class="note">读法提醒：Cut 的横线上方<b>左、右两块</b>分别是两个待证矢列，下方是合并结果。右块已经到公理了；左块还得继续往上推。</div>
+  </div>
+
+  <h3 style="font-size:16px;color:#b91c1c;border-left:3px solid #b91c1c;padding-left:8px;margin:18px 0 6px;">第 4 步（p27）：左分支再往上 &mdash; 落到谓词同余公理</h3>
+  <img class="slide" src="pages/p27.png" alt="p27">
+  <div class="explain">
+    <p>p27 用蓝色虚线框把"左分支怎么继续"拆给你看，分两跳：</p>
+    <ol>
+      <li>左分支 <code>s&#8784;t, s&#8784;s &#8866; t&#8784;s</code>，通过<b>结构规则</b>（加一个重复的假设 <code>s&#8784;s</code>，即弱化/收缩之类）整理成 <code>s&#8784;t, s&#8784;s, s&#8784;s &#8866; t&#8784;s</code>。</li>
+      <li>再认出它正是<b>谓词同余公理(3)</b>的一个实例：取谓词 <code>p</code> 为 <code>&#8784;</code> 本身，写成 <code>s&#8784;t, s&#8784;s, p(s,s) &#8866; p(t,s)</code>。这里 <code>p(s,s)</code> 就是 <code>s&#8784;s</code>，<code>p(t,s)</code> 就是 <code>t&#8784;s</code> &mdash; 替换"第一个参数 s→t"，正好把 <code>s&#8784;s</code> 变成 <code>t&#8784;s</code>。</li>
+    </ol>
+    <div class="tip"><b>这就是整棵树的"点睛"：</b>对称性 t=s 不是凭空来的，而是"拿自反 s=s，用谓词同余(把第一个 s 换成 t)"得到的。这一步用上了 p21 公理(3) 里那句"<u>p 可含等词</u>"&mdash; 没有它，就没法把 <code>&#8784;</code> 当作可替换的谓词。</div>
+    <div class="warn"><b>整棵树回看一遍（自底向上）：</b>目标 → <code>&#8594;R</code> 脱蕴含 → <code>Cut</code> 请进 s&#8784;s（右分支=自反公理封顶）→ 左分支整理 → 命中谓词同余公理封顶。<b>所有叶子都是 Ge 公理，证毕。</b>你以后造证明树就是这套：看主连接词选规则、缺原料用 Cut、最后逼到公理。</div>
+  </div>
+</section>
+
+<!-- ========== 背景 B1 ========== -->
+<section class="page bg" id="bg1">
+  <h2>结构归纳法：把数学归纳推广到"证明树"上</h2>
+  <div class="pgnum">补充背景 &middot; 进入 p28 前必看</div>
+  <div class="explain">
+    <p><b>新名词：结构归纳</b>（structural induction，结构归纳法）。你已经会<b>数学归纳法</b>（对自然数 n：先证 n=0，再证"n 成立 ⟹ n+1 成立"）。结构归纳是它的推广 &mdash; 不再对"数字"归纳，而是对"<b>按规则一层层搭起来的结构</b>"归纳。证明树正是这种结构。</p>
+
+    <h3>证明树是怎么"搭"出来的</h3>
+    <ul>
+      <li><b>最小情形（叶子）</b>：一个公理矢列，自己就是一棵（高度 0 的）证明树。</li>
+      <li><b>搭建方式（内节点）</b>：拿一条<u>规则</u>，把已有的 1 棵或 2 棵小证明树接在它上方，规则下方的结论就成了新树的根。</li>
+    </ul>
+    <p>规则按"上方有几棵子树"分两类，这正是 p33 反复出现的 <b>R&#8321; / R&#8322;</b>：</p>
+    <table class="tbl">
+      <tr><th>类</th><th>形状</th><th>含义</th><th>例子</th></tr>
+      <tr><td><b>R&#8321;</b></td><td class="l"><code>&#915;&#8321;&#8866;&#916;&#8321; / &#915;&#8866;&#916;</code></td><td class="l">一前提规则（上方 1 棵子树）</td><td class="l">&#8594;R, ∀L, ∀R …</td></tr>
+      <tr><td><b>R&#8322;</b></td><td class="l"><code>&#915;&#8321;&#8866;&#916;&#8321;　&#915;&#8322;&#8866;&#916;&#8322; / &#915;&#8866;&#916;</code></td><td class="l">两前提规则（上方 2 棵子树）</td><td class="l">∧R, &#8594;L, Cut …</td></tr>
+    </table>
+
+    <h3>结构归纳怎么用</h3>
+    <p>要证"<b>所有证明树都有性质 P</b>"，只需：</p>
+    <ol>
+      <li><b>归纳基础</b>：每个公理（叶子）都有 P；</li>
+      <li><b>归纳步骤</b>：假设上方的子树都有 P（这叫<b>归纳假设</b>），证明用一条规则接出来的新树也有 P &mdash; R&#8321; 和 R&#8322; 两种形状各验一遍。</li>
+    </ol>
+    <p>两步齐了，就能断言<b>任何</b>证明树（不管多高）都有 P。p28 的命题6.13 要证的 P 是："这棵 Ge 证明树能<u>翻译</u>成一棵 G 证明树（把 Γe 摆进前提后）"，p29–33 就是按这个模板走。</p>
+    <div class="tip"><b>为什么非用结构归纳不可？</b>因为证明树高度任意、形状千变万化，没法一棵棵列举。但它们都由"叶子 + R&#8321;/R&#8322; 两种拼法"生成 &mdash; 只要管住这有限的几种"生长方式"，就管住了全体。这正是归纳法的威力。</div>
+  </div>
+</section>
+
+<!-- ========== p28 ========== -->
+<section class="page" id="p28">
+  <h2>命题 6.13：把等词公理"外置"成前提 &mdash; Ge ⟺ G 的归约</h2>
+  <div class="pgnum">PDF 第 28 页</div>
+  <img class="slide" src="pages/p28.png" alt="p28">
+  <div class="explain">
+    <h3>先认 Γe</h3>
+    <table class="tbl">
+      <tr><th>符号</th><th>英文</th><th>含义</th></tr>
+      <tr><td><b>Γe</b></td><td class="l">equality axioms set</td><td class="l">由 3 条等词公理"全称闭包"组成的<b>句子集合</b></td></tr>
+    </table>
+    <p>这页把 p21 那 3 条等词公理，每条前面加上全称量词 ∀ 封成<b>闭句子</b>，打包成集合 Γe：</p>
+    <div class="formula">∀x(x&#8784;x),　∀&#8407;x∀&#8407;y(&#8407;x&#8784;&#8407;y &#8594; f(&#8407;x)&#8784;f(&#8407;y)),　∀&#8407;x∀&#8407;y(&#8407;x&#8784;&#8407;y &#8594; (p(&#8407;x)&#8594;p(&#8407;y)))</div>
+    <p>分别是<b>自反 / 函数同余 / 谓词同余</b>的全称版本。</p>
+
+    <h3>命题主体（这段的"核心技术"）</h3>
+    <div class="tip" style="font-size:16px;"><b>Γ &#8866; Δ 在 Ge 中可证　⟺　Γe, Γ &#8866; Δ 在 G 中可证。</b></div>
+    <p>用大白话：<b>"在带等词的新系统 Ge 里能证 Γ&#8866;Δ" 这件事，恰好等价于"把那 3 条等词公理 Γe 当成普通前提塞进左边后，在不带等词的老系统 G 里能证"。</b></p>
+    <div class="note"><b>这一步的意义（为什么重要）：</b>它把"等词"从<u>系统层面</u>（内置公理）搬到了<u>前提层面</u>（普通假设 Γe）。这样一来，关于 Ge 的问题就能用我们已经吃透的 G 系统的全部工具去解决 &mdash; 等词不再"特殊"，它只是左边多出来的几条假设。p34 的可靠性、以及后续完全性，都靠这次归约把战场搬回 G。</div>
+    <p>证明方法，原文一句话：<b>"对证明树的结构做归纳"</b> &mdash; 正是背景页 B1 教的那套。"⟺"是双向的，所以基础和步骤都要做<u>两个方向</u>（⟹ 和 ⟸）。p29–33 就是这场归纳的展开。</p>
+  </div>
+</section>
+
+<!-- ========== p29 ========== -->
+<section class="page" id="p29">
+  <h2>归纳基础（方向⟹）：Ge 的等词公理，在 G 中由 Γe 推出</h2>
+  <div class="pgnum">PDF 第 29 页</div>
+  <img class="slide" src="pages/p29.png" alt="p29">
+  <div class="explain">
+    <p>归纳基础 = 处理<b>叶子（公理）</b>。原文把它拆成两小问：</p>
+    <ul>
+      <li><b>(1)</b> 若 <code>Γ&#8866;Δ</code> 是 <u>Ge</u> 的公理 ⟹ <code>Γe, Γ&#8866;Δ</code> 在 <u>G</u> 中可证。（这页讲）</li>
+      <li><b>(2)</b> 若 <code>Γe, Γ&#8866;Δ</code> 是 <u>G</u> 的公理 ⟹ <code>Γ&#8866;Δ</code> 在 <u>Ge</u> 中可证。（下页 p30）</li>
+    </ul>
+
+    <h3>本页演示 (1)：拿谓词同余公理当例子</h3>
+    <p>设 Ge 公理是谓词同余 <code>&#8407;s&#8784;&#8407;t, p(&#8407;s) &#8866; p(&#8407;t)</code>（红色那行就是它）。要在 G 里证它，手里有 Γe，里面有那条全称的谓词同余句 <code>∀&#8407;x∀&#8407;y(&#8407;x&#8784;&#8407;y &#8594; (p(&#8407;x)&#8594;p(&#8407;y)))</code>。</p>
+    <p>截图下半那条带 <b><code>∀L</code></b> 标签的推理就是关键一跳：</p>
+    <div class="note"><b>回忆 ∀L 规则（左全称，forall-left）：</b>左边若有 <code>∀x A(x)</code>，可把它<b>实例化</b>成任意具体项的 <code>A(t)</code> 继续用。直觉：全称假设"对所有 x 成立"，当然对你挑的那个具体值也成立。</p></div>
+    <p>所以：用 ∀L 把 Γe 里的全称谓词同余句，实例化成 <code>&#8407;s&#8784;&#8407;t &#8594; (p(&#8407;s)&#8594;p(&#8407;t))</code>（横线上方那行），再配合左边已有的 <code>&#8407;s&#8784;&#8407;t</code> 和 <code>p(&#8407;s)</code>，在纯 G 里就推出了 <code>p(&#8407;t)</code>。<b>等词公理被 Γe + ∀L 顶替掉了。</b></p>
+    <div class="tip">自反、函数同余两条公理同理 &mdash; 都是"从 Γe 里 ∀L 实例化出对应句子，再拼出原公理"。这页只示范最有代表性的谓词同余。</div>
+  </div>
+</section>
+
+<!-- ========== p30 ========== -->
+<section class="page" id="p30">
+  <h2>归纳基础（方向⟸）：G 的公理，在 Ge 中可证</h2>
+  <div class="pgnum">PDF 第 30 页</div>
+  <img class="slide" src="pages/p30.png" alt="p30">
+  <div class="explain">
+    <p>这页做基础的<b>另一半 (2)</b>：若 <code>Γe, Γ &#8866; Δ</code> 是 G 的公理，要证 <code>Γ &#8866; Δ</code> 在 Ge 中可证。</p>
+    <h3>先做个分类</h3>
+    <p>G 的公理形如"左右两边有公共公式 A"。这里有两种情况：</p>
+    <ul>
+      <li><b>A 来自 Γ（或本来就在 Δ 里）</b>：那 <code>Γ&#8866;Δ</code> 自己就是 Ge 的公理，<u>显然成立</u>，原文一句"后者显然"带过。</li>
+      <li><b>A 来自 Γe</b>（即公共公式是某条等词公理的全称句）：这是要费点劲的"前者"，本页详证。</li>
+    </ul>
+    <h3>详证"A 是 Γe 里的句子"&mdash; 以函数同余为例</h3>
+    <p>设 <code>A = ∀&#8407;x∀&#8407;y(&#8407;x&#8784;&#8407;y &#8594; f(&#8407;x)&#8784;f(&#8407;y))</code>。要在 Ge 里把它造出来。截图那棵小树自底向上是：</p>
+    <ol>
+      <li>最顶 <code>Γ, &#8407;a&#8784;&#8407;b &#8866; f(&#8407;a)&#8784;f(&#8407;b), Δ</code> &mdash; 这正是 <b>Ge 的函数同余公理</b>（蓝框标注"Ge中的公理"），直接封顶；</li>
+      <li>往下用 <b><code>&#8594;R</code></b> 把 <code>&#8407;a&#8784;&#8407;b</code> 收进蕴含，得 <code>Γ &#8866; &#8407;a&#8784;&#8407;b &#8594; f(&#8407;a)&#8784;f(&#8407;b), Δ</code>；</li>
+      <li>再用 <b><code>∀R</code></b>（右全称，forall-right）把自由变元 <code>&#8407;a,&#8407;b</code> 全称封顶，得到 <code>Γ &#8866; ∀&#8407;x∀&#8407;y(…), Δ</code>，即 A。</li>
+    </ol>
+    <div class="note"><b>回忆 ∀R 规则：</b>要在右边证 <code>∀x A(x)</code>，只要对一个<b>全新的、没出现过的</b>变元（特征变元，eigenvariable）证 <code>A(a)</code> 即可 &mdash; 因为"对一个任意取的、没被约束的 a 成立"就等于"对所有 x 成立"。这就是 (3) 这一跳的依据，也解释了为啥要用全新的 <code>&#8407;a,&#8407;b</code>。</p></div>
+    <div class="tip"><b>两页基础合起来看：</b>p29 证"Ge 公理 ⟹ G(带Γe)可证"，p30 证"G(带Γe)公理 ⟹ Ge 可证"。叶子层面双向打通，归纳基础完成。下面 p31–33 处理"内节点"（规则）。</div>
+  </div>
+</section>
+
+<!-- ========== p31 ========== -->
+<section class="page" id="p31">
+  <h2>例：一棵具体证明树的归约长什么样（∀R + →R）</h2>
+  <div class="pgnum">PDF 第 31 页</div>
+  <img class="slide" src="pages/p31.png" alt="p31">
+  <div class="explain">
+    <p>在抽象讲归纳步骤前，先看一个<b>具体例子</b>找感觉。上框是一棵 Ge 里的证明树，证 <code>Γ &#8866; ∀x.A(x) &#8743; B(t)</code>，结构是：左支用 <code>∀R</code> 证 <code>∀x.A(x)</code>、右支证 <code>B(t)</code>，再合到一起。</p>
+    <h3>归约动作：每个矢列左边都"添上 Γe"</h3>
+    <p>下框是归约后的树 &mdash; <b>形状一模一样</b>，唯一变化是<u>每一行左边都多染红了一个 Γe</u>：<code>Γ&#8321;&#8866;…</code> 变 <code>Γe,Γ&#8321;&#8866;…</code>，根从 <code>Γ&#8866;…</code> 变 <code>Γe,Γ&#8866;…</code>。规则标签（∀R、&#8594;R）原封不动。</p>
+    <div class="tip"><b>这就是归约的全部机械动作：</b>把整棵 Ge 证明树<b>逐节点在左边塞进 Γe</b>，规则与结构都不动。能这么干的底气是：G 的每条规则都<b>允许两边带任意多余的旁支公式</b>（side formulas）&mdash; 多挂一个 Γe 在左边，规则照样合法。</div>
+    <div class="note">注意截图 ∀R 那步右上方的 <code>A[y/x]</code>：表示"把 A(x) 里的 x 替换成新变元 y"，正是 ∀R 引入特征变元的写法。塞 Γe 不会碰它，因为 Γe 是闭句子（没有自由变元），不会和特征变元的"新鲜性"冲突。</p></div>
+  </div>
+</section>
+
+<!-- ========== p32 ========== -->
+<section class="page" id="p32">
+  <h2>例（续）：从"归纳假设"的视角再看这棵树</h2>
+  <div class="pgnum">PDF 第 32 页</div>
+  <img class="slide" src="pages/p32.png" alt="p32">
+  <div class="explain">
+    <p>同一个例子，这页换成<b>归纳假设的口吻</b>讲，为下页抽象版热身。标题那句是核心：</p>
+    <div class="tip" style="font-size:15.5px;">"若 <code>Γ&#8321; &#8866; A[y/x]</code> 和 <code>Γ&#8322; &#8866; B(t)</code> 在 Ge 中可证，<b>蕴含</b> <code>Γe,Γ&#8321; &#8866; A[y/x]</code> 和 <code>Γe,Γ&#8322; &#8866; B(t)</code> 在 G 中可证。"</p></div>
+    <p>右上角蓝框就写着"<b>归纳假设</b>"。把它对上背景页 B1 的模板：</p>
+    <ul>
+      <li>这棵树的根由一条<b>两前提规则（&#8594;R 之上是 ∀R 与右支，属 R&#8322; 形）</b>接出；</li>
+      <li><b>归纳假设</b>就是"假定<u>上方两棵子树</u>已经能归约"（即 Γ&#8321; 支、Γ&#8322; 支各自的 Ge 树都能加 Γe 翻成 G 树）；</li>
+      <li>要证的<b>归纳步骤</b>是"那么把它们用这条规则拼起来的<u>整棵树</u>也能归约"&mdash; 而做法就是 p31 看到的"根那行也染上 Γe"。</li>
+    </ul>
+    <div class="note"><b>为什么这例子是合法的归纳？</b>因为子树比整棵树<b>矮（结构更小）</b>，对"更小的证明树"用归纳假设是允许的 &mdash; 这正是结构归纳"假设子结构成立"的标准姿势。p31 给"动作"，p32 给"为什么这动作构成一步归纳"。</div>
+  </div>
+</section>
+
+<!-- ========== p33 ========== -->
+<section class="page" id="p33">
+  <h2>归纳假设 + 归纳步骤：R&#8321;（一前提）/ R&#8322;（两前提）两类统一处理</h2>
+  <div class="pgnum">PDF 第 33 页</div>
+  <img class="slide" src="pages/p33.png" alt="p33">
+  <div class="explain">
+    <p>这页把上面具体例子<b>抽象成对一切规则的统一论证</b>。所有 G 规则按上方子树数目只有两形（见背景页 B1）：</p>
+    <div class="formula">R&#8321;（一前提）:　&#915;&#8321;&#8866;&#923;&#8321; / &#915;&#8866;&#923;　　　　R&#8322;（两前提）:　&#915;&#8321;&#8866;&#923;&#8321;　&#915;&#8322;&#8866;&#923;&#8322; / &#915;&#8866;&#923;</div>
+
+    <h3>方向 ⟹（Ge 树 → 加 Γe 的 G 树）</h3>
+    <ul>
+      <li><b>归纳假设</b>：Ge 证明树根部呈 R&#8321; 或 R&#8322; 形；假定上方子树 <code>Γ&#8321;&#8866;Λ&#8321;</code>（及 <code>Γ&#8322;&#8866;Λ&#8322;</code>）可归约，即 <code>Γe,Γ&#8321;&#8866;Λ&#8321;</code>（及 <code>Γe,Γ&#8322;&#8866;Λ&#8322;</code>）在 G 可证。</li>
+      <li><b>归纳步骤</b>：那么对两种形状，把同一条规则 R&#8321;/R&#8322; 作用在"已加 Γe 的子树"上，直接得 <code>Γe,Γ&#8866;Λ</code> 在 G 可证。&mdash; 就是 p31 的"染红 Γe、规则不变"。</li>
+    </ul>
+
+    <h3>方向 ⟸（加 Γe 的 G 树 → Ge 树）</h3>
+    <ul>
+      <li><b>归纳假设</b>：<code>Γe,Γ&#8866;Λ</code> 的 G 树呈 R&#8321;/R&#8322; 形；假定子树 <code>Γe,Γ&#8321;&#8866;Λ&#8321;</code>（及第二支）可证 ⟹ <code>Γ&#8321;&#8866;Λ&#8321;</code>（及第二支）在 Ge 可证。</li>
+      <li><b>归纳步骤</b>：同一条规则反向作用，得 <code>Γ&#8866;Λ</code> 在 Ge 可证。&mdash; 即"把 Γe 从每行<u>抹掉</u>，规则照样成立"。</li>
+    </ul>
+    <div class="tip"><b>为什么两个方向都只是"加/抹 Γe，规则不动"就够？</b>关键还是那条性质：G 的规则对"左边多挂的旁支公式"完全无所谓。Γe 在整棵树里始终原样跟着每一行走，既不被规则消耗、也不阻碍规则触发，所以加它/抹它都不破坏证明树合法性。</div>
+    <div class="warn">把基础（p29–30）+ 步骤（p33）合起来，结构归纳<b>双向</b>完成，命题6.13 证毕。至此 Ge 已被成功归约到 G。</div>
+  </div>
+</section>
+
+<!-- ========== p34 ========== -->
+<section class="page" id="p34">
+  <h2>定理 6.14：Ge 的可靠性，与"完全性"目标登场</h2>
+  <div class="pgnum">PDF 第 34 页（本段落幕，接下一段完全性证明）</div>
+  <img class="slide" src="pages/p34.png" alt="p34">
+  <div class="explain">
+    <h3>定理 6.14：可靠性（soundness）</h3>
+    <table class="tbl">
+      <tr><th>名词</th><th>英文</th><th>含义</th></tr>
+      <tr><td><b>可靠性</b></td><td class="l">soundness</td><td class="l">"证得出的，必定语义为真"&mdash; 即 <code>&#8866;</code> ⟹ <code>&#8872;</code></td></tr>
+    </table>
+    <div class="tip" style="font-size:15.5px;"><b>定理 6.14：若 <code>Γ &#8866; Δ</code> 在 Ge 中可证，则 <code>Γ &#8872; Δ</code>。</b>（语法可证 ⟹ 语义有效）</p></div>
+    <p>回忆 <code>&#8872;</code>（双横杠，语义蕴含/有效）是前段术语："凡是满足 Γ 的模型都满足 Δ"。可靠性保证 Ge 不会"瞎证"出语义为假的东西。</p>
+
+    <h3>证明为什么"只需证 3 条等词公理永真"</h3>
+    <p>原文：<b>"只需证明 3 条等词公理是永真的。"</b>道理：老的 G 系统<u>已经被证过是可靠的</u>（前段结论），它的所有规则都保持"真"。Ge = G + 3 条等词公理，新增的只有那 3 条公理。所以只要补证<b>这 3 条公理在任何模型里都永真</b>（自反 s=s 永真、函数同余永真、谓词同余永真 &mdash; 它们正是"真正的相等"在语义上的体现），整个 Ge 的可靠性就被"G 可靠 + 新公理永真"合起来保住了。</p>
+    <div class="note"><b>这里又见 p28 归约的好处：</b>因为 Γe 这 3 条公理在语义上天然永真，把它们外置成前提对"有效性"毫无损伤 &mdash; 可靠性几乎是"白送"的。</div>
+
+    <h3>下一段的目标：完全性（completeness）</h3>
+    <div class="warn" style="font-size:15.5px;"><b>完全性目标：若 <code>Γ &#8872; Δ</code>，则 <code>Γ &#8866; Δ</code> 在 Ge 中可证。</b>（语义有效 ⟹ 语法可证，正好是可靠性的<u>反方向</u>）</p></div>
+    <p>可靠性 + 完全性合起来，就是 <code>&#8866;</code> ⟺ <code>&#8872;</code> &mdash; <b>"能证的恰好等于真的"</b>，这是一阶逻辑（带等词）最核心的定理。可靠性这页已拿下；完全性更难，要靠极大协调集、模型构造等工具（前段铺垫的 Con/极大协调正是为此），<b>留给下一段展开</b>。</p>
+    <div class="tip"><b>本段到此收束：</b>D 组定义了 Ge 并演示其证明能力；E 组用结构归纳把 Ge 归约回 G（命题6.13），顺手白拿可靠性（定理6.14）。归约是"核心技术"&mdash; 它让我们能站在熟悉的 G 系统上，去攻最后的完全性。</div>
+  </div>
+</section>
+
+
+
+<!-- ============ 背景 C0：总地图 ============ -->
+<section class="page bg" id="bgC0">
+  <h2>完全性证明的总地图——我们究竟要走哪条路</h2>
+  <div class="pgnum">补充背景 · 进入 p35 前必看，全段反复回扣这张图</div>
+  <div class="explain">
+    <p>这一段是整讲的<strong>高潮</strong>。前两段把"证明系统"（⊢，能写出证明树）和"语义"（⊨，在模型里为真）两套东西分别讲清楚了。现在要做的，是把它们<strong>缝起来</strong>——证明<strong>完全性定理（Completeness Theorem）</strong>：凡是语义上成立的（Γ ⊨ A），证明系统都能证出来（Γ ⊢ A）。</p>
+
+    <div class="tip"><strong>一句话抓住主线：</strong>整个证明的核心引擎是一句话——<strong>"只要一个公式集不自相矛盾（协调 / Con），就一定能给它造出一个模型（可满足）"</strong>。这就是定理 6.19。有了它，完全性定理只是一个反证法的推论。</div>
+
+    <h3>路线图：从"无矛盾"一路抬到"有模型"</h3>
+    <p>难点在于：怎么从一个抽象的"无矛盾的公式集 Γ"，凭空<strong>造出</strong>一个真实的模型（论域 + 解释）？直接造不出来，因为 Γ 可能"信息不全"（很多公式既没说真也没说假）。所以要分四步把 Γ 一步步"喂饱"，喂到信息完整到能直接读出一个模型为止：</p>
+
+    <div class="formula" style="text-align:left;line-height:2.1;font-size:14.5px;">
+  ① Γ 协调 (Con)<br>
+  &nbsp;&nbsp;&nbsp;│ &nbsp;<span style="color:#b91c1c;">Lindenbaum 构造（定理6.17）</span>：把 Γ 扩成"极大 + 有见证人"的集合<br>
+  &nbsp;&nbsp;&nbsp;▼<br>
+  ② Ψ 是 <strong>Henkin 集</strong>（极大协调 + 见证性）<br>
+  &nbsp;&nbsp;&nbsp;│ &nbsp;<span style="color:#b91c1c;">定理6.18</span>：验证它满足一组"封闭性条件"<br>
+  &nbsp;&nbsp;&nbsp;▼<br>
+  ③ Ψ 是 <strong>Hintikka 集</strong>（一组语法条件，使它"能读出模型"）<br>
+  &nbsp;&nbsp;&nbsp;│ &nbsp;<span style="color:#b91c1c;">前序段已证：Hintikka集可满足</span>（造典范模型）<br>
+  &nbsp;&nbsp;&nbsp;▼<br>
+  ④ Ψ 可满足 ⟹ 子集 Γ 可满足 &nbsp;<span style="color:#1d4ed8;">✓ 到达终点（定理6.19）</span>
+    </div>
+
+    <div class="note">把这条链记牢：<strong>Con → Henkin → Hintikka → 可满足</strong>。后面每过一个定理，我会回到这张图标一句"我们走到第几步了"。本段三组内容正好对应：<strong>组 F</strong> 造出 Henkin 集（①→②，最硬核），<strong>组 G</strong> 证 Henkin 是 Hintikka（②→③），<strong>组 H</strong> 收口（③→④→完全性）。</div>
+
+    <h4>为什么是这三个集合，不能一步到位？</h4>
+    <ul>
+      <li><strong>为什么要"极大"？</strong>普通协调集对每个公式 A 可能"既不含 A 也不含 ¬A"——信息有缺口，读不出模型里 A 到底真还是假。极大协调保证<strong>二选一必有其一</strong>，缺口补满。</li>
+      <li><strong>为什么要"见证性"？</strong>这是一阶逻辑独有的麻烦。集合里有 ∃x.A（"存在某物满足A"），但模型论域里可能根本找不到那个"某物"。见证性强行塞一个常元 c 当"证人"，保证 A[c/x] 也在集合里——论域里就真有这么个东西。<strong>这正是 Henkin 的天才之处</strong>。</li>
+      <li><strong>为什么还要 Hintikka 这一层？</strong>Hintikka 集是"能直接翻译成模型"的标准格式（一组封闭性条件）。Henkin 集满足这些条件，于是借道 Hintikka 直接造模型。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ p35 定义6.15 ============ -->
+<section class="page" id="p35">
+  <h2>定义 6.15 · Henkin 集</h2>
+  <div class="pgnum">PDF 第 35 页 · 组 F 起点</div>
+  <img class="slide" src="pages/p35.png" alt="p35">
+  <div class="explain">
+    <h3>先把名字拆开：Henkin 集是什么</h3>
+    <p><strong>Henkin 集（Henkin set）</strong>：以逻辑学家 Leon Henkin 命名（1949 年他用这个构造给出完全性定理的经典证明）。它是一个<strong>公式集 Γ</strong>，同时满足两个条件——这两条正是上一页总地图里"把 Γ 喂饱"的两味料：</p>
+
+    <table class="tbl">
+      <tr><th>条件</th><th>形式化</th><th>直觉含义</th></tr>
+      <tr><td>(1) 极大协调</td><td class="l">Γ 极大协调</td><td class="l">不自相矛盾，且"满"到不能再加任何公式（加谁都矛盾）</td></tr>
+      <tr><td>(2) <strong>见证性</strong></td><td class="l">若 ∃x.A ∈ Γ，则有项 t 使 A[t/x] ∈ Γ</td><td class="l">凡声称"存在某物"，集合里就真给出那个"某物 t"作证人</td></tr>
+    </table>
+
+    <h4>条件(2)"见证性"逐符号读</h4>
+    <p><strong>见证性（witness property）</strong>，也叫"存在性见证"。逐字读条件(2)：</p>
+    <ul>
+      <li><code>∃x.A ∈ Γ</code>：集合里有一句"存在 x 使 A 成立"。例如 A 是"x 是质数"，这句就是"存在质数"。</li>
+      <li><code>A[t/x]</code>：把 A 里的 x 全换成具体的项 t（前序段讲过的代入记号）。即"t 是质数"。</li>
+      <li>整条：只要集合声称"存在质数"，它就<strong>必须同时点名一个具体的 t</strong>，并把"t 是质数"也放进集合。t 就是那句存在断言的<strong>证人（witness）</strong>。</li>
+    </ul>
+
+    <div class="tip"><strong>为什么非要见证性？</strong>造模型时论域是"所有项"。如果集合只说"存在质数"却不给具体的项，那造出来的论域里可能没有任何一项被标记成质数，∃x.A 就在模型里假了——和它在集合里"为真"矛盾。见证性就是提前把"证人"安插进论域，堵死这个洞。<strong>这是一阶逻辑比命题逻辑难的根源</strong>，命题逻辑没有量词，不需要这一条。</div>
+
+    <div class="warn">注意 (1) 里的"极大协调"是前序段已讲的术语（协调 Con = 无矛盾；极大 = 加任何新公式都会破坏协调）。本页的新东西只有 (2)。下面两页就动手<strong>造</strong>一个 Henkin 集出来。</div>
+  </div>
+</section>
+
+<!-- ============ 背景 C1：可数 + 枚举 ============ -->
+<section class="page bg" id="bgC1">
+  <h2>背景：可数语言 ℵ₀、加新常元、把公式排成一队</h2>
+  <div class="pgnum">补充背景 · 进入 p36 构造前必看</div>
+  <div class="explain">
+    <p>下一页的 Lindenbaum 构造要用三个"零件"，先在这里备齐，否则 p36 会看不懂。</p>
+
+    <h3>零件1：可数 ℵ₀（aleph-null）</h3>
+    <p><strong>ℵ₀（读 aleph-null / 阿列夫零）</strong>：最小的无穷基数，表示"可数无穷"——能和自然数 ℕ 一一对应、能"排成一队数下去"的无穷。<code>‖𝓛‖ = ℵ₀</code> 的意思是：语言 𝓛 里的符号（以及由它生成的全体公式）<strong>可数</strong>。</p>
+    <div class="note"><strong>为什么强调可数？</strong>因为构造要"把全体公式排成一列 φ₀, φ₁, φ₂, …，一个一个处理"。只有可数才排得成一队。可数是本讲的隐含前提（南大课件默认语言可数）。</div>
+
+    <h3>零件2：添加可数个新常元 c_n</h3>
+    <p><code>𝓛′ = 𝓛 ∪ { c_n | n ∈ ℕ }</code>：在原语言 𝓛 之外，<strong>新造无穷多个全新常元</strong> c₀, c₁, c₂, …。"新"= 原语言里从没出现过。</p>
+    <div class="tip"><strong>这些 c_n 干嘛用？</strong>正是上一页"见证性"要的<strong>证人</strong>。每碰到一句 ∃x.A，就抓一个还没用过的新常元 c 当证人，塞进 A[c/x]。新常元管够（有可数无穷个），公式也只有可数个，所以永远够用。<strong>用"新"常元是关键</strong>：新常元在原集合里没有任何包袱，不会引出意外矛盾（p38 的归纳证明全靠这一点）。</div>
+
+    <h3>零件3：把全体公式枚举成 φ₀, φ₁, …</h3>
+    <p>因为 𝓛 可数，可以把扩充语言 𝓛′ 的<strong>全体公式排成一个无穷序列</strong> φ₀, φ₁, …, φ_n, …（n ∈ ℕ），不重不漏。这叫<strong>枚举（enumeration）</strong>。</p>
+    <p>有了这队公式，就能"逐个表态"：第 n 步处理 φ_n —— 能加就加，加了矛盾就跳过。处理完所有 φ_n，集合就"满"了（极大性的来源）。</p>
+
+    <div class="warn">小结这三件套：<strong>可数（排得成队）+ 新常元（当证人）+ 枚举（逐个处理）</strong>。下一页的 Lindenbaum 链 Ψ_n 就是拿着这队公式，一步步往 Φ 上加东西，加成一个 Henkin 集。这个"逐步扩张到极大"的手法叫 <strong>Lindenbaum 构造（Lindenbaum's construction）</strong>，得名于波兰逻辑学家 Adolf Lindenbaum。</div>
+  </div>
+</section>
+
+<!-- ============ p36 定6.16 + 理6.17 ============ -->
+<section class="page" id="p36">
+  <h2>定义 6.16 + 定理 6.17 · Lindenbaum 链的三分支构造</h2>
+  <div class="pgnum">PDF 第 36 页 · 全段最核心的一页</div>
+  <img class="slide" src="pages/p36.png" alt="p36">
+  <div class="explain">
+    <h3>定理 6.17 要证什么</h3>
+    <p><strong>定理 6.17：</strong>只要 Φ 协调（Con(Φ)），就存在 𝓛′ 上的公式集 Ψ，使 Ψ ⊇ Φ 且 Ψ 是 𝓛′ 的 Henkin 集。</p>
+    <p>翻成总地图的语言：<strong>这就是 ①→② 那一步</strong>——把一个普通的协调集 Φ，扩张成一个 Henkin 集 Ψ。下面的构造就是"扩张的具体做法"。</p>
+
+    <h3>构造：Ψ_n 链 + 三分支规则（看图中大括号）</h3>
+    <p>定义一条<strong>递增的集合链</strong> Ψ₀ ⊆ Ψ₁ ⊆ Ψ₂ ⊆ …。起点 Ψ₀ = Φ。每一步看队列里的第 n 个公式 φ_n，按三种情况决定 Ψ_{n+1}：</p>
+
+    <table class="tbl">
+      <tr><th>情况</th><th>条件</th><th>动作 Ψ_{n+1} =</th><th>为什么这样</th></tr>
+      <tr><td>① 加了矛盾</td><td class="l">Incon(Ψ_n ∪ {φ_n})</td><td class="l">Ψ_n（<strong>不加</strong>）</td><td class="l">φ_n 会破坏协调，丢掉它</td></tr>
+      <tr><td>② 能加且非∃式</td><td class="l">Con(...) 且 φ_n 不呈 ∃x.A 形</td><td class="l">Ψ_n ∪ {φ_n}（<strong>加</strong>）</td><td class="l">加进来不矛盾，收下</td></tr>
+      <tr><td>③ 能加且是∃式</td><td class="l">Con(...) 且 φ_n 呈 ∃x.A 形</td><td class="l">Ψ_n ∪ {φ_n, A[c/x]}（<strong>加 + 配证人</strong>）</td><td class="l">不仅收下 ∃x.A，<strong>同时塞证人</strong> A[c/x]</td></tr>
+    </table>
+
+    <div class="tip"><strong>三分支的灵魂在情况③</strong>：当遇到的公式是"存在式" ∃x.A，光收下它还不够（否则不满足见证性），必须<strong>顺手抓一个新常元 c</strong>，把 A[c/x] 也加进去。这一步就是在<strong>制造见证性</strong>——总地图里那味独属于一阶逻辑的料。情况①②对应命题逻辑也有的"极大化"，情况③是一阶逻辑的加料。</div>
+
+    <div class="note"><strong>c 怎么选？</strong>看图最后一行：<code>c 为 {c_n} 中不曾使用过的新常元</code>。每次都挑一个<strong>全新、没露过面</strong>的常元当证人。这是 p38 归纳证明能走通的命门——新常元干净，不会和已有公式纠缠出矛盾。</div>
+
+    <h3>最后取并集</h3>
+    <div class="formula">Ψ = ∪{ Ψ_n | n ∈ ℕ }</div>
+    <p>把链上所有 Ψ_n 并起来，得到最终的 Ψ。它收纳了"逐步处理每个公式"的全部结果。下面 6 页就是逐条验证：这个 Ψ 确实是 Henkin 集。</p>
+  </div>
+</section>
+
+<!-- ============ p37 六条性质 ============ -->
+<section class="page" id="p37">
+  <h2>六条性质总览：Ψ 是 Henkin 集的拆解清单</h2>
+  <div class="pgnum">PDF 第 37 页 · 接下来 4 页的路标</div>
+  <img class="slide" src="pages/p37.png" alt="p37">
+  <div class="explain">
+    <h3>把"Ψ 是 Henkin 集"拆成 6 个小目标</h3>
+    <p>直接证"Ψ 是 Henkin 集"太大，课件把它拆成 6 条性质，逐条击破。先把这 6 条和总目标的关系列清，后面就是填空：</p>
+
+    <table class="tbl">
+      <tr><th>性质</th><th>内容</th><th>作用 / 证在哪页</th></tr>
+      <tr><td>(1)</td><td class="l">Φ ⊆ Ψ</td><td class="l">扩张确实包含原集合（"易见"，本页带过）</td></tr>
+      <tr><td>(2)</td><td class="l">对所有 n，Con(Ψ_n)</td><td class="l">链上每一环都协调 → <strong>p38 归纳证明</strong></td></tr>
+      <tr><td>(3)</td><td class="l">Con(Ψ)</td><td class="l">并集也协调 → <strong>p39</strong>（由(2)推出）</td></tr>
+      <tr><td>(4)</td><td class="l">Ψ_n 中新常元有穷</td><td class="l">技术引理，保证总能找到"还没用过"的新常元</td></tr>
+      <tr><td>(5)</td><td class="l">Ψ 极大协调</td><td class="l">Henkin 条件(1) → <strong>p40-41</strong></td></tr>
+      <tr><td>(6)</td><td class="l">Ψ 为 Henkin 集</td><td class="l">补上见证性，收口 → <strong>p41</strong></td></tr>
+    </table>
+
+    <div class="tip"><strong>逻辑依赖链：</strong>(2)是地基（每环协调）→ 推出(3)（整体协调）→ 配合(4)给出(5)（极大协调，即 Henkin 条件1）→ 再补(6)的见证性（来自构造的情况③）= Henkin 集。一环扣一环。</div>
+
+    <div class="note">本页对 (1) 直接判"易见"——因为 Ψ₀ = Φ 且链只增不减，Φ 当然在 Ψ 里。对 (2) 说"对 n 归纳证明如下"，引出下一页。<strong>性质(4)</strong>课件归到"对 n 归纳即可"（p39 末），不展开：每步最多引入 1 个新常元，n 步内至多 n 个，自然有穷——既然有穷，无穷个 c_n 里永远还剩"没用过的"可抓，情况③的证人供应不断。</div>
+  </div>
+</section>
+
+<!-- ============ p38 性质(2) ============ -->
+<section class="page" id="p38">
+  <h2>性质 (2)：对 n 归纳证 Con(Ψ_n)——三情况，重点看 ∃</h2>
+  <div class="pgnum">PDF 第 38 页 · 本段技术含量最高的一页</div>
+  <img class="slide" src="pages/p38.png" alt="p38">
+  <div class="explain">
+    <h3>归纳法骨架</h3>
+    <ul>
+      <li><strong>奠基 n=0：</strong>Ψ₀ = Φ，而 Φ 协调（定理前提），所以 Con(Ψ₀)。✓</li>
+      <li><strong>归纳假设（I.H.）：</strong>设 Con(Ψ_n)。</li>
+      <li><strong>归纳步骤：</strong>要证 Con(Ψ_{n+1})。按构造的三情况分别验。</li>
+    </ul>
+
+    <h4>情况 1（没加）</h4>
+    <p>Incon(Ψ_n ∪ {φ_n})，构造规定 Ψ_{n+1} = Ψ_n。既然没变，由 I.H. 直接得 Con(Ψ_{n+1})。✓</p>
+    <h4>情况 2（加了非∃式）</h4>
+    <p>条件本身就是 Con(Ψ_n ∪ {φ_n})，而 Ψ_{n+1} 正是这个集合，所以协调。✓ 这两种情况几乎白送。</p>
+
+    <h3>情况 3（加 ∃ 式 + 证人）——真正的难点</h3>
+    <p>此时 φ_n ≡ ∃x.A，Ψ_{n+1} = Ψ_n ∪ {φ_n, A[c/x]}。我们多塞了一个证人 A[c/x]，<strong>会不会塞出矛盾？</strong>用反证法证不会：</p>
+    <div class="formula" style="text-align:left;line-height:2.0;font-size:14px;">
+  反设 Incon(Ψ_{n+1})<br>
+  ⟹ 有有穷子集 Δ′ ⊆ Ψ_{n+1} 使 Δ′ ⊢ 可证（矛盾）<br>
+  ⟹ 有有穷 Δ ⊆ Ψ_n∪{φ_n}，使 <strong>Δ, A[c/x] ⊢</strong> 可证（把证人单拎出来）<br>
+  &nbsp;&nbsp;&nbsp;设这棵证明树为 <strong>T</strong><br>
+  ⟹ 在 T 中把常元 <strong>c 整体换成一个新变元 y</strong>，得 <strong>Δ, A[y/x] ⊢</strong> 可证<br>
+  ⟹ 由 <strong>∃L 规则</strong>（前序段的一阶量词左规则）：<strong>Δ, ∃x.A ⊢</strong> 可证<br>
+  ⟹ 即 Δ, φ_n ⊢ 可证，<strong>与 Con(Ψ_n ∪ {φ_n}) 矛盾</strong>
+    </div>
+
+    <div class="warn"><strong>整个证明的精华就在"把 c 换成新变元 y"这一步</strong>，务必想透为什么能换：c 是我们<strong>刚抓的全新常元</strong>，它<strong>只在证人 A[c/x] 里出现，没在 Δ 里、没在 ∃x.A 里露过面</strong>。一个"对其余公式完全陌生"的常元，在证明树里把它整体替换成新变元 y，证明依然合法（证明的有效性不依赖某个孤立常元具体叫什么）。换成变元后，A[y/x] 就符合 ∃L 规则"引入存在量词"对变元的要求，于是能用 ∃L 把 A[y/x] 收成 ∃x.A。</div>
+
+    <div class="tip"><strong>为什么这一步如此关键？</strong>它精确地说明了 p36"必须用<strong>没用过</strong>的新常元当证人"那个要求的用途——只有 c 干净（不在 Δ、不在 ∃x.A 里），换变元 + ∃L 才走得通，反证才能落到 Con(Ψ_n∪{φ_n}) 上。换句话说：<strong>加证人不会引入新矛盾</strong>，前提是证人用的是新常元。这是 Henkin 构造能成立的技术命门。</div>
+
+    <p style="color:#7a6f5e;">回到总地图：我们正在打磨 ①→② 的扩张，确认"每加一步都不破坏协调"。</p>
+  </div>
+</section>
+
+<!-- ============ p39 性质(3) ============ -->
+<section class="page" id="p39">
+  <h2>性质 (3)：Con(Ψ)——并集也协调</h2>
+  <div class="pgnum">PDF 第 39 页</div>
+  <img class="slide" src="pages/p39.png" alt="p39">
+  <div class="explain">
+    <h3>从"每环协调"到"整体协调"</h3>
+    <p>性质(2)只说了链上<strong>每个</strong> Ψ_n 协调，但 Ψ 是<strong>无穷个</strong> Ψ_n 的并。无穷并起来会不会突然矛盾？用反证 + <strong>有穷性</strong>这个杀手锏：</p>
+
+    <div class="formula" style="text-align:left;line-height:2.0;font-size:14px;">
+  反设 Incon(Ψ)<br>
+  ⟹ 存在<strong>有穷</strong>子集 Δ ⊆ Ψ 使 Δ ⊢ 可证（矛盾）<br>
+  &nbsp;&nbsp;&nbsp;设 Δ = {A₁, …, A_k}（有穷，只有 k 个公式）<br>
+  ⟹ 每个 A_i ∈ Ψ = ∪Ψ_n，故各有某个 n_i 使 A_i ∈ Ψ_{n_i}<br>
+  ⟹ 取 l = max(n₁,…,n_k)，由链递增，<strong>所有 A_i ∈ Ψ_l</strong>，即 Δ ⊆ Ψ_l<br>
+  ⟹ 于是 Δ ⊢ 可证 ⟹ Incon(Ψ_l)，<strong>与性质(2) Con(Ψ_l) 矛盾</strong>
+    </div>
+
+    <div class="tip"><strong>这个套路要记牢——"矛盾必落在有穷处"。</strong>证明树是有穷的（前序段：任何证明只用到有穷条前提），所以"Ψ 矛盾"必然只动用了 Ψ 里有穷多个公式。这有穷多个公式必定在<strong>某一个足够大的 Ψ_l</strong> 里全部凑齐（取下标最大值 l）。于是无穷集的矛盾被"压缩"回单个有穷环 Ψ_l 的矛盾——而那环我们已证协调。无穷的难题被有穷性化解。</div>
+
+    <div class="note">图末"(4) 对 n 归纳证明即可"：性质(4)（每个 Ψ_n 里新常元有穷）课件不展开。理由如 p37 所说——每步至多添 1 个证人常元，n 步至多 n 个，归纳即得有穷。<strong>到这里 ① 协调集已被扩成一个协调的并集 Ψ。</strong></div>
+  </div>
+</section>
+
+<!-- ============ p40 性质(5)判据 ============ -->
+<section class="page" id="p40">
+  <h2>性质 (5) 上：极大性只需证一个判据</h2>
+  <div class="pgnum">PDF 第 40 页</div>
+  <img class="slide" src="pages/p40.png" alt="p40">
+  <div class="explain">
+    <h3>"极大协调"拆成两半，一半已到手</h3>
+    <p>要证 Ψ <strong>极大协调</strong> = 协调 + 极大。协调已由性质(3)拿下，<strong>只剩"极大性"</strong>。</p>
+    <p>本页引用"前命题"把极大性归约成一个干净的判据（图中只给了上半句，下半页 p41 补全）：</p>
+
+    <div class="note">极大性的等价判据（前序段命题）：<br><strong>只需证：若 Con(Ψ_n ∪ {φ_n})（即 φ_n 加进来不矛盾），则 φ_n ∈ Ψ。</strong></div>
+
+    <div class="tip"><strong>读懂这个判据为什么等于"极大"：</strong>极大的本意是"凡是加进来不破坏协调的公式，集合里<strong>本来就已经有了</strong>，没有遗漏"。也就是"能加的都已经在里头"。所以只要证明"任何与 Ψ 相容的 φ_n 必属于 Ψ"，就说明 Ψ 满到无可再加——这正是极大。下一页用构造本身把这件事兑现。</p></div>
+
+    <p style="color:#7a6f5e;">导航：我们在补齐 Henkin 条件(1)（极大协调）的"极大"那一半。</p>
+  </div>
+</section>
+
+<!-- ============ p41 性质(5)(6) ============ -->
+<section class="page" id="p41">
+  <h2>性质 (5)(6)：极大协调 + Henkin 性，收口</h2>
+  <div class="pgnum">PDF 第 41 页 · 组 F 终点</div>
+  <img class="slide" src="pages/p41.png" alt="p41">
+  <div class="explain">
+    <h3>性质 (5) 补全：证那个判据</h3>
+    <p>要证"若 Con(Ψ_n ∪ {φ_n}) 则 φ_n ∈ Ψ"。看图中推理：</p>
+    <div class="formula" style="text-align:left;line-height:1.9;font-size:14px;">
+  设 Con(Ψ ∪ {φ_n})<br>
+  ⟹ Con(Ψ_n ∪ {φ_n})（因 Ψ_n ⊆ Ψ，子集也协调）<br>
+  ⟹ 命中构造的情况②或③，<strong>φ_n 被加入 Ψ_{n+1}</strong><br>
+  ⟹ φ_n ∈ Ψ_{n+1} ⊆ Ψ &nbsp;✓
+    </div>
+    <p>逻辑很顺：构造在第 n 步处理 φ_n 时，只要它和当时的集合相容，就一定收下它。所以"相容必入选"，极大性成立。<strong>至此性质(5) Ψ 极大协调 = Henkin 条件(1) 拿下。</strong></p>
+
+    <h3>性质 (6)：见证性——Henkin 条件(2)</h3>
+    <p>这一步几乎是把 p36 情况③的设计"读回来"：</p>
+    <div class="formula" style="text-align:left;line-height:1.9;font-size:14px;">
+  设 ∃x.A ∈ Ψ，记它为某个 φ_n（枚举里总有它的位置）<br>
+  ⟹ φ_n ∈ Ψ ⟹ 当初 Con(Ψ_n ∪ {φ_n})（否则不会被加）<br>
+  ⟹ 命中构造情况③，<strong>Ψ_{n+1} = Ψ_n ∪ {φ_n, A[c/x]}</strong><br>
+  ⟹ A[c/x] ∈ Ψ_{n+1} ⊆ Ψ &nbsp;✓（证人 c 就在 Ψ 里）
+    </div>
+
+    <div class="tip"><strong>见证性是"设计出来的"，不是"碰巧成立的"。</strong>p36 情况③那条"遇 ∃ 就配证人"的规则，专门就是为了让性质(6)成立。现在 (5)(6) 双双到手——<strong>Ψ 极大协调 + 有见证性 = Ψ 是 Henkin 集</strong>。定理 6.17 证毕（图右下角 □）。</div>
+
+    <div class="note" style="background:#eaf3ff;border-color:#bfdbfe;"><strong>★ 总地图打卡：① Con(Φ) → ② Henkin 集 Ψ ✓ 完成！</strong>组 F 这一段最硬的体力活做完了。接下来组 G 要证：这个 Henkin 集自动就是 Hintikka 集（②→③）。</div>
+  </div>
+</section>
+
+<!-- ============ 背景 C2：Hintikka ============ -->
+<section class="page bg" id="bgC2">
+  <h2>背景：Hintikka 集是什么，凭什么能"读出"一个模型</h2>
+  <div class="pgnum">补充背景 · 进入 p42 定理6.18 前必看</div>
+  <div class="explain">
+    <p><strong>Hintikka 集（Hintikka set）</strong>：以芬兰逻辑学家 Jaakko Hintikka 命名，也叫"model set / 模型集"。它<strong>不是</strong>靠"协调/极大"这类抽象性质定义的，而是靠<strong>一组具体的语法封闭性条件</strong>定义——正因为条件具体，它能被"直接翻译成一个模型"。</p>
+
+    <h3>核心思想：一个集合，处处"自洽展开"</h3>
+    <p>Hintikka 集是满足一串"如果含某复合公式，就必含它的分解部件"的条件的公式集。直觉：它对每种逻辑联结词都"算到底、不留账"。举几条感受一下（Γ 表示该集合）：</p>
+    <table class="tbl">
+      <tr><th>#</th><th>条件（节选自本讲）</th><th>读法</th></tr>
+      <tr><td>1</td><td class="l">A 原子 ⟹ A 与 ¬A 不同时属于 Γ</td><td class="l">原子层面不打架（一致性）</td></tr>
+      <tr><td>2</td><td class="l">¬¬A ∈ Γ ⟹ A ∈ Γ</td><td class="l">双重否定可消去</td></tr>
+      <tr><td>3</td><td class="l">A→B ∈ Γ ⟹ ¬A∈Γ 或 B∈Γ</td><td class="l">蕴含按真值表分解</td></tr>
+      <tr><td>5</td><td class="l">A∧B ∈ Γ ⟹ A∈Γ 且 B∈Γ</td><td class="l">合取拆成两片</td></tr>
+      <tr><td>9</td><td class="l">∀x.A ∈ Γ ⟹ 对所有项 t，A[t/x]∈Γ</td><td class="l">全称对每个个体兑现</td></tr>
+      <tr><td>10</td><td class="l">¬∀x.A ∈ Γ ⟹ 有项 t，¬A[t/x]∈Γ</td><td class="l">存在反例（要见证人！）</td></tr>
+    </table>
+
+    <h3>凭什么能"读出"模型？——典范模型预告</h3>
+    <p>有了这些条件，就能<strong>用集合自身造一个模型</strong>：论域取"所有项"，每个原子公式在模型里的真假，<strong>直接照它在不在 Γ 里来定</strong>（在 Γ 里就真，不在就假）。条件1-17 恰好保证这样"读"出来的真值，对每个复合公式都和"它在不在 Γ"一致。这就是<strong>典范模型 / 项模型</strong>（详见 p52 前的背景 C3）。前序段已经证过关键结论：<strong>每个 Hintikka 集都可满足</strong>。</p>
+
+    <div class="tip"><strong>所以组 G 的任务非常明确：</strong>证 Henkin 集（极大协调 + 见证性）<strong>满足上面每一条 Hintikka 条件</strong>。一旦满足，就免费继承"Hintikka 集可满足"，模型就到手了。下面 p42-51 就是逐条对照验证，共 17 条。</div>
+
+    <div class="note">为什么 Henkin 能满足这些条件？两个支柱：<strong>极大协调</strong>负责所有命题联结词和 ∀ 的条件（"该有的都有，矛盾的没有"）；<strong>见证性</strong>专门负责条件10 的 ¬∀（要造存在反例时，证人现成）。这正好把 Henkin 的两条定义用满。</div>
+  </div>
+</section>
+
+<!-- ============ p42 ============ -->
+<section class="page" id="p42">
+  <h2>定理 6.18 · Henkin ⟹ Hintikka：命题条件 (1)-(5)</h2>
+  <div class="pgnum">PDF 第 42 页 · 组 G 起点</div>
+  <img class="slide" src="pages/p42.png" alt="p42">
+  <div class="explain">
+    <h3>定理 6.18 与证明套路</h3>
+    <p><strong>定理 6.18：</strong>若 Γ 为 Henkin 集，则 Γ 为 Hintikka 集。<strong>证法：对照 Hintikka 定义逐条验证</strong>——把 Hintikka 的每条封闭性条件，用 Henkin 的"极大协调 + 见证性"推出来。本页给出前 5 条（后面 p43-47 给同样这 5 条配大字示意，对照看更清楚）。</p>
+
+    <h4>(1) 原子无矛盾</h4>
+    <p>要证：A 原子时 A、¬A 不同时在 Γ。理由直接：<code>Con(Γ)</code>。若两者都在，{A, ¬A} ⊆ Γ 立刻矛盾，违反协调。</p>
+
+    <h4>(2) ¬¬消去</h4>
+    <p>设 ¬¬A ∈ Γ。前序段定理 <code>¬¬A ⊢ A</code> 可证，故 <code>Γ ⊢ A</code>。又 Γ <strong>极大协调</strong>——这里用上极大性：凡 Γ 能证出的公式必已在 Γ 中（否则把 A 加进去仍协调，与极大矛盾）。所以 A ∈ Γ。</p>
+
+    <h4>(3) →的分解</h4>
+    <p>设 A→B ∈ Γ，反证：假设 ¬A∉Γ 且 B∉Γ。由命题6.6（极大协调集对"不含某式"的刻画），¬A∉Γ 推出 A∈Γ、B∉Γ 推出 ¬B∈Γ。于是 A, A→B ⊢ B 可证（→L / 分离规则），得 B∈Γ，与 ¬B∈Γ 矛盾。故 ¬A∈Γ 或 B∈Γ。</p>
+
+    <h4>(4)(5) 同法</h4>
+    <p>(4) ¬(A→B)：由 ¬(A→B) ⊢ A 且 ⊢ ¬B（命题6.7），得 A∈Γ 且 ¬B∈Γ。(5) A∧B：由 A∧B ⊢ A、A∧B ⊢ B，得 A,B 都∈Γ。</p>
+
+    <div class="tip"><strong>看清反复用的两块砖：</strong>① <strong>极大性</strong>——"Γ 能证的 ⟹ Γ 已含"（把 ⊢ 兑换成 ∈）；② <strong>命题 6.6/6.7</strong>——极大协调集里 "A∉Γ ⟺ ¬A∈Γ"（前序段已证）。每条验证都是这两块砖的组合。</div>
+  </div>
+</section>
+
+<!-- ============ p43 ============ -->
+<section class="page" id="p43">
+  <h2>条件 1 示意 · 原子公式不自相矛盾</h2>
+  <div class="pgnum">PDF 第 43 页 · p42 的条件(1)配图</div>
+  <img class="slide" src="pages/p43.png" alt="p43">
+  <div class="explain">
+    <p>图右上虚线框 <code>{A, ¬A} 矛盾</code>，底部框给出 Hintikka 条件1 的正式表述：<strong>"若公式 A 为原子公式，则 A 和 ¬A 不能都属于 Ψ。"</strong></p>
+    <div class="note">这就是 p42 条件(1) 的可视化。验证一句话：<code>Con(Ψ)</code> 直接排除 {A,¬A} 同在——否则集合里就有一对互相否定的公式，立即不协调。原子层的"不打架"是整个模型读取的最底层保证。</div>
+    <div class="tip">导航：组 G 逐条验证进行中。从这页起，每页底部那个虚线框就是<strong>正在核对的那一条 Hintikka 条件</strong>，建议对着框读 p42 对应的小条。</div>
+  </div>
+</section>
+
+<!-- ============ p44 ============ -->
+<section class="page" id="p44">
+  <h2>条件 2 示意 · ¬¬A ∈ Ψ ⟹ A ∈ Ψ</h2>
+  <div class="pgnum">PDF 第 44 页 · 条件(2)配图</div>
+  <img class="slide" src="pages/p44.png" alt="p44">
+  <div class="explain">
+    <p>图右给出关键证明片段（一条推理规则形态）：<br><code>Γ ⊢ ¬¬A&nbsp;&nbsp;&nbsp;¬¬A ⊢ A</code> ⟹ <code>Γ ⊢ A</code>（用 Cut / 传递性把两段证明接起来），并标注用到<strong>命题 6.7</strong>。底框：<strong>条件2"若 ¬¬A∈Ψ，则 A∈Ψ"。</strong></p>
+    <div class="note"><strong>两步：</strong>① 语法上 ¬¬A 能推出 A（双重否定消去，前序段定理）；② 极大协调把"能推出"升级成"已属于"。<code>Γ⊢A</code> + 极大 ⟹ A∈Γ。</div>
+    <div class="tip"><strong>这里第一次清楚看到 Cut 的用处：</strong>把"Γ⊢¬¬A"和"¬¬A⊢A"两棵证明树，用 Cut（前序段的切割规则）粘成一棵"Γ⊢A"。<strong>极大协调集对 ⊢ 封闭</strong>这件事，本质就靠 Cut 撑着。</div>
+  </div>
+</section>
+
+<!-- ============ p45 ============ -->
+<section class="page" id="p45">
+  <h2>条件 3 示意 · A→B ∈ Ψ ⟹ ¬A∈Ψ 或 B∈Ψ</h2>
+  <div class="pgnum">PDF 第 45 页 · 条件(3)配图</div>
+  <img class="slide" src="pages/p45.png" alt="p45">
+  <div class="explain">
+    <p>图左标 <code>→L</code>（一阶/命题 G 系统的蕴含左规则），右标 <code>Γ ⊢ B 可证</code>。底框：<strong>条件3"若 A→B∈Ψ，则 ¬A∈Ψ 或 B∈Ψ"。</strong></p>
+    <h4>反证法复盘（对照 p42 的(3)）</h4>
+    <ul>
+      <li>反设两者都不在：¬A∉Γ 且 B∉Γ。</li>
+      <li>极大协调 ⟹ A∈Γ（因 ¬A∉Γ），¬B∈Γ（因 B∉Γ）。</li>
+      <li>手里有 A 和 A→B，用 <strong>→L（分离 / modus ponens 的证明论版本）</strong>得 Γ⊢B。</li>
+      <li>极大 ⟹ B∈Γ，与 ¬B∈Γ 撞车，矛盾。</li>
+    </ul>
+    <div class="tip"><strong>为什么是"¬A 或 B"而不是"¬A 且 B"？</strong>对照蕴含真值表：A→B 为真 ⟺ A 假（即 ¬A 真）<strong>或</strong> B 真。Hintikka 条件就是把真值表的"为真情形"翻成"集合成员"。这是<strong>"分支型 / β 条件"</strong>（二选一），而 ∧（条件5）是"两者都要"的"合取型 / α 条件"。</div>
+  </div>
+</section>
+
+<!-- ============ p46 ============ -->
+<section class="page" id="p46">
+  <h2>条件 4 示意 · ¬(A→B) ∈ Ψ ⟹ A∈Ψ 且 ¬B∈Ψ</h2>
+  <div class="pgnum">PDF 第 46 页 · 条件(4)配图</div>
+  <img class="slide" src="pages/p46.png" alt="p46">
+  <div class="explain">
+    <p>底框：<strong>条件4"若 ¬(A→B)∈Ψ，则 A∈Ψ 且 ¬B∈Ψ"。</strong></p>
+    <div class="note"><strong>验证（对照 p42 的(4)）：</strong>由命题6.7，<code>¬(A→B) ⊢ A</code> 且 <code>¬(A→B) ⊢ ¬B</code> 都可证。Γ 含 ¬(A→B)，故 Γ⊢A 且 Γ⊢¬B，极大协调升级为 A∈Γ 且 ¬B∈Γ。</div>
+    <div class="tip"><strong>对照真值表理解：</strong>A→B 为假 ⟺ A 真<strong>且</strong> B 假（即 ¬B 真）。所以这是"两者都要"的<strong>α 型（合取型）</strong>条件，对应 p45 那个"二选一"的 β 型，正好互补。"否定一个蕴含"等价于"前件真、后件假"，这是逻辑里最常用的拆解之一。</div>
+  </div>
+</section>
+
+<!-- ============ p47 ============ -->
+<section class="page" id="p47">
+  <h2>条件 5 示意 · A∧B ∈ Ψ ⟹ A∈Ψ 且 B∈Ψ</h2>
+  <div class="pgnum">PDF 第 47 页 · 条件(5)配图</div>
+  <img class="slide" src="pages/p47.png" alt="p47">
+  <div class="explain">
+    <p>底框：<strong>条件5"若 A∧B∈Ψ，则 A∈Ψ 且 B∈Ψ"。</strong>最直观的一条。</p>
+    <div class="note"><strong>验证：</strong><code>A∧B ⊢ A</code>、<code>A∧B ⊢ B</code>（合取消去，前序段规则）。Γ 含 A∧B ⟹ Γ⊢A 且 Γ⊢B ⟹（极大）A∈Γ 且 B∈Γ。</div>
+    <div class="tip">"A 且 B 成立"自然要求 A、B 各自成立，毫无悬念的 <strong>α 型</strong>条件。<strong>到这里命题联结词的核心模式已经讲透</strong>：每条都是"语法拆解（⊢）+ 极大升级（∈）"，配真值表区分 α（都要）/ β（二选一）。后面 (6)-(8) 课件直接判"同理"。</div>
+  </div>
+</section>
+
+<!-- ============ p48 ============ -->
+<section class="page" id="p48">
+  <h2>条件 6 · ¬(A∧B)，以及 (7)(8) 同理</h2>
+  <div class="pgnum">PDF 第 48 页</div>
+  <img class="slide" src="pages/p48.png" alt="p48">
+  <div class="explain">
+    <p>正文给出 (6) 的证明，底框写出对应的 Hintikka <strong>条件6"若 ¬(A∧B)∈Ψ，则 ¬A∈Ψ 或 ¬B∈Ψ"</strong>。然后一句 <strong>"(7)~(8) 同理可证"</strong> 带过。</p>
+    <h4>(6) 的证明（反证，β 型）</h4>
+    <ul>
+      <li>设 ¬(A∧B)∈Γ，反设 ¬A∉Γ 且 ¬B∉Γ。</li>
+      <li>由命题6.6（极大协调），¬A∉Γ⟹A∈Γ，¬B∉Γ⟹B∈Γ。</li>
+      <li>A,B ⊢ A∧B（合取引入），故 Γ⊢A∧B，极大 ⟹ A∧B∈Γ。</li>
+      <li>但 ¬(A∧B)∈Γ，{A∧B, ¬(A∧B)} 矛盾，违反协调。</li>
+    </ul>
+    <div class="tip"><strong>"同理可证"指什么？</strong>(7)(8) 大概率是 ∨ / ¬∨ 的分解条件，套路和 ∧/¬∧ 完全镜像（∨ 是 β 型、¬∨ 是 α 型）。课件略讲是合理的——读者已经掌握"⊢拆解 + 极大升级 + α/β 分类"这套机械动作，剩下的换个联结词照抄即可。<strong>真正的新东西在量词，下一页开始。</strong></div>
+    <div class="note" style="background:#eaf3ff;border-color:#bfdbfe;">导航：命题联结词条件 (1)-(8) 全部清空，靠的全是 Henkin 的<strong>极大协调</strong>那一半。接下来 (9)(10) 进入量词，<strong>见证性</strong>那一半要登场了。</div>
+  </div>
+</section>
+
+<!-- ============ p49 ============ -->
+<section class="page" id="p49">
+  <h2>条件 9 · ∀x.A ∈ Ψ ⟹ 对所有项 t，A[t/x] ∈ Ψ</h2>
+  <div class="pgnum">PDF 第 49 页 · 量词条件开始</div>
+  <img class="slide" src="pages/p49.png" alt="p49">
+  <div class="explain">
+    <p>图右框 <code>Γ ⊢ A[t/x] 可证</code>，底框：<strong>条件9"若 ∀x.A∈Ψ，则对所有 t∈T，A[t/x]∈Ψ"</strong>（T = 全体项）。</p>
+    <h4>验证（一行搞定）</h4>
+    <p>设 ∀x.A∈Γ。对任意项 t，前序段的 <strong>∀左规则 / 全称实例化</strong>给出 <code>∀x.A ⊢ A[t/x]</code> 可证。故 Γ⊢A[t/x]，由极大协调 ⟹ A[t/x]∈Γ。</p>
+    <div class="tip"><strong>∀ 是 α 型的"无穷版"。</strong>合取 A∧B 拆成 A、B 两片；全称 ∀x.A 拆成<strong>对每个项 t 的 A[t/x] 一片</strong>——项有无穷多，就拆成无穷多片，但每片的论证一模一样（实例化 + 极大）。直觉对应："对所有 x 都成立"必须对论域里每个具体个体 t 兑现。这一条还是<strong>只用极大协调</strong>，见证性尚未出场。</div>
+    <div class="warn">注意 ∀ 这条<strong>不</strong>需要见证性：因为 ∀ 是"对所有"，每个 t 都能用 ∀左规则取出实例，论域里现成的项都够用。真正缺"证人"的是<strong>存在性</strong>断言——下一页 ¬∀（等价于一个 ∃）才会卡住，逼出见证性。</div>
+  </div>
+</section>
+
+<!-- ============ p50 ============ -->
+<section class="page" id="p50">
+  <h2>条件 10 · ¬∀x.A ∈ Ψ ⟹ 有项 t，¬A[t/x] ∈ Ψ —— 见证性登场</h2>
+  <div class="pgnum">PDF 第 50 页 · 整组 G 的关键一页</div>
+  <img class="slide" src="pages/p50.png" alt="p50">
+  <div class="explain">
+    <p>底框：<strong>条件10"若 ¬∀x.A∈Ψ，则有项 t∈T，¬A[t/x]∈Ψ"。</strong>这是 (9) 的"否定版"，但<strong>性质完全不同</strong>——它要求"<strong>存在</strong>某个项 t"，这正是见证性派上用场的地方。</p>
+    <h4>验证（两步，第二步用 Henkin 见证性）</h4>
+    <div class="formula" style="text-align:left;line-height:1.9;font-size:14px;">
+  设 ¬∀x.A ∈ Γ<br>
+  ① 语法：¬∀x.A ⊢ ∃x.¬A 可证 ⟹ Γ⊢∃x.¬A ⟹（极大）<strong>∃x.¬A ∈ Γ</strong><br>
+  ② Γ 是 <strong>Henkin 集</strong> ⟹ 见证性 ⟹ 有项 t 使 <strong>(¬A)[t/x] = ¬A[t/x] ∈ Γ</strong> ✓
+    </div>
+
+    <div class="warn"><strong>这是整组 G 唯一真正用到见证性的地方，务必看清两步的分工：</strong><br>① 第一步把 ¬∀ 翻成存在式 ∃x.¬A——"并非对所有 x 都 A" ⟺ "存在 x 使 ¬A"（量词的德摩根律），这步只用极大协调。<br>② 第二步集合里有了存在式 ∃x.¬A，<strong>但存在式光在集合里不够，得有具体证人</strong>——Henkin 的见证性正好保证：有一个项 t 使 ¬A[t/x]∈Γ。这个 t 就是"使 A 不成立的那个反例个体"。</div>
+
+    <div class="tip"><strong>回看总地图的"那味独属一阶逻辑的料"：</strong>命题逻辑没有量词，条件 (1)-(8) 用极大协调就够。一旦进入一阶，"存在反例"这种<strong>存在性断言</strong>必须落实到论域里的<strong>具体个体</strong>——这就是 p35 见证性、p36 情况③、p38 换变元那一连串设计的<strong>最终兑现点</strong>。所有的铺垫，为的就是这一行"有项 t 使 ¬A[t/x]∈Γ"。</div>
+  </div>
+</section>
+
+<!-- ============ p51 ============ -->
+<section class="page" id="p51">
+  <h2>条件 (11)-(17) · 量词其余 + 等词公理，归类略讲</h2>
+  <div class="pgnum">PDF 第 51 页 · 组 G 收尾</div>
+  <img class="slide" src="pages/p51.png" alt="p51">
+  <div class="explain">
+    <p>课件这里高度浓缩：<strong>"(11)~(12) 同理可证"</strong>、<strong>"(13)~(17) 由命题 6.7 即得"</strong>。右侧框列出 (13)-(15) 的样子（等词公理），左下标"等词公理"。</p>
+
+    <h4>(11)(12)：量词的其余否定情形</h4>
+    <p>大概率是 ∃x.A 与 ¬∃x.A 的分解条件，与 ∀(条件9)/¬∀(条件10) 镜像：</p>
+    <ul>
+      <li>∃x.A 类 ⟹ 有项 t 使 A[t/x]∈Γ —— <strong>直接就是 Henkin 见证性</strong>（和条件10同源）。</li>
+      <li>¬∃x.A 类 ⟹ 对所有 t，¬A[t/x]∈Γ —— 套条件9 的"对所有"模式（α 型无穷版）。</li>
+    </ul>
+
+    <h4>(13)-(17)：等词公理（看右框）</h4>
+    <p>这几条要求 Γ 含全部<strong>等词（≐，前序段记号）公理</strong>，逐条对照图中右框：</p>
+    <table class="tbl">
+      <tr><th>#</th><th>等词公理</th><th>含义</th></tr>
+      <tr><td>13</td><td class="l">t ≐ t ∈ Ψ</td><td class="l">自反性：任何项等于自己</td></tr>
+      <tr><td>14</td><td class="l">t≐s → s≐t ∈ Ψ</td><td class="l">对称性</td></tr>
+      <tr><td>15</td><td class="l">t≐s → (s≐u → t≐u) ∈ Ψ</td><td class="l">传递性</td></tr>
+      <tr><td>…</td><td class="l">（函数/谓词的代换相容）</td><td class="l">相等的项可互换</td></tr>
+    </table>
+    <div class="tip"><strong>为什么"由命题6.7 即得"？</strong>等词公理是<strong>系统的定理/公理</strong>，<code>⊢</code> 恒可证（不依赖 Γ 的具体内容）。既然 Γ⊢(等词公理)，由极大协调它们必属于 Γ。所以这几条是"白给"的——课件略讲完全合理。它们的用途在<strong>造模型时</strong>：保证典范模型里"项相等"是一个良定义的等价关系（自反/对称/传递 + 代换相容），论域才能按"相等的项归为一类"来构造（详见 p52 前的背景 C3）。</div>
+
+    <div class="note" style="background:#eaf3ff;border-color:#bfdbfe;"><strong>★ 总地图打卡：② Henkin 集 → ③ Hintikka 集 ✓ 完成！</strong>17 条封闭性条件全部验过——命题条件靠极大协调，存在条件靠见证性，等词靠公理可证性。定理 6.18 证毕。现在 Ψ 已经是一个"能直接读出模型"的 Hintikka 集了。</div>
+  </div>
+</section>
+
+<!-- ============ 背景 C3：典范模型 ============ -->
+<section class="page bg" id="bgC3">
+  <h2>背景：从 Hintikka 集造典范模型（项模型）</h2>
+  <div class="pgnum">补充背景 · 进入 p52 定理6.19 前必看</div>
+  <div class="explain">
+    <p>定理 6.18 把 Ψ 做成了 Hintikka 集。前序段已证"Hintikka 集可满足"——可满足意味着<strong>真有一个模型让 Ψ 全为真</strong>。这个模型是怎么来的？答案：<strong>用 Ψ 自己造</strong>。这种"拿语法对象当论域"的模型叫<strong>典范模型 / 项模型（canonical model / term model）</strong>。</p>
+
+    <h3>造法三句话</h3>
+    <ol>
+      <li><strong>论域 = 全体项（的等价类）。</strong>个体不是抽象的"东西"，就是语言里的项 t。若等词公理逼着 t≐s∈Ψ，就把 t、s 归成同一个个体（除以等词等价关系——这正是 p51 等词公理13-17 的用处）。</li>
+      <li><strong>函数/常元 = 语法拼接。</strong>常元 c 解释成它自己，函数 f 作用在项上就是组成新项 f(t₁,…)。</li>
+      <li><strong>谓词真值 = 读集合成员。</strong>原子公式 P(t₁,…) 在模型里为真 ⟺ P(t₁,…) ∈ Ψ。<strong>真假直接抄 Ψ</strong>。</li>
+    </ol>
+
+    <div class="tip"><strong>为什么这样造一定对？</strong>因为 Ψ 是 Hintikka 集——它的 17 条封闭性条件，<strong>恰好就是"按上面方式读真值时，复合公式的真假能层层自洽"的充要保证</strong>。对原子，真值按定义抄 Ψ；对 ∧、→、∀、∃ 等复合式，用对应的 Hintikka 条件做<strong>结构归纳</strong>（前序段的证明手法），就能证：公式在典范模型里真 ⟺ 它在 Ψ 里。于是 Ψ 全部为真——Ψ 可满足。</div>
+
+    <div class="note"><strong>见证性在这里的回响：</strong>论域是"项"，而见证性保证每个 ∃x.A 都有项 t 作证人在 Ψ 里——所以论域里<strong>真的有那个满足 A 的个体</strong>，存在断言在项模型里才为真。如果没有见证性，∃x.A 在 Ψ 里却在项模型里找不到证人，就会假，造模型失败。这就是 Henkin 全部努力的收益点。</div>
+
+    <p style="color:#7a6f5e;">备好这层理解，下一页定理 6.19 的"四连跳"就是把总地图一口气走完。</p>
+  </div>
+</section>
+
+<!-- ============ p52 ============ -->
+<section class="page" id="p52">
+  <h2>定理 6.19 · Γ 协调 ⟹ Γ 可满足（四连跳）</h2>
+  <div class="pgnum">PDF 第 52 页 · 组 H 起点，总地图全程</div>
+  <img class="slide" src="pages/p52.png" alt="p52">
+  <div class="explain">
+    <h3>这就是全篇的"主引擎"</h3>
+    <p><strong>定理 6.19：</strong>若 Γ 协调，则 Γ 可满足。证明把前面所有零件串成一条<strong>四连跳</strong>，正是背景 C0 那张总地图：</p>
+    <div class="formula" style="text-align:left;line-height:2.1;font-size:14.5px;">
+  Γ 协调 (Con)<br>
+  &nbsp;&nbsp;⟹ 存在 Henkin 集 Ψ ⊇ Γ &nbsp;&nbsp;<span style="color:#1d4ed8;">【定理6.17·Lindenbaum构造】</span><br>
+  &nbsp;&nbsp;⟹ 存在 Ψ⊇Γ 且 Ψ 为 Hintikka 集 &nbsp;<span style="color:#1d4ed8;">【定理6.18】</span><br>
+  &nbsp;&nbsp;⟹ 存在 Ψ⊇Γ 且 Ψ 可满足 &nbsp;&nbsp;<span style="color:#1d4ed8;">【Hintikka集可满足·造典范模型】</span><br>
+  &nbsp;&nbsp;⟹ Γ 可满足 &nbsp;&nbsp;<span style="color:#1d4ed8;">【子集继承：Ψ 的模型也满足 Γ⊆Ψ】</span>
+    </div>
+
+    <div class="tip"><strong>四跳逐一回扣：</strong><br>
+    跳1（①→②）= 组 F 全部 8 页的成果，最硬；<br>
+    跳2（②→③）= 组 G 的定理6.18，逐条验证 17 条；<br>
+    跳3（③→可满足）= 背景 C3 的典范模型 + 前序段"Hintikka可满足"；<br>
+    跳4 = 几乎白送：Ψ 的那个模型让 Ψ 全真，而 Γ⊆Ψ，所以 Γ 也全真。<strong>子集自动继承可满足性。</strong></div>
+
+    <div class="warn"><strong>记牢方向：本定理是 "Con ⟹ 可满足"</strong>（无矛盾 ⟹ 有模型）。它是完全性定理的"硬核引擎"。下一页给出反方向命题6.8，两边合起来就能证完全性。</div>
+  </div>
+</section>
+
+<!-- ============ p53 ============ -->
+<section class="page" id="p53">
+  <h2>定理 6.19 · 四连跳每一步的依据（配图）</h2>
+  <div class="pgnum">PDF 第 53 页 · p52 的依据标注版</div>
+  <img class="slide" src="pages/p53.png" alt="p53">
+  <div class="explain">
+    <p>这页和 p52 内容相同，右侧加了三个虚线框，把每一跳的<strong>依据</strong>标出来，正好对齐上一页的讲解：</p>
+    <table class="tbl">
+      <tr><th>推理步</th><th>图中标注</th><th>就是</th></tr>
+      <tr><td>Con ⟹ 有 Henkin 集</td><td>定理6.17</td><td class="l">Lindenbaum 构造（组 F）</td></tr>
+      <tr><td>Henkin ⟹ Hintikka</td><td>定理6.18</td><td class="l">逐条验证（组 G）</td></tr>
+      <tr><td>Hintikka ⟹ 可满足</td><td>Hintikka集可满足</td><td class="l">典范模型（背景 C3 + 前序段）</td></tr>
+    </table>
+    <div class="note">最后一跳"可满足 ⟹ Γ 可满足"图中没单独标框，因为它是"子集继承"的显然事实。<strong>把 p52、p53 当成同一张地图的"无注/有注"两版对照看即可。</strong></div>
+    <div class="tip" style="background:#eaf3ff;border-color:#bfdbfe;"><strong>★ 总地图打卡：① Con → ④ 可满足 全程贯通 ✓</strong>。定理 6.19 是整套证明的<strong>顶点</strong>。剩下 p54-57 只是把它"翻译"成完全性定理的标准陈述。</div>
+  </div>
+</section>
+
+<!-- ============ p54 ============ -->
+<section class="page" id="p54">
+  <h2>命题 6.8 · 反方向：可满足 ⟹ 协调</h2>
+  <div class="pgnum">PDF 第 54 页</div>
+  <img class="slide" src="pages/p54.png" alt="p54">
+  <div class="explain">
+    <p>本页在 p53 基础上补一个虚线框 <strong>命题 6.8</strong>，给出和 6.19 <strong>反向</strong>的两条事实：</p>
+    <table class="tbl">
+      <tr><th>命题6.8</th><th>内容</th><th>本质</th></tr>
+      <tr><td>(1)</td><td class="l">若 Γ 可满足，则 Con(Γ)</td><td class="l">有模型 ⟹ 无矛盾（这是<strong>可靠性</strong>的语义面）</td></tr>
+      <tr><td>(2)</td><td class="l">若 Γ 矛盾，则 Γ 不可满足</td><td class="l">(1) 的逆否，等价说法</td></tr>
+    </table>
+    <div class="tip"><strong>把两个方向并排，完全性的全貌就出来了：</strong><br>
+    · 定理6.19：<strong>Con(Γ) ⟹ 可满足</strong>（难，靠 Henkin 构造，刚证完）<br>
+    · 命题6.8：<strong>可满足 ⟹ Con(Γ)</strong>（易，有模型的东西当然不会推出矛盾）<br>
+    两条合起来：<strong>Con(Γ) ⟺ Γ 可满足</strong>。"无矛盾"和"有模型"是一回事——这是完全性定理的语义内核。</div>
+    <div class="note">命题6.8(1) 为什么"易"？若 Γ 有模型 𝕄 让它全真，而 Γ 又矛盾（能证出某 B 与 ¬B），由<strong>可靠性</strong>（前序段：能证的必在每个模型为真）B 与 ¬B 都在 𝕄 真——不可能。所以可满足必协调。下一页正式陈述完全性定理。</div>
+  </div>
+</section>
+
+<!-- ============ p55 ============ -->
+<section class="page" id="p55">
+  <h2>定理 6.20 · 完全性定理：Γ⊢A ⟺ Γ⊨A</h2>
+  <div class="pgnum">PDF 第 55 页 · 全篇终点定理</div>
+  <img class="slide" src="pages/p55.png" alt="p55">
+  <div class="explain">
+    <h3>陈述：把"可证"和"语义蕴涵"画等号</h3>
+    <p><strong>定理 6.20（Completeness / 完全性定理）：</strong><code>Γ ⊢ A ⟺ Γ ⊨ A</code>。先把两个符号再确认一遍（前序段术语）：</p>
+    <table class="tbl">
+      <tr><th>符号</th><th>读法</th><th>含义</th></tr>
+      <tr><td>Γ ⊢ A</td><td class="l">Γ 可证 A（语法）</td><td class="l">能在证明系统里写出一棵从 Γ 到 A 的证明树</td></tr>
+      <tr><td>Γ ⊨ A</td><td class="l">Γ 语义蕴涵 A（语义）</td><td class="l">凡使 Γ 全真的模型，必使 A 也真</td></tr>
+    </table>
+    <p><strong>completeness（完全性）</strong>："证明系统强到能证出所有语义为真的东西，一条不漏"。这是逻辑学最深刻的结果之一（Gödel 完全性定理）。</p>
+
+    <h3>两个方向</h3>
+    <ul>
+      <li><strong>"⟹" 方向 = Soundness（可靠性）：</strong>Γ⊢A ⟹ Γ⊨A。"能证的都是真的"，前序段已证（结构归纳每条规则保真），本页一句带过。</li>
+      <li><strong>"⟸" 方向（本讲新成果）：</strong>Γ⊨A ⟹ Γ⊢A。"真的都能证"。证法是<strong>反证 + 定理6.19</strong>，分两种情况（图中）：</li>
+    </ul>
+    <div class="formula" style="text-align:left;line-height:1.9;font-size:14px;">
+  设 Γ⊨A，要证 Γ⊢A。<br>
+  情况1. Incon(Γ)：矛盾集能证一切，易见 Γ⊢A。✓<br>
+  情况2. Con(Γ)：<strong>反设 Γ⊢A 不可证</strong> ⟹ Con(Γ∪{¬A})<br>
+  &nbsp;&nbsp;⟹（定理6.19）有 𝕄,σ 使 𝕄 ⊨_σ Γ∪{¬A}<br>
+  &nbsp;&nbsp;但 Γ⊨A 又要求 𝕄 ⊨_σ A —— 与 𝕄⊨_σ ¬A <strong>矛盾</strong>。
+    </div>
+    <div class="tip"><strong>看清反证的钩子在哪：</strong>"Γ⊢A 不可证" 怎么推出 "Con(Γ∪{¬A})"？因为若 Γ∪{¬A} 矛盾，就能用归谬 / 否定规则反推出 Γ⊢A（前序段：Incon(Γ∪{¬A}) ⟺ Γ⊢A）。所以"A 证不出"恰好等价于"添 ¬A 后仍协调"——于是定理6.19 立刻给出一个模型。下两页把情况2 的两处依据标清。</div>
+  </div>
+</section>
+
+<!-- ============ p56 ============ -->
+<section class="page" id="p56">
+  <h2>定理 6.20 · ⟸方向：语义前提 Γ⊨A 的用法</h2>
+  <div class="pgnum">PDF 第 56 页 · p55 的标注版（上）</div>
+  <img class="slide" src="pages/p56.png" alt="p56">
+  <div class="explain">
+    <p>本页给 p55 情况2 加了一个虚线框：<strong>"对于任何模型，若 Γ 可满足，则 A 可满足"</strong>——这是把语义前提 <code>Γ⊨A</code> 翻成大白话。</p>
+    <div class="note"><strong>这一步在反证里的位置：</strong>定理6.19 已经给了我们一个模型 𝕄,σ 满足 Γ∪{¬A}，特别地 𝕄 满足 Γ。此时<strong>动用前提 Γ⊨A</strong>（图中框）：既然 𝕄 满足 Γ，按 ⊨ 的定义 𝕄 就必须满足 A。可 𝕄 同时满足 ¬A（来自 Γ∪{¬A}）——A 与 ¬A 在同一模型同一赋值下都真，<strong>不可能</strong>。矛盾锁死。</div>
+    <div class="tip"><strong>为什么非要 σ（赋值）这个下标？</strong>𝕄 ⊨_σ 表示"在模型 𝕄 + 变元赋值 σ 下为真"（前序段记号）。一阶公式含自由变元时真假依赖 σ，所以要带着 σ 一起谈。这里关键是<strong>同一个 (𝕄,σ)</strong> 同时让 A 真又让 ¬A 真，才构成矛盾——下标必须一致。</div>
+  </div>
+</section>
+
+<!-- ============ p57 ============ -->
+<section class="page" id="p57">
+  <h2>定理 6.20 · ⟸方向收口 + 全篇回望</h2>
+  <div class="pgnum">PDF 第 57 页 · 本段终点</div>
+  <img class="slide" src="pages/p57.png" alt="p57">
+  <div class="explain">
+    <p>最后一页把情况2 的<strong>两处依据</strong>都标全（两个虚线框）：</p>
+    <table class="tbl">
+      <tr><th>框</th><th>图中文字</th><th>对应反证的哪一步</th></tr>
+      <tr><td>上</td><td class="l">有效性：对任何模型，若满足 Γ，则也满足 A</td><td class="l">= 前提 Γ⊨A，逼出"𝕄 必满足 A"</td></tr>
+      <tr><td>下</td><td class="l">定理6.19，Γ可满足 且 Γ∪{¬A}可满足</td><td class="l">= 由 Con(Γ∪{¬A}) 造出模型 𝕄</td></tr>
+    </table>
+    <p>两框一夹：定理6.19 造出满足 Γ∪{¬A} 的模型（下框）⟹ 它满足 ¬A；有效性 Γ⊨A 又逼它满足 A（上框）⟹ A 与 ¬A 同模型为真，矛盾。<strong>反设"Γ⊢A 不可证"被推翻，故 Γ⊢A。完全性定理证毕（□）。</strong></p>
+
+    <div class="tip" style="background:#eaf3ff;border-color:#bfdbfe;"><strong>★★ 全篇回望——总地图全部走完 ★★</strong><br>
+    一句话串起来：<strong>"A 语义上真但证不出"（Γ⊨A 且 Γ⊬A）⟹ 添 ¬A 仍协调 ⟹（Henkin 一路造模型，定理6.19）有个模型让 Γ 和 ¬A 同真 ⟹ 但 Γ⊨A 说这模型必满足 A ⟹ A、¬A 撞车，荒谬。</strong>所以"语义真"必然"证得出"。</div>
+
+    <div class="note"><strong>整段三组的功劳分配：</strong><br>
+    · 组 F（p35-41）：把协调集扩成 <strong>Henkin 集</strong>——Lindenbaum 三分支构造 + 6 条性质，全段最硬的体力活，核心创意是"遇 ∃ 配新常元证人"。<br>
+    · 组 G（p42-51）：证 Henkin <strong>就是</strong> Hintikka——17 条逐条验，命题条件靠极大协调，存在条件靠见证性，等词靠可证性。<br>
+    · 组 H（p52-57）：用 <strong>典范模型</strong>把 Hintikka 兑现成"可满足"，得定理6.19（Con⟹可满足），再反证收口成<strong>完全性定理</strong> Γ⊢A ⟺ Γ⊨A。<br>
+    <strong>⊢（能证）与 ⊨（为真）这两套独立发展的体系，在这里被证明完全等价——这就是数理逻辑这一章的全部目的地。</strong></div>
+  </div>
+</section>
+
+
+
+<!-- ===================== p58 ===================== -->
+<section class="page" id="p58">
+  <h2>紧致性定理（Compactness）</h2>
+  <div class="pgnum">PDF 第 58 页 · 组 I 完全性的推论</div>
+  <img class="slide" src="pages/p58.png" alt="p58">
+  <div class="explain">
+
+    <h3>这页在说什么</h3>
+    <p>这是完全性定理的第一个大推论。先把生词点破：</p>
+    <table class="tbl">
+      <tr><th>术语</th><th>英文全称</th><th>中文含义</th></tr>
+      <tr><td>紧致性</td><td class="l">Compactness</td><td class="l">"无穷"层面的可满足性，完全由"所有有穷片段"决定</td></tr>
+    </table>
+    <p><b>定理 6.21 的内容</b>：设 <code>&Gamma;</code> 是一个公式集（可以有<u>无穷多</u>条公式）。如果 <code>&Gamma;</code> 的<b>每一个有穷子集 &Delta;</b> 都可满足（有模型），那么整个 <code>&Gamma;</code> 本身也可满足。</p>
+
+    <div class="tip">一句话直觉：要判断无穷多条公式能不能同时为真，<b>不用一口气检查无穷条</b>，只要保证"任意拿出有限几条都不打架"，整体就一定有解。无穷的相容性被有穷情形"撑住"了——这就是"紧致"这个名字的来源（拓扑里紧致空间也是"无穷被有限覆盖控制住"）。</p>
+
+    <h3>证明怎么走（反证 + 前面学过的工具）</h3>
+    <p>这段证明把前几段的几个旧术语串了起来，先快速回忆一句：</p>
+    <ul>
+      <li><code>Incon(&Gamma;)</code> = <b>inconsistent，不协调</b>：能从 <code>&Gamma;</code> 推出矛盾（如 <code>A&and;&not;A</code>）。反之 <code>Con</code> = consistent 协调。</li>
+      <li><code>&vDash;</code>（可满足 / 有模型）与 <code>&vdash;</code>（可证）：第 1–3 段已讲，完全性定理把二者打通了。</li>
+    </ul>
+    <p>证明用<b>反证法</b>，链条是：</p>
+    <div class="formula">&Gamma; 不可满足 &rArr; Incon(&Gamma;) &rArr; 存在有穷子集 &Delta;，&Delta; &vdash; A&and;&not;A &rArr; &Delta; 不可满足</div>
+    <ul>
+      <li>第一个 &rArr; 用<b>可靠性/完全性</b>：不可满足（无模型）的公式集必然不协调。</li>
+      <li>第二个 &rArr; 是关键一步——证明是<u>有穷长</u>的，推出 <code>A&and;&not;A</code> 只用到了 <code>&Gamma;</code> 里<b>有限多条</b>公式，把这有限几条收集起来就是有穷子集 <code>&Delta;</code>，它已经 <code>&vdash; A&and;&not;A</code>。</li>
+      <li>于是这个 <code>&Delta;</code> 不可满足。但定理前提说"每个有穷子集都可满足"——矛盾。</li>
+    </ul>
+    <div class="note">整个证明的"发动机"是<b>证明的有穷性</b>：任何一次推导只能用到有限条前提。正是这一点让"无穷的不可满足"必然在某个"有穷片段"上暴露出来。</div>
+  </div>
+</section>
+
+<!-- ===================== bgD0 ===================== -->
+<section class="page bg" id="bgD0">
+  <h2>背景 D0：什么叫"可判定"、"算法能不能停下来"</h2>
+  <div class="pgnum">补充背景 · 进入 p59 前必看（计算理论零基础补课）</div>
+  <div class="explain">
+    <p>下一页要讲"一阶逻辑<b>不可判定</b>"。但你还没学过计算理论，"可判定 / 算法终止"这些词对你是全新的。这一页先用大白话把它们立住，p59 才看得懂。</p>
+
+    <h3>核心问题：能不能写一个"总会停下来给答案"的程序？</h3>
+    <p>设想有人问你一个判断题，比如"<code>&Gamma; &vDash; F</code> 成立吗？"（即"<code>F</code> 是不是 <code>&Gamma;</code> 的逻辑后承"）。我们想要一个程序，喂给它 <code>&Gamma;</code> 和 <code>F</code>，它<b>跑一阵子之后一定会停</b>，并吐出"是"或"否"。</p>
+    <table class="tbl">
+      <tr><th>术语</th><th>英文全称</th><th>中文含义（关键看"会不会停"）</th></tr>
+      <tr><td>可判定</td><td class="l">decidable</td><td class="l">存在一个算法，<b>对任何输入都终止</b>，并正确回答"是 / 否"</td></tr>
+      <tr><td>半可判定</td><td class="l">semi-decidable</td><td class="l">算法在"答案为是"时一定会停并回答"是"；但"答案为否"时<b>可能永远跑下去</b>，不给回答</td></tr>
+      <tr><td>算法终止</td><td class="l">(algorithm) terminates / halts</td><td class="l">程序跑到某一步停下来、不再继续</td></tr>
+    </table>
+
+    <div class="tip"><b>"判定"的硬要求是"保证停机"。</b>一个永远在转圈、你永远不知道它是"还没算完"还是"卡死了"的程序，<u>不算</u>判定算法。可判定 = 既能给对答案，<b>又保证有限时间内停</b>。</div>
+
+    <h3>一个生活类比</h3>
+    <p>想象一台验钞机：</p>
+    <ul>
+      <li><b>可判定</b>：真钞、假钞放进去，机器都在 3 秒内亮灯告诉你结果。任何钞票都给答案。</li>
+      <li><b>半可判定</b>：机器只在遇到<u>真钞</u>时亮绿灯；遇到假钞它就一直嗡嗡转，<b>永远不亮灯</b>。你看到绿灯就知道是真钞；但没亮灯时，你分不清"是假钞"还是"机器还在算"。</li>
+    </ul>
+    <div class="note">为什么"半"也有用？因为很多自然问题里，"是"这一侧可以靠<b>穷举搜索</b>抓到（找到一个见证就停），而"否"这一侧要排除无穷多种可能、停不下来。一阶逻辑的可证性正是这种结构——这就是 p59 的核心。</div>
+  </div>
+</section>
+
+<!-- ===================== p59 ===================== -->
+<section class="page" id="p59">
+  <h2>一阶逻辑的不可判定性</h2>
+  <div class="pgnum">PDF 第 59 页 · 组 J 一阶逻辑的界限</div>
+  <img class="slide" src="pages/p59.png" alt="p59">
+  <div class="explain">
+
+    <h3>先认人名：Church 和 Turing（1936/1937）</h3>
+    <table class="tbl">
+      <tr><th>专名</th><th>英文全称</th><th>是谁 / 做了什么</th></tr>
+      <tr><td>Church</td><td class="l">Alonzo Church</td><td class="l">逻辑学家，用 &lambda;-演算证明一阶逻辑不可判定（1936）</td></tr>
+      <tr><td>Turing</td><td class="l">Alan Turing</td><td class="l">用图灵机给出独立证明（1936/1937），奠定可计算性理论</td></tr>
+    </table>
+
+    <h3>不可判定性（undecidability）说的是什么</h3>
+    <p>结论很冷峻：<b>不存在</b>一个算法，能对任意给定的 <code>&Gamma;</code> 和 <code>F</code>，判断 <code>&Gamma; &vDash; F</code> 是否成立、<b>并且始终终止</b>。</p>
+    <div class="warn">注意"<u>且始终终止</u>"这五个字是定理的要害。配合 bgD0：不是说"没有任何程序能算"，而是说"没有一个<b>保证停机又永远正确</b>的程序"。允许偶尔不停，情况就不一样了——看下面。</div>
+
+    <h3>半可判定性：退一步，"是"这侧能抓住</h3>
+    <p>虽然不可判定，但一阶逻辑的可证性是<b>半可判定</b>的。课件给了构造思路：</p>
+    <ul>
+      <li>造一个算法，在一阶逻辑的自然推理系统里<b>系统地搜索 <code>&Gamma; &vdash; F</code> 的证明树</b>（一层层把所有可能的推导都列出来）。</li>
+      <li>若 <code>&Gamma; &vdash; F</code> 确实<b>可证</b>：那棵证明树是有穷的，搜索迟早会撞上它 &rarr; <b>有限步内停下、回答"是"</b>。</li>
+      <li>若 <code>&Gamma; &vdash; F</code> <b>不可证</b>：搜索找不到证明树，于是<b>永远搜下去、不终止</b>。</li>
+    </ul>
+    <div class="tip">这正好是 bgD0 里验钞机的"半"：可证（=真钞）一定亮灯，不可证（=假钞）就一直转。所以"<b>可证性是半可判定的，但不是可判定的</b>"——卡点就在"不可证时停不下来"。这同时呼应了 p59 的完全性背景：能搜到证明 &hArr; 是逻辑后承。</div>
+  </div>
+</section>
+
+<!-- ===================== bgD1 ===================== -->
+<section class="page bg" id="bgD1">
+  <h2>背景 D1：皮亚诺公理在直觉上想说什么</h2>
+  <div class="pgnum">补充背景 · 进入 p60 前必看</div>
+  <div class="explain">
+    <p>p60 要逐条列<b>皮亚诺算术（PA, Peano Arithmetic）</b>的 5 条公理。先别被符号吓住，它们其实就在回答一个朴素问题：<b>"自然数 0, 1, 2, 3, … 这一串东西，最少要规定哪几条规矩，才能把它们唯一钉死？"</b></p>
+
+    <h3>只需要两个原料</h3>
+    <ul>
+      <li>一个起点：<b><code>0</code></b>。</li>
+      <li>一个"再加一"的操作：<b>后继函数 <code>S</code></b>（successor）。<code>S(0)</code> 就是 1，<code>S(S(0))</code> 就是 2……每个数 <code>n</code> 都有它的下一个 <code>S(n)</code>。</li>
+    </ul>
+    <div class="tip">关键直觉：皮亚诺<b>不直接定义"1、2、3"</b>，而是说"从 0 出发，不停地按 S 这个按钮"，按出来的整条链子就是自然数。这条链子要满足三件事，链子才"长得对"：</p>
+      <ol>
+        <li><b>不回头</b>：<code>0</code> 不是任何数的后继（链子有个真正的开头，不是个圈）。</li>
+        <li><b>不撞车</b>：不同的数后继也不同（链子不会两股并到一条上）。</li>
+        <li><b>不漏掉</b>：这就是<b>归纳公理</b>——凡是"含 0、且对 S 封闭"的集合，必然就是全体自然数（链子之外没有别的多余元素）。</li>
+      </ol>
+    </div>
+
+    <h3>归纳公理为什么最特别</h3>
+    <p>前几条都是说"某个具体性质"，归纳公理却是对<b>所有子集 P</b>（或所有性质）说话——这让它非常强，正是数学归纳法的来源。也正因为它要量化"所有性质"，PA 才足够丰富，丰富到后面能把"可证性"这种元数学命题<u>编进算术里</u>——这是哥德尔定理能成立的土壤。记住这一点，p61 会用到。</p>
+  </div>
+</section>
+
+<!-- ===================== p60 ===================== -->
+<section class="page" id="p60">
+  <h2>皮亚诺算数公理（PA）</h2>
+  <div class="pgnum">PDF 第 60 页 · 组 K 走向不完全性</div>
+  <img class="slide" src="pages/p60.png" alt="p60">
+  <div class="explain">
+
+    <table class="tbl">
+      <tr><th>术语</th><th>英文全称</th><th>中文含义</th></tr>
+      <tr><td>PA</td><td class="l">Peano Arithmetic</td><td class="l">皮亚诺算术：刻画自然数的一阶公理系统</td></tr>
+      <tr><td>S(n)</td><td class="l">successor of n</td><td class="l">n 的后继，即 n 的"下一个数"</td></tr>
+      <tr><td>&doteq;</td><td class="l">(equality)</td><td class="l">等词，"相等"（第 2 段已引入，读作 a 等于 b）</td></tr>
+    </table>
+
+    <h3>逐条对照（符号 &rarr; 人话）</h3>
+    <table class="tbl">
+      <tr><th>公理</th><th>符号</th><th>说的是</th></tr>
+      <tr><td>1</td><td class="l"><code>&exist;N. 0 &isin; N</code></td><td class="l">0 是自然数（有个起点）</td></tr>
+      <tr><td>2</td><td class="l"><code>&forall;n&isin;N, &exist;n'. n' &doteq; S(n)</code></td><td class="l">每个自然数都有（确定的）后继</td></tr>
+      <tr><td>3</td><td class="l"><code>&forall;n&isin;N, &not;(S(n) &doteq; 0)</code></td><td class="l">0 不是任何数的后继 &rarr; <b>链子有开头、不成圈</b></td></tr>
+      <tr><td>4</td><td class="l"><code>&forall;a,b&isin;N, &not;(a&doteq;b) &rarr; &not;(S(a)&doteq;S(b))</code></td><td class="l">不同的数后继也不同 &rarr; <b>S 是单射、不撞车</b></td></tr>
+      <tr><td>5</td><td class="l"><code>&forall;P&sube;N, 0&isin;P &and; (n&isin;P&rarr;S(n)&isin;P) &rarr; (P&doteq;N)</code></td><td class="l"><b>归纳公理</b>：含 0 且对 S 封闭的子集就等于 N &rarr; <b>不漏掉</b></td></tr>
+    </table>
+
+    <div class="note">公理 4 课件写成"<code>&not;(a&doteq;b) &rarr; &not;(S(a)&doteq;S(b))</code>"，等价地讲就是<b>"后继相同则原数相同"</b>（S 是单射）。这保证 0,1,2,… 永不重复。</div>
+    <div class="tip">把 bgD1 的三句话对回来：公理 3 = 不回头，公理 4 = 不撞车，公理 5 = 不漏掉。公理 1、2 提供原料（起点 + 后继）。五条凑齐，自然数就被唯一钉死了。</div>
+    <div class="warn">公理 5 里量化的是"<b>所有子集 P / 所有性质</b>"，这是 PA 最强、也最关键的一条。正是这种表达力，让 PA 强到能在内部"谈论自己"——下一组的哥德尔定理就建立在这之上。</div>
+  </div>
+</section>
+
+<!-- ===================== bgD2 ===================== -->
+<section class="page bg" id="bgD2">
+  <h2>背景 D2：哥德尔编码 #A —— 把"公式"变成"数"</h2>
+  <div class="pgnum">补充背景 · 进入 p61 前必看（理解整个不完全性的钥匙）</div>
+  <div class="explain">
+    <p>接下来三页全靠一个核心招数：<b>哥德尔编码（Gödel numbering）</b>。它是哥德尔 1931 年的天才一击。不懂它，后面 <code>Prf</code>、<code>Prov</code>、对角化全是天书。这页专门讲透。</p>
+
+    <h3>它要解决什么矛盾</h3>
+    <p>PA 是一套"<b>谈论自然数</b>"的系统——它的公式只会说 0、后继、加法这类<u>算术</u>事实。可是"某公式 A 可证吗"是关于<b>逻辑系统本身</b>的话（元数学），表面上 PA 根本说不出口。哥德尔的破局思路：</p>
+    <div class="tip"><b>给每一个符号、每一条公式、每一段证明都分配一个唯一的自然数编号。</b>这样"公式"和"证明"都变成了"数"，而"A 是 B 的证明"这种关于符号串的关系，就翻译成了一条<b>关于这些编号的算术关系</b>——于是 PA 能间接谈论它自己了。</p>
+
+    <h3>记号 #A 怎么读</h3>
+    <table class="tbl">
+      <tr><th>记号</th><th>英文</th><th>含义</th></tr>
+      <tr><td>#A</td><td class="l">Gödel number of A</td><td class="l">公式（或证明）A 的<b>哥德尔码</b>，一个具体的自然数</td></tr>
+    </table>
+    <p>具体编法不止一种（常见的是给每个符号一个小数字，整条公式用素数幂连乘编成一个大数，可唯一还原）。<b>编法的技术细节不重要</b>，重要的只有两点性质：</p>
+    <ul>
+      <li><b>唯一可逆</b>：每条公式对应唯一一个数，每个数能解码回原公式（不会两条公式撞同一个码）。</li>
+      <li><b>机械可算</b>：编码 / 解码、判断"某数是否是合法公式的码"，都能用算法完成（这呼应 bgD0 的"可判定"）。</li>
+    </ul>
+
+    <div class="note"><b>一句话抓住全局</b>：编码之后，"语法操作"（拼公式、查证明）= "算术运算"（对编号做加减乘）。"<u>A 可证</u>"这句元话语，就摇身变成一句"<u>存在某个数 x，它和 #A 满足某条算术关系</u>"。p62 的 <code>Prf</code>/<code>Prov</code> 就是这句话的正式写法。</div>
+    <div class="warn">这一步是<b>自指（self-reference）</b>得以成立的地基：因为公式能用数指代别的公式，它最终能<u>用数指代自己</u>——这就引出 bgD3 的对角化。</div>
+  </div>
+</section>
+
+<!-- ===================== p61 ===================== -->
+<section class="page" id="p61">
+  <h2>哥德尔的不完全性定理 · 陈述</h2>
+  <div class="pgnum">PDF 第 61 页 · 组 K</div>
+  <img class="slide" src="pages/p61.png" alt="p61">
+  <div class="explain">
+
+    <h3>定理在说什么（Kurt Gödel, 1931）</h3>
+    <p>陈述：<b>不存在</b>一个<b>一致的（consistent，相容、无矛盾）</b>公理系统，能在系统内证明<b>所有</b>初等算术语言能表达的命题。</p>
+    <p>课件的形式化写法：</p>
+    <div class="formula">&not;&exist;F &supe; PA 且 Con(F)，s.t. &forall;A，有 F &vDash; A</div>
+    <p>逐块翻译：找不到这样的系统 <code>F</code>，使得 <code>F</code> 同时满足——(1) 至少<b>包含 PA</b>（<code>F &supe; PA</code>）、(2) 自身<b>一致</b>（<code>Con(F)</code>，无矛盾）、(3) 对<b>每一条算术命题 A</b> 都能判定（<code>&vDash; A</code>）。三者不可兼得。换句话说：<b>只要一个系统含 PA 且无矛盾，它就必然"不完备"——总有它判不了的算术命题。</b></p>
+
+    <h3 style="color:#b91c1c">最容易混的点：完备 ≠ 完全性！</h3>
+    <div class="warn">
+      <p>本讲前半场讲的是<b>完全性（completeness）</b>定理：<code>&Gamma;&vDash;F &rArr; &Gamma;&vdash;F</code>，意思是"凡是逻辑上为真（在所有模型里成立）的，都能在证明系统里推出来"。一阶逻辑<b>是完全的</b>。</p>
+      <p>这页的<b>不完全性（incompleteness）</b>讲的是完全<u>不同</u>的一件事。这里的"完备"指的是——</p>
+      <p class="center"><b>"系统能对每一条命题作出判定：要么证明它真，要么证明它假。"</b></p>
+      <p>哥德尔说：含 PA 的一致系统做不到这点，<b>总有命题 A，系统既证不出 A 真、也证不出 A 假</b>，A 悬在那里。</p>
+    </div>
+    <table class="tbl">
+      <tr><th></th><th>完全性 completeness（前半场）</th><th>不完全性 incompleteness（本页）</th></tr>
+      <tr><td class="l">主语</td><td class="l">一阶逻辑（纯逻辑层面）</td><td class="l">含 PA 的算术公理系统</td></tr>
+      <tr><td class="l">在说</td><td class="l">逻辑真 &rArr; 可证（&vDash;&rArr;&vdash;）</td><td class="l">存在命题既不可证、其否定也不可证</td></tr>
+      <tr><td class="l">结论</td><td class="l">一阶逻辑<b>是</b>完全的（好消息）</td><td class="l">算术系统<b>不可能</b>完备（界限）</td></tr>
+    </table>
+
+    <div class="note">课件最后一句：哥德尔构造的那条算术命题，即便放到包含 <b>ZFC（Zermelo–Fraenkel set theory with Choice，带选择公理的集合论）</b>这种巨强系统里，<b>照样判不了</b>。这说明不完全性不是 PA "太弱"，而是<b>任何足够强的系统都逃不掉</b>的根本界限。</div>
+  </div>
+</section>
+
+<!-- ===================== p62 ===================== -->
+<section class="page" id="p62">
+  <h2>证明梗概(一)：Prf 与 Prov</h2>
+  <div class="pgnum">PDF 第 62 页 · 组 K</div>
+  <img class="slide" src="pages/p62.png" alt="p62">
+  <div class="explain">
+    <p>有了 bgD2 的哥德尔编码，这页把"可证性"正式翻译成算术谓词。三步：</p>
+
+    <h3>① 用 #A 把公式变成数</h3>
+    <p>对公式 <code>A</code>，<code>#A</code> 是它的哥德尔码（见 bgD2）。从此谈"公式"就是谈"数"。</p>
+
+    <h3>② Prf_F(x, y)：x 是 y 的证明</h3>
+    <table class="tbl">
+      <tr><th>记号</th><th>英文全称</th><th>含义</th></tr>
+      <tr><td>Prf_F(x,y)</td><td class="l">Proof predicate</td><td class="l">二元关系"<b>x 是 y 的证明</b>"（x、y 都是哥德尔码）</td></tr>
+    </table>
+    <p>课件的关键论证：判断"<b>一串公式到底构不构成对某公式的合法证明</b>"，这件事是<b>可判定的</b>（呼应 bgD0——逐步核对每一步是否合法推理，一定能在有限步内查完、停机）。既然可判定，这条关系就<b>可以在 F 内部用一个算术公式表达出来</b>，记作 <code>Prf_F(x, y)</code>：x 这个码所解出的证明，正好是 y 这个码所解出公式的一个证明。</p>
+    <div class="tip">为什么 Prf 可判定、Prov 却不行？因为"<u>检查一个给定的证明对不对</u>"是有限核对（停得下来）；而"<u>是否存在某个证明</u>"要在无穷多候选里找，找不到就停不下来——这正是 p59 半可判定性的影子。</div>
+
+    <h3>③ Prov_F(y)：y 可证</h3>
+    <table class="tbl">
+      <tr><th>记号</th><th>英文全称</th><th>含义</th></tr>
+      <tr><td>Prov_F(y)</td><td class="l">Provability predicate</td><td class="l">"<b>y 是可证的</b>"，定义为 &exist;x. Prf_F(x,y)（存在一个证明 x）</td></tr>
+    </table>
+    <div class="formula">Prov_F(y) := &exist;x. Prf_F(x, y)</div>
+    <p>读法："y 可证" = "<b>存在</b>某个 x，x 是 y 的证明"。那个存在量词 <code>&exist;x</code> 就是"停不下来"的来源——要在所有 x 里找见证。由此得到一条关键桥梁：</p>
+    <div class="formula">F &vdash; A &rArr; F &vdash; Prov_F(#A)</div>
+    <p>翻译：<b>如果 A 在 F 中真的可证，那么"A 可证"这件事本身也能在 F 内部被证出来</b>。系统不仅能证 A，还能证"我证得了 A"。这条性质（可证性可被系统内部反映）是下一步对角化构造的弹药。</p>
+  </div>
+</section>
+
+<!-- ===================== bgD3 ===================== -->
+<section class="page bg" id="bgD3">
+  <h2>背景 D3：对角化 / 自指 —— "我不可证"这句话怎么造出来</h2>
+  <div class="pgnum">补充背景 · 进入 p63 前必看（不完全性的"灵魂"）</div>
+  <div class="explain">
+    <p>p63 会突然冒出一句"<b>对角化引理（diagonalization lemma）</b>"，然后造出一个说"我自己不可证"的句子 <code>G_F</code>。如果不先理解"<b>自指（self-reference）</b>是怎么合法发生的"，这步会像变魔术。这页用悖论破题。</p>
+
+    <h3>从两个老悖论说起</h3>
+    <ul>
+      <li><b>说谎者悖论</b>："<u>这句话是假的。</u>" —— 若它真，则它说的（自己假）成立，于是它假；若它假，则它说的不成立，于是它真。死循环。</li>
+      <li><b>理发师悖论</b>：村里理发师"<u>只给所有不自己刮胡子的人刮胡子</u>"。那他给不给自己刮？给，则他属于"自己刮的人"，按规矩不该给；不给，则他属于"不自己刮的人"，按规矩又该给。</li>
+    </ul>
+    <p>共同点：一句话<b>谈到了自己</b>，并对自己作了否定，于是真假翻来覆去。</p>
+
+    <h3>哥德尔的高明：把"真假"换成"可不可证"</h3>
+    <div class="tip">说谎者句"这句话是假的"会导致真正的逻辑爆炸，没法直接用。哥德尔做了一个<b>关键替换</b>：不造"这句话<u>是假的</u>"，而造一句——
+      <p class="center"><b>G_F：="这句话在 F 中<u>不可证</u>"</b></p>
+      把要命的"假"换成温和的"不可证"。这句话不会爆炸，反而正好把系统逼到墙角（见 p63/64）。</p>
+
+    <h3>"对角化"这个名字哪来的</h3>
+    <p>怎么让一句算术公式"指向自己的哥德尔码"？靠 bgD2：公式能用数指代公式。<b>对角化</b>的技巧是——把一个带自由变元的公式 <code>A(x)</code>，<u>用它自己的编号代入它自己的那个变元 x</u>（即 <code>A(#A)</code> 这种"x 处填自己"的操作）。"自己作用于自己"在编号表里恰好取的是<b>对角线</b>上的格子，故名对角化。</p>
+    <div class="note"><b>对角化引理</b>承诺的就是：<u>对任意性质 A(x)，都能机械地造出一个句子 D，使 F 能证 "D &hArr; A(#D)"</u>——D 在断言"我自己具有性质 A"。把 A 取成"不可证"，造出的 D 就是那句"我不可证"的 <code>G_F</code>。p63 直接用这个引理，p65–66 才回头证它本身。</div>
+    <div class="warn">先记住一句话就够看懂 p63：<b>对角化引理 = "任何自指句子都能被合法造出来"的保证书。</b></div>
+  </div>
+</section>
+
+<!-- ===================== p63 ===================== -->
+<section class="page" id="p63">
+  <h2>证明梗概(二)：用对角化造出 G_F</h2>
+  <div class="pgnum">PDF 第 63 页 · 组 K</div>
+  <img class="slide" src="pages/p63.png" alt="p63">
+  <div class="explain">
+
+    <h3>第一步：约定记号 A(x)</h3>
+    <p>令 <code>A(x)</code> 表示 F 中<b>任意一个只有一个自由变元 x 的公式</b>。把它想成"一个关于 x 的性质"，x 处可以填进具体的数（比如某个哥德尔码）。</p>
+
+    <h3>第二步：对角化引理（先用，不证）</h3>
+    <p>引理承诺：能<b>机械地构造</b>出一个公式 <code>D</code>，使得</p>
+    <div class="formula">F &vdash; D &harr; A[ #D / x ]</div>
+    <p>读法：<code>A[#D / x]</code> 是"把 A(x) 里的 x 换成 D 自己的哥德尔码 #D"。所以这条说的是——<b>D 等价于"A 这个性质对 D 自己成立"</b>。D 在谈论自己，正是 bgD3 说的合法自指。（引理本身留到 p65–66 证。）</p>
+
+    <h3>第三步：把 A 取成 ¬Prov_F，得到 G_F</h3>
+    <p>现在让 <code>A(x)</code> 具体取为 <code>&not;Prov_F(x)</code>（"x 不可证"，Prov 见 p62）。代入对角化引理，就存在一个公式 <code>G_F</code> 使得：</p>
+    <div class="formula">F &vdash; G_F &harr; &not;Prov_F[ #G_F / x ]</div>
+    <p>翻译：<b><code>G_F</code> 等价于"<code>G_F</code> 自己的哥德尔码不可证"</b>，也就是那句蓄谋已久的——</p>
+    <div class="tip center"><b>G_F ＝ "我（这句话）在 F 中不可证"</b></div>
+    <p>课件结论先抛出来：这个 <code>G_F</code> <b>既不是可证的，也不是不可证的</b>（即 F 既证不出 G_F、也证不出 ¬G_F）。<u>为什么</u>——下一页 p64 给出推理。</p>
+    <div class="note">注意这里 <code>G_F</code> 完完全全是一条<b>普通的算术公式</b>（一串关于自然数的符号），只是经过编码，它的"算术内容"恰好对应着"我不可证"这句元话语。它不是自然语言的把戏，而是 PA 内部货真价实的命题。</div>
+  </div>
+</section>
+
+<!-- ===================== p64 ===================== -->
+<section class="page" id="p64">
+  <h2>证明梗概(二)：G_F 既不可证也不可否证</h2>
+  <div class="pgnum">PDF 第 64 页 · 组 K（本页底部多了关键推理框）</div>
+  <img class="slide" src="pages/p64.png" alt="p64">
+  <div class="explain">
+    <p>本页上半与 p63 相同，<b>关键是底部蓝框里的反证推理</b>，它说明了为什么 <code>G_F</code> 不可证。</p>
+
+    <h3>反证：假设 G_F 可证，会怎样</h3>
+    <p>课件底框的逻辑链（逐句翻译）：</p>
+    <ol>
+      <li><b>假设</b> <code>F &vdash; G_F</code>（G_F 可证）。</li>
+      <li>由 p62 的桥梁性质（A 可证 &rArr; "A 可证"也可证）：<code>F &vdash; Prov_F(#G_F)</code>。</li>
+      <li>又由 p63 的等价 <code>F &vdash; G_F &harr; &not;Prov_F(#G_F)</code>：既然 G_F 可证，就得 <code>F &vdash; &not;Prov_F(#G_F)</code>，进而 <code>F &vdash; &not;G_F</code>。</li>
+      <li>于是 F 同时证出了 <code>Prov_F(#G_F)</code> 和 <code>&not;Prov_F(#G_F)</code>（也即同时有 G_F 与 ¬G_F）&rArr; <b><code>Incon(F)</code></b>（F 不一致！）。</li>
+    </ol>
+    <div class="warn">所以：<b>只要 F 是一致的（Con(F)），G_F 就<u>不可能</u>可证。</b>—— 假设它可证，必然逼出矛盾。</div>
+
+    <h3>另一半：G_F 也不可否证</h3>
+    <p>对称地（课件正文那句"既不可证也不是不可证"的后半）：若 <code>F &vdash; &not;G_F</code>，结合等价式会得到 <code>F &vdash; Prov_F(#G_F)</code>，即"G_F 可证"——可上一半刚证明一致的 F 下 G_F 不可证，又矛盾。故 <b>¬G_F 也证不出来</b>。</p>
+
+    <h3>这就是不完全性</h3>
+    <div class="tip">
+      <p>一致的、含 PA 的 F，面对 <code>G_F</code> <b>两头都迈不动</b>：</p>
+      <p class="center"><b>F &nvdash; G_F &nbsp;&nbsp;且&nbsp;&nbsp; F &nvdash; ¬G_F</b></p>
+      <p>系统对 <code>G_F</code> 无法作出任何判定——这正是 p61 说的"<b>不完备</b>"。而站在系统外的我们却看得明白：<code>G_F</code> 说"我不可证"，而它确实不可证，所以 <code>G_F</code> <b>其实是真的</b>——一条"<u>真但系统证不出</u>"的命题。这就是哥德尔不完全性的全部冲击力。</p>
+    </div>
+    <div class="note">回扣 p61 的"完备≠完全性"：这里 F 的失败不是"逻辑不可靠"，而是"<b>无力对所有算术命题表态</b>"。一阶逻辑仍然是完全的（&vDash;&rArr;&vdash;），但<b>算术真理</b>超出了任何固定公理系统的证明能力。</div>
+  </div>
+</section>
+
+<!-- ===================== p65 ===================== -->
+<section class="page" id="p65">
+  <h2>证明梗概(三)：对角化引理的构造（上）</h2>
+  <div class="pgnum">PDF 第 65 页 · 组 K（技术最重，抓思路即可）</div>
+  <img class="slide" src="pages/p65.png" alt="p65">
+  <div class="explain">
+    <div class="note">前面一直<b>借用</b>对角化引理没证。这两页回头证它。课件目标：给定性质 <code>A</code>，造出 D 使 <code>F &vdash; D &harr; A[#D/x]</code>。<b>技术符号很多，但思想只有一条：把"代入"这个语法动作，变成一个算术函数，再让公式去谈论这个函数，从而绕回自己。</b>不要逐符号死抠，跟住三个零件即可。</div>
+
+    <h3>零件①：sub —— "代入"变成算术函数</h3>
+    <div class="formula">sub( #A(x), n ) := #A[ n / x ]</div>
+    <p>读法：输入两个数——某公式 <code>A(x)</code> 的码 <code>#A(x)</code>、以及一个数 <code>n</code>；输出是"把 A(x) 里的 x 换成 n 后所得公式"的码。<b>一句话：sub 把"做一次代入"压缩成一次纯算术运算</b>（码进、码出）。bgD2 保证了这种码层面的操作是机械可算、可在 F 内表达的。</p>
+
+    <h3>零件②：S(x,y,z) —— 把 sub 写成一个可表达的关系</h3>
+    <p>函数不好直接塞进逻辑公式，就改写成<b>关系</b>：令 <code>S(x,y,z)</code> 表示算术等式 <code>sub(x,y) &doteq; z</code>。即</p>
+    <div class="formula">S(x,y,z) 为真 &hArr; x=#A(x), y=n, z=#A[n/x]</div>
+    <p>白话：<code>S(x,y,z)</code> 就是在说"<b>把 x 号公式的变元代入 y，结果正好是 z 号公式</b>"。它是一条 F 内部可写出的算术公式（注意这里的 S 是关系谓词，<u>跟 PA 的后继函数 S 同名但不同物</u>，别混）。</p>
+    <div class="warn">符号撞名提醒：本页的 <code>S(x,y,z)</code> 是"代入关系"，p60 的 <code>S(n)</code> 是"后继"。课件复用了字母 S，看上下文区分。</div>
+
+    <h3>零件③：构造 B(x) 与 k</h3>
+    <p>给定任意单自由变元公式 <code>A(x)</code>，构造</p>
+    <div class="formula">B(x) := &exist;y. ( A(y) &and; S(x,x,y) )</div>
+    <p>它只含一个自由变元 x，把它记作 <code>B(x)</code>，并令 <code>k := #B(x)</code>（B 自己的码）。</p>
+    <div class="tip"><b>为什么把 x 放进 S 的<u>前两个</u>位置（S(x,x,y)）？</b>这正是"对角化"动作：让公式<u>把自己的编号代入自己</u>。<code>S(x,x,y)</code> 在说"x 号公式代入它<u>自己的编号 x</u> 得到 y"——同一个 x 既当"被操作的公式"又当"代入的内容"，取的就是对角线。这一步是整段构造的命门，p66 把 x 真正换成 k 后，自指就闭合了。</p>
+  </div>
+</section>
+
+<!-- ===================== p66 ===================== -->
+<section class="page" id="p66">
+  <h2>证明梗概(三)：对角化引理的构造（下）· 推导完成</h2>
+  <div class="pgnum">PDF 第 66 页 · 组 K（本讲最后一页）</div>
+  <img class="slide" src="pages/p66.png" alt="p66">
+  <div class="explain">
+    <p>承 p65 的三个零件，这页把 x 换成具体的 k，让自指闭环，推出引理。<b>看懂主线即可，每一步等价变形不必死抠。</b></p>
+
+    <h3>临门一脚：令 D := B[k/x]</h3>
+    <div class="formula">D := B[ k/x ] := &exist;y. ( A(y) &and; S(x,x,y)[ k/x ] )</div>
+    <p>就是把 p65 造的 <code>B(x)</code> 里的自由变元 x，<b>换成 B 自己的码 <code>k=#B(x)</code></b>。这一换，公式就真正"指向了自己"。</p>
+
+    <h3>自指闭合的关键算术等式</h3>
+    <p>令 <code>m := #D</code>（D 的码）。由 sub 的定义直接算：</p>
+    <div class="formula">sub(k, k) = sub(#B(x), k) = #B[ k/x ] = #D = m</div>
+    <p>这一行是整个构造的<b>心脏</b>：<code>sub(k,k)</code>——"把 k 号公式代入它自己 k"——算出来正好等于 <code>D</code> 的码 <code>m</code>。"自己代入自己"的结果，恰是我们想要的那个自指句 D。<u>对角线</u>在这里真正接上了。</p>
+
+    <h3>收尾：从 S 的等价推到 D &harr; A[m/x]</h3>
+    <p>课件最后那串 &rArr; 链，逐步把上面的等式塞回 B 的定义、再用 <code>S(x,x,y)</code> 与 <code>y &doteq; m</code> 的等价化简存在量词，最终得到：</p>
+    <pre>F &vdash; &forall;y.( S(x,x,y)[k/x] &harr; y &doteq; x[m/x] )
+  &rArr; F &vdash; &exist;y.( A(y) &and; ( S(x,x,y)[k/x] &harr; y&doteq;x[m/x] ) )
+  &rArr; F &vdash; &exist;y.( A(y) &and; S(x,x,y)[k/x] ) &harr; &exist;y.( A(y) &and; y&doteq;m )
+  &rArr; F &vdash; D &harr; &exist;y.( A(y) &and; y&doteq;m )
+  &rArr; F &vdash; D &harr; A[ m/x ]          (因 m = #D)</pre>
+    <p>最后一行 <code>F &vdash; D &harr; A[m/x]</code>，而 <code>m=#D</code>，这<b>正是对角化引理要的 <code>F &vdash; D &harr; A[#D/x]</code></b>。引理证毕。 &#9633;</p>
+
+    <div class="tip"><b>整段回望</b>：sub 把"代入"算术化 &rarr; S 把它写成可表达的关系 &rarr; B(x) 里用 S(x,x,y) 埋下对角线 &rarr; 代入 k 让 <code>sub(k,k)=#D</code> 自指闭合 &rarr; 得到任意性质 A 的自指句 D。把 A 取 ¬Prov，D 就是 p63 的 <code>G_F</code>"我不可证"，再接 p64 的反证，<b>整套哥德尔不完全性就闭环了</b>。</p>
+    <div class="note">这一段技术细节是"自指如何在形式系统里被严格实现"的全部秘密。本讲到此结束：从一阶逻辑的完全性（好消息），一路走到了任何含 PA 系统的不完全性（根本界限）——逻辑能力的边界被精确地画了出来。</div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>
