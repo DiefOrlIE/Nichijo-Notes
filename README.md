@@ -22,5 +22,8 @@
 ### 研究报告
 - `sleep-whitepaper.html` — 睡眠白皮书 · 横纵分析
 
+### 数学速查 / 解题指南
+- `fourier-guide/` — 傅里叶级数 · 快速计算指导
+
 ## 结构约定
 每个讲稿一个文件夹,内含 `index.html` + `pages/` 原书页面截图。入口 `index.html` 是各讲稿的卡片导航页。
