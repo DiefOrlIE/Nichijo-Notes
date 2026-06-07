@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week14 实验 · 背景知识讲稿（PCA / KNN / 逻辑斯蒂回归）</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --sub:#555; --line:#d8d2c4; --accent:#6b1f4d; --accent2:#2a4d69;
+    --bg:#faf8f3; --card:#ffffff; --code-bg:#f4f1ea; --warn:#9a3b2e; --warnbg:#fbf0ed;
+    --tipbg:#eef3f0; --tip:#2f5d44; --kbd:#efe9db;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Songti SC","SimSun","STSong",serif;
+    font-size:18px; line-height:1.9;
+  }
+  /* 英文与代码用 Times / 等宽 */
+  .en, p, li, h1, h2, h3, h4, td, th { font-family:"Times New Roman","Songti SC","SimSun",serif; }
+  code, pre, .mono { font-family:"Consolas","Courier New",monospace; }
+
+  #wrap{display:flex; max-width:1180px; margin:0 auto;}
+  /* 侧边导航 */
+  nav{
+    position:sticky; top:0; align-self:flex-start;
+    width:248px; height:100vh; overflow-y:auto;
+    padding:28px 18px; border-right:1px solid var(--line);
+    background:#f5f1e8; font-size:15px;
+  }
+  nav h2{font-size:16px; color:var(--accent); margin:0 0 14px; letter-spacing:1px;}
+  nav a{display:block; color:var(--sub); text-decoration:none; padding:4px 8px; border-radius:5px; margin:2px 0;}
+  nav a:hover{background:#e7dfce; color:var(--ink);}
+  nav a.sub{padding-left:22px; font-size:13.5px; color:#777;}
+  nav .grp{margin-top:12px; font-weight:bold; color:var(--accent2); font-size:13px; text-transform:uppercase; letter-spacing:1px;}
+
+  main{flex:1; padding:42px 50px 120px; min-width:0;}
+  header.title{border-bottom:3px double var(--accent); padding-bottom:18px; margin-bottom:10px;}
+  header.title h1{font-size:30px; margin:0 0 6px; color:var(--accent); line-height:1.4;}
+  header.title .meta{color:var(--sub); font-size:15px;}
+
+  section{margin:46px 0; scroll-margin-top:20px;}
+  h2.sec{font-size:25px; color:var(--accent); border-left:6px solid var(--accent); padding-left:14px; margin:0 0 8px;}
+  h3{font-size:21px; color:var(--accent2); margin:34px 0 8px;}
+  h4{font-size:18px; color:#333; margin:22px 0 6px;}
+  p{margin:10px 0;}
+  .lead{color:var(--sub); font-size:16px; margin-top:0;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 22px; margin:18px 0; box-shadow:0 1px 3px rgba(0,0,0,.04);}
+
+  .tip, .warn, .key{border-radius:8px; padding:12px 18px; margin:16px 0;}
+  .tip{background:var(--tipbg); border-left:5px solid var(--tip);}
+  .tip b{color:var(--tip);}
+  .warn{background:var(--warnbg); border-left:5px solid var(--warn);}
+  .warn b{color:var(--warn);}
+  .key{background:#fbf7ea; border-left:5px solid #c79a2b;}
+  .key b{color:#8a6a14;}
+
+  pre{background:#1f1d1a; color:#e8e3d6; border-radius:8px; padding:16px 18px; overflow-x:auto; font-size:14.5px; line-height:1.65;}
+  pre code{background:none; color:inherit; padding:0;}
+  code{background:var(--code-bg); padding:1.5px 6px; border-radius:4px; font-size:15px; color:#7a2e52;}
+  .cmt{color:#9aa07e;}
+  .kw{color:#c98a6b;}
+  .str{color:#9ec98a;}
+
+  table{border-collapse:collapse; width:100%; margin:16px 0; font-size:16px;}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:#efe9db; color:#333;}
+  tr:nth-child(even) td{background:#faf8f2;}
+
+  .steps{counter-reset:step; list-style:none; padding-left:0;}
+  .steps>li{counter-increment:step; position:relative; padding:8px 0 8px 46px; margin:6px 0; border-bottom:1px dashed var(--line);}
+  .steps>li::before{content:counter(step); position:absolute; left:0; top:8px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:30px; font-family:"Times New Roman",serif; font-weight:bold;}
+
+  .map{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0;}
+  .map .box{background:var(--card); border:1px solid var(--line); border-top:4px solid var(--accent2); border-radius:8px; padding:14px 16px;}
+  .map .box h4{margin-top:0; color:var(--accent);}
+  .map .box small{color:var(--sub);}
+
+  kbd{background:var(--kbd); border:1px solid #cbbf9f; border-bottom-width:2px; border-radius:4px; padding:1px 7px; font-family:"Times New Roman",serif; font-size:14px;}
+  .qmark{color:var(--accent); font-weight:bold;}
+  hr{border:none; border-top:1px solid var(--line); margin:30px 0;}
+  .footnote{color:var(--sub); font-size:14px;}
+  a.ref{color:var(--accent2);}
+  .pill{display:inline-block; background:#efe9db; border-radius:20px; padding:2px 12px; font-size:13px; color:#555; margin-right:6px; font-family:"Times New Roman",serif;}
+  @media (max-width:900px){
+    nav{display:none;}
+    main{padding:24px 18px 80px;}
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div id="wrap">
+
+<nav>
+  <h2>目录</h2>
+  <a href="#overview">0 · 知识地图</a>
+
+  <div class="grp">数据 · 降维</div>
+  <a href="#data">1 · 数据表示与预处理</a>
+  <a href="#data-vec" class="sub">向量化与特征</a>
+  <a href="#data-norm" class="sub">规范化</a>
+  <a href="#pca">2 · 降维与 PCA</a>
+  <a href="#pca-why" class="sub">为什么降维</a>
+  <a href="#pca-intuition" class="sub">核心直觉</a>
+  <a href="#pca-math" class="sub">流程与公式</a>
+  <a href="#pca-ratio" class="sub">方差贡献率</a>
+  <a href="#pca-sign" class="sub">符号唯一化</a>
+  <a href="#q1" class="sub">★ 题一 解题</a>
+
+  <div class="grp">有监督学习</div>
+  <a href="#sup">3 · 有监督学习总览</a>
+  <a href="#sup-task" class="sub">回归 vs 分类</a>
+  <a href="#sup-eval" class="sub">评估与过拟合</a>
+  <a href="#knn">4 · KNN 近邻分类</a>
+  <a href="#knn-idea" class="sub">核心思想</a>
+  <a href="#knn-dist" class="sub">距离度量</a>
+  <a href="#knn-vote" class="sub">投票与平票</a>
+  <a href="#knn-k" class="sub">k 的选择</a>
+  <a href="#q2" class="sub">★ 题二 解题</a>
+  <a href="#lr">5 · 逻辑斯蒂回归</a>
+  <a href="#lr-from" class="sub">从回归到分类</a>
+  <a href="#lr-sigmoid" class="sub">sigmoid 与对数几率</a>
+  <a href="#lr-loss" class="sub">交叉熵损失</a>
+  <a href="#lr-gd" class="sub">梯度下降</a>
+  <a href="#q3" class="sub">★ 题三 解题</a>
+
+  <div class="grp">收尾</div>
+  <a href="#pitfalls">6 · 易错点总表</a>
+</nav>
+
+<main>
+<header class="title">
+  <h1>Week14 实验 · 背景知识讲稿</h1>
+  <div class="meta">PCA 降维 · KNN 分类 · 逻辑斯蒂回归 ｜ 配套《3.1 数据表示和降维》《3.2 有监督学习》<br>
+  写给：人工智能专业大一 · 鳟鱼大人 ｜ 风格：重直觉，公式够用即可，代码只点关键片段</div>
+</header>
+
+<!-- ============ 0 知识地图 ============ -->
+<section id="overview">
+  <h2 class="sec">0 · 这三道题在讲什么</h2>
+  <p class="lead">先把全局看清楚，再钻细节。三道题不是孤立的，它们正好串起了机器学习里最基础的三条线。</p>
+
+  <div class="map">
+    <div class="box">
+      <h4>题一 · PCA</h4>
+      <small>无监督 · 降维</small>
+      <p>把 $D$ 维数据压到 $d$ 维，尽量不丢信息。<br><b>关键词：</b>方差、协方差矩阵、特征值分解、投影。</p>
+    </div>
+    <div class="box">
+      <h4>题二 · KNN</h4>
+      <small>有监督 · 分类</small>
+      <p>"近朱者赤"：看最近的 $K$ 个邻居投票决定类别。<br><b>关键词：</b>距离度量、排序、投票、平票规则。</p>
+    </div>
+    <div class="box">
+      <h4>题三 · 逻辑斯蒂回归</h4>
+      <small>有监督 · 二分类</small>
+      <p>用一条"线"把两类分开，再用 sigmoid 转成概率。<br><b>关键词：</b>sigmoid、交叉熵、梯度下降。</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <b>一句话串起来：</b> 机器学习的常规流程是 ——
+    先<b>处理/表示数据</b>（必要时<b>降维 = PCA</b>），再选一个<b>模型</b>去学（<b>KNN</b> 靠记样本、<b>逻辑斯蒂回归</b>靠拟合参数），最后<b>评估</b>好坏。这份讲稿就按这个顺序展开。
+  </div>
+
+  <p>下面每一节先讲<b>背景知识</b>（为什么、是什么），到对应题目时再单独开一个 <span class="qmark">★ 解题</span> 小节，把题目要求翻译成步骤，给关键代码片段，并标出最容易踩的坑。完整函数留给你自己补全——这正是实验"自己实现"的要求。</p>
+</section>
+
+<!-- ============ 1 数据表示 ============ -->
+<section id="data">
+  <h2 class="sec">1 · 数据表示与预处理</h2>
+  <p class="lead">这是《3.1》的前半部分。所有模型的输入都是数字向量，理解这一层，后面 PCA 的"中心化""规范化"才不会突兀。</p>
+
+  <h3 id="data-vec">1.1 把现实问题变成向量</h3>
+  <p>机器学习处理的输入永远是一个数值向量 $\mathbf{x}\in\mathbb{R}^D$。比如房价预测里，一套房子被表示成 $\mathbf{x}=(\text{面积},\ \text{卧室数},\ \text{楼层},\dots)$，每一个分量叫一个<b>特征（feature）</b>，$D$ 就是<b>特征维度</b>。</p>
+  <p>$N$ 个样本叠起来就是一个矩阵。本次实验里约定：</p>
+  <div class="card">
+    数据矩阵 $X$ 形状为 $(N, D)$ —— <b>一行一个样本，一列一个特征</b>。
+    $$X=\begin{pmatrix} x_{11} & x_{12} & \cdots & x_{1D}\\ x_{21} & x_{22} & \cdots & x_{2D}\\ \vdots & & & \vdots\\ x_{N1} & x_{N2} & \cdots & x_{ND}\end{pmatrix}$$
+  </div>
+  <div class="warn">
+    <b>注意一个表示差异（PCA 会用到）：</b> 讲义《3.1》里为了推导方便，把 $X$ 写成<b>列</b>是样本（$D\times N$），所以协方差写成 $XX^\mathsf{T}$。而本题的 $X$ 是<b>行</b>是样本（$N\times D$），对应的协方差就要写成 $X^\mathsf{T}X$。<b>方向别记反</b>——判断标准很简单：协方差矩阵一定是 $D\times D$ 的（特征 × 特征）。
+  </div>
+
+  <p>特征分两类：</p>
+  <ul>
+    <li><b>数值型</b>（numerical）：重量、长度、面积，本身就是数，可直接计算。</li>
+    <li><b>类别型</b>（categorical）：颜色=红/黄/蓝，大小=大/中/小。不能直接当数算，要先编码（如 one-hot，或有序类别映射成 $1,0,-1$）。<br>三道题用的数据都是数值型，类别型了解即可。</li>
+  </ul>
+
+  <h3 id="data-norm">1.2 规范化（Normalization）</h3>
+  <p>不同特征量纲差别可能很大（面积上千、卧室数个位数）。如果直接算距离或方差，<b>大数值的特征会压倒小数值的特征</b>。所以常要先把各特征拉到可比的范围。两种常见做法：</p>
+
+  <table>
+    <tr><th>方法</th><th>公式</th><th>效果</th></tr>
+    <tr>
+      <td><b>min-max</b></td>
+      <td>$f_i'=\dfrac{f_i-f_{\min}}{f_{\max}-f_{\min}}$</td>
+      <td>线性缩放到 $[0,1]$</td>
+    </tr>
+    <tr>
+      <td><b>z-score</b></td>
+      <td>$f_i'=\dfrac{f_i-\bar f}{\sigma}$</td>
+      <td>变成均值 0、标准差 1</td>
+    </tr>
+  </table>
+
+  <div class="tip">
+    <b>和这三道题的关系：</b> PCA 的第一步"中心化"（减均值）其实就是 z-score 的前半段；KNN 算距离前理论上也该规范化，否则量纲大的特征主导距离。<b>本次三道题的判题数据都没要求你额外规范化</b>（题一只要求中心化），所以按题目说的做就行，但要知道"为什么实际工程里要规范化"。
+  </div>
+</section>
+
+<!-- ============ 2 PCA ============ -->
+<section id="pca">
+  <h2 class="sec">2 · 降维与主成分分析 PCA</h2>
+  <p class="lead">对应《3.1》后半。这是题一的全部理论。</p>
+
+  <h3 id="pca-why">2.1 为什么要降维</h3>
+  <p>当维度 $D$ 很高时（课程成绩几十门、文本几千个词、图像几万像素），会带来：难以<b>可视化</b>、容易受<b>噪声</b>干扰、<b>计算开销</b>大、模型容易<b>过拟合</b>。降维就是用更少的维度 $d\ (d<D)$ 保住数据里"最有用"的信息。</p>
+
+  <h3 id="pca-intuition">2.2 核心直觉：方差越大，信息越多</h3>
+  <p>PCA 是<b>无监督</b>的（只看 $X$，不看标签 $y$）。它的核心判断是一句话：</p>
+  <div class="key">
+    <b>数据在哪个方向上"摊得越开"（方差越大），那个方向就越重要。</b>
+  </div>
+  <p>想象一团沿斜线分布的点云。如果硬投影到水平轴，很多点会挤在一起、难以区分；但如果投影到点云<b>拉伸最长的那个方向</b>，点与点之间区分度最高，信息损失最小。PCA 要找的就是这个"最大方差方向"，称为<b>第一主成分（1st PC）</b>。找完第一个，再在<b>与它正交</b>的方向里找方差第二大的，是第二主成分，依此类推。</p>
+
+  <p>怎么量化"投影到方向 $\mathbf{v}$ 后的方差"？设 $\mathbf{v}$ 是单位向量（$\|\mathbf{v}\|=1$），样本 $\mathbf{x}_i$ 在 $\mathbf{v}$ 上的投影是标量 $\mathbf{v}^\mathsf{T}\mathbf{x}_i$。先把数据<b>中心化</b>（减去均值，记中心化后仍写 $\mathbf{x}_i$），则投影后的方差是：</p>
+  $$\text{Var}=\frac1N\sum_{i=1}^N (\mathbf{v}^\mathsf{T}\mathbf{x}_i)^2$$
+  <p>PCA 的优化目标就是：在 $\|\mathbf{v}\|=1$ 的约束下，<b>最大化</b>这个方差。</p>
+
+  <h4>为什么最后落到"特征值分解"</h4>
+  <p>把上式整理成矩阵形式（这里 $X$ 行是样本，所以用 $X^\mathsf{T}X$）：</p>
+  $$\frac1N\sum_i (\mathbf{v}^\mathsf{T}\mathbf{x}_i)^2 \;=\; \mathbf{v}^\mathsf{T}\Big(\tfrac1N X^\mathsf{T}X\Big)\mathbf{v} \;=\;\mathbf{v}^\mathsf{T} C\, \mathbf{v}$$
+  <p>其中 $C=\frac1N X^\mathsf{T}X$ 正是中心化数据的<b>协方差矩阵</b>（$D\times D$）。带约束求极值（拉格朗日乘子法），结论非常干净：</p>
+  <div class="card">
+    $$C\mathbf{v}=\lambda \mathbf{v}$$
+    也就是说，<b>最优的投影方向 $\mathbf{v}$ 恰好是协方差矩阵 $C$ 的特征向量</b>，对应的<b>特征值 $\lambda$ 就等于投影后的方差</b>。
+  </div>
+  <p>所以：特征值越大 → 那个方向方差越大 → 越重要。把特征值从大到小排，取前 $d$ 个特征向量，就是我们要的 $d$ 个主成分。又因为 $C$ 是<b>对称矩阵</b>，它的特征向量天然<b>两两正交</b>，正好满足"各主成分互相正交"的要求。</p>
+  <div class="tip">
+    <b>关于 $\frac1N$：</b> 协方差是除以 $N$ 还是 $N-1$、甚至不除，都<b>不影响</b>特征向量方向（只是把所有特征值同比例缩放），<b>也不影响方差贡献率</b>（比值约掉了）。所以题一里你用 <code>np.cov</code> 还是手写 <code>X.T@X</code> 都能得到同样的主成分。</p>
+  </div>
+
+  <h3 id="pca-math">2.3 PCA 完整流程（题一就是这五步）</h3>
+  <ol class="steps">
+    <li><b>中心化</b>：对每一列（特征）减去该列均值，得到 $X_c$。$\bar{\mathbf{x}}=\frac1N\sum_i \mathbf{x}_i$，$X_c = X-\bar{\mathbf{x}}$。</li>
+    <li><b>算协方差矩阵</b>：$C=\frac1N X_c^\mathsf{T}X_c$，形状 $D\times D$。</li>
+    <li><b>特征值分解</b>：求 $C$ 的特征值 $\lambda_1,\dots,\lambda_D$ 和对应特征向量。对称矩阵用 <code>np.linalg.eigh</code> 更稳。</li>
+    <li><b>排序选前 d 个</b>：按特征值<b>从大到小</b>排序，取前 $d$ 个特征值对应的特征向量，拼成投影矩阵 $W$（$D\times d$）。</li>
+    <li><b>投影</b>：$Z = X_c\, W$，形状 $(N,d)$，就是降维结果。</li>
+  </ol>
+
+  <div class="warn">
+    <b>最大的坑：<code>eigh</code> 返回的特征值是从小到大的！</b> NumPy 的 <code>np.linalg.eigh</code> 默认<b>升序</b>返回。你必须自己<b>反转</b>顺序，把最大的排到前面，否则取的是方差最小的方向，全错。
+  </div>
+
+  <h3 id="pca-ratio">2.4 方差贡献率（题目要输出的第一行）</h3>
+  <p>第 $k$ 个主成分的<b>方差贡献率</b> = 它的特征值占所有特征值之和的比例：</p>
+  $$r_k=\frac{\lambda_k}{\sum_{j=1}^{D}\lambda_j}$$
+  <p>直觉：它衡量"这个主成分保留了原始数据百分之多少的信息（方差）"。前 $d$ 个加起来越接近 1，说明降维丢的信息越少。验证示例：题目数据两个特征值是 $8$ 和 $2$，第一主成分贡献率 $=8/(8+2)=0.8$，正好对上题目输出的 <code>0.8000</code>。</p>
+
+  <h3 id="pca-sign">2.5 特征向量符号唯一化（题目的特殊规定）</h3>
+  <p>特征向量有个天然的不确定性：$\mathbf{v}$ 和 $-\mathbf{v}$ 都是合法特征向量（方向相反，但都代表同一条轴）。不同库、不同机器算出来的正负号可能不同，会导致投影结果差一个负号。为了让所有人输出一致，题目<b>强制规定</b>：</p>
+  <div class="card">
+    对每个特征向量，找到它<b>绝对值最大</b>的那个分量；如果该分量是<b>负数</b>，就把整个向量<b>乘以 −1</b>。
+  </div>
+  <p>这样保证"最大幅度的分量永远为正"，符号就唯一了。落实到代码就是几行（见下方解题）。</p>
+
+  <!-- ★ 题一解题 -->
+  <h3 id="q1">★ 题一 · 解题思路与关键片段</h3>
+  <p><span class="pill">输入</span>首行 <code>N D d</code>，接着 $N$ 行每行 $D$ 个实数。<span class="pill">输出</span>第一行 $d$ 个方差贡献率（4 位小数），再输出 $N$ 行降维后矩阵（每行 $d$ 个数，4 位小数）。</p>
+
+  <p>把 2.3 的五步直接翻译成代码骨架，关键处给提示、留白：</p>
+  <pre><code><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> pca_reduce(X, d):
+    <span class="cmt"># X: (N, D)。下面每一步对应讲稿 2.3 的五步</span>
+
+    <span class="cmt"># 1. 中心化：按列(axis=0)求均值再减。keepdims 让广播更稳</span>
+    mean = X.mean(axis=<span class="str">0</span>)
+    Xc = X - mean
+
+    <span class="cmt"># 2. 协方差矩阵 (D,D)。行是样本所以是 Xc.T @ Xc</span>
+    C = (Xc.T @ Xc) / X.shape[<span class="str">0</span>]      <span class="cmt"># 除不除 N 都不影响结果</span>
+
+    <span class="cmt"># 3. 对称矩阵特征分解；eigh 返回的特征值是【升序】！</span>
+    eigvals, eigvecs = np.linalg.eigh(C)   <span class="cmt"># eigvecs 的每一【列】是一个特征向量</span>
+
+    <span class="cmt"># 4. 反转成降序，取前 d 个</span>
+    order = np.argsort(eigvals)[::-<span class="str">1</span>]      <span class="cmt"># 从大到小的下标</span>
+    <span class="cmt"># TODO: 用 order 重排 eigvals 和 eigvecs(按列重排)，再切前 d 个</span>
+    <span class="cmt"># top_vals = ...   top_vecs = ...   (top_vecs 形状应为 (D, d))</span>
+
+    <span class="cmt"># 5. 符号唯一化：对每个特征向量(每一列)处理 —— 讲稿 2.5</span>
+    <span class="kw">for</span> j <span class="kw">in</span> range(top_vecs.shape[<span class="str">1</span>]):
+        col = top_vecs[:, j]
+        k = np.argmax(np.abs(col))         <span class="cmt"># 绝对值最大分量的下标</span>
+        <span class="kw">if</span> col[k] < <span class="str">0</span>:
+            top_vecs[:, j] = -col          <span class="cmt"># 整列翻转</span>
+
+    <span class="cmt"># 方差贡献率 = 该特征值 / 全部特征值之和（分母用所有 D 个！）</span>
+    ratios = top_vals / eigvals.sum()
+
+    <span class="cmt"># 6. 投影：Z = Xc @ W</span>
+    Z = Xc @ top_vecs                      <span class="cmt"># (N, d)</span>
+    <span class="kw">return</span> ratios, Z
+</code></pre>
+
+  <div class="warn"><b>题一三个最易错点：</b>
+    <ol>
+      <li><b>没反转 eigh 的升序</b> → 取到了最小方差方向。</li>
+      <li><b>方差贡献率分母用错</b> → 必须是<b>所有 $D$ 个</b>特征值之和，不是前 $d$ 个之和。</li>
+      <li><b>忘了符号唯一化</b> → 投影值正负号和标准答案相反。</li>
+    </ol>
+  </div>
+  <div class="tip"><b>输出格式：</b>题目要求 4 位小数，打印时用 <code>f"{x:.4f}"</code>。注意 <code>-0.0000</code> 这种边界——一般判题能接受，若不放心可在格式化前加 <code>x + 0.0</code> 或对极小值做归零处理。</div>
+</section>
+
+<!-- ============ 3 有监督学习总览 ============ -->
+<section id="sup">
+  <h2 class="sec">3 · 有监督学习总览</h2>
+  <p class="lead">对应《3.2》开头到评估部分。题二、题三都属于有监督学习，先建立共同的框架。</p>
+
+  <h3 id="sup-task">3.1 什么是有监督学习 · 回归 vs 分类</h3>
+  <p>有监督学习 = 用一堆<b>带答案的样本</b> $(\mathbf{x}_i, y_i)$ 去学一个函数 $f$，使 $f(\mathbf{x})$ 尽量接近真实 $y$。$\mathbf{x}$ 是输入，$y$ 是标签（答案）。按 $y$ 的类型分两大类：</p>
+  <table>
+    <tr><th></th><th>回归 Regression</th><th>分类 Classification</th></tr>
+    <tr><td><b>输出 $y$</b></td><td>连续实数（如房价 369.0）</td><td>离散类别（如 0/1，或多类）</td></tr>
+    <tr><td><b>例子</b></td><td>预测房价</td><td>判断西瓜熟没熟、邮件是否垃圾</td></tr>
+    <tr><td><b>本次题目</b></td><td>—</td><td>题二 KNN、题三 逻辑斯蒂回归都是分类</td></tr>
+  </table>
+  <div class="tip"><b>易混点：</b>"逻辑斯蒂回归"名字里带"回归"，但它做的是<b>分类</b>。名字的由来是它在内部对"对数几率"做了线性回归——后面 5.2 会讲。</div>
+
+  <h3 id="sup-eval">3.2 怎么评估好坏 · 过拟合</h3>
+  <p>训练完模型要看它表现如何。评估指标按任务分：</p>
+  <ul>
+    <li><b>回归</b>：均方误差 MSE $=\frac1m\sum_i (f(\mathbf{x}_i)-y_i)^2$，越小越好。</li>
+    <li><b>分类</b>：错误率 $E=\frac1m\sum_i \mathbb{1}[f(\mathbf{x}_i)\neq y_i]$；精度 $\text{acc}=1-E$，越大越好。（$\mathbb{1}[\cdot]$ 是指示函数，括号内成立取 1 否则 0）</li>
+  </ul>
+  <p>更重要的是<b>在哪批数据上评估</b>：</p>
+  <div class="card">
+    <b>训练误差（经验误差）</b>：在见过的训练集上的误差。<br>
+    <b>泛化误差</b>：在<b>没见过的</b>测试集上的误差 —— 这才是我们真正关心的。<br>
+    为此要把数据划分成训练集 / 测试集（两者不能重叠），常用<b>留出法</b>、<b>交叉验证</b>。
+  </div>
+  <p><b>过拟合 vs 欠拟合：</b>模型太简单 → 训练集都学不好（欠拟合）；模型太复杂 → 把训练集的噪声都背下来了，训练误差极低但泛化差（过拟合）。如讲义"识别猫"的例子：把训练集的猫记得死死的，遇到一只没见过姿势的猫反而认不出。<b>降维（PCA）有时能降噪、缓解过拟合</b>——这就把第一部分和这里连起来了。</p>
+</section>
+
+<!-- ============ 4 KNN ============ -->
+<section id="knn">
+  <h2 class="sec">4 · K 近邻 KNN</h2>
+  <p class="lead">对应《3.2》KNN 部分。题二的全部理论。</p>
+
+  <h3 id="knn-idea">4.1 核心思想：近朱者赤</h3>
+  <div class="key"><b>一个样本的类别，由离它最近的 $K$ 个训练样本投票决定。</b></div>
+  <p>这背后的假设是"相近的样本，标签也相近"。预测一个新样本时：算它和<b>所有</b>训练样本的距离 → 找最近的 $K$ 个 → 这 $K$ 个里哪个类别票数最多，就预测成哪个类。</p>
+  <div class="tip"><b>惰性学习（Lazy Learning）：</b> KNN <b>没有训练过程</b>，不学任何参数，只是把训练集存起来。所有计算都推迟到预测时才做。代价是：预测慢（每次都要和全部训练样本比），且要存下整个训练集。</div>
+
+  <h3 id="knn-dist">4.2 距离怎么算</h3>
+  <p>对两个 $D$ 维样本 $\mathbf{x},\mathbf{y}$，题目要支持两种距离：</p>
+  <table>
+    <tr><th>类型 T</th><th>名称</th><th>公式</th><th>直觉</th></tr>
+    <tr><td><b>1</b></td><td>欧氏距离</td><td>$\sqrt{\sum_{i=1}^D (x_i-y_i)^2}$</td><td>两点间直线距离</td></tr>
+    <tr><td><b>2</b></td><td>曼哈顿距离</td><td>$\sum_{i=1}^D |x_i-y_i|$</td><td>沿网格走的"出租车"距离</td></tr>
+  </table>
+  <p>这两者其实是<b>闵可夫斯基距离</b> $L_p=\big(\sum_i|x_i-y_i|^p\big)^{1/p}$ 的特例：$p=1$ 是曼哈顿，$p=2$ 是欧氏。了解即可，题目只要这两种。</p>
+  <div class="tip"><b>小优化（不影响结果）：</b> 比较欧氏距离的大小时，<b>开不开根号排序结果一样</b>（根号是单调的）。所以只为了排序找近邻，可以省掉 <code>sqrt</code>。不过为了代码清晰、避免出错，按公式老实写也完全没问题。</div>
+
+  <h3 id="knn-vote">4.3 投票与两条平票规则</h3>
+  <p>题目对"排序"和"投票"都规定了<b>确定性的 tie-break 规则</b>，必须严格照做，否则边界样本会判错：</p>
+  <ol class="steps">
+    <li><b>排序时距离相同：</b> 训练集中<b>先出现</b>的样本排在前面。→ 这要求排序是<b>稳定的</b>，并且把"原始下标"作为次级比较键。</li>
+    <li><b>投票时多个类别票数相同：</b> 选<b>类别编号最小</b>的那个类。</li>
+  </ol>
+
+  <h3 id="knn-k">4.4 K 的选择（理解，不用调参）</h3>
+  <p>$K$ 小（如 1）：决策边界贴合数据细节，但容易被噪声/异常点带偏。$K$ 大：边界更平滑、更稳，但可能模糊掉真实结构；$K$ 等于全体训练样本时，无论输入是什么都预测成"训练集里最多的那个类"。本题 $K$ 由输入给定，理解这个权衡即可。</p>
+
+  <!-- ★ 题二解题 -->
+  <h3 id="q2">★ 题二 · 解题思路与关键片段</h3>
+  <p><span class="pill">输入</span>首行 <code>N D Q K T</code>；接着 $N$ 行训练样本（$D$ 个实数 + 1 个整数标签）；再 $Q$ 行测试样本。<span class="pill">输出</span>$Q$ 行预测类别。</p>
+
+  <p>对每个测试样本，做"算距离 → 带下标排序 → 取前 K → 计票 → 选最小编号"。关键片段：</p>
+  <pre><code><span class="kw">def</span> distance(a, b, T):
+    <span class="kw">if</span> T == <span class="str">1</span>:                                  <span class="cmt"># 欧氏</span>
+        <span class="kw">return</span> sum((ai-bi)**<span class="str">2</span> <span class="kw">for</span> ai,bi <span class="kw">in</span> zip(a,b)) ** <span class="str">0.5</span>
+    <span class="kw">else</span>:                                     <span class="cmt"># 曼哈顿 (T==2)</span>
+        <span class="kw">return</span> sum(abs(ai-bi) <span class="kw">for</span> ai,bi <span class="kw">in</span> zip(a,b))
+
+<span class="kw">def</span> knn_predict(train_X, train_y, test_X, K, T):
+    preds = []
+    <span class="kw">for</span> x <span class="kw">in</span> test_X:
+        <span class="cmt"># 1. 算到每个训练样本的距离，连同【原始下标 i】一起存</span>
+        items = [(distance(x, train_X[i], T), i) <span class="kw">for</span> i <span class="kw">in</span> range(len(train_X))]
+
+        <span class="cmt"># 2. 排序：先按距离升序，距离相同按下标 i 升序(=先出现的在前)</span>
+        items.sort(key=<span class="kw">lambda</span> t: (t[<span class="str">0</span>], t[<span class="str">1</span>]))
+
+        <span class="cmt"># 3. 取前 K 个邻居的标签</span>
+        neighbor_labels = [train_y[i] <span class="kw">for</span> _, i <span class="kw">in</span> items[:K]]
+
+        <span class="cmt"># 4. 计票</span>
+        votes = {}
+        <span class="kw">for</span> lab <span class="kw">in</span> neighbor_labels:
+            votes[lab] = votes.get(lab, <span class="str">0</span>) + <span class="str">1</span>
+
+        <span class="cmt"># 5. 选票数最多者；平票选【类别编号最小】</span>
+        best = max(votes.keys(), key=<span class="kw">lambda</span> c: (votes[c], -c))
+        <span class="cmt"># 解释:(票数大优先, 票数相同则 -c 大即 c 小优先)。TODO:想清楚为什么是 -c</span>
+        preds.append(best)
+    <span class="kw">return</span> preds
+</code></pre>
+
+  <div class="warn"><b>题二易错点：</b>
+    <ol>
+      <li><b>平票选最小编号</b>：用 <code>max(..., key=(票数, -类别))</code> 这个技巧可以一行搞定；自己写 if 比较也行，但别忘了这条规则。</li>
+      <li><b>距离相同的稳定排序</b>：把原始下标 <code>i</code> 作为第二排序键，天然满足"先出现的在前"。</li>
+      <li><b>T 的分支</b>：1 是欧氏、2 是曼哈顿，别记反。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 5 逻辑斯蒂回归 ============ -->
+<section id="lr">
+  <h2 class="sec">5 · 逻辑斯蒂回归 Logistic Regression</h2>
+  <p class="lead">对应《3.2》分类模型部分。题三的全部理论。这是三道题里数学链条最长的一道，跟着直觉走就不难。</p>
+
+  <h3 id="lr-from">5.1 从线性回归到分类</h3>
+  <p>线性回归能算出一个实数 $z=\mathbf{w}^\mathsf{T}\mathbf{x}+b$。但分类要的是 0/1，怎么从实数 $z$ 跳到类别？最朴素的想法是用<b>阶跃函数</b>：$z>0$ 判 1，$z<0$ 判 0。问题是阶跃函数在 0 处<b>不连续、不可导</b>，没法用梯度方法优化。</p>
+
+  <h3 id="lr-sigmoid">5.2 sigmoid 与"对数几率"</h3>
+  <p>于是用一条光滑的 S 形曲线去近似阶跃函数，这就是 <b>sigmoid（对数几率函数）</b>：</p>
+  $$\hat y=\sigma(z)=\frac{1}{1+e^{-z}},\qquad z=\mathbf{w}^\mathsf{T}\mathbf{x}+b$$
+  <p>它把任意实数 $z$ 压到 $(0,1)$，正好可以解释成<b>"样本属于类别 1 的概率"</b>。$z\to+\infty$ 时趋近 1，$z\to-\infty$ 趋近 0，$z=0$ 时正好 0.5。预测规则：</p>
+  <div class="card">$\hat y\ge 0.5 \Rightarrow$ 预测类别 <b>1</b>；$\quad\hat y<0.5\Rightarrow$ 预测类别 <b>0</b>。<br>
+  （等价于看 $z\ge0$ 还是 $z<0$，因为 $\sigma(0)=0.5$。）</div>
+  <p><b>为什么叫"对数几率回归"：</b>把式子反解一下会得到 $\ln\frac{\hat y}{1-\hat y}=\mathbf{w}^\mathsf{T}\mathbf{x}+b$。左边 $\frac{\hat y}{1-\hat y}$ 是"正类概率 ÷ 负类概率"，叫<b>几率（odds）</b>，取对数叫<b>对数几率（log-odds / logit）</b>。所以这个模型本质是<b>用线性回归去拟合对数几率</b>——名字就是这么来的。这段了解即可，做题不用反解。</p>
+
+  <h3 id="lr-loss">5.3 交叉熵损失</h3>
+  <p>有了概率预测 $\hat y$，怎么衡量"预测得好不好"？用<b>二分类交叉熵损失</b>：</p>
+  $$L=-\frac1N\sum_{i=1}^N\big[\,y_i\log\hat y_i+(1-y_i)\log(1-\hat y_i)\,\big]$$
+  <p>直觉：当真实 $y_i=1$ 时，只剩 $-\log\hat y_i$，希望 $\hat y_i$ 越接近 1 损失越小；当 $y_i=0$ 时只剩 $-\log(1-\hat y_i)$，希望 $\hat y_i$ 越接近 0。预测对了损失趋于 0，错得离谱损失趋于无穷大。我们要做的就是调 $\mathbf{w},b$ 把 $L$ 降到最小。</p>
+
+  <h3 id="lr-gd">5.4 梯度下降</h3>
+  <p>$L$ 没有闭式解，但它是光滑凸函数，可以用<b>梯度下降</b>迭代逼近最小值。梯度下降的思想：从初值出发，每一步朝"损失下降最快"的反方向挪一小步，反复迭代。</p>
+  <p>交叉熵 + sigmoid 有一个非常漂亮的结论——梯度形式特别简洁（推导略，记住即可）：</p>
+  <div class="card">
+    $$w_j \leftarrow w_j-\alpha\cdot\frac1N\sum_{i=1}^N(\hat y_i-y_i)\,x_{ij}$$
+    $$b \leftarrow b-\alpha\cdot\frac1N\sum_{i=1}^N(\hat y_i-y_i)$$
+  </div>
+  <p>其中 $\alpha$ 是<b>学习率</b>（步长），$(\hat y_i-y_i)$ 是<b>预测概率与真实标签的误差</b>。本题用<b>批量梯度下降</b>：每一轮用<b>全部</b>训练样本算一次平均梯度，更新一次参数，共做 $E$ 轮。</p>
+  <div class="tip"><b>参数初始化（题目硬性规定）：</b> $\mathbf{w}$ 全 0，$b=0$。这样保证大家训练轨迹一致、输出可复现。</div>
+
+  <h4>数值稳定的 sigmoid</h4>
+  <p>直接写 <code>1/(1+exp(-z))</code>，当 $z$ 是很大的负数时，<code>exp(-z)</code> 会溢出（overflow）报错。稳健写法是分情况：</p>
+  <pre><code><span class="kw">import</span> math
+<span class="kw">def</span> sigmoid(z):
+    <span class="kw">if</span> z >= <span class="str">0</span>:
+        <span class="kw">return</span> <span class="str">1.0</span> / (<span class="str">1.0</span> + math.exp(-z))
+    <span class="kw">else</span>:
+        ez = math.exp(z)              <span class="cmt"># z<0 时 exp(z) 不会溢出</span>
+        <span class="kw">return</span> ez / (<span class="str">1.0</span> + ez)
+</code></pre>
+
+  <!-- ★ 题三解题 -->
+  <h3 id="q3">★ 题三 · 解题思路与关键片段</h3>
+  <p><span class="pill">输入</span>首行 <code>N D Q E alpha</code>；$N$ 行训练样本（$D$ 实数 + 标签 0/1）；$Q$ 行测试样本。<span class="pill">输出</span>$Q$ 行预测类别。</p>
+  <p>题目已给了完整骨架，你只要填三处 <code>TODO</code>。对照 5.4 的公式：</p>
+  <pre><code><span class="cmt"># 训练：每一轮(共 E 轮)用全部样本累加梯度，再平均、更新</span>
+<span class="kw">for</span> _ <span class="kw">in</span> range(E):
+    grad_w = [<span class="str">0.0</span>]*D
+    grad_b = <span class="str">0.0</span>
+    <span class="kw">for</span> i <span class="kw">in</span> range(N):
+        <span class="cmt"># ① 线性输出 z = w·x + b</span>
+        z = sum(w[j]*train_X[i][j] <span class="kw">for</span> j <span class="kw">in</span> range(D)) + b
+        <span class="cmt"># ② 预测概率</span>
+        y_hat = sigmoid(z)
+        <span class="cmt"># ③ 误差 = 预测 - 真实</span>
+        error = y_hat - train_y[i]
+        <span class="cmt"># 累加梯度</span>
+        <span class="kw">for</span> j <span class="kw">in</span> range(D):
+            grad_w[j] += error * train_X[i][j]
+        grad_b += error
+    <span class="cmt"># 平均后更新(题目给的骨架已写好这部分)</span>
+    <span class="kw">for</span> j <span class="kw">in</span> range(D):
+        w[j] -= alpha * grad_w[j] / N
+    b -= alpha * grad_b / N
+
+<span class="cmt"># 预测：概率 >= 0.5 输出 1，否则 0</span>
+<span class="kw">for</span> x <span class="kw">in</span> test_X:
+    z = sum(w[j]*x[j] <span class="kw">for</span> j <span class="kw">in</span> range(D)) + b
+    pred = <span class="str">1</span> <span class="kw">if</span> sigmoid(z) >= <span class="str">0.5</span> <span class="kw">else</span> <span class="str">0</span>
+    predictions.append(pred)
+</code></pre>
+
+  <div class="warn"><b>题三易错点：</b>
+    <ol>
+      <li><b>误差方向</b>是 $\hat y - y$（预测减真实），不是反过来。梯度公式里正是这个符号让"更新 = 减去梯度"成立。</li>
+      <li><b>批量梯度</b>：必须先把<b>所有</b>样本的梯度<b>累加完</b>，除以 $N$，<b>再</b>更新一次 $w,b$；不要每个样本就更新一次（那是随机梯度下降，结果对不上）。</li>
+      <li><b>sigmoid 数值溢出</b>：用上面的分段写法。</li>
+      <li>$w,b$ <b>初始化全 0</b>，别随机。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 6 易错点 ============ -->
+<section id="pitfalls">
+  <h2 class="sec">6 · 易错点总表（交卷前过一遍）</h2>
+  <table>
+    <tr><th>题</th><th>最容易翻车的地方</th></tr>
+    <tr><td rowspan="3"><b>一 PCA</b></td><td><code>np.linalg.eigh</code> 特征值是<b>升序</b>，必须反转取最大的。</td></tr>
+    <tr><td>方差贡献率分母 = <b>全部 $D$ 个</b>特征值之和。</td></tr>
+    <tr><td>特征向量<b>符号唯一化</b>：绝对值最大分量为负则整列 ×(−1)。</td></tr>
+    <tr><td rowspan="2"><b>二 KNN</b></td><td>距离相同 → <b>先出现</b>的样本优先（下标作次级排序键）。</td></tr>
+    <tr><td>票数相同 → 选<b>类别编号最小</b>。</td></tr>
+    <tr><td rowspan="3"><b>三 LR</b></td><td>批量梯度：累加全部样本 → 平均 → 才更新一次。</td></tr>
+    <tr><td>误差 = $\hat y - y$；$w,b$ 初始化全 0。</td></tr>
+    <tr><td>sigmoid 用分段写法防溢出。</td></tr>
+    <tr><td><b>通用</b></td><td>输出统一保留 <b>4 位小数</b>（题一）/ 整数类别（题二三），逐行打印。</td></tr>
+  </table>
+
+  <div class="tip" style="margin-top:24px;">
+    <b>学习建议：</b>这三题都明确要求<b>自己实现、不许调库现成模型</b>。上面给的都是"骨架 + 关键片段 + 留白(TODO)"，建议你<b>先盖住代码、只看思路自己写一遍</b>，卡住了再回来对照。真正理解 PCA 的"方差→特征值"、KNN 的"投票"、LR 的"误差驱动更新"这三个直觉，比记代码重要得多。
+  </div>
+
+  <hr>
+  <p class="footnote">配套讲义：南京大学《3.1 数据表示和降维》《3.2 有监督学习》（黄书剑、罗元凯）。参考：周志华《机器学习》Ch2–Ch3；CS229；CMU 601。公式渲染由 MathJax 提供，需联网加载。</p>
+</section>
+
+</main>
+</div>
+</body>
+</html>

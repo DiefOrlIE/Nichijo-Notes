@@ -20,7 +20,11 @@
 - `mathlogic-10/` — 第 10 讲 一阶逻辑的自然推理系统 G
 - `mathlogic-11/` — 第 11 讲 完全性定理(一) · 协调性与极大协调性
 
+### 程序设计 (Programming)
+- `week14-ml-background/` — Week14 实验 背景知识 · PCA / KNN / 逻辑斯蒂回归
+
 ### 其他芝士
+- `task-overload/` — 时间&任务管理方法论 · 系统报告
 - `fourier-guide/` — 傅里叶级数 · 快速计算指导
 - `sleep-whitepaper.html` — 睡眠白皮书 · 横纵分析
 

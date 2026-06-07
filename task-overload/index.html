@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任务过载与时间管理 · 系统报告</title>
+<style>
+  :root{
+    --paper:#f7f4ec;
+    --paper-deep:#efe9da;
+    --ink:#23201a;
+    --ink-soft:#4a4639;
+    --ink-faint:#7c7563;
+    --rule:#d9d2c0;
+    --accent:#8a4b2f;       /* 赭石 */
+    --accent-soft:#b9764f;
+    --green:#4f6b3e;
+    --blue:#3c5a73;
+    --gold:#9c7a1f;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Songti SC","SimSun","Noto Serif CJK SC",STSong,"Times New Roman",serif;
+    font-size:17.5px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* 衬线英文与数字 */
+  body{font-feature-settings:"liga" 1;}
+  .en,code,.num{font-family:"Times New Roman",Georgia,"Songti SC","SimSun",serif;}
+
+  /* ---------- 布局 ---------- */
+  .wrap{display:flex;max-width:1180px;margin:0 auto;}
+  nav.toc{
+    width:248px;flex:0 0 248px;
+    position:sticky;top:0;align-self:flex-start;height:100vh;
+    overflow-y:auto;padding:46px 22px 60px 30px;
+    border-right:1px solid var(--rule);
+    font-size:14.5px;line-height:1.5;
+  }
+  nav.toc .toc-title{
+    font-size:13px;letter-spacing:.18em;color:var(--ink-faint);
+    text-transform:uppercase;margin-bottom:18px;
+  }
+  nav.toc a{
+    display:block;color:var(--ink-soft);text-decoration:none;
+    padding:5px 0 5px 12px;border-left:2px solid transparent;
+    transition:all .15s;
+  }
+  nav.toc a:hover{color:var(--accent);}
+  nav.toc a.sub{padding-left:26px;font-size:13.5px;color:var(--ink-faint);}
+  nav.toc a.active{color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+
+  main{flex:1 1 auto;min-width:0;padding:54px 56px 120px;}
+  .inner{max-width:var(--maxw);margin:0 auto;}
+
+  /* ---------- 头部 ---------- */
+  header.hero{margin-bottom:54px;}
+  .kicker{font-size:13px;letter-spacing:.24em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;}
+  h1{
+    font-size:40px;line-height:1.28;margin:0 0 18px;font-weight:700;
+    letter-spacing:.01em;
+  }
+  .lede{font-size:19px;color:var(--ink-soft);line-height:1.8;margin:0;}
+  .meta{margin-top:22px;font-size:14px;color:var(--ink-faint);border-top:1px solid var(--rule);padding-top:14px;}
+
+  /* ---------- 标题层级 ---------- */
+  h2{
+    font-size:27px;margin:62px 0 8px;padding-top:14px;font-weight:700;
+    letter-spacing:.01em;scroll-margin-top:20px;
+  }
+  h2 .h2-num{color:var(--accent);font-family:"Times New Roman",serif;margin-right:.4em;}
+  h2 + .sub-lede{color:var(--ink-faint);font-size:15.5px;margin:0 0 24px;line-height:1.6;}
+  h3{font-size:20.5px;margin:40px 0 10px;font-weight:700;scroll-margin-top:20px;}
+  h4{font-size:17px;margin:26px 0 6px;font-weight:700;color:var(--ink-soft);}
+  p{margin:14px 0;}
+  strong{font-weight:700;color:var(--ink);}
+  a.cite{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);}
+  a.cite:hover{background:var(--paper-deep);}
+
+  ul,ol{padding-left:1.3em;margin:14px 0;}
+  li{margin:7px 0;}
+
+  hr.div{border:none;border-top:1px solid var(--rule);margin:54px 0;}
+
+  /* ---------- 急救卡 ---------- */
+  .sos{
+    background:linear-gradient(180deg,#fbf3ee,#f6ece4);
+    border:1px solid #e3c7b4;border-left:5px solid var(--accent);
+    border-radius:10px;padding:26px 30px;margin:30px 0;
+    box-shadow:0 1px 0 #fff inset;
+  }
+  .sos h3{margin-top:0;color:var(--accent);}
+  .sos ol{counter-reset:sos;list-style:none;padding-left:0;}
+  .sos ol li{counter-increment:sos;position:relative;padding-left:42px;margin:14px 0;}
+  .sos ol li::before{
+    content:counter(sos);position:absolute;left:0;top:2px;
+    width:28px;height:28px;border-radius:50%;
+    background:var(--accent);color:#fff;font-family:"Times New Roman",serif;
+    text-align:center;line-height:28px;font-size:15px;font-weight:700;
+  }
+
+  /* ---------- 通用提示框 ---------- */
+  .box{border:1px solid var(--rule);border-radius:10px;padding:20px 24px;margin:24px 0;background:#fcfaf4;}
+  .box.green{border-left:4px solid var(--green);}
+  .box.blue{border-left:4px solid var(--blue);}
+  .box.gold{border-left:4px solid var(--gold);}
+  .box .tag{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;}
+
+  /* ---------- 矩阵 ---------- */
+  .matrix{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0;}
+  .quad{border:1px solid var(--rule);border-radius:8px;padding:16px 18px;background:#fcfaf4;}
+  .quad .q-head{font-weight:700;font-size:15px;margin-bottom:4px;}
+  .quad .q-act{font-size:13px;color:#fff;display:inline-block;padding:2px 9px;border-radius:20px;margin-bottom:8px;}
+  .quad p{margin:6px 0 0;font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
+  .q1 .q-act{background:var(--accent);} .q1{border-top:3px solid var(--accent);}
+  .q2 .q-act{background:var(--green);} .q2{border-top:3px solid var(--green);}
+  .q3 .q-act{background:var(--blue);} .q3{border-top:3px solid var(--blue);}
+  .q4 .q-act{background:var(--ink-faint);} .q4{border-top:3px solid var(--ink-faint);}
+
+  /* ---------- 表格 ---------- */
+  table{border-collapse:collapse;width:100%;margin:24px 0;font-size:15px;}
+  th,td{border:1px solid var(--rule);padding:10px 14px;text-align:left;vertical-align:top;line-height:1.6;}
+  th{background:var(--paper-deep);font-weight:700;font-size:14px;}
+  td .num{color:var(--accent);font-weight:700;}
+
+  /* ---------- 折叠 ---------- */
+  details{border:1px solid var(--rule);border-radius:9px;margin:14px 0;background:#fcfaf4;overflow:hidden;}
+  details summary{
+    cursor:pointer;padding:15px 22px;font-weight:700;font-size:16.5px;
+    list-style:none;display:flex;align-items:center;gap:10px;
+  }
+  details summary::-webkit-details-marker{display:none;}
+  details summary::before{content:"＋";color:var(--accent);font-family:serif;font-size:18px;}
+  details[open] summary::before{content:"－";}
+  details summary:hover{color:var(--accent);}
+  details .body{padding:2px 24px 18px;border-top:1px solid var(--rule);}
+
+  /* ---------- 资源卡 ---------- */
+  .res{border:1px solid var(--rule);border-radius:9px;padding:18px 22px;margin:14px 0;background:#fcfaf4;}
+  .res .r-name{font-weight:700;font-size:17px;}
+  .res .r-name a{color:var(--accent);text-decoration:none;}
+  .res .r-name a:hover{border-bottom:1px solid var(--accent);}
+  .res .r-kind{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-left:8px;}
+  .res p{margin:6px 0 0;font-size:15px;color:var(--ink-soft);line-height:1.65;}
+
+  /* ---------- 引用区 ---------- */
+  .sources{font-size:14px;line-height:1.7;}
+  .sources li{margin:9px 0;}
+  .sources a{color:var(--accent);word-break:break-all;}
+
+  blockquote{
+    margin:22px 0;padding:6px 0 6px 22px;border-left:3px solid var(--accent-soft);
+    color:var(--ink-soft);font-style:italic;
+  }
+  .pull{font-size:21px;line-height:1.6;color:var(--accent);margin:34px 0;text-align:center;font-weight:700;}
+
+  footer{margin-top:80px;border-top:1px solid var(--rule);padding-top:24px;font-size:14px;color:var(--ink-faint);}
+
+  /* ---------- 响应式 ---------- */
+  @media(max-width:920px){
+    nav.toc{display:none;}
+    main{padding:36px 22px 80px;}
+    h1{font-size:31px;}
+    .matrix{grid-template-columns:1fr;}
+  }
+  .back-top{position:fixed;right:26px;bottom:26px;background:var(--accent);color:#fff;
+    width:46px;height:46px;border-radius:50%;display:none;align-items:center;justify-content:center;
+    text-decoration:none;font-size:20px;box-shadow:0 3px 10px rgba(0,0,0,.18);z-index:20;}
+  .back-top.show{display:flex;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+
+  <!-- 侧边目录 -->
+  <nav class="toc" id="toc">
+    <div class="toc-title">目录</div>
+    <a href="#sos">⚡ 30 秒急救</a>
+    <a href="#part1">一 · 可执行方案</a>
+    <a href="#m-triage" class="sub">1 急性过载急救流程</a>
+    <a href="#m-eisen" class="sub">2 取舍：四象限</a>
+    <a href="#m-block" class="sub">3 时间块排程</a>
+    <a href="#m-ifthen" class="sub">4 If-Then 触发器</a>
+    <a href="#m-focus" class="sub">5 专注与节奏</a>
+    <a href="#m-review" class="sub">6 每周回顾</a>
+    <a href="#m-student" class="sub">7 大学生场景落地</a>
+    <a href="#part2">二 · 为什么会过载（理论）</a>
+    <a href="#t-load" class="sub">大脑的负载机制</a>
+    <a href="#t-bias" class="sub">两个认知偏差</a>
+    <a href="#t-stress" class="sub">压力与表现</a>
+    <a href="#part3">三 · 方法论体系谱系</a>
+    <a href="#part4">四 · 学术证据速查表</a>
+    <a href="#part5">五 · 口碑资源清单</a>
+    <a href="#part6">六 · 一句话收束</a>
+    <a href="#sources">参考来源</a>
+  </nav>
+
+  <main>
+  <div class="inner">
+
+    <header class="hero">
+      <div class="kicker">个人效能 · 系统报告</div>
+      <h1>当事情突然涌来时<br>如何安放任务与时间</h1>
+      <p class="lede">一份从「立刻能用」到「为什么有用」的完整地图——先给你过载瞬间的急救流程与可落地的方法，再讲清楚背后的认知科学与方法论体系，最后附上口碑资源与学术证据，供你长期翻阅。</p>
+      <div class="meta">为 鳟鱼大人 整理 · 2026-06-07 · 全文方法均标注一手出处，可点击溯源</div>
+    </header>
+
+    <!-- ============ 30秒急救 ============ -->
+    <div class="sos" id="sos">
+      <h3>⚡ 先别慌：过载瞬间的 30 秒急救</h3>
+      <p style="margin-top:0;color:var(--ink-soft)">当一堆事同时砸过来、大脑「死机」时，<strong>不要先去做任何一件事</strong>。过载的本质不是事情多，而是它们全挤在你脑子里抢占带宽。先把它们倒出来：</p>
+      <ol>
+        <li><strong>清空大脑（Brain Dump）。</strong>拿纸或备忘录，把脑子里所有「待办、担心、没忘掉的事」<strong>不加排序地全写下来</strong>，写到脑子空了为止。研究证实：仅仅写下来、做个计划，就能显著降低未完成任务对注意力的占用（Masicampo &amp; Baumeister, 2011）。</li>
+        <li><strong>只圈一件事。</strong>从清单里挑<strong>一件「重要且今天能动」</strong>的事，其余全部暂时无视。</li>
+        <li><strong>把它砍到最小一步。</strong>不是「写完报告」，而是「打开文档写下标题」。小到不可能失败为止。</li>
+        <li><strong>设 10 分钟计时器，只做这一步。</strong>响了再决定：继续，还是休息。</li>
+      </ol>
+      <p style="margin-bottom:0;color:var(--ink-faint);font-size:14.5px">这一套来自临床心理与认知科学的共识做法——先让神经系统从「淹没」回到「可操作」，再谈规划。<a class="cite" href="#sources">[来源]</a></p>
+    </div>
+
+    <p>急救只是止血。下面分三层展开：<strong>第一层是平时就该装进工具箱的可执行方法</strong>；<strong>第二层解释你为什么会过载</strong>（懂了机制，方法才不会变成又一项负担）；<strong>第三层是方法论谱系、学术证据与口碑资源</strong>。</p>
+
+    <hr class="div">
+
+    <!-- ============ PART 1 ============ -->
+    <h2 id="part1"><span class="h2-num">一</span>可执行方案</h2>
+    <p class="sub-lede">从「此刻很乱」到「长期有序」，按使用频率排列。先用 1–2 个，别一次全上。</p>
+
+    <h3 id="m-triage">1 · 急性过载急救流程（Capture → Triage → 最小步）</h3>
+    <p>上面的急救卡就是它的极简版。完整版加两步，把一次性救火变成可复用的流程：</p>
+    <div class="box green">
+      <div class="tag">流程</div>
+      <p style="margin-top:0"><strong>① 全部捕获</strong>：所有事进一个「收件箱」（一张纸 / 一个 App），不在脑子里存。<br>
+      <strong>② 逐条分诊</strong>：对每条问「需要我做吗？下一步具体动作是什么？」——<strong>能 2 分钟内做完的立刻做掉</strong>，其余写下「下一步动作」（动词开头，如「给老师发邮件问 X」）。<br>
+      <strong>③ 排进系统</strong>：分诊后的事按下面的四象限取舍、再排进时间块。</p>
+    </div>
+    <p>这正是 GTD（Getting Things Done）的内核：David Allen 的名言是「<em>你脑子里的事越多，真正做成的越少</em>」——大脑是用来思考的，不是用来存储的。<a class="cite" href="#sources">[GTD]</a></p>
+
+    <h3 id="m-eisen">2 · 取舍：艾森豪威尔四象限</h3>
+    <p>任务多时，真正的问题往往不是「怎么做更快」，而是<strong>「哪些根本不该我做 / 现在做」</strong>。把每件事按「<strong>重要</strong>（推动你的长期目标）」与「<strong>紧急</strong>（有迫近的时限）」两轴分类：</p>
+    <div class="matrix">
+      <div class="quad q1">
+        <div class="q-act">立刻做</div>
+        <div class="q-head">重要 · 紧急</div>
+        <p>明天截止的作业、突发危机。先解决，但目标是让这个格子尽量空——它满了说明你总在救火。</p>
+      </div>
+      <div class="quad q2">
+        <div class="q-act">排期做</div>
+        <div class="q-head">重要 · 不紧急</div>
+        <p>复习、长期项目、健康、关系。<strong>这才是高回报区</strong>，却最容易被挤掉。主动给它排时间。</p>
+      </div>
+      <div class="quad q3">
+        <div class="q-act">委托 / 压缩</div>
+        <div class="q-head">不重要 · 紧急</div>
+        <p>大部分临时消息、别人的「急事」。能转交就转交，不能就限时快速处理。</p>
+      </div>
+      <div class="quad q4">
+        <div class="q-act">删除</div>
+        <div class="q-head">不重要 · 不紧急</div>
+        <p>无意识刷手机、凑数的事。直接划掉，不必有负罪感。</p>
+      </div>
+    </div>
+    <div class="box gold">
+      <div class="tag">关键洞察 · 紧急性陷阱</div>
+      <p style="margin:0">人天生偏好「有截止日期」的任务，哪怕它回报很低——这叫<strong>「单纯紧急效应」(Mere-Urgency Effect)</strong>。于是第三象限（紧急但不重要）不断偷走本该属于第二象限的时间。四象限的全部价值，就是逼你看见这件事。<a class="cite" href="#sources">[Todoist / Asana]</a></p>
+    </div>
+
+    <h3 id="m-block">3 · 时间块排程（Time Blocking）</h3>
+    <p>光有清单不够——一长串待办只会让人更焦虑。<strong>把任务放进日历的具体时段</strong>，给每段时间一个明确的「工作」。Cal Newport 的做法是：一张纸，每行代表 30 分钟，<strong>为这一天的每一块时间预先指派任务</strong>。</p>
+    <ul>
+      <li><strong>它解决什么</strong>：把「我有好多事」的弥散焦虑，换成「此刻只需做这一件」的笃定。Newport 说时间块能「用赋权式的意图，替换掉令人疲惫的瞎忙」。<a class="cite" href="#sources">[Newport]</a></li>
+      <li><strong>怎么排</strong>：先把第二象限的「重要不紧急」块排进去（如固定的复习时段），再填其余。给每块留缓冲——计划必然被打断，留出 overflow 行。</li>
+      <li><strong>配合现实</strong>：你<strong>一定</strong>会高估自己一天能做多少（见下文「计划谬误」）。块排不下，就是信号：该砍任务，而不是熬夜硬塞。</li>
+    </ul>
+
+    <h3 id="m-ifthen">4 · If-Then 触发器（执行意图）</h3>
+    <p>这是性价比最高、也最被低估的一招。不要只立「我要去做 X」的目标，而要预先写死<strong>「如果遇到情境 Y，我就执行动作 X」</strong>。</p>
+    <blockquote>「<span class="en">如果</span>晚饭后回到宿舍，<span class="en">那么</span>我就先做 25 分钟高数，再碰手机。」</blockquote>
+    <p>为什么有效：它把「要不要做、什么时候做」的决策<strong>提前外包给了情境线索</strong>，到点几乎自动启动，绕开了拖延时的内心拉扯。这不是鸡汤——Gollwitzer &amp; Sheeran 对 <span class="num">94</span> 项研究的元分析显示，执行意图对目标达成有<strong>中到大的效应量（d = .65）</strong>。<a class="cite" href="#sources">[元分析]</a></p>
+
+    <h3 id="m-focus">5 · 专注与节奏（番茄 / 心流）</h3>
+    <p>开始做之后，靠节奏维持。<strong>番茄工作法</strong>（专注 25 分钟 + 短休）的最大价值不是那 25 分钟，而是<strong>「先做 25 分钟」这个极低的启动门槛</strong>能骗过拖延。</p>
+    <div class="box blue">
+      <div class="tag">证据要诚实</div>
+      <p style="margin:0">番茄法在教育研究里证据其实有限。近年实验发现：<strong>固定节奏的休息让学生主观上更专注、更有动力、觉得任务没那么难</strong>；但也有研究指出固定打断可能破坏「心流」，于是出现了让你自己决定何时休息的 <span class="en">Flowtime</span> 变体。<strong>结论：把它当启动器和防过劳工具，而非铁律——能进入心流时，别被铃声打断。</strong><a class="cite" href="#sources">[Pomodoro 研究]</a></p>
+    </div>
+    <p>同一时段<strong>只做一件事</strong>。看似省时的多任务其实最贵：任务切换会吃掉最多 <span class="num">40%</span> 的有效时间，任务越复杂、越不熟，切换代价越大（Rubinstein, Meyer &amp; Evans, 2001）。<a class="cite" href="#sources">[APA]</a></p>
+
+    <h3 id="m-review">6 · 每周回顾（系统的维护）</h3>
+    <p>任何系统不维护都会腐坏。每周固定留 <span class="num">20–30</span> 分钟：清空所有收件箱、检视各项目的「下一步」、删掉已死的任务、为下周排块。David Allen 称每周回顾是「成功的关键因素」——它保证你不只是「在做事」，而是「在做对的事」。<a class="cite" href="#sources">[GTD 周回顾]</a></p>
+
+    <h3 id="m-student">7 · 大学生场景落地</h3>
+    <p>把上面的方法翻译成你会遇到的具体处境：</p>
+
+    <details>
+      <summary>考试周：四五门同时复习，无从下手</summary>
+      <div class="body">
+        <ul>
+          <li><strong>先 Brain Dump + 倒排</strong>：列出每门的考试日与范围，按「考试日期 × 你的薄弱程度」算优先级，而非按科目顺序。</li>
+          <li><strong>时间块，按科目而非按「学习」</strong>：把每天切成 2–3 个 90 分钟深度块，每块锁定一门，块之间换科目（利用切换前先做完整块，避免高频切换损耗）。</li>
+          <li><strong>对抗计划谬误</strong>：用你<strong>上次</strong>实际复习一章花的时间来估算，而不是「理想情况」。默认给每项 ×1.5。</li>
+          <li><strong>If-Then 防崩</strong>：「如果某章卡住超过 20 分钟，那么先标记、跳下一章，回头再战」——避免一处卡死拖垮整块。</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>DDL 集中爆炸：作业、报告、项目同一周到期</summary>
+      <div class="body">
+        <ul>
+          <li><strong>四象限分诊</strong>：哪些是「重要紧急」（占分高、明天交），哪些其实是「紧急不重要」（占分低的小作业，先用最低标准快速清掉，腾出脑子）。</li>
+          <li><strong>砍标准，不砍睡眠</strong>：过载时，把「做到 100 分」改为「先做到 70 分的完整版」。一份 70 分的全交，远胜两份 95 分加两份没交。这呼应了 Burkeman 的核心——<strong>你本来就不可能做完所有事，主动选择放弃什么，比假装都能做完更理性</strong>。</li>
+          <li><strong>最小步破启动</strong>：每个 DDL 先做「最小可见进展」（建好文件、列出提纲），把 4 个「0%」变成 4 个「10%」，焦虑会显著下降。</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>课业 + 社团 + 兼职，角色来回切换</summary>
+      <div class="body">
+        <ul>
+          <li><strong>批处理同类事</strong>：把所有「回消息 / 处理社团杂务」攒到固定 1–2 个时段集中做，而不是全天被打断。理由同上：切换成本。</li>
+          <li><strong>学会拒绝是时间管理的一部分</strong>：第三象限（别人的「急事」）能委托就委托、能说不就说不。保护带宽是必要的，不是自私。</li>
+          <li><strong>给「重要不紧急」上锁</strong>：把复习 / 睡眠 / 运动当成不可移动的日历事件，否则它们永远被社团临时事挤掉。</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>明明很忙却感觉一事无成（瞎忙焦虑）</summary>
+      <div class="body">
+        <p>这通常是<strong>长期待在第一、三象限救火、从不进第二象限</strong>的结果。每天结束做 2 分钟复盘：今天有没有<strong>至少一块时间</strong>投给了真正重要的长期目标？如果连续几天都没有，说明你的系统在被「紧急」绑架——这正是 Newport 的时间块和四象限要修的病。</p>
+      </div>
+    </details>
+
+    <hr class="div">
+
+    <!-- ============ PART 2 ============ -->
+    <h2 id="part2"><span class="h2-num">二</span>为什么会过载：背后的机制</h2>
+    <p class="sub-lede">方法之所以有效，是因为它们对症。理解这三组机制，你就能自己判断什么方法该用、什么是噱头。</p>
+
+    <h3 id="t-load">大脑的负载机制：为什么「写下来」就轻松了</h3>
+    <p>过载感的来源，是认知科学里两个相关现象：</p>
+    <ul>
+      <li><strong>蔡格尼克效应（Zeigarnik Effect）</strong>：1927 年，心理学家蔡格尼克发现，<strong>人对「未完成的任务」记得格外清晰</strong>——大脑会把未闭合的「待办」放进一个高优先级队列里反复提醒，持续消耗注意力。事情没做完，它就一直在你后台「嗡嗡作响」。</li>
+      <li><strong>认知卸载（Cognitive Offloading）</strong>：关键转折来自 Masicampo &amp; Baumeister（2011）的实验——他们发现<strong>不必真的完成任务，只要为它做一个具体的「何时何地怎么做」的计划，就能解除这种心理占用</strong>。把事写进一个你信任的系统，等于告诉大脑「这件事我接住了，你可以放下」。</li>
+    </ul>
+    <p class="pull">这就是为什么 Brain Dump 和 GTD 的「捕获」如此有效——<br>不是因为你做了更多，而是因为大脑被允许放下。</p>
+
+    <h3 id="t-bias">两个让你高估自己的认知偏差</h3>
+    <table>
+      <thead><tr><th>偏差</th><th>它让你做错什么</th><th>对策</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>计划谬误<br>Planning Fallacy</strong></td>
+          <td>系统性低估自己完成任务的时间。Buehler 等（1994）的经典研究：学生估计毕业论文完成时间，结果 <span class="num">70%</span> 的人超时，平均比预估多花 <span class="num">22</span> 天。你只想象「顺利剧本」，忽略过往真实经验。</td>
+          <td>用「<strong>外部视角</strong>」估时——参考你/别人<strong>过去做同类事</strong>的实际耗时，而非理想情况。习惯性给估算打 1.5 倍。</td>
+        </tr>
+        <tr>
+          <td><strong>单纯紧急效应<br>Mere-Urgency Effect</strong></td>
+          <td>优先做有截止日期的事，哪怕回报很低，导致重要的长期事被持续推迟。</td>
+          <td>艾森豪威尔四象限，强制区分「紧急」与「重要」，主动给第二象限排时间。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="t-stress">压力与表现：适度还是过载？</h3>
+    <p>常被引用的<strong>耶克斯-多德森定律（Yerkes-Dodson Law）</strong>说：压力与表现呈倒 U 形——太低没动力，太高会崩，中间有个最佳点；且<strong>任务越复杂，最佳压力点越低</strong>（复杂任务需要更平静的状态）。</p>
+    <div class="box">
+      <div class="tag">但要打个学术补丁</div>
+      <p style="margin:0">这条「定律」原始证据其实薄弱（1908 年的小鼠实验，样本少、操控粗糙），现代不少研究发现「压力越高、表现越差」更常见。所以更稳妥的理解是：<strong>它是一个有用的启发，不是铁律</strong>。实践含义没变——<strong>越是复杂、需要深度思考的任务（写论文、解难题），越要把自己从高压「淹没」状态先拉回平静</strong>，急救卡的第一步正是为此。<a class="cite" href="#sources">[Yerkes-Dodson 评述]</a></p>
+    </div>
+
+    <hr class="div">
+
+    <!-- ============ PART 3 ============ -->
+    <h2 id="part3"><span class="h2-num">三</span>方法论体系谱系</h2>
+    <p class="sub-lede">市面方法虽多，根上是四种思路。看清它们各自解决什么，就不会盲目追新工具。</p>
+
+    <table>
+      <thead><tr><th>体系</th><th>核心主张</th><th>最适合</th></tr></thead>
+      <tbody>
+        <tr><td><strong>GTD</strong><br><span style="font-size:13px;color:var(--ink-faint)">David Allen</span></td>
+          <td>把所有事捕获进可信系统、清空大脑，按「下一步动作」组织，定期回顾。解决「<strong>记不过来 / 心里乱</strong>」。</td>
+          <td>事务繁杂、头绪多、容易遗漏的人。</td></tr>
+        <tr><td><strong>四象限 / 要事第一</strong><br><span style="font-size:13px;color:var(--ink-faint)">Eisenhower → Covey</span></td>
+          <td>按重要 × 紧急分类取舍，把精力投向「重要不紧急」。解决「<strong>瞎忙、抓不住重点</strong>」。</td>
+          <td>总在救火、感觉努力却没成果的人。</td></tr>
+        <tr><td><strong>深度工作 / 时间块</strong><br><span style="font-size:13px;color:var(--ink-faint)">Cal Newport</span></td>
+          <td>为每段时间预先指派任务，保护大块不被打断的深度专注。解决「<strong>注意力碎片化</strong>」。</td>
+          <td>需要长时间专注产出（学习、写作、编程）的人。</td></tr>
+        <tr><td><strong>有限性哲学</strong><br><span style="font-size:13px;color:var(--ink-faint)">Oliver Burkeman</span></td>
+          <td>人生只有约四千周，你<strong>注定做不完所有事</strong>。别追求「掌控全部」，而要主动、清醒地选择放弃什么。解决「<strong>效率陷阱 / 永远不够</strong>」。</td>
+          <td>已经很努力但仍被「做不完」的焦虑反噬的人。</td></tr>
+      </tbody>
+    </table>
+    <blockquote>Burkeman 的提醒值得贴在墙上：越想靠「提高效率」追上所有事，事情反而来得越多——这是<strong>「效率陷阱」</strong>。真正的解法不是塞进更多，而是承认有限，把有限的注意力<strong>有意识地</strong>花在你选定的少数事情上。</blockquote>
+
+    <hr class="div">
+
+    <!-- ============ PART 4 ============ -->
+    <h2 id="part4"><span class="h2-num">四</span>学术证据速查表</h2>
+    <p class="sub-lede">本报告的主张都有据可查。下表汇总核心研究，方便你溯源或写进论文。</p>
+    <table>
+      <thead><tr><th>研究 / 来源</th><th>核心发现</th><th>对应方法</th></tr></thead>
+      <tbody>
+        <tr><td>Gollwitzer &amp; Sheeran (2006)，94 项研究元分析</td><td>执行意图（If-Then）对目标达成有中-大效应量 <span class="num">d = .65</span></td><td>If-Then 触发器</td></tr>
+        <tr><td>Masicampo &amp; Baumeister (2011)</td><td>不必完成任务，只要为其制定具体计划，即可解除未完成任务对注意力的占用</td><td>Brain Dump / GTD 捕获</td></tr>
+        <tr><td>Zeigarnik (1927)</td><td>人对未完成任务的记忆更顽固，持续消耗心理带宽</td><td>外化清单的根据</td></tr>
+        <tr><td>Buehler, Griffin &amp; Ross (1994)</td><td>计划谬误：系统性低估完成时间（论文实验 70% 超时，平均多 22 天）</td><td>外部视角估时</td></tr>
+        <tr><td>Rubinstein, Meyer &amp; Evans (2001)，JEP</td><td>任务切换最多消耗 40% 有效时间，越复杂代价越高</td><td>单任务 / 批处理</td></tr>
+        <tr><td>Yerkes &amp; Dodson (1908) 及现代评述</td><td>压力-表现倒 U（启发性，非铁律）；复杂任务最佳压力更低</td><td>过载先降压</td></tr>
+        <tr><td>Pomodoro 教育研究（2023–2025）</td><td>固定休息提升主观专注与动力，但证据有限，可能扰乱心流</td><td>专注节奏（谨慎用）</td></tr>
+      </tbody>
+    </table>
+
+    <hr class="div">
+
+    <!-- ============ PART 5 ============ -->
+    <h2 id="part5"><span class="h2-num">五</span>口碑资源清单</h2>
+    <p class="sub-lede">想系统深入，从这些一手、口碑稳定的来源开始，而非二手「干货博主」的转述。</p>
+
+    <h3>书（按优先级）</h3>
+    <div class="res">
+      <div class="r-name"><a href="https://www.oliverburkeman.com/fourthousandweeks" target="_blank">《四千周》Four Thousand Weeks</a><span class="r-kind">Oliver Burkeman</span></div>
+      <p>不是技巧书，是世界观纠偏。如果你已经够努力却仍被「做不完」折磨，先读这本——它治的是病根。</p>
+    </div>
+    <div class="res">
+      <div class="r-name"><a href="https://gettingthingsdone.com/what-is-gtd/" target="_blank">《搞定》Getting Things Done</a><span class="r-kind">David Allen</span></div>
+      <p>事务管理的奠基之作，「捕获-清空大脑」的方法源头。事多头绪杂的人必读。</p>
+    </div>
+    <div class="res">
+      <div class="r-name">《深度工作》Deep Work<span class="r-kind">Cal Newport</span></div>
+      <p>专注力的系统论，时间块方法出处。对需要长时间深度产出的学生尤其对口。</p>
+    </div>
+
+    <h3>博客 / 一手站点</h3>
+    <div class="res">
+      <div class="r-name"><a href="https://calnewport.com/" target="_blank">Cal Newport 博客（calnewport.com）</a><span class="r-kind">Blog</span></div>
+      <p>计算机科学教授本人写的深度工作与时间管理，思辨扎实，无营销味。代表文：<a href="https://calnewport.com/deep-habits-the-importance-of-planning-every-minute-of-your-work-day/" target="_blank" style="color:var(--accent)">每分钟都规划</a>。</p>
+    </div>
+    <div class="res">
+      <div class="r-name"><a href="https://www.oliverburkeman.com/" target="_blank">Oliver Burkeman（含 The Imperfectionist 通讯）</a><span class="r-kind">Blog / Newsletter</span></div>
+      <p>反「生产力至上」的清醒声音，文笔好，适合长期订阅慢读。</p>
+    </div>
+    <div class="res">
+      <div class="r-name"><a href="https://www.todoist.com/productivity-methods" target="_blank">Todoist Productivity Methods</a> · <a href="https://asana.com/resources" target="_blank">Asana Resources</a><span class="r-kind">实操指南</span></div>
+      <p>两个团队维护的方法库，把 GTD、四象限、时间块讲得清楚可操作，是中立、口碑好的入门站。</p>
+    </div>
+    <div class="res">
+      <div class="r-name"><a href="https://thedecisionlab.com/biases" target="_blank">The Decision Lab</a><span class="r-kind">认知科学科普</span></div>
+      <p>计划谬误、紧急性偏差等认知偏差的严谨科普，每篇附学术引用，想深挖机制看这里。</p>
+    </div>
+
+    <h3>学术原文（可直接读）</h3>
+    <div class="res">
+      <div class="r-name"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6838677/" target="_blank">认知卸载综述（PMC）</a><span class="r-kind">Paper</span></div>
+      <p>「为什么写下来就轻松」的科学解释，了解 GTD 心理学基础的入口。</p>
+    </div>
+    <div class="res">
+      <div class="r-name"><a href="https://www.apa.org/topics/research/multitasking" target="_blank">APA：Multitasking 切换成本</a><span class="r-kind">Paper / 权威机构</span></div>
+      <p>美国心理学会对任务切换代价的官方综述，单任务原则的依据。</p>
+    </div>
+
+    <hr class="div">
+
+    <!-- ============ PART 6 ============ -->
+    <h2 id="part6"><span class="h2-num">六</span>一句话收束</h2>
+    <p class="pull">过载不是因为事太多，<br>而是因为它们都还在你脑子里、且都没分出轻重。</p>
+    <p>所以无论方法叫什么，有效的核心动作永远是同三步：<strong>① 倒出来</strong>（清空大脑，解除心理占用）→ <strong>② 分轻重</strong>（按重要而非紧急取舍，并接受做不完）→ <strong>③ 排进时间、只做一件</strong>（给任务一个具体的「何时何地」，单线程推进）。</p>
+    <p>方法是工具，不是又一项要「做到完美」的任务。挑一两个先用起来，跑顺了再加。</p>
+
+    <!-- ============ 参考来源 ============ -->
+    <h2 id="sources"><span class="h2-num">附</span>参考来源</h2>
+    <ol class="sources">
+      <li>Gollwitzer &amp; Sheeran, <em>Implementation Intentions and Goal Achievement: A Meta-Analysis</em> (2006) — <a href="https://www.researchgate.net/publication/37367696_Implementation_Intentions_and_Goal_Achievement_A_Meta-Analysis_of_Effects_and_Processes" target="_blank">ResearchGate</a></li>
+      <li>Buehler, Griffin &amp; Ross, <em>Exploring the Planning Fallacy</em> (1994) — <a href="https://www.semanticscholar.org/paper/Exploring-the-%22planning-fallacy%22:-Why-people-their-Buehler-Griffin/f91964dad8c0e54cd58b1aa99e430b900fcf082b" target="_blank">Semantic Scholar</a>；科普版 <a href="https://thedecisionlab.com/biases/planning-fallacy" target="_blank">The Decision Lab</a></li>
+      <li>艾森豪威尔矩阵与紧急性陷阱 — <a href="https://www.todoist.com/productivity-methods/eisenhower-matrix" target="_blank">Todoist</a>；<a href="https://asana.com/resources/eisenhower-matrix" target="_blank">Asana</a></li>
+      <li>Cal Newport 时间块 / 深度工作 — <a href="https://calnewport.com/deep-habits-the-importance-of-planning-every-minute-of-your-work-day/" target="_blank">calnewport.com</a></li>
+      <li>GTD（含周回顾、清空大脑原理）— <a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank">Wikipedia</a>；<a href="https://gettingthingsdone.com/what-is-gtd/" target="_blank">官方站</a></li>
+      <li>Zeigarnik 效应与认知卸载（Masicampo &amp; Baumeister, 2011）— <a href="https://super-productivity.com/blog/zeigarnik-effect-productivity/" target="_blank">综述</a>；<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6838677/" target="_blank">认知卸载论文 PMC</a></li>
+      <li>Oliver Burkeman《四千周》— <a href="https://www.oliverburkeman.com/fourthousandweeks" target="_blank">作者官网</a></li>
+      <li>耶克斯-多德森定律及其批判 — <a href="https://www.learningscientists.org/blog/2024/2/29-1" target="_blank">The Learning Scientists: Lore, not Law</a>；<a href="https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law" target="_blank">Wikipedia</a></li>
+      <li>任务切换成本（Rubinstein, Meyer &amp; Evans, 2001）— <a href="https://www.apa.org/topics/research/multitasking" target="_blank">APA</a></li>
+      <li>番茄工作法证据 — <a href="https://www.mdpi.com/2076-328X/15/7/861" target="_blank">MDPI 对照实验</a>；<a href="https://www.browndailyherald.com/article/2026/03/fact-check-is-the-pomodoro-technique-actually-effective-for-studying" target="_blank">Brown Daily Herald 事实核查</a></li>
+      <li>过载急救（Brain Dump / 最小步 / 降压）— <a href="https://www.simplypsychology.org/overwhelmed-with-too-many-things-to-do.html" target="_blank">Simply Psychology</a>；<a href="https://health.clevelandclinic.org/brain-overload-5-tricks-to-stop-feeling-so-overwhelmed" target="_blank">Cleveland Clinic</a></li>
+    </ol>
+
+    <footer>
+      阿卡酱整理 · 资料经网络核实并标注一手出处 · 方法择一二先行，勿求全。<br>
+      本报告侧重个人效能方法学，非医疗建议；若过载已伴随持续的情绪困扰，请寻求专业支持。
+    </footer>
+
+  </div>
+  </main>
+</div>
+
+<a href="#" class="back-top" id="backTop" aria-label="回到顶部">↑</a>
+
+<script>
+  // 滚动高亮目录
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const map=links.map(a=>({a,el:document.querySelector(a.getAttribute('href'))})).filter(x=>x.el);
+  const backTop=document.getElementById('backTop');
+  function onScroll(){
+    const y=window.scrollY+140;
+    let cur=null;
+    for(const m of map){ if(m.el.offsetTop<=y) cur=m; }
+    links.forEach(a=>a.classList.remove('active'));
+    if(cur) cur.a.classList.add('active');
+    backTop.classList.toggle('show',window.scrollY>600);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+</script>
+</body>
+</html>
