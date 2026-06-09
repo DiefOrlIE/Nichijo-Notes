@@ -228,6 +228,7 @@
     <li class="group">E · 全章收束</li>
     <li><a href="#p131">131. 四种基本操作 + RTL</a></li>
     <li><a href="#p132">132. CPU 基本组成原理图</a></li>
+    <li><a href="#glossary" class="bg">★ 术语全称对照表</a></li>
   </ol></aside>
 
 <main>
@@ -819,24 +820,25 @@
     <h3>挑的 9 条覆盖了哪些"类别"</h3>
     <table class="tbl">
       <tr><th>指令</th><th>类型</th><th>代表的能力</th></tr>
-      <tr><td>add</td><td>R</td><td class="l">寄存器-寄存器算术</td></tr>
-      <tr><td>slt</td><td>R</td><td class="l">带符号比较</td></tr>
-      <tr><td>sltu</td><td>R</td><td class="l">无符号比较</td></tr>
-      <tr><td>ori</td><td>I</td><td class="l">寄存器-立即数逻辑</td></tr>
-      <tr><td>lui</td><td>U</td><td class="l">长立即数加载</td></tr>
-      <tr><td>lw</td><td>I (load)</td><td class="l">访存读</td></tr>
-      <tr><td>sw</td><td>S</td><td class="l">访存写</td></tr>
-      <tr><td>beq</td><td>B</td><td class="l">条件分支</td></tr>
-      <tr><td>jal</td><td>J</td><td class="l">无条件跳转 + 链接</td></tr>
+      <tr><td><b>add</b></td><td>R</td><td class="l"><b>add</b>（add，加法）—— 寄存器-寄存器算术</td></tr>
+      <tr><td><b>slt</b></td><td>R</td><td class="l"><b>slt</b>（set less than，带符号小于则置 1）—— 带符号比较</td></tr>
+      <tr><td><b>sltu</b></td><td>R</td><td class="l"><b>sltu</b>（set less than unsigned，无符号小于则置 1）—— 无符号比较</td></tr>
+      <tr><td><b>ori</b></td><td>I</td><td class="l"><b>ori</b>（OR immediate，与立即数按位或）—— 寄存器-立即数逻辑</td></tr>
+      <tr><td><b>lui</b></td><td>U</td><td class="l"><b>lui</b>（load upper immediate，加载高位立即数）—— 长立即数加载</td></tr>
+      <tr><td><b>lw</b></td><td>I (load)</td><td class="l"><b>lw</b>（load word，取字 / 从内存读一个字）—— 访存读</td></tr>
+      <tr><td><b>sw</b></td><td>S</td><td class="l"><b>sw</b>（store word，存字 / 把一个字写进内存）—— 访存写</td></tr>
+      <tr><td><b>beq</b></td><td>B</td><td class="l"><b>beq</b>（branch if equal，相等则分支跳转）—— 条件分支</td></tr>
+      <tr><td><b>jal</b></td><td>J</td><td class="l"><b>jal</b>（jump and link，跳转并把返回地址链接进寄存器）—— 无条件跳转 + 链接</td></tr>
     </table>
     <div class="tip"><b>设计哲学</b>：挑这 9 条不是随便的——它们覆盖了"算/访存/分支/跳转"四大类的<b>所有数据通路骨架</b>。一旦能搞定这 9 条，剩下指令只是 ALU 操作变种，<b>数据通路不再需要新部件</b>。</div>
     <h3>RTL 语法（你会反复看到）</h3>
     <ul>
-      <li><code>R[rs1]</code>：寄存器组中编号为 rs1 的那个寄存器的内容</li>
-      <li><code>M[addr]</code>：内存地址 addr 的内容</li>
-      <li><code>SEXT(imm)</code>：符号扩展（保留正负）</li>
-      <li><code>ZEXT(imm)</code>：零扩展（高位补 0）</li>
-      <li><code>←</code>：赋值，箭头指向"目的地"</li>
+      <li><code>R[rs1]</code>（同理 <code>R[rd]</code>、<code>R[rs2]</code>）：寄存器组中编号为 rs1 的那个寄存器的内容（R = Register 寄存器）</li>
+      <li><code>M[addr]</code>：内存地址 addr 处存的内容（M = Memory 存储器）</li>
+      <li><code>SEXT(imm)</code>：sign-extend，符号扩展——把短立即数按符号位补足到 32 位，保留正负</li>
+      <li><code>ZEXT(imm)</code>：zero-extend，零扩展——高位一律补 0</li>
+      <li><code>‖</code>：concatenation，位拼接——把两段二进制首尾接在一起（如 <code>imm20 ‖ 12'h000</code>=高 20 位放 imm、低 12 位补 0）</li>
+      <li><code>←</code>：赋值，箭头指向"目的地"（左边是目的、右边是来源）</li>
     </ul>
   </div>
 </section>
@@ -2752,6 +2754,67 @@
     </ol>
     <div class="tip"><b>核心三句话</b>：<br>① CPU = Datapath + Control Unit<br>② 性能 = IC × CPI × T_clk，三者相互制约<br>② 单周期 → 多周期 → 流水线，都是在三因子上做权衡的不同实现方式</div>
     <p><b>整章结束</b>。这三份讲解合起来 = 一份完整的章节学习资料。</p>
+  </div>
+</section>
+
+<section class="page" id="glossary">
+  <h2>★ 术语全称对照表（查找用）</h2>
+  <div class="pgnum">附录 · 全文出现过的缩写 / 指令 / 记号汇总</div>
+  <div class="explain">
+    <h3>一、架构 / 部件缩写</h3>
+    <table class="tbl">
+      <tr><th>缩写</th><th>英文全称</th><th>中文含义</th></tr>
+      <tr><td>PC</td><td class="l">Program Counter</td><td class="l">程序计数器</td></tr>
+      <tr><td>IR</td><td class="l">Instruction Register</td><td class="l">指令寄存器</td></tr>
+      <tr><td>MAR</td><td class="l">Memory Address Register</td><td class="l">存储器地址寄存器</td></tr>
+      <tr><td>MDR</td><td class="l">Memory Data Register</td><td class="l">存储器数据寄存器</td></tr>
+      <tr><td>GPRs</td><td class="l">General-Purpose Registers</td><td class="l">通用寄存器组</td></tr>
+      <tr><td>ALU</td><td class="l">Arithmetic Logic Unit</td><td class="l">算术逻辑单元</td></tr>
+      <tr><td>MUX</td><td class="l">Multiplexer</td><td class="l">多路选择器</td></tr>
+      <tr><td>CPI</td><td class="l">Cycles Per Instruction</td><td class="l">每条指令平均时钟周期数</td></tr>
+      <tr><td>MIPS</td><td class="l">Million Instructions Per Second</td><td class="l">每秒百万条指令（性能指标）</td></tr>
+      <tr><td>MFLOPS</td><td class="l">Million Floating-point Operations Per Second</td><td class="l">每秒百万次浮点运算</td></tr>
+      <tr><td>RTL</td><td class="l">Register Transfer Language</td><td class="l">寄存器传输语言</td></tr>
+      <tr><td>CISC</td><td class="l">Complex Instruction Set Computer</td><td class="l">复杂指令集计算机</td></tr>
+      <tr><td>RISC</td><td class="l">Reduced Instruction Set Computer</td><td class="l">精简指令集计算机</td></tr>
+      <tr><td>PSW</td><td class="l">Program Status Word</td><td class="l">程序状态字</td></tr>
+      <tr><td>DMA</td><td class="l">Direct Memory Access</td><td class="l">直接存储器存取</td></tr>
+      <tr><td>NOP</td><td class="l">no operation</td><td class="l">空操作</td></tr>
+      <tr><td>IMem</td><td class="l">Instruction Memory</td><td class="l">指令存储器</td></tr>
+      <tr><td>DMem</td><td class="l">Data Memory</td><td class="l">数据存储器</td></tr>
+    </table>
+    <h3>二、流水线五阶段</h3>
+    <table class="tbl">
+      <tr><th>缩写</th><th>英文全称</th><th>中文含义</th></tr>
+      <tr><td>IF</td><td class="l">Instruction Fetch</td><td class="l">取指</td></tr>
+      <tr><td>ID</td><td class="l">Instruction Decode</td><td class="l">译码</td></tr>
+      <tr><td>EX</td><td class="l">Execute</td><td class="l">执行</td></tr>
+      <tr><td>M</td><td class="l">Memory</td><td class="l">访存</td></tr>
+      <tr><td>WB</td><td class="l">Write Back</td><td class="l">写回</td></tr>
+    </table>
+    <h3>三、9 条目标指令助记符</h3>
+    <table class="tbl">
+      <tr><th>助记符</th><th>英文全称</th><th>中文含义</th></tr>
+      <tr><td>add</td><td class="l">add</td><td class="l">加法</td></tr>
+      <tr><td>slt</td><td class="l">set less than</td><td class="l">带符号小于则置 1</td></tr>
+      <tr><td>sltu</td><td class="l">set less than unsigned</td><td class="l">无符号小于则置 1</td></tr>
+      <tr><td>ori</td><td class="l">OR immediate</td><td class="l">与立即数按位或</td></tr>
+      <tr><td>lui</td><td class="l">load upper immediate</td><td class="l">加载高位立即数</td></tr>
+      <tr><td>lw</td><td class="l">load word</td><td class="l">取字（从内存读一个字）</td></tr>
+      <tr><td>sw</td><td class="l">store word</td><td class="l">存字（把一个字写进内存）</td></tr>
+      <tr><td>beq</td><td class="l">branch if equal</td><td class="l">相等则分支跳转</td></tr>
+      <tr><td>jal</td><td class="l">jump and link</td><td class="l">跳转并链接（保存返回地址）</td></tr>
+    </table>
+    <h3>四、RTL 记号 / 符号</h3>
+    <table class="tbl">
+      <tr><th>记号</th><th>读法 / 全称</th><th>含义</th></tr>
+      <tr><td>R[x]</td><td class="l">Register x</td><td class="l">编号为 x 的寄存器的内容（如 R[rd]、R[rs1]）</td></tr>
+      <tr><td>M[addr]</td><td class="l">Memory[addr]</td><td class="l">内存地址 addr 处存的内容</td></tr>
+      <tr><td>SEXT</td><td class="l">sign-extend</td><td class="l">符号扩展：按符号位补足到 32 位，保留正负</td></tr>
+      <tr><td>ZEXT</td><td class="l">zero-extend</td><td class="l">零扩展：高位一律补 0</td></tr>
+      <tr><td>‖</td><td class="l">concatenation</td><td class="l">位拼接：把两段二进制首尾接起来</td></tr>
+      <tr><td>←</td><td class="l">assignment</td><td class="l">赋值：左边是目的、右边是来源</td></tr>
+    </table>
   </div>
 </section>
 
