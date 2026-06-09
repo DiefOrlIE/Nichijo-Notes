@@ -22,6 +22,7 @@
 
 ### 程序设计 (Programming)
 - `week14-ml-background/` — Week14 实验 背景知识 · PCA / KNN / 逻辑斯蒂回归
+- `programming-cram/` — 程序设计机测 · 考前串讲
 
 ### 其他芝士
 - `task-overload/` — 时间&任务管理方法论 · 系统报告

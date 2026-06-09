@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程序设计机测 · 考前串讲</title>
+<style>
+:root{
+  --ink:#23201c; --ink2:#4a443c; --paper:#f6f1e7; --card:#fffdf8;
+  --line:#e0d7c5; --accent:#9a3b28; --accent2:#2f5d50; --gold:#b08442;
+  --code-bg:#2b2722; --code-fg:#ece4d6; --cm:#9a9082;
+  --warn-bg:#fbeee6; --warn-line:#d98a5e; --tip-bg:#eaf1ec; --tip-line:#6c9c87;
+  --key-bg:#f3ecdb; --key-line:#c8a85a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Times New Roman","宋体",SimSun,serif;
+  font-size:17px; line-height:1.78;
+}
+/* layout */
+.wrap{display:flex; max-width:1280px; margin:0 auto;}
+nav{
+  width:248px; flex:0 0 248px; position:sticky; top:0; height:100vh;
+  overflow-y:auto; padding:26px 14px 40px 22px; border-right:1px solid var(--line);
+  background:linear-gradient(180deg,#f1e9da,#f6f1e7);
+}
+nav h1{font-size:18px; margin:0 0 4px; letter-spacing:.5px}
+nav .sub{font-size:12.5px; color:var(--ink2); margin-bottom:18px; font-style:italic}
+nav a{
+  display:block; color:var(--ink2); text-decoration:none; font-size:14px;
+  padding:3px 8px; border-radius:4px; border-left:2px solid transparent; line-height:1.5;
+}
+nav a:hover{color:var(--accent); background:#fff8ec}
+nav a.active{color:var(--accent); border-left-color:var(--accent); background:#fff5e7; font-weight:bold}
+nav a.grp{margin-top:14px; font-weight:bold; color:var(--ink); font-size:13px; letter-spacing:1px; text-transform:uppercase; opacity:.75; padding-left:8px}
+nav a.sub-a{padding-left:18px; font-size:13.3px}
+main{flex:1; min-width:0; padding:40px 56px 120px; max-width:920px}
+@media(max-width:980px){
+  nav{display:none} main{padding:28px 20px 80px}
+}
+/* headings */
+.hero{border-bottom:3px double var(--accent); padding-bottom:18px; margin-bottom:8px}
+.hero h1{font-size:34px; margin:0 0 6px; letter-spacing:1px}
+.hero p{margin:2px 0; color:var(--ink2)}
+.hero .tag{display:inline-block; font-size:13px; color:var(--accent); border:1px solid var(--accent); border-radius:20px; padding:1px 12px; margin-top:8px; font-style:italic}
+section{margin-top:46px; scroll-margin-top:18px}
+section>h2{
+  font-size:26px; margin:0 0 4px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  color:var(--accent); position:relative;
+}
+section>h2 .no{font-size:15px; color:var(--gold); font-weight:normal; margin-right:10px; font-style:italic}
+h3{font-size:20px; margin:30px 0 8px; color:var(--accent2); border-left:4px solid var(--accent2); padding-left:10px}
+h4{font-size:16.5px; margin:20px 0 4px; color:var(--ink)}
+p{margin:10px 0}
+.lead{font-size:17.5px; color:var(--ink); background:var(--key-bg); border-left:4px solid var(--gold); padding:10px 16px; border-radius:0 6px 6px 0; margin:14px 0}
+.lead b{color:var(--accent)}
+ul,ol{margin:10px 0; padding-left:26px}
+li{margin:5px 0}
+code.inl{background:#efe7d6; color:#7a3322; padding:1px 6px; border-radius:4px; font-family:"Consolas","Courier New",monospace; font-size:14.5px}
+b,strong{color:#5a2a1c}
+em{color:var(--accent2); font-style:normal; font-weight:bold}
+/* code blocks */
+pre{
+  background:var(--code-bg); color:var(--code-fg); border-radius:8px; margin:14px 0;
+  padding:14px 16px; overflow-x:auto; font-size:13.6px; line-height:1.6;
+  box-shadow:0 2px 10px rgba(0,0,0,.12); position:relative;
+}
+pre code{font-family:"Consolas","Courier New",monospace; white-space:pre; tab-size:4}
+.cm{color:var(--cm); font-style:italic}
+.copy{position:absolute; top:8px; right:10px; font-size:11px; color:#cdbfa8; background:#403a33;
+  border:1px solid #57504700; border-radius:4px; padding:2px 8px; cursor:pointer; opacity:.55; transition:.15s; font-family:sans-serif}
+pre:hover .copy{opacity:1}
+.copy:hover{background:#5a5147; color:#fff}
+/* callouts */
+.box{border-radius:0 8px 8px 0; padding:12px 16px 12px 18px; margin:16px 0; border-left:5px solid; font-size:15.5px}
+.warn{background:var(--warn-bg); border-color:var(--warn-line)}
+.warn::before{content:"⚠ 易错"; font-weight:bold; color:#b65a25; display:block; margin-bottom:4px; font-size:14px; letter-spacing:1px}
+.tip{background:var(--tip-bg); border-color:var(--tip-line)}
+.tip::before{content:"✓ 口诀 / 要点"; font-weight:bold; color:#3c7a62; display:block; margin-bottom:4px; font-size:14px; letter-spacing:1px}
+.key{background:var(--key-bg); border-color:var(--key-line)}
+.key::before{content:"★ 高频考点"; font-weight:bold; color:#9a7320; display:block; margin-bottom:4px; font-size:14px; letter-spacing:1px}
+.box p{margin:5px 0}
+.box code.inl{background:#fff5e0}
+/* tables */
+table{border-collapse:collapse; width:100%; margin:16px 0; font-size:14.5px; background:var(--card)}
+th,td{border:1px solid var(--line); padding:7px 11px; text-align:left; vertical-align:top}
+th{background:#efe6d3; color:var(--accent); font-weight:bold}
+tr:nth-child(even) td{background:#faf6ec}
+td code,th code{font-family:"Consolas","Courier New",monospace; color:#7a3322; font-size:13.5px}
+/* misc */
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:0 22px}
+@media(max-width:700px){.cols{grid-template-columns:1fr}}
+.divider{text-align:center; color:var(--gold); margin:40px 0 10px; letter-spacing:6px; font-size:18px}
+.footer{margin-top:80px; padding-top:20px; border-top:2px solid var(--line); color:var(--ink2); font-size:14px; text-align:center; font-style:italic}
+.checklist{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 22px; columns:2; column-gap:34px}
+@media(max-width:700px){.checklist{columns:1}}
+.checklist li{break-inside:avoid}
+.mini{font-size:14px; color:var(--ink2)}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+<nav id="toc">
+  <h1>机测 · 考前串讲</h1>
+  <div class="sub">数据结构 · 函数 · OOP · AI 算法</div>
+  <a href="#intro" class="grp">开篇</a>
+  <a href="#intro" class="sub-a">心智地图与考试范围</a>
+
+  <a href="#partA" class="grp">A · 语言核心</a>
+  <a href="#a1" class="sub-a">A1 输入输出·机测套路</a>
+  <a href="#a2" class="sub-a">A2 函数式编程</a>
+  <a href="#a3" class="sub-a">A3 面向对象 OOP</a>
+  <a href="#a4" class="sub-a">A4 迭代器·魔术方法</a>
+  <a href="#a5" class="sub-a">A5 异常处理</a>
+  <a href="#a6" class="sub-a">A6 数据结构速查</a>
+  <a href="#a7" class="sub-a">A7 搜索·递归·回溯</a>
+
+  <a href="#partB" class="grp">B · 数据分析与 AI</a>
+  <a href="#b1" class="sub-a">B1 NumPy 核心</a>
+  <a href="#b2" class="sub-a">B2 Pandas 核心</a>
+  <a href="#b3" class="sub-a">B3 数据规范化</a>
+  <a href="#b4" class="sub-a">B4 KNN 与距离</a>
+  <a href="#b5" class="sub-a">B5 逻辑回归</a>
+  <a href="#b6" class="sub-a">B6 聚类 K-Means</a>
+  <a href="#b7" class="sub-a">B7 PCA 与 SVD</a>
+  <a href="#b8" class="sub-a">B8 关联规则·异常检测</a>
+  <a href="#b9" class="sub-a">B9 理论简答速记</a>
+
+  <a href="#partC" class="grp">C · 收尾</a>
+  <a href="#c1" class="sub-a">易错总清单·考前自查</a>
+</nav>
+
+<main>
+  <div class="hero" id="top">
+    <h1>程序设计机测 · 考前串讲</h1>
+    <p class="mini">整合自《OJ 知识清单》《Python OJ 手册》《上机测试知识手册》及补充内容</p>
+    <p>覆盖老师圈定的全部方向：<b>数据结构 · 函数 · 面向对象 · 人工智能基础算法</b>，部分结合搜索、异常处理、NumPy。</p>
+    <span class="tag">聚焦高频 + 易错 · 讲解配可套用模板</span>
+  </div>
+
+<!-- ============ INTRO ============ -->
+<section id="intro">
+  <h2><span class="no">00</span>开篇 · 心智地图</h2>
+  <p class="lead">先把整张知识网在脑子里立起来。这门课考的不是"记住某个 API"，而是<b>两种思维方式</b>：把"行为"当数据传来传去的 <b>函数式</b>，和把"数据+行为"打包成对象的 <b>面向对象</b>；再加上解决问题的通用工具——<b>搜索/递归</b> 与 <b>向量化计算（NumPy）</b>，以及 AI 的几个<b>基础算法骨架</b>。</p>
+
+  <h3>考试范围拆解（老师原话 → 落到知识点）</h3>
+  <table>
+    <tr><th>老师提到</th><th>对应本讲稿</th><th>典型考法</th></tr>
+    <tr><td>数据结构</td><td>A6</td><td>list/dict/set/deque/heapq 选用与操作</td></tr>
+    <tr><td>函数</td><td>A2</td><td>闭包、柯里化、高阶函数、lambda、装饰器</td></tr>
+    <tr><td>面向对象</td><td>A3 / A4</td><td>继承、多态、MRO、super、魔术方法、迭代器</td></tr>
+    <tr><td>AI 基础概念与算法</td><td>B4–B9</td><td>KNN、逻辑回归、K-Means、PCA、Apriori、理论简答</td></tr>
+    <tr><td>结合搜索</td><td>A7</td><td>BFS/DFS、回溯、记忆化递归</td></tr>
+    <tr><td>结合异常处理</td><td>A5</td><td>try/except/finally、自定义异常、EAFP</td></tr>
+    <tr><td>结合 NumPy（不考复杂接口记忆）</td><td>B1</td><td>广播、axis 聚合、where、视图/副本</td></tr>
+  </table>
+
+  <div class="tip">
+    <p><b>机测拿分顺序</b>：① 先把输入输出和测试框架（<code class="inl">exec(input())</code> / EOF）写对——这是所有题的地基；② 套用本讲稿对应的模板代码改参数；③ 检查易错点（闭包延迟绑定、super 不是父类、视图改原数组、axis 记反）。</p>
+  </div>
+</section>
+
+<div class="divider">❖ &nbsp; A · 语言核心 &nbsp; ❖</div>
+<section id="partA"></section>
+
+<!-- ============ A1 ============ -->
+<section id="a1">
+  <h2><span class="no">A1</span>输入输出 · 机测通用套路</h2>
+  <p class="lead">机测题大多"只让你写函数"，但完整程序题要自己读输入。把下面几条<b>背成肌肉记忆</b>，开考直接默写。</p>
+
+  <h3>读入</h3>
+<script type="text/plain" class="code">
+n = int(input().strip())                 # 单个整数
+a, b, c = map(int, input().split())      # 一行多个整数
+lst = list(map(int, input().split()))    # 一行任意个 → list
+x, y = map(float, input().split())       # 浮点
+
+# H 行 W 列矩阵
+matrix = [list(map(int, input().split())) for _ in range(H)]
+
+# 读 Python 字面量（Pandas 题常见）：输入形如 [1, 2, 3]
+ids = eval(input())                      # 直接得到 list，能解析 [None, 90]
+
+# 读到 EOF 为止（两种写法）
+import sys
+for line in sys.stdin:
+    line = line.strip()
+    if not line: continue
+    ...                                  # 处理每行
+# 或
+while True:
+    try:
+        s = input()
+    except EOFError:
+        break
+</script>
+
+  <h3>输出</h3>
+<script type="text/plain" class="code">
+print(x, y, sep=" ")                     # 自定义分隔
+print(f"{x:.6f}")                        # 保留 6 位（自动补零）
+print(f"{x:.2f}")                        # 保留 2 位
+print(" ".join(map(str, lst)))           # 一行批量
+print("\n".join(out))                    # 多行：先收集到 out 列表再一次输出
+print("YES" if cond else "NO")
+</script>
+
+  <div class="key">
+    <p><b>OOP 题的通用测试框架</b>——题面常自带这段，看到就知道是面向对象题：</p>
+  </div>
+<script type="text/plain" class="code">
+while True:
+    try:
+        exec(input())                    # 把每行当 Python 语句执行
+    except EOFError:
+        break
+</script>
+
+  <div class="warn">
+    <p><code class="inl">round(x, 6)</code> 不会补零，<code class="inl">f"{x:.6f}"</code> 会补零——要对齐输出位数用 f-string。</p>
+    <p><code class="inl">round(0.5)==0</code>（银行家舍入，四舍六入五成双），不是 1。</p>
+    <p><code class="inl">int("3.0")</code> 报错！要 <code class="inl">int(float("3.0"))</code>。<code class="inl">int("-3")</code> 没问题。</p>
+    <p>拼字符串别在循环里 <code class="inl">s += ch</code>（O(n²)）；收集到 list 最后 <code class="inl">"".join()</code>。</p>
+  </div>
+</section>
+
+<!-- ============ A2 ============ -->
+<section id="a2">
+  <h2><span class="no">A2</span>函数式编程</h2>
+  <p class="lead">一句话主线：<b>函数是一等对象（first-class object）</b>——能绑定到名字、能当参数传、能当返回值、能塞进数据结构。围绕这一点展开高阶函数、闭包、柯里化、装饰器。</p>
+
+  <h3>① 执行环境：frame 与名字查找</h3>
+  <ul>
+    <li>每次函数<b>调用</b>都新建一个独立的 local frame（栈帧）；递归之所以正确，就是每层有自己的 frame。</li>
+    <li>名字查找顺序：<em>local → 外层（嵌套 parent）→ global</em>（LEGB）。</li>
+  </ul>
+  <table>
+    <tr><th>关键字</th><th>作用</th><th>用在哪</th></tr>
+    <tr><td>无</td><td>函数内赋值 → 在 local frame 新建绑定</td><td>默认</td></tr>
+    <tr><td><code>global x</code></td><td>绑定到 global frame</td><td>普通/嵌套都行</td></tr>
+    <tr><td><code>nonlocal x</code></td><td>绑定到最近的非 global 外层 frame</td><td>仅嵌套函数</td></tr>
+  </table>
+  <div class="warn">
+    <p>只<b>读</b>外层名字不用声明；一旦在函数里<b>赋值</b>且没声明，该名字立刻被当成局部变量，赋值前读取就 <code class="inl">UnboundLocalError</code>。</p>
+    <p><b>Pure vs Non-Pure</b>：纯函数只靠输入算输出；副作用（改全局/nonlocal、print、改可变参数）就是非纯。<b>可变参数（list/dict）会被函数改到外面，不可变（int/str/tuple）不会。</b></p>
+  </div>
+
+  <h3>② 高阶函数：函数作参数 / 作返回值</h3>
+<script type="text/plain" class="code">
+# 函数作参数：把"行为"抽象出去
+def summation(n, term):          # term 是一个函数
+    return sum(term(k) for k in range(n))
+summation(10, lambda x: x*x)
+
+# 函数作返回值 = 闭包：内层函数记住外层 frame
+def make_counter(s, d):
+    times = -1
+    def counter():
+        nonlocal times
+        times += 1
+        return s + d * times
+    return counter
+
+c = make_counter(5, 2)
+c(); c(); c()        # 5, 7, 9  —— 状态存在 counter 的 parent frame 里
+</script>
+  <div class="tip"><p>每次 <code class="inl">make_counter()</code> 调用都造一个独立 frame，返回的内层函数保留对它的引用 = <b>闭包</b>。多个计数器互不干扰，就是因为各有各的 frame。</p></div>
+
+  <h3>③ 柯里化 Currying（高频大题结构）</h3>
+  <p>把"一次吃多个参数"拆成"一系列每次吃一个参数、返回新函数"的链条。<b>实现靠闭包</b>，所以柯里化就是闭包的特例。</p>
+<script type="text/plain" class="code">
+def add(x, y): return x + y          # 普通：add(3,5) -> 8
+
+def add_curry(x):                    # 柯里化
+    def inner(y):
+        return x + y
+    return inner
+add_curry(3)(5)                      # 8
+add3 = add_curry(3)                  # 部分应用：得到"专门加 3"的函数
+
+# 三层柯里化（图跳转作业的核心结构）：make_kth(k)(graph)(u)
+def make_kth(k):
+    def builder(graph):
+        def f(u):
+            lst = sorted(graph.get(u, []))
+            return lst[k-1] if len(lst) >= k else u
+        return f
+    return builder
+make_kth(2)(g)(5)                    # 洋葱：每剥一层吃一个参数；def 层数 = 参数个数
+</script>
+  <div class="key"><p><b>记忆口诀</b>：<code class="inl">f(a)(b)(c)</code> 看成洋葱，每剥一层吃一个参数；函数体里 <code class="inl">def</code> 的嵌套层数 = 参数个数。用途：<b>部分应用</b>（先固定一部分参数得到特化版本）、适配只收单参数的高阶函数、延迟绑定。</p></div>
+
+  <h3>④ 闭包延迟绑定大坑（必考易错）</h3>
+<script type="text/plain" class="code">
+# 错：循环里造 lambda，全部共享最后一个 i
+fs = [lambda x: x + i for i in range(3)]
+print([f(10) for f in fs])           # [12, 12, 12]  ✗
+
+# 对：默认参数在 def 那一刻就求值，把当前值冻结进函数
+fs = [lambda x, i=i: x + i for i in range(3)]
+print([f(10) for f in fs])           # [10, 11, 12]  ✓
+</script>
+  <div class="warn"><p>Python 闭包捕获的是<b>变量名</b>不是<b>值</b>。循环变量是同一个名字，所有 lambda 共享它，循环结束后都拿到最终值。<b>解法：<code class="inl">lambda x, a=cur: ...</code> 用默认参数当场冻结。</b>若内层用 <code class="inl">def</code> + 循环变量，则改用工厂函数 <code class="inl">make_xxx(a, k)</code> 包一层。</p></div>
+
+  <h3>⑤ lambda / map·filter·reduce / 生成器</h3>
+<script type="text/plain" class="code">
+square = lambda x: x*x               # 只能单个表达式，不能含语句
+sorted(lst, key=lambda x: x[1])      # 多用在高阶函数里
+# 条件表达式可以：lambda x: "+" if x>0 else "-"
+
+list(map(lambda x: x*2, lst))        # 惰性，要 list() 才看到/能多次遍历
+list(filter(lambda x: x>0, lst))     # 保留 True 的
+from functools import reduce
+reduce(lambda a,b: a+b, lst, 0)      # 聚合
+
+gen = (i*i for i in range(5))        # 生成器表达式（圆括号！）
+def fib():                           # 生成器函数
+    a, b = 0, 1
+    while True:
+        yield b
+        a, b = b, a + b              # yield 处挂起保存状态，next() 才继续
+</script>
+
+  <h3>⑥ 装饰器 Decorator</h3>
+<script type="text/plain" class="code">
+def trace(fn):
+    def wrapped(x):
+        print("->", x)
+        return fn(x)
+    return wrapped
+
+@trace
+def triple(x): return 3 * x          # 等价于 triple = trace(triple)
+</script>
+</section>
+
+<!-- ============ A3 ============ -->
+<section id="a3">
+  <h2><span class="no">A3</span>面向对象 OOP</h2>
+  <p class="lead">主线：<b>类 = 数据(属性) + 行为(方法) 的封装模板</b>；继承复用、多态分派、MRO 决定 super 走向。这是本课最大的考点块之一。</p>
+
+  <h3>① 类基础 · 成员 · 封装</h3>
+<script type="text/plain" class="code">
+class Account:
+    interest = 0.2                   # 类成员（所有实例共享）
+    total = 0
+    def __init__(self, holder, balance=0):
+        self.holder = holder         # 实例成员
+        self.__balance = balance     # 私有（双下划线 → 名称改写）
+        Account.total += 1           # 改类成员要显式用类名
+    def deposit(self, amount):
+        self.__balance += amount
+    def get_balance(self):
+        return self.__balance
+</script>
+  <table>
+    <tr><th>命名</th><th>含义</th></tr>
+    <tr><td><code>xxx</code></td><td>公开</td></tr>
+    <tr><td><code>_xxx</code></td><td>约定内部（不强制）</td></tr>
+    <tr><td><code>__xxx</code></td><td>名称改写为 <code>_类名__xxx</code>，外部 <code>a.__xxx</code> 报 AttributeError</td></tr>
+    <tr><td><code>__xxx__</code></td><td>魔术方法 / 解释器专用</td></tr>
+  </table>
+  <div class="tip">
+    <p><code class="inl">a.deposit(100)</code> 等价 <code class="inl">Account.deposit(a, 100)</code>——<code class="inl">self</code> 就是当前对象，Python 自动传。</p>
+    <p>读 <code class="inl">obj.x</code>：先查实例 → 再查类 → 再查基类。写 <code class="inl">obj.x=...</code> <b>总是</b>建/改实例成员；<code class="inl">Cls.x=...</code> 才改类成员。</p>
+  </div>
+
+  <h4>静态方法 / 类方法</h4>
+<script type="text/plain" class="code">
+class A:
+    @staticmethod
+    def from_string(s):              # 无 self / cls，像普通函数挂在类里
+        name, money = s.split(",")
+        return A(name.strip(), float(money))
+    @classmethod
+    def make(cls, x):                # 第一个参数是 cls（类本身）
+        return cls(x)
+</script>
+
+  <h3>② 继承 · super · 多态</h3>
+<script type="text/plain" class="code">
+class CheckingAccount(Account):
+    def __init__(self, holder, balance=0):
+        super().__init__(holder, balance)   # 调基类构造，先初始化基类属性
+        self.fee = 1
+    def withdraw(self, amount):
+        super().withdraw(amount + self.fee) # 重写时也能复用基类逻辑
+</script>
+  <ul>
+    <li>派生类不写 <code class="inl">__init__</code> → 自动继承基类的。</li>
+    <li><b>多态</b>：同名方法通过对象调用时按<b>实际类型</b>分派；遍历一个混类型列表 <code class="inl">sum(s.area() for s in shapes)</code> 不判断类型，就是多态。</li>
+    <li>类型判断：<code class="inl">isinstance(obj, Cls)</code>、<code class="inl">issubclass(Sub, Base)</code>；第二参可传元组 <code class="inl">isinstance(x, (int, float))</code>。</li>
+  </ul>
+  <div class="warn"><p>重写 <code class="inl">__init__</code> 却忘记 <code class="inl">super().__init__(...)</code> → 基类属性没初始化，后面访问就 AttributeError。</p></div>
+
+  <h3>③ MRO 与多继承（高频易错）</h3>
+<script type="text/plain" class="code">
+class A:
+    def f(self): print("A")
+class B(A):
+    def f(self): super().f(); print("B")
+class C(A):
+    def f(self): super().f(); print("C")
+class D(B, C):                       # MRO: D -> B -> C -> A -> object
+    def f(self): super().f(); print("D")
+
+print(D.mro())
+D().f()                             # 输出 A C B D（沿 MRO 递归，回溯时打印）
+</script>
+  <div class="key">
+    <p><b><code class="inl">super()</code> 不是"父类"，是 MRO（方法解析顺序）里的下一个。</b> MRO 规则：派生类在前、多基类按声明顺序、C3 线性化保证一致。</p>
+    <p><b>想精确调某个基类的方法</b>，绕过 MRO：用类名显式调 <code class="inl">Cat.speak(self)</code>。</p>
+  </div>
+</section>
+
+<!-- ============ A4 ============ -->
+<section id="a4">
+  <h2><span class="no">A4</span>迭代器 · 魔术方法 · Duck Typing</h2>
+  <p class="lead">魔术方法（<code class="inl">__xxx__</code>）让你的对象"接入 Python 语法"——能被 <code class="inl">print</code>、能 <code class="inl">+</code>、能 <code class="inl">for</code>、能 <code class="inl">obj()</code>。这是 OOP 题最爱出的花样。</p>
+
+  <h3>① 必背魔术方法表</h3>
+  <table>
+    <tr><th>方法</th><th>触发</th><th>方法</th><th>触发</th></tr>
+    <tr><td><code>__init__</code></td><td>创建后初始化</td><td><code>__str__</code></td><td><code>str()</code>/<code>print()</code></td></tr>
+    <tr><td><code>__repr__</code></td><td><code>repr()</code>/REPL</td><td><code>__len__</code></td><td><code>len()</code></td></tr>
+    <tr><td><code>__eq__ __lt__ __le__ ...</code></td><td><code>== &lt; &lt;= ...</code></td><td><code>__add__ __sub__ __mul__</code></td><td><code>+ - *</code></td></tr>
+    <tr><td><code>__radd__ __rmul__</code></td><td>右操作数（左侧不支持）</td><td><code>__getitem__ __setitem__</code></td><td><code>obj[i]</code> / <code>obj[i]=v</code></td></tr>
+    <tr><td><code>__iter__</code></td><td><code>for x in obj</code></td><td><code>__next__</code></td><td><code>next(it)</code></td></tr>
+    <tr><td><code>__call__</code></td><td><code>obj(...)</code></td><td><code>__contains__</code></td><td><code>x in obj</code></td></tr>
+    <tr><td><code>__enter__ __exit__</code></td><td><code>with obj:</code></td><td><code>__bool__</code></td><td><code>if obj:</code></td></tr>
+  </table>
+
+  <h4>运算符重载例：二维向量</h4>
+<script type="text/plain" class="code">
+class Vector:
+    def __init__(self, x, y): self.x, self.y = x, y
+    def __add__(self, o): return Vector(self.x+o.x, self.y+o.y)
+    def __mul__(self, o):
+        if isinstance(o, Vector):
+            return self.x*o.x + self.y*o.y          # 点乘 -> 标量
+        return Vector(self.x*o, self.y*o)           # 数乘 -> 向量
+    def __rmul__(self, o): return self.__mul__(o)   # 支持 3 * v
+    def __str__(self): return f"({self.x}, {self.y})"
+</script>
+
+  <h4><code class="inl">__call__</code>：让对象像函数（任务调度题）</h4>
+<script type="text/plain" class="code">
+class Task:
+    def __init__(self, name): self.name = name
+    def __call__(self): return f"Running: {self.name}"
+
+class TaskScheduler:
+    def __init__(self): self.tasks = []
+    def add_task(self, t): self.tasks.append(t)
+    def run_all(self): return [t() for t in self.tasks]   # 直接调用 = 多态
+</script>
+
+  <h3>② 自定义迭代器（必考模板）</h3>
+<script type="text/plain" class="code">
+class ReverseList:
+    def __init__(self, lst):
+        self.lst = list(reversed(lst))
+        self.i = 0
+    def __iter__(self):
+        self.i = 0          # 关键：每次 iter 时重置，才能被 for 多次
+        return self         # 自己就是迭代器
+    def __next__(self):
+        if self.i < len(self.lst):
+            self.i += 1
+            return self.lst[self.i - 1]
+        raise StopIteration  # 结束信号
+    def __len__(self):
+        return len(self.lst)
+</script>
+  <div class="warn"><p><b><code class="inl">__iter__</code> 里不重置状态 → 对象只能 for 一次</b>，第二次循环直接为空。这是考试常设的坑。</p></div>
+
+  <h3>③ Duck Typing 与 EAFP</h3>
+  <ul>
+    <li><b>Duck Typing</b>：不看类型，看有没有对应方法/属性——有 <code class="inl">__iter__</code> 就当可迭代。</li>
+    <li><b>EAFP</b>（Easier to Ask Forgiveness）：先做，错了再 <code class="inl">except</code>——Pythonic。对应 <b>LBYL</b>（先 <code class="inl">if hasattr</code> 检查再做）。</li>
+  </ul>
+</section>
+
+<!-- ============ A5 ============ -->
+<section id="a5">
+  <h2><span class="no">A5</span>异常处理</h2>
+  <p class="lead">主线：把"可能出错的正常逻辑"和"出错后的善后"分开写。<code class="inl">try</code> 装正常流程，<code class="inl">except</code> 接特定异常，<code class="inl">else</code> 在没出错时跑，<code class="inl">finally</code> 无论如何都跑（资源清理）。</p>
+<script type="text/plain" class="code">
+try:
+    x = int(input())
+except ValueError as e:        # 接住特定异常，e 是异常对象
+    print("bad:", e)
+except (TypeError, KeyError):  # 多种一起接
+    ...
+else:                          # try 没抛异常时执行
+    print("ok")
+finally:                       # 无论是否异常都执行
+    print("done")
+
+raise ValueError("bad input")  # 主动抛
+# 在 except 块里裸 raise 可把当前异常再抛出去
+</script>
+  <h3>常见内置异常</h3>
+  <table>
+    <tr><th>异常</th><th>触发</th><th>异常</th><th>触发</th></tr>
+    <tr><td><code>ValueError</code></td><td>类型对值不合法 <code>int("x")</code></td><td><code>TypeError</code></td><td>类型不匹配 <code>"a"+1</code></td></tr>
+    <tr><td><code>IndexError</code></td><td>序列越界</td><td><code>KeyError</code></td><td>dict 无此键</td></tr>
+    <tr><td><code>AttributeError</code></td><td>对象没这个属性</td><td><code>ZeroDivisionError</code></td><td>除 0</td></tr>
+    <tr><td><code>StopIteration</code></td><td>迭代器结束</td><td><code>NameError</code></td><td>用未定义名字</td></tr>
+    <tr><td><code>FileNotFoundError</code></td><td>文件不存在</td><td><code>RecursionError</code></td><td>递归过深</td></tr>
+  </table>
+  <h3>自定义异常 + 上下文管理器</h3>
+<script type="text/plain" class="code">
+class MyError(Exception):
+    def __init__(self, msg, x):
+        super().__init__(msg)
+        self.x = x
+
+with open("f.txt") as f:       # with 即使内部抛异常也会自动 close
+    data = f.read()
+
+class MyCM:
+    def __enter__(self): return self
+    def __exit__(self, exc_type, exc_val, tb):
+        return False           # return True 可"吞掉"异常
+</script>
+  <div class="warn"><p><code class="inl">assert</code> 在 <code class="inl">-O</code> 模式被忽略，<b>别用 assert 做业务校验</b>，只用于测试/调试。</p></div>
+</section>
+
+<!-- ============ A6 ============ -->
+<section id="a6">
+  <h2><span class="no">A6</span>数据结构速查</h2>
+  <p class="lead">选对容器 = 一半的分。核心判据：<b>要不要顺序、要不要去重、要不要键值映射、两端操作还是优先级</b>。</p>
+  <table>
+    <tr><th>需求</th><th>选</th><th>关键操作 / 复杂度</th></tr>
+    <tr><td>有序、可重复、随机访问</td><td><code>list</code></td><td><code>append/pop()</code> O(1)；<code>pop(0)</code> O(n)！<code>x in</code> O(n)</td></tr>
+    <tr><td>键值映射 / 计数</td><td><code>dict</code></td><td>增删查 O(1)；<code>d.get(k, default)</code></td></tr>
+    <tr><td>去重 / 快速判存在</td><td><code>set</code></td><td><code>x in s</code> O(1)；<code>| &amp; - ^</code> 并交差对称差</td></tr>
+    <tr><td>不可变、可当 dict 键</td><td><code>tuple</code></td><td><code>visited.add((r,c))</code></td></tr>
+    <tr><td>两端进出（BFS 队列）</td><td><code>deque</code></td><td><code>appendleft/popleft</code> O(1)</td></tr>
+    <tr><td>优先级（最小/大优先）</td><td><code>heapq</code></td><td><code>heappush/heappop</code> O(log n)</td></tr>
+  </table>
+
+  <div class="cols">
+  <div>
+  <h4>dict 三件套（计数/分组神器）</h4>
+<script type="text/plain" class="code">
+from collections import defaultdict, Counter
+freq = defaultdict(int)        # 缺省 0
+for x in arr: freq[x] += 1
+
+g = defaultdict(list)          # 建邻接表
+for u, v in edges:
+    g[u].append(v); g[v].append(u)
+
+c = Counter("aabbbc")          # {'b':3,'a':2,'c':1}
+c.most_common(2)               # [('b',3),('a',2)]
+</script>
+  </div>
+  <div>
+  <h4>heapq（只有最小堆）</h4>
+<script type="text/plain" class="code">
+import heapq
+h = []
+heapq.heappush(h, 5)
+small = heapq.heappop(h)       # 弹最小
+
+# 最大堆技巧：存负值
+heapq.heappush(h, -val)
+big = -heapq.heappop(h)
+
+# 存元组按第一项排（Dijkstra）
+heapq.heappush(h, (dist, node))
+</script>
+  </div>
+  </div>
+  <div class="warn"><p>BFS 队列<b>必须用 <code class="inl">deque.popleft()</code></b>，<code class="inl">list.pop(0)</code> 是 O(n) 会超时。</p>
+  <p><b>二维列表陷阱</b>：<code class="inl">[[0]*m]*n</code> 所有行是同一个对象，改一行全变！要 <code class="inl">[[0]*m for _ in range(n)]</code>。</p>
+  <p><b>可变默认参数陷阱</b>：<code class="inl">def f(x, lst=[])</code> 多次调用共享同一 list。改用 <code class="inl">lst=None</code> + 函数内 <code class="inl">if lst is None: lst=[]</code>。</p></div>
+</section>
+
+<!-- ============ A7 ============ -->
+<section id="a7">
+  <h2><span class="no">A7</span>搜索 · 递归 · 回溯</h2>
+  <p class="lead">搜索的统一框架：<b>状态空间</b>（初始状态 → 动作 → 状态转移 → 终止状态）。穷举系搜索分 <b>BFS</b>（队列，找最短）和 <b>DFS</b>（栈/递归，找所有解）。</p>
+
+  <h3>① 递归 + 记忆化（避免重复计算）</h3>
+<script type="text/plain" class="code">
+# 手动 cache
+cache = {0:1, 1:2, 2:4}
+def count_cells(n):
+    if n in cache: return cache[n]
+    cache[n] = count_cells(n-1) + count_cells(n-2) + count_cells(n-3)
+    return cache[n]
+
+# 或装饰器一行搞定
+from functools import lru_cache
+@lru_cache(maxsize=None)
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)
+</script>
+  <div class="tip"><p>递归三要素：<b>基线条件</b>（何时停）+ <b>递推关系</b>（怎么缩小问题）+ <b>记忆化</b>（存中间结果）。数据大时 <code class="inl">import sys; sys.setrecursionlimit(10**6)</code>。</p></div>
+
+  <h3>② BFS — 最短路径（无权图）</h3>
+<script type="text/plain" class="code">
+from collections import deque
+def shortest_path(start, target, graph):
+    visited = {start}
+    queue = deque([(start, 0)])         # (节点, 距离)
+    while queue:
+        u, d = queue.popleft()
+        if u == target: return d
+        for v in graph[u]:
+            if v not in visited:
+                visited.add(v)          # 入队时立刻标记！不是出队时
+                queue.append((v, d + 1))
+    return -1                           # 不可达
+</script>
+  <div class="warn"><p><b>visited 必须在"入队时"标记</b>，不是出队时——否则同一节点会被重复入队，复杂度退化。</p></div>
+
+  <h3>③ DFS 与回溯（求所有解）</h3>
+<script type="text/plain" class="code">
+# 递归 DFS（连通分量 / 岛屿计数）
+def dfs(u, graph, visited):
+    visited.add(u)
+    for v in graph[u]:
+        if v not in visited:
+            dfs(v, graph, visited)
+
+# 回溯模板：做选择 -> 递归 -> 撤销选择（全排列）
+def backtrack(path, used, nums, result):
+    if len(path) == len(nums):
+        result.append(path[:])          # 必须拷贝！path 是可变对象
+        return
+    for i in range(len(nums)):
+        if used[i]: continue
+        used[i] = True; path.append(nums[i])   # 做选择
+        backtrack(path, used, nums, result)
+        path.pop(); used[i] = False            # 撤销选择
+</script>
+  <h3>④ BFS vs DFS 怎么选</h3>
+  <table>
+    <tr><th>需求</th><th>用</th><th>需求</th><th>用</th></tr>
+    <tr><td>最短路径（无权）</td><td><b>BFS</b></td><td>所有解 / 路径方案</td><td>DFS + 回溯</td></tr>
+    <tr><td>解在浅层</td><td>BFS</td><td>解在深处 / 内存有限</td><td>DFS（O(深度)）</td></tr>
+  </table>
+</section>
+
+<div class="divider">❖ &nbsp; B · 数据分析与 AI 基础 &nbsp; ❖</div>
+<section id="partB"></section>
+
+<!-- ============ B1 ============ -->
+<section id="b1">
+  <h2><span class="no">B1</span>NumPy 核心</h2>
+  <p class="lead">老师明说<b>不考复杂接口记忆</b>，但要会用常用功能。NumPy 的灵魂就三个：<b>向量化</b>（别写循环）、<b>广播</b>（不同形状自动对齐）、<b>axis</b>（沿哪根轴聚合）。</p>
+
+  <h3>① 创建 · 属性 · 索引</h3>
+<script type="text/plain" class="code">
+import numpy as np
+np.array([[1,2],[3,4]])          # 从 list
+np.zeros((3,4)); np.ones((3,4)); np.full((3,4), 7)
+np.arange(0,10,2)                # [0 2 4 6 8] 不含 stop
+np.linspace(0,1,5)               # 含 stop，等分 5 个点
+np.eye(3)                        # 单位矩阵
+
+a.shape   # 形状(元组)   a.ndim # 维数   a.size # 元素数   a.dtype # 类型
+# 注意：都是属性，不加括号！但 a.sum() a.mean() 是方法要加括号
+
+a[1:3, :2]      # 子矩阵      a[:, ::-1]   # 每行左右翻
+a[-3:, -3:]     # 后3行后3列  a[::2, ::2]  # 行列隔一取
+</script>
+  <div class="warn"><p>别用 <code class="inl">np.ndarray((m,n))</code> 创建——那是底层构造器，返回<b>垃圾值</b>。要全 0 用 <code class="inl">np.zeros((m,n))</code>。</p></div>
+
+  <h3>② 视图 vs 副本（高频考点）</h3>
+  <ul>
+    <li><b>切片返回视图</b>（共享内存）→ 改视图会改原数组。</li>
+    <li><b>花式索引 <code class="inl">a[[0,2]]</code>、布尔索引 <code class="inl">a[mask]</code> 返回副本</b>。</li>
+    <li>要独立副本：<code class="inl">.copy()</code>；判断是否共享：<code class="inl">np.shares_memory(a,b)</code>。</li>
+  </ul>
+
+  <h3>③ axis 聚合 —— 灵魂</h3>
+  <div class="key"><p><b>口诀：<code class="inl">axis=k</code> 就是"把第 k 维压扁/消掉"，结果 shape 少这一维。</b></p></div>
+<script type="text/plain" class="code">
+a.sum()              # 全部求和 -> 标量
+a.sum(axis=0)        # 消掉第0维(压行) -> 每列的和
+a.sum(axis=1)        # 消掉第1维(压列) -> 每行的和
+a.mean(axis=1, keepdims=True)   # 保留被消维为长度1，便于广播
+
+scores.max(axis=0)        # 每列(每次测验)最高分
+scores.argmax(axis=1)     # 每行(每个学生)最高分所在列号
+scores.mean(axis=1).argmax()    # 平均分最高的学生编号
+
+# std/var 的 ddof：默认 0(总体)，样本标准差用 ddof=1
+</script>
+
+  <h3>④ 广播 Broadcasting</h3>
+  <p>规则（<b>从右往左</b>逐维对齐）：每一维要么相等、要么其中一个是 1，否则报错；维数不足在<b>左边</b>补 1。</p>
+<script type="text/plain" class="code">
+# (5,4) 与 (4,)  -> (4,)补成(1,4) -> OK，结果(5,4)
+# (5,4) 与 (5,1) -> OK (5,4)
+# (5,4) 与 (5,)  -> 右对齐 4≠5 报错！需先 a[:,None] 变 (5,1)
+scores - scores.mean(axis=0)     # 每列减列均值
+</script>
+
+  <h3>⑤ where / 条件 / 除零保护</h3>
+<script type="text/plain" class="code">
+np.where(image >= T, 255, 0)     # 二值化：满足取前者，否则后者
+np.where(cond)                   # 单参数：返回满足条件的下标
+
+# 除零保护（归一化/Z-score 必用）
+with np.errstate(divide='ignore', invalid='ignore'):
+    result = np.where(sigma == 0, 0.0, (data - mu) / sigma)
+</script>
+  <div class="warn"><p><code class="inl">np.where(cond, A, B)</code> 会<b>先把 A、B 两个分支都算完</b>再选，所以 <code class="inl">(data-mu)/sigma</code> 即使最终不取也会执行除法触发警告 → 必须套 <code class="inl">np.errstate</code>。</p></div>
+
+  <h3>⑥ 形状操作 · 线性代数（眼熟即可）</h3>
+<script type="text/plain" class="code">
+a.reshape(-1, V)     # -1 自动推算；通常视图
+a.ravel()            # 拉平(视图)   a.flatten() # 拉平(总是副本)
+np.concatenate([A,B], axis=0)        # 拼接
+np.vstack([A,B]); np.hstack([A,B])   # 上下/左右拼
+A @ B                # 矩阵乘；三维@二维是批量乘 (S,T,V)@(V,D)->(S,T,D)
+np.linalg.eigh(S)    # 对称阵特征分解(升序，PCA 用)
+np.linalg.svd(A)     # 奇异值分解
+</script>
+</section>
+
+<!-- ============ B2 ============ -->
+<section id="b2">
+  <h2><span class="no">B2</span>Pandas 核心</h2>
+  <p class="lead">两个主角：<b>Series</b>（一维带标签数组，既像 ndarray 又像 dict）和 <b>DataFrame</b>（二维表）。考点集中在<b>分组聚合 groupby</b> 和<b>表拼接 merge/concat</b>。</p>
+
+  <h3>① Series 与 index 对齐（易错）</h3>
+<script type="text/plain" class="code">
+s = pd.Series([1,2,3], index=["a","b","c"])
+s["a"]; s[s > s.median()]; s * 2     # 像 dict / 像 ndarray
+s.get("g", np.nan)                   # 取不到返回默认值
+
+# ⭐ 两 Series 运算按 index 的"值"对齐，与顺序无关，对不上的为 NaN
+s1 = pd.Series([1,2,3], index=["a","b","c"])
+s2 = pd.Series([4,5,6], index=["b","c","a"])
+s1 + s2                              # a:1+6=7  b:2+4=6  c:3+5=8（按标签！）
+s1.add(s2, fill_value=0)             # 对不上的当 0，不变 NaN
+</script>
+
+  <h3>② DataFrame 选择 · 筛选 · 排序</h3>
+<script type="text/plain" class="code">
+df['col']            # 一列 -> Series
+df[['a','b']]        # 多列 -> DataFrame
+df['amt'] = df['price'] * df['qty']  # 新增列(向量化)
+df.loc[行标签, 列标签]               # 按名字选
+df.iloc[行号, 列号]                  # 按位置选
+
+df[df['amt'] >= T]                   # 布尔筛选
+df[(df['a']>0) & (df['b']<5)]        # 多条件用 & |，每个加括号，不能写 and
+df.sort_values(by=['amt','name'], ascending=[False, True])
+</script>
+
+  <h3>③ groupby 分组聚合（高频）</h3>
+<script type="text/plain" class="code">
+df['amount'] = df['quantity'] * df['price']
+g = df.groupby('product').agg(
+        total_qty=('quantity', 'sum'),
+        total_amt=('amount',   'sum'),
+    ).reset_index()                  # 别忘 reset_index 把分组键变回列
+
+# 用组内均值填充缺失
+df['hours'] = df.groupby('class')['hours'].transform(
+        lambda s: s.fillna(s.mean()))
+</script>
+
+  <h3>④ 拼接：concat 堆叠 vs merge 按键合并</h3>
+  <table>
+    <tr><th></th><th>concat（摞起来）</th><th>merge（按键合并，像 SQL JOIN）</th></tr>
+    <tr><td>场景</td><td>两表结构相同，把行/列摞起来</td><td>靠共同的键(如学号)横向拼字段</td></tr>
+    <tr><td>用法</td><td><code>pd.concat([d1,d2], axis=0)</code></td><td><code>pd.merge(l, r, on='id', how='left')</code></td></tr>
+    <tr><td>关键参数</td><td><code>axis</code>(0上下/1左右), <code>ignore_index</code></td><td><code>how</code>(inner/left/outer), <code>indicator</code></td></tr>
+  </table>
+<script type="text/plain" class="code">
+m = pd.merge(schedule, records, on=['student_id','date'],
+             how='left', indicator=True)
+# _merge 列值：'both'(两表都有) / 'left_only'(只左表有)
+matched = m[m['_merge'] == 'both']
+
+for _, row in df.iterrows():         # 逐行遍历，row 是 Series
+    print(int(row['id']), f"{row['rate']:.2f}")
+</script>
+</section>
+
+<!-- ============ B3 ============ -->
+<section id="b3">
+  <h2><span class="no">B3</span>数据规范化</h2>
+  <p class="lead">为什么要规范化：各特征量纲/尺度差太大（如"学习时长"和"成绩"），不处理的话大尺度特征会主导距离和方差。两种主流方法 + 除零特判。</p>
+  <table>
+    <tr><th>方法</th><th>公式</th><th>何时用</th></tr>
+    <tr><td>min-max（缩放到 [0,1]）</td><td><code>f' = (f - min) / (max - min)</code></td><td>分布有界、要固定范围</td></tr>
+    <tr><td>z-score（均值0标准差1）</td><td><code>f' = (f - μ) / σ</code></td><td>有异常值、要消除量纲</td></tr>
+  </table>
+<script type="text/plain" class="code">
+def normalize_minmax(a):                  # 按列归一化
+    mins, maxs = a.min(axis=0), a.max(axis=0)
+    rng = maxs - mins
+    return np.where(rng == 0, 0.0, (a - mins) / np.where(rng==0, 1, rng))
+
+def zscore(a):
+    mu, sigma = a.mean(axis=0), a.std(axis=0)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        return np.where(sigma == 0, 0.0, (a - mu) / sigma)
+</script>
+  <div class="warn"><p>max==min（或 σ==0）时分母为 0，必须特判置 0。整数数组先 <code class="inl">.astype(float)</code> 防精度丢失。</p></div>
+</section>
+
+<!-- ============ B4 ============ -->
+<section id="b4">
+  <h2><span class="no">B4</span>KNN 与距离度量</h2>
+  <p class="lead">KNN = 找最近的 K 个邻居投票（分类）或取均值（回归）。是 <b>lazy learning</b>：没有显式训练，预测时才算距离，运行代价高。</p>
+  <table>
+    <tr><th>距离</th><th>公式</th><th>闵氏 p</th></tr>
+    <tr><td>欧氏 Euclidean</td><td><code>√Σ(xᵢ-yᵢ)²</code></td><td>p=2</td></tr>
+    <tr><td>曼哈顿 Manhattan</td><td><code>Σ|xᵢ-yᵢ|</code></td><td>p=1</td></tr>
+    <tr><td>切比雪夫 Chebyshev</td><td><code>max|xᵢ-yᵢ|</code></td><td>p→∞</td></tr>
+  </table>
+<script type="text/plain" class="code">
+def knn_predict(train_X, train_y, test_X, K, T):
+    preds = []
+    for x in test_X:
+        dists = []
+        for j, v in enumerate(train_X):
+            if T == 1:                                   # 欧氏
+                d = sum((x[i]-v[i])**2 for i in range(len(x))) ** 0.5
+            else:                                        # 曼哈顿
+                d = sum(abs(x[i]-v[i]) for i in range(len(x)))
+            dists.append((d, j))                         # 带 j 保证稳定
+        dists.sort()
+        vote = {}
+        for _, j in dists[:K]:
+            vote[train_y[j]] = vote.get(train_y[j], 0) + 1
+        mx = max(vote.values())
+        preds.append(min(l for l, c in vote.items() if c == mx))  # 平票取小
+    return preds
+</script>
+  <div class="tip"><p>K 小 → 贴合数据但易受噪声；K 大 → 边界平滑但钝化；K=全集 → 恒定输出多数类。<b>平票/平距取最小编号</b>是这门课的统一约定。</p></div>
+</section>
+
+<!-- ============ B5 ============ -->
+<section id="b5">
+  <h2><span class="no">B5</span>逻辑回归（二分类）</h2>
+  <p class="lead">用 sigmoid 把线性输出 <code class="inl">z=wᵀx+b</code> 压到 (0,1) 当概率；<code class="inl">y≥0.5</code> 判 1。本质是用线性模型预测"<b>对数几率</b> <code class="inl">ln(y/(1-y))=wᵀx+b</code>"。求解 = 极大似然 = 最小化交叉熵，用梯度下降。</p>
+<script type="text/plain" class="code">
+import math
+def sigmoid(z):
+    if z >= 0:  return 1.0 / (1.0 + math.exp(-z))
+    e = math.exp(z); return e / (1.0 + e)            # 分段防溢出
+
+def logistic_regression(train_X, train_y, test_X, E, alpha):
+    N, D = len(train_X), len(train_X[0])
+    w = [0.0]*D; b = 0.0
+    for _ in range(E):                               # E 轮
+        gw = [0.0]*D; gb = 0.0
+        for i in range(N):
+            z = sum(w[j]*train_X[i][j] for j in range(D)) + b
+            err = sigmoid(z) - train_y[i]            # ŷ - y
+            for j in range(D): gw[j] += err * train_X[i][j]
+            gb += err
+        for j in range(D): w[j] -= alpha * gw[j] / N # 梯度下降更新
+        b -= alpha * gb / N
+    return [1 if sigmoid(sum(w[j]*x[j] for j in range(len(x)))+b) >= 0.5
+            else 0 for x in test_X]
+</script>
+  <div class="key"><p>梯度更新公式记牢：<code class="inl">w -= α·(1/N)Σ(ŷᵢ-yᵢ)xᵢ</code>，<code class="inl">b -= α·(1/N)Σ(ŷᵢ-yᵢ)</code>。</p></div>
+</section>
+
+<!-- ============ B6 ============ -->
+<section id="b6">
+  <h2><span class="no">B6</span>聚类 · K-Means</h2>
+  <p class="lead">无监督：只有 x 没标签，挖数据内在结构。K-Means 目标是最小化<b>簇内平方和</b> <code class="inl">E=Σₖ Σ_{x∈Cₖ} ‖x-μₖ‖²</code>。流程：①初始化 k 个中心 ②每点分到最近中心 ③重算中心=簇内均值 ④重复至不变。</p>
+<script type="text/plain" class="code">
+def cluster(points, K, T, algorithm):
+    import math
+    def dist(a, b): return math.hypot(a[0]-b[0], a[1]-b[1])
+    centers = list(points[:K])                 # 初始中心 = 前 K 个点
+    labels = [0]*len(points)
+    for _ in range(T):
+        for i, p in enumerate(points):         # 1. 分配
+            ds = [dist(p, c) for c in centers]
+            labels[i] = ds.index(min(ds))      # 平距取小编号
+        for k in range(K):                     # 2. 更新中心
+            members = [points[i] for i in range(len(points)) if labels[i]==k]
+            if not members: continue           # 空簇：中心不变
+            if algorithm == 'M':               # K-Means：坐标均值
+                cx = sum(p[0] for p in members)/len(members)
+                cy = sum(p[1] for p in members)/len(members)
+                centers[k] = (cx, cy)
+            else:                              # K-Centroid：簇内距离和最小的真实点
+                centers[k] = min(members,
+                    key=lambda p: sum(dist(p, q) for q in members))
+    return labels
+</script>
+  <div class="tip"><p>NumPy 版簇心更新一行：<code class="inl">centroids[i] = X[labels==i].mean(axis=0)</code>。<b>K-Centroid 变体</b>：簇心必须是某个真实样本点。影响结果的因素：k 值、<b>初始点选择（可能收敛到不同局部解）</b>、噪声。</p></div>
+</section>
+
+<!-- ============ B7 ============ -->
+<section id="b7">
+  <h2><span class="no">B7</span>PCA 与 SVD（降维）</h2>
+  <p class="lead">PCA 目标：找投影后<b>方差最大</b>的方向。结论链：协方差矩阵的<b>特征值 = 该方向上的方差</b>，<b>特征向量 = 该方向</b>；取最大的几个特征值方向 = 保留信息最多、投影损失最小。</p>
+<script type="text/plain" class="code">
+def pca_reduce(X, d):
+    X = X - X.mean(axis=0)                 # 1. 中心化
+    S = (X.T @ X) / X.shape[0]             # 2. 协方差矩阵(对称)
+    vals, vecs = np.linalg.eigh(S)         # 3. 特征分解(对称用 eigh，升序!)
+    order = np.argsort(vals)[::-1]         # 4. 特征值降序
+    top_vals = vals[order[:d]]
+    top_vecs = vecs[:, order[:d]]          # 5. 取前 d 个主成分
+    ratio = top_vals / vals.sum()          # 方差贡献率
+    Z = X @ top_vecs                       # 6. 投影
+    return ratio, Z
+</script>
+  <h4>SVD 去噪（保留前 K 个奇异值）</h4>
+<script type="text/plain" class="code">
+from scipy.linalg import svd
+def denoise(A, K):
+    U, S, Vt = svd(A, full_matrices=False) # S 是一维奇异值(降序)
+    return U[:, :K] @ np.diag(S[:K]) @ Vt[:K, :]   # 注意 S 要 diag 成对角阵
+</script>
+  <div class="key">
+    <p><b>PCA 去噪原理</b>：小特征值对应方向方差小，多是噪声，丢弃即去噪。</p>
+    <p><b>为什么先标准化</b>：各特征量纲差异大时，否则大尺度特征主导方差。</p>
+    <p><b>eigh 升序</b>：取最大要 <code class="inl">np.argsort(vals)[::-1]</code>。XXᵀ 对称 → 特征向量正交 → 各主成分互不相关。</p>
+  </div>
+</section>
+
+<!-- ============ B8 ============ -->
+<section id="b8">
+  <h2><span class="no">B8</span>关联规则 · 异常检测</h2>
+
+  <h3>① 关联规则 Apriori</h3>
+  <ul>
+    <li><b>支持度</b> <code class="inl">s(X)=σ(X)/N</code>（频繁程度，概率 P(X)）。</li>
+    <li><b>置信度</b> <code class="inl">c(X→Y)=σ(X∪Y)/σ(X)</code>（可靠程度，条件概率 P(Y|X)）。⚠ <code class="inl">A→B</code> 和 <code class="inl">B→A</code> 置信度不同！</li>
+    <li><b>Apriori 原理</b>：非频繁项集的<b>所有超集必非频繁</b>（反单调性，可剪枝）。等价：<code class="inl">X⊆Y ⟹ s(X)≥s(Y)</code>。</li>
+  </ul>
+  <div class="tip"><p>判置信度避免浮点误差：用整数比较 <code class="inl">100*σ(X∪Y) >= C*σ(X)</code>。<br>剪枝例：<code class="inl">{文档,讨论区}</code> 非频繁 → <code class="inl">{文档,讨论区,草稿}</code> 必非频繁，无需再查。</p></div>
+
+  <h3>② 异常检测</h3>
+  <table>
+    <tr><th>方法</th><th>核心</th></tr>
+    <tr><td>基于模型（3-sigma）</td><td><code>z=(x-μ)/σ</code>，<code>|z|>2</code> 或 <code>>3</code> 为异常</td></tr>
+    <tr><td>基于邻近度</td><td><code>density(x,k)=到 K 近邻平均距离</code>，越大越稀疏越异常</td></tr>
+    <tr><td>基于相对密度（作业用）</td><td><code>score(x)=density(x,k) / 邻居们 density 的均值</code>，能处理不同密度簇</td></tr>
+  </table>
+<script type="text/plain" class="code">
+def detect_outliers_sigma(data):           # 3-sigma 向量化版
+    mean = data.mean(axis=0)
+    std  = data.std(axis=0)
+    return np.where(np.abs(data - mean) > std, 1, 0)
+</script>
+  <div class="warn"><p>异常 ≠ 噪声：噪声随机、观察价值低；异常可能来自不同类别/自然变异/测量误差，有研究价值。<code class="inl">np.std</code> 默认 <code class="inl">ddof=0</code>（总体）。</p></div>
+</section>
+
+<!-- ============ B9 ============ -->
+<section id="b9">
+  <h2><span class="no">B9</span>理论简答速记</h2>
+  <p class="lead">这些是简答/选择题的高频答案，背结论。</p>
+
+  <h3>监督 vs 无监督</h3>
+  <ul>
+    <li><b>监督</b>：数据有标签 (X,y)，学输入→输出映射；任务 = 分类 / 回归。</li>
+    <li><b>无监督</b>：只有 X 无标签，学内在结构；任务 = 聚类 / 降维 / 关联规则 / 异常检测。</li>
+  </ul>
+
+  <h3>过拟合 / 欠拟合（loss–复杂度图）</h3>
+  <p>训练 loss 随复杂度<b>持续下降</b>；泛化(测试) loss <b>先降后升</b>（拐点=最佳复杂度）。图左侧=欠拟合（两者都高），右侧=过拟合（训练低测试高，记住了噪声）。<b>不能只看训练 loss 选模型</b>，它反映不了泛化能力。划分方法：留出法 / 交叉验证。</p>
+
+  <h3>MSE vs MAE</h3>
+<script type="text/plain" class="code">
+MSE = mean((y - ŷ)**2)    # 对大误差更敏感(平方放大)，在意极端误差用它
+MAE = mean(abs(y - ŷ))    # 对异常值更鲁棒，均衡容忍小偏差用它
+</script>
+  <p class="mini">例（误差 0.5/0.2/-0.5/0.3/-0.5）：MSE=(0.25+0.04+0.25+0.09+0.25)/5≈<b>0.18</b>；MAE=2.0/5=<b>0.40</b>。</p>
+
+  <h3>list vs ndarray（为何大规模数值计算用 ndarray）</h3>
+  <table>
+    <tr><th></th><th>Python list</th><th>NumPy ndarray</th></tr>
+    <tr><td>数据</td><td>任意类型，存指针</td><td>同类型，固定长度</td></tr>
+    <tr><td>内存</td><td>指针散落堆中</td><td><b>连续内存块</b>（缓存友好）</td></tr>
+    <tr><td>计算</td><td>for 逐个</td><td><b>向量化</b>（底层 C/BLAS/SIMD）</td></tr>
+  </table>
+
+  <h3>IPython 速答</h3>
+  <ul>
+    <li><code class="inl">In</code> 是 list（存源码字符串），<code class="inl">Out</code> 是 dict（key=编号，value=返回值）。<b>只有"光秃秃的表达式"才进 Out</b>；赋值、<code class="inl">print()</code>（返回 None）不进。</li>
+    <li>line magic 单 <code class="inl">%</code>（仅当前行）；cell magic 双 <code class="inl">%%</code>（整个 cell，必须在首行）。<code class="inl">%timeit</code> 测耗时、<code class="inl">%run</code> 跑脚本。</li>
+  </ul>
+</section>
+
+<div class="divider">❖ &nbsp; C · 收尾 &nbsp; ❖</div>
+<section id="partC"></section>
+
+<!-- ============ C1 ============ -->
+<section id="c1">
+  <h2><span class="no">C1</span>易错总清单 · 考前自查</h2>
+
+  <h3>20 条易错点（开考前扫一遍）</h3>
+  <ol>
+    <li><b>闭包延迟绑定</b>：循环里造 lambda 一定用默认参数固定当前值 <code class="inl">lambda x, a=cur: ...</code></li>
+    <li><b><code class="inl">super()</code> 不是父类</b>，是 MRO 的下一个；想精确调某基类用 <code class="inl">Base.method(self,...)</code></li>
+    <li><b>重写 <code class="inl">__init__</code></b> 忘记 <code class="inl">super().__init__()</code> → 基类属性没初始化</li>
+    <li><b>私有属性</b> <code class="inl">__x</code> 被改名为 <code class="inl">_Cls__x</code>，外部直接访问报 AttributeError</li>
+    <li><b><code class="inl">__iter__</code> 不重置状态</b> → 对象只能 for 一次</li>
+    <li><b>可变默认参数</b> <code class="inl">def f(lst=[])</code> 多次调用共享同一 list → 用 <code class="inl">None</code> 哨兵</li>
+    <li><b>二维列表</b> <code class="inl">[[0]*m]*n</code> 所有行同一对象 → 用列表推导</li>
+    <li><b>BFS 用 <code class="inl">deque.popleft()</code></b>，别用 <code class="inl">list.pop(0)</code>（O(n)）</li>
+    <li><b>visited 入队时标记</b>，不是出队时</li>
+    <li><b>map/filter 是迭代器</b>，<code class="inl">list()</code> 后才能多次遍历</li>
+    <li><b>浮点比较</b>用 <code class="inl">abs(a-b)&lt;eps</code>，不用 <code class="inl">==</code></li>
+    <li><b>NumPy 属性不加括号</b>：<code class="inl">a.shape</code> 对；但 <code class="inl">a.sum()</code> 是方法要括号</li>
+    <li><b>axis 记反</b>：<code class="inl">axis=0</code> 压行得每列结果，<code class="inl">axis=1</code> 压列得每行结果</li>
+    <li><b>切片是视图会改原数组</b>，不想被改用 <code class="inl">.copy()</code></li>
+    <li><b><code class="inl">np.where</code> 双分支都执行</b>，除零套 <code class="inl">np.errstate</code></li>
+    <li><b>keepdims=True</b>：要和原数组广播相减时必须加</li>
+    <li><b>std 的 ddof</b>：默认 0（总体），样本用 ddof=1</li>
+    <li><b>SVD 的 S 是一维</b>，重构要 <code class="inl">np.diag(S[:K])</code>；<b>eigh 升序</b>取最大要倒序</li>
+    <li><b>groupby 后 <code class="inl">reset_index()</code></b>；多条件筛选每个加括号用 <code class="inl">&amp; |</code> 不用 <code class="inl">and</code></li>
+    <li><b>平票/平距取最小编号</b>（这门课统一约定）</li>
+  </ol>
+
+  <h3>极简考前自查表</h3>
+  <ul class="checklist">
+    <li>☐ 闭包：<code class="inl">make_xxx()</code> 内 <code class="inl">def inner()</code> + nonlocal/默认参数 + return</li>
+    <li>☐ 柯里化：<code class="inl">f(a)(b)(c)</code>，def 层数=参数个数</li>
+    <li>☐ OOP：<code class="inl">__init__/super/__str__/__eq__/__add__/__call__</code></li>
+    <li>☐ 多态：父类引用调子类重写方法</li>
+    <li>☐ MRO：<code class="inl">Cls.mro()</code>，super 走 MRO</li>
+    <li>☐ 迭代器：<code class="inl">__iter__</code> 返 self 并重置，<code class="inl">__next__</code> 抛 StopIteration</li>
+    <li>☐ 异常：<code class="inl">try/except/else/finally</code>，<code class="inl">raise XxxError</code></li>
+    <li>☐ 搜索：BFS 求最短(deque)，DFS/回溯求所有解</li>
+    <li>☐ 递归：基线 + 递推 + 记忆化 cache</li>
+    <li>☐ NumPy：广播规则、axis 聚合、视图/副本、where 除零</li>
+    <li>☐ Pandas：groupby+reset_index、merge(indicator)、Series 按标签对齐</li>
+    <li>☐ AI：KNN 投票、逻辑回归梯度、K-Means 流程、PCA 取最大特征值</li>
+    <li>☐ 输入：<code class="inl">map(int, input().split())</code>、EOF 终止、<code class="inl">exec(input())</code></li>
+    <li>☐ 输出：<code class="inl">f"{x:.6f}"</code>、<code class="inl">"\n".join()</code> 批量</li>
+  </ul>
+
+  <div class="tip"><p>明天开考先深呼吸：读懂题 → 判断属于哪个模板 → 套用改参数 → 跑样例 → 扫易错点。慢就是快。<b>祝鳟鱼大人机测顺利。</b></p></div>
+</section>
+
+<div class="footer">程序设计机测考前串讲 · 为虹鳟鱼整理 · 阿卡酱<br>本讲稿聚焦高频考点与易错点，完整细节回查原四份资料</div>
+</main>
+</div>
+
+<script>
+// ---- 把 script.code 渲染成高亮代码块 + 复制按钮 ----
+function highlightComments(html){
+  return html.split('\n').map(line=>{
+    const trimmed = line.replace(/^\s+/, '');
+    if(trimmed.startsWith('#')){
+      return '<span class="cm">'+line+'</span>';
+    }
+    const m = line.match(/^(.*?\S)(\s+#.*)$/);
+    if(m){ return m[1]+'<span class="cm">'+m[2]+'</span>'; }
+    return line;
+  }).join('\n');
+}
+document.querySelectorAll('script.code').forEach(s=>{
+  const pre = document.createElement('pre');
+  const code = document.createElement('code');
+  // textContent 赋值自动转义 < > &
+  code.textContent = s.textContent.replace(/^\n/, '').replace(/\s+$/, '');
+  code.innerHTML = highlightComments(code.innerHTML);
+  const btn = document.createElement('button');
+  btn.className = 'copy'; btn.textContent = '复制';
+  btn.addEventListener('click', ()=>{
+    navigator.clipboard.writeText(code.textContent).then(()=>{
+      btn.textContent = '已复制'; setTimeout(()=>btn.textContent='复制', 1200);
+    });
+  });
+  pre.appendChild(btn); pre.appendChild(code);
+  s.replaceWith(pre);
+});
+
+// ---- 侧边栏滚动高亮 ----
+const links = [...document.querySelectorAll('nav a.sub-a')];
+const map = {};
+links.forEach(a=>{ const id=a.getAttribute('href').slice(1); const el=document.getElementById(id); if(el) map[id]=a; });
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a = map[e.target.id];
+      if(a){ a.classList.add('active');
+        a.scrollIntoView({block:'nearest'});
+      }
+    }
+  });
+}, {rootMargin:'-10% 0px -75% 0px', threshold:0});
+Object.keys(map).forEach(id=>{ const el=document.getElementById(id); if(el) obs.observe(el); });
+</script>
+</body>
+</html>
