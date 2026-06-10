@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 辅助学习工作流手册 — 给 AI 专业大学生</title>
+<style>
+  :root {
+    --paper: #f7f3ea;
+    --paper-deep: #efe9db;
+    --ink: #26221c;
+    --ink-soft: #5a5346;
+    --ink-faint: #8a8270;
+    --vermilion: #a63a2b;
+    --vermilion-deep: #7e2a1e;
+    --seal: #b8452f;
+    --rule: #d8d0bf;
+    --rule-dark: #b8ad95;
+    --good: #2d5a3d;
+    --warn: #8a6d1f;
+    --bad: #8c2f24;
+    --code-bg: #efe9da;
+    --serif: "Times New Roman", "Noto Serif SC", "SimSun", "宋体", serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+  body {
+    font-family: var(--serif);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.85;
+    font-size: 17px;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(166,58,43,0.035), transparent 50%),
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.006) 3px, rgba(0,0,0,0.006) 4px);
+  }
+
+  /* ---------- 布局 ---------- */
+  .layout { display: flex; max-width: 1280px; margin: 0 auto; }
+  nav.toc {
+    width: 248px; flex-shrink: 0;
+    position: sticky; top: 0; height: 100vh;
+    overflow-y: auto; padding: 3rem 1.2rem 3rem 1.6rem;
+    border-right: 1px solid var(--rule);
+    scrollbar-width: thin;
+  }
+  main { flex: 1; min-width: 0; padding: 0 4rem 6rem 4rem; }
+  @media (max-width: 900px) {
+    nav.toc { display: none; }
+    main { padding: 0 1.4rem 4rem 1.4rem; }
+  }
+
+  /* ---------- 目录 ---------- */
+  nav.toc .toc-title {
+    font-size: .8rem; letter-spacing: .5em; color: var(--vermilion);
+    border-bottom: 2px solid var(--vermilion); padding-bottom: .6rem; margin-bottom: 1.2rem;
+    font-weight: bold;
+  }
+  nav.toc a {
+    display: block; color: var(--ink-soft); text-decoration: none;
+    font-size: .82rem; padding: .28rem .5rem; line-height: 1.5;
+    border-left: 2px solid transparent; transition: all .15s;
+  }
+  nav.toc a.lv2 { padding-left: 1.4rem; font-size: .78rem; color: var(--ink-faint); }
+  nav.toc a:hover { color: var(--vermilion); }
+  nav.toc a.active { color: var(--vermilion-deep); border-left-color: var(--vermilion); background: rgba(166,58,43,.05); font-weight: bold; }
+
+  /* ---------- 封面 ---------- */
+  header.cover {
+    padding: 5.5rem 0 3.5rem 0;
+    border-bottom: 3px double var(--rule-dark);
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+  .cover .kicker {
+    font-size: .8rem; letter-spacing: .45em; color: var(--vermilion);
+    margin-bottom: 1.6rem; font-weight: bold;
+  }
+  .cover h1 {
+    font-size: 2.7rem; line-height: 1.3; font-weight: bold; letter-spacing: .06em;
+  }
+  .cover h1 em { font-style: normal; color: var(--vermilion); }
+  .cover .subtitle {
+    margin-top: 1.4rem; font-size: 1.02rem; color: var(--ink-soft); max-width: 38em;
+  }
+  .cover .meta {
+    margin-top: 2.2rem; font-size: .82rem; color: var(--ink-faint);
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+  }
+  .cover .meta b { color: var(--ink-soft); font-weight: normal; }
+  .cover .seal {
+    position: absolute; right: 0; top: 5.2rem;
+    width: 76px; height: 76px; border: 2.5px solid var(--seal);
+    color: var(--seal); display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem; font-weight: bold; letter-spacing: .15em;
+    transform: rotate(6deg); opacity: .82; line-height: 1.4;
+    text-align: center; padding: 6px; border-radius: 3px;
+  }
+  @media (max-width: 700px) { .cover .seal { display: none; } .cover h1 { font-size: 2rem; } }
+
+  /* ---------- 章节 ---------- */
+  section { margin-bottom: 4.5rem; }
+  .chap-head { display: flex; align-items: baseline; gap: 1.2rem; margin-bottom: .4rem; }
+  .chap-no {
+    font-size: 3rem; color: var(--rule-dark); font-weight: bold;
+    font-family: "Times New Roman", serif; line-height: 1;
+  }
+  h2 {
+    font-size: 1.65rem; font-weight: bold; letter-spacing: .08em;
+    color: var(--ink);
+  }
+  .chap-rule {
+    height: 3px; margin: .9rem 0 1.8rem 0;
+    background: linear-gradient(to right, var(--vermilion) 0, var(--vermilion) 64px, var(--rule) 64px, var(--rule) 100%);
+  }
+  h3 {
+    font-size: 1.18rem; font-weight: bold; margin: 2.4rem 0 .9rem 0;
+    letter-spacing: .05em;
+  }
+  h3 .h3-mark { color: var(--vermilion); margin-right: .5em; }
+  h4 { font-size: 1rem; font-weight: bold; margin: 1.6rem 0 .6rem 0; color: var(--ink); }
+  p { margin-bottom: 1rem; text-align: justify; }
+  p.lead { font-size: 1.05rem; color: var(--ink-soft); }
+  strong { color: var(--vermilion-deep); }
+  a { color: var(--vermilion-deep); text-decoration: none; border-bottom: 1px dotted var(--vermilion); }
+  a:hover { background: rgba(166,58,43,.08); }
+  ul, ol { margin: 0 0 1.1rem 1.6rem; }
+  li { margin-bottom: .45rem; text-align: justify; }
+  li::marker { color: var(--vermilion); }
+
+  /* ---------- 组件 ---------- */
+  .principle {
+    border: 1.5px solid var(--vermilion); background: rgba(166,58,43,.045);
+    padding: 1.5rem 1.8rem; margin: 1.8rem 0; position: relative;
+  }
+  .principle::before {
+    content: "核心原则"; position: absolute; top: -0.75em; left: 1.2rem;
+    background: var(--paper); color: var(--vermilion); padding: 0 .6em;
+    font-size: .8rem; font-weight: bold; letter-spacing: .3em;
+  }
+  .principle p { margin: 0; font-size: 1.08rem; }
+  .principle p + p { margin-top: .6rem; }
+
+  .callout {
+    border-left: 3px solid var(--rule-dark); background: var(--paper-deep);
+    padding: 1rem 1.4rem; margin: 1.4rem 0; font-size: .94rem; color: var(--ink-soft);
+  }
+  .callout b:first-child { color: var(--ink); }
+  .callout.red { border-left-color: var(--bad); }
+  .callout.green { border-left-color: var(--good); }
+
+  .prompt-box {
+    background: #2b2620; color: #ece5d3; padding: 1.3rem 1.5rem;
+    margin: 1.2rem 0 1.6rem 0; font-size: .9rem; line-height: 1.75;
+    white-space: pre-wrap; position: relative; border-radius: 2px;
+    font-family: var(--serif);
+  }
+  .prompt-box::before {
+    content: attr(data-label);
+    position: absolute; top: 0; right: 0;
+    background: var(--vermilion); color: #f7f3ea; font-size: .72rem;
+    padding: .15rem .8rem; letter-spacing: .2em; font-weight: bold;
+  }
+  .prompt-note { font-size: .86rem; color: var(--ink-faint); margin: -0.9rem 0 1.6rem 0; }
+  .prompt-note b { color: var(--ink-soft); }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 1.3rem 0 1.8rem 0;
+    font-size: .88rem; line-height: 1.6;
+  }
+  th {
+    text-align: left; font-weight: bold; color: var(--paper);
+    background: var(--ink); padding: .55rem .8rem; letter-spacing: .05em;
+  }
+  td { padding: .6rem .8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tr:nth-child(even) td { background: rgba(0,0,0,.018); }
+  td.c-good { color: var(--good); font-weight: bold; }
+  td.c-bad { color: var(--bad); font-weight: bold; }
+  td.c-warn { color: var(--warn); font-weight: bold; }
+
+  .flow {
+    display: flex; flex-wrap: wrap; gap: .5rem; align-items: stretch;
+    margin: 1.4rem 0 1.8rem 0; counter-reset: step;
+  }
+  .flow .step {
+    flex: 1 1 130px; border: 1px solid var(--rule-dark); background: var(--paper-deep);
+    padding: .9rem .9rem .9rem .9rem; font-size: .84rem; line-height: 1.55;
+    position: relative; counter-increment: step;
+  }
+  .flow .step::before {
+    content: counter(step); display: block;
+    font-family: "Times New Roman", serif; font-size: 1.5rem; font-weight: bold;
+    color: var(--vermilion); line-height: 1; margin-bottom: .35rem;
+  }
+  .flow .step b { display: block; margin-bottom: .25rem; color: var(--ink); }
+
+  .scene {
+    border: 1px solid var(--rule-dark); margin: 2rem 0; background: rgba(255,255,255,.35);
+  }
+  .scene-head {
+    background: var(--ink); color: var(--paper); padding: .7rem 1.3rem;
+    font-weight: bold; letter-spacing: .1em; font-size: 1.02rem;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .scene-head .tag { font-size: .75rem; color: #cfc5a9; font-weight: normal; letter-spacing: .15em; }
+  .scene-body { padding: 1.3rem 1.5rem .6rem 1.5rem; }
+  .scene-body .pain {
+    font-size: .92rem; color: var(--ink-soft); font-style: italic;
+    border-bottom: 1px dashed var(--rule-dark); padding-bottom: .8rem; margin-bottom: 1rem;
+  }
+
+  .evidence { font-size: .82rem; color: var(--ink-faint); }
+  .evidence b { color: var(--ink-soft); }
+
+  footer {
+    border-top: 3px double var(--rule-dark); padding-top: 1.6rem; margin-top: 4rem;
+    font-size: .82rem; color: var(--ink-faint); line-height: 2;
+  }
+
+  @media print {
+    nav.toc { display: none; }
+    main { padding: 0 1cm; }
+    .prompt-box { background: #f0ebdd; color: #26221c; border: 1px solid #999; }
+    body { font-size: 11pt; }
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="layout">
+
+<nav class="toc" id="toc">
+  <div class="toc-title">目 录</div>
+  <a href="#ch0">序 · 这份手册怎么来的</a>
+  <a href="#ch1">一 · 原文精要：六个提示词</a>
+  <a href="#ch2">二 · 科学依据：何时有效，何时有害</a>
+  <a href="#ch2" class="lv2" data-target="ch2-pos">支持的证据</a>
+  <a href="#ch2-neg" class="lv2">警示的证据</a>
+  <a href="#ch3">三 · 官方怎么说</a>
+  <a href="#ch4">四 · 通用学习闭环（七步）</a>
+  <a href="#ch5">五 · 分场景工作流</a>
+  <a href="#s1" class="lv2">数学基础课</a>
+  <a href="#s2" class="lv2">编程与项目实战</a>
+  <a href="#s3" class="lv2">英文论文与文档</a>
+  <a href="#s4" class="lv2">英语学习</a>
+  <a href="#s5" class="lv2">新技术栈 20 小时入门</a>
+  <a href="#s6" class="lv2">考前复习</a>
+  <a href="#s7" class="lv2">AI 工作流与工具本身</a>
+  <a href="#ch6">六 · 防退化机制与红线</a>
+  <a href="#appa">附录 A · 资源清单</a>
+  <a href="#appb">附录 B · 参考来源</a>
+</nav>
+
+<main>
+
+<header class="cover">
+  <div class="seal">学而<br>时习</div>
+  <div class="kicker">NICHIJO · 学习方法</div>
+  <h1>AI 辅助学习<em>工作流手册</em></h1>
+  <p class="subtitle">从一篇「6 个提示词」的公众号文章出发，对照 Anthropic 与 OpenAI 的官方教育指南、学习科学论文、GitHub 高星项目与一线工程师的实践，整理出一套面向 AI 专业大学生、偏自学与实战的可执行工作流。</p>
+  <div class="meta">
+    <span>编写 <b>阿卡酱</b></span>
+    <span>日期 <b>2026-06-10</b></span>
+    <span>调研来源 <b>30+ 一手来源（官方 / 论文 / GitHub / 博客）</b></span>
+  </div>
+</header>
+
+<!-- ================ 序 ================ -->
+<section id="ch0">
+  <div class="chap-head"><span class="chap-no">序</span><h2>这份手册怎么来的</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">原文章的核心主张是对的：<strong>把 AI 当教练，而不是当答案机</strong>。它给出的 6 个提示词（20 小时入门、速查表、考到崩溃、学习阶梯、资源筛选、费曼讲解）大体都落在「逼你思考」的一侧——这恰好与学习科学的结论一致。但它有三个不足：</p>
+  <ol>
+    <li><strong>没有证据</strong>——「检索练习有效」是它唯一提到的依据，实际上这个领域有大量随机对照实验，包括相当刺眼的反面证据；</li>
+    <li><strong>没有护栏</strong>——多项实验表明，「裸用」ChatGPT 与「带教学法约束地用」效果天差地别，原文提示词缺少这一层；</li>
+    <li><strong>没有场景</strong>——「学习【主题】」太泛。学微积分、做项目、读论文、练英语，工作流完全不同。</li>
+  </ol>
+  <p>本手册按这三点扩展：第二章给证据，第四章给带护栏的通用闭环，第五章按七个场景落地。如果只有三分钟，请记住下面这条贯穿全书的原则——它来自目前所有实证研究的共同指向。</p>
+  <div class="principle">
+    <p><strong>AI 替你完成认知劳动时，损害学习；AI 逼你完成认知劳动时，增强学习。</strong></p>
+    <p>每次开口问 AI 之前自检一句：这个提示词是让它<em>替我想</em>，还是<em>逼我想</em>？</p>
+  </div>
+</section>
+
+<!-- ================ 一 ================ -->
+<section id="ch1">
+  <div class="chap-head"><span class="chap-no">I</span><h2>原文精要：六个提示词</h2></div>
+  <div class="chap-rule"></div>
+  <p>原文的系统可以浓缩成一张表。「对应原理」一列是本手册补上的——每个提示词背后其实都站着一个被反复验证的学习科学概念。</p>
+  <table>
+    <tr><th style="width:11em">提示词</th><th>做什么</th><th style="width:13em">对应学习科学原理</th><th style="width:5.5em">本手册评价</th></tr>
+    <tr><td><b>① 20 小时入门</b></td><td>让 AI 给完全新手拆一份有优先级的结构化入门计划：先学什么、暂缓什么、新手常犯什么错、如何判断已入门</td><td>认知负荷管理、刻意练习的目标设定</td><td class="c-good">保留并加强</td></tr>
+    <tr><td><b>② 一页速查表</b></td><td>核心概念 + 框架 + 常见错误 + 公式步骤，30 秒可浏览</td><td>降低提取成本（解决「用时想不起来」）</td><td class="c-warn">改造：让自己先写，AI 补漏</td></tr>
+    <tr><td><b>③ 考到崩溃</b></td><td>AI 出题、逐步加难、答错讲解并追问、连对 10 题为止</td><td><b>检索练习</b>（证据最强的学习技术）</td><td class="c-good">全书核心，加强</td></tr>
+    <tr><td><b>④ 学习阶梯</b></td><td>从零到高级分级，每级有前置依赖和练习任务</td><td>知识结构化、最近发展区</td><td class="c-good">保留</td></tr>
+    <tr><td><b>⑤ 资源筛选</b></td><td>按类型列最佳资源，并说明「为什么」「先看哪个」</td><td>—</td><td class="c-warn">改造：AI 会编造资源，须核实</td></tr>
+    <tr><td><b>⑥ 费曼讲解</b></td><td>向 AI 讲解主题，AI 打断含糊处、指出术语滥用与逻辑跳跃</td><td><b>自我解释 / 以教促学</b>（元分析 g≈0.55）</td><td class="c-good">保留并扩展为「AI 当学生」</td></tr>
+  </table>
+  <p>整体判断：这 6 个提示词作为骨架成立，但直接照搬会遇到两个问题——AI 默认行为是「热心地直接给答案」，会悄悄绕过你的思考；以及它对自己不知道的东西（尤其是资源推荐）会自信地编造。第四章的改良版逐一处理了这两点。</p>
+</section>
+
+<!-- ================ 二 ================ -->
+<section id="ch2">
+  <div class="chap-head"><span class="chap-no">II</span><h2>科学依据：何时有效，何时有害</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">这一章是手册的地基。先看支持「AI 教练」的证据，再看更重要的警示证据——后者解释了为什么必须加护栏。</p>
+
+  <h3 id="ch2-pos"><span class="h3-mark">§</span>支持的证据</h3>
+  <table>
+    <tr><th style="width:13em">研究</th><th>发现</th><th style="width:7em">证据强度</th></tr>
+    <tr><td>Roediger &amp; Karpicke 2006<br><span class="evidence">Psychological Science</span></td><td>读完材料后「自测」对比「重读」：5 分钟后重读占优，<b>一周后自测组保持率约 56% vs 42%</b>。检索练习的代价是当下感觉更吃力，回报是长期记得牢</td><td>随机实验</td></tr>
+    <tr><td>Dunlosky et al. 2013<br><span class="evidence">PSPI 综述</span></td><td>系统评估 10 种学习技术：<b>练习测试和间隔练习是仅有的两项「高效用」技术</b>；学生最爱的重读、划线、做摘要被评为低效用</td><td>大型综述</td></tr>
+    <tr><td>Cepeda et al. 2006<br><span class="evidence">Psych. Bulletin</span></td><td>317 个实验的元分析：间隔学习稳定优于集中突击，且<b>想记得越久，复习间隔应拉得越开</b></td><td>元分析</td></tr>
+    <tr><td>Bisra 2018 / Kobayashi 2019<br><span class="evidence">两项元分析</span></td><td>自我解释效应量 g≈0.55；「准备并真正去教别人」g≈0.56——<b>费曼技巧有实证内核</b>，且互动式教学（对方会提问）收益更大</td><td>元分析</td></tr>
+    <tr><td>Rohrer &amp; Taylor 2007<br><span class="evidence">交错练习</span></td><td>混着做不同类型的数学题：练习时错得更多，<b>但一天后测验成绩约为分块练习的两倍（63% vs 20%）</b>。「练得难受」常是学得扎实的信号</td><td>随机实验</td></tr>
+    <tr><td>Kestin et al. 2025<br><span class="evidence">Scientific Reports，哈佛物理课</span></td><td>194 名本科生交叉随机分组：<b>带教学法护栏的定制 AI tutor，学习增益超过精心设计的主动学习课堂两倍</b>（效应量约 0.73–1.3），且中位用时仅 49 分钟、自评动机更高。注意：有效的是「护栏 + 定制提示词」，不是裸聊</td><td>RCT</td></tr>
+  </table>
+
+  <h3 id="ch2-neg"><span class="h3-mark">§</span>警示的证据</h3>
+  <table>
+    <tr><th style="width:13em">研究</th><th>发现</th><th style="width:7em">证据强度</th></tr>
+    <tr><td>Bastani et al. 2025<br><span class="evidence">PNAS，宾大 Wharton</span></td><td>约 1000 名高中生数学实验：裸用 GPT-4 练习时成绩 <b>+48%</b>，撤掉 AI 后闭卷考试反而比从未用过的对照组<b>低 17%</b>。改用「只给提示不给答案」的 GPT Tutor：练习 +127%，考试与对照组持平——<b>护栏能消除伤害</b></td><td>RCT</td></tr>
+    <tr><td>Fan et al. 2025<br><span class="evidence">BJET</span></td><td>写作任务中 ChatGPT 组分数最高，但知识增益与迁移无优势，自我调节过程被外包——作者命名为 <b>"metacognitive laziness"（元认知惰性）</b></td><td>RCT</td></tr>
+    <tr><td>Gerlich 2025<br><span class="evidence">Societies，n=666</span></td><td>AI 使用频率与批判性思维显著负相关，由「认知卸载」中介，<b>年轻人受影响最大</b>（横断面研究，不能定因果，但方向值得警惕）</td><td>相关性</td></tr>
+    <tr><td>Kosmyna et al. 2025<br><span class="evidence">MIT，arXiv 预印本</span></td><td>EEG 显示用 LLM 写作的被试脑连接最弱、对自己刚写的文章记忆最差，提出「认知债务」概念（n=54、未同行评审，仅作提示）</td><td>小样本</td></tr>
+    <tr><td>Anthropic 教育报告 2025<br><span class="evidence">57 万条学生对话分析</span></td><td>约 <b>47% 的学生对话是「直接索取」型</b>；学生让 AI 干的恰是高阶认知活——「创造」占 39.8%、「分析」占 30.2%，「记忆」仅 1.8%。官方原话：AI 可能成为拐杖，阻碍基础能力发展</td><td>描述性</td></tr>
+  </table>
+
+  <div class="callout red">
+    <b>一个需要诚实说明的不对称：</b>「定制护栏 AI tutor 显著有效」目前只有 Kestin 一项 RCT（单一课程、两周模块）；而「裸用 AI 有害学习」已有多项独立 RCT 支持。这意味着：对「AI 教练」的乐观要建立在<b>严格执行护栏</b>的前提上，而不是建立在工具本身上。
+  </div>
+
+  <p>把两组证据合起来，可以提炼出三条可操作的推论，它们决定了第四、五、六章的全部设计：</p>
+  <ol>
+    <li><strong>护栏即一切</strong>：哈佛实验有效与宾大实验有害，差别只在系统提示词——「只给提示、分步引导、先让学生试」。所以每个工作流的第一步都是给 AI 立规矩。</li>
+    <li><strong>练习时的流畅是幻觉</strong>：+48% 与 −17% 同时出现在一组学生身上。衡量学习的唯一标准是<strong>脱离 AI 的闭卷表现</strong>，必须把它制度化（见第六章）。</li>
+    <li><strong>难受才是对的</strong>：检索练习、交错练习、自我解释，全部以「当下更吃力」换「长期更牢固」。如果用 AI 学得很轻松，大概率在重读式假学习。</li>
+  </ol>
+</section>
+
+<!-- ================ 三 ================ -->
+<section id="ch3">
+  <div class="chap-head"><span class="chap-no">III</span><h2>官方怎么说</h2></div>
+  <div class="chap-rule"></div>
+  <p>Anthropic 和 OpenAI 在 2025 年都把「学生用 AI」做成了正式产品和指南，思路高度一致：<strong>用定制系统指令把 AI 约束成苏格拉底式导师，并明确划界——深化理解可以，代写产出不行。</strong></p>
+
+  <h3><span class="h3-mark">§</span>Anthropic：Learning Mode</h3>
+  <ul>
+    <li>核心机制是<strong>引导而非给答案</strong>：用 "How would you approach this?"（你会怎么入手？）代替直接解答，用 "What evidence supports your conclusion?"（什么证据支持你的结论？）追问。</li>
+    <li>已不限教育版：普通 Claude 用户可在设置 / styles 中启用 Learning 风格；Claude Code 也有 <code>/learning</code> 输出风格（边写边留 TODO 让你补关键代码）。</li>
+    <li>配套免费课程：Anthropic Academy 的 <em>AI Fluency for Students</em>。</li>
+  </ul>
+
+  <h3><span class="h3-mark">§</span>OpenAI：Study Mode 与学生写作指南</h3>
+  <ul>
+    <li><strong>Study Mode</strong>（在 ChatGPT 输入 <code>/</code> 选 "Study and learn"）：由教育学专家撰写的定制指令驱动，五原则——主动参与、管理认知负荷、培养元认知、激发好奇、支持性反馈。官方建议开场就告知<strong>你的水平、主题、截止时间</strong>，并上传课件或大纲。</li>
+    <li><strong>学生写作指南</strong>的 12 条建议里最有用的几条：让 AI 做「逆向大纲」检验你文章的逻辑、要求 AI 给出反方论点做压力测试、与领域思想家模拟对话、苏格拉底式追问深化构思。</li>
+    <li><strong>红线</strong>（官方原话大意）：让 AI 代写你本应自己写的句子是「适得其反」的用法；建议把 AI 对话分享链接列入参考文献，主动向教授透明。</li>
+  </ul>
+
+  <p>两个值得直接抄走的官方提示词：</p>
+  <div class="prompt-box" data-label="官方 · Anthropic">我每写完一段，请从三方面分析：1) 清晰度 2) 证据质量 3) 逻辑。
+(After each paragraph I write, analyze it for clarity, evidence quality, and logic.)</div>
+  <div class="prompt-box" data-label="官方 · OpenAI 学生提示词包">为我即将到来的【科目】考试创建一份个性化、自适应的学习计划。
+结合我的近期表现和教学大纲，包含：时间分配、针对性练习题、复习场次。
+随我的进度和薄弱环节动态调整计划。</div>
+</section>
+
+<!-- ================ 四 ================ -->
+<section id="ch4">
+  <div class="chap-head"><span class="chap-no">IV</span><h2>通用学习闭环（七步）</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">把原文 6 个提示词重组为一个带护栏的闭环。任何主题——一门课、一个框架、一门语言——都走这七步。</p>
+
+  <div class="flow">
+    <div class="step"><b>立规矩</b>给 AI 设导师护栏（一次性）</div>
+    <div class="step"><b>建梯子</b>学习阶梯 + 20h 计划</div>
+    <div class="step"><b>学一级</b>带水平声明地学概念</div>
+    <div class="step"><b>被拷问</b>检索练习，连对过关</div>
+    <div class="step"><b>讲出来</b>费曼 / AI 当学生</div>
+    <div class="step"><b>隔期重考</b>按遗忘曲线安排重测</div>
+    <div class="step"><b>闭卷验证</b>脱离 AI 检验真实水平</div>
+  </div>
+
+  <h3><span class="h3-mark">第 0 步</span>导师护栏（最重要的一段提示词）</h3>
+  <p>这是哈佛实验有效、宾大裸用实验有害的全部差别所在。把它存为 Claude 的 Project 指令 / ChatGPT 的自定义指令，所有学习对话都在这个护栏下进行：</p>
+  <div class="prompt-box" data-label="P0 · 导师护栏">你是我的私人学习导师。我是 AI 专业大一学生，已学过：【微积分基础 / Python 基础 /……】。
+
+在所有学习对话中遵守以下规则：
+1. 不直接给完整答案或最终代码。先问我会怎么入手，引导我自己推导。
+2. 我卡住时，一次只给一个最小提示，给完提示让我再试。
+3. 我给出答案后，先要求我解释理由，再评判对错。
+4. 用我已学过的知识来类比和解释新概念，需要新前置知识时先明确指出。
+5. 每讲完一个概念，立刻出一道题考我，我答对才继续。
+6. 我的解释含糊、跳步、滥用术语时，直接打断指出，不要客气。
+7. 例外：当我明确说「直接给答案」时才可以直接给。</div>
+  <p class="prompt-note"><b>设计依据：</b>规则 1–2 来自宾大实验中有效的 GPT Tutor 设定；规则 3、5 实现检索练习；规则 6 来自原文费曼提示词；规则 7 留出逃生门，避免查个语法也被反问。</p>
+
+  <h3><span class="h3-mark">第 1 步</span>建梯子：阶梯 + 20 小时计划合并</h3>
+  <div class="prompt-box" data-label="P1 · 学习地图">我想学【主题】，目标是【能做出 X / 通过 Y 考试 / 读懂 Z】，可投入约【N】小时。
+我的现有基础：【…】。
+
+请输出：
+1. 学习阶梯：从我的现状到目标分为 4–6 级，每级写明
+   (a) 要掌握什么 (b) 前置依赖 (c) 一个动手练习 (d) 通关标准（我能闭卷做到什么）
+2. 在这个阶梯上标出 20 小时的分配，明确指出哪些内容这个阶段应该刻意忽略
+3. 新手在这个主题上最常见的 3 个误区，以及如何自查
+先输出第 1 级的详细展开，其余只给概要。</div>
+  <p class="prompt-note"><b>对原文的改动：</b>合并了「20 小时入门」和「学习阶梯」（二者本来就重叠）；新增「通关标准必须是闭卷可验证的行为」——这是防练习幻觉的钩子；加了目标和时间约束，因为没有约束的计划 AI 会写得面面俱到而不可执行。</p>
+
+  <h3><span class="h3-mark">第 2 步</span>学一级：概念讲解的正确打开方式</h3>
+  <div class="prompt-box" data-label="P2 · 概念学习">我正在学【阶梯第 N 级】里的【概念】。请：
+1. 先用一个我熟悉的东西（【我已学的 X】）做类比，讲直觉
+2. 再给严格定义，并指出类比在哪里失效
+3. 给一个最小的具体例子，让我亲手算一遍 / 跑一遍
+4. 问我三个检查理解的问题（由浅入深），等我回答后再继续</div>
+
+  <h3><span class="h3-mark">第 3 步</span>被拷问：检索练习（原文提示词 ③ 加强版）</h3>
+  <div class="prompt-box" data-label="P3 · 检索拷问">请围绕【主题 / 我上传的笔记】对我进行检索练习测试。规则：
+1. 从基础题开始，答对就升难度；混合题型（概念解释 / 计算 / 应用 / 找错）
+2. 模拟考试条件：我不查资料、不回看笔记作答
+3. 我答错时：不直接给答案，先给一个提示让我再试一次；仍错才讲解，并追问一道同类变式题
+4. 全程记录我的错题清单（概念 + 错误类型）
+5. 连续答对 10 题后结束，输出：错题清单、我最薄弱的 2 个概念、建议的复习重点</div>
+  <p class="prompt-note"><b>对原文的改动：</b>加入「先提示再答案」（宾大护栏）、「变式追问」（防止背答案）、「错题清单输出」（喂给第 5 步的间隔重考）。</p>
+
+  <h3><span class="h3-mark">第 4 步</span>讲出来：费曼，以及更狠的「AI 当学生」</h3>
+  <p>原文的费曼提示词已经不错，可直接用。这里补充 Ethan Mollick 提出的反转版——<strong>让 AI 扮演学生，你来当老师</strong>。教一个会犯错、会追问的学生，比单向解释更接近「互动式教学」（Kobayashi 元分析中收益最大的形态）：</p>
+  <div class="prompt-box" data-label="P4 · AI 当学生">你扮演一个聪明但刚接触【主题】的学生，我来教你。规则：
+1. 我每讲一段，你就提出一个真诚的疑问或要求举例
+2. 故意犯 1–2 个该主题典型的新手错误，看我能否发现并纠正
+3. 我解释含糊时追问「为什么」，直到我说清或承认不会
+4. 结束后切回导师身份，给我反馈：哪里讲对了、哪里错了、哪里露馅了</div>
+
+  <h3><span class="h3-mark">第 5 步</span>隔期重考：把遗忘曲线交给 AI 调度</h3>
+  <div class="prompt-box" data-label="P5 · 间隔重考">这是我过去几次测试的错题清单：【粘贴 / 上传】。
+请：
+1. 按「想记多久，间隔多长」的原则，给我排一个 1 天 / 3 天 / 7 天 / 21 天的重考计划
+2. 现在就用错题的变式题（不要原题）考我一轮
+3. 对我连续两次答对的概念，标记为「已巩固」，从清单移除
+4. 输出更新后的错题清单，供下次使用</div>
+  <p class="prompt-note"><b>说明：</b>大量刷卡片仍建议用 Anki（算法更可靠），AI 的角色是<b>生成高质量卡片和变式题</b>。让 AI 把错题清单转成 Anki 可导入格式（正面 / 背面，TSV）只需一句话。</p>
+
+  <h3><span class="h3-mark">第 6 步</span>闭卷验证：唯一可信的度量</h3>
+  <p>每完成一级，关掉 AI，做一次真实条件的检验：闭卷做题、白板推导、从空文件写出程序、口头向真人讲一遍。<strong>通关标准用第 1 步里 AI 给出的那条「闭卷可验证行为」。</strong>过了才升级，不过就回第 2 步。这一步没有提示词——重点恰恰是不用 AI。</p>
+</section>
+
+<!-- ================ 五 ================ -->
+<section id="ch5">
+  <div class="chap-head"><span class="chap-no">V</span><h2>分场景工作流</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">七步闭环是骨架，落到具体场景各有侧重。每个场景给出：典型困境、工作流、专用提示词。</p>
+
+  <!-- 场景1 -->
+  <div class="scene" id="s1">
+    <div class="scene-head">场景一 · 数学基础课<span class="tag">微积分 / 线代 / 概率</span></div>
+    <div class="scene-body">
+      <p class="pain">困境：上课能听懂，作业不会做；对着答案能看懂，考试自己推不出来。——这正是「重读式假学习」的数学版。</p>
+      <ul>
+        <li><strong>预习</strong>：把下节课讲义发给 AI，「用我已学的内容讲直觉，列出这节课的 3 个核心问题」——带着问题去上课，听课变成检索。</li>
+        <li><strong>作业卡住时</strong>：禁止直接拍照求解。用护栏问法（见下）。AI 在数学计算上会犯错，<strong>每一步都要自己验算</strong>，把「给 AI 挑错」本身当练习。</li>
+        <li><strong>看懂答案 ≠ 会</strong>：每道看着答案弄懂的题，立刻让 AI 出一道改了数字和情境的变式题，闭卷重做。</li>
+        <li><strong>章节结束</strong>：自己先默写本章速查表（定义、定理、易错点），再让 AI 补漏——「自己先写」这一步就是检索练习，直接让 AI 生成则退化为重读。</li>
+      </ul>
+      <div class="prompt-box" data-label="S1 · 数学卡题">这道题我卡住了：【题目】。我目前的尝试是：【写出你的思路，哪怕只有一步】。
+不要给我完整解答。请：
+1. 先指出我的思路哪里对、哪里走偏
+2. 给一个最小提示（比如该用哪个定理、往哪个方向变形），让我继续试
+3. 我每提交一步，你只确认或提示，直到我自己做完
+4. 做完后，问我这道题考的核心概念是什么，并出一道变式题</div>
+    </div>
+  </div>
+
+  <!-- 场景2 -->
+  <div class="scene" id="s2">
+    <div class="scene-head">场景二 · 编程与项目实战<span class="tag">防「人肉剪贴板」</span></div>
+    <div class="scene-body">
+      <p class="pain">困境：AI 写的代码能跑，但离开 AI 就写不出来；报错第一反应是粘给 AI 而不是读。一线工程师对此已有成熟对策（Willison、Osmani、Carlini）。</p>
+      <ul>
+        <li><strong>先挣扎规则</strong>：动手任务先自己写 15–30 分钟（或至少写出伪代码方案），再让 AI 给它的版本，对比差异——差异处就是你的知识缺口。</li>
+        <li><strong>Willison 铁律</strong>：<strong>绝不接受没亲眼跑过的代码</strong>。让 AI 先给最简可运行版本，跑通了再迭代加需求。「测试这件事不可外包。」</li>
+        <li><strong>把 AI 代码当同事的 PR 来审</strong>：逐段追问「为什么这样写？有什么局限？还有别的写法吗？」审不懂的代码不许合入自己的项目。</li>
+        <li><strong>报错处理</strong>：先完整读一遍报错并写下自己的猜测，再问 AI——猜对率会以肉眼可见的速度上升。</li>
+        <li><strong>两种模式分开</strong>：探索新领域时可以放开 vibe coding 快速建直觉；但列入「我要掌握」清单的技术，必须走第四章闭环。别让两种模式混在一起自欺。</li>
+        <li><strong>每周一天 No-AI Day</strong>：只用文档和搜索写代码，作为编程能力的「闭卷验证」。</li>
+      </ul>
+      <div class="prompt-box" data-label="S2 · 代码审问">这是你刚给我的代码。在我使用之前，请扮演严格的面试官：
+1. 逐块问我「这段在做什么、为什么需要它」，我来回答
+2. 我答错或答不出的地方，讲解后标记为我的知识缺口
+3. 问我：如果【改一个需求 / 输入异常 / 数据量扩大 100 倍】，哪里要改？
+4. 最后列出这段代码用到的、我还不熟的语言特性或库，按优先级排序</div>
+    </div>
+  </div>
+
+  <!-- 场景3 -->
+  <div class="scene" id="s3">
+    <div class="scene-head">场景三 · 英文论文与技术文档<span class="tag">粗筛 → 精读 → 求证 → 自测</span></div>
+    <div class="scene-body">
+      <p class="pain">困境：一篇 arXiv 论文啃三天，啃完只记得摘要；或者反过来——AI 总结一切，自己一篇都没真正读过。</p>
+      <ul>
+        <li><strong>粗筛</strong>（AI 干）：批量丢给 AI 生成中文摘要 + 「这篇解决什么问题、方法新在哪、和 X 的区别」，决定哪篇值得精读。工具：ChatPaper、gpt_academic。</li>
+        <li><strong>精读</strong>（自己干，AI 陪读）：逐节读原文。读不懂的段落贴给 AI：「逐句解释，但每个关键术语先问我是否已懂」。公式让 AI 补中间推导步骤，<strong>自己在纸上重推一遍</strong>。</li>
+        <li><strong>求证</strong>：AI 对论文细节会幻觉。任何要写进笔记 / 引用的结论，回原文找到具体段落确认。带引用的问答工具（paper-qa 类）可以减少这一步成本。</li>
+        <li><strong>自测</strong>：读完让 AI 就这篇论文出 5 道题（方法细节、为什么这样设计、局限性），或用 P4 把论文讲给「AI 学生」听。讲不出来 = 没读懂。</li>
+      </ul>
+      <div class="prompt-box" data-label="S3 · 精读陪读">我在精读这篇论文的第【N】节（原文粘贴如下）。我是 AI 专业大一学生。
+1. 先问我：这一节在整篇论文的论证里承担什么角色？我答完你再补充
+2. 逐段解释，遇到关键术语先问我是否已懂，我说懂就让我用一句话定义它
+3. 公式给出逐步推导，但在关键一步停下来问我「下一步该怎么变形」
+4. 这一节读完后，出 3 道理解题（其中 1 道关于方法局限性）</div>
+    </div>
+  </div>
+
+  <!-- 场景4 -->
+  <div class="scene" id="s4">
+    <div class="scene-head">场景四 · 英语学习<span class="tag">输入积累 + 输出纠错</span></div>
+    <div class="scene-body">
+      <p class="pain">困境：背单词 App 打卡很勤，开口写作仍是中式英语。原则（李笑来《人人都能用英语》）：英语是「用」出来的，不是「学」出来的——AI 恰好把「用」的成本降到了零。</p>
+      <ul>
+        <li><strong>输入</strong>：在真实阅读（论文、文档、感兴趣的文章）中积累生词，划词翻译 + 生词本，而非孤立背表。让 AI 把生词连同<strong>你遇到它的原句</strong>做成 Anki 卡。</li>
+        <li><strong>口语</strong>：用语音模式做情景对话（点餐、presentation、技术面试），关键设定：「只在我犯错时打断，纠正并用一句话讲语法点，然后继续对话」。影子跟读（shadowing）可用 Enjoy 等工具。</li>
+        <li><strong>写作</strong>：自己先写，AI 只做三件事——改语法、把中式表达替换为地道表达（逐条解释为什么）、用逆向大纲检查逻辑。<strong>不让 AI 代写初稿</strong>，否则练的是 AI 不是你。</li>
+        <li><strong>学术英语顺带练</strong>：场景三的论文精读本身就是最对口的输入材料，遇到的表达直接进生词本，一份时间两份收获。</li>
+      </ul>
+      <div class="prompt-box" data-label="S4 · 口语陪练">我们用英语进行情景对话练习：【场景，如 course project 答辩问答】。
+我的水平大约 CEFR 【B1】。规则：
+1. 你说话的难度略高于我的水平，但不要刻意简化到不自然
+2. 我犯语法或用词错误时，用 [纠正: …] 简短插入，然后继续对话，不要中断节奏
+3. 我说的中式英语，给出母语者的说法
+4. 对话 15 轮后结束，汇总我的错误模式 TOP3，并把今天的纠正做成 Anki 卡（TSV 格式）</div>
+    </div>
+  </div>
+
+  <!-- 场景5 -->
+  <div class="scene" id="s5">
+    <div class="scene-head">场景五 · 新技术栈 / 新语言 20 小时入门<span class="tag">原文提示词 ① 的完全体</span></div>
+    <div class="scene-body">
+      <p class="pain">适用：自学一个新框架（PyTorch / React / Rust…）、一门新语言、一个新领域。这是原文「20 小时」提示词最对口的场景，改良点是把计划锚定在一个真实的小项目上。</p>
+      <ul>
+        <li><strong>选一个真实小项目当锚点</strong>：「学 PyTorch」不可执行，「用 PyTorch 从零训一个 MNIST 分类器并解释每一行」可执行。先让 AI 帮你把模糊愿望转成项目锚点。</li>
+        <li><strong>用 P1 生成 20 小时计划</strong>，每 4–5 小时一级，每级以「项目推进到哪一步」为通关标准。</li>
+        <li><strong>克隆—改造法</strong>（来自 awesome-llm-apps 的用法）：找一个能跑的最小示例，先跑通，再让 AI 带你逐文件讲解，然后<strong>改造它</strong>（换数据集、加功能、改架构）——改造才是学习发生的地方。</li>
+        <li><strong>官方文档优先</strong>：让 AI 推荐资源后，用搜索核实存在性与口碑；教程类内容 AI 经常推荐过时或编造的链接。框架类学习，第一资源永远是官方文档 + 官方 tutorial。</li>
+        <li><strong>结束标准</strong>：20 小时后做一次「空文件测试」——新建空项目，不看任何参考，从零把核心流程写出来。写不出的部分就是下一个 20 小时的起点。</li>
+      </ul>
+      <div class="prompt-box" data-label="S5 · 项目锚点">我想用约 20 小时入门【技术栈】。帮我设计一个「项目锚点」：
+1. 提出 3 个候选小项目，要求：能在 20 小时内完成 70%、覆盖该技术栈的核心概念、做完有成就感
+2. 我选定后，按项目进度切分学习阶梯（每级 4–5 小时），每级写明：推进项目到哪一步、需要学哪些概念、哪些先跳过
+3. 明确告诉我：这 20 小时里刻意不碰什么（以及为什么现在不该碰）</div>
+    </div>
+  </div>
+
+  <!-- 场景6 -->
+  <div class="scene" id="s6">
+    <div class="scene-head">场景六 · 考前复习<span class="tag">速查表 + 错题驱动 + 模拟考</span></div>
+    <div class="scene-body">
+      <p class="pain">困境：复习 = 把课件从头翻到尾，翻完很安心，上考场大脑空白。——重读的流畅感是 Dunlosky 列表里最经典的低效用陷阱。</p>
+      <ul>
+        <li><strong>第一天就做诊断</strong>：把考纲 / 课件丢给 AI，先做一轮覆盖全部章节的快速摸底测试，得到「按薄弱程度排序的章节清单」——复习时间按薄弱度分配，而不是按章节顺序。</li>
+        <li><strong>速查表自己写</strong>：每章闭卷默写一页速查表，AI 对照课件批改补漏。默写出来的部分基本不用再复习。</li>
+        <li><strong>错题驱动</strong>：用 P3 拷问 + P5 间隔重考滚动消灭错题清单，间隔按「距考试还有几天」压缩（如 1/2/4 天）。</li>
+        <li><strong>考前 48 小时</strong>：让 AI 按真实题型和分值结构出整卷模拟考，限时闭卷完成，AI 批改并预测失分点。最后一晚只看速查表和错题清单。</li>
+      </ul>
+      <div class="prompt-box" data-label="S6 · 全真模拟">根据我上传的考纲和历年题风格，出一份全真模拟卷：
+1. 题型与分值结构对齐【期末卷：选择 30 / 计算 50 / 证明 20】
+2. 难度分布：60% 基础、30% 中等、10% 拔高
+3. 我限时【120】分钟闭卷作答后把答案发你
+4. 批改时给：每题得分点分析、总分、按失分聚类的「考前 24 小时抢分清单」</div>
+    </div>
+  </div>
+
+  <!-- 场景7 -->
+  <div class="scene" id="s7">
+    <div class="scene-head">场景七 · AI 工作流与工具本身<span class="tag">AI 专业特供</span></div>
+    <div class="scene-body">
+      <p class="pain">AI 专业学生的特殊课题：学习对象本身就是 AI（提示工程、Agent、Claude Code、新模型新范式）。这个领域没有教科书，迭代以月计，必须建立「从一手实践者学习」的习惯。</p>
+      <ul>
+        <li><strong>元技能优先</strong>：先系统学提示工程（Anthropic 官方交互式教程是最佳起点）——「会问」是所有 AI 辅助学习的乘数。</li>
+        <li><strong>跟实践者不跟课本</strong>：Karpathy 的视频与 nanoGPT/LLM101n、Simon Willison 的博客、Anthropic/OpenAI 官方 cookbook 与文档，比任何二手教程都新且准。</li>
+        <li><strong>用 AI 学 AI 的递归用法</strong>：让 Claude 解释它自己的 API 文档、让它带你读 Transformer 论文、用 Claude Code 的 learning 输出风格写项目（它会留 TODO 让你亲手补核心代码）。</li>
+        <li><strong>每月一个微型复现</strong>：挑一个新东西（一篇热门论文的玩具版、一个 MCP server、一个 agent 模式），用场景五的「项目锚点」法 10–20 小时复现。复现过的东西才真正属于你。</li>
+        <li><strong>把学习成果沉淀为工作流资产</strong>：学到的好提示词进自己的提示词库；重复性流程写成 skill / 脚本。你的 Nichijo 项目就适合放这些。</li>
+      </ul>
+      <div class="prompt-box" data-label="S7 · 论文玩具复现">我想用一个周末复现【论文 / 技术】的玩具版本来真正理解它。
+1. 先确认：它的核心思想剥掉工程优化后是什么？最小可验证版本长什么样？
+2. 设计一个「玩具配置」：小数据集、小模型、CPU 或单卡可跑、2 小时内出结果
+3. 我来写代码，你只在我卡住时给提示（遵守导师护栏）
+4. 跑通后，问我 5 个问题检验我是否理解了「为什么它有效」，再讨论玩具版和原版的差距在哪</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================ 六 ================ -->
+<section id="ch6">
+  <div class="chap-head"><span class="chap-no">VI</span><h2>防退化机制与红线</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">第二章的警示证据不是用来吓人的，是用来设计制度的。四个机制 + 两条红线。</p>
+
+  <h3><span class="h3-mark">§</span>四个防退化机制</h3>
+  <table>
+    <tr><th style="width:10em">机制</th><th>做法</th><th style="width:14em">针对的风险</th></tr>
+    <tr><td><b>先挣扎后求助</b></td><td>任何问题先独立尝试 15–30 分钟（写下思路），再开口问 AI，且问的时候附上自己的尝试</td><td>认知卸载——大脑发现「反正有 AI」就拒绝启动</td></tr>
+    <tr><td><b>定期闭卷</b></td><td>每级一次闭卷验证；每周一天 No-AI Day；以闭卷表现而非练习手感评估自己</td><td>练习幻觉（宾大实验的 +48% vs −17%）</td></tr>
+    <tr><td><b>必复述</b></td><td>AI 讲过的东西，关掉对话用自己的话写进笔记；写不出来就回去重学</td><td>元认知惰性——把「AI 懂了」误当「我懂了」</td></tr>
+    <tr><td><b>反向校验</b></td><td>对 AI 的关键输出保持「它可能错」的默认姿态：数学要验算、引用要回查、代码要跑、资源要搜索核实</td><td>幻觉污染笔记；同时校验本身就是高质量练习</td></tr>
+  </table>
+
+  <h3><span class="h3-mark">§</span>两条红线</h3>
+  <div class="callout red">
+    <b>红线一：作业与论文的署名劳动不外包。</b>两家官方口径一致：用 AI 深化理解、获取反馈属于正当学习；让 AI 代写你署名提交的句子和代码是「适得其反」的用法——不仅是诚信问题，宾大与 BJET 的实验说明你同时放弃了那次练习的全部学习价值。需要时遵守课程的 AI 政策，OpenAI 的建议值得采纳：把 AI 对话链接列入参考文献，主动透明。
+  </div>
+  <div class="callout red">
+    <b>红线二：高阶思维不外包。</b>Anthropic 的数据显示学生最爱让 AI 干的恰是「创造」和「分析」——而这正是大学要训练的核心能力。分工应该倒过来：<b>AI 干低阶活（检索、格式化、生成练习题、整理资料），你干高阶活（推理、设计、判断、综合）。</b>每次用 AI 前一秒钟自检：我把哪一层认知交出去了？
+  </div>
+
+  <div class="callout green">
+    <b>最后，一个积极的提醒。</b>证据同样表明：用对了，一个带护栏的 AI 导师能以两倍于优质课堂的效率工作，而且随叫随到、永不疲倦、容许你问任何「蠢问题」。Bloom 在 1984 年发现一对一辅导能让普通学生超越 98% 的同伴时，结论是悲观的——这种待遇太贵了。现在它免费。差距只在于：你是让它替你思考，还是逼你思考。
+  </div>
+</section>
+
+<!-- ================ 附录 A ================ -->
+<section id="appa">
+  <div class="chap-head"><span class="chap-no">A</span><h2>附录 A · 资源清单</h2></div>
+  <div class="chap-rule"></div>
+  <p>星数为 2026 年 6 月实测数量级。按用途分组，<strong>不必全装</strong>——每组选一个用顺手即可。</p>
+
+  <h3><span class="h3-mark">§</span>学 AI / LLM 本身</h3>
+  <table>
+    <tr><th style="width:16em">资源</th><th style="width:5em">Stars</th><th>用途与建议</th></tr>
+    <tr><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">anthropics/prompt-eng-interactive-tutorial</a></td><td>36k</td><td>官方交互式提示工程教程。<b>建议第一个学</b>，元技能</td></tr>
+    <tr><td><a href="https://github.com/mlabonne/llm-course">mlabonne/llm-course</a></td><td>80k</td><td>LLM 学习路线图 + Colab 笔记本，进阶 LLM 最清晰的 roadmap</td></tr>
+    <tr><td><a href="https://github.com/microsoft/generative-ai-for-beginners">microsoft/generative-ai-for-beginners</a></td><td>112k</td><td>微软官方 21 课 GenAI 入门，体系化、附作业</td></tr>
+    <tr><td><a href="https://github.com/Shubhamsaboo/awesome-llm-apps">Shubhamsaboo/awesome-llm-apps</a></td><td>114k</td><td>100+ 可跑的 Agent/RAG 项目，「克隆—改造」法的素材库</td></tr>
+    <tr><td><a href="https://github.com/karpathy/LLM101n">karpathy/LLM101n</a> / <a href="https://eurekalabs.ai">Eureka Labs</a></td><td>37k</td><td>Karpathy 的从零构建课程，learning by building 典范</td></tr>
+  </table>
+
+  <h3><span class="h3-mark">§</span>学习工作流工具</h3>
+  <table>
+    <tr><th style="width:16em">资源</th><th style="width:5em">Stars</th><th>用途与建议</th></tr>
+    <tr><td><a href="https://github.com/JushBJJ/Mr.-Ranedeer-AI-Tutor">Mr.-Ranedeer-AI-Tutor</a></td><td>30k</td><td>最著名的 AI 导师提示词（可配置深度与风格），值得拆解其结构来改进自己的 P0</td></tr>
+    <tr><td><a href="https://github.com/danielmiessler/Fabric">danielmiessler/Fabric</a></td><td>42k</td><td>提示词模式框架：extract_wisdom（视频/文章→笔记）、to_flashcards（→Anki 卡）等可复用管线</td></tr>
+    <tr><td><a href="https://github.com/binary-husky/gpt_academic">binary-husky/gpt_academic</a></td><td>71k</td><td>论文全文对照翻译 / 总结 / 润色，中文学生读论文一站式</td></tr>
+    <tr><td><a href="https://github.com/kaixindelele/ChatPaper">kaixindelele/ChatPaper</a></td><td>20k</td><td>arXiv 批量摘要，论文粗筛</td></tr>
+    <tr><td><a href="https://github.com/Future-House/paper-qa">Future-House/paper-qa</a></td><td>9k</td><td>带原文引用的文献问答，治幻觉</td></tr>
+    <tr><td><a href="https://github.com/yetone/openai-translator">yetone/openai-translator</a></td><td>25k</td><td>划词翻译 + 生词本，阅读中积累英语</td></tr>
+    <tr><td><a href="https://github.com/ZuodaoTech/everyone-can-use-english">everyone-can-use-english</a></td><td>35k</td><td>《人人都能用英语》方法论 + Enjoy AI 跟读应用</td></tr>
+  </table>
+
+  <h3><span class="h3-mark">§</span>必读文章（按优先级）</h3>
+  <ol>
+    <li><a href="https://www.oneusefulthing.org/p/the-future-of-education-in-a-world">Ethan Mollick — The future of education in a world of AI</a>：AI 的七种学习用法（tutor / coach / mentor / simulator / AI-student…），本手册 P4 的出处。</li>
+    <li><a href="https://simonwillison.net/2025/Mar/11/using-llms-for-code/">Simon Willison — Here's how I use LLMs to help me write code</a>：场景二的主要依据，「过度自信的结对搭档」心智模型。</li>
+    <li><a href="https://addyo.substack.com/p/avoiding-skill-atrophy-in-the-age">Addy Osmani — Avoiding Skill Atrophy in the Age of AI</a>：「先挣扎、后求助、必复述」防退化机制的出处。</li>
+    <li><a href="https://nicholas.carlini.com/writing/2024/how-i-use-ai.html">Nicholas Carlini — How I Use "AI"</a>：50 段真实对话，看顶级研究员怎么用 AI 学新东西。</li>
+    <li><a href="https://www.youtube.com/watch?v=EWvNQjAaOHw">Andrej Karpathy — How I use LLMs</a>（视频 2h11m）：大量用 LLM 学概念、读文档的亲身演示。</li>
+    <li><a href="https://nmn.gl/blog/ai-illiterate-programmers">Namanyay Goel — AI is Creating a Generation of Illiterate Programmers</a>：反面教材自述，No-AI Day 的出处。</li>
+  </ol>
+</section>
+
+<!-- ================ 附录 B ================ -->
+<section id="appb">
+  <div class="chap-head"><span class="chap-no">B</span><h2>附录 B · 参考来源</h2></div>
+  <div class="chap-rule"></div>
+
+  <h3><span class="h3-mark">§</span>官方指南</h3>
+  <ul class="evidence" style="font-size:.86rem">
+    <li>Anthropic — Claude for Education：<a href="https://www.anthropic.com/news/introducing-claude-for-education">anthropic.com/news/introducing-claude-for-education</a></li>
+    <li>Anthropic — Education Report（57 万条学生对话分析）：<a href="https://www.anthropic.com/news/anthropic-education-report-how-university-students-use-claude">anthropic.com/news/anthropic-education-report…</a></li>
+    <li>Anthropic — 教育方案与 Learning Mode：<a href="https://claude.com/solutions/education">claude.com/solutions/education</a>；AI Fluency 课程：<a href="https://www.anthropic.com/learn">anthropic.com/learn</a></li>
+    <li>OpenAI — Study Mode：<a href="https://openai.com/index/chatgpt-study-mode/">openai.com/index/chatgpt-study-mode</a>；FAQ：<a href="https://help.openai.com/en/articles/11780217-chatgpt-study-mode-faq">help.openai.com/…/chatgpt-study-mode-faq</a></li>
+    <li>OpenAI — A Student's Guide to Writing with ChatGPT：<a href="https://openai.com/chatgpt/use-cases/student-writing-guide/">openai.com/chatgpt/use-cases/student-writing-guide</a></li>
+    <li>OpenAI Academy — Prompt Pack for Students：<a href="https://academy.openai.com/public/clubs/higher-education-05x4z/resources/prompt-pack-for-students">academy.openai.com/…/prompt-pack-for-students</a></li>
+  </ul>
+
+  <h3><span class="h3-mark">§</span>学习科学与 AI tutor 实证</h3>
+  <ul class="evidence" style="font-size:.86rem">
+    <li>Roediger &amp; Karpicke (2006) 检索练习：<a href="https://journals.sagepub.com/doi/10.1111/j.1467-9280.2006.01693.x">journals.sagepub.com</a></li>
+    <li>Dunlosky et al. (2013) 十种学习技术评估：<a href="https://journals.sagepub.com/doi/abs/10.1177/1529100612453266">journals.sagepub.com</a></li>
+    <li>Cepeda et al. (2006) 间隔练习元分析：<a href="https://pubmed.ncbi.nlm.nih.gov/16719566/">pubmed.ncbi.nlm.nih.gov</a></li>
+    <li>Bisra et al. (2018) 自我解释元分析：<a href="https://link.springer.com/article/10.1007/s10648-018-9434-x">springer.com</a>；Kobayashi (2019) 以教促学元分析：<a href="https://onlinelibrary.wiley.com/doi/10.1111/jpr.12221">wiley.com</a></li>
+    <li>Rohrer &amp; Taylor (2007) 交错练习：<a href="https://digitalcommons.usf.edu/psy_facpub/1760/">digitalcommons.usf.edu</a></li>
+    <li>Kestin et al. (2025) 哈佛 AI tutor RCT：<a href="https://www.nature.com/articles/s41598-025-97652-6">nature.com/articles/s41598-025-97652-6</a></li>
+    <li>Bastani et al. (2025) Generative AI Can Harm Learning，PNAS：<a href="https://www.pnas.org/doi/10.1073/pnas.2422633122">pnas.org</a></li>
+    <li>Fan et al. (2025) 元认知惰性，BJET：<a href="https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13544">wiley.com</a></li>
+    <li>Gerlich (2025) AI 与批判性思维：<a href="https://www.mdpi.com/2075-4698/15/1/6">mdpi.com</a>；Kosmyna et al. (2025) Your Brain on ChatGPT：<a href="https://arxiv.org/abs/2506.08872">arxiv.org/abs/2506.08872</a></li>
+    <li>Bloom (1984) 2 Sigma：<a href="https://journals.sagepub.com/doi/10.3102/0013189X013006004">journals.sagepub.com</a>；VanLehn (2011) 效应修正：<a href="https://www.tandfonline.com/doi/abs/10.1080/00461520.2011.611369">tandfonline.com</a></li>
+    <li>CS50.ai (SIGCSE 2024)：<a href="https://dl.acm.org/doi/10.1145/3626253.3635427">dl.acm.org</a>；Khan Academy 效果声明：<a href="https://blog.khanacademy.org/khan-academy-efficacy-results-november-2024/">blog.khanacademy.org</a></li>
+  </ul>
+
+  <footer>
+    <p>本手册由阿卡酱基于三路并行调研（官方指南 / GitHub 与博客 / 学习科学论文）整理，2026 年 6 月 10 日。证据强度已逐条标注：RCT 与元分析为强证据，描述性与相关性研究仅作方向参考。所有提示词均可直接复制使用，建议先从 <b>P0 导师护栏</b> 开始。</p>
+    <p style="margin-top:.5rem">学而不思则罔，思而不学则殆。——《论语·为政》</p>
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var map = {};
+  links.forEach(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    if (!(id in map)) map[id] = a;
+  });
+  // 子场景与子节也参与高亮
+  var ids = ['ch0','ch1','ch2','ch3','ch4','ch5','s1','s2','s3','s4','s5','s6','s7','ch6','appa','appb'];
+  var sections = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+  function onScroll() {
+    var pos = window.scrollY + window.innerHeight * 0.25;
+    var current = sections[0];
+    sections.forEach(function (sec) {
+      if (sec.offsetTop <= pos) current = sec;
+    });
+    links.forEach(function (a) { a.classList.remove('active'); });
+    var id = current.id;
+    // 场景子项高亮自身，同时章节链接也亮
+    if (map[id]) map[id].classList.add('active');
+    if (/^s\d$/.test(id) && map['ch5']) map['ch5'].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
