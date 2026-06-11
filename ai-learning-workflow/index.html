@@ -163,6 +163,15 @@
   }
   .prompt-note { font-size: .86rem; color: var(--ink-faint); margin: -0.9rem 0 1.6rem 0; }
   .prompt-note b { color: var(--ink-soft); }
+  .prompt-box.has-copy { padding-bottom: 2.6rem; }
+  .prompt-box .copy-btn {
+    position: absolute; bottom: .55rem; right: .8rem;
+    font-family: var(--serif); font-size: .74rem; letter-spacing: .2em;
+    background: transparent; color: #cfc5a9; border: 1px solid #6b6354;
+    padding: .12rem .8rem; cursor: pointer; border-radius: 2px; transition: all .15s;
+  }
+  .prompt-box .copy-btn:hover { color: #f7f3ea; border-color: #cfc5a9; }
+  @media print { .prompt-box .copy-btn { display: none; } }
 
   table {
     width: 100%; border-collapse: collapse; margin: 1.3rem 0 1.8rem 0;
@@ -254,6 +263,8 @@
   <a href="#appa">附录 A · 资源清单</a>
   <a href="#appb">附录 B · 参考来源</a>
   <a href="#appc">附录 C · Karpathy 方法论速查</a>
+  <a href="#appd">附录 D · Claude Code 特化</a>
+  <a href="#appe">附录 E · Prompt 速查总表</a>
 </nav>
 
 <main>
@@ -265,7 +276,7 @@
   <p class="subtitle">从一篇「6 个提示词」的公众号文章出发，对照 Anthropic 与 OpenAI 的官方教育指南、学习科学论文、GitHub 高星项目与一线工程师的实践，整理出一套面向 AI 专业大学生、偏自学与实战的可执行工作流。</p>
   <div class="meta">
     <span>编写 <b>阿卡酱</b></span>
-    <span>日期 <b>2026-06-10</b>（2026-06-11 增补第七章、附录 C）</span>
+    <span>日期 <b>2026-06-10</b>（2026-06-11 增补第七章、附录 C–E）</span>
     <span>调研来源 <b>30+ 一手来源（官方 / 论文 / GitHub / 博客）</b></span>
   </div>
 </header>
@@ -352,7 +363,7 @@
   <h3><span class="h3-mark">§</span>Anthropic：Learning Mode</h3>
   <ul>
     <li>核心机制是<strong>引导而非给答案</strong>：用 "How would you approach this?"（你会怎么入手？）代替直接解答，用 "What evidence supports your conclusion?"（什么证据支持你的结论？）追问。</li>
-    <li>已不限教育版：普通 Claude 用户可在设置 / styles 中启用 Learning 风格；Claude Code 也有 <code>/learning</code> 输出风格（边写边留 TODO 让你补关键代码）。</li>
+    <li>已不限教育版：普通 Claude 用户可在设置 / styles 中启用 Learning 风格；Claude Code 也内置 Learning 输出风格（边写边留 TODO 让你补关键代码，经 <code>/config</code> → Output style 启用）。</li>
     <li>配套免费课程：Anthropic Academy 的 <em>AI Fluency for Students</em>。</li>
   </ul>
 
@@ -840,6 +851,72 @@
 
   <p class="evidence"><b>本附录来源：</b><a href="https://karpathy.ai">karpathy.ai</a>；<a href="https://x.com/karpathy/status/1756380066580455557">「学习的短视频化」原帖（X，2024-02）</a>；<a href="https://www.dwarkesh.com/p/andrej-karpathy">Dwarkesh 访谈：AGI is still a decade away（2025-10）</a>；<a href="https://philippdubach.com/posts/karpathys-software-3.0-playbook/">Sequoia AI Ascent 2026 演讲要点</a>；<a href="https://www.youtube.com/watch?v=EWvNQjAaOHw">How I use LLMs（2025-02）</a>；<a href="https://karpathy.github.io/2019/04/25/recipe/">A Recipe for Training Neural Networks（2019）</a>；<a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">llm-wiki gist（2026-04）</a>。</p>
 
+</section>
+
+<!-- ================ 附录 D ================ -->
+<section id="appd">
+  <div class="chap-head"><span class="chap-no">D</span><h2>附录 D · Claude Code 特化</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">手册正文的提示词默认在聊天版 Claude / ChatGPT 里用（依赖 Projects、自定义指令）。如果你的主力是 Claude Code——没有 Projects，但它的替代品全部更工程化、更适合长期学习：<strong>护栏变成文件、提示词变成命令、错题清单变成可被读写的数据。</strong>对照表如下。</p>
+
+  <table>
+    <tr><th style="width:10em">聊天版概念</th><th style="width:13em">Claude Code 对应物</th><th>怎么用在学习上</th></tr>
+    <tr><td>Project 系统指令</td><td><b>CLAUDE.md</b>（分层加载）</td><td>每门课 / 每个主题建一个目录，目录里的 CLAUDE.md 写入 P0 护栏——在这个目录里打开 Claude Code，<b>护栏自动生效，永不忘记</b>。跨科目的通用规则放全局 <code>~/.claude/CLAUDE.md</code></td></tr>
+    <tr><td>Learning Mode</td><td><b>内置 Learning / Explanatory 输出风格</b><br><span class="evidence">经 <code>/config</code> → Output style 启用，或在 settings 设 <code>"outputStyle": "Learning"</code>（旧 <code>/output-style</code> 命令已于 v2.1.91 移除）</span></td><td>Learning 风格写代码时会留 <code>TODO(human)</code> 让你亲手补核心段——场景二「先挣扎」的官方实现；Explanatory 风格边做边讲设计取舍</td></tr>
+    <tr><td>反复粘贴的提示词</td><td><b>Skill / 自定义斜杠命令</b><br><span class="evidence"><code>.claude/skills/quiz/SKILL.md</code>（新写法）或 <code>.claude/commands/quiz.md</code>（旧写法，仍有效），两者都生成 <code>/quiz</code></span></td><td>把附录 E 总表里常用的提示词存成命令：<code>/quiz 线代第三章</code>、<code>/feynman</code>、<code>/mock-exam</code>——一次保存，永久复用（场景七「沉淀为工作流资产」的落地）</td></tr>
+    <tr><td>Project 知识库</td><td><b>目录里的文件本身</b></td><td>课件 PDF 丢进 <code>materials/</code> 直接让它读；错题清单是 <code>mistakes.md</code>，P3/P5 直接读写它，还能一句话转成 Anki 可导入的 TSV——这套目录恰好就是第七章 LLM Wiki 的雏形</td></tr>
+    <tr><td>独立的考官</td><td><b>Subagent</b>（<code>.claude/agents/examiner.md</code>）</td><td>出题批改用独立上下文的考官 agent——它看不到你主对话里刚讨论过的笔记，<b>不会被「剧透」</b>，更接近真实考试条件</td></tr>
+    <tr><td>跨会话记忆</td><td><b>progress.md + 记忆功能</b></td><td>在 CLAUDE.md 里约定「每次测试结束把薄弱点追加进 progress.md」——下次会话自动接续，相当于自带学习档案的导师</td></tr>
+  </table>
+
+  <h3><span class="h3-mark">§</span>「学习项目」目录模板</h3>
+  <div class="prompt-box" data-label="D1 · 目录模板">E:\Study\linear-algebra\
+├── CLAUDE.md        # P0 护栏全文 + 本课约定（见下）
+├── materials/       # 课件 PDF、讲义（只读源）
+├── notes/           # 你的笔记、自写速查表
+├── mistakes.md      # 错题清单（概念 | 错误类型 | 日期 | 巩固状态）
+└── progress.md      # 学习日志与薄弱点
+
+CLAUDE.md 在 P0 之外加三条：
+- mistakes.md 的条目格式与更新规则
+- 每次测试结束后更新 progress.md
+- materials/ 只读，不得修改</div>
+
+  <div class="callout"><b>两个注意点。</b>① Claude Code 的默认人格是「干活工具」，倾向直接替你做完——护栏必须写进 CLAUDE.md 文件，口头说一次会随会话结束而失效；② 终端里做 P4 口头费曼不方便，改为打字讲解，或用系统语音输入。学术向工作流可参考 <a href="https://effortlessacademic.com/claude-code-and-cowork-for-academics-beginner-guide-part-1/">The Effortless Academic 的 Claude Code 学术指南</a>。</div>
+</section>
+
+<!-- ================ 附录 E ================ -->
+<section id="appe">
+  <div class="chap-head"><span class="chap-no">E</span><h2>附录 E · Prompt 速查总表</h2></div>
+  <div class="chap-rule"></div>
+  <p class="lead">按「你此刻想干什么」查找该用哪个提示词。编号可点击直达原文；<strong>每个提示词框右下角都有「复制」按钮，一键复制全文</strong>。</p>
+
+  <table>
+    <tr><th style="width:17em">你想干什么</th><th style="width:9em">用哪个</th><th>要点提醒</th></tr>
+    <tr><td colspan="3" style="background:var(--paper-deep);font-weight:bold;letter-spacing:.2em">通用闭环（第四章）</td></tr>
+    <tr><td>给 AI 立学习导师规矩（一切的前提，一次性）</td><td><a href="#p0">P0 导师护栏</a></td><td>存进 CLAUDE.md / 自定义指令，别口头说</td></tr>
+    <tr><td>规划一个新主题：学习阶梯 + 20 小时分配</td><td><a href="#p1">P1 学习地图</a></td><td>先想清楚目标和可投入时长</td></tr>
+    <tr><td>学一个新概念，要直觉 + 严格定义 + 例子</td><td><a href="#p2">P2 概念学习</a></td><td>告诉它你已学过什么，类比才会准</td></tr>
+    <tr><td>自测掌握程度 / 暴露理解漏洞</td><td><a href="#p3">P3 检索拷问</a></td><td>闭卷作答；让它输出错题清单并保存</td></tr>
+    <tr><td>检验「我真的懂了吗」/ 准备给别人讲</td><td><a href="#p4">P4 AI 当学生</a></td><td>它会故意犯错，看你能否抓住</td></tr>
+    <tr><td>安排复习 / 滚动消灭错题</td><td><a href="#p5">P5 间隔重考</a></td><td>变式题不要原题；大量刷卡仍用 Anki</td></tr>
+    <tr><td colspan="3" style="background:var(--paper-deep);font-weight:bold;letter-spacing:.2em">分场景（第五章）</td></tr>
+    <tr><td>数学题卡住了，不想直接看答案</td><td><a href="#s1">S1 数学卡题</a></td><td>必须附上自己的尝试，哪怕只有一步</td></tr>
+    <tr><td>AI 给了代码，用之前确认自己真的懂</td><td><a href="#s2">S2 代码审问</a></td><td>审不懂的代码不许合入</td></tr>
+    <tr><td>精读论文 / 文档的某一节</td><td><a href="#s3">S3 精读陪读</a></td><td>关键结论回原文核对</td></tr>
+    <tr><td>练英语口语 / 情景对话</td><td><a href="#s4">S4 口语陪练</a></td><td>结束后错误 TOP3 转 Anki 卡</td></tr>
+    <tr><td>20 小时入门一个新技术栈 / 新语言</td><td><a href="#s5">S5 项目锚点</a></td><td>先选定小项目再开始学</td></tr>
+    <tr><td>考前出全真模拟卷</td><td><a href="#s6">S6 全真模拟</a></td><td>限时、闭卷，按真实题型分值</td></tr>
+    <tr><td>周末复现一篇论文 / 新技术的玩具版</td><td><a href="#s7">S7 玩具复现</a></td><td>剥掉工程优化，2 小时能出结果的配置</td></tr>
+    <tr><td colspan="3" style="background:var(--paper-deep);font-weight:bold;letter-spacing:.2em">其他</td></tr>
+    <tr><td>写论文 / 报告时要逐段反馈</td><td><a href="#ch3">官方 · Anthropic</a></td><td>清晰度 / 证据 / 逻辑三轴</td></tr>
+    <tr><td>为考试排自适应学习计划</td><td><a href="#ch3">官方 · OpenAI</a></td><td>附上成绩和大纲效果更好</td></tr>
+    <tr><td>为长期主题建个人知识库</td><td><a href="#w1">W1 初始化</a></td><td>一题一 wiki，别建「万物 wiki」</td></tr>
+    <tr><td>在 Claude Code 里搭学习项目目录</td><td><a href="#appd">D1 目录模板</a></td><td>护栏写进 CLAUDE.md</td></tr>
+  </table>
+
+  <p class="evidence">速记：日常学习只需要记住三个——<b>P0 开局立规矩，P3 学完必拷问，P5 隔期再重考</b>。其余按表查。</p>
+
   <footer>
     <p>本手册由阿卡酱基于三路并行调研（官方指南 / GitHub 与博客 / 学习科学论文）整理，2026 年 6 月 10 日。证据强度已逐条标注：RCT 与元分析为强证据，描述性与相关性研究仅作方向参考。所有提示词均可直接复制使用，建议先从 <b>P0 导师护栏</b> 开始。</p>
     <p style="margin-top:.5rem">学而不思则罔，思而不学则殆。——《论语·为政》</p>
@@ -858,7 +935,7 @@
     if (!(id in map)) map[id] = a;
   });
   // 子场景与子节也参与高亮
-  var ids = ['ch0','ch1','ch2','ch3','ch4','ch5','s1','s2','s3','s4','s5','s6','s7','ch6','ch7','appa','appb','appc'];
+  var ids = ['ch0','ch1','ch2','ch3','ch4','ch5','s1','s2','s3','s4','s5','s6','s7','ch6','ch7','appa','appb','appc','appd','appe'];
   var sections = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
 
   function onScroll() {
@@ -875,6 +952,35 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // 提示词框：自动编号锚点 + 一键复制
+  document.querySelectorAll('.prompt-box').forEach(function (box) {
+    var text = box.textContent.trim();
+    var tok = (box.getAttribute('data-label') || '').split('·')[0].trim().toLowerCase();
+    if (/^[psw][0-9]$/.test(tok) && !document.getElementById(tok)) box.id = tok;
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.addEventListener('click', function () {
+      function done(ok) {
+        btn.textContent = ok ? '已复制 ✓' : '复制失败';
+        setTimeout(function () { btn.textContent = '复制'; }, 1600);
+      }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done(ok);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+      } else fallback();
+    });
+    box.classList.add('has-copy');
+    box.appendChild(btn);
+  });
 })();
 </script>
 </body>
