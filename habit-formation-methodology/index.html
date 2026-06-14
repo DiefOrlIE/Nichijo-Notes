@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>习惯的科学：为什么打球不需要坚持</title>
+<style>
+  :root {
+    --paper: #faf7f1;
+    --paper-deep: #f3eee4;
+    --ink: #211c16;
+    --ink-soft: #5d564c;
+    --rule: #d9d1c2;
+    --rule-dark: #8f8678;
+    --accent: #8c2f24;
+    --accent-soft: #f0e2dd;
+    --note-bg: #f5f0e3;
+    --serif: "Times New Roman", "SimSun", "宋体", "Noto Serif SC", serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--serif);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.9;
+    font-size: 17px;
+    background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0 1px, transparent 1px 3px);
+  }
+
+  /* ---------- 布局 ---------- */
+  .layout { display: flex; max-width: 1180px; margin: 0 auto; }
+  nav.toc {
+    width: 250px; flex-shrink: 0;
+    position: sticky; top: 0; height: 100vh;
+    padding: 56px 28px 40px 24px;
+    border-right: 1px solid var(--rule);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  nav.toc .toc-title {
+    font-size: 13px; letter-spacing: 0.35em; color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule-dark); padding-bottom: 10px; margin-bottom: 18px;
+  }
+  nav.toc a {
+    display: block; text-decoration: none; color: var(--ink-soft);
+    font-size: 13.5px; line-height: 1.5; padding: 5px 0 5px 12px;
+    border-left: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav.toc a:hover { color: var(--accent); }
+  nav.toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: bold; }
+  nav.toc a.lv2 { padding-left: 26px; font-size: 12.5px; color: #837b6f; }
+  nav.toc a.lv2.active { color: var(--accent); }
+
+  main { flex: 1; min-width: 0; padding: 0 56px 120px; }
+  @media (max-width: 900px) {
+    nav.toc { display: none; }
+    main { padding: 0 22px 80px; }
+  }
+
+  /* ---------- 封面 ---------- */
+  header.cover { padding: 92px 0 56px; border-bottom: 3px double var(--rule-dark); margin-bottom: 64px; }
+  .cover .kicker {
+    color: var(--accent); font-size: 14px; letter-spacing: 0.55em; margin-bottom: 28px;
+  }
+  .cover h1 { font-size: 42px; line-height: 1.45; font-weight: bold; margin-bottom: 18px; }
+  .cover .subtitle { font-size: 19px; color: var(--ink-soft); margin-bottom: 40px; }
+  .cover .meta {
+    font-size: 13.5px; color: var(--ink-soft); line-height: 2.1;
+    border-top: 1px solid var(--rule); padding-top: 18px; max-width: 460px;
+  }
+  .cover .meta b { color: var(--ink); font-weight: bold; }
+
+  /* ---------- 章节 ---------- */
+  section { margin-bottom: 88px; }
+  .chap-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
+  .chap-no {
+    font-size: 64px; color: var(--accent); font-weight: bold; line-height: 1;
+    font-style: italic; opacity: 0.85;
+  }
+  h2 { font-size: 28px; font-weight: bold; line-height: 1.4; }
+  .chap-rule { border: none; border-top: 1px solid var(--rule-dark); margin: 18px 0 8px; }
+  .chap-intro { color: var(--ink-soft); font-size: 15.5px; margin-bottom: 36px; padding-top: 8px; }
+
+  h3 {
+    font-size: 20px; font-weight: bold; margin: 48px 0 16px;
+    padding-left: 14px; border-left: 4px solid var(--accent); line-height: 1.5;
+  }
+  h4 { font-size: 17px; font-weight: bold; margin: 30px 0 10px; color: var(--ink); }
+  p { margin-bottom: 16px; text-align: justify; }
+  b, strong { font-weight: bold; }
+  .accent { color: var(--accent); font-weight: bold; }
+  sup.ref { font-size: 11px; color: var(--accent); font-family: "Times New Roman", serif; }
+  sup.ref a { color: var(--accent); text-decoration: none; }
+  ul, ol { margin: 0 0 18px 1.8em; }
+  li { margin-bottom: 8px; text-align: justify; }
+
+  /* ---------- 引语 ---------- */
+  blockquote.epigraph {
+    margin: 0 0 34px; padding: 4px 0 4px 22px;
+    border-left: 3px solid var(--rule-dark);
+    color: var(--ink-soft); font-style: italic; font-size: 16px;
+  }
+  blockquote.epigraph .who { display: block; font-style: normal; font-size: 13px; margin-top: 8px; letter-spacing: 0.1em; }
+
+  /* ---------- 三线表 ---------- */
+  .tbl-wrap { overflow-x: auto; margin: 26px 0 10px; }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.7;
+    border-top: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink);
+  }
+  thead th {
+    border-bottom: 1px solid var(--ink); font-weight: bold; padding: 10px 12px;
+    text-align: left; white-space: nowrap;
+  }
+  tbody td { padding: 9px 12px; vertical-align: top; }
+  tbody tr:not(:last-child) td { border-bottom: 1px solid var(--rule); }
+  .tbl-caption {
+    font-size: 13.5px; color: var(--ink-soft); margin-bottom: 34px; text-align: center;
+  }
+  .tbl-caption b { color: var(--ink); }
+  td.c, th.c { text-align: center; }
+  .yes { color: #2e6b34; font-weight: bold; }
+  .no { color: var(--accent); font-weight: bold; }
+  .half { color: #a07a1f; font-weight: bold; }
+
+  /* ---------- 批注框 ---------- */
+  .note {
+    background: var(--note-bg); border-left: 4px solid var(--accent);
+    padding: 18px 22px; margin: 28px 0; font-size: 15.5px;
+  }
+  .note .note-tag {
+    color: var(--accent); font-weight: bold; letter-spacing: 0.25em; font-size: 13px;
+    display: block; margin-bottom: 8px;
+  }
+  .note p:last-child { margin-bottom: 0; }
+
+  .warn {
+    background: transparent; border: 1px solid var(--rule-dark);
+    padding: 18px 22px; margin: 28px 0; font-size: 15px; color: var(--ink-soft);
+  }
+  .warn .note-tag {
+    color: var(--ink); font-weight: bold; letter-spacing: 0.25em; font-size: 13px;
+    display: block; margin-bottom: 8px;
+  }
+  .warn p:last-child { margin-bottom: 0; }
+
+  /* ---------- 工具卡 ---------- */
+  .tool {
+    border: 1px solid var(--rule-dark); margin: 30px 0; background: #fff;
+    box-shadow: 3px 3px 0 var(--paper-deep);
+  }
+  .tool-head {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 14px 22px; border-bottom: 1px solid var(--rule);
+    background: var(--paper-deep);
+  }
+  .tool-no { color: var(--accent); font-weight: bold; font-size: 15px; letter-spacing: 0.08em; white-space: nowrap; }
+  .tool-name { font-weight: bold; font-size: 17.5px; }
+  .tool-evidence { font-size: 12.5px; color: var(--ink-soft); margin-left: auto; white-space: nowrap; }
+  .tool-body { padding: 18px 22px 8px; font-size: 15.5px; }
+  .tool-body p { margin-bottom: 12px; }
+  .formula {
+    font-size: 15.5px; padding: 12px 18px; background: var(--note-bg);
+    border: 1px dashed var(--rule-dark); margin: 12px 0 16px; line-height: 1.8;
+  }
+
+  /* ---------- 处方卡 ---------- */
+  .rx {
+    border: 2px solid var(--ink); margin: 30px 0; background: #fff; position: relative;
+  }
+  .rx-head {
+    display: flex; align-items: baseline; padding: 16px 24px 12px;
+    border-bottom: 2px solid var(--ink); gap: 14px; flex-wrap: wrap;
+  }
+  .rx-head .rx-habit { font-size: 22px; font-weight: bold; }
+  .rx-head .rx-diff { font-size: 13px; color: var(--accent); letter-spacing: 0.15em; margin-left: auto; }
+  .rx-body { padding: 20px 24px 14px; font-size: 15.5px; }
+  .rx-body p { margin-bottom: 13px; }
+  .rx-week {
+    margin: 18px 0 14px; padding: 16px 20px; border: 1.5px dashed var(--accent);
+    background: var(--accent-soft); font-size: 15px;
+  }
+  .rx-week .rx-week-tag { font-weight: bold; color: var(--accent); letter-spacing: 0.2em; font-size: 13px; display: block; margin-bottom: 8px; }
+  .rx-week ul { margin-bottom: 4px; }
+  .rx-fallback { font-size: 14.5px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 12px; margin-top: 6px; }
+  .rx-fallback b { color: var(--ink); }
+
+  /* ---------- 条形图 ---------- */
+  .chart { margin: 30px 0 8px; }
+  .bars {
+    display: flex; align-items: flex-end; gap: 3px; height: 190px;
+    border-bottom: 1.5px solid var(--ink); padding: 0 4px;
+  }
+  .bar { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+  .bar i {
+    display: block; background: #b3a78f; min-height: 1px;
+    border-radius: 1px 1px 0 0;
+  }
+  .bar.hot i { background: var(--accent); }
+  .bar-x { display: flex; gap: 3px; padding: 6px 4px 0; }
+  .bar-x span { flex: 1; text-align: center; font-size: 10.5px; color: var(--ink-soft); font-family: "Times New Roman", serif; }
+  .legend { font-size: 13px; color: var(--ink-soft); margin-top: 10px; }
+  .legend .sw { display: inline-block; width: 11px; height: 11px; vertical-align: -1px; margin-right: 5px; }
+
+  /* ---------- 数据卡片组 ---------- */
+  .stat-row { display: flex; gap: 16px; margin: 26px 0; flex-wrap: wrap; }
+  .stat {
+    flex: 1; min-width: 150px; border: 1px solid var(--rule-dark);
+    padding: 16px 18px; background: #fff;
+  }
+  .stat .num { font-size: 30px; font-weight: bold; color: var(--accent); line-height: 1.2; font-family: "Times New Roman", serif; }
+  .stat .num small { font-size: 15px; color: var(--ink); font-weight: normal; }
+  .stat .lbl { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+
+  /* ---------- TLDR ---------- */
+  .tldr { border: 2px solid var(--ink); padding: 28px 32px; margin: 0 0 30px; background: #fff; }
+  .tldr-tag { font-weight: bold; letter-spacing: 0.3em; font-size: 14px; color: var(--accent); display: block; margin-bottom: 16px; }
+  .tldr ol { margin: 0 0 0 1.5em; }
+  .tldr li { margin-bottom: 10px; font-size: 15.5px; }
+
+  /* ---------- 参考文献 ---------- */
+  .refs { font-size: 13.5px; line-height: 1.8; }
+  .refs ol { margin-left: 2em; }
+  .refs li { margin-bottom: 10px; color: var(--ink-soft); }
+  .refs li b { color: var(--ink); }
+  .refs a { color: var(--accent); text-decoration: none; word-break: break-all; }
+  .refs a:hover { text-decoration: underline; }
+  .refs h4 { margin-top: 28px; }
+
+  footer {
+    border-top: 3px double var(--rule-dark); margin-top: 80px; padding-top: 24px;
+    font-size: 13px; color: var(--ink-soft); line-height: 2;
+  }
+
+  /* ---------- 打印 ---------- */
+  @media print {
+    nav.toc { display: none; }
+    body { background: #fff; font-size: 11pt; }
+    main { padding: 0; }
+    .tool, .rx, .stat, .tldr { box-shadow: none; break-inside: avoid; }
+    section { break-inside: auto; }
+    .note, .warn, .rx-week { break-inside: avoid; }
+    a { color: inherit; }
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="layout">
+
+<nav class="toc" id="toc">
+  <div class="toc-title">目　录</div>
+  <a href="#tldr">总览（TL;DR）</a>
+  <a href="#ch1">一　诊断：差距在结构</a>
+  <a href="#ch1-1" class="lv2">1.1 五维对比</a>
+  <a href="#ch1-2" class="lv2">1.2 动机配置表</a>
+  <a href="#ch2">二　习惯科学的五个事实</a>
+  <a href="#ch3">三　方法论工具箱</a>
+  <a href="#t1" class="lv2">工具一　实施意图</a>
+  <a href="#t2" class="lv2">工具二　习惯叠加</a>
+  <a href="#t3" class="lv2">工具三　摩擦力设计</a>
+  <a href="#t4" class="lv2">工具四　两分钟起步</a>
+  <a href="#t5" class="lv2">工具五　即时奖励改造</a>
+  <a href="#t6" class="lv2">工具六　社会结构</a>
+  <a href="#t7" class="lv2">工具七　记录与断链规则</a>
+  <a href="#t8" class="lv2">工具八　择时启动</a>
+  <a href="#t-warn" class="lv2">边界与失效条件</a>
+  <a href="#ch4">四　你的时间审计</a>
+  <a href="#ch5">五　四个习惯的处方</a>
+  <a href="#rx1" class="lv2">处方一　早睡</a>
+  <a href="#rx2" class="lv2">处方二　背单词</a>
+  <a href="#rx3" class="lv2">处方三　练字</a>
+  <a href="#rx4" class="lv2">处方四　健身</a>
+  <a href="#ch6">六　没时间怎么办</a>
+  <a href="#ch7">七　工具与 90 天路线图</a>
+  <a href="#refs">参考文献</a>
+</nav>
+
+<main>
+
+<header class="cover">
+  <div class="kicker">实证研究 · 方法论 · 个人数据</div>
+  <h1>习惯的科学<br>为什么打球不需要坚持</h1>
+  <div class="subtitle">从「打球天天打、背单词三天断」的动机结构差异出发，构建可执行的习惯养成方法论</div>
+  <div class="meta">
+    为 <b>虹鳟鱼</b> 定制 ｜ 2026 年 6 月 12 日<br>
+    依据：35 篇论文与专著（关键数字均核对一手来源）＋ 本机 ActivityWatch 14 天使用数据（5 月 30 日 – 6 月 12 日）<br>
+    目标习惯：<b>早睡 · 背单词 · 练字 · 健身</b>
+  </div>
+</header>
+
+<!-- ================= TLDR ================= -->
+<section id="tldr">
+  <div class="tldr">
+    <span class="tldr-tag">总　览</span>
+    <ol>
+      <li>你坚持不了背单词、却天天打球，原因无关意志力：打球自带<b>即时奖励、内在动机、心流结构、同伴约束、固定情境</b>五项配置，四个目标习惯几乎一项都没有。研究显示，即时奖励对坚持行为的预测力约为远期回报的 <b>4 倍</b><sup class="ref"><a href="#refs">[1]</a></sup>。</li>
+      <li>习惯的本质是<b>自动性</b>：行为的启动权从「我要做」交给「情境线索」<sup class="ref"><a href="#refs">[4]</a></sup>。打球早已自动化，背单词每天都要重新决策一次——消耗的根本就是两种资源。</li>
+      <li>「21 天养成习惯」是误传。实测中位于<b>约 66 天</b>形成自动性，个体差异 18–254 天<sup class="ref"><a href="#refs">[3]</a></sup>。预期错了，第三周放弃就成了必然。</li>
+      <li><b>漏掉一天不影响习惯形成</b>，这是原始研究的直接结论<sup class="ref"><a href="#refs">[3]</a></sup>。规则只有一条：别连断两次。断链后自我原谅者恢复得更快，自责反而加剧拖延<sup class="ref"><a href="#refs">[27]</a></sup>。</li>
+      <li>自控力强的人并非更能硬扛诱惑，他们靠的是<b>把行为自动化、让环境替自己做功</b><sup class="ref"><a href="#refs">[20]</a></sup>。方法论的核心是改造结构，意志力只负责启动前两周。</li>
+      <li>最有效的单点技术是<b>实施意图</b>（if–then 计划）：元分析效应量 d = 0.65；在运动场景，写下「周几·几点·在哪」的人每周至少锻炼一次的比例达 91%，对照组 38%<sup class="ref"><a href="#refs">[22] [23]</a></sup>。</li>
+      <li>你的数据说明「没时间」站不住：纯娱乐日均 <b>54 分钟</b>，22 点后平均还有 <b>85 分钟</b>屏幕时间。四个习惯最小版本合计只要 <b>35 分钟/天</b>。真正稀缺的是启动能量，对策是频率优先、剂量最小化。</li>
+      <li>早睡是你最难的一个，因为它是「停止类」习惯。数据显示过去 14 晚有 <b>10 晚过零点</b>，深夜时间一半娱乐、一半赶作业——所以方案也是两条：娱乐白天化＋作业前移，再加一个 23:00 的正向关机仪式。</li>
+      <li>健身有捷径：别新建「去健身房」这个高摩擦习惯，把力量训练<b>寄生在打球生态上</b>（球前热身、球后加练、拉球友一起），借用你已有的最强锚点。</li>
+      <li>90 天路线：前两周只做最小版本、只求出勤；3–8 周加量并引入同伴；9–12 周用自动性量表自评，缺哪项配置补哪项。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 第一章 ================= -->
+<section id="ch1">
+  <div class="chap-head"><span class="chap-no">壹</span><h2>诊断：打球与背单词之间，隔着五项配置</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">先把「我意志力差」这个解释扔掉。同一个人，在打球上表现出近乎完美的「坚持」，在背单词上溃不成军——变量显然在活动本身的结构里，与人格无关。</p>
+
+  <p>第一个要拆穿的说法是「打球是因为我喜欢，背单词是因为我不喜欢」。这句话对，但没用——它把问题归结为不可改变的偏好。行为科学给出的版本要精确得多：<b>打球的奖励发生在当下，背单词的奖励发生在几个月后</b>。Woolley 与 Fishbach 对新年计划执行者和健身、学习人群的系列研究发现，「过程本身是否享受」（即时奖励）对坚持度的预测系数 β = 0.35，而「未来回报有多重要」（延迟奖励）仅 β = 0.09——<span class="accent">前者预测力约为后者的 4 倍</span>，尽管被试自己声称是为了长远目标而做<sup class="ref"><a href="#refs">[1]</a></sup>。大脑用来强化习惯回路的多巴胺信号窗口极短，Wendy Wood 直接给出量级：奖励必须在行为后<b>约一分钟内</b>到达才能有效绑定<sup class="ref"><a href="#refs">[35]</a></sup>。打球时每个进球、每次抢断都在秒级发放奖励；背单词的奖励（四六级分数、流利阅读）排期在数月之后，神经系统根本收不到货。</p>
+
+  <h3 id="ch1-1">1.1 五个维度的系统对比</h3>
+
+  <h4>① 奖励时机：秒级 vs 月级</h4>
+  <p>如上所述。值得补充的是因果方向也成立：实验中引导人们关注活动的即时乐趣（选好吃的健康食品、好听的学习材料），坚持时长随之提高<sup class="ref"><a href="#refs">[31]</a></sup>。这意味着「让习惯当下变爽」是可施工的，第三章工具五专门处理。</p>
+
+  <h4>② 动机类型：内在 vs 应该</h4>
+  <p>自我决定理论（SDT）把动机排成一条内化光谱：从「外部要求」「愧疚驱动」（内摄调节）、「认可其价值」（认同调节），到「活动本身即奖赏」（内在动机）<sup class="ref"><a href="#refs">[10]</a></sup>。打球处在光谱最右端；而「我应该早睡」「我应该背单词」是典型的内摄＋认同调节——Teixeira 等人对 66 项运动研究的系统综述发现，这类「应该型」动机能推动你<b>开始</b>，但长期坚持的最强预测因子是内在动机与享受感<sup class="ref"><a href="#refs">[14]</a></sup>。换句话说：靠「应该」启动没问题，但若三个月后活动还没长出内在乐趣或自动性，它就会按期崩塌。</p>
+
+  <h4>③ 心流结构：天生有 vs 天生无</h4>
+  <p>心流需要三个条件：挑战与技能平衡、目标清晰、反馈即时<sup class="ref"><a href="#refs">[15]</a></sup>。Csikszentmihalyi 最早研究的对象就是棋手、攀岩者和舞者——球类比赛是心流条件的物理实现：比分即反馈，对手即动态难度调节，回合即清晰目标。再看背单词：反馈以月计、难度恒定不随你成长、目标抽象（「过六级」）。对 526 名高中生的经验取样研究证实，听讲、做题这类被动学习情境的投入度全场最低<sup class="ref"><a href="#refs">[16]</a></sup>。学习类习惯难以进入心流，这是结构问题，需要人工补反馈回路。</p>
+
+  <h4>④ 社会结构：互依 vs 零成本放弃</h4>
+  <p>约好的球局，放弃要付社交代价；一个人的背单词计划，放弃成本为零。这个差距能量化：功率车实验中，独自骑行平均坚持 10.6 分钟；当被试与一名（表现稍强的）搭档绑定团队成绩时，坚持到 <span class="accent">21.89 分钟——翻倍</span>（Köhler 效应）<sup class="ref"><a href="#refs">[18]</a></sup>。减重项目中，与三位朋友一起报名并接受社会支持训练者 95% 完成治疗、66% 在随访期完全保持减重；单独参加者两个数字是 76% 和 24%<sup class="ref"><a href="#refs">[19]</a></sup>。对 44 项研究的元分析同样显示：运用群体动力学的「真团体」锻炼坚持度显著高于普通集体课和居家独练<sup class="ref"><a href="#refs">[17]</a></sup>。</p>
+
+  <h4>⑤ 情境线索：固定 vs 漂移</h4>
+  <p>习惯由稳定的情境线索自动触发——时间、地点、前置动作<sup class="ref"><a href="#refs">[2]</a></sup>。打球有固定的球场、固定的时段、固定的人，线索像闹钟一样可靠；而「有空就背单词」「今晚早点睡」没有任何稳定触发点，每次执行都要靠当场的自由意志现场拍板。Wood 的研究表明，日常行为中约三分之一到一半（研究二测得 43%）是在相同情境下无意识重复的<sup class="ref"><a href="#refs">[2]</a></sup>——没有情境锚的行为，永远进不了这个自动化序列。</p>
+
+  <h3 id="ch1-2">1.2 动机配置表</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr><th>配置项</th><th class="c">打球</th><th class="c">早睡</th><th class="c">背单词</th><th class="c">练字</th><th class="c">健身</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>即时奖励（秒级反馈）</td><td class="c yes">✓</td><td class="c no">✗</td><td class="c no">✗</td><td class="c half">△ 写完可见</td><td class="c no">✗ 以月计</td></tr>
+      <tr><td>内在动机（过程即奖赏）</td><td class="c yes">✓</td><td class="c no">✗</td><td class="c no">✗</td><td class="c half">△ 可培养</td><td class="c half">△ 可嫁接</td></tr>
+      <tr><td>心流结构（挑战–反馈匹配）</td><td class="c yes">✓</td><td class="c no">—</td><td class="c no">✗</td><td class="c half">△ 临帖近似</td><td class="c half">△ 重量递增</td></tr>
+      <tr><td>社会互依（放弃有代价）</td><td class="c yes">✓</td><td class="c no">✗</td><td class="c no">✗</td><td class="c no">✗</td><td class="c no">✗</td></tr>
+      <tr><td>稳定情境线索（定时定点）</td><td class="c yes">✓</td><td class="c half">△ 时间漂移</td><td class="c no">✗</td><td class="c no">✗</td><td class="c no">✗</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-caption"><b>表 1</b>　打球与四个目标习惯的动机配置对比。✓ 天然具备；△ 部分具备或可改造；✗ 缺失。</div>
+
+  <div class="note">
+    <span class="note-tag">本章结论</span>
+    <p>打球根本不在「坚持」，它在<b>自我运转</b>——五项配置齐全的活动不消耗意志力。四个目标习惯难以坚持，是因为它们以「裸行为」的形式存在：没有反馈、没有同伴、没有固定情境，每一次执行都要支付全额的启动成本。<b>所以方法论的任务只有一句话：把缺失的配置逐项补上，让目标习惯长得尽量像打球。</b>这正是第三章工具箱和第五章处方的设计逻辑。</p>
+  </div>
+</section>
+
+<!-- ================= 第二章 ================= -->
+<section id="ch2">
+  <div class="chap-head"><span class="chap-no">贰</span><h2>习惯科学的五个基本事实</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">动手之前先校准预期。这五个事实来自习惯研究的核心文献，每一条都直接影响你对「失败」的解释方式——而对失败的解释方式，决定你能否走到自动化那天。</p>
+
+  <h3>事实一：习惯 = 自动性，与「频率高」是两回事</h3>
+  <p>学术定义里，习惯是「刺激经由习得的刺激–反应联结，自动生成行动冲动」的过程<sup class="ref"><a href="#refs">[5]</a></sup>。判断标准只有一个：<b>行为是否还需要意识决策</b>。每天都做但每天都靠逼自己，那是高频行为，离习惯还远；真正的习惯是「回过神来已经在做了」。Gardner 等人特别指出：习惯一旦把启动权移交给环境线索，就<b>不再依赖动机和兴趣</b>——「即使动机消退，行为仍会持续」<sup class="ref"><a href="#refs">[4]</a></sup>。这就是为什么值得花两三个月把行为推到自动化：那是一劳永逸的分界线。</p>
+
+  <h3>事实二：约 66 天，且范围是 18–254 天——「21 天」是误传</h3>
+  <p>Lally 等人让 96 名志愿者每天在固定情境下重复一个自选行为并测量自动性，结果呈<b>渐近曲线</b>：前期上升快，之后放缓，平均约 66 天到达平台；个体差异巨大，从 18 天到 254 天<sup class="ref"><a href="#refs">[3]</a></sup>。行为越复杂越慢：喝水类的简单动作远快于「50 个仰卧起坐」这类复杂例程。而流传最广的「21 天定律」出自整形外科医生 Maltz（1960）对患者适应新面孔的观察，原话是「心理意象的可察觉变化<b>至少</b>需要约 21 天」——他说的既非习惯，也非充分时间，后世把「至少」丢掉后误传至今<sup class="ref"><a href="#refs">[6]</a></sup>。</p>
+  <p>实践含义：<b>第三周毫无「自动」迹象是正常进度，不是失败信号</b>。把验收期设在 90 天，并接受复杂习惯（如健身）比简单习惯（如睡前放手机）慢得多。</p>
+
+  <h3>事实三：漏一天无伤，连断两天才危险</h3>
+  <p>同一研究的直接发现：「错过一次执行机会，不会实质影响习惯形成进程」，漏做后自动性增益很快恢复<sup class="ref"><a href="#refs">[3]</a></sup>。真正的杀手是断链后的羞耻感：对拖延学生的追踪显示，第一次考试前严重拖延者中，<b>自我原谅程度高的人在第二次考试前拖延显著减少</b>，自责者没有任何改善<sup class="ref"><a href="#refs">[27]</a></sup>。James Clear 把它总结成可操作的一条：never miss twice——错一次是意外，错两次是新模式的开始<sup class="ref"><a href="#refs">[33]</a></sup>。</p>
+
+  <h3>事实四：自控力强的人，靠的是结构而非硬扛</h3>
+  <p>六项研究、2274 名被试的结论：特质自控力与好结果（成绩、睡眠、锻炼）的关系，由「已自动化的有益习惯」中介——自控力强的人并没有在每天上演意志力搏斗，他们只是更早把行为变成了习惯<sup class="ref"><a href="#refs">[20]</a></sup>。Duckworth 进一步证明，改变情境（提前移除诱惑、改造环境）比临场压制冲动有效得多<sup class="ref"><a href="#refs">[21]</a></sup>。所以别再问「如何提高自制力」，要问「如何设计一个不需要自制力的环境」。</p>
+
+  <h3>事实五：习惯活在大脑的「打包机制」里</h3>
+  <p>神经科学层面，习惯形成对应基底神经节纹状体的「组块化」（chunking）：习惯成型后，神经元只在例程<b>开始和结束</b>时放电，中段沉寂——整套动作被打包成一个由情境触发的单元，运行时几乎不占用意识带宽<sup class="ref"><a href="#refs">[7] [8]</a></sup>。Duhigg 把这套机制普及为「线索–惯常行为–奖励」回路<sup class="ref"><a href="#refs">[9]</a></sup>，James Clear 扩展为「提示–渴求–反应–奖赏」四段<sup class="ref"><a href="#refs">[33]</a></sup>。工具箱的八个工具，本质都在为这个回路的某一段施工。</p>
+</section>
+
+<!-- ================= 第三章 ================= -->
+<section id="ch3">
+  <div class="chap-head"><span class="chap-no">叁</span><h2>方法论工具箱：八个工具，两类警告</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">按习惯回路的四段组织：让线索稳定（工具一、二）、让启动便宜（工具三、四）、让奖励即时（工具五）、让放弃有代价（工具六、七），外加一个择时工具（八）。每个工具标注证据强度，失效条件集中列在章末。</p>
+
+  <div class="tool" id="t1">
+    <div class="tool-head"><span class="tool-no">工具一</span><span class="tool-name">实施意图（if–then 计划）</span><span class="tool-evidence">证据强度：★★★（94 项研究元分析）</span></div>
+    <div class="tool-body">
+      <p>把「我要多锻炼」改写成「<b>如果遇到情境 Y，我就执行行为 Z</b>」。94 项研究、8461 名被试的元分析给出 d = 0.65 的中大效应<sup class="ref"><a href="#refs">[22]</a></sup>。最著名的运动实验：要求被试写下「下周我将于〔星期〕〔时间〕在〔地点〕进行至少 20 分钟剧烈运动」，该组 91% 的人每周至少锻炼一次，对照组 38%、纯动机激励组 35%（d = 1.25）<sup class="ref"><a href="#refs">[23]</a></sup>——注意：动机宣讲几乎无效，指定时间地点的一句话效果翻倍有余。</p>
+      <div class="formula">格式：<b>如果〔具体时间/地点/前置事件〕，我就〔具体动作〕。</b><br>例：「如果吃完晚饭回到宿舍坐下，我就先写一行字再开电脑。」</div>
+      <p>原理：预先把决策做完，把行为绑到具体情境上，执行时无需再调用动机。这是性价比最高的单点技术，四个处方里每一个都用到它。</p>
+    </div>
+  </div>
+
+  <div class="tool" id="t2">
+    <div class="tool-head"><span class="tool-no">工具二</span><span class="tool-name">习惯叠加（锚点）</span><span class="tool-evidence">证据强度：★★☆（实施意图的特化）</span></div>
+    <div class="tool-body">
+      <p>实施意图的特化版本：用<b>已有的稳定习惯</b>当触发线索。Fogg 称之为锚点（Anchor），Clear 给出公式<sup class="ref"><a href="#refs">[33] [34]</a></sup>：</p>
+      <div class="formula">「做完〔当前习惯〕之后，我就做〔新习惯〕。」</div>
+      <p>锚点质量决定成败：必须选<b>每天必然发生、时间地点稳定</b>的事（午饭后回到宿舍、刷完牙、打完球）。「有空的时候」「晚上找时间」都不是锚点。你最强的锚点清单：吃完午饭/晚饭坐回书桌、出门去球场、打完球回来、睡前刷牙。第五章的处方将反复征用它们。</p>
+    </div>
+  </div>
+
+  <div class="tool" id="t3">
+    <div class="tool-head"><span class="tool-no">工具三</span><span class="tool-name">摩擦力设计（环境替你做功）</span><span class="tool-evidence">证据强度：★★★（习惯研究主线）</span></div>
+    <div class="tool-body">
+      <p>行为发生的概率与启动成本成反比，且对极小的成本差异极其敏感。经典现场实验：医院食堂只是把瓶装水摆到每个冰柜和收银台旁（汽水原位不动），三个月后汽水销量下降 11.4%、水上升 25.8%<sup class="ref"><a href="#refs">[33]</a></sup>。Wood 总结为：好习惯减摩擦，坏习惯加摩擦——把字帖摊开在桌面、把哑铃放在门口；反过来，把手机充电器移出卧室、卸载 App 让刷视频多三步<sup class="ref"><a href="#refs">[35]</a></sup>。</p>
+      <p>设计准则：<b>让好行为的启动距离趋近零步，让坏行为至少多两步。</b>意志力只在「两步之差」里有胜算。</p>
+    </div>
+  </div>
+
+  <div class="tool" id="t4">
+    <div class="tool-head"><span class="tool-no">工具四</span><span class="tool-name">两分钟起步（剂量最小化）</span><span class="tool-evidence">证据强度：★★☆（Fogg 模型＋自动化曲线推论）</span></div>
+    <div class="tool-body">
+      <p>Fogg 行为模型：行为 = 动机 × 能力 × 提示三者在同一时刻汇合（B=MAP）。动机天然波动、不可指望，所以唯一可靠的策略是<b>把行为缩小到动机最低谷也能完成的尺寸</b><sup class="ref"><a href="#refs">[34]</a></sup>——用牙线只清一颗牙，俯卧撑只做两个。Clear 的版本叫两分钟规则：任何新习惯的入门版不超过两分钟，「睡前阅读」降为「读一页」<sup class="ref"><a href="#refs">[33]</a></sup>。</p>
+      <p>这样做有两层依据：其一，简单行为自动化显著更快（Lally 曲线）<sup class="ref"><a href="#refs">[3]</a></sup>；其二，前期练的本来就不是效果，是<b>「出现」这个动作本身</b>——先让「到场」自动化，再谈加量。觉得「只背 5 个词没意义」是用产出逻辑评价基建工程。</p>
+    </div>
+  </div>
+
+  <div class="tool" id="t5">
+    <div class="tool-head"><span class="tool-no">工具五</span><span class="tool-name">即时奖励改造</span><span class="tool-evidence">证据强度：★★★（随机对照＋预测研究）</span></div>
+    <div class="tool-body">
+      <p>把第一章的诊断反过来用：既然即时奖励预测坚持<sup class="ref"><a href="#refs">[1]</a></sup>，就给没有即时奖励的行为人工接一个。三条施工路线：</p>
+      <ul>
+        <li><b>诱惑捆绑</b>：把渴望的娱乐<b>锁定</b>在目标行为期间。健身房实验把上头的有声小说锁在只能于健身房使用的设备里，初期出勤提高 51%；实验结束时 61% 的被试愿意付费购买这种「自我捆绑」<sup class="ref"><a href="#refs">[24]</a></sup>。注意效应会衰减（假期后骤降），需要定期换「饵」。</li>
+        <li><b>过程乐趣优先</b>：在不损害目标的前提下选最享受的版本——好听的播客配走路、有击杀感的背单词 App、顺手的笔<sup class="ref"><a href="#refs">[31]</a></sup>。</li>
+        <li><b>完成即庆祝</b>：Fogg 的 ABC 模型第三步——微行为完成后立刻制造一个真实的积极情绪（握拳、说 Victory、在日历画一个重重的勾）。他的原话：「创造习惯的是情绪，而非重复本身」<sup class="ref"><a href="#refs">[34]</a></sup>。听起来傻，但它精确对准了多巴胺的一分钟窗口<sup class="ref"><a href="#refs">[35]</a></sup>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tool" id="t6">
+    <div class="tool-head"><span class="tool-no">工具六</span><span class="tool-name">社会结构（互依与公开承诺）</span><span class="tool-evidence">证据强度：★★★（元分析＋随机对照）</span></div>
+    <div class="tool-body">
+      <p>第一章已给出数字：同伴互依使坚持翻倍<sup class="ref"><a href="#refs">[18]</a></sup>，朋友同行使完成率从 76% 升到 95%<sup class="ref"><a href="#refs">[19]</a></sup>。要点是「互依」而非「围观」——最优结构是<b>你的缺席会实际影响对方</b>（约定互查、共享进度、二人成行），其次才是打卡群里的点赞。Köhler 效应还有个细节：搭档以<b>比你稍强</b>为最佳，差距太大双向泄气<sup class="ref"><a href="#refs">[18]</a></sup>。</p>
+      <p>辅助手段：截止日期外置。自设截止线有效但设得不够狠，外部强制的均匀截止表现最好<sup class="ref"><a href="#refs">[28]</a></sup>——把「周日交作业」自我改写为「周五晚发给同学互检」，等于人工造一个外部 deadline。</p>
+    </div>
+  </div>
+
+  <div class="tool" id="t7">
+    <div class="tool-head"><span class="tool-no">工具七</span><span class="tool-name">记录追踪与断链规则</span><span class="tool-evidence">证据强度：★★★（138 项随机实验元分析）</span></div>
+    <div class="tool-body">
+      <p>对 138 项随机实验（近 2 万人）的元分析：促使人们监测进度的干预，平均提升目标达成 d = 0.40；当进度被<b>物理记录或公开汇报</b>时效应更大<sup class="ref"><a href="#refs">[26]</a></sup>。所以纸质日历画叉、给同伴发截图，优于在心里记得。</p>
+      <p>流行的「别打破链条」（日历连续画叉）符合损失厌恶与进度可视化机制，但请配合两条保险使用：① 事实三说过，漏一天无伤——链条的正确规则是 <b>never miss twice</b><sup class="ref"><a href="#refs">[33]</a></sup>；② 病了、考试周，执行两分钟版本也算完成当天——链条记录的是「出现」，不记录产出。（顺带一提：此法常被归于 Seinfeld，他本人 2014 年公开否认发明过它——民间技巧，机制成立，出处存疑。）</p>
+    </div>
+  </div>
+
+  <div class="tool" id="t8">
+    <div class="tool-head"><span class="tool-no">工具八</span><span class="tool-name">择时启动（新起点效应）</span><span class="tool-evidence">证据强度：★★☆（大数据观察研究）</span></div>
+    <div class="tool-body">
+      <p>时间地标会开启新的「心理账户」，把过去的失败归档进上一期。大学健身房 1.2 万人的打卡数据：周一出勤 +33.4%，新学期 +47.1%，生日后 +7.5%；新年时承诺合同网站的合同创建量 +145.3%<sup class="ref"><a href="#refs">[25]</a></sup>。</p>
+      <p>用法有二：① 启动新习惯选在下周一或月初，借势；② 中途崩盘后，主动制造一个最近的时间地标重启（「下周一是新的一期」），而非等 9 月开学。注意它只解决「启动」，撑过 66 天还得靠前面七个工具。</p>
+    </div>
+  </div>
+
+  <h3 id="t-warn">边界与失效条件（同样有证据）</h3>
+  <div class="warn">
+    <span class="note-tag">警告一　外部奖励会挤出内在动机</span>
+    <p>对本来有点兴趣的活动，<b>预期中的实物奖励</b>会降低内在动机（128 项实验元分析，自由选择行为 d ≈ −0.28 至 −0.40）；意外奖励无害，<b>真诚的口头肯定反而增益</b>（d = 0.33）<sup class="ref"><a href="#refs">[11] [12] [13]</a></sup>。实践禁区：不要给自己设「背完单词奖励 50 元」式的合同——你会把背单词训练成「为钱打工」，停止付钱即停止行为。奖励要么内生于过程（工具五），要么是无规律的惊喜。</p>
+  </div>
+  <div class="warn">
+    <span class="note-tag">警告二　排行榜式游戏化可能反噬</span>
+    <p>游戏化对学习的元分析效应整体为正但偏小（行为 g = 0.25），且在方法最严谨的研究中动机与行为效应不再显著<sup class="ref"><a href="#refs">[29]</a></sup>；一项 16 周课堂实验中，强制的排行榜＋徽章让内在动机和期末成绩<b>双双下降</b><sup class="ref"><a href="#refs">[30]</a></sup>。含社交协作的游戏化设计效果最好，纯竞争排名风险最大。选背单词 App 时，「和朋友组队」优于「全国排名」。</p>
+  </div>
+</section>
+
+<!-- ================= 第四章 ================= -->
+<section id="ch4">
+  <div class="chap-head"><span class="chap-no">肆</span><h2>你的时间审计：数据不支持「没时间」</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">数据来源：本机 ActivityWatch，2026 年 5 月 30 日至 6 月 12 日共 14 天，覆盖窗口焦点、AFK 状态与浏览器标签。已剔除桌面待机进程（explorer.exe）的虚高时长；因记录机制存在重叠，以下数字为估算值。局限：仅含电脑端，手机与线下时间不可见。</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">5.0<small> 小时/天</small></div><div class="lbl">电脑活跃时长（14 天均值，3.0–9.1 波动）</div></div>
+    <div class="stat"><div class="num">10<small> / 14 晚</small></div><div class="lbl">在 0 点后才离开电脑，最晚 01:16</div></div>
+    <div class="stat"><div class="num">85<small> 分钟/晚</small></div><div class="lbl">22 点后的平均屏幕时间</div></div>
+    <div class="stat"><div class="num">54<small> 分钟/天</small></div><div class="lbl">纯娱乐均值（B 站 8.8h ＋ 在线追剧 3.9h，14 天合计）</div></div>
+  </div>
+
+  <h3>4.1 一天的形状</h3>
+  <div class="chart">
+    <div class="bars">
+      <div class="bar hot" title="0时 6.3h"><i style="height:76%"></i></div>
+      <div class="bar hot" title="1时 0.5h"><i style="height:6%"></i></div>
+      <div class="bar" title="2时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="3时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="4时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="5时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="6时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="7时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="8时 0"><i style="height:0%"></i></div>
+      <div class="bar" title="9时 0.3h"><i style="height:4%"></i></div>
+      <div class="bar" title="10时 4.4h"><i style="height:53%"></i></div>
+      <div class="bar" title="11时 4.5h"><i style="height:54%"></i></div>
+      <div class="bar" title="12时 4.5h"><i style="height:54%"></i></div>
+      <div class="bar" title="13时 0.7h"><i style="height:8%"></i></div>
+      <div class="bar" title="14时 8.3h"><i style="height:100%"></i></div>
+      <div class="bar" title="15时 3.4h"><i style="height:41%"></i></div>
+      <div class="bar" title="16时 1.6h"><i style="height:19%"></i></div>
+      <div class="bar" title="17时 2.8h"><i style="height:34%"></i></div>
+      <div class="bar" title="18时 6.0h"><i style="height:72%"></i></div>
+      <div class="bar" title="19时 6.7h"><i style="height:81%"></i></div>
+      <div class="bar" title="20时 3.7h"><i style="height:45%"></i></div>
+      <div class="bar" title="21时 2.7h"><i style="height:33%"></i></div>
+      <div class="bar hot" title="22时 6.5h"><i style="height:78%"></i></div>
+      <div class="bar hot" title="23时 6.5h"><i style="height:78%"></i></div>
+    </div>
+    <div class="bar-x">
+      <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+    </div>
+    <div class="legend"><span class="sw" style="background:#b3a78f"></span>日间使用　<span class="sw" style="background:var(--accent)"></span>22:00–01:00 深夜段（早睡的主战场）</div>
+  </div>
+  <div class="tbl-caption"><b>图 1</b>　14 天按小时合计的电脑活跃时长（小时）。横轴为本地时间。</div>
+
+  <p>三个形状特征：① 上午 9 点前几乎空白（上课或未起床），电脑日从 10 点开始；② 14 点是全天最高峰，13 点（午饭/午休）和 15–17 点是明显低谷；③ <span class="accent">22 点到次日 1 点存在一个与白天高峰等量的「深夜高原」</span>——这就是早睡问题在数据上的样子。14 晚里仅 1 晚在 22 点前结束使用，3 晚在 23:45–23:52 勉强收线，其余 10 晚全部过零点。</p>
+
+  <h3>4.2 深夜在干什么</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>22:00 后的去向</th><th>14 天合计</th><th>性质</th></tr></thead>
+    <tbody>
+      <tr><td>Bilibili 视频</td><td>约 210 分钟</td><td>娱乐</td></tr>
+      <tr><td>在线追剧（netflixgc）</td><td>约 51 分钟</td><td>娱乐</td></tr>
+      <tr><td>微信 / TIM</td><td>约 156 分钟</td><td>社交</td></tr>
+      <tr><td>Claude（写代码 / 学习）</td><td>约 314 分钟</td><td>学习·项目</td></tr>
+      <tr><td>课程作业平台（cslab CMS / LMS）</td><td>约 135 分钟</td><td>作业</td></tr>
+      <tr><td>java 进程（课程编程作业）</td><td>约 132 分钟</td><td>作业</td></tr>
+      <tr><td>Word / Obsidian / 本地讲义</td><td>约 60+ 分钟</td><td>学习</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-caption"><b>表 2</b>　22:00–04:00 时段主要应用与网站停留（14 天合计，估算值）。</div>
+
+  <p>结构很清晰：深夜时间约<b>四成是娱乐与社交，六成是学习和作业</b>。这直接决定了早睡处方的双轨设计——只劝「少刷 B 站」解决不了一半问题，那些拖到 23 点的作业（cslab 平台深夜停留近两小时）必须在白天找到新家；反过来，只优化日程也不够，B 站和剧的吸引力需要摩擦力工程对付。</p>
+
+  <h3>4.3 审计结论</h3>
+  <div class="note">
+    <span class="note-tag">三条结论</span>
+    <p><b>一、时间预算充足。</b>四个习惯的最小版本合计约 35 分钟/天（背单词 10 ＋ 练字 5 ＋ 力量训练 5 ＋ 关机仪式 15），仅日均 54 分钟的纯娱乐就足以覆盖，何况还有 85 分钟的深夜段可整体回收。「没时间」描述的其实是「没有低启动成本的时段安排」，这是调度问题，第六章处理。</p>
+    <p><b>二、早睡的敌人具体而可拆解。</b>深夜高原 = 约 40% 娱乐 ＋ 60% 作业。对应解法：娱乐前移（13–17 点低谷正好接住）＋ 作业 deadline 前移（19 点启动而非 22 点）。</p>
+    <p><b>三、13 点与 15–17 点是天然的习惯停车位。</b>午饭后（13 点低谷）插背单词，晚饭后（18 点前）插练字，都贴着既有节律，无需对抗任何现有安排。</p>
+  </div>
+</section>
+
+<!-- ================= 第五章 ================= -->
+<section id="ch5">
+  <div class="chap-head"><span class="chap-no">伍</span><h2>四个习惯的处方</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">每张处方按同一逻辑生成：对照表 1 找出缺失配置 → 用工具箱补齐 → 给出第一周的最小启动版 → 预设失败预案。规则：<b>第一、二周只执行「启动周」栏，其余内容两周后再加。</b></p>
+
+  <!-- 早睡 -->
+  <div class="rx" id="rx1">
+    <div class="rx-head"><span class="rx-habit">处方一　早睡</span><span class="rx-diff">难度 ★★★★　类型：停止类习惯</span></div>
+    <div class="rx-body">
+      <p><b>诊断：</b>早睡是四个里最难的，因为它不是「做一件事」，而是「同时停止所有事」——没有可执行的动作，自然没有可绑定的奖励和线索。你的数据：10/14 晚过零点；深夜 40% 娱乐＋60% 作业。两个源头要分开治。</p>
+      <p><b>① 重定义为正向行为（工具一）。</b>「早睡」无法执行，「23:00 关机仪式」可以。仪式内容固定：保存工作 → 设备拿去书桌充电（不进床）→ 洗漱 → 写三行明日清单。if–then：「<b>如果 23:00 的闹钟响，我就保存并合上电脑，无论手头是什么</b>。」</p>
+      <p><b>② 作业前移（工具一＋六）。</b>深夜作业的根源是启动太晚。新 if–then：「如果吃完晚饭回到书桌（约 19:00），我就先开作业平台做 25 分钟，再碰任何娱乐。」配合外置 deadline：把作业的自设截止从「睡前」改为「22:30 发给同学互检 / 在群里报进度」<sup class="ref"><a href="#refs">[28]</a></sup>。</p>
+      <p><b>③ 娱乐白天化（工具三）。</b>B 站和剧不必戒，但深夜档要搬家：13–17 点的低谷完全装得下。同时给深夜加摩擦：23:00 后手机自动进睡眠模式（系统级，难绕过）、浏览器装定时拦截扩展、充电器固定在书桌。</p>
+      <p><b>④ 给「停止」造即时奖励（工具五）。</b>早睡的回报（白天精神）感知延迟，需要人工反馈：用 SleepTown 这类「按时睡觉就盖楼」的应用，或最朴素的纸质日历——23:30 前上床就画一个重重的勾。</p>
+      <div class="rx-week">
+        <span class="rx-week-tag">启动周（第 1–2 周）</span>
+        <ul>
+          <li>只立一条规矩：<b>23:00 闹钟响 → 执行关机仪式</b>。上床时间不考核，刷不刷手机暂不管。</li>
+          <li>手机设置自动睡眠模式（23:00）；充电器今晚就移到书桌。</li>
+          <li>纸质日历：执行了仪式就画勾。目标 5/7 晚。</li>
+        </ul>
+      </div>
+      <div class="rx-fallback"><b>失败预案：</b>超过 23:30 也照常执行仪式——链条考核的是「仪式有没有做」，不是钟点完美。连断两晚，第三晚把闹钟提前到 22:30，并检查是哪个源头（作业没写完？视频停不下来？）回到 ②③ 修。</div>
+    </div>
+  </div>
+
+  <!-- 背单词 -->
+  <div class="rx" id="rx2">
+    <div class="rx-head"><span class="rx-habit">处方二　背单词</span><span class="rx-diff">难度 ★★★　类型：认知任务</span></div>
+    <div class="rx-body">
+      <p><b>诊断：</b>五项配置全缺的「裸行为」：反馈以月计、纯应该型动机、无心流、无同伴、无固定线索。好消息是它剂量可调，最适合两分钟起步。</p>
+      <p><b>① 锚点（工具二）。</b>「吃完午饭回到宿舍坐下 → 打开单词 App」。你的数据显示 13 点是全天最深的低谷，这个锚点不与任何现有安排冲突。</p>
+      <p><b>② 最小剂量（工具四）。</b>每天 <b>10 个词</b>，上限也是 10 个——前两周刻意禁止多背，保护「明天还想打开」的感觉。多出来的欲望让它积着。</p>
+      <p><b>③ 接即时反馈（工具五）。</b>选有「击杀感」的工具：Anki / 墨墨这类逐词判定、当场出对错的；背完顺手截图发给搭子。警告二适用：选「组队互查」机制，别开全国排行榜。</p>
+      <p><b>④ 诱惑捆绑变体（工具五）。</b>新规则：<b>背完今天的 10 个词，才打开 B 站</b>。把一个已有高频行为改造成奖励门——B 站从敌人变成发薪员。</p>
+      <p><b>⑤ 同伴互依（工具六）。</b>找一个水平比你略好的同学，约定每天互发完成截图；连续一周谁断链谁请奶茶。Köhler 效应：搭档稍强时坚持翻倍<sup class="ref"><a href="#refs">[18]</a></sup>。</p>
+      <div class="rx-week">
+        <span class="rx-week-tag">启动周（第 1–2 周）</span>
+        <ul>
+          <li>午饭后回到座位 → 10 个词，背完为止（约 8–10 分钟）。</li>
+          <li>App 选好后第一天就把每日上限设为 10，关掉排行榜推送。</li>
+          <li>本周先不找搭子——先确认自己能独立出现 10 天，再引入社会结构。</li>
+        </ul>
+      </div>
+      <div class="rx-fallback"><b>失败预案：</b>当天忘了，睡前刷牙后补 5 个也算完成（never miss twice 的「两分钟补救版」）。考试周自动降级为每天 5 个，链条不断。</div>
+    </div>
+  </div>
+
+  <!-- 练字 -->
+  <div class="rx" id="rx3">
+    <div class="rx-head"><span class="rx-habit">处方三　练字</span><span class="rx-diff">难度 ★★　类型：动作技能</span></div>
+    <div class="rx-body">
+      <p><b>诊断：</b>四个里最有潜力长出内在动机的——它和打球同属动作技能：进步可见、有「手感」、临帖天然接近心流结构（挑战–技能匹配）<sup class="ref"><a href="#refs">[15]</a></sup>。缺的只是线索和反馈回路，配置补齐后它可能自己跑起来。</p>
+      <p><b>① 零摩擦环境（工具三）。</b>字帖＋笔常驻书桌最显眼处，<b>永远摊开在今天要写的那页</b>。启动距离 = 0 步：坐下、拿笔、写。收进抽屉等于宣判死刑。</p>
+      <p><b>② 锚点（工具二）。</b>「吃完晚饭回到书桌 → 先写一行字，再开电脑」。一行字约 3–5 分钟，顺带充当「进入晚间学习状态」的启动仪式——给作业前移当引信，一张处方治两个习惯。</p>
+      <p><b>③ 胜任感可视化（工具五＋七）。</b>每周日拍一张本周字与第一周同一个字的对比照。练字进步速度快，这是它相对背单词的巨大优势——胜任感反馈其实很好造，多数人只是从来不回头看。物理记录另有加成（Harkin：记录形式效应更大<sup class="ref"><a href="#refs">[26]</a></sup>）。</p>
+      <p><b>④ 难度调节（心流）。</b>选略高于当前水平的帖；写得太顺时换更难的字，太挫败时退回结构简单的字——手动维持挑战–技能平衡。</p>
+      <div class="rx-week">
+        <span class="rx-week-tag">启动周（第 1–2 周）</span>
+        <ul>
+          <li>今晚把字帖摊在书桌上。</li>
+          <li>每天晚饭后一行字（3–5 分钟），写完在帖角写日期。</li>
+          <li>第 7 天拍第一张对比照。</li>
+        </ul>
+      </div>
+      <div class="rx-fallback"><b>失败预案：</b>晚上没写，睡前写三个字也算。出门在外，手机写字 App 划两笔也算出现。</div>
+    </div>
+  </div>
+
+  <!-- 健身 -->
+  <div class="rx" id="rx4">
+    <div class="rx-head"><span class="rx-habit">处方四　健身</span><span class="rx-diff">难度 ★★　类型：寄生策略</span></div>
+    <div class="rx-body">
+      <p><b>诊断（先纠正问题本身）：</b>你已经有运动习惯了——打球就是。真正缺的大概率是<b>力量训练</b>。最大的错误是去新建一个「办卡去健身房」的独立习惯：高摩擦、单人、反馈以月计，表 1 里全线飘红。正确策略是<b>寄生：把力量训练挂到打球这个已自动化的强习惯上</b>。</p>
+      <p><b>① 叠加到最强锚点（工具二）。</b>「出门去球场前 → 20 个深蹲」或「打完球回来洗澡前 → 2 组俯卧撑」。打球是你全身上下最稳定的线索，借它的自动化白嫖启动。</p>
+      <p><b>② 动机嫁接（工具五）。</b>把力量训练的延迟回报（体型）换成已有内在动机的即时变量：<b>练腿 = 起跳更高，练核心 = 对抗更稳</b>。球场表现是周级反馈，体型是季级反馈——前者快一个数量级，而你本来就在乎它。</p>
+      <p><b>③ 社会移植（工具六）。</b>拉球友一起：赛前集体热身加 10 个波比跳，或约定「输的一方加练一组」。把打球局自带的社会结构原封不动套在训练上。</p>
+      <p><b>④ 加量靠重量级数（心流）。</b>从徒手开始，每周微增（次数或难度变式），制造可感知的进步曲线——力量训练天然有「数字上涨」的反馈，好好利用。</p>
+      <div class="rx-week">
+        <span class="rx-week-tag">启动周（第 1–2 周）</span>
+        <ul>
+          <li>规则一条：<b>每个打球日，球前 20 深蹲或球后 2 组俯卧撑</b>（不打球的日子不考核）。</li>
+          <li>记在和练字同一本日历上。</li>
+        </ul>
+      </div>
+      <div class="rx-fallback"><b>失败预案：</b>球打太累实在不想练，做 1 组、5 个，算完成。两周后若运转良好，再考虑把非打球日的「宿舍 10 分钟徒手」加进来——仍然不需要健身房。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 第六章 ================= -->
+<section id="ch6">
+  <div class="chap-head"><span class="chap-no">陆</span><h2>没时间怎么办</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">分两种情形：日常的「感觉没时间」，和考试周式的「真没时间」。两者的解法完全不同。</p>
+
+  <h3>6.1 日常情形：你缺的是停车位，不是时间</h3>
+  <p>第四章已经算过账：最小版四件套 35 分钟/天 ＜ 纯娱乐 54 分钟/天 ＜ 深夜段 85 分钟/晚。预算从来都在。「没时间」的真实含义通常是：<b>没有一个无需决策、贴着现有节律的固定时段</b>——每次都要现场找时间，找时间本身就是一次意志力支出，于是顺理成章地「算了」。</p>
+  <p>处方里的安排已经回答了这个问题：背单词停在 13 点低谷（午饭锚点），练字停在 18–19 点（晚饭锚点），力量训练挂在打球日，关机仪式钉在 23:00。<b>四个习惯各有车位，互不抢道，也不与上课冲突。</b>剩下的只是头两周用闹钟和日历把车位焊牢。</p>
+
+  <h3>6.2 真没时间：降级协议</h3>
+  <p>考试周、赶大作业、生病——这些时期请启用降级协议，且把它当成方法论的一部分而非失败：</p>
+  <ul>
+    <li><b>全线降到两分钟版</b>：5 个词、3 个字、1 组俯卧撑、仪式只剩「设备出卧室」。频率是命，剂量随便砍——自动化靠的是情境一致的重复，而非单次时长<sup class="ref"><a href="#refs">[3]</a></sup>。</li>
+    <li><b>宁可四个都做最小版，不要轮流做完整版</b>。「今天好好背一小时单词、明天好好练一小时字」的轮换制，在自动化意义上等于四个习惯各断三天。</li>
+    <li><b>预先写好降级 if–then</b>：「如果当天课表超过 8 节或有 DDL，我就自动切换最小版」——把降级也变成计划内动作，消灭「今天特殊所以算了」的临场裁量权。</li>
+    <li><b>崩盘后用时间地标重启</b>：彻底断了一周也没关系，下周一就是新账户（健身房数据：周一出勤 +33.4%<sup class="ref"><a href="#refs">[25]</a></sup>）。自我原谅，重新开始，别补偿性加倍——补偿是连断两次的头号诱因<sup class="ref"><a href="#refs">[27] [33]</a></sup>。</li>
+  </ul>
+
+  <div class="note">
+    <span class="note-tag">一个换算</span>
+    <p>「等我有空了再好好养习惯」在 66 天的尺度下不成立——大学四年永远在学期与考试的循环里。两分钟版本存在的意义，就是让习惯在任何负载下都有一个<b>不可再降的活法</b>。能活着穿过考试周的习惯，才轮得到谈规模。</p>
+  </div>
+</section>
+
+<!-- ================= 第七章 ================= -->
+<section id="ch7">
+  <div class="chap-head"><span class="chap-no">柒</span><h2>工具与 90 天路线图</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro">工具是放大器，前提是处方先跑起来。原则：能用纸质日历解决的，先用纸质日历——多一个 App 就多一处摩擦。</p>
+
+  <h3>7.1 工具速查</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>工具</th><th>平台</th><th>机制一句话</th><th>费用</th><th>适配</th></tr></thead>
+    <tbody>
+      <tr><td>纸质日历＋笔</td><td>—</td><td>物理画勾，记录效应最强的形式<sup class="ref"><a href="#refs">[26]</a></sup></td><td>≈0</td><td>全部四个，首选</td></tr>
+      <tr><td><b>滴答清单 TickTick</b></td><td>全平台（国产）</td><td>待办＋内置习惯打卡，日历视图</td><td>免费够用；会员 ¥99/年（学生 75 折）</td><td>总控与提醒</td></tr>
+      <tr><td><b>Loop Habit Tracker</b></td><td>Android，开源</td><td>极简打卡＋习惯强度（自动性）曲线</td><td>免费无广告</td><td>打卡＋看自动性涨没涨</td></tr>
+      <tr><td><b>Habitica</b></td><td>Web / iOS / Android，开源</td><td>习惯 RPG 化，组队漏打卡全队掉血</td><td>免费＋可选订阅</td><td>想要组队互依时</td></tr>
+      <tr><td><b>Anki / 墨墨背单词</b></td><td>全平台 / 移动端</td><td>间隔重复，逐词即时判定</td><td>Anki 免费（iOS 收费）；墨墨免费＋上限内购</td><td>背单词</td></tr>
+      <tr><td><b>SleepTown</b></td><td>iOS / Android</td><td>按时睡＋不玩手机＝盖楼，断则楼塌</td><td>买断约 ¥12–18</td><td>早睡的即时奖励</td></tr>
+      <tr><td>系统睡眠模式</td><td>手机自带</td><td>定时静音、灰度、拦应用，系统级难绕过</td><td>免费</td><td>早睡的摩擦力</td></tr>
+      <tr><td>Forest 专注森林</td><td>iOS / Android</td><td>专注种树、离开枯树</td><td>免费＋订阅</td><td>作业前移的 25 分钟</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-caption"><b>表 3</b>　工具速查。均无需外区账号。建议总数 ≤ 2 个 App ＋ 1 本日历。</div>
+
+  <h3>7.2 90 天路线图</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>阶段</th><th>任务</th><th>验收标准</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>第 1–2 周</b><br>只求出现</td>
+        <td>四张处方只执行「启动周」栏：10 个词、一行字、打球日 20 深蹲、23:00 仪式。纸质日历画勾。<b>禁止加量。</b></td>
+        <td>每个习惯出现 ≥ 10/14 天。没达标的，检查锚点是否选错（最常见病因），换锚点重来。</td>
+      </tr>
+      <tr>
+        <td><b>第 3–8 周</b><br>加量＋上社会结构</td>
+        <td>剂量阶梯式上调（词 10→20→30；字一行→半页；力量加组数）。引入搭子互查（背单词）、球友共练（力量）、作业互检 deadline（早睡）。崩盘按降级协议处理。</td>
+        <td>主观启动阻力下降；漏做后能在次日自动恢复（never miss twice 从未失守）。</td>
+      </tr>
+      <tr>
+        <td><b>第 9–12 周</b><br>验收自动性</td>
+        <td>用 SRBAI 四问逐个自评（见下）。达标的习惯进入维护态（只防连断两次）；未达标的对照表 1 找缺失配置，单点修复。</td>
+        <td>≥ 2 个习惯自评「基本自动」。注意复杂习惯（早睡）慢于简单习惯（练字）是正常曲线<sup class="ref"><a href="#refs">[3]</a></sup>。</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-caption"><b>表 4</b>　90 天路线图。</div>
+
+  <div class="formula" style="margin-top:24px">
+    <b>SRBAI 自动性自评</b>（对每个习惯，1–7 分作答<sup class="ref"><a href="#refs">[32]</a></sup>）：<br>
+    「做 X 这件事，①我会不假思索地开始；②是自动发生的；③不需要刻意记得；④开始了才意识到自己在做。」<br>
+    四题均值 ≥ 5：已基本自动化。仍 ≤ 3：回查锚点稳定性与奖励即时性。
+  </div>
+
+  <div class="note">
+    <span class="note-tag">最后一条原则</span>
+    <p>这份报告给了八个工具、四张处方，但 90 天里真正非守不住的只有三件事：<b>锚点别漂移、剂量别贪多、断了别断第二次。</b>其余一切细节，都可以也应该在执行中按你的实际情况修订——方法论服务于你，而非反过来。</p>
+  </div>
+</section>
+
+<!-- ================= 参考文献 ================= -->
+<section id="refs" class="refs">
+  <div class="chap-head"><span class="chap-no">※</span><h2>参考文献</h2></div>
+  <hr class="chap-rule">
+  <p class="chap-intro" style="margin-bottom:20px">标注 ◆ 者，关键数字经一手原文（论文 PDF / 作者官网）核对；其余经官方摘要或多个独立来源交叉核实。</p>
+
+  <h4>期刊论文</h4>
+  <ol>
+    <li>◆ Woolley, K., &amp; Fishbach, A. (2017). Immediate rewards predict adherence to long-term goals. <i>Personality and Social Psychology Bulletin, 43</i>(2), 151–162. <a href="https://doi.org/10.1177/0146167216676480">doi:10.1177/0146167216676480</a></li>
+    <li>◆ Wood, W., Quinn, J. M., &amp; Kashy, D. A. (2002). Habits in everyday life: Thought, emotion, and action. <i>Journal of Personality and Social Psychology, 83</i>(6), 1281–1297. <a href="https://doi.org/10.1037/0022-3514.83.6.1281">doi:10.1037/0022-3514.83.6.1281</a></li>
+    <li>◆ Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., &amp; Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. <i>European Journal of Social Psychology, 40</i>(6), 998–1009. <a href="https://doi.org/10.1002/ejsp.674">doi:10.1002/ejsp.674</a>（66 天为平均值；范围 18–254 天）</li>
+    <li>Gardner, B., Lally, P., &amp; Wardle, J. (2012). Making health habitual: The psychology of 'habit-formation' and general practice. <i>British Journal of General Practice, 62</i>(605), 664–666. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3505409/">PMC3505409</a></li>
+    <li>Gardner, B. (2015). A review and analysis of the use of 'habit' in understanding, predicting and influencing health-related behaviour. <i>Health Psychology Review, 9</i>(3), 277–295. <a href="https://doi.org/10.1080/17437199.2013.876238">doi:10.1080/17437199.2013.876238</a></li>
+    <li>Maltz, M. (1960). <i>Psycho-Cybernetics</i>. Prentice-Hall.（「21 天」误传源头）；辟谣见 UCL Health Chatter: <a href="https://blogs.ucl.ac.uk/bsh/2012/06/29/busting-the-21-days-habit-formation-myth/">Busting the 21 days habit formation myth</a></li>
+    <li>Graybiel, A. M. (2008). Habits, rituals, and the evaluative brain. <i>Annual Review of Neuroscience, 31</i>, 359–387.</li>
+    <li>Jog, M. S., Kubota, Y., Connolly, C. I., Hillegaart, V., &amp; Graybiel, A. M. (1999). Building neural representations of habits. <i>Science, 286</i>(5445), 1745–1749.</li>
+    <li>Duhigg, C. (2012). <i>The Power of Habit</i>. Random House.（habit loop 的科普来源）</li>
+    <li>Ryan, R. M., &amp; Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. <i>American Psychologist, 55</i>(1), 68–78. 另见 <a href="https://selfdeterminationtheory.org/theory/">selfdeterminationtheory.org</a></li>
+    <li>◆ Deci, E. L. (1971). Effects of externally mediated rewards on intrinsic motivation. <i>Journal of Personality and Social Psychology, 18</i>(1), 105–115.</li>
+    <li>Lepper, M. R., Greene, D., &amp; Nisbett, R. E. (1973). Undermining children's intrinsic interest with extrinsic reward. <i>Journal of Personality and Social Psychology, 28</i>(1), 129–137.</li>
+    <li>Deci, E. L., Koestner, R., &amp; Ryan, R. M. (1999). A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation. <i>Psychological Bulletin, 125</i>(6), 627–668.</li>
+    <li>Teixeira, P. J., Carraça, E. V., Markland, D., Silva, M. N., &amp; Ryan, R. M. (2012). Exercise, physical activity, and self-determination theory: A systematic review. <i>International Journal of Behavioral Nutrition and Physical Activity, 9</i>, 78. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3441783/">PMC3441783</a></li>
+    <li>Nakamura, J., &amp; Csikszentmihalyi, M. (2002). The concept of flow. In <i>Handbook of Positive Psychology</i> (pp. 89–105). Oxford University Press.</li>
+    <li>Shernoff, D. J., Csikszentmihalyi, M., Schneider, B., &amp; Shernoff, E. S. (2003). Student engagement in high school classrooms from the perspective of flow theory. <i>School Psychology Quarterly, 18</i>(2), 158–176.</li>
+    <li>◆ Burke, S. M., Carron, A. V., Eys, M. A., Ntoumanis, N., &amp; Estabrooks, P. A. (2006). Group versus individual approach? A meta-analysis of the effectiveness of interventions to increase physical activity. <i>Sport &amp; Exercise Psychology Review, 2</i>(1), 19–35.</li>
+    <li>◆ Irwin, B. C., Scorniaenchi, J., Kerr, N. L., Eisenmann, J. C., &amp; Feltz, D. L. (2012). Aerobic exercise is promoted when individual performance affects the group. <i>Annals of Behavioral Medicine, 44</i>(2), 151–159.（Köhler 效应：10.6 → 21.89 分钟）</li>
+    <li>Wing, R. R., &amp; Jeffery, R. W. (1999). Benefits of recruiting participants with friends and increasing social support for weight loss and maintenance. <i>Journal of Consulting and Clinical Psychology, 67</i>(1), 132–138.</li>
+    <li>Galla, B. M., &amp; Duckworth, A. L. (2015). More than resisting temptation: Beneficial habits mediate the relationship between self-control and positive life outcomes. <i>Journal of Personality and Social Psychology, 109</i>(3), 508–525.</li>
+    <li>Duckworth, A. L., Gendler, T. S., &amp; Gross, J. J. (2016). Situational strategies for self-control. <i>Perspectives on Psychological Science, 11</i>(1), 35–55.</li>
+    <li>◆ Gollwitzer, P. M., &amp; Sheeran, P. (2006). Implementation intentions and goal achievement: A meta-analysis of effects and processes. <i>Advances in Experimental Social Psychology, 38</i>, 69–119.（d = 0.65, k = 94, N = 8461，原文核对）</li>
+    <li>Milne, S., Orbell, S., &amp; Sheeran, P. (2002). Combining motivational and volitional interventions to promote exercise participation. <i>British Journal of Health Psychology, 7</i>, 163–184.（d = 1.25 经元分析原文核对；91%/38%/35% 来自一致的二手引用）</li>
+    <li>◆ Milkman, K. L., Minson, J. A., &amp; Volpp, K. G. M. (2014). Holding the Hunger Games hostage at the gym: An evaluation of temptation bundling. <i>Management Science, 60</i>(2), 283–299.</li>
+    <li>◆ Dai, H., Milkman, K. L., &amp; Riis, J. (2014). The fresh start effect: Temporal landmarks motivate aspirational behavior. <i>Management Science, 60</i>(10), 2563–2582.</li>
+    <li>Harkin, B., Webb, T. L., Chang, B. P. I., et al. (2016). Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence. <i>Psychological Bulletin, 142</i>(2), 198–229.（d⁺ = 0.40，官方摘要核对）</li>
+    <li>Wohl, M. J. A., Pychyl, T. A., &amp; Bennett, S. H. (2010). I forgive myself, now I can study: How self-forgiveness for procrastinating can reduce future procrastination. <i>Personality and Individual Differences, 48</i>(7), 803–808.</li>
+    <li>◆ Ariely, D., &amp; Wertenbroch, K. (2002). Procrastination, deadlines, and performance: Self-control by precommitment. <i>Psychological Science, 13</i>(3), 219–224.</li>
+    <li>Sailer, M., &amp; Homner, L. (2020). The gamification of learning: A meta-analysis. <i>Educational Psychology Review, 32</i>, 77–112.</li>
+    <li>Hanus, M. D., &amp; Fox, J. (2015). Assessing the effects of gamification in the classroom. <i>Computers &amp; Education, 80</i>, 152–161.</li>
+    <li>Woolley, K., &amp; Fishbach, A. (2016). For the fun of it: Harnessing immediate rewards to increase persistence in long-term goals. <i>Journal of Consumer Research, 42</i>(6), 952–966.</li>
+    <li>Verplanken, B., &amp; Orbell, S. (2003). Reflections on past behavior: A self-report index of habit strength. <i>Journal of Applied Social Psychology, 33</i>(6), 1313–1330.（SRHI；SRBAI 见 Gardner et al. 2012, <i>IJBNPA 9</i>:102）</li>
+  </ol>
+
+  <h4>专著与网络资源</h4>
+  <ol start="33">
+    <li>Clear, J. (2018). <i>Atomic Habits</i>. Avery. 中译《掌控习惯》。官网免费长文：<a href="https://jamesclear.com/habits">jamesclear.com/habits</a>；两分钟规则、习惯叠加、never miss twice、食堂实验均见官网对应文章。</li>
+    <li>Fogg, B. J. (2020). <i>Tiny Habits</i>. Houghton Mifflin. 行为模型：<a href="https://behaviormodel.org">behaviormodel.org</a>；庆祝机制（Fogg 本人撰文）：<a href="https://ideas.ted.com/how-you-can-use-the-power-of-celebration-to-make-new-habits-stick/">ideas.ted.com</a></li>
+    <li>Wood, W. (2019). <i>Good Habits, Bad Habits</i>. Farrar, Straus and Giroux. 中译《习惯心理学》。访谈（43%、摩擦力、奖励窗口）：<a href="https://behavioralscientist.org/good-habits-bad-habits-a-conversation-with-wendy-wood/">behavioralscientist.org</a></li>
+    <li>少数派．习惯养成 ABC：要如何克服内心的静摩擦力？<a href="https://sspai.com/post/103458">sspai.com/post/103458</a>；另：漫谈习惯养成——相比打卡，不妨试试接纳无聊和认真休息．<a href="https://sspai.com/post/87833">sspai.com/post/87833</a>（反打卡视角，可作平衡阅读）</li>
+    <li>「Don't break the chain」出处：Brad Isaac 述 Seinfeld 建议（Lifehacker, 2007）；Seinfeld 本人于 2014 年 Reddit AMA 否认发明此法。引用时注意此典故出处存疑。</li>
+  </ol>
+
+  <footer>
+    本报告由阿卡酱编撰 ｜ 调研执行：四个并行检索代理（论文一手来源优先）＋ ActivityWatch 本机数据审计<br>
+    引用规范说明：文中所有效应量与百分比均溯源至上列文献；未能核对一手原文者已在文中或文末标注。<br>
+    存放路径：E:\CC_Nichijo\notes\habit-formation-methodology.html ｜ 2026-06-12
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script>
+  // 目录 scrollspy
+  const tocLinks = document.querySelectorAll('nav.toc a');
+  const targets = [...tocLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const byId = {};
+  tocLinks.forEach(a => byId[a.getAttribute('href').slice(1)] = a);
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const link = byId[e.target.id];
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px' });
+  targets.forEach(t => obs.observe(t));
+</script>
+</body>
+</html>

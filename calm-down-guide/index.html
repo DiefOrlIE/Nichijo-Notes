@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重要事件前，如何让自己静下来</title>
+<style>
+  :root{
+    --ink:#2b2b2b;
+    --ink-soft:#5a5a5a;
+    --paper:#faf7f1;
+    --card:#ffffff;
+    --line:#e3ddd1;
+    --accent:#3a6b5e;        /* 沉静的墨绿 */
+    --accent-soft:#e7efea;
+    --warm:#a8633a;          /* 暖色用于"全天"层 */
+    --warm-soft:#f4e9e0;
+    --serif-cn:"Songti SC","SimSun","宋体",serif;
+    --serif-en:"Times New Roman",Georgia,serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif-en),var(--serif-cn);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:56px 24px 80px;}
+  header{text-align:center;margin-bottom:8px;}
+  h1{
+    font-size:32px;font-weight:700;margin:0 0 10px;letter-spacing:.5px;
+  }
+  .sub{color:var(--ink-soft);font-size:16px;margin:0 auto;max-width:560px;}
+  .lead{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:8px;padding:18px 22px;margin:34px 0;font-size:16px;color:var(--ink-soft);
+  }
+  .lead b{color:var(--ink);}
+  h2{
+    font-size:13px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--accent);font-family:var(--serif-en);font-weight:700;
+    margin:48px 0 6px;
+  }
+  h2.warm{color:var(--warm);}
+  .sec-title{font-size:23px;font-weight:700;margin:0 0 22px;border-bottom:1px solid var(--line);padding-bottom:10px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;margin:0 0 18px;
+  }
+  .card h3{
+    font-size:19px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px;
+  }
+  .tag{
+    font-family:var(--serif-en);font-size:11px;letter-spacing:1px;
+    background:var(--accent-soft);color:var(--accent);
+    padding:3px 9px;border-radius:20px;font-weight:700;white-space:nowrap;
+  }
+  .tag.warm{background:var(--warm-soft);color:var(--warm);}
+  .how{margin:12px 0 12px;padding-left:0;list-style:none;}
+  .how li{position:relative;padding-left:26px;margin:7px 0;}
+  .how li::before{
+    content:"›";position:absolute;left:8px;top:0;color:var(--accent);font-weight:700;font-size:18px;
+  }
+  .why{
+    font-size:14.5px;color:var(--ink-soft);background:var(--paper);
+    border-radius:7px;padding:12px 16px;margin-top:6px;
+  }
+  .why b{color:var(--ink);}
+  .src{font-size:13px;margin-top:10px;}
+  .src a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);}
+  .src a:hover{border-bottom-style:solid;}
+  table.cheat{width:100%;border-collapse:collapse;margin-top:6px;background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--line);}
+  table.cheat th,table.cheat td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;}
+  table.cheat th{background:var(--accent);color:#fff;font-family:var(--serif-en);font-weight:600;letter-spacing:.5px;}
+  table.cheat tr:last-child td{border-bottom:none;}
+  table.cheat td:first-child{font-weight:700;white-space:nowrap;}
+  .footnote{margin-top:50px;border-top:1px solid var(--line);padding-top:20px;font-size:13.5px;color:var(--ink-soft);}
+  .footnote h4{font-size:13px;letter-spacing:1px;color:var(--ink);margin:0 0 10px;font-family:var(--serif-en);text-transform:uppercase;}
+  .footnote ol{margin:0;padding-left:20px;}
+  .footnote li{margin:5px 0;}
+  .footnote a{color:var(--accent);text-decoration:none;}
+  .footnote a:hover{text-decoration:underline;}
+  .disc{margin-top:24px;font-size:12.5px;color:#9a948a;text-align:center;font-style:italic;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+
+  <header>
+    <h1>重要事件前，如何让自己静下来</h1>
+    <p class="sub">傍晚有面试、答辩或考试，却一整天反刍、坐不住——这份指南把方法分成两层：<b>全天的反刍管理</b>，和<b>临场几分钟的快速急救</b>。每个方法都附原理与来源。</p>
+  </header>
+
+  <div class="lead">
+    先理解一件事：你不是"软弱"，这是大脑的默认机制。重要事件未发生时，前额叶会反复"预演"威胁、杏仁核维持警戒，这叫<b>预期性焦虑（anticipatory anxiety）</b>与<b>反刍（rumination）</b>。它有两个可被直接干预的把手——<b>身体的生理唤醒</b>（靠呼吸下调）和<b>注意力的去向</b>（靠转移与重评）。下面的方法全部作用在这两点上。
+  </div>
+
+  <!-- 全天层 -->
+  <h2 class="warm">Layer 1 · 全天管理</h2>
+  <div class="sec-title">不让那件事占据一整天</div>
+
+  <div class="card">
+    <h3>担忧时段 <span class="tag warm">WORRY POSTPONEMENT</span></h3>
+    <p style="margin:0 0 6px;color:var(--ink-soft)">把"随时担心"压缩成"定点担心"。</p>
+    <ul class="how">
+      <li>提前划一个 15–30 分钟的固定"担忧窗口"（如下午 4:00–4:20）。</li>
+      <li>白天一旦发现自己开始想面试，<b>不压制、不展开</b>，只对自己说"留到 4 点再想"，然后把注意力放回手头的事。</li>
+      <li>到了那个窗口，专门坐下来想，最好落到纸上：担心什么 → 哪些可准备 → 列成行动。窗口一到点就停。</li>
+    </ul>
+    <div class="why"><b>原理：</b>该技术由 Borkovec 等人 1983 年作为"刺激控制"提出，核心是切断"担忧线索 → 立即陷入"的条件反射。2023 年一篇 meta 分析显示，相比只是记录担忧，担忧延迟能显著降低日常担忧的<b>频率与持续时间</b>（效应量虽属中小，但操作成本极低）。它把焦虑变成有边界、可调度的对象，而不是渗透全天的背景噪音。</div>
+    <div class="src">来源：<a href="https://link.springer.com/article/10.1007/s41811-023-00193-x">Springer · 担忧延迟 meta 分析 (2023)</a> · <a href="https://www.psychologytools.com/resource/worry-postponement">Psychology Tools · Worry Postponement</a></div>
+  </div>
+
+  <div class="card">
+    <h3>把"焦虑"重命名为"兴奋" <span class="tag warm">REAPPRAISAL</span></h3>
+    <p style="margin:0 0 6px;color:var(--ink-soft)">不要试图"冷静下来"，而是给同一种身体反应换个标签。</p>
+    <ul class="how">
+      <li>心跳快、手心出汗时，对自己明确地说一句："<b>我很兴奋 / 我准备好了</b>"，而不是"我要冷静"。</li>
+      <li>把唤醒重新解读为<b>助力</b>：心跳加速是身体在为你输送更多氧气和能量，帮你发挥。</li>
+    </ul>
+    <div class="why"><b>原理：</b>焦虑与兴奋在生理上几乎相同——都是高唤醒。强行"冷静"是要把高唤醒拉到低唤醒，难且费力；而"兴奋"与焦虑<b>唤醒方向一致</b>，重贴标签因此更容易成功。Jamieson 团队的实验里，被引导把压力唤醒重评为"有益"的学生，数学考试焦虑更低、成绩更好；告知"紧张能提升表现"的 GRE 备考者，演讲表现也被盲评者评得更高。</div>
+    <div class="src">来源：<a href="https://journals.sagepub.com/doi/abs/10.1177/1948550616644656">Jamieson et al., 2016 · 考场情境的压力重评</a> · <a href="https://www.apa.org/pubs/journals/releases/xge-a0035325.pdf">APA · "Get Excited" (Brooks, 2014, PDF)</a></div>
+  </div>
+
+  <div class="card">
+    <h3>用"可控的准备"锚住注意力 <span class="tag warm">ACTION ANCHOR</span></h3>
+    <ul class="how">
+      <li>把当天切成有明确开始/结束的时间块（time-boxing），每块只做一件具体的事——准备自我介绍、过一遍简历、出门路线。</li>
+      <li>注意力一旦从"<b>结果会怎样</b>"（不可控）转到"<b>我现在做哪一步</b>"（可控），反刍就失去了燃料。</li>
+    </ul>
+    <div class="why"><b>原理：</b>反刍依赖"空转的注意力"。给注意力一个具体、可完成的对象，等于把它从对未来结果的灾难化预演里拽回当下。这与下面 5-4-3-2-1 同源——都是用一个明确的当下焦点，挤掉杏仁核驱动的威胁循环。</div>
+  </div>
+
+  <!-- 临场层 -->
+  <h2>Layer 2 · 临场急救</h2>
+  <div class="sec-title">几分钟内把唤醒压下去</div>
+
+  <div class="card">
+    <h3>生理叹息 <span class="tag">PHYSIOLOGICAL SIGH · 最快</span></h3>
+    <p style="margin:0 0 6px;color:var(--ink-soft)">目前实证下最快的实时降压手段，30 秒起效。</p>
+    <ul class="how">
+      <li>用鼻子吸气一次 → 在肺还没排空时，再<b>短促补吸第二口</b>（让肺充分张开）。</li>
+      <li>然后用嘴<b>缓慢、长长地把气全部呼出</b>。</li>
+      <li>重复 1–3 次即可即时见效；想更稳定可连续做约 5 分钟。</li>
+    </ul>
+    <div class="why"><b>原理：</b>双吸气重新打开萎陷的肺泡，<b>长呼气</b>提升迷走神经张力、激活副交感（"刹车"）系统，直接下调心率与唤醒。斯坦福 Huberman 与 Spiegel 团队 2023 年发表于《Cell Reports Medicine》的随机对照研究中，每天 5 分钟"循环叹息"在改善情绪、降低呼吸频率上<b>优于正念冥想</b>，也优于盒式呼吸与循环过度换气。</div>
+    <div class="src">来源：<a href="https://www.cell.com/cell-reports-medecine/fulltext/S2666-3791(22)00474-8">Cell Reports Medicine, 2023 · 原文</a> · <a href="https://stanmed.stanford.edu/cyclic-sighing-stress-relief/">Stanford Medicine 报道</a></div>
+  </div>
+
+  <div class="card">
+    <h3>盒式呼吸 <span class="tag">BOX BREATHING · 4-4-4-4</span></h3>
+    <ul class="how">
+      <li>吸气 4 秒 → 屏息 4 秒 → 呼气 4 秒 → 屏息 4 秒，循环。</li>
+      <li>做 4–6 个循环。等长节律本身有"可预测、可掌控"的安定感，适合进考场/面试间前在座位上做。</li>
+    </ul>
+    <div class="why"><b>原理：</b>刻意放慢、规律化呼吸提升心率变异性（HRV）、增强迷走调节。在上面那项斯坦福研究里，盒式呼吸同样显著降低了状态焦虑（与循环叹息接近），只是情绪改善幅度略逊于叹息。美军、急救人员常用它正因其简单、好记、稳定。</div>
+    <div class="src">来源：<a href="https://www.cell.com/cell-reports-medecine/fulltext/S2666-3791(22)00474-8">Cell Reports Medicine, 2023</a></div>
+  </div>
+
+  <div class="card">
+    <h3>5-4-3-2-1 着陆法 <span class="tag">GROUNDING</span></h3>
+    <p style="margin:0 0 6px;color:var(--ink-soft)">当脑子停不下来、思绪飘向"万一搞砸"时，用感官把自己拉回当下。</p>
+    <ul class="how">
+      <li>说出你能<b>看到</b>的 5 样东西 → <b>听到</b>的 4 种声音 → <b>触到</b>的 3 种触感 → <b>闻到</b>的 2 种气味 → <b>尝到</b>的 1 种味道。</li>
+      <li>逐项、缓慢、具体地命名，不赶进度。</li>
+    </ul>
+    <div class="why"><b>原理：</b>把注意力从抽象的灾难化想象，切换到即时、无威胁的感官输入，激活前额叶来调节杏仁核的警报。2025 年一项针对护理学生考试焦虑的试验中，这套"五感技术"让高焦虑比例从 23% 降到 4%；罗切斯特大学医学中心也将其列为一线应对技能。</div>
+    <div class="src">来源：<a href="https://www.sciencedirect.com/science/article/abs/pii/S1557308725002999">ScienceDirect · 护生考试焦虑试验 (2025)</a></div>
+  </div>
+
+  <!-- 速查 -->
+  <h2>Cheat Sheet · 一页速查</h2>
+  <div class="sec-title">该用哪个？</div>
+  <table class="cheat">
+    <tr><th>状态</th><th>用这个</th><th>耗时</th></tr>
+    <tr><td>心跳快、当场紧张</td><td>生理叹息 ×1–3</td><td>30 秒</td></tr>
+    <tr><td>进场前想稳住节奏</td><td>盒式呼吸 4-4-4-4</td><td>1–2 分钟</td></tr>
+    <tr><td>脑子停不下来反刍</td><td>5-4-3-2-1 着陆</td><td>1–2 分钟</td></tr>
+    <tr><td>一整天被那件事占据</td><td>担忧时段 + 行动锚点</td><td>设定一次</td></tr>
+    <tr><td>"我会不会搞砸"</td><td>重命名为"兴奋"</td><td>一句话</td></tr>
+  </table>
+
+  <div class="footnote">
+    <h4>References</h4>
+    <ol>
+      <li>Balban M.Y., Huberman A.D., Spiegel D. et al. <i>Brief structured respiration practices enhance mood and reduce physiological arousal.</i> Cell Reports Medicine, 2023 — <a href="https://www.cell.com/cell-reports-medecine/fulltext/S2666-3791(22)00474-8">cell.com</a> · <a href="https://stanmed.stanford.edu/cyclic-sighing-stress-relief/">stanmed.stanford.edu</a></li>
+      <li><i>担忧延迟对日常担忧的效果：meta 分析.</i> Int. J. Cognitive Behavioral Therapy, 2023 — <a href="https://link.springer.com/article/10.1007/s41811-023-00193-x">link.springer.com</a> · <a href="https://www.psychologytools.com/resource/worry-postponement">Psychology Tools</a></li>
+      <li>Jamieson J.P. et al. <i>Reappraising Stress Arousal Improves Performance and Reduces Evaluation Anxiety.</i> 2016 — <a href="https://journals.sagepub.com/doi/abs/10.1177/1948550616644656">SAGE</a>；Brooks A.W. <i>Get Excited.</i> APA, 2014 — <a href="https://www.apa.org/pubs/journals/releases/xge-a0035325.pdf">PDF</a></li>
+      <li><i>Five Senses (5-4-3-2-1) Technique for test anxiety.</i> 2025 — <a href="https://www.sciencedirect.com/science/article/abs/pii/S1557308725002999">ScienceDirect</a></li>
+      <li>开源练习工具（可视化计时跟练）：<a href="https://github.com/topics/box-breathing">GitHub · box-breathing topic</a> · <a href="https://github.com/jaroslaw-weber/calm-garden-cli">calm-garden-cli（含生理叹息）</a> · <a href="https://lassebomh.github.io/box-breathing/">在线盒式呼吸动画</a></li>
+    </ol>
+    <p class="disc">本指南整理自公开研究与临床材料，用于自我调节参考，不替代专业医疗或心理诊断。若焦虑长期、严重影响生活，请咨询专业人士。</p>
+  </div>
+
+</div>
+</body>
+</html>

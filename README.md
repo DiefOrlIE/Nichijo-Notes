@@ -29,6 +29,8 @@
 - `fourier-guide/` — 傅里叶级数 · 快速计算指导
 - `sleep-whitepaper.html` — 睡眠白皮书 · 横纵分析
 - `ai-learning-workflow/` — AI 辅助学习工作流手册 · 给 AI 专业大学生
+- `calm-down-guide/` — 如何静下来 · 重要事件前的情绪调节
+- `habit-formation-methodology/` — 习惯的科学 · 为什么打球不需要坚持
 
 ## 结构约定
 每个讲稿一个文件夹,内含 `index.html` + `pages/` 原书页面截图。入口 `index.html` 是各讲稿的卡片导航页。
