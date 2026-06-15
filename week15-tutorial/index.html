@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Week 15 复习讲义 · 监督/无监督 · 聚类 · 关联规则 · 异常检测</title>
+<style>
+  :root{
+    --bg:#faf6ee; --panel:#fffdf7; --ink:#2a2620; --mute:#7a6f5e;
+    --accent:#1d4ed8; --accent2:#b91c1c;
+    --line:#e8e0cf; --softline:#efe7d4;
+    --note-bg:#fff8dc; --note-bd:#f3e0a0;
+    --tip-bg:#eaf3ff; --tip-bd:#bfdbfe;
+    --warn-bg:#fdecec; --warn-bd:#f5b8b8;
+    --bg-ribbon:#f3ead4; --bg-ribbon-bd:#d9c894;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",SimSun,"Times New Roman",serif;
+    font-size:16px;line-height:1.78;}
+  aside{position:fixed;top:0;left:0;width:230px;height:100vh;overflow-y:auto;
+    background:#f5efe0;border-right:1px solid var(--line);padding:18px 12px;font-size:13px;}
+  aside h1{font-size:14px;margin:0 0 4px;color:var(--accent);font-weight:700;}
+  aside .intro{color:var(--mute);font-size:12px;margin:0 4px 8px;line-height:1.5;}
+  aside ol{list-style:none;padding:0;margin:0;}
+  aside li{margin:1px 0;}
+  aside a{color:var(--ink);text-decoration:none;display:block;padding:4px 8px;border-radius:4px;
+    border-left:3px solid transparent;transition:all .15s;}
+  aside a:hover{background:#ebe0c4;}
+  aside a.active{background:#fff6d8;border-left-color:var(--accent2);font-weight:700;color:var(--accent2);}
+  aside a.sub{padding-left:18px;color:#6f6452;font-size:12.5px;}
+  aside .group{margin:12px 4px 4px;font-weight:700;color:#3a3525;font-size:12px;letter-spacing:.5px;border-top:1px solid var(--softline);padding-top:8px;}
+  aside .foot{margin-top:14px;font-size:11px;color:#a99e88;border-top:1px solid var(--softline);padding-top:10px;line-height:1.6;}
+  main{margin-left:230px;padding:30px 48px 80px;max-width:1080px;}
+  section.page{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;margin-bottom:36px;box-shadow:0 1px 2px rgba(80,60,20,.04);}
+  section.page h2{margin:0 0 4px;font-size:21px;color:var(--accent);}
+  section.page .pgnum{color:var(--mute);font-size:13px;margin-bottom:14px;}
+  .explain h3{font-size:16px;color:var(--accent2);margin:16px 0 6px;border-left:3px solid var(--accent2);padding-left:8px;}
+  .explain h4{font-size:15px;color:#5c4a18;margin:12px 0 4px;}
+  .explain p{margin:6px 0;}
+  .explain ul,.explain ol{margin:6px 0;padding-left:24px;}
+  .explain li{margin:3px 0;}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:15px;}
+  .note b,.tip b,.warn b{color:inherit;}
+  code,pre,.mono{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;}
+  code{background:#f1ead4;padding:0 4px;border-radius:3px;font-size:14px;}
+  pre{background:#1f1a14;color:#f3ead2;padding:12px 14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.55;}
+  pre .c{color:#9a8f6a;} pre .k{color:#d99a6c;} pre .s{color:#a9c08a;}
+  table.tbl{border-collapse:collapse;margin:10px 0;font-size:14.5px;width:100%;}
+  table.tbl th,table.tbl td{border:1px solid #d4c79c;padding:5px 10px;text-align:center;}
+  table.tbl th{background:#f1e7c8;}
+  table.tbl td.l{text-align:left;}
+  hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:900px){.twocol{grid-template-columns:1fr;} aside{display:none;} main{margin-left:0;padding:20px;}}
+  .center{text-align:center;}
+  .formula{text-align:center;font-family:Consolas,monospace;font-size:15px;background:#f8f2dc;padding:10px;border-radius:4px;margin:10px 0;}
+  .formula small{display:block;font-family:inherit;color:var(--mute);font-size:12px;margin-top:4px;}
+  .hero{background:linear-gradient(180deg,#fffdf7,#f7f0df);border:1px solid var(--line);border-radius:10px;padding:26px 28px;margin-bottom:30px;}
+  .hero .k{font-size:12px;letter-spacing:2px;color:var(--accent2);text-transform:uppercase;}
+  .hero h1{font-size:26px;margin:6px 0 8px;color:var(--ink);}
+  .hero p{margin:0;color:var(--mute);font-size:15px;}
+  .key{background:#fff2c4;padding:0 3px;border-radius:3px;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<aside>
+  <h1>Week 15 复习讲义</h1>
+  <div class="intro">人工智能程序设计 · 四块知识从头讲透</div>
+  <ol>
+    <li><a href="#p0">0 · 全景地图</a></li>
+    <li class="group">A · 监督 / 无监督</li>
+    <li><a href="#p1">1 · 两类学习的区别</a></li>
+    <li class="group">B · 聚类</li>
+    <li><a href="#p2">2 · 距离与目标</a></li>
+    <li><a href="#p3">3 · K-Means</a></li>
+    <li><a href="#p4">4 · K-Centroid</a></li>
+    <li><a href="#p5">5 · 初始化与空簇</a></li>
+    <li><a href="#p6">6 · 手算走一遍</a></li>
+    <li class="group">C · 关联规则</li>
+    <li><a href="#p7">7 · 基本概念</a></li>
+    <li><a href="#p8">8 · 支持度·置信度</a></li>
+    <li><a href="#p9">9 · Apriori 原理</a></li>
+    <li><a href="#p10">10 · 手算走一遍</a></li>
+    <li class="group">D · 异常检测</li>
+    <li><a href="#p11">11 · 相对密度法</a></li>
+    <li><a href="#p12">12 · z-score 法</a></li>
+    <li class="group">★ 收尾</li>
+    <li><a href="#p13">13 · 速查表</a></li>
+  </ol>
+  <div class="foot">阿卡酱 为 鳟鱼大人 整理<br>所有手算可复现 · 2026-06-15</div>
+</aside>
+
+<main>
+
+<div class="hero">
+  <div class="k">Machine Learning · Review</div>
+  <h1>四块拼图：从「有没有答案」到「怎么找异常」</h1>
+  <p>先分清监督 / 无监督，再从无监督里挑三件常用工具：聚类分组、关联规则挖共现、异常检测找离群。读完每个公式你都能自己手算一遍。</p>
+</div>
+
+<!-- ============ 0 ============ -->
+<section class="page" id="p0">
+  <h2>0 · 全景地图</h2>
+  <div class="pgnum">先搭骨架，再填血肉</div>
+  <div class="explain">
+    <p>机器学习按「训练数据里有没有标准答案（标签）」分两大类。本次作业的四块，除了第 1 节的对比，其余<b>全落在无监督这一侧</b>：</p>
+    <table class="tbl">
+      <tr><th>大类</th><th>有没有标签</th><th>在干什么</th><th>本次涉及</th></tr>
+      <tr><td>监督学习</td><td>有 (x, y)</td><td class="l">学一个能预测标签的映射</td><td>第 1 节</td></tr>
+      <tr><td rowspan="3">无监督学习</td><td rowspan="3">只有 x</td><td class="l">把样本分组 → 聚类</td><td>第 2–6 节</td></tr>
+      <tr><td class="l">挖共现规律 → 关联规则</td><td>第 7–10 节</td></tr>
+      <tr><td class="l">找离群点 → 异常检测</td><td>第 11–12 节</td></tr>
+    </table>
+    <div class="tip"><b>一句话直觉</b>：监督学习是「老师给了答案，你学着对答案」；无监督学习是「没答案，自己看数据长什么样」。聚类看「谁和谁像」，关联规则看「什么和什么一起出现」，异常检测看「谁不合群」。</div>
+  </div>
+</section>
+
+<!-- ============ 1 ============ -->
+<section class="page" id="p1">
+  <h2>1 · 监督学习 vs 无监督学习</h2>
+  <div class="pgnum">三个角度：数据长什么样 · 靠什么信号学 · 能干什么活</div>
+  <div class="explain">
+    <h3>数据形式与目标</h3>
+    <p><b>监督学习</b>的每个样本是「特征 + 标签」对 (x, y)。x 是输入（如邮件词频），y 是标准答案（如「垃圾/正常」）。目标：学映射 <code>f : x → y</code>，对<span class="key">没见过的新样本</span>也能预测标签。</p>
+    <p><b>无监督学习</b>的样本只有特征 x，<span class="key">没有任何标签</span>。目标退而求其次：发现数据自身的结构——哪些点抱团、哪些维度重要、什么总一起出现、谁是异类。</p>
+
+    <h3>学习信号（最易混的点）</h3>
+    <p>「学习信号」= 模型靠什么反馈来调整自己，这是两类学习的<b>本质分界</b>。</p>
+    <div class="twocol">
+      <div class="tip"><b>监督：外部误差</b><br>信号来自标签。预测出 ŷ，和真值 y 比，差距由<b>损失函数</b>量化（分类用交叉熵，回归用均方误差），最小化损失来调参。每个样本都有明确「对/错」依据。</div>
+      <div class="note"><b>无监督：内在准则</b><br>没标签可对照，信号来自数据自身准则：同簇点应尽量近（簇内距离）、压缩后还原误差要小、投影后方差要大。衡量的是「结构合不合理」而非「预测对不对」。</div>
+    </div>
+
+    <h3>常见任务场景</h3>
+    <table class="tbl">
+      <tr><th>类型</th><th>任务</th><th>例子</th></tr>
+      <tr><td rowspan="2">监督</td><td>分类（标签离散）</td><td class="l">垃圾邮件识别、图像分类、违约判断</td></tr>
+      <tr><td>回归（标签连续）</td><td class="l">房价、气温、销量预测</td></tr>
+      <tr><td rowspan="4">无监督</td><td>聚类</td><td class="l">用户分群、文档主题归类</td></tr>
+      <tr><td>降维</td><td class="l">可视化、特征压缩（PCA、t-SNE）</td></tr>
+      <tr><td>关联规则</td><td class="l">购物篮分析、学习行为模式</td></tr>
+      <tr><td>异常检测</td><td class="l">欺诈识别、设备故障预警</td></tr>
+    </table>
+    <div class="note"><b>记忆锚点</b>：有标签→学预测（监督）；无标签→找结构（无监督）。后面三节全是「找结构」的具体招式。</div>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="page" id="p2">
+  <h2>2 · 聚类：距离与目标函数</h2>
+  <div class="pgnum">把没标签的点分成 K 组，组内尽量像、组间尽量远</div>
+  <div class="explain">
+    <p>聚类要量化「像不像」，二维下用<b>欧氏距离</b>（直线距离）：</p>
+    <div class="formula">d(p, q) = √[ (pₓ−qₓ)² + (p_y−q_y)² ]<small>两点欧氏距离</small></div>
+    <p>K-Means 想最小化<b>簇内平方误差和 SSE</b>：每个点到所属簇心距离的平方求和，越小越紧凑。</p>
+    <div class="formula">SSE = Σ_k Σ_{x∈C_k} ‖x − c_k‖²<small>越小越好；c_k 是第 k 个簇心</small></div>
+    <div class="warn"><b>关键性质</b>：这个 SSE 是<b>非凸</b>的，算法只能保证收敛到<b>局部最优</b>，不保证全局最优。这是后面「初始化敏感」一切问题的根源。</div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="page" id="p3">
+  <h2>3 · K-Means 的四步循环</h2>
+  <div class="pgnum">分配 → 求均值更新 → 重复</div>
+  <div class="explain">
+    <ol>
+      <li><b>初始化</b>：选 K 个初始簇心（本课程固定取前 K 个点，保证答案唯一）。</li>
+      <li><b>分配</b>：每个点算到 K 个簇心的距离，归给<span class="key">最近</span>的簇；距离相等时归编号小的簇心。</li>
+      <li><b>更新</b>：每个簇的新簇心 = 簇内所有点坐标的<b>平均值</b>。</li>
+      <li><b>重复</b> 第 2、3 步，直到做满 T 次迭代。</li>
+    </ol>
+    <div class="formula">c_新 = ( (x₁+…+x_m)/m , (y₁+…+y_m)/m )<small>K-Means 更新：簇内坐标均值，m 为簇内点数</small></div>
+    <p>对应作业要补的那行代码：<code>labels==i</code> 取出第 i 簇全部样本，<code>.mean(axis=0)</code> 沿样本方向逐列求均值。</p>
+    <pre><span class="k">def</span> update_centroids(X, labels, k):
+    n_features = X.shape[<span class="s">1</span>]
+    centroids = np.zeros((k, n_features))
+    <span class="k">for</span> i <span class="k">in</span> range(k):
+        centroids[i] = X[labels == i].mean(axis=<span class="s">0</span>)   <span class="c"># 第 i 簇按维度求均值</span>
+    <span class="k">return</span> centroids</pre>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="page" id="p4">
+  <h2>4 · K-Centroid（medoid）的区别</h2>
+  <div class="pgnum">和 K-Means 只差「更新簇心」这一步</div>
+  <div class="explain">
+    <p>K-Means 的簇心是算出来的<span class="key">虚拟平均点</span>（可能不在数据里）；K-Centroid 要求簇心必须是<span class="key">簇内某个真实样本点</span>。</p>
+    <p>选法：对簇内每个点，算它到簇内其余所有点的距离之和，选<b>距离和最小</b>的那个点（并列取输入编号最小）。</p>
+    <div class="formula">c_新 = arg min_{p∈C} Σ_{q∈C} d(p, q)<small>簇内到他人总距离最小的真实点</small></div>
+    <table class="tbl">
+      <tr><th></th><th>K-Means</th><th>K-Centroid</th></tr>
+      <tr><td>簇心是什么</td><td>坐标均值（虚拟点）</td><td>簇内某个真实样本点</td></tr>
+      <tr><td>怎么算</td><td>求平均，O(m)</td><td>两两距离和取最小，O(m²)</td></tr>
+      <tr><td>抗异常值</td><td>弱（被极端点拉走）</td><td>强（中位点式，更稳健）</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="page" id="p5">
+  <h2>5 · 初始化的影响 & 空簇处理</h2>
+  <div class="pgnum">为什么固定取前 K 个点</div>
+  <div class="explain">
+    <p><b>初始簇心选择会直接改变最终结果</b>，因为 SSE 非凸、只收敛到局部最优：</p>
+    <ul>
+      <li>初始中心不同 → 可能收敛到<b>不同的簇划分</b>，结果不唯一；</li>
+      <li>初始中心选得差（几个落在同一真实簇、或彼此太近）→ 易陷<b>差的局部最优</b>、产生<b>空簇</b>、收敛变慢；</li>
+      <li>缓解：<b>多次随机重启</b>取 SSE 最小的一次，或用 <b>k-means++</b>（让初始中心尽量分散）。</li>
+    </ul>
+    <p>本课程「固定取前 K 个点」正是为了消除随机性、<span class="key">保证答案唯一可判分</span>。</p>
+    <div class="warn"><b>空簇处理</b>：某次迭代若某簇<b>一个点都没分到</b>，它的簇心<b>保持不变</b>（代码里就是 <code>if n==0: continue</code> 跳过更新）。</div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="page" id="p6">
+  <h2>6 · 手算走一遍（聚类例题）</h2>
+  <div class="pgnum">6 点，K=2，T=2，K-Means</div>
+  <div class="explain">
+    <p>初始簇心 = 前 2 个点：c₁=(0,0)，c₂=(0,2)。</p>
+    <h4>迭代 1 · 分配</h4>
+    <table class="tbl">
+      <tr><th>点</th><th>到 c₁(0,0)</th><th>到 c₂(0,2)</th><th>归簇</th></tr>
+      <tr><td>p1 (0,0)</td><td>0</td><td>2</td><td>簇1</td></tr>
+      <tr><td>p2 (0,2)</td><td>2</td><td>0</td><td>簇2</td></tr>
+      <tr><td>p3 (1,1)</td><td>√2≈1.41</td><td>√2≈1.41</td><td>簇1（并列取小号）</td></tr>
+      <tr><td>p4 (8,8)</td><td>≈11.31</td><td>10.00</td><td>簇2</td></tr>
+      <tr><td>p5 (9,8)</td><td>≈12.04</td><td>≈10.82</td><td>簇2</td></tr>
+      <tr><td>p6 (8,9)</td><td>≈12.04</td><td>≈10.63</td><td>簇2</td></tr>
+    </table>
+    <p><b>更新</b>：簇1={p1,p3} → c₁=(0.5, 0.5)；簇2={p2,p4,p5,p6} → c₂=((0+8+9+8)/4, (2+8+8+9)/4)=(6.25, 6.75)。</p>
+    <h4>迭代 2 · 分配</h4>
+    <p>用新簇心：p1、p2、p3 离 (0.5,0.5) 明显更近 → 簇1；p4、p5、p6 离 (6.25,6.75) 更近 → 簇2。簇心几乎不动，结束。</p>
+    <div class="tip"><b>最终标签</b>：p1,p2,p3 → 簇 1；p4,p5,p6 → 簇 2。与标准答案一致 ✓</div>
+    <div class="note"><b>实现小坑</b>：你代码是「先循环 T−1 次更新、最后再分配一次得标签」。和「分配+更新各做 T 次」殊途同归——标签总由<b>最后一次分配</b>决定，最后那次更新算了也没用上，结果完全一致。</div>
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="page" id="p7">
+  <h2>7 · 关联规则：基本概念</h2>
+  <div class="pgnum">从「购物篮」里挖「买 A 的人也常买 B」</div>
+  <div class="explain">
+    <ul>
+      <li><b>事务 (transaction)</b>：一条记录，是一组 item 的集合。如 S1={看视频, 做测验, 看讨论区}。</li>
+      <li><b>item（项）</b>：事务里的单个元素。如「看视频」。</li>
+      <li><b>项集 (itemset)</b>：若干 item 的集合；含 k 个的叫 k-项集。</li>
+      <li><b>关联规则</b>：形如 <code>X → y</code>，「出现 X 时往往也出现 y」。X 非空，y 是单个 item 且 y∉X。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section class="page" id="p8">
+  <h2>8 · 支持度与置信度</h2>
+  <div class="pgnum">一个量「多常见」，一个量「多可靠」</div>
+  <div class="explain">
+    <p><b>支持计数</b> = 包含某项集的事务数。<b>支持度 support</b> = 支持计数 / 总事务数。</p>
+    <div class="formula">support(Z) = (包含 Z 的事务数) / (总事务数 N)<small>衡量组合有多常见</small></div>
+    <p><b>置信度 confidence</b> = 出现 X 的前提下也出现 y 的比例，即条件概率 P(y|X)：</p>
+    <div class="formula">confidence(X → y) = support_count(X ∪ {y}) / support_count(X)<small>衡量规则有多可靠</small></div>
+    <p>满足 <code>support ≥ minsup</code> 的项集叫<b>频繁项集</b>；同时满足 <code>support ≥ minsup</code> 且 <code>confidence ≥ minconf</code> 的才是要找的<b>强关联规则</b>。</p>
+    <div class="warn"><b>避坑·整数比较</b>：判置信度别用除法（有浮点误差）。把 <code>sc/sx ≥ C/100</code> 两边乘开成纯整数比较：<br><b>100 × support_count(X∪{y}) ≥ C × support_count(X)</b></div>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section class="page" id="p9">
+  <h2>9 · Apriori 原理（精髓）</h2>
+  <div class="pgnum">用一条性质把 2ᴹ 种组合大幅剪枝</div>
+  <div class="explain">
+    <div class="tip"><b>反单调性 / 向下封闭</b><br>项集若<b>频繁，其所有子集也一定频繁</b>；反过来，项集若<b>不频繁，其所有超集也一定不频繁</b>。<br>直觉：超集出现次数不可能比子集多（加限制只会更难满足），子集都不够格，超集更不可能够格。</div>
+    <p>由此得到逐层算法：</p>
+    <ol>
+      <li>找出所有频繁 1-项集。</li>
+      <li>由频繁 k-项集两两连接，生成候选 (k+1)-项集（前 k−1 项相同才连接）。</li>
+      <li><b>剪枝</b>：候选的任一 k-项子集若不频繁，直接丢掉（不用扫库）。</li>
+      <li>扫一遍数据库给剩下候选计数，留 support ≥ minsup 的。</li>
+      <li>重复直到生不出新频繁项集；最后从每个频繁项集拆规则、验证置信度。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="page" id="p10">
+  <h2>10 · 手算走一遍（学生行为数据集）</h2>
+  <div class="pgnum">N=8，minsup=0.5（计数≥4），minconf=0.7</div>
+  <div class="explain">
+    <p>先数各单项支持计数：看视频 6、做测验 7、看讨论区 6、提交草稿 6、查阅文档 3。</p>
+    <h4>b · 几个项集的支持度</h4>
+    <table class="tbl">
+      <tr><th>项集</th><th>包含它的事务</th><th>计数</th><th>支持度</th></tr>
+      <tr><td class="l">{看视频}</td><td class="l">S1,S2,S3,S5,S6,S8</td><td>6</td><td>0.75</td></tr>
+      <tr><td class="l">{做测验}</td><td class="l">除 S3 外全部</td><td>7</td><td>0.875</td></tr>
+      <tr><td class="l">{看视频, 做测验}</td><td class="l">S1,S2,S5,S6,S8</td><td>5</td><td>0.625</td></tr>
+      <tr><td class="l">{做测验, 看讨论区}</td><td class="l">S1,S2,S4,S6,S7,S8</td><td>6</td><td>0.75</td></tr>
+      <tr><td class="l">{看视频, 做测验, 看讨论区}</td><td class="l">S1,S2,S6,S8</td><td>4</td><td>0.50</td></tr>
+    </table>
+    <h4>c · 是不是频繁 3-项集</h4>
+    <p>{看视频, 做测验, 看讨论区} 支持度 0.50，<b>等于</b> minsup（阈值取「≥」）→ <b>是</b>频繁 3-项集。</p>
+    <h4>d · 两条规则是否满足</h4>
+    <div class="tip"><b>规则1 {看视频,做测验}→{看讨论区}</b>：support=0.5≥0.5 ✓；confidence=0.5/0.625=<b>0.8</b>≥0.7 ✓ → 满足</div>
+    <div class="tip"><b>规则2 {看讨论区}→{做测验}</b>：support=0.75≥0.5 ✓；confidence=0.75/0.75=<b>1.0</b>≥0.7 ✓ → 满足（用过看讨论区的全用过做测验）</div>
+    <h4>e · {查阅文档, 看讨论区, 提交草稿} 还要查吗</h4>
+    <p><b>不要。</b>已知 {查阅文档, 看讨论区} 不频繁；由反单调性，它的<b>超集</b> {查阅文档, 看讨论区, 提交草稿} 必然也不频繁，<span class="key">直接剪枝</span>，不必扫库计数。</p>
+  </div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section class="page" id="p11">
+  <h2>11 · 异常检测一：相对密度法</h2>
+  <div class="pgnum">看「比邻居稀疏多少」（局部、无分布假设）</div>
+  <div class="explain">
+    <p>这是 LOF（局部离群因子）的简化版。核心：一个点异不异常，<b>不看它绝对有多孤立，而看它比周围邻居孤立多少</b>。</p>
+    <h4>① K 近邻</h4>
+    <p>点 i 的 K 近邻 = 除自己外、欧氏距离最近的 K 个点。<b>距离相同时编号小的优先</b>（排序键用 (距离, 编号) 自动满足）。</p>
+    <h4>② 局部密度</h4>
+    <p>这里的「密度」其实是<b>到 K 个近邻的平均距离</b>。注意方向：<span class="key">值越大 = 邻居越远 = 越稀疏 = 越可能异常</span>。</p>
+    <div class="formula">density(i) = (1/K) · Σ_{j∈KNN(i)} d(i, j)<small>K 个近邻的平均距离（越大越稀疏）</small></div>
+    <h4>③ 相对异常得分</h4>
+    <div class="formula">score(i) = density(i) / avg_neighbor_density(i)<small>自己的稀疏度 ÷ 邻居们的平均稀疏度</small></div>
+    <p>分母是「点 i 的 K 个近邻各自 density 的平均」。score &gt; 1 说明 i 比邻居更稀疏，越大越异常。</p>
+    <div class="note"><b>为什么要「相对」</b>：有的点本就在稀疏区，但邻居一样稀疏，它并不异常——绝对密度会冤枉它。除以邻居密度后，「大家都稀疏」被约掉，只有<b>显著比周围孤立</b>的点得分才高。</div>
+    <h4>手算（8 点，K=2，Q=3）</h4>
+    <div class="tip"><b>点 8 (30,30)</b>：2 近邻是点 6、7，距离都是 √((30−10)²+(30−11)²)=√761≈27.59 → density(8)=27.59。点 6、7 的 density≈1.21（紧挨 5/6/7 那团）。score(8)=27.59/1.21≈<b>22.85</b>，远超 1，最异常 ✓。（点 6、7 得分≈1.09，并列取小号 6 在前，输出 8 / 6 / 7。）</div>
+  </div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section class="page" id="p12">
+  <h2>12 · 异常检测二：z-score 法</h2>
+  <div class="pgnum">看「偏离均值几个标准差」（全局、假设正态）</div>
+  <div class="explain">
+    <p>假设数据来自正态分布。<b>z 分数</b>把每个点标准化：</p>
+    <div class="formula">z = (x − μ) / σ<small>μ 均值，σ 标准差</small></div>
+    <p>经验法则：正态下约 95% 的数据落在 ±2σ 内、99.7% 落在 ±3σ 内。所以 <code>|z| &gt; 2</code>（或更严的 3）就当异常。</p>
+    <div class="warn"><b>样本 σ 还是总体 σ</b>：样本标准差分母用 n−1（无偏，<code>ddof=1</code>），总体标准差用 n。两者数值略不同，但本题结论不变——都只标出一个异常点。</div>
+    <h4>手算：data = [1,2,2,1,10,2,1,20]</h4>
+    <ul>
+      <li>均值 μ = (1+2+2+1+10+2+1+20)/8 = 39/8 = <b>4.875</b></li>
+      <li>偏差平方和 = 324.875；样本 σ = √(324.875/7) ≈ <b>6.81</b>（总体 σ=√(324.875/8)≈6.37，结论一样）</li>
+      <li>各 z：1→−0.57，2→−0.42，10→0.75，<b>20→2.22</b></li>
+    </ul>
+    <p>只有 <b>20（第 8 个点）</b> 的 |z|≈2.22 &gt; 2，被标记为异常；10 的 |z|≈0.75，没超阈值，<span class="key">不算异常</span>。</p>
+    <div class="warn"><b>masking（掩盖）效应</b>：异常值 20 自己把 μ、σ 抬高了，把同样偏离主群的 10「盖」住，使它显不出异常。这是 z-score 的天生短板。多异常场景改用更稳健的<b>中位数 / MAD</b>。</div>
+    <h4>两种方法对比</h4>
+    <table class="tbl">
+      <tr><th></th><th>相对密度法</th><th>z-score 法</th></tr>
+      <tr><td>视角</td><td>局部（和邻居比）</td><td>全局（和全体均值比）</td></tr>
+      <tr><td>分布假设</td><td>无</td><td>假设正态</td></tr>
+      <tr><td>优点</td><td>发现局部离群、适应密度不均</td><td>简单、可解释</td></tr>
+      <tr><td>缺点</td><td>要算 KNN，O(N²) 偏慢</td><td>易被异常值污染（masking）</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 13 ============ -->
+<section class="page" id="p13">
+  <h2>13 · 速查表</h2>
+  <div class="pgnum">考前扫一眼</div>
+  <div class="explain">
+    <table class="tbl">
+      <tr><th>概念</th><th>一句话 / 公式</th></tr>
+      <tr><td>监督 vs 无监督</td><td class="l">有标签学预测 vs 无标签找结构</td></tr>
+      <tr><td>欧氏距离</td><td class="l">d = √((Δx)² + (Δy)²)</td></tr>
+      <tr><td>K-Means 更新</td><td class="l">簇心 = 簇内坐标均值（虚拟点）</td></tr>
+      <tr><td>K-Centroid 更新</td><td class="l">簇心 = 簇内到他人总距离最小的真实点</td></tr>
+      <tr><td>初始化敏感</td><td class="l">SSE 非凸 → 局部最优 → k-means++ / 多次重启</td></tr>
+      <tr><td>空簇</td><td class="l">簇心保持不变</td></tr>
+      <tr><td>支持度</td><td class="l">含该项集的事务数 / N</td></tr>
+      <tr><td>置信度</td><td class="l">support(X∪y) / support(X)，比较用 100·sc ≥ C·sx</td></tr>
+      <tr><td>Apriori 原理</td><td class="l">非频繁项集的所有超集必非频繁（可剪枝）</td></tr>
+      <tr><td>相对密度得分</td><td class="l">density(i) / 邻居平均 density；density = K 近邻平均距离</td></tr>
+      <tr><td>z-score</td><td class="l">z=(x−μ)/σ，|z|&gt;2 为异常；注意 masking</td></tr>
+    </table>
+    <p class="center" style="color:var(--mute);font-style:italic;margin-top:18px">看完这页，作业里每个数都该能自己复算出来。有不懂随时问阿卡酱。</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const links = document.querySelectorAll('aside a[href^="#"]');
+const map = new Map();
+links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+const sections = Array.from(document.querySelectorAll('section.page'));
+function update() {
+  const probe = window.innerHeight * 0.3;
+  let current = sections[0];
+  for (const s of sections) {
+    const r = s.getBoundingClientRect();
+    if (r.top - probe <= 0) current = s;
+    else break;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  const a = map.get(current.id);
+  if (a) {
+    a.classList.add('active');
+    const ar = a.getBoundingClientRect();
+    if (ar.top < 0 || ar.bottom > window.innerHeight) a.scrollIntoView({block:'nearest'});
+  }
+}
+window.addEventListener('scroll', update, {passive:true});
+window.addEventListener('load', update);
+</script>
+
+</body>
+</html>

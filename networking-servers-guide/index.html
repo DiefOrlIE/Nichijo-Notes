@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计算机网络与服务器 · 从零到搭起你的网站和代理</title>
+<style>
+  :root{
+    --bg:#faf9f6; --bg-elev:#ffffff; --bg-sink:#f3f1ea;
+    --text:#232321; --text-soft:#55534e; --muted:#8d8a82;
+    --rule:#e5e1d6; --rule-soft:#efece3;
+    --accent:#0f766e; --accent-d:#0b5750; --accent-soft:#e3f1ef;
+    --link:#0e6b78;
+    --code-bg:#1c1f29; --code-text:#e7e6e3; --code-rule:#2c3040;
+    --indigo:#5b53b8; --indigo-soft:#ecebfb;
+    --amber:#9a6a17; --amber-soft:#fbf1dd;
+    --green:#2f7a3f; --green-soft:#e6f3e8;
+    --red:#b23b34; --red-soft:#fbe9e7;
+    --slate:#4d5765; --slate-soft:#eceef1;
+    --serif:'Times New Roman','Songti SC','SimSun','宋体',serif;
+    --mono:'Cascadia Code','Consolas','SFMono-Regular',Menlo,'Courier New',monospace;
+    --sidebar-w:286px;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--serif); font-size:18px; line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- reading progress ---------- */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;
+    background:linear-gradient(90deg,var(--accent),var(--indigo));transition:width .1s ease;}
+  /* ---------- layout ---------- */
+  .layout{display:flex;align-items:flex-start;}
+  /* ---------- sidebar ---------- */
+  nav.sidebar{
+    position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;overflow-y:auto;
+    background:var(--bg-sink);border-right:1px solid var(--rule);
+    padding:26px 16px 60px 22px;z-index:50;
+  }
+  nav.sidebar .brand{font-size:15px;color:var(--accent-d);font-weight:bold;letter-spacing:.3px;
+    margin-bottom:4px;}
+  nav.sidebar .brand small{display:block;font-weight:normal;color:var(--muted);font-size:12.5px;
+    letter-spacing:0;margin-top:3px;line-height:1.5;}
+  nav.sidebar .toc{margin-top:18px;}
+  nav.sidebar .grp{margin-bottom:6px;}
+  nav.sidebar .grp > a{display:block;text-decoration:none;color:var(--text);font-weight:bold;
+    font-size:14.5px;padding:6px 8px;border-radius:6px;}
+  nav.sidebar .grp > a:hover{background:var(--accent-soft);}
+  nav.sidebar .sub{margin:2px 0 8px 0;border-left:1px solid var(--rule);padding-left:8px;}
+  nav.sidebar .sub a{display:block;text-decoration:none;color:var(--text-soft);font-size:13px;
+    line-height:1.5;padding:3px 8px;border-radius:5px;border-left:2px solid transparent;margin-left:-9px;}
+  nav.sidebar .sub a:hover{color:var(--accent-d);}
+  nav.sidebar a.active{color:var(--accent-d);background:var(--accent-soft);
+    border-left-color:var(--accent);font-weight:bold;}
+  /* ---------- main ---------- */
+  main{margin-left:var(--sidebar-w);flex:1;min-width:0;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:54px 40px 120px;}
+  section{margin-bottom:8px;}
+  h1.title{font-size:34px;line-height:1.3;margin:0 0 10px;letter-spacing:.2px;}
+  .lede{font-size:18.5px;color:var(--text-soft);margin:0 0 18px;}
+  .meta{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);padding:10px 0;margin:22px 0 34px;
+    display:flex;gap:20px;flex-wrap:wrap;}
+  .meta b{color:var(--text-soft);font-weight:normal;}
+  h2{font-size:25px;margin:60px 0 6px;padding-top:14px;border-top:2px solid var(--rule);
+    letter-spacing:.2px;scroll-margin-top:20px;}
+  h2 .num{color:var(--accent);font-size:17px;display:block;font-weight:normal;letter-spacing:1px;margin-bottom:2px;}
+  h3{font-size:20px;margin:36px 0 4px;scroll-margin-top:20px;color:var(--accent-d);}
+  h4{font-size:17px;margin:24px 0 2px;color:var(--text);}
+  p{margin:12px 0;}
+  a{color:var(--link);text-underline-offset:2px;}
+  ul,ol{margin:12px 0;padding-left:26px;}
+  li{margin:6px 0;}
+  strong{color:#15140f;}
+  .small{font-size:15px;color:var(--text-soft);}
+  hr{border:none;border-top:1px dashed var(--rule);margin:30px 0;}
+  /* ---------- code ---------- */
+  code{font-family:var(--mono);font-size:14.5px;background:var(--bg-sink);
+    border:1px solid var(--rule);border-radius:4px;padding:1px 5px;color:#7a3b2e;}
+  pre{position:relative;background:var(--code-bg);color:var(--code-text);border:1px solid var(--code-rule);
+    border-radius:10px;padding:16px 16px;overflow-x:auto;margin:14px 0;line-height:1.62;}
+  pre code{font-family:var(--mono);font-size:13.7px;background:none;border:none;padding:0;color:inherit;
+    white-space:pre;}
+  pre .cm{color:#8a93a8;}      /* comment */
+  pre .pr{color:#7ee3c7;}      /* prompt / keyword */
+  pre .st{color:#e6c07b;}      /* string */
+  pre .kw{color:#c195ec;}
+  .copy{position:absolute;top:8px;right:8px;background:#2a2e3c;color:#cdd2df;border:1px solid #3a3f50;
+    border-radius:6px;font-family:var(--serif);font-size:12px;padding:3px 9px;cursor:pointer;opacity:0;
+    transition:opacity .15s;}
+  pre:hover .copy{opacity:1;}
+  .copy:hover{background:#363b4c;}
+  .copy.done{color:#7ee3c7;border-color:#3a5;}
+  /* ---------- callouts ---------- */
+  .box{border:1px solid var(--rule);border-left-width:4px;border-radius:8px;padding:13px 16px 13px 17px;
+    margin:18px 0;background:var(--bg-elev);font-size:16.5px;}
+  .box .bt{font-weight:bold;font-size:14px;letter-spacing:.4px;display:block;margin-bottom:4px;}
+  .box p{margin:7px 0;} .box ul{margin:7px 0;}
+  .box.model{border-left-color:var(--indigo);background:var(--indigo-soft);}
+  .box.model .bt{color:var(--indigo);}
+  .box.analogy{border-left-color:var(--amber);background:var(--amber-soft);}
+  .box.analogy .bt{color:var(--amber);}
+  .box.do{border-left-color:var(--green);background:var(--green-soft);}
+  .box.do .bt{color:var(--green);}
+  .box.warn{border-left-color:var(--red);background:var(--red-soft);}
+  .box.warn .bt{color:var(--red);}
+  .box.term{border-left-color:var(--slate);background:var(--slate-soft);}
+  .box.term .bt{color:var(--slate);}
+  /* ---------- figure ---------- */
+  figure{margin:22px 0;text-align:center;}
+  figure svg{max-width:100%;height:auto;background:var(--bg-elev);border:1px solid var(--rule);
+    border-radius:10px;padding:14px;}
+  figcaption{font-size:14px;color:var(--muted);margin-top:8px;}
+  /* ---------- table ---------- */
+  .tbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:15.5px;}
+  .tbl th,.tbl td{border:1px solid var(--rule);padding:8px 11px;text-align:left;vertical-align:top;}
+  .tbl th{background:var(--bg-sink);font-weight:bold;}
+  .tbl tr:nth-child(even) td{background:#fcfbf8;}
+  /* ---------- misc ---------- */
+  .kbd{font-family:var(--mono);font-size:12.5px;background:#fff;border:1px solid var(--rule);
+    border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--text);}
+  .pathmap{display:grid;gap:0;margin:8px 0;}
+  .tag{display:inline-block;font-size:12.5px;background:var(--accent-soft);color:var(--accent-d);
+    border-radius:20px;padding:1px 10px;margin-right:4px;}
+  /* ---------- mobile ---------- */
+  #menuBtn{display:none;position:fixed;top:12px;left:12px;z-index:70;background:var(--accent);color:#fff;
+    border:none;border-radius:8px;padding:8px 12px;font-family:var(--serif);font-size:15px;cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  #scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:45;}
+  @media(max-width:980px){
+    nav.sidebar{transform:translateX(-100%);transition:transform .25s ease;box-shadow:2px 0 18px rgba(0,0,0,.15);}
+    body.nav-open nav.sidebar{transform:translateX(0);}
+    body.nav-open #scrim{display:block;}
+    main{margin-left:0;}
+    #menuBtn{display:block;}
+    .wrap{padding:64px 20px 100px;}
+    h1.title{font-size:27px;}
+    body{font-size:17px;}
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div id="progress"></div>
+<button id="menuBtn">☰ 目录</button>
+<div id="scrim"></div>
+
+<div class="layout">
+<nav class="sidebar" id="sidebar">
+  <div class="brand">计算机网络与服务器
+    <small>从零到搭起你的网站和代理 · 写给虹鳟鱼</small>
+  </div>
+  <div class="toc">
+    <div class="grp"><a href="#p0">0 · 导读与学习路径</a></div>
+
+    <div class="grp"><a href="#p1">1 · 先建立心智模型</a>
+      <div class="sub">
+        <a href="#p1-1">1.1 输入网址后发生了什么</a>
+        <a href="#p1-2">1.2 为什么要分层</a>
+        <a href="#p1-3">1.3 IP:网络世界的门牌号</a>
+        <a href="#p1-4">1.4 端口:一台机器的多个窗口</a>
+        <a href="#p1-5">1.5 DNS:域名电话簿</a>
+        <a href="#p1-6">1.6 TCP / UDP / 数据包</a>
+        <a href="#p1-7">1.7 路由与 NAT</a>
+      </div>
+    </div>
+
+    <div class="grp"><a href="#p2">2 · Web 的语言 HTTP/HTTPS</a>
+      <div class="sub">
+        <a href="#p2-1">2.1 请求与响应</a>
+        <a href="#p2-2">2.2 Cookie / Session / Token</a>
+        <a href="#p2-3">2.3 HTTPS 与 TLS 加密</a>
+        <a href="#p2-4">2.4 动手:看真实请求</a>
+      </div>
+    </div>
+
+    <div class="grp"><a href="#p3">3 · 服务器与 Linux 基础</a>
+      <div class="sub">
+        <a href="#p3-1">3.1 服务器 / VPS / 云</a>
+        <a href="#p3-2">3.2 Linux 入门</a>
+        <a href="#p3-3">3.3 SSH 远程登录</a>
+        <a href="#p3-4">3.4 命令行必备</a>
+        <a href="#p3-5">3.5 进程与服务 systemd</a>
+        <a href="#p3-6">3.6 防火墙</a>
+      </div>
+    </div>
+
+    <div class="grp"><a href="#p4">4 · 项目一:动态个人网站</a>
+      <div class="sub">
+        <a href="#p4-1">4.1 架构总览</a>
+        <a href="#p4-2">4.2 前端三件套</a>
+        <a href="#p4-3">4.3 后端与 API</a>
+        <a href="#p4-4">4.4 数据库</a>
+        <a href="#p4-5">4.5 域名与 DNS 配置</a>
+        <a href="#p4-6">4.6 部署上线</a>
+        <a href="#p4-7">4.7 HTTPS 证书</a>
+        <a href="#p4-8">4.8 安全加固</a>
+        <a href="#p4-9">4.9 进阶:Docker/CI/监控</a>
+      </div>
+    </div>
+
+    <div class="grp"><a href="#p5">5 · 项目二:个人代理(梯子)</a>
+      <div class="sub">
+        <a href="#p5-1">5.1 原理与正当用途</a>
+        <a href="#p5-2">5.2 代理的本质:转发</a>
+        <a href="#p5-3">5.3 为什么会被识别:DPI</a>
+        <a href="#p5-4">5.4 加密与伪装:协议演进</a>
+        <a href="#p5-5">5.5 实操:VPS + Xray</a>
+        <a href="#p5-6">5.6 TLS 伪装与 Reality</a>
+        <a href="#p5-7">5.7 客户端与维护</a>
+      </div>
+    </div>
+
+    <div class="grp"><a href="#p6">6 · 全景与进阶路线</a>
+      <div class="sub">
+        <a href="#p6-1">6.1 知识地图</a>
+        <a href="#p6-2">6.2 学习路线与资源</a>
+        <a href="#p6-3">6.3 未来方向</a>
+      </div>
+    </div>
+
+    <div class="grp"><a href="#appx">附录</a>
+      <div class="sub">
+        <a href="#appx-1">A. 术语表</a>
+        <a href="#appx-2">B. 命令速查</a>
+        <a href="#appx-3">C. 排错思路</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- ============================ PART 0 ============================ -->
+<section id="p0">
+  <h1 class="title">计算机网络与服务器<br>从零到搭起你的网站和代理</h1>
+  <p class="lede">这份教程用两个真实项目当主线——搭一个<strong>动态个人网站</strong>、搭一套<strong>自用的个人代理</strong>——把计算机网络和服务器的核心知识从最底层讲清楚。看得懂、用得上、将来能往深里挖。</p>
+  <div class="meta">
+    <span><b>读者</b> 几乎零网络基础</span>
+    <span><b>风格</b> 原理 + 实操,由浅入深</span>
+    <span><b>主线</b> 动态网站 · 个人代理</span>
+    <span><b>建议</b> 边读边动手</span>
+  </div>
+
+  <h2><span class="num">PART 0</span>怎么用这份教程</h2>
+
+  <p>你现在大概是这样:会用浏览器,知道"上网"这回事,但 IP、DNS、端口、服务器这些词,听过、说不清。没关系——这份教程就是为这个起点写的。每个概念都会先用生活里的类比建立直觉,再补上技术细节,最后落到"在这两个项目里它具体是什么"。</p>
+
+  <div class="box model">
+    <span class="bt">一条核心主线</span>
+    <p>整份教程其实在回答一个问题:<strong>"你电脑上的一段数据,怎么准确地送到地球另一端的另一台电脑,再原样拿回来?"</strong> 网站是"你去访问别人的服务器",代理是"你让自己的服务器替你去访问别人"。两件事用的是同一套底层知识,学一遍,两个项目都通了。</p>
+  </div>
+
+  <h3>三种读法,按你的状态选</h3>
+  <ul>
+    <li><strong>系统学(推荐)</strong>:从第 1 部分顺着读到第 6 部分。前 3 部分是地基(网络原理 + 服务器基础),后面两个项目会反复用到。</li>
+    <li><strong>带着目标学</strong>:急着搭网站就先读 1、2、3,再跳到第 4 部分;急着搭代理就读 1、3,再跳到第 5 部分。遇到不懂的名词回前面查。</li>
+    <li><strong>当手册查</strong>:左侧目录随时跳转。附录有<a href="#appx-1">术语表</a>、<a href="#appx-2">命令速查</a>和<a href="#appx-3">排错思路</a>。</li>
+  </ul>
+
+  <h3>学习路径一图看懂</h3>
+  <figure>
+    <svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs>
+        <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" fill="#0f766e"/>
+        </marker>
+      </defs>
+      <!-- foundation row -->
+      <rect x="20" y="24" width="200" height="64" rx="10" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="120" y="50" text-anchor="middle" font-size="16" fill="#0b5750" font-weight="bold">1 · 网络心智模型</text>
+      <text x="120" y="72" text-anchor="middle" font-size="12.5" fill="#55534e">IP·端口·DNS·TCP·路由</text>
+
+      <rect x="240" y="24" width="200" height="64" rx="10" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="340" y="50" text-anchor="middle" font-size="16" fill="#0b5750" font-weight="bold">2 · HTTP/HTTPS</text>
+      <text x="340" y="72" text-anchor="middle" font-size="12.5" fill="#55534e">请求·响应·加密·证书</text>
+
+      <rect x="460" y="24" width="200" height="64" rx="10" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="560" y="50" text-anchor="middle" font-size="16" fill="#0b5750" font-weight="bold">3 · 服务器 / Linux</text>
+      <text x="560" y="72" text-anchor="middle" font-size="12.5" fill="#55534e">VPS·SSH·命令行·防火墙</text>
+
+      <text x="755" y="48" text-anchor="middle" font-size="14" fill="#8d8a82">地基</text>
+      <text x="755" y="68" text-anchor="middle" font-size="14" fill="#8d8a82">三件套</text>
+
+      <!-- arrows down -->
+      <line x1="230" y1="120" x2="230" y2="150" stroke="#0f766e" stroke-width="2" marker-end="url(#ah)"/>
+      <line x1="560" y1="120" x2="560" y2="150" stroke="#0f766e" stroke-width="2" marker-end="url(#ah)"/>
+      <text x="395" y="116" text-anchor="middle" font-size="12.5" fill="#8d8a82">同一套地基,分流到两个项目 ↓</text>
+
+      <!-- projects -->
+      <rect x="60" y="156" width="340" height="120" rx="12" fill="#ecebfb" stroke="#5b53b8"/>
+      <text x="230" y="182" text-anchor="middle" font-size="17" fill="#5b53b8" font-weight="bold">项目一 · 动态个人网站</text>
+      <text x="230" y="208" text-anchor="middle" font-size="13" fill="#55534e">前端 → 后端 API → 数据库</text>
+      <text x="230" y="230" text-anchor="middle" font-size="13" fill="#55534e">域名 → 部署 → HTTPS → 加固</text>
+      <text x="230" y="256" text-anchor="middle" font-size="12.5" fill="#8d8a82">"别人来访问你的服务器"</text>
+
+      <rect x="430" y="156" width="340" height="120" rx="12" fill="#fbf1dd" stroke="#9a6a17"/>
+      <text x="600" y="182" text-anchor="middle" font-size="17" fill="#9a6a17" font-weight="bold">项目二 · 个人代理(梯子)</text>
+      <text x="600" y="208" text-anchor="middle" font-size="13" fill="#55534e">转发 → 加密 → TLS 伪装</text>
+      <text x="600" y="230" text-anchor="middle" font-size="13" fill="#55534e">VPS → Xray/sing-box → 客户端</text>
+      <text x="600" y="256" text-anchor="middle" font-size="12.5" fill="#8d8a82">"你的服务器替你去访问"</text>
+    </svg>
+    <figcaption>前三部分是公共地基,第 4、5 部分是两个项目。建议先把地基过一遍。</figcaption>
+  </figure>
+
+  <div class="box warn">
+    <span class="bt">两个项目的现实预期</span>
+    <p><strong>网站</strong>:从零到上线一个能用的动态站,认真投入大约 2–4 周(含学前端后端)。第一版可以很简陋,先跑通"能访问 → 有数据 → 能登录"。</p>
+    <p><strong>代理</strong>:技术上一个晚上就能搭好。但要先有一台<strong>海外 VPS</strong>(约 ¥30–60/月)。它属于个人自用工具,用于访问 GitHub、Google Scholar、arXiv、Hugging Face、npm/pip 等开发与学术资源——请把它当作"理解加密隧道如何工作"的实验,并遵守你所在地的法律法规与服务商条款。</p>
+  </div>
+</section>
+
+<!-- ============================ PART 1 ============================ -->
+<section id="p1">
+  <h2><span class="num">PART 1</span>先建立心智模型:网络到底是怎么回事</h2>
+  <p>在背任何术语之前,先把整幅图装进脑子。这一部分讲完,你再看任何网络知识都有地方"挂"。核心就一句话:<strong>网络是一套让两台机器可靠交换数据的规则</strong>。下面把这套规则拆开看。</p>
+
+  <h3 id="p1-1">1.1 输入网址按下回车,那一瞬间发生了什么</h3>
+  <p>这是理解网络最好的入口。假设你在浏览器输入 <code>www.example.com</code> 然后回车,看似一瞬间页面就出来了,背后其实跑完了一条很长的流水线:</p>
+
+  <figure>
+    <svg viewBox="0 0 860 250" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs>
+        <marker id="a1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" fill="#5b53b8"/>
+        </marker>
+      </defs>
+      <rect x="20" y="92" width="120" height="60" rx="9" fill="#ecebfb" stroke="#5b53b8"/>
+      <text x="80" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b53b8">你的浏览器</text>
+      <text x="80" y="138" text-anchor="middle" font-size="11.5" fill="#55534e">想要网页</text>
+
+      <g font-size="12.5" fill="#55534e">
+        <!-- step boxes -->
+        <rect x="170" y="20" width="150" height="48" rx="8" fill="#fff" stroke="#5b53b8"/>
+        <text x="245" y="40" text-anchor="middle" font-size="13" font-weight="bold" fill="#232321">① DNS 查询</text>
+        <text x="245" y="58" text-anchor="middle">域名 → IP 地址</text>
+
+        <rect x="350" y="20" width="150" height="48" rx="8" fill="#fff" stroke="#5b53b8"/>
+        <text x="425" y="40" text-anchor="middle" font-size="13" font-weight="bold" fill="#232321">② TCP 建立连接</text>
+        <text x="425" y="58" text-anchor="middle">三次握手</text>
+
+        <rect x="530" y="20" width="150" height="48" rx="8" fill="#fff" stroke="#5b53b8"/>
+        <text x="605" y="40" text-anchor="middle" font-size="13" font-weight="bold" fill="#232321">③ TLS 加密</text>
+        <text x="605" y="58" text-anchor="middle">协商密钥(https)</text>
+
+        <rect x="350" y="176" width="150" height="48" rx="8" fill="#fff" stroke="#5b53b8"/>
+        <text x="425" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="#232321">④ HTTP 请求</text>
+        <text x="425" y="214" text-anchor="middle">"把首页给我"</text>
+
+        <rect x="530" y="176" width="150" height="48" rx="8" fill="#fff" stroke="#5b53b8"/>
+        <text x="605" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="#232321">⑤ 服务器响应</text>
+        <text x="605" y="214" text-anchor="middle">返回 HTML</text>
+      </g>
+
+      <rect x="720" y="92" width="120" height="60" rx="9" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="780" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#0b5750">目标服务器</text>
+      <text x="780" y="138" text-anchor="middle" font-size="11.5" fill="#55534e">存着网页</text>
+
+      <!-- flow arrows -->
+      <path d="M120,108 C150,80 150,60 168,46" fill="none" stroke="#5b53b8" stroke-width="1.6" marker-end="url(#a1)"/>
+      <line x1="320" y1="44" x2="348" y2="44" stroke="#5b53b8" stroke-width="1.6" marker-end="url(#a1)"/>
+      <line x1="500" y1="44" x2="528" y2="44" stroke="#5b53b8" stroke-width="1.6" marker-end="url(#a1)"/>
+      <path d="M680,52 C720,75 660,150 605,174" fill="none" stroke="#5b53b8" stroke-width="1.6" marker-end="url(#a1)"/>
+      <line x1="500" y1="200" x2="528" y2="200" stroke="#5b53b8" stroke-width="1.6" marker-end="url(#a1)"/>
+      <path d="M720,140 C700,160 660,180 605,196" fill="none" stroke="#0f766e" stroke-width="1.6" marker-end="url(#a1)"/>
+      <path d="M348,200 C250,200 140,180 110,150" fill="none" stroke="#0f766e" stroke-width="1.6" marker-end="url(#a1)"/>
+      <text x="240" y="172" font-size="11.5" fill="#0f766e">⑥ 浏览器渲染出页面</text>
+    </svg>
+    <figcaption>一次访问的流水线。后面几节就是把①~⑤每一步讲透。</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>查地址(DNS)</strong>:<code>www.example.com</code> 是给人记的名字,机器之间只认数字地址(IP)。浏览器先问"DNS 服务器":这个名字对应哪个 IP?</li>
+    <li><strong>接通线路(TCP)</strong>:拿到 IP 后,你的电脑和服务器先"握手"建立一条可靠连接,确认双方都在线、能收发。</li>
+    <li><strong>上锁(TLS)</strong>:如果是 <code>https</code>,双方再协商一把只有彼此知道的密钥,之后所有内容都加密,中间人偷看到的是乱码。</li>
+    <li><strong>提要求(HTTP)</strong>:连接建好后,浏览器发一句结构化的话:"GET 首页"。</li>
+    <li><strong>给东西(响应)</strong>:服务器回一坨 HTML 文本。</li>
+    <li><strong>画出来(渲染)</strong>:浏览器把 HTML/CSS/JS 解析成你看到的页面。</li>
+  </ol>
+
+  <div class="box analogy">
+    <span class="bt">类比:寄一封挂号信</span>
+    <p>DNS 是"查收件人地址";TCP 握手是"先打电话确认对方在家、能签收";TLS 是"用只有你俩懂的暗语写信";HTTP 请求是"信里写的内容";响应是"对方回的信"。整套网络协议,本质就是一份大家都遵守的"邮政规则"。</p>
+  </div>
+
+  <h3 id="p1-2">1.2 为什么要"分层":网络的分层思想</h3>
+  <p>上面每一步用的是不同的"协议"(协议 = 双方约定好的规则)。它们被组织成<strong>分层结构</strong>:每一层只干自己的事,把上一层的数据包好交给下一层,像套娃。这样做的好处是<strong>各层可以独立替换</strong>——换 WiFi 还是网线(底层变了),你的浏览器(高层)完全不用改。</p>
+
+  <figure>
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <g font-size="13.5">
+        <rect x="40" y="20" width="380" height="48" rx="7" fill="#ecebfb" stroke="#5b53b8"/>
+        <text x="60" y="42" font-size="14.5" font-weight="bold" fill="#5b53b8">应用层</text>
+        <text x="60" y="60" font-size="12" fill="#55534e">HTTP · DNS · 你打交道的协议</text>
+        <text x="410" y="48" text-anchor="end" font-size="12" fill="#8d8a82" font-style="italic">"说什么"</text>
+
+        <rect x="40" y="78" width="380" height="48" rx="7" fill="#e3f1ef" stroke="#0f766e"/>
+        <text x="60" y="100" font-size="14.5" font-weight="bold" fill="#0b5750">传输层</text>
+        <text x="60" y="118" font-size="12" fill="#55534e">TCP / UDP · 端口 · 可靠或快速</text>
+        <text x="410" y="106" text-anchor="end" font-size="12" fill="#8d8a82" font-style="italic">"送到哪个程序"</text>
+
+        <rect x="40" y="136" width="380" height="48" rx="7" fill="#fbf1dd" stroke="#9a6a17"/>
+        <text x="60" y="158" font-size="14.5" font-weight="bold" fill="#9a6a17">网络层</text>
+        <text x="60" y="176" font-size="12" fill="#55534e">IP · 路由 · 跨越整个互联网找到目标机</text>
+        <text x="410" y="164" text-anchor="end" font-size="12" fill="#8d8a82" font-style="italic">"送到哪台机器"</text>
+
+        <rect x="40" y="194" width="380" height="48" rx="7" fill="#eceef1" stroke="#4d5765"/>
+        <text x="60" y="216" font-size="14.5" font-weight="bold" fill="#4d5765">链路层</text>
+        <text x="60" y="234" font-size="12" fill="#55534e">网卡 · MAC 地址 · 同一段网络内传输</text>
+        <text x="410" y="222" text-anchor="end" font-size="12" fill="#8d8a82" font-style="italic">"送到隔壁那台"</text>
+
+        <rect x="40" y="252" width="380" height="44" rx="7" fill="#f3f1ea" stroke="#8d8a82"/>
+        <text x="60" y="279" font-size="14.5" font-weight="bold" fill="#55534e">物理层</text>
+        <text x="410" y="279" text-anchor="end" font-size="12" fill="#8d8a82" font-style="italic">网线/光纤/电磁波</text>
+      </g>
+      <!-- nesting illustration -->
+      <g font-size="12" fill="#55534e">
+        <text x="610" y="40" text-anchor="middle" font-size="13" font-weight="bold" fill="#232321">数据像套娃</text>
+        <rect x="500" y="58" width="220" height="230" rx="8" fill="none" stroke="#5b53b8"/>
+        <text x="510" y="74" font-size="11" fill="#5b53b8">应用数据(你的网页请求)</text>
+        <rect x="516" y="84" width="188" height="186" rx="8" fill="none" stroke="#0f766e"/>
+        <text x="526" y="100" font-size="11" fill="#0b5750">+ TCP 头(端口/序号)</text>
+        <rect x="532" y="110" width="156" height="146" rx="8" fill="none" stroke="#9a6a17"/>
+        <text x="542" y="126" font-size="11" fill="#9a6a17">+ IP 头(源/目标 IP)</text>
+        <rect x="548" y="136" width="124" height="106" rx="8" fill="none" stroke="#4d5765"/>
+        <text x="558" y="152" font-size="11" fill="#4d5765">+ 帧头(MAC)</text>
+        <rect x="564" y="162" width="92" height="66" rx="6" fill="#f3f1ea" stroke="#8d8a82"/>
+        <text x="610" y="199" text-anchor="middle" font-size="11">变成电信号</text>
+      </g>
+    </svg>
+    <figcaption>TCP/IP 四/五层模型。每往下一层就给数据"多包一层信封",到对面再层层拆开。</figcaption>
+  </figure>
+
+  <div class="box term">
+    <span class="bt">术语:OSI 七层 vs TCP/IP 五层</span>
+    <p>课本常讲 <strong>OSI 七层模型</strong>(物理、数据链路、网络、传输、会话、表示、应用),那是教学用的理论参考。实际互联网跑的是 <strong>TCP/IP 模型</strong>,通常按上图划成 4 或 5 层。入门阶段记住<strong>应用层 / 传输层 / 网络层 / 链路层</strong>这四层和它们各自管什么,就足够用很久了。</p>
+  </div>
+
+  <h3 id="p1-3">1.3 IP 地址:网络世界的门牌号</h3>
+  <p>互联网上每一台要被找到的机器,都得有一个<strong>IP 地址</strong>。它就是门牌号。目前两种格式并存:</p>
+  <ul>
+    <li><strong>IPv4</strong>:形如 <code>93.184.216.34</code>,四段 0–255 的数字。总共约 43 亿个,早就不够分了。</li>
+    <li><strong>IPv6</strong>:形如 <code>2606:2800:220:1:248:1893:25c8:1946</code>,数量大到几乎用不完,正在逐步普及。</li>
+  </ul>
+
+  <h4>公网 IP 与私网 IP</h4>
+  <p>这是初学者最容易混的一点。你家里每台设备的 IP(比如手机显示 <code>192.168.x.x</code>)是<strong>私网 IP</strong>,只在你家这张局域网里有效,出了家门没人认。真正在互联网上代表"你家"的,是路由器从运营商那拿到的一个<strong>公网 IP</strong>。</p>
+  <div class="box analogy">
+    <span class="bt">类比:公司总机 + 分机</span>
+    <p>公网 IP 像公司对外的总机号码(全世界唯一、能打进来);私网 IP 像公司内部的分机号(1001、1002,出了公司没用)。下一节的 NAT 就是那台"总机转接"的设备。</p>
+  </div>
+  <div class="box do">
+    <span class="bt">动手:看看自己的 IP</span>
+    <p>查私网 IP(本机在局域网里的地址):Windows 上 <span class="kbd">Win+R</span> 输入 <code>cmd</code>,运行 <code>ipconfig</code>;找 IPv4 地址那行。</p>
+    <p>查公网 IP(你家对外的地址):浏览器访问 <a href="https://ip.sb">ip.sb</a> 或搜索"我的 IP"。把两个数字对比一下,你就理解"里外两个地址"了。</p>
+  </div>
+
+  <h3 id="p1-4">1.4 端口:一台机器上的多个窗口</h3>
+  <p>IP 把数据送到了正确的机器,但一台机器上同时跑着很多程序——浏览器、QQ、网游、网站服务……数据到底交给哪个程序?靠<strong>端口号</strong>(0–65535 的整数)区分。IP 定位机器,端口定位机器上的具体程序。</p>
+  <div class="box analogy">
+    <span class="bt">类比:大楼 + 房间号</span>
+    <p>IP 是大楼地址,端口是房间号。<code>93.184.216.34:443</code> 意思是"那栋楼的 443 房间"。一些端口是约定俗成的"固定铺面":</p>
+  </div>
+  <table class="tbl">
+    <tr><th>端口</th><th>常见用途</th><th>你会在哪用到</th></tr>
+    <tr><td><code>80</code></td><td>HTTP(网页,明文)</td><td>网站项目</td></tr>
+    <tr><td><code>443</code></td><td>HTTPS(网页,加密)</td><td>网站项目 + 代理伪装</td></tr>
+    <tr><td><code>22</code></td><td>SSH(远程登录服务器)</td><td>两个项目都要</td></tr>
+    <tr><td><code>53</code></td><td>DNS(域名解析)</td><td>底层自动用</td></tr>
+    <tr><td><code>3306 / 5432</code></td><td>MySQL / PostgreSQL 数据库</td><td>网站后端</td></tr>
+  </table>
+  <p class="small">记住 <strong>22 / 80 / 443</strong> 这三个就够开局了:登录服务器走 22,网站走 80/443。</p>
+
+  <h3 id="p1-5">1.5 DNS:把域名翻译成 IP 的电话簿</h3>
+  <p>没人愿意背 <code>93.184.216.34</code>,大家记的是 <code>example.com</code>。<strong>DNS(域名系统)</strong>就是那本全球电话簿,负责把好记的域名翻译成机器要用的 IP。这个翻译过程叫<strong>域名解析</strong>。</p>
+  <p>解析是逐级问出来的,像查一本分层目录:</p>
+  <figure>
+    <svg viewBox="0 0 820 170" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs><marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#0f766e"/></marker></defs>
+      <g font-size="12.5" fill="#55534e">
+        <rect x="14" y="60" width="120" height="50" rx="8" fill="#ecebfb" stroke="#5b53b8"/>
+        <text x="74" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#5b53b8">你的电脑</text>
+        <text x="74" y="100" text-anchor="middle">问:example.com?</text>
+
+        <rect x="178" y="60" width="130" height="50" rx="8" fill="#fff" stroke="#0f766e"/>
+        <text x="243" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#0b5750">本地 DNS</text>
+        <text x="243" y="98" text-anchor="middle">(运营商/8.8.8.8)</text>
+
+        <rect x="352" y="14" width="130" height="44" rx="8" fill="#fbf1dd" stroke="#9a6a17"/>
+        <text x="417" y="34" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#9a6a17">根 . 服务器</text>
+        <text x="417" y="50" text-anchor="middle">去问 .com</text>
+
+        <rect x="352" y="64" width="130" height="44" rx="8" fill="#fbf1dd" stroke="#9a6a17"/>
+        <text x="417" y="84" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#9a6a17">.com 服务器</text>
+        <text x="417" y="100" text-anchor="middle">去问 example</text>
+
+        <rect x="352" y="114" width="130" height="44" rx="8" fill="#fbf1dd" stroke="#9a6a17"/>
+        <text x="417" y="134" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#9a6a17">权威服务器</text>
+        <text x="417" y="150" text-anchor="middle">答:93.184.216.34</text>
+
+        <rect x="540" y="60" width="120" height="50" rx="8" fill="#e3f1ef" stroke="#0f766e"/>
+        <text x="600" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#0b5750">拿到 IP</text>
+        <text x="600" y="100" text-anchor="middle">缓存一段时间</text>
+      </g>
+      <line x1="136" y1="85" x2="176" y2="85" stroke="#0f766e" stroke-width="1.6" marker-end="url(#a2)"/>
+      <line x1="310" y1="78" x2="350" y2="40" stroke="#9a6a17" stroke-width="1.4" marker-end="url(#a2)"/>
+      <line x1="310" y1="85" x2="350" y2="85" stroke="#9a6a17" stroke-width="1.4" marker-end="url(#a2)"/>
+      <line x1="310" y1="92" x2="350" y2="130" stroke="#9a6a17" stroke-width="1.4" marker-end="url(#a2)"/>
+      <line x1="484" y1="130" x2="538" y2="100" stroke="#0f766e" stroke-width="1.6" marker-end="url(#a2)"/>
+    </svg>
+    <figcaption>DNS 逐级解析。结果会被"缓存"一段时间(TTL),所以第二次访问同一网站就快得多。</figcaption>
+  </figure>
+  <div class="box model">
+    <span class="bt">这对两个项目都很关键</span>
+    <p><strong>网站项目</strong>:你买了域名后,要在域名商后台加一条 DNS 记录,把 <code>你的域名 → 你服务器的 IP</code> 绑起来,别人才能用域名访问你。</p>
+    <p><strong>代理项目</strong>:高级伪装方案会用到域名 + DNS,让流量看起来像在访问一个普通网站。</p>
+    <p>最常用的两种记录:<code>A 记录</code>(域名 → IPv4)、<code>CNAME</code>(域名 → 另一个域名,做别名)。</p>
+  </div>
+
+  <h3 id="p1-6">1.6 TCP / UDP / 数据包:东西是怎么一段段传过去的</h3>
+  <p>数据在网上不是一股脑流过去的,而是被切成一个个<strong>数据包(packet)</strong>分别发送,到对面再重新拼起来。负责"怎么切、怎么拼、丢了怎么办"的,是传输层的两个协议:</p>
+  <table class="tbl">
+    <tr><th></th><th>TCP</th><th>UDP</th></tr>
+    <tr><td>核心特点</td><td>可靠、有序、会重传</td><td>快、简单、不保证送到</td></tr>
+    <tr><td>类比</td><td>挂号信(要签收回执)</td><td>明信片(扔进邮筒就不管了)</td></tr>
+    <tr><td>适合</td><td>网页、文件、登录——错一个字节都不行</td><td>直播、语音、游戏——快比全更重要</td></tr>
+    <tr><td>你的项目</td><td>网站全程用 TCP</td><td>新一代代理协议(如 Hysteria)用 UDP 提速</td></tr>
+  </table>
+
+  <h4>TCP 的"三次握手"</h4>
+  <p>TCP 在传数据前,要先确认双方都准备好,这就是<strong>三次握手</strong>——你会反复在各种文档里见到这个词,它其实很简单:</p>
+  <figure>
+    <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0f766e"/></marker></defs>
+      <text x="120" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b53b8">客户端(你)</text>
+      <text x="600" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#0b5750">服务器</text>
+      <line x1="120" y1="40" x2="120" y2="185" stroke="#c9c4b6" stroke-width="1.5"/>
+      <line x1="600" y1="40" x2="600" y2="185" stroke="#c9c4b6" stroke-width="1.5"/>
+      <line x1="125" y1="62" x2="595" y2="92" stroke="#0f766e" stroke-width="1.8" marker-end="url(#a3)"/>
+      <text x="360" y="68" text-anchor="middle" font-size="12.5" fill="#232321">① SYN — "在吗?我想连你"</text>
+      <line x1="595" y1="112" x2="125" y2="142" stroke="#9a6a17" stroke-width="1.8" marker-end="url(#a3)"/>
+      <text x="360" y="120" text-anchor="middle" font-size="12.5" fill="#232321">② SYN+ACK — "在,收到,你呢?"</text>
+      <line x1="125" y1="160" x2="595" y2="178" stroke="#0f766e" stroke-width="1.8" marker-end="url(#a3)"/>
+      <text x="360" y="166" text-anchor="middle" font-size="12.5" fill="#232321">③ ACK — "收到,开始传"</text>
+    </svg>
+    <figcaption>三次握手:互相确认"我能发、你能收"。之后连接建立,才开始传真正的数据。</figcaption>
+  </figure>
+
+  <h3 id="p1-7">1.7 路由与 NAT:包是怎么找到地球另一端的</h3>
+  <p>你的数据包从家里出发,要经过运营商、骨干网、海底光缆、对方运营商……十几二十"跳"才能到目标服务器。每一跳上都有一台<strong>路由器</strong>,它干的事只有一件:看包上的目标 IP,查自己的"路由表",决定"下一站往哪扔"。无数路由器接力,包就一步步逼近目标。</p>
+  <div class="box do">
+    <span class="bt">动手:亲眼看包走过的路</span>
+    <p>命令行运行 <code>tracert example.com</code>(Windows)或 <code>traceroute</code>(Linux/Mac),会列出你的包经过的每一跳路由器。再用 <code>ping example.com</code> 看往返要多少毫秒(延迟)。这俩是日后排查"网络不通/很慢"的第一手工具。</p>
+  </div>
+  <h4>NAT:让一个公网 IP 养活全家设备</h4>
+  <p>前面说你家所有设备共用一个公网 IP,实现这点的就是路由器上的 <strong>NAT(网络地址转换)</strong>。你发出去的包,源地址会被路由器从私网 IP 改写成公网 IP;回来的包再改回来,准确送到当初那台设备。</p>
+  <div class="box model">
+    <span class="bt">NAT 解释了一个关键现象</span>
+    <p>因为有 NAT,<strong>外部默认无法主动连到你家的某台设备</strong>(它没有独立公网地址,藏在路由器后面)。这就是为什么你的网站和代理都得放在一台有公网 IP 的<strong>服务器(VPS)</strong>上——它能被全世界直接访问到,而你家的电脑通常不能。这条直接引出第 3 部分。</p>
+  </div>
+
+  <div class="box warn">
+    <span class="bt">第 1 部分小结(务必记住这几句)</span>
+    <ul>
+      <li><strong>IP</strong> 定位机器,<strong>端口</strong> 定位机器上的程序,<strong>DNS</strong> 把域名翻译成 IP。</li>
+      <li>数据被切成<strong>包</strong>,<strong>TCP</strong> 保证可靠送达,<strong>路由器</strong>接力转发。</li>
+      <li>网络分<strong>层</strong>,各层套娃式打包;你写网站只碰最上面的应用层,但出问题要会往下看。</li>
+      <li>你家设备藏在 <strong>NAT</strong> 后面,所以需要一台有公网 IP 的<strong>服务器</strong>来对外提供服务。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ PART 2 ============================ -->
+<section id="p2">
+  <h2><span class="num">PART 2</span>Web 的语言:HTTP 与 HTTPS</h2>
+  <p>第 1 部分搞定了"数据怎么送到对面"。这一部分讲<strong>"送的内容长什么样"</strong>。浏览器和服务器之间说的话遵循 <strong>HTTP</strong> 协议——这是你做网站时天天打交道的东西,做代理时也要靠它来伪装。</p>
+
+  <h3 id="p2-1">2.1 请求与响应:HTTP 的全部骨架</h3>
+  <p>HTTP 是个简单的<strong>一问一答</strong>模型:客户端(浏览器)发一个<strong>请求</strong>,服务器回一个<strong>响应</strong>,然后这次对话就结束了。一个请求长这样:</p>
+  <pre><code><span class="cm"># 请求:浏览器发给服务器的原始文本</span>
+GET /about.html HTTP/1.1          <span class="cm"># 方法 + 路径 + 协议版本</span>
+Host: www.example.com             <span class="cm"># 要访问哪个域名</span>
+User-Agent: Mozilla/5.0 ...       <span class="cm"># 我是什么浏览器</span>
+Accept: text/html                 <span class="cm"># 我想要什么格式</span>
+                                  <span class="cm"># ← 这里有个空行,下面是请求体(GET 通常没有)</span></code></pre>
+  <p>服务器回的响应,结构对称:</p>
+  <pre><code><span class="cm"># 响应:服务器回给浏览器</span>
+HTTP/1.1 200 OK                   <span class="cm"># 状态码:成功</span>
+Content-Type: text/html           <span class="cm"># 我给你的是 HTML</span>
+Content-Length: 1270              <span class="cm"># 内容多长</span>
+                                  <span class="cm"># ← 空行</span>
+&lt;!DOCTYPE html&gt;&lt;html&gt;...&lt;/html&gt;    <span class="cm"># 响应体:真正的网页内容</span></code></pre>
+
+  <h4>请求方法:你想干什么</h4>
+  <table class="tbl">
+    <tr><th>方法</th><th>含义</th><th>例子</th></tr>
+    <tr><td><code>GET</code></td><td>获取数据(只读)</td><td>打开一个网页、查列表</td></tr>
+    <tr><td><code>POST</code></td><td>提交新数据</td><td>注册、发评论、上传</td></tr>
+    <tr><td><code>PUT</code> / <code>PATCH</code></td><td>修改已有数据</td><td>编辑个人资料</td></tr>
+    <tr><td><code>DELETE</code></td><td>删除数据</td><td>删一条评论</td></tr>
+  </table>
+  <p class="small">你的动态网站后端,本质就是给这几种方法各写一段处理逻辑。第 4.3 节会专门讲。</p>
+
+  <h4>状态码:服务器的回复是好是坏</h4>
+  <table class="tbl">
+    <tr><th>范围</th><th>含义</th><th>常见</th></tr>
+    <tr><td><code>2xx</code></td><td>成功</td><td><code>200 OK</code>、<code>201 Created</code></td></tr>
+    <tr><td><code>3xx</code></td><td>重定向(去别处)</td><td><code>301</code> 永久跳转、<code>302</code> 临时</td></tr>
+    <tr><td><code>4xx</code></td><td>你(客户端)错了</td><td><code>404</code> 找不到、<code>401</code> 没登录、<code>403</code> 没权限</td></tr>
+    <tr><td><code>5xx</code></td><td>服务器自己崩了</td><td><code>500</code> 内部错误、<code>502</code> 网关错误</td></tr>
+  </table>
+  <div class="box warn">
+    <span class="bt">这些数字你会天天见</span>
+    <p>部署网站时,<code>502 Bad Gateway</code> 通常意味着 Nginx 转发的后端程序没起来;<code>404</code> 是路径写错或文件没传上去;<code>500</code> 是你后端代码报错了。<strong>看到几百几,先判断是自己错(4xx)还是服务器错(5xx)</strong>,排错方向立刻清晰。</p>
+  </div>
+
+  <h4>请求头 / 响应头:附带的元信息</h4>
+  <p>上面那些 <code>Host:</code>、<code>Content-Type:</code> 叫<strong>头(header)</strong>,是关于这次请求/响应的"说明标签"。它们控制缓存、身份、内容类型、跨域等等。现在不用背,知道"头是一堆 key: value 的元信息"即可。</p>
+
+  <h3 id="p2-2">2.2 一个关键难题:HTTP 是"无状态"的</h3>
+  <p>HTTP 有个反直觉的设定:<strong>每次请求都是独立的,服务器默认不记得你上一次是谁</strong>。这叫<strong>无状态</strong>。可是网站明明能"保持登录",怎么做到的?靠三种机制给无状态的 HTTP "外挂记忆":</p>
+  <table class="tbl">
+    <tr><th>机制</th><th>怎么工作</th><th>类比</th></tr>
+    <tr><td><strong>Cookie</strong></td><td>服务器发一小段数据让浏览器存着,之后每次请求自动带上</td><td>游乐园门口盖的手印章</td></tr>
+    <tr><td><strong>Session</strong></td><td>服务器端存你的登录状态,Cookie 里只放一个 session ID 当钥匙</td><td>寄存柜:你拿号牌,东西在柜子里</td></tr>
+    <tr><td><strong>Token</strong>(如 JWT)</td><td>登录后发你一张带签名的"令牌",你每次请求放在头里;服务器验签不用查库</td><td>演唱会的电子票,扫码即验</td></tr>
+  </table>
+  <div class="box model">
+    <span class="bt">做网站时你要选一种</span>
+    <p>"评论 / 登录"功能的核心就是这个。传统服务端渲染网站常用 <strong>Session + Cookie</strong>;前后端分离 / 手机 App 常用 <strong>Token(JWT)</strong>。第 4 部分会落地。现在记住:<strong>登录态 = 服务器靠每次请求带的那点凭证认出你</strong>。</p>
+  </div>
+
+  <h3 id="p2-3">2.3 HTTPS 与 TLS:为什么要加密,怎么加密</h3>
+  <p>普通 HTTP 是<strong>明文</strong>传输——你的密码在路上,任何一跳路由器、同一个 WiFi 下的人都可能看到。<strong>HTTPS = HTTP + TLS 加密</strong>,给整条通道上锁。今天所有正经网站都必须上 HTTPS(浏览器会把纯 HTTP 站标成"不安全")。</p>
+  <p>TLS 要同时解决两个问题:</p>
+  <ol>
+    <li><strong>加密</strong>:内容变乱码,中间人看不懂。</li>
+    <li><strong>身份验证</strong>:确认对面真是 example.com,而不是冒充的钓鱼站——靠<strong>证书</strong>。</li>
+  </ol>
+
+  <figure>
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs><marker id="a4" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0f766e"/></marker></defs>
+      <text x="120" y="26" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b53b8">浏览器</text>
+      <text x="600" y="26" text-anchor="middle" font-size="14" font-weight="bold" fill="#0b5750">服务器</text>
+      <line x1="120" y1="36" x2="120" y2="238" stroke="#c9c4b6" stroke-width="1.5"/>
+      <line x1="600" y1="36" x2="600" y2="238" stroke="#c9c4b6" stroke-width="1.5"/>
+      <line x1="125" y1="56" x2="595" y2="80" stroke="#0f766e" stroke-width="1.7" marker-end="url(#a4)"/>
+      <text x="360" y="60" text-anchor="middle" font-size="12" fill="#232321">① 你好,我支持这些加密方式</text>
+      <line x1="595" y1="98" x2="125" y2="122" stroke="#9a6a17" stroke-width="1.7" marker-end="url(#a4)"/>
+      <text x="360" y="102" text-anchor="middle" font-size="12" fill="#232321">② 你好,这是我的证书(含公钥)</text>
+      <rect x="180" y="132" width="360" height="34" rx="6" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="360" y="154" text-anchor="middle" font-size="12" fill="#0b5750">③ 浏览器验证证书可信 → 用公钥协商出一把对称密钥</text>
+      <line x1="125" y1="182" x2="595" y2="200" stroke="#0f766e" stroke-width="1.7" marker-end="url(#a4)"/>
+      <text x="360" y="186" text-anchor="middle" font-size="12" fill="#232321">④ 之后双方用这把密钥加密通信</text>
+      <rect x="180" y="210" width="360" height="30" rx="6" fill="#ecebfb" stroke="#5b53b8"/>
+      <text x="360" y="230" text-anchor="middle" font-size="12" fill="#5b53b8">🔒 通道建立,HTTP 内容全程加密</text>
+    </svg>
+    <figcaption>TLS 握手(简化版)。重点:先验证身份(证书),再协商出一把只有双方知道的密钥。</figcaption>
+  </figure>
+
+  <div class="box term">
+    <span class="bt">术语:证书、CA、Let's Encrypt</span>
+    <p><strong>证书</strong>是一份"由权威机构盖章、证明某域名归某服务器所有"的文件。盖章的权威机构叫 <strong>CA(证书颁发机构)</strong>。浏览器内置了一批信任的 CA,所以能验证证书真假。<br>
+    <strong>Let's Encrypt</strong> 是一个免费、自动化的 CA,你的网站项目就用它来一键签发 HTTPS 证书(见 4.7 节)。代理项目的高级伪装也会用到证书。</p>
+  </div>
+
+  <div class="box analogy">
+    <span class="bt">类比:公钥 / 私钥这把"特殊的锁"</span>
+    <p>TLS 用到<strong>非对称加密</strong>:一对钥匙,公钥负责"锁"、私钥负责"开",公钥可以随便公开。任何人都能用你公开的公钥给你加密,但只有握着私钥的你能解开。证书里装的就是服务器的公钥。这套思想后面 SSH 登录(3.3)、代理加密(5.4)还会反复出现,先有个印象。</p>
+  </div>
+
+  <h3 id="p2-4">2.4 动手:用浏览器开发者工具看真实的网络通信</h3>
+  <p>讲再多不如亲眼看一次。打开任意网站,按 <span class="kbd">F12</span> 打开开发者工具,切到 <strong>Network(网络)</strong> 面板,刷新页面:</p>
+  <div class="box do">
+    <span class="bt">照着看一遍</span>
+    <ol>
+      <li>左边列出了这个页面发起的<strong>所有请求</strong>(HTML、CSS、图片、接口……一个页面往往有几十个)。</li>
+      <li>点任意一条,右边能看到:请求的 <strong>URL、方法、状态码</strong>;<strong>Headers</strong>(请求头/响应头,找找 <code>Cookie</code> 和 <code>Content-Type</code>);<strong>Response</strong>(服务器返回的原始内容)。</li>
+      <li>切到 <strong>Console(控制台)</strong> 能跑 JavaScript;切到 <strong>Application</strong> 能看到本站存的 Cookie。</li>
+    </ol>
+    <p>这一步把前两部分的抽象概念全部"实体化"了:你刚学的请求/响应/状态码/头/Cookie,现在都摆在眼前。<strong>这是你以后调试网站最常用的工具,务必玩熟。</strong></p>
+  </div>
+
+  <div class="box warn">
+    <span class="bt">第 2 部分小结</span>
+    <ul>
+      <li>HTTP 是<strong>一问一答</strong>:请求(方法+路径+头+体)→ 响应(状态码+头+体)。</li>
+      <li>状态码分四档:<strong>2 成功 / 3 跳转 / 4 你错 / 5 服务器错</strong>。</li>
+      <li>HTTP <strong>无状态</strong>,靠 Cookie / Session / Token 维持登录。</li>
+      <li>HTTPS = HTTP + <strong>TLS</strong>:先用证书验身份,再协商密钥加密。免费证书用 Let's Encrypt。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ PART 3 ============================ -->
+<section id="p3">
+  <h2><span class="num">PART 3</span>服务器与 Linux 基础</h2>
+  <p>两个项目都要落到一台<strong>有公网 IP、24 小时开机的服务器</strong>上。这一部分讲清楚:服务器是什么、为什么是 Linux、怎么远程登录它、怎么在上面敲命令干活。这是从"在自己电脑上写代码"跨到"让全世界能访问"的关键一跳。</p>
+
+  <h3 id="p3-1">3.1 服务器、VPS、云,到底是什么</h3>
+  <p><strong>服务器(server)不是一种特殊的机器,而是一个角色</strong>:任何一台持续运行、等着别人来连接并提供服务的电脑,都是服务器。你手头这台电脑也能当服务器,但它有两个硬伤:不是 24 小时开机,而且(回忆 1.7 节)藏在 NAT 后面,外面连不进来。</p>
+  <p>所以现实做法是<strong>租一台云服务器</strong>。最常见的形态是 <strong>VPS(虚拟专用服务器)</strong>:云厂商把一台物理大服务器切成很多份,每份给你一个独立的操作系统、固定公网 IP 和 root 权限,你像用一台真机一样用它。</p>
+  <table class="tbl">
+    <tr><th>项目</th><th>选什么样的 VPS</th><th>大致价位</th></tr>
+    <tr><td>动态网站</td><td>国内或就近地区;若面向国内访客且用自有域名,需<strong>备案</strong></td><td>¥20–60/月起</td></tr>
+    <tr><td>个人代理</td><td><strong>海外</strong> VPS(如日本、新加坡、美西),线路质量优先</td><td>¥30–60/月</td></tr>
+  </table>
+  <div class="box term">
+    <span class="bt">术语:常见云厂商</span>
+    <p>国内:阿里云、腾讯云、华为云。海外:Vultr、DigitalOcean、Linode(Akamai)、AWS Lightsail、Hetzner、搬瓦工(BandwagonHost)等。新手买 VPS 看四个指标:<strong>地区/线路、CPU与内存、流量额度、价格</strong>。代理用途尤其看"流量"和"线路"。</p>
+  </div>
+  <div class="box warn">
+    <span class="bt">关于备案(国内网站绕不开)</span>
+    <p>在中国大陆的服务器上、用域名对外提供网站服务,法规要求先做 <strong>ICP 备案</strong>(通过云厂商提交,实名、需时约 1–3 周)。想跳过备案练手,可以先用<strong>海外服务器 + 域名直连</strong>,或用 GitHub Pages / Vercel 这类托管平台起步。这点务必先了解清楚,免得买完才发现卡住。</p>
+  </div>
+
+  <h3 id="p3-2">3.2 Linux 入门:为什么服务器几乎都跑 Linux</h3>
+  <p>绝大多数服务器跑的是 <strong>Linux</strong>(一种免费、开源、稳定、省资源的操作系统),最常见的发行版是 <strong>Ubuntu</strong> 和 <strong>Debian</strong>。它没有图形界面,全靠<strong>命令行</strong>操作——一开始会不习惯,但命令行恰恰是服务器运维的"母语",学会受益十年。</p>
+  <h4>三个必须建立的概念</h4>
+  <ul>
+    <li><strong>一切皆文件</strong>:配置、设备、甚至运行中的进程,在 Linux 里大多表现为文件路径。改配置 = 编辑某个文件。</li>
+    <li><strong>目录树</strong>:从根 <code>/</code> 开始的一棵树。关键几个:<code>/etc</code>(配置)、<code>/var/log</code>(日志)、<code>/home</code>(用户文件)、<code>/usr</code>(程序)、<code>/root</code>(管理员家目录)。</li>
+    <li><strong>用户与权限</strong>:<code>root</code> 是超级管理员(权力无限,也最危险);普通用户权限受限。临时借用管理员权限,在命令前加 <code>sudo</code>。</li>
+  </ul>
+  <div class="box model">
+    <span class="bt">权限那一串 rwx 怎么读</span>
+    <p><code>ls -l</code> 会看到 <code>-rwxr-xr--</code> 这种。<strong>r</strong>=读、<strong>w</strong>=写、<strong>x</strong>=执行,三组分别对应<strong>文件主人 / 同组 / 其他人</strong>。<code>chmod</code> 改权限、<code>chown</code> 改归属。配置代理和网站时常因为"权限不对"出问题,知道这个就能自查。</p>
+  </div>
+
+  <h3 id="p3-3">3.3 SSH:安全地远程登录服务器</h3>
+  <p>VPS 在云端,你怎么操作它?靠 <strong>SSH</strong>——一个加密的远程登录协议(走 22 端口)。在你自己电脑的终端里敲一行,就进了服务器的命令行:</p>
+  <pre><code><span class="cm"># 用密码登录(root 用户 + 服务器公网 IP)</span>
+ssh root@123.45.67.89</code></pre>
+  <p>密码登录能用,但<strong>不安全也不方便</strong>(会被暴力破解、每次要输密码)。正确做法是用 <strong>SSH 密钥对</strong>登录——回忆 2.3 节的公钥/私钥思想,这里正好用上:</p>
+  <pre><code><span class="cm"># ① 在你自己电脑上生成一对密钥(一路回车即可)</span>
+ssh-keygen -t ed25519
+
+<span class="cm"># 生成两个文件:</span>
+<span class="cm">#   ~/.ssh/id_ed25519       私钥 —— 死守在自己电脑,绝不外传</span>
+<span class="cm">#   ~/.ssh/id_ed25519.pub   公钥 —— 可以公开,要放到服务器上</span>
+
+<span class="cm"># ② 把公钥安装到服务器(之后免密登录)</span>
+ssh-copy-id root@123.45.67.89
+<span class="cm"># Windows 若没有该命令,可手动把 .pub 内容追加到</span>
+<span class="cm"># 服务器的 ~/.ssh/authorized_keys 文件里</span></code></pre>
+  <div class="box analogy">
+    <span class="bt">类比:私钥是钥匙,公钥是锁</span>
+    <p>你把"锁"(公钥)装到服务器门上,"钥匙"(私钥)只有你有。登录时服务器用锁出一道只有对应钥匙能解的题,你的电脑用私钥解开,证明"是你"。全程私钥不离开你的电脑,比密码安全得多。<strong>私钥泄露 = 别人能登你服务器,务必保管好。</strong></p>
+  </div>
+
+  <h3 id="p3-4">3.4 命令行必备:够用就好的一打命令</h3>
+  <p>不用全背,这一打命令覆盖你 90% 的日常操作,边用边熟:</p>
+  <table class="tbl">
+    <tr><th>命令</th><th>作用</th><th>例子</th></tr>
+    <tr><td><code>ls -l</code> / <code>ls -la</code></td><td>列出当前目录文件(含隐藏)</td><td><code>ls -la /etc</code></td></tr>
+    <tr><td><code>cd</code></td><td>进入目录</td><td><code>cd /var/log</code></td></tr>
+    <tr><td><code>pwd</code></td><td>显示当前在哪</td><td><code>pwd</code></td></tr>
+    <tr><td><code>cat</code> / <code>less</code></td><td>看文件内容</td><td><code>cat /etc/os-release</code></td></tr>
+    <tr><td><code>nano</code> / <code>vim</code></td><td>编辑文件(nano 对新手友好)</td><td><code>nano config.json</code></td></tr>
+    <tr><td><code>cp</code> / <code>mv</code> / <code>rm</code></td><td>复制 / 移动改名 / 删除</td><td><code>rm -i old.txt</code></td></tr>
+    <tr><td><code>mkdir</code></td><td>建目录</td><td><code>mkdir mysite</code></td></tr>
+    <tr><td><code>sudo</code></td><td>以管理员身份执行</td><td><code>sudo nano /etc/...</code></td></tr>
+    <tr><td><code>apt update</code> / <code>apt install</code></td><td>更新软件源 / 装软件(Debian/Ubuntu)</td><td><code>sudo apt install nginx</code></td></tr>
+    <tr><td><code>systemctl</code></td><td>管理后台服务(见 3.5)</td><td><code>systemctl status nginx</code></td></tr>
+    <tr><td><code>curl</code></td><td>命令行发 HTTP 请求(测接口神器)</td><td><code>curl ip.sb</code></td></tr>
+    <tr><td><code>htop</code> / <code>df -h</code></td><td>看 CPU内存 / 看磁盘空间</td><td><code>df -h</code></td></tr>
+  </table>
+  <div class="box do">
+    <span class="bt">第一次登录服务器先跑这几句</span>
+    <pre><code><span class="cm"># 更新系统软件(Debian/Ubuntu),养成好习惯</span>
+sudo apt update <span class="kw">&amp;&amp;</span> sudo apt upgrade -y
+
+<span class="cm"># 看看系统版本、磁盘、内存</span>
+cat /etc/os-release
+df -h
+free -h</code></pre>
+  </div>
+
+  <h3 id="p3-5">3.5 进程与服务:让程序在后台一直跑(systemd)</h3>
+  <p>你的网站后端、你的代理程序,都需要<strong>开机自启、崩了自动重启、关掉 SSH 也继续跑</strong>。现代 Linux 用 <strong>systemd</strong> 管这件事,被它管理的长期运行程序叫一个<strong>服务(service)</strong>。</p>
+  <pre><code><span class="cm"># systemctl:管理服务的总开关(以 nginx 为例)</span>
+sudo systemctl start nginx      <span class="cm"># 启动</span>
+sudo systemctl stop nginx       <span class="cm"># 停止</span>
+sudo systemctl restart nginx    <span class="cm"># 重启(改完配置常用)</span>
+sudo systemctl status nginx     <span class="cm"># 看运行状态 + 最近日志(排错第一站)</span>
+sudo systemctl enable nginx     <span class="cm"># 设为开机自启</span></code></pre>
+  <div class="box model">
+    <span class="bt">为什么这个很重要</span>
+    <p>新手常犯的错:在 SSH 里直接 <code>python app.py</code> 把网站跑起来,一关终端网站就挂了。正确姿势是<strong>把程序注册成 systemd 服务</strong>(或用 Docker、或用 pm2 这类进程管理器),让它脱离你的终端独立运行。第 4、5 部分都会这么做。</p>
+  </div>
+
+  <h3 id="p3-6">3.6 防火墙:只开该开的门</h3>
+  <p>服务器暴露在公网上,每天都有自动化扫描在试探各个端口。<strong>防火墙</strong>的原则很简单:<strong>默认全关,只放行你确实在用的端口</strong>。Ubuntu 上最简单的工具是 <code>ufw</code>:</p>
+  <pre><code><span class="cm"># 放行必要端口,再开启防火墙(顺序别反!先放 22 再 enable)</span>
+sudo ufw allow 22        <span class="cm"># SSH,不放行你会把自己锁在外面</span>
+sudo ufw allow 80        <span class="cm"># HTTP</span>
+sudo ufw allow 443       <span class="cm"># HTTPS</span>
+sudo ufw enable          <span class="cm"># 启用</span>
+sudo ufw status          <span class="cm"># 查看规则</span></code></pre>
+  <div class="box warn">
+    <span class="bt">血泪坑:别把自己关在门外</span>
+    <p>开防火墙前<strong>务必先放行 22 端口</strong>,否则 <code>enable</code> 之后你自己的 SSH 也会被挡,直接失联(只能去云厂商后台的网页控制台救场)。这是新手最经典的事故之一。云厂商后台通常还有一层"安全组",逻辑相同,两边都要放行。</p>
+  </div>
+
+  <div class="box warn">
+    <span class="bt">第 3 部分小结</span>
+    <ul>
+      <li><strong>服务器</strong>是个角色;现实里租一台 <strong>VPS</strong>(有公网 IP、24h 开机、root 权限)。</li>
+      <li>服务器跑 <strong>Linux</strong>,靠<strong>命令行</strong>操作;<code>sudo</code> 借管理员权限,权限模型是 rwx。</li>
+      <li>用 <strong>SSH 密钥</strong>登录(私钥死守,公钥放服务器)。</li>
+      <li>长期程序注册成 <strong>systemd 服务</strong>;<strong>防火墙</strong>默认全关、只放 22/80/443。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ PART 4 ============================ -->
+<section id="p4">
+  <h2><span class="num">PART 4</span>项目一:从零搭一个动态个人网站</h2>
+  <p>现在把前三部分的地基用起来。目标:一个带<strong>登录</strong>和<strong>评论</strong>的动态站(有数据库、有后端 API)。这一部分按真实开发顺序走一遍,每步都告诉你"它是什么、为什么、怎么做"。第一版做得简陋没关系,先把整条链路打通。</p>
+
+  <h3 id="p4-1">4.1 架构总览:动态网站由哪几块组成</h3>
+  <p>"静态站"是几个固定 HTML 文件,谁来看都一样;"动态站"会根据用户和数据库实时生成内容(你的评论、你的登录态)。一个典型动态站分四块:</p>
+  <figure>
+    <svg viewBox="0 0 840 220" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs><marker id="a5" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#0f766e"/></marker></defs>
+      <rect x="20" y="80" width="140" height="64" rx="10" fill="#ecebfb" stroke="#5b53b8"/>
+      <text x="90" y="106" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b53b8">① 前端</text>
+      <text x="90" y="126" text-anchor="middle" font-size="11.5" fill="#55534e">浏览器里的页面</text>
+
+      <rect x="230" y="80" width="150" height="64" rx="10" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="305" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#0b5750">② 反向代理</text>
+      <text x="305" y="118" text-anchor="middle" font-size="11.5" fill="#55534e">Nginx</text>
+      <text x="305" y="134" text-anchor="middle" font-size="11" fill="#8d8a82">门卫 / 分发 / HTTPS</text>
+
+      <rect x="450" y="80" width="150" height="64" rx="10" fill="#fbf1dd" stroke="#9a6a17"/>
+      <text x="525" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#9a6a17">③ 后端应用</text>
+      <text x="525" y="118" text-anchor="middle" font-size="11.5" fill="#55534e">你的业务逻辑</text>
+      <text x="525" y="134" text-anchor="middle" font-size="11" fill="#8d8a82">Flask/FastAPI/Express</text>
+
+      <rect x="670" y="80" width="150" height="64" rx="10" fill="#eceef1" stroke="#4d5765"/>
+      <text x="745" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#4d5765">④ 数据库</text>
+      <text x="745" y="118" text-anchor="middle" font-size="11.5" fill="#55534e">长期存数据</text>
+      <text x="745" y="134" text-anchor="middle" font-size="11" fill="#8d8a82">PostgreSQL/MySQL</text>
+
+      <line x1="160" y1="112" x2="228" y2="112" stroke="#0f766e" stroke-width="1.7" marker-end="url(#a5)"/>
+      <line x1="380" y1="112" x2="448" y2="112" stroke="#0f766e" stroke-width="1.7" marker-end="url(#a5)"/>
+      <line x1="600" y1="112" x2="668" y2="112" stroke="#0f766e" stroke-width="1.7" marker-end="url(#a5)"/>
+      <text x="194" y="104" text-anchor="middle" font-size="10.5" fill="#8d8a82">HTTPS</text>
+      <text x="414" y="104" text-anchor="middle" font-size="10.5" fill="#8d8a82">转发</text>
+      <text x="634" y="104" text-anchor="middle" font-size="10.5" fill="#8d8a82">查/存</text>
+      <text x="420" y="186" text-anchor="middle" font-size="12" fill="#8d8a82">②③④ 都跑在你那台 VPS 上</text>
+      <line x1="220" y1="160" x2="820" y2="160" stroke="#c9c4b6" stroke-dasharray="4 4"/>
+    </svg>
+    <figcaption>动态网站的四块。前端在用户浏览器里;Nginx、后端、数据库都在你的 VPS 上。</figcaption>
+  </figure>
+  <div class="box model">
+    <span class="bt">为什么要 Nginx 这道"门卫"</span>
+    <p>后端程序(Flask 等)直接对外暴露并不理想。前面加一台 <strong>Nginx 反向代理</strong>有几大好处:统一在它这里做 <strong>HTTPS</strong> 加解密、把不同路径分发给不同后端、托管静态文件、扛住一部分恶意流量。用户只看到 Nginx,看不到后面的结构。</p>
+  </div>
+  <div class="box do">
+    <span class="bt">起步可以更简单</span>
+    <p>如果你想先有成就感,<strong>静态部分</strong>可以先丢到 <strong>GitHub Pages / Vercel / Netlify</strong>(免费、自动 HTTPS、几分钟上线),动态后端用 <strong>Railway / Render</strong> 这类平台托管。等理解了再搬到自己的 VPS,把整条链路亲手搭一遍。两条路这份教程都覆盖。</p>
+  </div>
+
+  <h3 id="p4-2">4.2 前端三件套:HTML / CSS / JavaScript</h3>
+  <p>浏览器里看到的一切,都由这三样构成,各管一摊:</p>
+  <table class="tbl">
+    <tr><th></th><th>管什么</th><th>类比</th></tr>
+    <tr><td><strong>HTML</strong></td><td>结构与内容(标题、段落、按钮、表单)</td><td>房子的钢筋骨架</td></tr>
+    <tr><td><strong>CSS</strong></td><td>样式与排版(颜色、字体、布局、响应式)</td><td>装修和软装</td></tr>
+    <tr><td><strong>JavaScript</strong></td><td>行为与交互(点击、请求数据、动态更新)</td><td>水电和智能家居</td></tr>
+  </table>
+  <p>一个最小页面长这样:</p>
+  <pre><code><span class="kw">&lt;!DOCTYPE html&gt;</span>
+<span class="kw">&lt;html</span> lang="zh"<span class="kw">&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+  <span class="kw">&lt;meta</span> charset="UTF-8"<span class="kw">&gt;</span>
+  <span class="kw">&lt;title&gt;</span>我的小站<span class="kw">&lt;/title&gt;</span>
+  <span class="kw">&lt;style&gt;</span> body { font-family: serif; max-width: 700px; margin: auto; } <span class="kw">&lt;/style&gt;</span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body&gt;</span>
+  <span class="kw">&lt;h1&gt;</span>欢迎来到虹鳟鱼的主页<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;button</span> onclick="loadComments()"<span class="kw">&gt;</span>看看评论<span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;ul</span> id="list"<span class="kw">&gt;&lt;/ul&gt;</span>
+  <span class="kw">&lt;script&gt;</span>
+    async function loadComments() {
+      const res = await fetch("/api/comments");   <span class="cm">// 向后端要数据</span>
+      const data = await res.json();
+      document.getElementById("list").innerHTML =
+        data.map(c =&gt; `&lt;li&gt;${c.text}&lt;/li&gt;`).join("");
+    }
+  <span class="kw">&lt;/script&gt;</span>
+<span class="kw">&lt;/body&gt;&lt;/html&gt;</span></code></pre>
+  <p>那句 <code>fetch("/api/comments")</code> 就是<strong>前端向后端发 HTTP 请求</strong>(回忆第 2 部分)——这正是前后端的接缝。</p>
+  <div class="box term">
+    <span class="bt">术语:前端框架(以后再碰)</span>
+    <p>页面一复杂,手写 DOM 操作会很累,于是有了 <strong>React / Vue</strong> 这类框架,帮你用"组件 + 数据驱动"的方式构建界面。<strong>初学先把原生 HTML/CSS/JS 写顺</strong>,理解了再上框架,否则容易学了框架却不懂底层。</p>
+  </div>
+
+  <h3 id="p4-3">4.3 后端与 API:网站的大脑</h3>
+  <p><strong>后端</strong>是跑在服务器上的程序,负责:接收前端请求 → 校验身份 → 读写数据库 → 返回结果。前端和后端之间约定好的那套接口,叫 <strong>API</strong>。最主流的风格是 <strong>REST</strong>:用 HTTP 方法 + 路径表达"对什么资源做什么操作"。</p>
+  <table class="tbl">
+    <tr><th>前端想做的事</th><th>对应 API(方法 + 路径)</th></tr>
+    <tr><td>看所有评论</td><td><code>GET /api/comments</code></td></tr>
+    <tr><td>发一条评论</td><td><code>POST /api/comments</code></td></tr>
+    <tr><td>删除第 5 条评论</td><td><code>DELETE /api/comments/5</code></td></tr>
+    <tr><td>登录</td><td><code>POST /api/login</code></td></tr>
+  </table>
+  <p>用 Python 的 <strong>Flask</strong> 写,后端核心就这么几行(你是 AI 专业,Python 正好顺手):</p>
+  <pre><code><span class="cm"># app.py — 一个最小后端</span>
+<span class="kw">from</span> flask <span class="kw">import</span> Flask, request, jsonify
+app = Flask(__name__)
+
+comments = []   <span class="cm"># 先用内存列表,下一节换成数据库</span>
+
+<span class="cm"># 前端 GET 过来:把所有评论给它</span>
+@app.route("/api/comments", methods=["GET"])
+<span class="kw">def</span> list_comments():
+    <span class="kw">return</span> jsonify(comments)
+
+<span class="cm"># 前端 POST 过来:新增一条评论</span>
+@app.route("/api/comments", methods=["POST"])
+<span class="kw">def</span> add_comment():
+    data = request.get_json()
+    comments.append({"text": data["text"]})
+    <span class="kw">return</span> jsonify({"ok": True}), 201   <span class="cm"># 201 = 创建成功</span>
+
+<span class="kw">if</span> __name__ == "__main__":
+    app.run(port=8000)</code></pre>
+  <p>本机跑起来后,浏览器访问 <code>http://127.0.0.1:8000/api/comments</code> 就能看到后端的返回。前端那段 <code>fetch</code> 一调,前后端就接通了。</p>
+  <div class="box term">
+    <span class="bt">术语:后端技术选型(任选一个深入)</span>
+    <p><strong>Python</strong>:Flask(极简,适合入门)、FastAPI(现代、自带接口文档、性能好)、Django(大而全)。<strong>Node.js</strong>:Express、Nest。<strong>Go</strong>:性能强,部署简单。<br>建议你从 <strong>Flask 或 FastAPI</strong> 起步——语言你熟,生态成熟,资料多。</p>
+  </div>
+
+  <h3 id="p4-4">4.4 数据库:让数据长期、可靠地存下来</h3>
+  <p>上面把评论存在内存列表里,程序一重启就全没了。真正的数据要进<strong>数据库</strong>。两大流派:</p>
+  <table class="tbl">
+    <tr><th></th><th>关系型(SQL)</th><th>非关系型(NoSQL)</th></tr>
+    <tr><td>代表</td><td>PostgreSQL、MySQL、SQLite</td><td>MongoDB、Redis</td></tr>
+    <tr><td>结构</td><td>像 Excel 表格,行列严格</td><td>像 JSON,灵活</td></tr>
+    <tr><td>适合</td><td>有明确关系的数据(用户、评论、订单)</td><td>缓存、日志、结构多变的数据</td></tr>
+    <tr><td>你的网站</td><td><strong>首选 SQL</strong>,先用 SQLite 练手,上线换 PostgreSQL</td><td>以后做缓存再说</td></tr>
+  </table>
+  <p>用 SQL 描述"评论表",再增/查:</p>
+  <pre><code><span class="cm">-- 建一张评论表(每条评论一行)</span>
+<span class="kw">CREATE TABLE</span> comments (
+    id        SERIAL PRIMARY KEY,          <span class="cm">-- 自增主键,每行唯一编号</span>
+    user_id   INTEGER,                     <span class="cm">-- 谁发的(关联用户表)</span>
+    text      TEXT NOT NULL,               <span class="cm">-- 评论内容</span>
+    created_at TIMESTAMP DEFAULT now()      <span class="cm">-- 发表时间</span>
+);
+
+<span class="kw">INSERT INTO</span> comments (user_id, text) <span class="kw">VALUES</span> (1, '第一条评论');  <span class="cm">-- 增</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> comments <span class="kw">ORDER BY</span> created_at <span class="kw">DESC</span>;          <span class="cm">-- 查</span></code></pre>
+  <div class="box warn">
+    <span class="bt">安全红线:SQL 注入</span>
+    <p>千万别把用户输入直接拼进 SQL 字符串(比如 <code>"... text='" + 用户输入 + "'"</code>)。攻击者能输入特制内容篡改你的查询,这叫 <strong>SQL 注入</strong>。正确做法是用<strong>参数化查询</strong>(把值作为参数传入,由数据库驱动转义)或用 ORM。这是后端第一条要刻进肌肉记忆的安全准则。</p>
+  </div>
+  <div class="box term">
+    <span class="bt">术语:ORM</span>
+    <p>每次手写 SQL 很繁琐,<strong>ORM</strong>(对象关系映射,如 Python 的 SQLAlchemy)让你用写代码对象的方式操作数据库,它在背后生成安全的 SQL。入门可以先手写几条 SQL 理解原理,再上 ORM 提效。</p>
+  </div>
+
+  <h3 id="p4-5">4.5 域名与 DNS 配置:让别人用名字找到你</h3>
+  <p>有了能跑的网站和一台 VPS(假设公网 IP 是 <code>123.45.67.89</code>),现在让它能用域名访问:</p>
+  <ol>
+    <li><strong>注册域名</strong>:在阿里云/腾讯云/Namecheap/Cloudflare 等注册商买一个(如 <code>hongzunyu.com</code>),便宜的几十块一年。</li>
+    <li><strong>加解析记录</strong>:进域名管理后台,加一条 <code>A 记录</code>(回忆 1.5 节):</li>
+  </ol>
+  <table class="tbl">
+    <tr><th>类型</th><th>主机记录</th><th>记录值</th><th>含义</th></tr>
+    <tr><td>A</td><td><code>@</code></td><td><code>123.45.67.89</code></td><td>裸域名 hongzunyu.com → 你的 IP</td></tr>
+    <tr><td>A</td><td><code>www</code></td><td><code>123.45.67.89</code></td><td>www.hongzunyu.com → 你的 IP</td></tr>
+  </table>
+  <p>加完等几分钟到几小时(DNS 缓存生效)。验证:</p>
+  <pre><code><span class="cm"># 查域名解析到哪个 IP 了</span>
+nslookup hongzunyu.com
+<span class="cm"># 或</span>
+dig hongzunyu.com +short</code></pre>
+
+  <h3 id="p4-6">4.6 部署上线:把网站搬到 VPS 上跑起来</h3>
+  <p>这一步把"本机能跑"变成"全世界能访问"。完整链路:<strong>代码上传 → 装运行环境 → 用生产级方式启动后端 → Nginx 反向代理 → systemd 守护</strong>。</p>
+  <pre><code><span class="cm"># 在 VPS 上(已用 SSH 登录)</span>
+
+<span class="cm"># ① 装 Python 环境与依赖(以 Flask 为例)</span>
+sudo apt update <span class="kw">&amp;&amp;</span> sudo apt install -y python3-pip python3-venv nginx
+<span class="cm"># 把代码传上来(git clone 你的仓库,或用 scp 上传)</span>
+cd /var/www/mysite
+python3 -m venv venv <span class="kw">&amp;&amp;</span> source venv/bin/activate
+pip install flask gunicorn
+
+<span class="cm"># ② 用 gunicorn 以生产方式启动后端(比 app.run 更稳更快)</span>
+<span class="cm">#    开 4 个工作进程,只监听本机 8000 端口(对外由 Nginx 转发)</span>
+gunicorn -w 4 -b 127.0.0.1:8000 app:app</code></pre>
+  <p>接着配 <strong>Nginx 反向代理</strong>,把外面 80 端口的请求转发给本机 8000 的后端。编辑 <code>/etc/nginx/sites-available/mysite</code>:</p>
+  <pre><code>server {
+    listen 80;
+    server_name hongzunyu.com www.hongzunyu.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;     <span class="cm"># 转发给后端</span>
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</code></pre>
+  <pre><code><span class="cm"># 启用配置并重载 Nginx</span>
+sudo ln -s /etc/nginx/sites-available/mysite /etc/nginx/sites-enabled/
+sudo nginx -t              <span class="cm"># 先测语法,没问题再重载</span>
+sudo systemctl reload nginx</code></pre>
+  <p>最后把 gunicorn 注册成 <strong>systemd 服务</strong>(回忆 3.5),让它开机自启、崩溃重启。新建 <code>/etc/systemd/system/mysite.service</code>:</p>
+  <pre><code>[Unit]
+Description=My site backend
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/mysite
+ExecStart=/var/www/mysite/venv/bin/gunicorn -w 4 -b 127.0.0.1:8000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+  <pre><code>sudo systemctl daemon-reload
+sudo systemctl enable --now mysite     <span class="cm"># 启动并设为开机自启</span>
+sudo systemctl status mysite           <span class="cm"># 确认在跑</span></code></pre>
+  <p>到这一步,浏览器访问 <code>http://hongzunyu.com</code> 应该能看到你的网站了(还是 http,下一节加锁)。</p>
+
+  <h3 id="p4-7">4.7 HTTPS:给网站免费上锁(Let's Encrypt)</h3>
+  <p>回忆 2.3 节,正经网站必须 HTTPS。用 <strong>certbot</strong> + <strong>Let's Encrypt</strong> 一条命令搞定,还能自动续期:</p>
+  <pre><code><span class="cm"># 装 certbot 的 nginx 插件</span>
+sudo apt install -y certbot python3-certbot-nginx
+
+<span class="cm"># 自动签发证书 + 改好 Nginx 配置 + 设置 80 跳 443</span>
+sudo certbot --nginx -d hongzunyu.com -d www.hongzunyu.com
+
+<span class="cm"># 证书 90 天到期,certbot 会自动续期;可手动测试续期流程</span>
+sudo certbot renew --dry-run</code></pre>
+  <p>跑完访问 <code>https://hongzunyu.com</code>,地址栏出现 🔒。别忘了在防火墙和云安全组放行 <strong>443</strong>。</p>
+
+  <h3 id="p4-8">4.8 安全加固:上线后立刻要做的几件事</h3>
+  <p>服务器一旦上公网,几分钟内就会有自动化扫描来敲门。基础加固清单(投入产出比最高的几条):</p>
+  <table class="tbl">
+    <tr><th>做什么</th><th>为什么</th></tr>
+    <tr><td>禁用 SSH 密码登录,只留密钥</td><td>挡掉绝大多数暴力破解(改 <code>/etc/ssh/sshd_config</code> 里 <code>PasswordAuthentication no</code>)</td></tr>
+    <tr><td>不用 root 日常操作,建普通用户 + sudo</td><td>降低误操作和被入侵后的破坏面</td></tr>
+    <tr><td>防火墙只开 22/80/443</td><td>减少暴露面(回忆 3.6)</td></tr>
+    <tr><td>装 <code>fail2ban</code></td><td>自动封禁反复尝试登录失败的 IP</td></tr>
+    <tr><td>定期 <code>apt upgrade</code> + 关注安全更新</td><td>补已知漏洞</td></tr>
+    <tr><td>后端:参数化查询、校验输入、密码加盐哈希存储</td><td>防注入、防撞库(密码绝不明文存!)</td></tr>
+    <tr><td>定期备份数据库</td><td>误删/被黑/硬盘坏都能恢复</td></tr>
+  </table>
+  <div class="box warn">
+    <span class="bt">密码存储:绝不明文</span>
+    <p>用户密码<strong>永远不能明文存进数据库</strong>。要用 <code>bcrypt</code> / <code>argon2</code> 这类专门的算法做"加盐哈希"——即使数据库被脱库,攻击者也拿不到原始密码。这是登录功能的底线。</p>
+  </div>
+
+  <h3 id="p4-9">4.9 进阶:Docker、CI/CD、监控(知道有这回事)</h3>
+  <p>第一版网站不需要这些,但它们是你"未来要掌握"的方向,先建立概念:</p>
+  <ul>
+    <li><strong>Docker(容器)</strong>:把"程序 + 它依赖的整个环境"打包成一个标准化的"集装箱",在任何机器上一条命令跑起来,彻底解决"我电脑上能跑、服务器上不行"。强烈建议网站稳定后学一下,部署体验质变。</li>
+    <li><strong>CI/CD(持续集成/部署)</strong>:用 GitHub Actions 等,实现"<code>git push</code> 一推,自动测试 + 自动部署到服务器",告别手动上传。</li>
+    <li><strong>监控与日志</strong>:网站挂了要第一时间知道。了解 <code>journalctl</code> 看 systemd 日志、Nginx 的 <code>access.log</code>/<code>error.log</code>,以后可上 Prometheus + Grafana、或 UptimeRobot 这类在线监测。</li>
+    <li><strong>负载均衡 / CDN</strong>:访问量大了,用 CDN(如 Cloudflare)把静态资源缓存到全球节点加速,用负载均衡把流量分到多台服务器。</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="bt">第 4 部分小结:动态网站的完整链路</span>
+    <p>前端(HTML/CSS/JS)→ <strong>fetch</strong> 调 → 后端 API(Flask/FastAPI)→ 读写<strong>数据库</strong>。部署时:代码上 VPS → <strong>gunicorn</strong> 跑后端 → <strong>Nginx</strong> 反向代理 → <strong>certbot</strong> 上 HTTPS → <strong>systemd</strong> 守护 → 防火墙 + 加固。把这条链路亲手走通一次,你对"网站"的理解会彻底从模糊变清晰。</p>
+  </div>
+</section>
+
+<!-- ============================ PART 5 ============================ -->
+<section id="p5">
+  <h2><span class="num">PART 5</span>项目二:个人代理(梯子)的原理与搭建</h2>
+  <div class="box warn">
+    <span class="bt">先说清楚定位与边界</span>
+    <p>这一部分把代理当作<strong>"理解加密隧道如何工作"的网络工程实验</strong>,正当用途是访问 GitHub、Google Scholar、arXiv、Hugging Face、Stack Overflow、npm/pip/conda 等开发与学术资源。请<strong>仅用于个人合法用途</strong>,遵守你所在地的法律法规与服务商条款,不用于任何违法或商业牟利目的。技术原理本身是公开的网络知识,理解它对你这个 AI 专业的学生有长期价值。</p>
+  </div>
+
+  <h3 id="p5-1">5.1 原理总览:代理到底在做什么</h3>
+  <p>正常上网是"你 → 直接访问目标网站"。代理是在中间插一个<strong>替身</strong>:你先把请求加密发给自己在海外的服务器,由它替你去访问目标,再把结果加密传回。对目标网站来说,访客是你的服务器;对你和服务器之间的链路来说,传的是看不懂的加密流量。</p>
+  <figure>
+    <svg viewBox="0 0 840 230" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <defs><marker id="a6" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#0f766e"/></marker>
+      <marker id="a6r" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#b23b34"/></marker></defs>
+      <rect x="20" y="80" width="120" height="60" rx="10" fill="#ecebfb" stroke="#5b53b8"/>
+      <text x="80" y="106" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#5b53b8">你的电脑</text>
+      <text x="80" y="125" text-anchor="middle" font-size="11" fill="#55534e">客户端</text>
+
+      <rect x="330" y="80" width="160" height="60" rx="10" fill="#fbf1dd" stroke="#9a6a17"/>
+      <text x="410" y="103" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#9a6a17">你的海外 VPS</text>
+      <text x="410" y="122" text-anchor="middle" font-size="11" fill="#55534e">代理服务器(替身)</text>
+
+      <rect x="700" y="80" width="120" height="60" rx="10" fill="#e3f1ef" stroke="#0f766e"/>
+      <text x="760" y="103" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0b5750">目标网站</text>
+      <text x="760" y="122" text-anchor="middle" font-size="11" fill="#55534e">GitHub 等</text>
+
+      <line x1="140" y1="100" x2="328" y2="100" stroke="#0f766e" stroke-width="2" marker-end="url(#a6)"/>
+      <text x="234" y="90" text-anchor="middle" font-size="12" fill="#0b5750">🔒 加密隧道</text>
+      <text x="234" y="122" text-anchor="middle" font-size="10.5" fill="#8d8a82">看起来像普通 HTTPS</text>
+
+      <line x1="490" y1="100" x2="698" y2="100" stroke="#0f766e" stroke-width="2" marker-end="url(#a6)"/>
+      <text x="594" y="90" text-anchor="middle" font-size="12" fill="#0b5750">VPS 替你正常访问</text>
+
+      <line x1="140" y1="180" x2="698" y2="180" stroke="#b23b34" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#a6r)"/>
+      <text x="420" y="172" text-anchor="middle" font-size="11.5" fill="#b23b34">✗ 直连:某些资源访问不稳定 / 慢</text>
+    </svg>
+    <figcaption>代理的本质:把"你直连目标"改成"你 → 加密隧道 → 你的替身服务器 → 目标"。</figcaption>
+  </figure>
+  <div class="box term">
+    <span class="bt">术语:代理 vs VPN vs 隧道</span>
+    <p><strong>代理(Proxy)</strong>:按应用/按流量转发(如浏览器走代理)。<strong>VPN</strong>:在系统层建一条虚拟网卡,把整机流量都套进加密隧道。<strong>隧道(Tunnel)</strong>:泛指"把一种流量包进另一条加密通道"的做法。个人自用场景里,大家说的"梯子"多是<strong>加密代理</strong>,技术上和 VPN 高度重叠。</p>
+  </div>
+
+  <h3 id="p5-2">5.2 代理的本质:就是"转发"</h3>
+  <p>剥到最底层,代理服务器干的事极其朴素——<strong>流量转发</strong>。最经典的协议是 <strong>SOCKS5</strong>:你的程序把"我要连 github.com:443"这个意图告诉代理,代理替你建立连接、来回搬运字节。它本身<strong>不加密</strong>。</p>
+  <p>所以一个"裸 SOCKS5/HTTP 代理"在公网上有两个问题:① 明文,链路上能被看到你在访问什么;② 容易被识别和阻断。解决这两点,就是后面"加密 + 伪装"的全部动机。</p>
+  <div class="box do">
+    <span class="bt">动手感受转发(本地玩)</span>
+    <p>很多工具能一行起一个本地 SOCKS5 代理。最容易体会的是 SSH 自带的功能:<code>ssh -D 1080 root@你的VPS</code> 会在本机 1080 端口开一个 SOCKS5 代理,流量经 SSH 加密隧道从 VPS 出去。把浏览器代理设成 <code>127.0.0.1:1080</code> 就能用——这其实已经是一个"最简陋的梯子"了,正好印证原理。只是它的流量特征明显、速度一般,所以才有了后面更专业的方案。</p>
+  </div>
+
+  <h3 id="p5-3">5.3 为什么"裸代理"会被识别:DPI 与流量特征</h3>
+  <p>要理解现代代理协议为什么长那样,得先理解它们在对抗什么。网络中间设备(运营商、网关、防火墙)可以做 <strong>DPI(深度包检测)</strong>——不只看包要去哪,还分析包的<strong>内容和特征</strong>。识别一个连接是不是代理,常见三种手段:</p>
+  <ul>
+    <li><strong>特征指纹</strong>:某些代理协议握手时有固定字节模式,一眼能认出来。</li>
+    <li><strong>流量行为</strong>:连接时长、包大小分布、时序等统计特征异常。</li>
+    <li><strong>主动探测</strong>:对可疑服务器主动发起连接试探,看它对乱七八糟的请求如何反应——真网站和代理服务器的反应不一样。</li>
+  </ul>
+  <div class="box model">
+    <span class="bt">这条主线串起整个协议演进</span>
+    <p>代理技术这十年的进化,核心就一句话:<strong>让加密流量越来越像"一次再普通不过的 HTTPS 访问"</strong>,从而既看不出内容(加密),也看不出它是代理(伪装),还经得起主动探测。下一节就是这条进化线。</p>
+  </div>
+
+  <h3 id="p5-4">5.4 加密与伪装:协议演进这条线</h3>
+  <p>按出现顺序理解,你就明白每一代在补上一代的什么短板:</p>
+  <table class="tbl">
+    <tr><th>协议</th><th>核心思路</th><th>补了什么短板</th></tr>
+    <tr><td><strong>Shadowsocks (SS)</strong></td><td>轻量加密代理,把流量加密成"看不出内容"</td><td>解决明文问题;曾经够用,后被特征识别</td></tr>
+    <tr><td><strong>V2Ray / VMess</strong></td><td>可扩展的传输框架,支持多种伪装(走 WebSocket、套 CDN 等)</td><td>增强伪装与灵活性</td></tr>
+    <tr><td><strong>Trojan</strong></td><td>干脆<strong>伪装成标准 HTTPS</strong>,跑在 443,配真实域名+证书;探测时回落到一个真网站</td><td>对抗主动探测,"长得就像正经网站"</td></tr>
+    <tr><td><strong>VLESS + XTLS</strong></td><td>更轻量(去掉冗余加密),性能更高</td><td>减少开销、提速</td></tr>
+    <tr><td><strong>VLESS + Vision + REALITY</strong>(Xray)</td><td>直接<strong>借用一个真实大网站的 TLS 握手</strong>,无需自己买域名和证书,探测者看到的就是那个真网站</td><td>当前主流之一,抗探测强、部署省事</td></tr>
+    <tr><td><strong>Hysteria2 / TUIC</strong></td><td>基于 <strong>QUIC(UDP)</strong>,在丢包高的线路上更快</td><td>解决高延迟/丢包线路体验</td></tr>
+  </table>
+  <div class="box term">
+    <span class="bt">术语:Xray-core 与 sing-box</span>
+    <p>你不用自己实现这些协议,有成熟内核:<br>
+    · <strong>Xray-core</strong>(XTLS 项目):VLESS / Vision / Reality 的主力实现。<br>
+    · <strong>sing-box</strong>:一个"全家桶"内核,服务端客户端通吃,支持上面几乎所有协议,配置统一,近年很流行。<br>
+    新手 2026 年起步,推荐二选一:<strong>Xray 的 VLESS+Reality</strong>(省去域名证书),或 <strong>sing-box</strong>(一套搞定多协议)。</p>
+  </div>
+
+  <h3 id="p5-5">5.5 实操:在海外 VPS 上搭一套(以 Xray + Reality 为例)</h3>
+  <div class="box warn">
+    <span class="bt">命令与配置以官方仓库为准</span>
+    <p>代理内核更新较快,下面给的是<strong>流程骨架和代表性配置</strong>,具体安装命令、配置字段请对照官方最新文档:Xray-install(<a href="https://github.com/XTLS/Xray-install">github.com/XTLS/Xray-install</a>)、Xray-core(<a href="https://github.com/XTLS/Xray-core">github.com/XTLS/Xray-core</a>)、sing-box(<a href="https://github.com/SagerNet/sing-box">github.com/SagerNet/sing-box</a>)。理解每一步在干什么,比照抄命令更重要。</p>
+  </div>
+  <p><strong>前提</strong>:已买好一台海外 VPS,已用 SSH 登录(第 3 部分),已做基础加固。</p>
+  <pre><code><span class="cm"># ① 用官方脚本安装 Xray(命令以官方 README 为准)</span>
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+
+<span class="cm"># ② 生成所需的随机凭据</span>
+xray uuid                 <span class="cm"># 生成一个 UUID,当作你的客户端 id</span>
+xray x25519               <span class="cm"># 生成 Reality 的 私钥/公钥 一对</span></code></pre>
+  <p>然后编辑 Xray 的配置文件(通常 <code>/usr/local/etc/xray/config.json</code>)。Reality 的核心思路:让你的服务器在被探测时,表现得就像在访问 <code>dest</code> 指定的那个<strong>真实大网站</strong>。代表性配置骨架:</p>
+  <pre><code>{
+  "inbounds": [{
+    "port": 443,
+    "protocol": "vless",
+    "settings": {
+      "clients": [{ "id": "上一步的 UUID", "flow": "xtls-rprx-vision" }],
+      "decryption": "none"
+    },
+    "streamSettings": {
+      "network": "tcp",
+      "security": "reality",
+      "realitySettings": {
+        "dest": "www.microsoft.com:443",       <span class="cm">// 借用的真实网站</span>
+        "serverNames": ["www.microsoft.com"],   <span class="cm">// 对外宣称的域名</span>
+        "privateKey": "x25519 生成的私钥",
+        "shortIds": [""]
+      }
+    }
+  }],
+  "outbounds": [{ "protocol": "freedom" }]
+}</code></pre>
+  <pre><code><span class="cm"># ③ 重启并设为开机自启,查看状态</span>
+sudo systemctl restart xray
+sudo systemctl enable xray
+sudo systemctl status xray      <span class="cm"># 不正常就看日志:journalctl -u xray -e</span>
+
+<span class="cm"># ④ 放行 443 端口(防火墙 + 云安全组都要)</span>
+sudo ufw allow 443</code></pre>
+  <p class="small">备选更省心的路线:用 <strong>sing-box</strong>,或借助社区成熟的一键脚本(认准高星、活跃维护的开源项目,谨慎对待来历不明的脚本)。无论哪种,理解上面这套"UUID + 密钥 + 借真实网站做 TLS"的逻辑都通用。</p>
+
+  <h3 id="p5-6">5.6 两条伪装路线:Reality 与"域名+证书"</h3>
+  <p>让流量像正经 HTTPS,主要两条路,理解差异你就能自己选:</p>
+  <table class="tbl">
+    <tr><th></th><th>Reality(借别人网站)</th><th>域名 + 证书(用自己网站)</th></tr>
+    <tr><td>要不要域名</td><td>不需要</td><td>需要,还要解析到 VPS</td></tr>
+    <tr><td>要不要证书</td><td>不需要(借用目标站的)</td><td>需要(Let's Encrypt,同 4.7)</td></tr>
+    <tr><td>对外长相</td><td>像在访问那个被借的大网站</td><td>像在访问你自己的网站</td></tr>
+    <tr><td>适合</td><td>怕麻烦、想抗探测,首选</td><td>想顺便真挂个网站当幌子(Trojan/VLESS+TLS)</td></tr>
+  </table>
+  <div class="box model">
+    <span class="bt">两个项目在这里交汇</span>
+    <p>"域名+证书"这条路用到的<strong>域名解析(4.5)、Nginx、Let's Encrypt 证书(4.7)</strong>,和你做网站时完全是同一套技能。甚至可以在同一台机器上,443 端口前面放 Nginx,把代理流量和真实网站流量按规则分流——这就是为什么这份教程把两个项目放一起讲:<strong>底层知识是共享的</strong>。</p>
+  </div>
+
+  <h3 id="p5-7">5.7 客户端与日常维护</h3>
+  <p>服务器端搭好后,在你的设备上用<strong>客户端</strong>填入服务器地址、端口、UUID、公钥等参数即可连。常见客户端:</p>
+  <table class="tbl">
+    <tr><th>平台</th><th>常见客户端</th></tr>
+    <tr><td>Windows</td><td>v2rayN、sing-box、Nekoray、Clash 系</td></tr>
+    <tr><td>macOS</td><td>sing-box、V2rayU、Clash 系</td></tr>
+    <tr><td>Android</td><td>v2rayNG、sing-box、Clash Meta 系</td></tr>
+    <tr><td>iOS</td><td>Shadowrocket、sing-box(均需对应区账号)</td></tr>
+  </table>
+  <div class="box term">
+    <span class="bt">术语:分流规则</span>
+    <p>客户端通常支持<strong>分流</strong>:国内网站直连(更快),只有需要的流量才走代理。这套规则一般写在配置或订阅里(如 Clash 的规则、GeoIP/GeoSite 数据)。理解了 1.3 的 IP、1.5 的域名,你就知道分流就是"按目标 IP/域名决定走代理还是直连"。</p>
+  </div>
+  <h4>维护要点</h4>
+  <ul>
+    <li><strong>安全</strong>:VPS 同样要做第 3、4 部分的加固(密钥登录、防火墙、更新)。代理服务器被入侵,后果不小。</li>
+    <li><strong>稳定</strong>:关注内核版本更新;<code>journalctl -u xray -e</code> 看日志排错。</li>
+    <li><strong>合规自律</strong>:控制在个人合法用途内,不分享牟利、不做违法访问。把它当学习工具善用。</li>
+    <li><strong>备份配置</strong>:把 UUID、密钥、配置文件记好,换服务器能快速重建。</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="bt">第 5 部分小结</span>
+    <ul>
+      <li>代理本质是<strong>替身转发</strong>;裸代理明文且易被识别。</li>
+      <li>对抗 <strong>DPI / 主动探测</strong>,协议一路演进:SS → V2Ray → Trojan → VLESS+Reality → Hysteria2,主线是<strong>"越来越像普通 HTTPS"</strong>。</li>
+      <li>实操:海外 VPS + <strong>Xray(VLESS+Reality)</strong> 或 <strong>sing-box</strong>,服务端配好 → 客户端连入 → 分流使用。</li>
+      <li>所用的域名/证书/Nginx 技能与网站项目<strong>完全共享</strong>。仅限个人合法用途。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ PART 6 ============================ -->
+<section id="p6">
+  <h2><span class="num">PART 6</span>全景与进阶路线</h2>
+
+  <h3 id="p6-1">6.1 知识地图:把学过的全串起来</h3>
+  <p>读到这里,你已经走完了一次数据从你电脑到地球另一端再回来的完整旅程。把所有概念挂回那张分层图上,它们各自的位置就清楚了:</p>
+  <figure>
+    <svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman','SimSun',serif">
+      <g font-size="13">
+        <rect x="30" y="20" width="540" height="50" rx="8" fill="#ecebfb" stroke="#5b53b8"/>
+        <text x="46" y="40" font-size="14" font-weight="bold" fill="#5b53b8">应用层</text>
+        <text x="46" y="59" font-size="11.5" fill="#55534e">HTTP/HTTPS · DNS · 你的网站后端 · 代理协议(VLESS/Trojan)</text>
+        <text x="660" y="48" font-size="12" fill="#8d8a82">PART 2 · 4 · 5</text>
+
+        <rect x="30" y="80" width="540" height="50" rx="8" fill="#e3f1ef" stroke="#0f766e"/>
+        <text x="46" y="100" font-size="14" font-weight="bold" fill="#0b5750">传输层</text>
+        <text x="46" y="119" font-size="11.5" fill="#55534e">TCP(可靠)/ UDP(快) · 端口(22/80/443) · TLS 加密</text>
+        <text x="660" y="108" font-size="12" fill="#8d8a82">PART 1.6 · 2.3</text>
+
+        <rect x="30" y="140" width="540" height="50" rx="8" fill="#fbf1dd" stroke="#9a6a17"/>
+        <text x="46" y="160" font-size="14" font-weight="bold" fill="#9a6a17">网络层</text>
+        <text x="46" y="179" font-size="11.5" fill="#55534e">IP 地址 · 路由 · NAT · 公网/私网</text>
+        <text x="660" y="168" font-size="12" fill="#8d8a82">PART 1.3 · 1.7</text>
+
+        <rect x="30" y="200" width="540" height="46" rx="8" fill="#eceef1" stroke="#4d5765"/>
+        <text x="46" y="227" font-size="14" font-weight="bold" fill="#4d5765">链路 / 物理层</text>
+        <text x="660" y="227" font-size="12" fill="#8d8a82">PART 1.2</text>
+
+        <rect x="30" y="262" width="760" height="44" rx="8" fill="#f3f1ea" stroke="#8d8a82" stroke-dasharray="5 4"/>
+        <text x="46" y="282" font-size="13.5" font-weight="bold" fill="#55534e">承载这一切的:Linux 服务器 / VPS / SSH / Nginx / systemd / 防火墙</text>
+        <text x="46" y="298" font-size="11.5" fill="#8d8a82">PART 3 —— 两个项目共同的运行环境</text>
+
+        <rect x="600" y="80" width="190" height="110" rx="8" fill="#fff" stroke="#5b53b8" stroke-dasharray="4 3"/>
+        <text x="695" y="104" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#5b53b8">两个项目</text>
+        <text x="695" y="126" text-anchor="middle" font-size="11.5" fill="#55534e">网站:别人访问你</text>
+        <text x="695" y="146" text-anchor="middle" font-size="11.5" fill="#55534e">代理:你的替身访问</text>
+        <text x="695" y="170" text-anchor="middle" font-size="11" fill="#8d8a82">复用同一套底层</text>
+      </g>
+    </svg>
+    <figcaption>整份教程的知识地图。任何新的网络知识,都能往这张图上挂。</figcaption>
+  </figure>
+
+  <h3 id="p6-2">6.2 学习路线与推荐资源</h3>
+  <p>按阶段推进,别想一口吃成胖子。给你一条务实的路线:</p>
+  <table class="tbl">
+    <tr><th>阶段</th><th>目标</th><th>做什么</th></tr>
+    <tr><td>第 1 周</td><td>打通概念 + 摸服务器</td><td>读完本教程 1–3 部分;买/借一台便宜 VPS,练 SSH、命令行、防火墙</td></tr>
+    <tr><td>第 2–3 周</td><td>跑通一个静态站</td><td>写 HTML/CSS/JS;先用 GitHub Pages 上线;配域名 + HTTPS</td></tr>
+    <tr><td>第 4–6 周</td><td>动态站打通链路</td><td>Flask/FastAPI 写 API + 数据库,实现评论/登录;搬到 VPS,Nginx+systemd 部署</td></tr>
+    <tr><td>并行</td><td>理解加密隧道</td><td>搭一套个人代理(Xray/sing-box),对照 5.1–5.4 理解原理</td></tr>
+    <tr><td>之后</td><td>工程化</td><td>学 Docker、CI/CD、监控、网络安全基础</td></tr>
+  </table>
+  <h4>值得信赖的资源(都是公认经典)</h4>
+  <table class="tbl">
+    <tr><th>类型</th><th>推荐</th><th>用途</th></tr>
+    <tr><td>网络教材</td><td>《计算机网络:自顶向下方法》(Kurose &amp; Ross)</td><td>从应用层往下讲,最适合你这种学法</td></tr>
+    <tr><td>图解入门</td><td>《图解 HTTP》《图解 TCP/IP》</td><td>轻松建立直觉</td></tr>
+    <tr><td>系统课</td><td>斯坦福 CS144(计算机网络)</td><td>想深入时,带你亲手实现 TCP</td></tr>
+    <tr><td>Web 开发</td><td>MDN Web Docs(developer.mozilla.org)</td><td>HTML/CSS/JS 最权威的查询手册</td></tr>
+    <tr><td>Linux</td><td>《鸟哥的 Linux 私房菜》</td><td>中文 Linux 入门经典</td></tr>
+    <tr><td>服务器实操</td><td>DigitalOcean Community 教程</td><td>Nginx/部署/安全,步骤清晰,英文</td></tr>
+    <tr><td>概念科普</td><td>Cloudflare Learning Center</td><td>DNS/TLS/CDN/DDoS 等概念讲得通俗</td></tr>
+    <tr><td>学习路线图</td><td>roadmap.sh(backend / devops)</td><td>看清整条技能树的全貌</td></tr>
+  </table>
+
+  <h3 id="p6-3">6.3 未来方向:这份教程之后往哪走</h3>
+  <p>当下两个项目用不到,但随着深入会一个个遇到,提前知道名字:</p>
+  <ul>
+    <li><strong>容器与编排</strong>:Docker → Docker Compose → Kubernetes(K8s)。现代部署的事实标准,运维方向必修。</li>
+    <li><strong>CDN 与边缘</strong>:Cloudflare 等把内容缓存到离用户最近的节点,加速 + 抗攻击。</li>
+    <li><strong>负载均衡与高可用</strong>:流量大了,多台服务器分摊;一台挂了其它顶上。</li>
+    <li><strong>可观测性</strong>:日志(ELK)、指标(Prometheus + Grafana)、链路追踪——看清系统内部在发生什么。</li>
+    <li><strong>网络安全</strong>:HTTPS 之外的 XSS、CSRF、DDoS 防护、最小权限、零信任。你做了公开服务就该懂。</li>
+    <li><strong>网络编程</strong>:用 socket 亲手写一个 TCP 客户端/服务器,会让前面所有概念落到代码上(C/Python 都行,Beej's Guide 是经典)。</li>
+    <li><strong>与你专业的结合</strong>:模型部署(把训练好的模型包成 API 服务对外提供)、分布式训练的网络通信、大文件/数据集传输优化——AI 工程里到处是网络与服务器知识。</li>
+  </ul>
+  <div class="box model">
+    <span class="bt">最后一句</span>
+    <p>网络和服务器的知识又多又杂,但骨架就是这份教程讲的那几样:<strong>分层、寻址、连接、加密、转发、部署</strong>。把这两个项目亲手做一遍,你不会再觉得"网络"是一团黑箱——它会变成一套你能拆开、能调试、能搭建的具体东西。遇到新名词,回到知识地图上找它的位置就好。</p>
+  </div>
+</section>
+
+<!-- ============================ APPENDIX ============================ -->
+<section id="appx">
+  <h2><span class="num">APPENDIX</span>附录</h2>
+
+  <h3 id="appx-1">A. 术语表(随手查)</h3>
+  <table class="tbl">
+    <tr><th>术语</th><th>一句话解释</th></tr>
+    <tr><td>IP 地址</td><td>机器在网络上的门牌号(IPv4 如 1.2.3.4)</td></tr>
+    <tr><td>端口</td><td>同一台机器上区分不同程序的编号(0–65535)</td></tr>
+    <tr><td>DNS</td><td>把域名翻译成 IP 的全球电话簿</td></tr>
+    <tr><td>TCP / UDP</td><td>传输层协议:可靠有序 / 快速不保证</td></tr>
+    <tr><td>NAT</td><td>路由器把私网 IP 和公网 IP 互转,让全家共用一个公网 IP</td></tr>
+    <tr><td>HTTP / HTTPS</td><td>网页通信协议 / 加了 TLS 加密的版本</td></tr>
+    <tr><td>TLS / 证书 / CA</td><td>加密 + 验身份的机制 / 身份凭证 / 颁发凭证的权威机构</td></tr>
+    <tr><td>Cookie/Session/Token</td><td>给无状态 HTTP "加记忆"、维持登录的三种方式</td></tr>
+    <tr><td>VPS</td><td>租来的虚拟服务器,有公网 IP、root 权限</td></tr>
+    <tr><td>SSH</td><td>加密的远程登录服务器协议(22 端口)</td></tr>
+    <tr><td>公钥 / 私钥</td><td>非对称加密的一对钥匙:公钥锁、私钥开</td></tr>
+    <tr><td>Nginx</td><td>反向代理 / Web 服务器,常做网站门卫与 HTTPS 终端</td></tr>
+    <tr><td>反向代理</td><td>挡在后端前面,统一接收请求再转发的中间层</td></tr>
+    <tr><td>systemd</td><td>Linux 管理后台服务(开机自启/守护)的系统</td></tr>
+    <tr><td>API / REST</td><td>前后端约定的接口 / 用 HTTP 方法+路径表达操作的风格</td></tr>
+    <tr><td>SQL / ORM</td><td>操作关系型数据库的语言 / 用代码对象代替手写 SQL 的工具</td></tr>
+    <tr><td>DPI</td><td>深度包检测:分析流量内容与特征以识别/过滤</td></tr>
+    <tr><td>SOCKS5</td><td>经典的(不加密)代理转发协议</td></tr>
+    <tr><td>VLESS / Reality</td><td>现代代理协议 / 借真实网站 TLS 做伪装的方案</td></tr>
+    <tr><td>CDN</td><td>把内容缓存到全球节点加速访问的网络</td></tr>
+  </table>
+
+  <h3 id="appx-2">B. 命令速查</h3>
+  <pre><code><span class="cm"># —— 网络诊断(本机或服务器都能用)——</span>
+ping example.com            <span class="cm"># 通不通 + 延迟多少 ms</span>
+tracert example.com         <span class="cm"># 包经过哪些路由器(Linux: traceroute)</span>
+nslookup example.com        <span class="cm"># 域名解析到哪个 IP(或 dig example.com +short)</span>
+curl -I https://example.com <span class="cm"># 只看响应头(状态码/类型),测网站活没活</span>
+curl ip.sb                  <span class="cm"># 看本机出口公网 IP</span>
+
+<span class="cm"># —— 连接与传文件 ——</span>
+ssh root@1.2.3.4            <span class="cm"># 登录服务器</span>
+ssh-keygen -t ed25519      <span class="cm"># 生成 SSH 密钥对</span>
+scp file.txt root@1.2.3.4:/tmp/   <span class="cm"># 上传文件到服务器</span>
+
+<span class="cm"># —— 服务器日常 ——</span>
+sudo apt update <span class="kw">&amp;&amp;</span> sudo apt upgrade -y   <span class="cm"># 更新系统</span>
+df -h / free -h / htop                  <span class="cm"># 看磁盘 / 内存 / CPU</span>
+systemctl status nginx                  <span class="cm"># 看服务状态(排错第一站)</span>
+journalctl -u xray -e                   <span class="cm"># 看某服务的日志</span>
+
+<span class="cm"># —— 防火墙 ——</span>
+sudo ufw allow 22 / 80 / 443    <span class="cm"># 放行端口(先放 22 再 enable!)</span>
+sudo ufw enable / status
+
+<span class="cm"># —— 网站部署 ——</span>
+nginx -t <span class="kw">&amp;&amp;</span> sudo systemctl reload nginx          <span class="cm"># 测配置并重载</span>
+sudo certbot --nginx -d example.com               <span class="cm"># 一键 HTTPS</span></code></pre>
+
+  <h3 id="appx-3">C. 排错思路:从下往上,逐层定位</h3>
+  <p>网络问题最忌乱猜。按分层模型<strong>从底往上</strong>排,几步就能锁定:</p>
+  <ol>
+    <li><strong>通不通?</strong> <code>ping IP</code>。不通 → 机器没开、IP 错、或网络层不通。</li>
+    <li><strong>域名解析对吗?</strong> <code>nslookup 域名</code>。解析到错误 IP → 改 DNS 记录、等缓存。</li>
+    <li><strong>端口开着吗?</strong> 服务没起 / 防火墙没放行,是 80% 的"连不上"。查 <code>systemctl status</code> + <code>ufw status</code> + 云安全组。</li>
+    <li><strong>服务在跑吗?</strong> <code>systemctl status xxx</code>、<code>journalctl -u xxx -e</code> 看它有没有崩、报什么错。</li>
+    <li><strong>应用层报错?</strong> 看状态码:<code>502</code> 后端没起、<code>404</code> 路径错、<code>500</code> 代码错、证书错则查 HTTPS 配置。</li>
+    <li><strong>逐段二分</strong>:本机能连吗(<code>curl 127.0.0.1:端口</code>)?服务器本地能连吗?换个网络呢?把链路切成几段,定位是哪一段断的。</li>
+  </ol>
+  <div class="box do">
+    <span class="bt">一句话心法</span>
+    <p><strong>"先确认底层通,再往上层查;每次只改一个变量,改完就验证。"</strong> 这套思路对网站、代理、以及未来你遇到的任何网络问题,都通用。</p>
+  </div>
+
+  <hr>
+  <p class="small" style="text-align:center;color:var(--muted);">
+    教程结束 · 写给虹鳟鱼的网络与服务器入门 · 边读边动手,两个项目走通,这些知识就真正属于你了。
+  </p>
+</section>
+
+
+</div><!-- /.wrap -->
+</main>
+</div><!-- /.layout -->
+
+<script>
+(function(){
+  // reading progress
+  var prog=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement;
+    var sc=h.scrollTop||document.body.scrollTop;
+    var max=(h.scrollHeight-h.clientHeight)||1;
+    prog.style.width=(sc/max*100)+'%';
+  }
+  document.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // mobile nav
+  var body=document.body, btn=document.getElementById('menuBtn'), scrim=document.getElementById('scrim');
+  btn.addEventListener('click',function(){body.classList.toggle('nav-open');});
+  scrim.addEventListener('click',function(){body.classList.remove('nav-open');});
+  document.querySelectorAll('nav.sidebar a').forEach(function(a){
+    a.addEventListener('click',function(){body.classList.remove('nav-open');});
+  });
+
+  // copy buttons
+  document.querySelectorAll('pre').forEach(function(pre){
+    var b=document.createElement('button'); b.className='copy'; b.textContent='复制';
+    b.addEventListener('click',function(){
+      var code=pre.querySelector('code'); var t=code?code.innerText:pre.innerText;
+      navigator.clipboard.writeText(t).then(function(){
+        b.textContent='已复制'; b.classList.add('done');
+        setTimeout(function(){b.textContent='复制'; b.classList.remove('done');},1400);
+      });
+    });
+    pre.appendChild(b);
+  });
+
+  // scrollspy
+  var links={}; document.querySelectorAll('nav.sidebar a[href^="#"]').forEach(function(a){
+    links[a.getAttribute('href').slice(1)]=a;
+  });
+  var targets=[]; Object.keys(links).forEach(function(id){
+    var el=document.getElementById(id); if(el) targets.push(el);
+  });
+  var cur=null;
+  function spy(){
+    var pos=(document.documentElement.scrollTop||document.body.scrollTop)+120;
+    var best=null;
+    targets.forEach(function(el){ if(el.offsetTop<=pos) best=el; });
+    if(best && best.id!==cur){
+      if(cur && links[cur]) links[cur].classList.remove('active');
+      cur=best.id; if(links[cur]){ links[cur].classList.add('active');
+        // keep active link visible in sidebar
+        var r=links[cur].getBoundingClientRect();
+        if(r.top<70||r.bottom>window.innerHeight-20) links[cur].scrollIntoView({block:'center'});
+      }
+    }
+  }
+  document.addEventListener('scroll',spy,{passive:true}); window.addEventListener('load',spy); spy();
+})();
+</script>
+</body>
+</html>

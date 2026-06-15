@@ -23,6 +23,9 @@
 ### 程序设计 (Programming)
 - `week14-ml-background/` — Week14 实验 背景知识 · PCA / KNN / 逻辑斯蒂回归
 - `programming-cram/` — 程序设计机测 · 考前串讲
+- `week15-tutorial/` — Week 15 复习讲义 · 监督/无监督 · 聚类 · 关联规则 · 异常检测
+- `networking-servers-guide/` — 计算机网络与服务器 · 从零搭起你的网站和代理
+- `flask-comment-site-handson/` — 实战篇 Flask 评论站 · 从 0 到上线(逐行)
 
 ### 其他芝士
 - `task-overload/` — 时间&任务管理方法论 · 系统报告
