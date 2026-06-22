@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等代数（下）期末知识清单</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#666; --line:#e2e0da; --bg:#fbfaf7;
+    --card:#ffffff; --accent:#7c2d12; --warn:#b91c1c; --soft:#f3efe7;
+    --sbw:268px;
+    --serif: "Times New Roman", "宋体", SimSun, "Songti SC", serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--serif); color:var(--ink); background:var(--bg);
+    line-height:1.85; margin:0; padding:0;
+    -webkit-font-smoothing:antialiased;
+    overflow-anchor:auto;            /* 保留滚动锚定, 抵消 MathJax 异步回流 */
+  }
+
+  /* ===== 固定侧边目录 ===== */
+  .sidebar{
+    position:fixed; top:0; left:0; width:var(--sbw); height:100vh;
+    background:#fff; border-right:1px solid var(--line);
+    display:flex; flex-direction:column; z-index:50;
+  }
+  .sb-head{
+    padding:16px 18px 12px; border-bottom:1px solid var(--line);
+  }
+  .sb-head .t{font-size:15px; font-weight:700; color:var(--accent); line-height:1.4;}
+  .sb-ctrl{margin-top:10px; display:none; gap:8px;}
+  .sb-ctrl button{
+    font-family:var(--serif); font-size:13px; cursor:pointer; flex:1;
+    border:1px solid var(--accent); color:var(--accent); background:#fff;
+    padding:4px 0; border-radius:6px;
+  }
+  .sb-ctrl button:hover{background:var(--accent); color:#fff;}
+  #toc{
+    flex:1; overflow-y:auto; padding:10px 8px 30px; overscroll-behavior:contain;
+  }
+  #toc a{
+    display:block; text-decoration:none; color:var(--muted);
+    font-size:13.5px; line-height:1.5; padding:5px 10px; margin:1px 0;
+    border-radius:6px; border-left:3px solid transparent;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  #toc a.toc-h3{padding-left:24px; font-size:12.5px;}
+  #toc a:hover{background:var(--soft); color:var(--ink);}
+  #toc a.active{
+    color:var(--accent); font-weight:700; background:var(--soft);
+    border-left-color:var(--accent);
+  }
+
+  /* ===== 正文 ===== */
+  .content{margin-left:var(--sbw);}
+  .wrap{max-width:820px; margin:0 auto; padding:48px 32px 140px;}
+  h1{font-size:30px; text-align:center; margin:0 0 6px; letter-spacing:1px;}
+  h1+blockquote{margin-top:18px;}
+  h2,h3{scroll-margin-top:18px;}     /* 锚点跳转留出余量, 不贴死顶边 */
+  h2{
+    font-size:23px; margin:46px 0 16px; padding:8px 0 8px 14px;
+    border-left:5px solid var(--accent); background:var(--soft);
+    border-radius:0 6px 6px 0;
+  }
+  h3{font-size:18px; margin:28px 0 10px; color:var(--accent);
+     border-bottom:1px dashed var(--line); padding-bottom:5px;}
+  p{margin:10px 0;}
+  ul,ol{margin:8px 0; padding-left:26px;}
+  li{margin:5px 0;}
+  blockquote{
+    margin:16px 0; padding:12px 18px; background:var(--soft);
+    border-left:4px solid var(--line); color:var(--muted);
+    border-radius:0 6px 6px 0; font-size:15px;
+  }
+  strong{color:var(--accent); font-weight:700;}
+  code{
+    font-family:"Cascadia Code","Consolas",monospace; font-size:.92em;
+    background:#f0ece3; padding:1px 5px; border-radius:4px; color:#7c2d12;
+  }
+  hr{border:none; border-top:1px solid var(--line); margin:38px 0;}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:15px;}
+  th,td{border:1px solid var(--line); padding:7px 11px; text-align:left;}
+  th{background:var(--soft);}
+  mjx-container{overflow-x:auto; overflow-y:hidden;}
+
+  /* ===== 可折叠答案 ===== */
+  details{
+    margin:8px 0 20px; border:1px solid var(--line); border-radius:8px;
+    background:var(--card); padding:0 16px; overflow:hidden;
+  }
+  details[open]{background:#fcfbf8;}
+  summary{
+    cursor:pointer; padding:10px 4px; font-size:15px; color:var(--accent);
+    font-weight:700; list-style:none; user-select:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▶ "; font-size:12px;}
+  details[open] summary::before{content:"▼ ";}
+  details[open] summary{border-bottom:1px dashed var(--line); margin-bottom:8px;}
+  details > *:not(summary){padding-bottom:6px;}
+
+  /* ===== 移动端: 侧栏抽屉化 ===== */
+  #sb-toggle{
+    position:fixed; top:14px; left:14px; z-index:60; display:none;
+    width:42px; height:42px; border-radius:8px; border:1px solid var(--line);
+    background:#fff; cursor:pointer; font-size:20px; color:var(--accent);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  @media (max-width:1024px){
+    .sidebar{transform:translateX(-100%); transition:transform .25s; box-shadow:0 0 24px rgba(0,0,0,.12);}
+    body.sb-open .sidebar{transform:translateX(0);}
+    .content{margin-left:0;}
+    #sb-toggle{display:block;}
+    .wrap{padding:64px 18px 90px;}
+    h1{font-size:24px;}
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+  .ex-btn{display:inline-block;margin:18px 0 8px;padding:8px 18px;background:#8b5a3c;color:#fffdf9;text-decoration:none;border-radius:20px;font-size:14px;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:background .15s}
+  .ex-btn:hover{background:#6f4530}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<button id="sb-toggle" aria-label="目录">☰</button>
+<nav class="sidebar">
+  <div class="sb-head">
+    <div class="t">高等代数（下）期末知识清单</div>
+    <div class="sb-ctrl" id="sbctrl">
+      <button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">全部展开</button>
+      <button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">全部收起</button>
+    </div>
+  </div>
+  <div id="toc"></div>
+</nav>
+<div class="content">
+  <div class="wrap">
+<h1>高等代数（下）期末知识清单</h1>
+<blockquote>
+<p>范围：第五章 二次型 · 第六章 线性空间 · 第七章 线性变换 · 第九章 欧几里得空间
+用法：先通读一遍勾出"我能立刻复述"的，剩下的标红重点突破。
+标记：⚠️ = 高频易错点（红） · ★ = 期末重点考点 / 常用计算法（绿） · （拓展）= 选看或偏难。</p>
+</blockquote>
+<hr />
+<h2>第五章 二次型</h2>
+<h3>5.1 二次型的矩阵表示</h3>
+<ul>
+<li><strong>二次型</strong>：$f(x_1,\dots,x_n)=\sum_{i,j} a_{ij}x_ix_j = X^TAX$，其中 $A$ 取<strong>对称矩阵</strong>（$a_{ij}=a_{ji}$），此时 $A$ 由 $f$ 唯一确定。</li>
+<li><strong>合同</strong>：$A,B$ 合同 $\iff$ 存在可逆 $C$ 使 $B=C^TAC$。二次型做非退化线性替换 $X=CY$ 后，矩阵从 $A$ 变 $C^TAC$。</li>
+<li><strong>二次型的秩</strong> $\mathrm{rank}(f)=\mathrm{rank}(A)$（合同变换不改变秩，是合同不变量）。</li>
+<li>⚠️ <strong>合同 ≠ 相似</strong>。合同保持对称性与正负惯性指数；相似保持特征值。合同的矩阵不一定相似，反之也不一定。</li>
+<li>⚠️ 写二次型矩阵时，交叉项 $a_{ij}x_ix_j$（$i\ne j$）的系数要<strong>对半分</strong>给 $a_{ij}$ 和 $a_{ji}$。</li>
+</ul>
+<h3>5.2 二次型的标准形</h3>
+<ul>
+<li><strong>标准形</strong>：只含平方项 $d_1y_1^2+\dots+d_ny_n^2$，对应对角矩阵。</li>
+<li>任一二次型都可经非退化线性替换化为标准形（配方法 / 合同初等变换法 / 正交替换法，后者见第九章）。</li>
+<li><strong>配方法</strong>要点：先处理含平方项的变量逐个配方；若全无平方项（如只有 $x_1x_2$），先做 $x_1=y_1+y_2,\ x_2=y_1-y_2$ 凑出平方项。</li>
+<li>★（重点·计算法）<strong>合同变换法化标准形</strong>：把 $\binom{A}{E}$ 排好，每对 $A$ 做一次列初等变换就对<strong>整体</strong>做同样列变换、并对上方 $A$ 补做<strong>对应的行变换</strong>（行列成对、保持对称）；当上方化为对角阵 $D$ 时，下方 $E$ 变为 $C$，满足 $C^TAC=D$，所求替换 $X=CY$。</li>
+<li>⚠️ 标准形<strong>不唯一</strong>（系数依赖所用替换），但下面的规范形唯一。</li>
+</ul>
+<h3>5.3 二次型规范形的唯一性</h3>
+<ul>
+<li><strong>规范形</strong>（实）：$y_1^2+\dots+y_p^2-y_{p+1}^2-\dots-y_r^2$，系数只取 $+1,-1,0$。</li>
+<li><strong>惯性定理</strong>：实二次型的规范形唯一。$r=$ 秩，$p=$ <strong>正惯性指数</strong>，$q=r-p=$ 负惯性指数，$s=p-q=$ <strong>符号差</strong>。这些是合同不变量。</li>
+<li>⚠️ 复数域上规范形只由秩决定（$y_1^2+\dots+y_r^2$），没有正负之分——实、复要分清。</li>
+<li>两实对称矩阵合同 $\iff$ 秩相同且正惯性指数相同。</li>
+</ul>
+<h3>5.4 正定二次型</h3>
+<ul>
+<li><strong>正定</strong>：$\forall X\ne 0,\ X^TAX&gt;0$。对应矩阵称正定矩阵。</li>
+<li><strong>判定（核心，必背全部等价条件）</strong>：$n$ 元实二次型正定 $\iff$
+  1. 正惯性指数 $p=n$；
+  2. $A$ 与单位矩阵 $E$ 合同；
+  3. 存在可逆 $C$ 使 $A=C^TC$；
+  4. $A$ 的<strong>所有顺序主子式 $&gt;0$</strong>；
+  5. $A$ 的<strong>全部特征值 $&gt;0$</strong>。</li>
+<li><strong>半正定</strong> $\iff$ 所有<strong>主子式</strong>（不只是顺序主子式）$\ge 0$ $\iff$ 特征值全 $\ge 0$ $\iff p=r$。</li>
+<li>⚠️ 负定判定：奇数阶顺序主子式 $&lt;0$、偶数阶 $&gt;0$（符号交错）。</li>
+<li>⚠️ 半正定<strong>不能</strong>只用顺序主子式 $\ge 0$ 判（反例 $\mathrm{diag}(0,-1)$ 顺序主子式为 $0,0$ 但非半正定）。负定/半正定/半负定别记混。</li>
+<li>（拓展）正定的快速必要条件：主对角元 $a_{ii}&gt;0$ 且 $\det A&gt;0$（不满足即可立刻排除正定；但满足并不充分）。</li>
+<li>常考：含参数 $t$ 的二次型，求使其正定的 $t$ 取值范围（用顺序主子式全正联立不等式）。</li>
+</ul>
+<hr />
+<h2>第六章 线性空间</h2>
+<h3>6.1 集合与映射</h3>
+<ul>
+<li>映射的单射/满射/双射；可逆 $\iff$ 双射。复合、恒等映射、逆映射。</li>
+</ul>
+<h3>6.2 线性空间的定义与简单性质</h3>
+<ul>
+<li><strong>定义</strong>：非空集合 $V$ 配数域 $P$ 上的加法与数乘，满足 8 条公理（加法交换/结合/有零元/有负元，数乘 4 条）。</li>
+<li><strong>简单性质</strong>：零元唯一；负元唯一；$0\cdot\alpha=\mathbf{0}$；$k\cdot\mathbf{0}=\mathbf{0}$；$(-1)\alpha=-\alpha$；$k\alpha=\mathbf{0}\Rightarrow k=0$ 或 $\alpha=\mathbf{0}$。</li>
+<li>⚠️ 判断是否构成线性空间：常见陷阱是加法/数乘"非常规定义"，要逐条验公理；尤其检查<strong>对加法和数乘封闭</strong>、零元是否存在、数乘 $1\cdot\alpha=\alpha$。</li>
+</ul>
+<h3>6.3 维数、基与坐标</h3>
+<ul>
+<li><strong>线性相关/无关</strong>、<strong>极大无关组</strong>、<strong>秩</strong>（沿用上学期向量组理论，但现在对象是抽象向量）。</li>
+<li><strong>基</strong>：线性无关且能张成 $V$ 的向量组。<strong>维数</strong> $\dim V$ = 基中向量个数（与基选取无关）。</li>
+<li><strong>坐标</strong>：$\alpha=x_1\varepsilon_1+\dots+x_n\varepsilon_n$，则 $(x_1,\dots,x_n)^T$ 是 $\alpha$ 在基 $\{\varepsilon_i\}$ 下的坐标；坐标在固定基下唯一。</li>
+<li>常见空间维数：$P^n$ 维 $n$；$P[x]_n$（次数 $&lt;n$ 的多项式）维 $n$；$P^{m\times n}$ 维 $mn$。</li>
+</ul>
+<h3>6.4 基变换与坐标变换</h3>
+<ul>
+<li><strong>过渡矩阵</strong> $T$：$(\eta_1,\dots,\eta_n)=(\varepsilon_1,\dots,\varepsilon_n)T$，$T$ 的第 $j$ 列是新基 $\eta_j$ 在旧基下的坐标。$T$ 必可逆。</li>
+<li><strong>坐标变换</strong>：同一向量旧坐标 $X$、新坐标 $Y$，则 $X=TY$，即 $Y=T^{-1}X$。</li>
+<li>⚠️ 基变换矩阵作用在"基（行向量组）"上是右乘 $T$，坐标变换是 $X=TY$——别把 $T$ 和 $T^{-1}$ 用反，也别把基与坐标的变换方向记反。</li>
+</ul>
+<h3>6.5 子空间</h3>
+<ul>
+<li><strong>子空间</strong>：$V$ 的非空子集 $W$，对加法和数乘封闭（等价：对线性组合封闭）。</li>
+<li><strong>生成子空间</strong> $L(\alpha_1,\dots,\alpha_s)=\{\sum k_i\alpha_i\}$，其维数 = 向量组的秩。</li>
+<li>平凡子空间：$\{\mathbf 0\}$ 与 $V$ 自身。</li>
+<li>★（重点·计算法）<strong>求 $L(\alpha_1,\dots,\alpha_s)$ 的基与维数</strong>：把各 $\alpha_i$ 的坐标排成矩阵的列（或行）作初等变换，主元所在列对应的 $\alpha_i$ 构成一组基，秩即维数。</li>
+<li>★ <strong>扩基定理</strong>：$V$ 的任一子空间的一组基都可扩充为 $V$ 的一组基（第九章求正交补、构造标准正交基都用它）。</li>
+</ul>
+<h3>6.6 子空间的交与和</h3>
+<ul>
+<li>$W_1\cap W_2$、$W_1+W_2=\{\alpha_1+\alpha_2\mid \alpha_i\in W_i\}$ 都是子空间。⚠️ <strong>并集一般不是子空间</strong>。</li>
+<li>★ $L(\alpha_1,\dots,\alpha_s)+L(\beta_1,\dots,\beta_t)=L(\alpha_1,\dots,\alpha_s,\beta_1,\dots,\beta_t)$——和空间就是把两组生成元合在一起生成的空间。</li>
+<li><strong>维数公式（必背）</strong>：$\dim W_1+\dim W_2=\dim(W_1+W_2)+\dim(W_1\cap W_2)$。</li>
+<li>（拓展）推论：若 $\dim W_1+\dim W_2&gt;n=\dim V$，则 $W_1\cap W_2\ne\{\mathbf 0\}$（必有非零公共向量）。</li>
+<li>常考：给两组生成元，求和与交的维数及基（和的基由两组生成元合并取极大无关组；交需解方程组）。</li>
+</ul>
+<h3>6.7 子空间的直和</h3>
+<ul>
+<li><strong>直和</strong> $W_1\oplus W_2$ 的等价判定（必背全部）：
+  1. $W_1+W_2$ 中每个向量分解 $\alpha=\alpha_1+\alpha_2$ 唯一；
+  2. 零向量分解唯一（$\mathbf 0=\alpha_1+\alpha_2\Rightarrow\alpha_1=\alpha_2=\mathbf 0$）；
+  3. $W_1\cap W_2=\{\mathbf 0\}$；
+  4. $\dim(W_1+W_2)=\dim W_1+\dim W_2$。</li>
+<li>⚠️ 多个子空间直和时，<strong>两两交为零 $\ne$ 直和</strong>！必须用"零向量分解唯一"或"维数之和相等"判定。</li>
+<li>任一子空间 $W$ 都有补空间 $U$ 使 $V=W\oplus U$（补空间不唯一）。</li>
+</ul>
+<h3>6.8 线性空间的同构</h3>
+<ul>
+<li><strong>同构</strong>：双射 $\sigma:V\to V'$ 保持加法与数乘。</li>
+<li><strong>核心定理</strong>：数域 $P$ 上两个有限维线性空间同构 $\iff$ <strong>维数相同</strong>。从而 $n$ 维空间都同构于 $P^n$。</li>
+<li>同构映射把基映成基、保持线性相关性与秩。</li>
+</ul>
+<hr />
+<h2>第七章 线性变换</h2>
+<h3>7.1 线性变换的定义</h3>
+<ul>
+<li><strong>线性变换</strong> $\sigma:V\to V$ 满足 $\sigma(\alpha+\beta)=\sigma\alpha+\sigma\beta$，$\sigma(k\alpha)=k\sigma\alpha$（即保持线性组合）。</li>
+<li>性质：$\sigma(\mathbf 0)=\mathbf 0$，$\sigma(-\alpha)=-\sigma\alpha$，把线性相关组映成线性相关组（⚠️ 但<strong>无关组不一定映成无关组</strong>）。</li>
+</ul>
+<h3>7.2 线性变换的运算</h3>
+<ul>
+<li>加法、数乘、乘法（复合）、逆。$L(V)$（全体线性变换）对加法数乘构成线性空间，维数 $n^2$。</li>
+<li>⚠️ 线性变换乘法<strong>一般不交换</strong> $\sigma\tau\ne\tau\sigma$；可逆 $\iff$ 双射 $\iff$ 把基映成基。</li>
+</ul>
+<h3>7.3 线性变换的矩阵</h3>
+<ul>
+<li>取定基 $\{\varepsilon_i\}$，$\sigma(\varepsilon_1,\dots,\varepsilon_n)=(\varepsilon_1,\dots,\varepsilon_n)A$，$A$ 为 $\sigma$ 在该基下的矩阵（第 $j$ 列 = $\sigma\varepsilon_j$ 的坐标）。</li>
+<li>坐标关系：$\alpha$ 坐标 $X$，则 $\sigma\alpha$ 坐标 $=AX$。</li>
+<li><strong>同一线性变换在不同基下的矩阵相似</strong>：$B=T^{-1}AT$（$T$ 为过渡矩阵）。⚠️ 线性变换 ↔ 相似；二次型 ↔ 合同，别混。</li>
+<li>★ <strong>相似不变量</strong>：相似矩阵有相同的 $\det$、$\mathrm{tr}$、秩、特征多项式、特征值；且对应的 $A^k$、$A$ 的多项式 $f(A)$、$A^{-1}$（若可逆）也相似。</li>
+</ul>
+<h3>7.4 特征值与特征向量</h3>
+<ul>
+<li>$\sigma\xi=\lambda\xi\ (\xi\ne\mathbf 0)$：$\lambda$ 特征值，$\xi$ 特征向量。</li>
+<li><strong>特征多项式</strong> $f(\lambda)=|\lambda E-A|$，根即特征值。⚠️ 相似矩阵特征多项式相同，故特征值是相似不变量（与基无关）。</li>
+<li><strong>特征子空间</strong> $V_\lambda=\{\xi\mid\sigma\xi=\lambda\xi\}=\ker(\lambda E-\sigma)$，其维数 = <strong>几何重数</strong>。</li>
+<li>⚠️ <strong>几何重数 $\le$ 代数重数</strong>（特征多项式中 $\lambda$ 的重数）。</li>
+<li>求法：解 $|\lambda E-A|=0$ 得特征值，再对每个 $\lambda$ 解 $(\lambda E-A)X=0$ 求特征向量。</li>
+<li>常用：$\mathrm{tr}(A)=\sum\lambda_i$，$|A|=\prod\lambda_i$。</li>
+</ul>
+<h3>7.5 对角矩阵（可对角化）</h3>
+<ul>
+<li>$\sigma$ 可对角化 $\iff$ 有 $n$ 个线性无关特征向量 $\iff$ 各特征子空间维数之和 $=n$ $\iff$ <strong>每个特征值几何重数 = 代数重数</strong>。</li>
+<li><strong>充分条件</strong>：$n$ 个互异特征值 $\Rightarrow$ 可对角化（⚠️ 充分非必要）。</li>
+<li>不同特征值的特征向量线性无关。</li>
+<li>步骤：求特征值→对每个求特征子空间的基→凑齐 $n$ 个无关向量作 $P$ 的列→$P^{-1}AP=\Lambda$。</li>
+<li>★（重点·计算法）<strong>应用</strong>：可对角化时 $A=P\Lambda P^{-1}$，于是 $A^k=P\Lambda^kP^{-1}$（求高次幂、解线性递推如斐波那契）；也可由给定的特征值与特征向量<strong>反求</strong> $A=P\Lambda P^{-1}$。</li>
+</ul>
+<h3>7.6 线性变换的值域与核</h3>
+<ul>
+<li><strong>值域</strong> $\sigma V=\mathrm{Im}\,\sigma$（秩 = $\dim\sigma V$），<strong>核</strong> $\ker\sigma=\sigma^{-1}(\mathbf 0)$（零度 = $\dim\ker\sigma$）。</li>
+<li><strong>维数定理</strong>：$\dim\sigma V+\dim\ker\sigma=\dim V=n$（秩 + 零度 = $n$）。</li>
+<li>★ <strong>矩阵语言</strong>：取定基后 $\mathrm{Im}\,\sigma$ 对应矩阵 $A$ 的<strong>列空间</strong>，$\ker\sigma$ 对应齐次方程组 $AX=\mathbf 0$ 的<strong>解空间</strong>；故秩 $=\mathrm{rank}(A)$，零度 $=n-\mathrm{rank}(A)$。</li>
+<li>⚠️ 值域 + 核的维数和为 $n$，但 $\sigma V+\ker\sigma$ <strong>不一定是直和</strong>、不一定等于 $V$。</li>
+<li>$\sigma$ 单射 $\iff\ker\sigma=\{\mathbf 0\}\iff$ 满射 $\iff$ 可逆（有限维下三者等价）。</li>
+</ul>
+<h3>7.7 不变子空间</h3>
+<ul>
+<li><strong>$\sigma$-不变子空间</strong> $W$：$\sigma(W)\subseteq W$。</li>
+<li>常见不变子空间：$\{\mathbf 0\}$、$V$、$\ker\sigma$、$\mathrm{Im}\,\sigma$、特征子空间 $V_\lambda$、$L(\xi)$（$\xi$ 为特征向量）。</li>
+<li>意义：$V=W_1\oplus\dots\oplus W_s$ 为不变子空间直和时，$\sigma$ 在适当基下矩阵为<strong>准对角形</strong>（分块对角）。这是若当标准型的思想来源。</li>
+<li>单个不变子空间 $W$：把 $W$ 的基扩充为 $V$ 的基后，$\sigma$ 的矩阵呈<strong>分块上三角</strong>形。</li>
+<li>（拓展）<strong>根子空间分解</strong>：由 Hamilton-Cayley，$V$ 可分解为各特征值的根子空间（广义特征向量空间）$\ker(\sigma-\lambda_i\,\mathrm{id})^{r_i}$ 的直和，这是若当标准型的理论基础。</li>
+</ul>
+<h3>7.8 若当（Jordan）标准型</h3>
+<ul>
+<li><strong>若当块</strong> $J(\lambda,t)$：主对角线为 $\lambda$，<strong>次对角线（主对角线下方）为 1</strong>，其余为 0 的 $t$ 级矩阵（本课程约定；上三角形式亦可）。</li>
+<li><strong>若当形矩阵</strong> = 若干若当块组成的准对角矩阵。一级若当块即对角元，故对角矩阵是特殊若当形。</li>
+<li><strong>核心定理</strong>：复数域上任一线性变换 / $n$ 级复矩阵都与一个若当形矩阵相似，且该若当形除块的排列次序外<strong>唯一</strong>（若当标准型）。</li>
+<li>主对角线元素 = 全部特征值（按代数重数重复）。</li>
+<li><strong>求法（必练）</strong>：① 求特征值；② 对每个 $\lambda$ 求特征向量；③ 从特征向量出发解 $(A-\lambda E)v_{k}=v_{k-1}$ 构造<strong>若当链（广义特征向量）</strong>直到无解；④ 链长 = 若当块阶数，链数 = 几何重数；⑤ 把（广义）特征向量按链顺序排成可逆 $P$，则 $P^{-1}AP=J$。</li>
+<li>⚠️ 同一特征值的<strong>若当块个数 = 几何重数</strong>；块的<strong>总阶数 = 代数重数</strong>。仅凭特征值代数重数无法确定块的具体分布，需看几何重数（及最小多项式）。</li>
+</ul>
+<h3>7.9 最小多项式</h3>
+<ul>
+<li><strong>最小多项式</strong> $m(x)$：以 $A$ 为根、次数最低的首一多项式。<strong>唯一</strong>。</li>
+<li>核心性质（必背）：
+  1. $f(A)=\mathbf 0\iff m(x)\mid f(x)$；
+  2. $m(x)\mid$ 特征多项式（且二者有相同的不可约因子 / 相同的根）；
+  3. <strong>相似矩阵有相同最小多项式</strong>（⚠️ 反之不成立——最小多项式相同未必相似）；
+  4. $k$ 级若当块 $J(\lambda,k)$ 的最小多项式为 $(x-\lambda)^k$；
+  5. 准对角矩阵的最小多项式 = 各块最小多项式的<strong>最小公倍式</strong>；
+  6. $A$ 最小多项式中因子 $(x-\lambda)$ 的次数 = $A$ 的若当型中对应 $\lambda$ 的<strong>最大若当块的阶数</strong>。</li>
+<li><strong>可对角化判据</strong>：$A$（复）可对角化 $\iff$ 最小多项式<strong>无重根</strong>（$\iff$ 是互异一次因式之积）。</li>
+<li>Cayley-Hamilton：$f(A)=\mathbf 0$（特征多项式以 $A$ 为根）。</li>
+</ul>
+<hr />
+<h2>第九章 欧几里得空间</h2>
+<h3>9.1 欧几里得空间的定义与性质</h3>
+<ul>
+<li><strong>内积</strong> $(\alpha,\beta)$：实线性空间上满足对称性、双线性、正定性（$(\alpha,\alpha)\ge0$，等号仅 $\alpha=\mathbf 0$）的二元函数。</li>
+<li><strong>长度</strong> $|\alpha|=\sqrt{(\alpha,\alpha)}$；<strong>夹角</strong> $\cos\theta=\dfrac{(\alpha,\beta)}{|\alpha||\beta|}$。</li>
+<li><strong>Cauchy-Schwarz 不等式</strong>：$|(\alpha,\beta)|\le|\alpha||\beta|$，等号 $\iff$ 线性相关。</li>
+<li>三角不等式 $|\alpha+\beta|\le|\alpha|+|\beta|$。</li>
+<li><strong>度量矩阵（Gram 矩阵）</strong> $G=((\varepsilon_i,\varepsilon_j))$：对称正定；坐标为 $X,Y$ 时 $(\alpha,\beta)=X^TGY$。</li>
+</ul>
+<h3>9.2 标准正交基</h3>
+<ul>
+<li><strong>正交向量组</strong>：两两内积为 0 的非零向量组，必线性无关。<strong>标准正交基</strong>：两两正交且长度为 1（度量矩阵为 $E$，内积变为标准内积 $X^TY$）。</li>
+<li><strong>Schmidt 正交化（必练计算）</strong>：由无关组 $\{\alpha_i\}$ 构造正交组 $\{\beta_i\}$：
+  $\beta_1=\alpha_1$，$\beta_k=\alpha_k-\sum_{j=1}^{k-1}\dfrac{(\alpha_k,\beta_j)}{(\beta_j,\beta_j)}\beta_j$，再单位化。</li>
+<li>⚠️ 正交化要严格按顺序、每步减去在前面所有 $\beta_j$ 上的投影；单位化别忘。</li>
+<li>（拓展）任一正交向量组都可扩充为一组正交基；两组标准正交基之间的<strong>过渡矩阵是正交矩阵</strong>。</li>
+</ul>
+<h3>9.3 同构</h3>
+<ul>
+<li>两个有限维欧氏空间同构（保内积的双射线性映射）$\iff$ <strong>维数相同</strong>。任一 $n$ 维欧氏空间同构于标准欧氏空间 $\mathbb R^n$。</li>
+</ul>
+<h3>9.4 正交变换</h3>
+<ul>
+<li><strong>正交变换</strong> $\sigma$：保持内积 $(\sigma\alpha,\sigma\beta)=(\alpha,\beta)$。等价条件（必背）：
+  1. 保持长度 $|\sigma\alpha|=|\alpha|$；
+  2. 把标准正交基映成标准正交基；
+  3. 在标准正交基下的矩阵为<strong>正交矩阵</strong>（$A^TA=E$，即 $A^{-1}=A^T$）。</li>
+<li>正交矩阵性质：$|A|=\pm1$（$+1$ 第一类/旋转，$-1$ 第二类/反射）；行（列）向量组为标准正交基。</li>
+<li>⚠️ $A^TA=E$ 与 $AA^T=E$ 等价（方阵），但要写清是哪一个条件。</li>
+</ul>
+<h3>9.5 子空间（正交补）</h3>
+<ul>
+<li><strong>正交补</strong> $W^\perp=\{\alpha\mid(\alpha,\beta)=0,\ \forall\beta\in W\}$ 是子空间。</li>
+<li><strong>核心定理</strong>：$V=W\oplus W^\perp$，且 $\dim W+\dim W^\perp=n$，$(W^\perp)^\perp=W$。正交补<strong>唯一</strong>（区别于一般补空间）。</li>
+<li>内（正交）直和：$W_1\perp W_2$ 时 $W_1+W_2$ 为正交直和。</li>
+</ul>
+<h3>9.6 实对称矩阵的标准型</h3>
+<ul>
+<li><strong>核心定理（必背）</strong>：实对称矩阵 $A$ 的特征值全为<strong>实数</strong>；不同特征值的特征向量<strong>相互正交</strong>；$A$ 必可<strong>正交对角化</strong>——存在正交矩阵 $Q$ 使 $Q^TAQ=Q^{-1}AQ=\Lambda$（对角）。</li>
+<li>⚠️ 实对称矩阵一定可对角化（即使有重特征值，几何重数也 = 代数重数）。</li>
+<li><strong>正交对角化步骤（重点计算题）</strong>：① 求特征值；② 对每个特征值求特征子空间的基；③ 对每个特征子空间内部 Schmidt 正交化 + 单位化（不同特征值之间已自动正交）；④ 拼成正交矩阵 $Q$，则 $Q^TAQ=\Lambda$。</li>
+<li>应用：用正交替换 $X=QY$ 把实二次型化为标准形（系数即特征值），即"二次型的主轴问题"。</li>
+<li>★ <strong>用特征值判定实对称矩阵的定性</strong>：特征值全 $&gt;0$ 正定；全 $\ge0$ 半正定；全 $&lt;0$ 负定；有正有负 不定（与第五章惯性指数判据互通）。</li>
+<li>★ <strong>对称变换</strong>：满足 $(\sigma\alpha,\beta)=(\alpha,\sigma\beta)$ 的线性变换，在<strong>标准正交基</strong>下的矩阵恰为实对称矩阵（二者一一对应）；对称变换的不变子空间，其正交补也是不变子空间。这是"实对称矩阵可正交对角化"的变换语言版本。</li>
+</ul>
+<h3>9.7 最小二乘法</h3>
+<ul>
+<li>超定方程组 $AX=b$ 无解时，求 $X$ 使 $|AX-b|$ 最小。</li>
+<li><strong>正规方程组（法方程）</strong>：$A^TAX=A^Tb$，其解即最小二乘解。</li>
+<li>几何意义：$AX$ 是 $b$ 在 $A$ 列空间上的<strong>正交投影</strong>，残差 $b-AX\perp$ 列空间。</li>
+<li>★ 当 $A$ 列满秩时投影有显式公式 $AX=A(A^TA)^{-1}A^Tb$；"向量到子空间的距离以垂线（正交投影）为最短"正是最小二乘的几何本质。</li>
+</ul>
+<hr />
+<h2>跨章高频联系（容易交叉命题）</h2>
+<ul>
+<li><strong>三种"对角化"别混</strong>：① 线性变换/方阵相似对角化（看几何重数）；② 二次型合同对角化（配方/合同变换，看惯性指数）；③ 实对称矩阵正交对角化（既相似又合同，正交矩阵）。</li>
+<li><strong>相似 vs 合同</strong>：相似保特征值；合同保正负惯性指数。实对称矩阵正交相似时两者统一。</li>
+<li><strong>判定类等价条件成串记忆</strong>：正定（5 条）、直和（4 条）、可对角化（几何重数 / 最小多项式无重根）、正交变换（3 条）。</li>
+<li><strong>维数公式族</strong>：交和维数公式、秩零度定理、$\dim W+\dim W^\perp=n$。</li>
+</ul>
+  </div>
+</div>
+<script>
+(function(){
+  var wrap = document.querySelector('.wrap');
+  var heads = Array.prototype.slice.call(wrap.querySelectorAll('h2, h3'));
+  var toc = document.getElementById('toc');
+  var links = [];
+
+  heads.forEach(function(h, i){
+    if(!h.id) h.id = 'sec-' + i;
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace(/\s+/g,' ').trim();
+    a.className = (h.tagName === 'H3') ? 'toc-h3' : 'toc-h2';
+    toc.appendChild(a);
+    links.push(a);
+  });
+
+  // 高亮当前章节 (只读 DOM + 只动侧栏自身滚动, 绝不改 window.scrollTop)
+  function setActive(id){
+    for(var i=0;i<links.length;i++){
+      var on = (links[i].getAttribute('href') === '#'+id);
+      if(on && !links[i].classList.contains('active')){
+        links[i].classList.add('active');
+        // 让高亮项在侧栏可视区内, 仅滚动侧栏内部容器
+        var top = links[i].offsetTop, h = toc.clientHeight;
+        if(links[i].offsetTop < toc.scrollTop || top > toc.scrollTop + h - 30){
+          toc.scrollTop = top - h/2;
+        }
+      } else if(!on){
+        links[i].classList.remove('active');
+      }
+    }
+  }
+
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(function(){
+      var cur = heads.length ? heads[0] : null;
+      for(var i=0;i<heads.length;i++){
+        if(heads[i].getBoundingClientRect().top <= 90) cur = heads[i];
+        else break;
+      }
+      if(cur) setActive(cur.id);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+  onScroll();
+
+  // 移动端抽屉
+  var toggle = document.getElementById('sb-toggle');
+  toggle.addEventListener('click', function(){ document.body.classList.toggle('sb-open'); });
+  toc.addEventListener('click', function(e){
+    if(e.target.tagName === 'A' && window.matchMedia('(max-width:1024px)').matches){
+      document.body.classList.remove('sb-open');
+    }
+  });
+
+  // 仅当存在折叠答案时, 显示"全部展开/收起"
+  if(document.querySelector('details')){
+    document.getElementById('sbctrl').style.display = 'flex';
+  }
+
+  // ⚠️ 易错点(红) / ★ 重点考点(绿) 高亮
+  wrap.querySelectorAll('li,p').forEach(function(el){
+    var t = el.textContent.trim();
+    if(t.indexOf('⚠') === 0){
+      el.style.background = '#fdf2f2';
+      el.style.borderLeft = '3px solid #b91c1c';
+      el.style.padding = '4px 10px';
+      el.style.borderRadius = '4px';
+      el.style.margin = '6px 0';
+    } else if(t.indexOf('★') === 0){
+      el.style.background = '#f0f7f0';
+      el.style.borderLeft = '3px solid #2f7d32';
+      el.style.padding = '4px 10px';
+      el.style.borderRadius = '4px';
+      el.style.margin = '6px 0';
+    }
+  });
+})();
+</script>
+
+<div style="text-align:center;padding:24px 0 32px">
+  <a class="ex-btn" href="exercises.html">📝 期末自测题目 →</a>
+</div>
+</body>
+</html>

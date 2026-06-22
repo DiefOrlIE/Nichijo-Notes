@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等代数（下）期末自测题</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#666; --line:#e2e0da; --bg:#fbfaf7;
+    --card:#ffffff; --accent:#7c2d12; --warn:#b91c1c; --soft:#f3efe7;
+    --sbw:268px;
+    --serif: "Times New Roman", "宋体", SimSun, "Songti SC", serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--serif); color:var(--ink); background:var(--bg);
+    line-height:1.85; margin:0; padding:0;
+    -webkit-font-smoothing:antialiased;
+    overflow-anchor:auto;            /* 保留滚动锚定, 抵消 MathJax 异步回流 */
+  }
+
+  /* ===== 固定侧边目录 ===== */
+  .sidebar{
+    position:fixed; top:0; left:0; width:var(--sbw); height:100vh;
+    background:#fff; border-right:1px solid var(--line);
+    display:flex; flex-direction:column; z-index:50;
+  }
+  .sb-head{
+    padding:16px 18px 12px; border-bottom:1px solid var(--line);
+  }
+  .sb-head .t{font-size:15px; font-weight:700; color:var(--accent); line-height:1.4;}
+  .sb-ctrl{margin-top:10px; display:none; gap:8px;}
+  .sb-ctrl button{
+    font-family:var(--serif); font-size:13px; cursor:pointer; flex:1;
+    border:1px solid var(--accent); color:var(--accent); background:#fff;
+    padding:4px 0; border-radius:6px;
+  }
+  .sb-ctrl button:hover{background:var(--accent); color:#fff;}
+  #toc{
+    flex:1; overflow-y:auto; padding:10px 8px 30px; overscroll-behavior:contain;
+  }
+  #toc a{
+    display:block; text-decoration:none; color:var(--muted);
+    font-size:13.5px; line-height:1.5; padding:5px 10px; margin:1px 0;
+    border-radius:6px; border-left:3px solid transparent;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  #toc a.toc-h3{padding-left:24px; font-size:12.5px;}
+  #toc a:hover{background:var(--soft); color:var(--ink);}
+  #toc a.active{
+    color:var(--accent); font-weight:700; background:var(--soft);
+    border-left-color:var(--accent);
+  }
+
+  /* ===== 正文 ===== */
+  .content{margin-left:var(--sbw);}
+  .wrap{max-width:820px; margin:0 auto; padding:48px 32px 140px;}
+  h1{font-size:30px; text-align:center; margin:0 0 6px; letter-spacing:1px;}
+  h1+blockquote{margin-top:18px;}
+  h2,h3{scroll-margin-top:18px;}     /* 锚点跳转留出余量, 不贴死顶边 */
+  h2{
+    font-size:23px; margin:46px 0 16px; padding:8px 0 8px 14px;
+    border-left:5px solid var(--accent); background:var(--soft);
+    border-radius:0 6px 6px 0;
+  }
+  h3{font-size:18px; margin:28px 0 10px; color:var(--accent);
+     border-bottom:1px dashed var(--line); padding-bottom:5px;}
+  p{margin:10px 0;}
+  ul,ol{margin:8px 0; padding-left:26px;}
+  li{margin:5px 0;}
+  blockquote{
+    margin:16px 0; padding:12px 18px; background:var(--soft);
+    border-left:4px solid var(--line); color:var(--muted);
+    border-radius:0 6px 6px 0; font-size:15px;
+  }
+  strong{color:var(--accent); font-weight:700;}
+  code{
+    font-family:"Cascadia Code","Consolas",monospace; font-size:.92em;
+    background:#f0ece3; padding:1px 5px; border-radius:4px; color:#7c2d12;
+  }
+  hr{border:none; border-top:1px solid var(--line); margin:38px 0;}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:15px;}
+  th,td{border:1px solid var(--line); padding:7px 11px; text-align:left;}
+  th{background:var(--soft);}
+  mjx-container{overflow-x:auto; overflow-y:hidden;}
+
+  /* ===== 可折叠答案 ===== */
+  details{
+    margin:8px 0 20px; border:1px solid var(--line); border-radius:8px;
+    background:var(--card); padding:0 16px; overflow:hidden;
+  }
+  details[open]{background:#fcfbf8;}
+  summary{
+    cursor:pointer; padding:10px 4px; font-size:15px; color:var(--accent);
+    font-weight:700; list-style:none; user-select:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▶ "; font-size:12px;}
+  details[open] summary::before{content:"▼ ";}
+  details[open] summary{border-bottom:1px dashed var(--line); margin-bottom:8px;}
+  details > *:not(summary){padding-bottom:6px;}
+
+  /* ===== 移动端: 侧栏抽屉化 ===== */
+  #sb-toggle{
+    position:fixed; top:14px; left:14px; z-index:60; display:none;
+    width:42px; height:42px; border-radius:8px; border:1px solid var(--line);
+    background:#fff; cursor:pointer; font-size:20px; color:var(--accent);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  @media (max-width:1024px){
+    .sidebar{transform:translateX(-100%); transition:transform .25s; box-shadow:0 0 24px rgba(0,0,0,.12);}
+    body.sb-open .sidebar{transform:translateX(0);}
+    .content{margin-left:0;}
+    #sb-toggle{display:block;}
+    .wrap{padding:64px 18px 90px;}
+    h1{font-size:24px;}
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="index.html" title="返回知识清单">← 返回知识清单</a>
+<button id="sb-toggle" aria-label="目录">☰</button>
+<nav class="sidebar">
+  <div class="sb-head">
+    <div class="t">高等代数（下）期末自测题</div>
+    <div class="sb-ctrl" id="sbctrl">
+      <button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">全部展开</button>
+      <button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">全部收起</button>
+    </div>
+  </div>
+  <div id="toc"></div>
+</nav>
+<div class="content">
+  <div class="wrap">
+<h1>高等代数（下）期末自测题</h1>
+<blockquote>
+<p>三层：<strong>A 判断题</strong>（查概念）→ <strong>B 中等计算题</strong>（查熟练度）→ <strong>C 概念辨析 / 证明思路</strong>（查硬骨头）。
+每题先自己作答，再点开"查看答案与解析"对照。计算题数字都不大，重在流程对不对。</p>
+</blockquote>
+<hr />
+<h2>A. 判断题（判断对错并说明理由）</h2>
+<p><strong>A1.</strong> 若实对称矩阵 $A,B$ 合同，则 $A,B$ 相似。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。合同保持的是秩与正负惯性指数，相似保持的是特征值。反例：$\mathrm{diag}(1,1)$ 与 $\mathrm{diag}(2,2)$ 合同（取 $C=\mathrm{diag}(\sqrt2,\sqrt2)$），但特征值不同，不相似。</p>
+</details>
+<p><strong>A2.</strong> 任一实对称矩阵都可以对角化。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✓</strong>。实对称矩阵特征值全为实数，且必可正交对角化（每个特征值几何重数 = 代数重数），这是第九章核心定理。</p>
+</details>
+<p><strong>A3.</strong> "$n$ 阶矩阵有 $n$ 个互不相同的特征值"是它可对角化的充分必要条件。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。是<strong>充分非必要</strong>。如单位矩阵 $E$ 只有一个特征值 1 却可对角化。充要条件是"每个特征值几何重数 = 代数重数"。</p>
+</details>
+<p><strong>A4.</strong> 若干个子空间两两相交为零，则它们的和是直和。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。多个子空间"两两交为零"<strong>不足以</strong>保证直和。反例：$\mathbb R^2$ 中三条不同直线 $L_1,L_2,L_3$ 两两交为 $\{0\}$，但 $L_1+L_2+L_3=\mathbb R^2$ 维数 2 $\ne 1+1+1$，分解不唯一。正确判据：零向量分解唯一，或维数之和等于和空间维数。</p>
+</details>
+<p><strong>A5.</strong> 线性变换把线性无关向量组映成线性无关向量组。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。线性变换只保证把线性<strong>相关</strong>组映成相关组。零变换把任何无关组映成全零（相关）。只有<strong>可逆</strong>线性变换才保持无关性。</p>
+</details>
+<p><strong>A6.</strong> 实二次型的标准形是唯一的。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。标准形依赖所用的非退化替换，系数不唯一。唯一的是<strong>规范形</strong>（系数只取 $+1,-1,0$）——惯性定理。</p>
+</details>
+<p><strong>A7.</strong> 实对称矩阵 $A$ 半正定的充要条件是它的所有顺序主子式都 $\ge 0$。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。半正定要求<strong>所有主子式</strong>（不止顺序主子式）$\ge 0$。反例 $\mathrm{diag}(0,-1)$ 顺序主子式为 $0,0$ 全 $\ge0$，但显然不半正定。正定才可只用顺序主子式（全 $&gt;0$）。</p>
+</details>
+<p><strong>A8.</strong> 相似的两个矩阵有相同的最小多项式。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✓</strong>。$B=T^{-1}AT$ 时 $g_A(B)=T^{-1}g_A(A)T=0$，故 $g_B\mid g_A$，对称地 $g_A\mid g_B$，又都首一，所以相等。</p>
+</details>
+<p><strong>A9.</strong> 最小多项式相同的两个矩阵一定相似。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。反例（课件原例）：$A=\mathrm{diag}\big(J_2(1),\,1,\,2\big)$ 与 $B=\mathrm{diag}\big(J_2(1),\,2,\,2\big)$（均 4 阶，$J_2(1)$ 为特征值 1 的 2 阶若当块）。两者最小多项式都是 $(x-1)^2(x-2)$，但特征多项式分别为 $(x-1)^3(x-2)$ 与 $(x-1)^2(x-2)^2$，不相似。最小多项式只决定每个特征值的<strong>最大</strong>若当块大小，不决定块的个数与总阶数。</p>
+</details>
+<p><strong>A10.</strong> 正交矩阵的行列式一定等于 1。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。由 $A^TA=E$ 得 $|A|^2=1$，故 $|A|=\pm1$。$+1$ 为第一类（旋转），$-1$ 为第二类（含反射）。</p>
+</details>
+<p><strong>A11.</strong> 子空间 $W$ 的正交补 $W^\perp$ 是唯一的。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✓</strong>。正交补 $W^\perp=\{\alpha\mid(\alpha,\beta)=0,\forall\beta\in W\}$ 由内积唯一确定。注意区分：使 $V=W\oplus U$ 的一般补空间 $U$ <strong>不唯一</strong>，但正交补唯一。</p>
+</details>
+<p><strong>A12.</strong> 线性变换的某个特征值，其几何重数总是不超过代数重数。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✓</strong>。$1\le$ 几何重数 $\le$ 代数重数。可对角化当且仅当每个特征值两者相等。</p>
+</details>
+<p><strong>A13.</strong> 在 $n$ 维空间上，若线性变换 $\sigma$ 满足 $\ker\sigma=\{\mathbf 0\}$，则 $\sigma$ 是满射。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✓</strong>。由秩零度定理 $\dim\mathrm{Im}\,\sigma=n-\dim\ker\sigma=n$，故满射。有限维下单射、满射、可逆三者等价（无限维不成立）。</p>
+</details>
+<p><strong>A14.</strong> 在若当标准型中，同一特征值对应的若当块个数等于该特征值的代数重数。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。若当块的<strong>个数 = 几何重数</strong>（线性无关特征向量个数），块的<strong>总阶数 = 代数重数</strong>。</p>
+</details>
+<p><strong>A15.</strong> 两个子空间的并集 $W_1\cup W_2$ 仍是子空间。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p><strong>✗</strong>。一般不是。除非一个包含另一个。反例：$\mathbb R^2$ 中 $x$ 轴并 $y$ 轴，$(1,0)+(0,1)=(1,1)$ 不在并集里，对加法不封闭。</p>
+</details>
+<hr />
+<h2>B. 中等计算题</h2>
+<p><strong>B1.</strong> 写出二次型 $f=x_1^2+2x_2^2+3x_3^2+2x_1x_2+2x_2x_3$ 的矩阵，并判断是否正定。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>矩阵 $A=\begin{pmatrix}1&amp;1&amp;0\\1&amp;2&amp;1\\0&amp;1&amp;3\end{pmatrix}$（交叉项系数对半分）。
+顺序主子式：$\Delta_1=1&gt;0$，$\Delta_2=\begin{vmatrix}1&amp;1\\1&amp;2\end{vmatrix}=1&gt;0$，$\Delta_3=|A|=1\cdot(6-1)-1\cdot(3-0)=5-3=2&gt;0$。
+三个全大于 0，所以 $f$ <strong>正定</strong>。</p>
+</details>
+<p><strong>B2.</strong> 求使二次型 $f=x_1^2+x_2^2+x_3^2+2t\,x_1x_2$ 正定的 $t$ 的取值范围。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$A=\begin{pmatrix}1&amp;t&amp;0\\t&amp;1&amp;0\\0&amp;0&amp;1\end{pmatrix}$。顺序主子式：$\Delta_1=1&gt;0$，$\Delta_2=1-t^2&gt;0$，$\Delta_3=1\cdot(1-t^2)=1-t^2&gt;0$。
+故需 $1-t^2&gt;0$，即 $\boxed{-1&lt;t&lt;1}$。</p>
+</details>
+<p><strong>B3.</strong> 求正交矩阵 $Q$ 使 $A=\begin{pmatrix}2&amp;1\\1&amp;2\end{pmatrix}$ 正交对角化。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$|\lambda E-A|=(\lambda-2)^2-1=(\lambda-3)(\lambda-1)$，特征值 $\lambda_1=3,\lambda_2=1$。
+- $\lambda=3$：$(A-3E)X=0\Rightarrow\xi_1=(1,1)^T$；
+- $\lambda=1$：$\xi_2=(1,-1)^T$（不同特征值已自动正交）。
+单位化得 $Q=\dfrac{1}{\sqrt2}\begin{pmatrix}1&amp;1\\1&amp;-1\end{pmatrix}$，则 $Q^TAQ=\mathrm{diag}(3,1)$。</p>
+</details>
+<p><strong>B4.</strong> 用 Schmidt 正交化把 $\alpha_1=(1,1,0),\ \alpha_2=(1,0,1)$ 化为标准正交向量组。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$\beta_1=\alpha_1=(1,1,0)$。
+$\beta_2=\alpha_2-\dfrac{(\alpha_2,\beta_1)}{(\beta_1,\beta_1)}\beta_1=(1,0,1)-\dfrac{1}{2}(1,1,0)=\left(\tfrac12,-\tfrac12,1\right)$。
+单位化：$\eta_1=\dfrac{1}{\sqrt2}(1,1,0)$，$|\beta_2|=\sqrt{\tfrac14+\tfrac14+1}=\sqrt{\tfrac32}=\dfrac{\sqrt6}{2}$，
+$\eta_2=\dfrac{2}{\sqrt6}\left(\tfrac12,-\tfrac12,1\right)=\dfrac{1}{\sqrt6}(1,-1,2)$。</p>
+</details>
+<p><strong>B5.</strong> 判断 $A=\begin{pmatrix}2&amp;1&amp;0\\0&amp;2&amp;0\\0&amp;0&amp;3\end{pmatrix}$ 是否可对角化。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>特征值 $\lambda=2$（二重），$\lambda=3$（一重）。
+对 $\lambda=2$：$A-2E=\begin{pmatrix}0&amp;1&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;1\end{pmatrix}$，秩为 2，几何重数 $=3-2=1&lt;2=$ 代数重数。
+故 $A$ <strong>不可对角化</strong>。（它的若当型为 $\mathrm{diag}(J(2,2),3)$。）</p>
+</details>
+<p><strong>B6.</strong> 求 $A=\begin{pmatrix}3&amp;1\\-1&amp;1\end{pmatrix}$ 的若当标准型 $J$ 及可逆矩阵 $P$，使 $P^{-1}AP=J$。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$|\lambda E-A|=(\lambda-3)(\lambda-1)+1=\lambda^2-4\lambda+4=(\lambda-2)^2$，特征值 $\lambda=2$（二重）。
+$A-2E=\begin{pmatrix}1&amp;1\\-1&amp;-1\end{pmatrix}$ 秩 1，几何重数 1 ⟹ 只有<strong>一个 2 阶若当块</strong>。
+- 特征向量 $\xi$：$(A-2E)\xi=0\Rightarrow\xi=(1,-1)^T$。
+- 广义特征向量 $\eta$：解 $(A-2E)\eta=\xi$，即 $\eta_1+\eta_2=1$，取 $\eta=(1,0)^T$。此时 $A\eta=2\eta+\xi$。
+本课程用<strong>下三角</strong>若当块 $J=\begin{pmatrix}2&amp;0\\1&amp;2\end{pmatrix}$，对应列序为"广义向量在前、特征向量在后"：$P=(\eta,\,\xi)=\begin{pmatrix}1&amp;1\\0&amp;-1\end{pmatrix}$，验证 $P^{-1}AP=\begin{pmatrix}2&amp;0\\1&amp;2\end{pmatrix}$。
+（若改用上三角约定 $J=\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}$，则列序相反取 $P=(\xi,\,\eta)=\begin{pmatrix}1&amp;1\\-1&amp;0\end{pmatrix}$。两种写法都对，关键是 $P$ 的列序要与若当块的上/下三角形式匹配。）</p>
+</details>
+<p><strong>B7.</strong> 求 $A=\begin{pmatrix}1&amp;1&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;1\end{pmatrix}$ 的最小多项式，并据此说明它是否可对角化。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>特征多项式 $f(x)=(x-1)^3$，故最小多项式形如 $(x-1)^k$。
+$A-E=\begin{pmatrix}0&amp;1&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;0\end{pmatrix}\ne 0$，$(A-E)^2=0$。
+所以最小多项式为 $\boxed{(x-1)^2}$。含重根 ⟹ <strong>不可对角化</strong>。</p>
+</details>
+<p><strong>B8.</strong> 在 $\mathbb R^4$ 中，$W_1=L\big((1,1,0,0),(0,0,1,1)\big)$，$W_2=L\big((1,0,1,0),(0,1,0,1)\big)$。求 $\dim(W_1+W_2)$ 与 $\dim(W_1\cap W_2)$。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$W_1+W_2$ 由 4 个向量生成，按行排成矩阵作行变换：
+$$\begin{pmatrix}1&amp;1&amp;0&amp;0\\0&amp;0&amp;1&amp;1\\1&amp;0&amp;1&amp;0\\0&amp;1&amp;0&amp;1\end{pmatrix}\to \text{秩}=3$$
+（第 3 行 $-$ 第 1 行 $=(0,-1,1,0)$，它与第 4 行 $(0,1,0,1)$ 之和 $=(0,0,1,1)=$ 第 2 行，存在线性关系）。
+故 $\dim(W_1+W_2)=3$。由维数公式 $\dim(W_1\cap W_2)=2+2-3=1$。</p>
+</details>
+<hr />
+<h2>C. 概念辨析 / 证明思路题</h2>
+<p><strong>C1.</strong> 设 $\sigma$ 是线性变换，$\lambda_1\ne\lambda_2$ 是它的两个特征值，$\xi_1,\xi_2$ 为对应特征向量。证明 $\xi_1,\xi_2$ 线性无关。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>设 $k_1\xi_1+k_2\xi_2=\mathbf 0$。用 $\sigma$ 作用：$k_1\lambda_1\xi_1+k_2\lambda_2\xi_2=\mathbf 0$。
+又原式乘 $\lambda_1$：$k_1\lambda_1\xi_1+k_2\lambda_1\xi_2=\mathbf 0$。两式相减：$k_2(\lambda_2-\lambda_1)\xi_2=\mathbf 0$。
+因 $\lambda_2\ne\lambda_1$ 且 $\xi_2\ne\mathbf 0$，得 $k_2=0$，代回得 $k_1=0$。故线性无关。
+（一般结论：不同特征值的特征向量线性无关，可对 $m$ 个用归纳法。）</p>
+</details>
+<p><strong>C2.</strong> 证明：实对称矩阵 $A$ 属于不同特征值的特征向量必正交。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>设 $A\xi=\lambda\xi$，$A\eta=\mu\eta$，$\lambda\ne\mu$。考察 $\xi^TA\eta$：
+一方面 $\xi^TA\eta=\xi^T(\mu\eta)=\mu\,\xi^T\eta$；
+另一方面 $\xi^TA\eta=(A^T\xi)^T\eta=(A\xi)^T\eta=\lambda\,\xi^T\eta$（用了 $A^T=A$）。
+两者相减：$(\lambda-\mu)\xi^T\eta=0$，因 $\lambda\ne\mu$，故 $\xi^T\eta=(\xi,\eta)=0$，即正交。</p>
+</details>
+<p><strong>C3.</strong> 设 $W_1,W_2$ 是 $V$ 的子空间，且 $W_1\cap W_2=\{\mathbf 0\}$，$\dim W_1+\dim W_2=\dim V$。证明 $V=W_1\oplus W_2$。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>由维数公式 $\dim(W_1+W_2)=\dim W_1+\dim W_2-\dim(W_1\cap W_2)=\dim W_1+\dim W_2-0=\dim V$。
+又 $W_1+W_2\subseteq V$，维数相等 ⟹ $W_1+W_2=V$。
+再由 $W_1\cap W_2=\{\mathbf 0\}$，和为直和。故 $V=W_1\oplus W_2$。
+（关键：直和的判据"交为零"与"维数相加"任一条 + 和等于 $V$ 即可。）</p>
+</details>
+<p><strong>C4.</strong> 叙述并简证：在 $n$ 维欧氏空间 $V$ 中，对子空间 $W$ 有 $\dim W+\dim W^\perp=n$。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>取 $W$ 的一组标准正交基 $\varepsilon_1,\dots,\varepsilon_m$，扩充为 $V$ 的标准正交基 $\varepsilon_1,\dots,\varepsilon_m,\varepsilon_{m+1},\dots,\varepsilon_n$。
+则 $\alpha\in W^\perp\iff(\alpha,\varepsilon_i)=0\ (i\le m)$，即 $\alpha$ 的前 $m$ 个坐标为 0，故 $W^\perp=L(\varepsilon_{m+1},\dots,\varepsilon_n)$，维数 $n-m$。
+所以 $\dim W+\dim W^\perp=m+(n-m)=n$，且 $V=W\oplus W^\perp$。</p>
+</details>
+<p><strong>C5.</strong> 设 $n$ 阶矩阵 $A$ 满足 $A^2=A$（幂等）。证明 $A$ 可对角化。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$A^2=A\Rightarrow A^2-A=0$，即多项式 $g(x)=x^2-x=x(x-1)$ 以 $A$ 为根。
+故最小多项式 $m(x)\mid x(x-1)$，它是<strong>互异一次因式之积、无重根</strong>。
+由"最小多项式无重根 ⟺ 可对角化"，$A$ 可对角化（特征值只能是 0 或 1）。</p>
+</details>
+<p><strong>C6.</strong> 证明：$n$ 阶矩阵 $A$ 与其转置 $A^T$ 有相同的特征多项式（从而有相同的特征值）。</p>
+<details>
+<summary>查看答案与解析</summary>
+<p>$|\lambda E-A^T|=|(\lambda E-A)^T|=|\lambda E-A|$（用了 $\lambda E-A^T=(\lambda E-A)^T$ 及"转置不改变行列式" $|M^T|=|M|$）。
+故二者特征多项式相同，特征值（含重数）相同。
+（注：特征值相同，但特征向量一般不同；$A$ 与 $A^T$ 总是相似的，证明更深。）</p>
+</details>
+  </div>
+</div>
+<script>
+(function(){
+  var wrap = document.querySelector('.wrap');
+  var heads = Array.prototype.slice.call(wrap.querySelectorAll('h2, h3'));
+  var toc = document.getElementById('toc');
+  var links = [];
+
+  heads.forEach(function(h, i){
+    if(!h.id) h.id = 'sec-' + i;
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace(/\s+/g,' ').trim();
+    a.className = (h.tagName === 'H3') ? 'toc-h3' : 'toc-h2';
+    toc.appendChild(a);
+    links.push(a);
+  });
+
+  // 高亮当前章节 (只读 DOM + 只动侧栏自身滚动, 绝不改 window.scrollTop)
+  function setActive(id){
+    for(var i=0;i<links.length;i++){
+      var on = (links[i].getAttribute('href') === '#'+id);
+      if(on && !links[i].classList.contains('active')){
+        links[i].classList.add('active');
+        // 让高亮项在侧栏可视区内, 仅滚动侧栏内部容器
+        var top = links[i].offsetTop, h = toc.clientHeight;
+        if(links[i].offsetTop < toc.scrollTop || top > toc.scrollTop + h - 30){
+          toc.scrollTop = top - h/2;
+        }
+      } else if(!on){
+        links[i].classList.remove('active');
+      }
+    }
+  }
+
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(function(){
+      var cur = heads.length ? heads[0] : null;
+      for(var i=0;i<heads.length;i++){
+        if(heads[i].getBoundingClientRect().top <= 90) cur = heads[i];
+        else break;
+      }
+      if(cur) setActive(cur.id);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+  onScroll();
+
+  // 移动端抽屉
+  var toggle = document.getElementById('sb-toggle');
+  toggle.addEventListener('click', function(){ document.body.classList.toggle('sb-open'); });
+  toc.addEventListener('click', function(e){
+    if(e.target.tagName === 'A' && window.matchMedia('(max-width:1024px)').matches){
+      document.body.classList.remove('sb-open');
+    }
+  });
+
+  // 仅当存在折叠答案时, 显示"全部展开/收起"
+  if(document.querySelector('details')){
+    document.getElementById('sbctrl').style.display = 'flex';
+  }
+
+  // ⚠️ 易错点(红) / ★ 重点考点(绿) 高亮
+  wrap.querySelectorAll('li,p').forEach(function(el){
+    var t = el.textContent.trim();
+    if(t.indexOf('⚠') === 0){
+      el.style.background = '#fdf2f2';
+      el.style.borderLeft = '3px solid #b91c1c';
+      el.style.padding = '4px 10px';
+      el.style.borderRadius = '4px';
+      el.style.margin = '6px 0';
+    } else if(t.indexOf('★') === 0){
+      el.style.background = '#f0f7f0';
+      el.style.borderLeft = '3px solid #2f7d32';
+      el.style.padding = '4px 10px';
+      el.style.borderRadius = '4px';
+      el.style.margin = '6px 0';
+    }
+  });
+})();
+</script>
+</body>
+</html>
