@@ -64,7 +64,7 @@
 <a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
 
 <h1>DLCO 期末诊断卷</h1>
-<div class="sub">数字系统设计基础 · 64 题全覆盖 · 目标：速查你哪里不熟，不是刷题</div>
+<div class="sub">数字系统设计基础 · 58 题全覆盖 · 目标：速查你哪里不熟，不是刷题</div>
 
 <div class="howto">
 <b>怎么用：</b>逐题先在脑子里/草稿上作答，再点「参考答案」核对。<b>凡是答不出、或核对后发现错的，勾上右侧「🚩没把握」。</b>
@@ -126,7 +126,7 @@
 <div class="q"><div class="qhead"><span class="qid">1.6</span><span class="badge b-big">仿真题</span>
 <div class="qbody">小端存储，地址 0x100–0x103 依次存 63H、73H、61H、69H。（已知 'a'=61H）<br>(1) 作为无符号整数，右移 24 位后的十进制值 = ______；(2) 作为字符串 = ______。</div>
 <label class="flagbox"><input type="checkbox">🚩没把握</label></div>
-<details><summary>参考答案</summary><div class="ans">小端：低地址存低字节 → 整数 = 0x69616373。
+<details><summary>参考答案</summary><div class="ans">小端：低地址存低字节 → 整数 = 0x69617363。
 (1) 右移 24 位取最高字节 = 0x69 = <span class="key">105</span>；
 (2) 字符串按地址从低到高逐字节：63='c'、73='s'、61='a'、69='i' → <span class="key">"csai"</span>。
 <span class="ex">字符串顺序按地址递增；整数拼接时高地址是高位字节——别搞反。</span></div></details></div>
@@ -318,7 +318,7 @@
 <div class="qbody">扩展操作码：指令字长 16 位、地址码 6 位。已有二地址指令 15 条、一地址指令 34 条，问零地址指令最多有多少条？写出算式。</div>
 <label class="flagbox"><input type="checkbox">🚩没把握</label></div>
 <details><summary>参考答案</summary><div class="ans">二地址用 4 位操作码（剩 2×6=12 位地址），可用 2⁴=16，用掉 15，剩 1 → 扩展给一地址（再用 6 位）：1×2⁶=64，用掉 34，剩 30 → 扩展给零地址（再用 6 位）：
-<code>(2⁴−15)·2⁶−34)·2⁶ = 30 × 64 = </code><span class="key">1920 条</span>。
+<code>((2⁴−15)·2⁶−34)·2⁶ = 30 × 64 = </code><span class="key">1920 条</span>。
 <span class="ex">核心：逐级把没用完的短码空间×下一字段的编码数，扣掉已占用的。</span></div></details></div>
 
 <div class="q"><div class="qhead"><span class="qid">7.3</span><span class="badge b-fill">填空</span>
