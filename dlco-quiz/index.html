@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLCO 期末诊断卷 · 速查薄弱点</title>
+<style>
+  :root{
+    --ink:#1d1b16; --mute:#6b665c; --line:#dcd6c8; --paper:#fbf9f3; --card:#fff;
+    --hi:#8a1c1c; --hi-bg:#f7ecec; --blue:#1f3a5f; --blue-bg:#eaf0f7;
+    --gold:#9a7b1a; --green:#2c5a2c; --green-bg:#e9f1e9; --flag:#c0392b;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:"SimSun","宋体","Times New Roman",serif; color:var(--ink);
+    background:var(--paper); max-width:920px; margin:0 auto; padding:30px 38px;
+    line-height:1.75; font-size:16px;}
+  h1{font-size:27px; text-align:center; margin:0 0 4px;}
+  .sub{text-align:center; color:var(--mute); font-size:13px; margin-bottom:18px;}
+  .howto{background:var(--blue-bg); border:1px solid #cdd9e8; border-radius:8px;
+    padding:14px 18px; font-size:14px; margin-bottom:18px;}
+  .howto b{color:var(--blue);}
+  .bar{position:sticky; top:0; z-index:20; background:var(--paper);
+    border-bottom:2px solid var(--line); padding:10px 0; margin-bottom:8px;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  button{font-family:inherit; font-size:14px; padding:6px 14px; border:1px solid var(--blue);
+    background:#fff; color:var(--blue); border-radius:6px; cursor:pointer;}
+  button:hover{background:var(--blue); color:#fff;}
+  button.warn{border-color:var(--flag); color:var(--flag);}
+  button.warn:hover{background:var(--flag); color:#fff;}
+  #out{width:100%; min-height:54px; margin-top:6px; font-family:inherit; font-size:14px;
+    border:1px solid var(--line); border-radius:6px; padding:8px; background:#fff;}
+  h2{font-size:20px; margin:26px 0 10px; padding:7px 12px; border-left:5px solid var(--hi);
+    background:var(--hi-bg);}
+  h2 .w{float:right; font-size:12px; color:var(--hi); font-weight:normal; font-family:sans-serif;}
+  .q{background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:12px 16px; margin:11px 0;}
+  .q.flagged{border-color:var(--flag); box-shadow:0 0 0 1px var(--flag) inset;}
+  .qhead{display:flex; align-items:baseline; gap:8px;}
+  .qid{font-family:"Times New Roman",serif; font-weight:bold; color:var(--blue); flex:0 0 auto;}
+  .badge{font-size:11px; font-family:sans-serif; padding:1px 7px; border-radius:3px; flex:0 0 auto;}
+  .b-fill{background:#eef3e9; color:var(--green); border:1px solid #cfe0c4;}
+  .b-exp{background:#f3eee9; color:var(--gold); border:1px solid #e4d8c4;}
+  .b-big{background:var(--hi); color:#fff;}
+  .qbody{flex:1;}
+  .flagbox{margin-left:auto; flex:0 0 auto; font-size:13px; color:var(--flag);
+    font-family:sans-serif; white-space:nowrap; cursor:pointer; user-select:none;}
+  .flagbox input{vertical-align:middle; transform:scale(1.15); margin-right:3px;}
+  details{margin-top:9px; border-top:1px dashed var(--line); padding-top:7px;}
+  summary{cursor:pointer; color:var(--hi); font-size:14px; font-family:sans-serif;}
+  details[open] summary{margin-bottom:6px;}
+  .ans{font-size:15px;}
+  .ans .key{color:var(--hi); font-weight:bold;}
+  .ans .ex{color:var(--mute); font-size:14px; margin-top:5px; display:block;}
+  code{font-family:"Cambria Math","Times New Roman",serif; background:#f0ece0;
+    padding:1px 4px; border-radius:3px; font-size:14px;}
+  @media print{ .bar,.flagbox,.howto{display:none;} details{open:true;} body{max-width:none;}
+    details>summary{display:none;} details>div{display:block!important;} }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<h1>DLCO 期末诊断卷</h1>
+<div class="sub">数字系统设计基础 · 64 题全覆盖 · 目标：速查你哪里不熟，不是刷题</div>
+
+<div class="howto">
+<b>怎么用：</b>逐题先在脑子里/草稿上作答，再点「参考答案」核对。<b>凡是答不出、或核对后发现错的，勾上右侧「🚩没把握」。</b>
+做完点顶栏<b>「汇总没把握的题」</b>，把生成的题号列表复制发给阿卡酱，我据此定位你的薄弱章节、给针对性讲解和补强方案。
+</div>
+
+<div class="bar">
+  <button onclick="toggleAll(true)">全部展开答案</button>
+  <button onclick="toggleAll(false)">全部收起</button>
+  <button class="warn" onclick="collect()">汇总没把握的题 →</button>
+  <span id="cnt" style="font-size:13px;color:var(--mute);"></span>
+  <textarea id="out" placeholder="点「汇总没把握的题」后，这里会列出你勾选的题号，复制发我。"></textarea>
+</div>
+
+<!-- ============ chap0 ============ -->
+<h2>第0章 导论<span class="w">~2分</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">0.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">计算系统软件层次自顶向下：Application → ______ → Assembler → ______（接口层）。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">编译器/操作系统(Compiler / OS)；<span class="key">ISA（指令集体系结构）</span>。
+<span class="ex">ISA 是软硬件分界面：往上是软件，往下是微体系结构→数字设计→电路→晶体管。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">0.2</span><span class="badge b-exp">解释</span>
+<div class="qbody">ISA 与微体系结构（Microarchitecture）有什么区别？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">ISA 是规范/契约</span>（指令集、寄存器组织、寻址方式、数据类型等程序员可见的接口）；<span class="key">微架构是 ISA 的具体硬件实现</span>。同一 ISA 可有多种微架构（如不同性能的 x86 处理器）。
+<span class="ex">易错：把两者混为一谈。ISA 不变，微架构可演进。</span></div></details></div>
+
+<!-- ============ chap1 ============ -->
+<h2>第1章 二进制编码<span class="w">~5分</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">1.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">冯·诺依曼结构五大部件：运算器、控制器、______、______、______。其核心思想是______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">存储器、输入设备、输出设备；<span class="key">存储程序（指令与数据均以二进制存于同一存储器，不加区分，自动逐条执行）</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.2</span><span class="badge b-fill">填空</span>
+<div class="qbody">写出 PC、IR、MAR、MDR 各自存放什么。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">PC</span>=下一条指令地址；<span class="key">IR</span>=当前执行的指令；<span class="key">MAR</span>=访存地址；<span class="key">MDR</span>=与存储器交换的数据。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.3</span><span class="badge b-fill">填空</span>
+<div class="qbody">n 位定点整数补码定义 <code>[X]补 = ______</code>（mod 2ⁿ），可表示范围为 ______。求负数补码的规则是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>2ⁿ + X</code>；范围 <code>[−2ⁿ⁻¹, 2ⁿ⁻¹−1]</code>；<span class="key">各位取反、末位加 1</span>。
+<span class="ex">补码 0 唯一；模是 2ⁿ 不是 2ⁿ−1；真值公式 X = −aₙ₋₁·2ⁿ⁻¹ + Σ aᵢ·2ⁱ。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.4</span><span class="badge b-exp">解释</span>
+<div class="qbody">为什么 IEEE 754 浮点数的尾数用原码、阶码用移码？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">尾数原码</span>：符号与数值分离，便于乘除（符号异或、数值无符号运算）。<span class="key">阶码移码</span>：移码 = 真值 + 偏置，使阶码可直接按无符号整数比较大小，简化对阶与排序。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.5</span><span class="badge b-fill">填空</span>
+<div class="qbody">IEEE 754 单精度：S(1) + 阶码 E(8, 偏置 ______) + 尾数 M(23)。规格化数真值 = ______，此时 E 的取值范围是 ______。阶码全 0、尾数非 0 表示 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">偏置 <span class="key">127</span>；真值 <code>(−1)ˢ × 1.M × 2^(E−127)</code>；E ∈ <code>[1, 254]</code>；<span class="key">非规格化数</span>（隐含位为 0，指数固定 −126）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.6</span><span class="badge b-big">仿真题</span>
+<div class="qbody">小端存储，地址 0x100–0x103 依次存 63H、73H、61H、69H。（已知 'a'=61H）<br>(1) 作为无符号整数，右移 24 位后的十进制值 = ______；(2) 作为字符串 = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">小端：低地址存低字节 → 整数 = 0x69616373。
+(1) 右移 24 位取最高字节 = 0x69 = <span class="key">105</span>；
+(2) 字符串按地址从低到高逐字节：63='c'、73='s'、61='a'、69='i' → <span class="key">"csai"</span>。
+<span class="ex">字符串顺序按地址递增；整数拼接时高地址是高位字节——别搞反。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.7</span><span class="badge b-exp">解释</span>
+<div class="qbody">大端与小端的区别？C 语言中 <code>-1 &lt; 0U</code> 的结果是什么，为什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">大端</span>=最高有效字节存低地址；<span class="key">小端</span>=最低有效字节存低地址。
+<code>-1 &lt; 0U</code> 为 <span class="key">假</span>：有符号与无符号混合运算时，有符号数被转成无符号数，−1 变成 0xFFFFFFFF（很大），故不小于 0U。</div></details></div>
+
+<!-- ============ chap2 ============ -->
+<h2>第2章 数字逻辑基础<span class="w">~7分</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">德·摩根定理：<code>¬(X·Y) = ______</code>，<code>¬(X+Y) = ______</code>。反演定律求补函数的规则中，对「非单个变量上的整体取反号」应如何处理？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>¬X + ¬Y</code>；<code>¬X · ¬Y</code>；整体取反号 <span class="key">保留不变</span>（不可拆成单变量反）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.2</span><span class="badge b-fill">填空</span>
+<div class="qbody">分配律有两条：<code>X·(Y+Z) = ______</code>；<code>X + Y·Z = ______</code>（与算术不同）。一致律（冗余项定理）：<code>XY + ¬XZ + YZ = ______</code>。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>XY + XZ</code>；<code>(X+Y)(X+Z)</code>；<code>XY + ¬XZ</code>（YZ 是冗余项，消去可避免冒险）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.3</span><span class="badge b-big">仿真题</span>
+<div class="qbody"><code>F(A,B,C,D) = Σm(1,3,5,7,9,11,13,15)</code>。(1) 用最大项表示 <code>F = ΠM(______)</code>；(2) 序号最大的最大项 M₁₄ 的逻辑表达式 = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">(1) 最小项与最大项编号互补 → <code>ΠM(0,2,4,6,8,10,12,14)</code>；
+(2) M₁₄：14=1110，最大项是和项、变量为 1 取反变量、为 0 取原变量 → <code>¬A+¬B+¬C+D</code>。
+<span class="ex">本题 F 其实就是「D=1」（所有奇数项）。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.4</span><span class="badge b-fill">填空</span>
+<div class="qbody">直流噪声容限：高态 <code>NM_H = ______</code>，低态 <code>NM_L = ______</code>。CMOS 动态功耗 <code>P_D = ______</code>。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>NM_H = V_OHmin − V_IHmin</code>；<code>NM_L = V_ILmax − V_OLmax</code>；<code>P_D = (C_L + C_PD)·V_CC²·f</code>。
+<span class="ex">易错：NM_H/NM_L 的减数被减数顺序常记反。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.5</span><span class="badge b-exp">解释</span>
+<div class="qbody">CMOS 与非门和或非门的上拉（PMOS）/下拉（NMOS）网络结构分别是怎样的？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">与非门</span>：PMOS 并联（上拉）+ NMOS 串联（下拉）。<span class="key">或非门</span>：PMOS 串联 + NMOS 并联。
+<span class="ex">规律：与→下拉串联，或→下拉并联；上拉与下拉对偶。严禁 VDD 到地出现低阻通路。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.6</span><span class="badge b-fill">填空</span>
+<div class="qbody">卡诺图化简：相邻 2ⁱ 个「1 格」合并消去 ______ 个变量。质蕴涵项、实质蕴涵项、最小覆盖的关系是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">消去 <span class="key">i</span> 个变量；最小覆盖 = 所有<span class="key">实质蕴涵项</span>（含独有最小项的质蕴涵项）+ 最少数量的其他质蕴涵项以覆盖全部最小项。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.7</span><span class="badge b-exp">解释</span>
+<div class="qbody">如何用卡诺图判断电路是否存在静态冒险？如何消除？（去年简答原题）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">判断</span>：卡诺图上两个为 1 的质蕴涵圈「相切」（相邻但未被同一个圈覆盖），当输入在这两圈间跳变、仅一个变量变化时，因路径延迟差可能产生毛刺 → 存在静态-1 冒险。
+<span class="key">消除</span>：在与或式中加一个<span class="key">冗余的一致项</span>（把相切的两圈搭起来的圈），覆盖跳变边界即可。</div></details></div>
+
+<!-- ============ chap3 ============ -->
+<h2>第3章 组合逻辑电路<span class="w">~5分</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">3.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">组合逻辑电路必须同时满足的三大构成规则：______、______、______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">①每个组件本身是组合电路；②<span class="key">任两组件输出端不能直接互连</span>；③<span class="key">无反馈</span>（输出不能直接或间接接回输入）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">3.2</span><span class="badge b-fill">填空</span>
+<div class="qbody">全加器：<code>S = ______</code>，<code>Cout = ______</code>。n 位行波进位加法器的缺点是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>S = A ⊕ B ⊕ Cin</code>；<code>Cout = AB + ACin + BCin</code>；缺点：<span class="key">高位需等低位进位逐级传递，速度慢，延迟随位数线性增长</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">3.3</span><span class="badge b-exp">解释</span>
+<div class="qbody">74X138（3-8 译码器）的使能逻辑是怎样的？输出是高有效还是低有效？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">三个使能端 G1（高有效）、G2A_L、G2B_L（低有效），内部使能 <code>EN = G1·¬G2A_L·¬G2B_L</code>，三者同时满足才工作；<span class="key">输出低有效</span>（<code>Yi_L = ¬(EN·Mi)</code>）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">3.4</span><span class="badge b-exp">解释</span>
+<div class="qbody">用降维法、以 B、C 为选择端的 4 选 1 MUX 实现 <code>F(A,B,C)=Σm(1,3,5,6)</code>，写出四个数据输入 D00、D01、D10、D11。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">按 BC 分组看 A：<br>D00(BC=00, m0/m4)=0；D01(BC=01, m1/m5)=<span class="key">1</span>；D10(BC=10, m2/m6)=<span class="key">A</span>（仅 m6=ABC̄有效）；D11(BC=11, m3/m7)=<span class="key">¬A</span>（仅 m3 有效）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">3.5</span><span class="badge b-fill">填空</span>
+<div class="qbody">组合电路时序：传输延迟 <code>Tpd</code> 指 ______；最小延迟 <code>Tcd</code> 指 ______。三态门 EN=0 时输出为 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">Tpd=输入变化到所有输出稳定的<span class="key">最长</span>时间（沿关键路径）；Tcd=输入变化到任一输出首次变化的<span class="key">最短</span>时间；EN=0 输出为<span class="key">高阻态 Hi-Z</span>。</div></details></div>
+
+<!-- ============ chap4 ============ -->
+<h2>第4章 时序逻辑电路<span class="w">~22分 · 重点</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">4.1</span><span class="badge b-exp">解释</span>
+<div class="qbody">锁存器和触发器的异同？（去年简答原题）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">同：都是双稳态、存 1 位、靠反馈环路记忆。异：<span class="key">锁存器电平触发</span>（有效电平期间透明，输入直通输出）；<span class="key">触发器边沿触发</span>（仅时钟沿采样），抗干扰强、便于同步设计。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.2</span><span class="badge b-fill">填空</span>
+<div class="qbody">Mealy 型输出 = ______；Moore 型输出 = ______。状态图上区别：Moore 输出标在 ______，Mealy 标在 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>G(现态, 输入)</code>；<code>G(现态)</code>；Moore 标在<span class="key">状态圈里</span>（如 C/10），Mealy 标在<span class="key">转移箭头上</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.3</span><span class="badge b-fill">填空</span>
+<div class="qbody">写出特征方程：D 触发器 Q*=______；JK 触发器 Q*=______；T 触发器 Q*=______。SR 锁存器的约束条件是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>Q*=D</code>；<code>Q*=J·Q̄ + K̄·Q</code>；<code>Q*=T⊕Q</code>；约束 <code>S·R≠1</code>（S、R 不能同时为 1）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.4</span><span class="badge b-fill">填空</span>
+<div class="qbody">同步时序电路两条时序约束：最小时钟周期 <code>t_clk &gt; ______</code>；最小保持 <code>t_hold &lt; ______</code>。建立时间容限 = ______（需 &gt;0）。（去年填空：时钟周期 &gt; 建立时间 + ___ + ___ 的和）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>t_clk &gt; t_ffpd(max) + t_comb(max) + t_setup</code>；<code>t_hold &lt; t_ffpd(min) + t_comb(min)</code>；建立容限 <code>= t_clk − t_ffpd(max) − t_comb(max) − t_setup</code>。
+<span class="ex">去年那两空 = Clk-to-Q 延迟(t_ffpd) 和 组合逻辑延迟(t_comb)。max 用于建立约束、min 用于保持约束，别混。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.5</span><span class="badge b-fill">填空</span>
+<div class="qbody">状态图的「完备性」指 ______；「互斥性」指 ______。状态编码相邻三准则中的第一条是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">完备性：从每个状态出发的所有转移条件<span class="key">逻辑或 = 1</span>（任何输入都有去向）；互斥性：各转移条件<span class="key">两两逻辑与 = 0</span>（不会同时满足两条）；第一准则：<span class="key">次态相同的现态，编码尽量相邻</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.6</span><span class="badge b-exp">解释</span>
+<div class="qbody">什么是未用状态的「自启动」？设计 FSM 时为什么要做未用状态分析？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">编码空间大于实际状态数时会有未用状态。把未用状态当现态代入激励方程算其次态，若能在有限个时钟内回到正常工作循环且无错误输出，则电路<span class="key">能自启动</span>；否则可能「挂起/死锁」。因此必须检查，必要时用预置或无关项修正。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.7</span><span class="badge b-big">仿真题</span>
+<div class="qbody">给定一个状态转移图（如 5 状态、每状态 2 位输出的 Moore 机），写出同步时序电路的设计步骤（五步），并说明第(2)问「时序分析」和第(3)问「未用状态分析」各怎么做。（去年大题原型）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">设计五步</span>：①状态编码（5 态需 3 位）→ ②选触发器（一般 D，激励=次态）→ ③列状态转移真值表 → ④卡诺图求各 Dᵢ 激励方程与输出方程 → ⑤画电路图。
+<span class="key">(2) 时序分析</span>（反推）：写驱动方程→代特征方程得次态方程→列状态表/画状态图，验证与题目一致。
+<span class="key">(3) 未用状态分析</span>：把未用编码（如 101/110/111）代入方程求次态，确认能否回到有效状态环（自启动）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.8</span><span class="badge b-exp">解释</span>
+<div class="qbody">寄存器堆（Register File）的读操作和写操作在时序上有何本质区别？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">读是组合逻辑</span>：给地址经 MUX 直接输出，不需时钟。<span class="key">写是时序逻辑</span>：需时钟沿 + 写使能 WE，地址/数据/WE 须满足建立时间，在时钟沿写入。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">4.9</span><span class="badge b-exp">解释</span>
+<div class="qbody">异步行波加法计数器与减法计数器，在触发器的时钟连接上有什么区别？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">以下降沿触发的翻转触发器为例：<span class="key">加法</span>用前级 <code>Q</code> 驱动后级时钟（Q 由 1→0 时进位）；<span class="key">减法</span>用前级 <code>Q̄</code> 驱动后级时钟。把 Q 与 Q̄ 对调即在加/减之间切换。</div></details></div>
+
+<!-- ============ chap6 ============ -->
+<h2>第6章 运算方法和运算部件<span class="w">~17分 · 重点</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">6.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">补码减法 <code>[A−B]补 = ______</code>。带符号溢出 <code>OF = ______</code>（用进位表示）；无符号溢出标志 <code>CF = ______</code>；符号标志 <code>SF = ______</code>。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>[A]补 + [−B]补</code>（<code>[−B]补 = ¬[B]补 + 1</code>）；<code>OF = Cₙ ⊕ Cₙ₋₁</code>（最高位与次高位进位不同）；<code>CF = Cout ⊕ Cin</code>（无符号进位/借位）；<code>SF = 结果最高位 Fₙ₋₁</code>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.2</span><span class="badge b-fill">填空</span>
+<div class="qbody">用减法做大小比较：无符号数 A&gt;B 的条件是 ______；带符号数 A&gt;B 的条件是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">无符号：<code>CF=0 且 ZF=0</code>；带符号：<code>SF=OF 且 ZF=0</code>（即 A&lt;B 时 SF≠OF）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.3</span><span class="badge b-fill">填空</span>
+<div class="qbody">先行进位加法器（CLA）：进位生成 <code>Gᵢ = ______</code>，进位传递 <code>Pᵢ = ______</code>，进位递推 <code>Cᵢ = ______</code>。它相比行波进位的优势是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>Gᵢ = AᵢBᵢ</code>；<code>Pᵢ = Aᵢ+Bᵢ</code>（或 Aᵢ⊕Bᵢ）；<code>Cᵢ = Gᵢ + Pᵢ·Cᵢ₋₁</code>；优势：<span class="key">并行算出各位进位，消除逐级等待</span>，延迟与位数基本无关。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.4</span><span class="badge b-big">仿真题</span>
+<div class="qbody">推导补码两位乘法（Booth 两位乘法）的规则：根据乘数相邻三位 <code>yᵢ₊₁ yᵢ yᵢ₋₁</code>，部分积该加什么、移几位、循环几次？列出编码表。（去年大题原型）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">看 <code>yᵢ₊₁yᵢyᵢ₋₁</code> 决定加 {0, ±X, ±2X}，再<span class="key">算术右移 2 位</span>，循环 <span class="key">n/2</span> 次：
+<br>000/111→+0；001/010→+X；011→+2X；100→−2X；101/110→−X。
+<span class="ex">原理：Booth 一位乘 Pᵢ₊₁=[Pᵢ+(yᵢ₋₁−yᵢ)X]·2⁻¹，合并相邻两步即得。「+3X 麻烦」改成本次 −X、下次 +X（下次已右移 2 位等价 +4X）。硬件仍只用加法器+移位器。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.5</span><span class="badge b-exp">解释</span>
+<div class="qbody">原码两位乘法为什么需要采用 3 位符号位（模 8 补码）？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">两位乘每次部分积右移 2 位，且会出现 <code>−X</code>（处理 +3X=−X+4X）操作；2 位符号位不足以容纳右移与负部分积可能的跨位，<span class="key">需 3 位符号位防止部分积移位时符号/数值错位</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.6</span><span class="badge b-fill">填空</span>
+<div class="qbody">补码乘法的溢出判断：乘积高 ______ 位为全 0 或全 1 时不溢出。无符号乘法与补码乘法的「低 n 位结果」关系是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">高 <span class="key">n+1</span> 位全 0 或全 1（等价于高 n 位每位都等于低 n 位的符号位）；两者<span class="key">低 n 位结果完全相同</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.7</span><span class="badge b-exp">解释</span>
+<div class="qbody">不恢复余数法（加减交替法）做除法的上商规则是什么？（区分原码除法和补码除法）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">原码除（看余数正负）</span>：R≥0 商 1、下步 2R−Y；R&lt;0 商 0、下步 2R+Y；末余数为负要加回除数修正。
+<span class="key">补码除（看余数 R 与除数 Y 符号异同）</span>：同号商 1、下步 2R−Y；异号商 0、下步 2R+Y；末位恒置 1；X、Y 异号时商末位再加 1 修正。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">6.8</span><span class="badge b-fill">填空</span>
+<div class="qbody">移码加减运算：移码的和/差等于「和/差的 ______」，运算后需将结果的 ______ 取反还原。负数除以 2ᵏ 为实现向零舍入，应先做 ______ 再右移。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">等于「和/差的<span class="key">补码</span>」；运算后将结果<span class="key">符号位（最高位）</span>取反；负数除 2ᵏ 先做 <code>(x + 2ᵏ − 1)</code> 纠偏再算术右移。
+<span class="ex">易错：负数 x>>1 ≠ x/2，移位向负无穷舍入、除法向零舍入。</span></div></details></div>
+
+<!-- ============ chap7 ============ -->
+<h2>第7章 指令系统<span class="w">~27分 · 最大头</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">7.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">写出有效地址 EA：直接 ______、间接 ______、寄存器间接 ______、相对 ______、基址 ______、变址 ______。寄存器间接寻址中，操作数寄存器里存放的是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">直接 EA=A；间接 EA=(A)；寄存器间接 EA=(R)；相对 EA=A+(PC)；基址 EA=A+(B)；变址 EA=A+(I)；寄存器间接里存的是<span class="key">操作数的地址</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.2</span><span class="badge b-big">仿真题</span>
+<div class="qbody">扩展操作码：指令字长 16 位、地址码 6 位。已有二地址指令 15 条、一地址指令 34 条，问零地址指令最多有多少条？写出算式。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">二地址用 4 位操作码（剩 2×6=12 位地址），可用 2⁴=16，用掉 15，剩 1 → 扩展给一地址（再用 6 位）：1×2⁶=64，用掉 34，剩 30 → 扩展给零地址（再用 6 位）：
+<code>(2⁴−15)·2⁶−34)·2⁶ = 30 × 64 = </code><span class="key">1920 条</span>。
+<span class="ex">核心：逐级把没用完的短码空间×下一字段的编码数，扣掉已占用的。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.3</span><span class="badge b-fill">填空</span>
+<div class="qbody">RISC-V 32 位六种指令格式：R、I、S、B、U、J。其中立即数 12 位的是 ______，放高 20 位的是 ______，用于分支的是 ______，用于 jal 的是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">12 位立即数：<span class="key">I 型、S 型</span>（B 型为 13 位含末 0）；高 20 位：<span class="key">U 型</span>；分支：<span class="key">B 型</span>；jal：<span class="key">J 型</span>（21 位含末 0）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.4</span><span class="badge b-big">仿真题</span>
+<div class="qbody">RISC-V 综合题：(1) 给定一个 opcode，R 型指令理论上最多多少条？I 型呢？(2) I 型立即数下标是 imm[11:0]，U 型是 imm[31:12]，分析两者设计思路与扩展方式的不同。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">(1) R 型靠 funct3(3 位)+funct7(7 位)区分 → <code>2³×2⁷ = 2¹⁰ = 1024</code> 条；I 型只靠 funct3 → <code>2³ = 8</code> 条。
+(2) <span class="key">I 型</span>：12 位小立即数放低位，运算时<span class="key">符号扩展</span>到 32 位（配合 addi/load 的近距偏移）；<span class="key">U 型</span>：20 位放高位 [31:12]，低 12 位补 0（=左移 12 位），<span class="key">不符号扩展</span>（lui 专门拼高 20 位）。二者 lui+addi 合用才能凑任意 32 位常数。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.5</span><span class="badge b-fill">填空</span>
+<div class="qbody">B 型、J 型立即数的共同特点是最低位恒为 ______，使用时要先 ______ 再 ______ 得到字节偏移。jal 的跳转范围约 ______，分支约 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">最低位恒为 <span class="key">0</span>（半字/字对齐）；先<span class="key">符号扩展</span>再<span class="key">左移 1 位</span>；jal 约 <span class="key">±1 MiB</span>（21 位有符号），分支约 <span class="key">±4 KiB</span>（13 位）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.6</span><span class="badge b-exp">解释</span>
+<div class="qbody">RV32I 能不能只用一条指令把任意 32 位操作数写入寄存器？为什么？（去年综合题第 5 问）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">不能（部分同意该说法）</span>：12 位以内立即数可用一条 <code>addi rd, x0, imm</code>；但 32 位指令字装不下完整 32 位立即数（还要留 opcode、rd），任意 32 位常数<span class="key">必须 lui+addi 两条</span>（高 20 位 + 低 12 位）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.7</span><span class="badge b-exp">解释</span>
+<div class="qbody">用 LUI + ADDI 加载一个低 12 位最高位为 1 的 32 位常数时，为什么要用「hi+1」修正？举例。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">ADDI 的 12 位立即数<span class="key">符号扩展</span>，若低 12 位最高位为 1 则被当成负数，会使高 20 位少 1。故先把高位装 <code>hi+1</code>，再用 ADDI 加一个负的 12 位立即数抵消。
+<span class="ex">例：装 0x1FFF → <code>LUI x5,2; ADDI x5,x5,-1</code>。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.8</span><span class="badge b-fill">填空</span>
+<div class="qbody">CISC vs RISC：访存方式上 RISC 是 ______ 型（只有 ______ 指令访存）；控制方式 RISC 多用 ______；指令周期 RISC 多为 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">Load/Store 型（只有 <span class="key">Load/Store</span> 访存，运算指令只碰寄存器）；控制用<span class="key">组合逻辑/硬布线</span>；多为<span class="key">单周期（便于流水线）</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.9</span><span class="badge b-exp">解释</span>
+<div class="qbody">简述一条指令的执行过程；异常和中断如何处理？（去年简答原题）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">执行过程</span>：取指（IR←M[PC]，PC←PC+4）→ 译码 → 取操作数 → 执行(ALU) → 写回 → 循环。
+<span class="key">异常/中断处理</span>：①关中断；②保护断点和程序状态（EPC←断点，Cause←原因编码）；③转入处理程序；处理完恢复现场、返回。异常来自 CPU 内部（溢出/非法指令），中断来自外部（I/O）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">7.10</span><span class="badge b-exp">解释</span>
+<div class="qbody">RISC-V 调用约定里「调用者保存（caller-saved）」和「被调用者保存（callee-saved）」分别指哪些寄存器，含义是什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">caller-saved</span>（临时 t0–t6、参数 a0–a7）：被调函数可随意改，调用方若需保留要自己先存。<span class="key">callee-saved</span>（s0–s11）：被调函数若要用必须先保存、返回前恢复，保证对调用方不变。</div></details></div>
+
+<!-- ============ chap8 ============ -->
+<h2>第8章 中央处理器<span class="w">~18分 · 重点</span></h2>
+
+<div class="q"><div class="qhead"><span class="qid">8.1</span><span class="badge b-fill">填空</span>
+<div class="qbody">CPU = ______ + ______。数据通路里「操作元件」是 ______ 逻辑（举例 ______），「状态元件」是 ______ 逻辑（举例 ______）。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">数据通路 + 控制器；操作元件=<span class="key">组合</span>逻辑（ALU、MUX、加法器、译码器）；状态元件=<span class="key">时序</span>逻辑（PC、寄存器堆、存储器）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.2</span><span class="badge b-fill">填空</span>
+<div class="qbody">CPU 性能核心公式：<code>CPU 时间 = ______ × ______ × ______</code>。<code>CPI = ______</code>。影响时钟频率的两个因素是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>CPU 时间 = 指令条数 × CPI × 时钟周期</code>；<code>CPI = 总时钟周期数 / 指令条数</code>（综合 CPI=Σ CPIᵢ·Fᵢ）；时钟频率受<span class="key">微体系结构和工艺</span>影响。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.3</span><span class="badge b-big">仿真题</span>
+<div class="qbody">指令 <code>jal rd, imm20</code>，功能 <code>PC←PC+SEXT(imm[20:1]≪1); R[rd]←PC+4</code>。结合 J 型数据通路：(1) 描述执行过程；(2) 写出关键控制信号取值；(3) 转移目标地址范围多大？（去年大题原型）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">(1) 取指→译码识别 J 型→扩展器对 imm 符号扩展并左移 1 位；一路加法器算 <span class="key">PC+offset</span> 经下地址逻辑送 PC，另一路算 <span class="key">PC+4</span> 经 MUX 写回 rd。
+(2) <code>RegWr=1</code>、<code>Jump=1</code>、<code>Branch=0</code>、<code>MemWr=0</code>、<code>MemtoReg→选 PC+4</code>、<code>ExtOp=immJ</code>、ALU 做加；ALUASrc 选 PC、ALUBSrc 选常数 4。
+(3) 偏移 21 位有符号、末位 0 → 范围 <code>PC−2²⁰ ~ PC+(2²⁰−2)</code> 字节（约 ±1 MiB）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.4</span><span class="badge b-fill">填空</span>
+<div class="qbody">五种立即数扩展：immI = ______（位数与扩展方式）；immU = ______；immB 的最低位强制为 ______。逻辑指令 ori 的立即数是 ______ 扩展。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">immI：12 位<span class="key">符号扩展</span>到 32 位；immU：高 20 位放 [31:12]、低 12 位补 0（<span class="key">非符号扩展</span>）；immB 最低位强制为 <span class="key">0</span>；ori 立即数也是<span class="key">符号扩展</span>（易错点，不是零扩展）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.5</span><span class="badge b-exp">解释</span>
+<div class="qbody">单周期 CPU 的时钟周期为什么由 lw 指令决定？它的关键路径包含哪些环节？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">单周期所有指令共用一个周期，须容纳最慢指令。lw 经过的环节最多：<code>PC → 指令存储器 → 读寄存器 → ALU 算地址 → 数据存储器读 → 写回寄存器(setup)</code>（再加时钟偏移）。所以周期由 lw 关键路径定，简单指令被迫等长周期 → 性能浪费。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.6</span><span class="badge b-fill">填空</span>
+<div class="qbody">取指与 PC 更新的逻辑顺序必须是 ______。单周期下地址逻辑：<code>Jump=1</code> 选 ______；<code>Branch=1 且 Zero=1</code> 选 ______；否则选 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">必须<span class="key">先取指（Instr←M[PC]）再 PC←PC+4</span>，顺序不可颠倒；Jump 选跳转目标，Branch&Zero 选分支目标，否则选 PC+4。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.7</span><span class="badge b-exp">解释</span>
+<div class="qbody">流水线三大冒险分别是什么？各自的典型解决方法？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">结构冒险</span>：部件争用 → 指令/数据 Cache 分离、固定流水段使用。<span class="key">数据冒险</span>：ALU 相关用<span class="key">转发(Forwarding)</span>；Load-use 需<span class="key">阻塞 1 周期+转发</span>。<span class="key">控制冒险</span>：转移目标未定 → 清空错误指令、分支预测（静态/动态）、延迟分支。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.8</span><span class="badge b-exp">解释</span>
+<div class="qbody">异常和中断的区别？异常处理中 EPC 保存的「断点」有哪两种情况？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">异常</span>来自 CPU 内部（溢出、非法指令、缺页），<span class="key">中断</span>来自外部（I/O 请求）。EPC：<span class="key">故障类异常存 PC−4</span>（出错指令本身，便于重执行），<span class="key">自陷/中断存 PC</span>（下一条）。Cause 寄存器记录原因。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.9</span><span class="badge b-fill">填空</span>
+<div class="qbody">多周期处理器 CPI = ______。微程序控制器中，水平型微指令的特点是 ______，垂直型是 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">CPI = <span class="key">Σ(指令占比ᵢ × 指令周期数ᵢ)</span>（按频率加权）；水平型<span class="key">并行度高、微程序短、字长长</span>；垂直型<span class="key">编码效率高、易编制、速度慢</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">8.10</span><span class="badge b-exp">解释</span>
+<div class="qbody">为什么说流水线不能缩短「单条指令」的执行时间？它提升性能的本质是什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">单条指令仍要走完所有流水段（甚至因段对齐略变长）。流水线靠<span class="key">多条指令重叠执行</span>提高吞吐率：理想下每个周期完成一条，加速比≈流水级数（受冒险和流水寄存器开销限制）。瓶颈在<span class="key">最慢的那一段</span>。</div></details></div>
+
+<div style="height:40px;"></div>
+
+<script>
+function toggleAll(open){ document.querySelectorAll('details').forEach(d=>d.open=open); }
+function collect(){
+  var ids=[];
+  document.querySelectorAll('.q').forEach(function(q){
+    var cb=q.querySelector('.flagbox input');
+    if(cb && cb.checked){ ids.push(q.querySelector('.qid').textContent.trim()); }
+  });
+  var out=document.getElementById('out');
+  if(ids.length===0){ out.value='（还没勾选任何「🚩没把握」的题）'; }
+  else{ out.value='我在 DLCO 诊断卷里没把握的题：'+ids.join(', ')+'。请帮我定位薄弱章节并给针对性讲解。'; out.select(); }
+  document.getElementById('cnt').textContent='共勾选 '+ids.length+' 题';
+}
+// 勾选时高亮题卡
+document.querySelectorAll('.flagbox input').forEach(function(cb){
+  cb.addEventListener('change',function(){ cb.closest('.q').classList.toggle('flagged',cb.checked); });
+});
+</script>
+</body>
+</html>

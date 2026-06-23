@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLCO 复习考点清单</title><style>:root{--ink:#1d1b16;--mute:#6b665c;--line:#dcd6c8;--paper:#fbf9f3;
+--hi:#8a1c1c;--blue:#1f3a5f;--blue-bg:#eaf0f7;--gold:#9a7b1a;}
+*{box-sizing:border-box;}body{font-family:"SimSun","宋体","Times New Roman",serif;color:var(--ink);
+background:var(--paper);margin:0;line-height:1.8;font-size:15.5px;}
+#wrap{display:flex;max-width:1180px;margin:0 auto;}
+nav{position:sticky;top:0;align-self:flex-start;height:100vh;overflow:auto;
+flex:0 0 190px;padding:24px 12px;border-right:1px solid var(--line);font-size:14px;}
+nav .t{font-weight:bold;color:var(--hi);margin-bottom:10px;font-size:15px;}
+nav a{display:block;padding:5px 8px;color:var(--blue);text-decoration:none;border-radius:5px;}
+nav a:hover,nav a.on{background:var(--blue-bg);}
+main{flex:1;padding:30px 40px;min-width:0;}
+h1{font-size:26px;text-align:center;margin:0 0 4px;}
+.sub{text-align:center;color:var(--mute);font-size:13px;margin-bottom:24px;}
+section{margin-bottom:34px;padding-bottom:10px;border-bottom:2px solid var(--line);scroll-margin-top:10px;}
+h2{font-size:21px;color:#fff;background:var(--hi);padding:7px 14px;border-radius:6px;margin:0 0 12px;}
+section h2{font-size:18px;color:var(--hi);background:none;border-bottom:1px solid var(--line);padding:0 0 4px;}
+h3{font-size:17px;color:var(--blue);margin:18px 0 6px;border-left:4px solid var(--blue);padding-left:8px;}
+h4{font-size:15.5px;color:var(--gold);margin:12px 0 4px;}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14px;}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:left;vertical-align:top;}
+th{background:#efe9da;}
+code{font-family:"Cambria Math","Times New Roman",serif;background:#f0ece0;padding:1px 4px;border-radius:3px;font-size:14px;}
+pre{background:#f4f0e6;border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow:auto;}
+pre code{background:none;padding:0;}
+ul,ol{padding-left:22px;}li{margin:3px 0;}strong{color:var(--hi);}
+blockquote{border-left:3px solid var(--gold);background:#f8f3e6;margin:8px 0;padding:6px 12px;color:#5a503a;}
+@media print{nav{display:none;}#wrap{display:block;}main{padding:0 8mm;}}
+@media(max-width:760px){nav{display:none;}main{padding:20px 16px;}}
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style></head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a><div id="wrap">
+<nav><div class="t">考点清单</div>
+<a href="#sec1">chap0 导论</a>
+<a href="#sec2">chap1 二进制编码</a>
+<a href="#sec3">chap2 数字逻辑基础</a>
+<a href="#sec4">chap3 组合逻辑电路</a>
+<a href="#sec5">chap4 时序逻辑电路</a>
+<a href="#sec6">chap6-运算方法和运算部件</a>
+<a href="#sec7">chap7-指令系统</a>
+<a href="#sec8">chap8-中央处理器</a></nav>
+<main>
+<h1>DLCO 复习考点清单</h1>
+<div class="sub">数字系统设计基础 · 课件转录稿经 DeepSeek 整理 · 8 章全考点</div>
+<section id="sec1"><h2>chap0 导论 · 复习提纲</h2>
+<h2>本章在课程中的作用</h2>
+<p>本章建立数字系统设计及计算机组成的全局视野，厘清软硬件层次关系与协同设计理念，为后续编码、逻辑、运算、指令、处理器、存储等章节的学习提供统一认知框架和需求入口。</p>
+<hr />
+<h2>复习提纲</h2>
+<h3>一、课程定位与技术主线</h3>
+<ul>
+<li><strong>核心定位</strong>：通用计算平台的设计与实现，强调软硬件协同</li>
+<li><strong>技术主线</strong>：基于 RISC-V 架构的通用计算架构设计</li>
+<li><strong>专用平台本质</strong>：对通用架构的精简或强化</li>
+<li><strong>课程内涵</strong>：计算机全领域知识缩影（编码、算法、调度、架构、网络等）</li>
+<li><strong>课程外延</strong>：系统能力培养，软硬件协同设计开发</li>
+</ul>
+<h3>二、计算系统层次结构</h3>
+<ul>
+<li><strong>软件层次（自顶向下）</strong><br />
+  Application → Compiler / Operating System → Assembler → Instruction Set Architecture (ISA)</li>
+<li><strong>硬件层次（自顶向下）</strong><br />
+  Processor / Memory / I/O → Datapath &amp; Control → Digital Design → Circuit Design → Transistors</li>
+<li><strong>关键接口</strong>：ISA 是软件的功能抽象，也是硬件数字系统的设计需求</li>
+<li><strong>设计基础</strong>：电子电路是数字系统的物理基础</li>
+</ul>
+<h3>三、指令集架构（ISA）的地位</h3>
+<ul>
+<li>软件与硬件之间的契约与功能抽象</li>
+<li>定义了计算机的指令集，是数字系统的设计需求【重点】</li>
+<li>上层软件通过 ISA 驱动硬件协同工作</li>
+</ul>
+<h3>四、5W 学习框架</h3>
+<ul>
+<li><strong>Why</strong> – 为什么要学习数字系统设计</li>
+<li><strong>What</strong> – 计算机由哪些部分构成，分别做什么</li>
+<li><strong>How</strong> – 各部分如何设计、如何工作</li>
+<li><strong>When</strong> – 各部件在什么时序下工作</li>
+<li><strong>Where</strong> – 各功能在层次结构中的位置</li>
+</ul>
+<h3>五、课程学习目标</h3>
+<ul>
+<li><strong>核心目标</strong>：理解计算机如何工作【重点】</li>
+<li>理解软件算法如何驱动计算部件协同工作</li>
+<li>理解硬件平台的能力来源与约束</li>
+<li>了解计算机各部件的设计方法</li>
+<li>能够清晰描绘计算机工作的状态</li>
+<li><strong>实践目标</strong>：设计并实现符合需求的数字系统（CPU、智能处理平台）</li>
+<li><strong>价值导向</strong>：对硬件技术发展、体系结构演进、高级编程均有很大益处</li>
+</ul>
+<h3>六、教学内容六阶段</h3>
+<ol>
+<li>数字化编码  </li>
+<li>数字逻辑设计  </li>
+<li>运算方法与部件  </li>
+<li>指令系统设计  </li>
+<li>中央处理器设计  </li>
+<li>存储与输入输出<br />
+- <strong>底层支撑</strong>：所有设计均建立在基础逻辑器件之上</li>
+</ol>
+<h3>七、学习方法与考核</h3>
+<ul>
+<li><strong>教材</strong>：《数字逻辑与计算机组成》袁春风主编，2020 年出版【重点】</li>
+<li><strong>主要参考书</strong></li>
+<li>《数字设计原理与实践（原书第4版）》John F. Wakerly</li>
+<li>《数字逻辑基础与Verilog设计（原书第2版）》Stephen Brown 等</li>
+<li><strong>教学环节</strong>：课堂讲授 → 课程实验 → 作业训练</li>
+<li>实验从第五周开始，安排在双周五下午</li>
+<li>作业鼓励自主讨论</li>
+<li><strong>在线平台</strong>：QQ 课程群 + 教学立方</li>
+<li><strong>评分标准</strong></li>
+<li>作业与讲评（含签到和课堂交互）：20%</li>
+<li>课程实验：20%</li>
+<li>考试：60% 【重点】</li>
+<li><strong>答疑渠道</strong></li>
+<li>线上：QQ 课程群 / 智慧南雍讨论区</li>
+<li>线下：计算机学院楼 1015 办公室</li>
+</ul>
+<hr />
+<h2>高频考点</h2>
+<ol>
+<li>计算系统的软件层次与硬件层次划分，及各层名称与顺序</li>
+<li>ISA 的定义、角色及其在软硬件接口中的地位</li>
+<li>课程核心目标（理解计算机如何工作）及其具体含义</li>
+<li>教学内容的六阶段递进顺序</li>
+<li>课程评分比例（尤其考试占 60%）及实验开始时间</li>
+</ol>
+<hr />
+<h2>易错点</h2>
+<ul>
+<li>将 ISA 与微架构（Microarchitecture）混为一谈（ISA 是规范，微架构是具体实现）</li>
+<li>误把专用平台当作与通用平台无关的全新设计，忽略其“精简/强化”的本质</li>
+<li>软件层次与硬件层次的边界记忆模糊，尤其是 Assembler 与 ISA 的归属</li>
+<li>混淆“数字逻辑设计”与“电路设计”的层次关系</li>
+<li>记错实验起始周次（第五周）或考试占比（60%而非 50% 或 70%）</li>
+</ul>
+<hr />
+</section>
+<section id="sec2"><h2>chap1 二进制编码 · 复习提纲</h2>
+<h2>第1章 二进制编码 —— 复习提纲</h2>
+<p>本章解决的是<strong>计算机系统中数据与指令的基本表示问题</strong>，即如何用二进制对数值、字符、指令等各类信息进行统一的编码、存储与处理，为理解计算机软硬件接口和后续运算器设计奠定基础。</p>
+<hr />
+<h2>1 计算机系统结构与工作原理</h2>
+<h3>1.1 冯·诺依曼结构</h3>
+<ul>
+<li><strong>核心思想</strong>：存储程序（Stored-program）工作方式，指令与数据均以二进制形式存放于同一存储器中，形式上不加区分。</li>
+<li><strong>五大部件</strong>：运算器、控制器、存储器、输入设备、输出设备。</li>
+<li><strong>指令组成</strong>：操作码（OP） + 地址码（Addr），操作码说明操作类型，地址码指出操作数位置。</li>
+<li><strong>工作过程</strong>：程序启动前指令与数据按序存放；启动后计算机自动逐条取指令、执行指令，无需人工干预。</li>
+</ul>
+<h3>1.2 现代计算机的核心部件</h3>
+<ul>
+<li><strong>CPU</strong> = 运算器 + 控制器。</li>
+<li><strong>关键寄存器</strong>：</li>
+<li><strong>PC</strong>（程序计数器）：存放下一条指令地址，执行后自动增量 <code>PC ← PC + 1</code>。</li>
+<li><strong>MAR</strong>（存储器地址寄存器）：存放访存地址。</li>
+<li><strong>MDR</strong>（存储器数据寄存器）：暂存从存储器读出或写入的数据。</li>
+<li><strong>IR</strong>（指令寄存器）：存放当前执行指令，分为 OP 和 Addr 部分。</li>
+<li><strong>GPRs</strong>（通用寄存器组）：存放临时数据与操作数。</li>
+<li><strong>ALU</strong>（算术逻辑部件）：执行算术、逻辑运算。</li>
+<li><strong>标志寄存器</strong>：保存 ALU 运算结果的状态标志。</li>
+<li><strong>信息流</strong>：数据流（存储器↔MDR↔GPRs↔ALU）、地址流（PC↔MAR, IR↔MAR）、控制流（控制器→各部件）。</li>
+</ul>
+<h3>1.3 指令执行步骤</h3>
+<ol>
+<li><strong>取指令</strong>：<code>IR ← M[PC]</code></li>
+<li><strong>指令译码</strong>：解析操作码。</li>
+<li><strong>取操作数</strong>：从寄存器或存储器取数。</li>
+<li><strong>指令执行</strong>：ALU 完成运算。</li>
+<li><strong>回写结果</strong>：写入寄存器或存储器。</li>
+<li><strong>修改 PC</strong>：<code>PC ← PC + 1</code>（或根据指令更新）。</li>
+</ol>
+<h3>1.4 指令集体系结构（ISA）</h3>
+<ul>
+<li><strong>定义</strong>：软、硬件的接口，规定了如何使用硬件的全部规约。</li>
+<li><strong>ISA 规定的内容</strong>：指令集合与格式、操作数类型、寄存器组织、存储空间与编址、大小端方式、寻址方式、指令执行控制方式等。</li>
+</ul>
+<h3>1.5 翻译程序与层次结构</h3>
+<ul>
+<li><strong>翻译程序</strong>：</li>
+<li><strong>编译器</strong>：将高级语言程序整体翻译为目标代码。</li>
+<li><strong>汇编器</strong>：将汇编语言翻译为机器语言。</li>
+<li><strong>解释器</strong>：逐条翻译并立即执行高级语言语句，不生成目标文件。</li>
+<li><strong>计算机系统抽象层</strong>：应用(问题) → 算法 → 编程语言 → 操作系统/虚拟机 → <strong>ISA</strong> → 微体系结构 → 功能部件 → 电路 → 器件。</li>
+</ul>
+<hr />
+<h2>2 数制及其转换</h2>
+<h3>2.1 进位计数制基本概念</h3>
+<ul>
+<li><strong>基与权</strong>：R 进制中基为 R，每位数字具有权值 <code>R^i</code>。</li>
+<li><strong>二进制、八进制、十六进制</strong>是计算机常用进制。</li>
+</ul>
+<h3>2.2 任意进制与十进制的转换</h3>
+<ul>
+<li><strong>R 进制 → 十进制</strong>：按权展开求和。<br />
+  ((a_n a_{n-1}\dots a_0.a_{-1}\dots a_{-m})<em>R = \sum</em>{i=-m}^{n} a_i R^i)</li>
+<li><strong>十进制 → R 进制</strong>：</li>
+<li><strong>整数部分</strong>：除基取余，先得者为低位（从下往上读）。</li>
+<li><strong>小数部分</strong>：乘基取整，先得者为高位（从上往下读）。</li>
+</ul>
+<h3>2.3 二、八、十六进制互转</h3>
+<ul>
+<li><strong>3 位二进制 ↔ 1 位八进制</strong>；<strong>4 位二进制 ↔ 1 位十六进制</strong>。</li>
+<li>以<strong>小数点为界</strong>，左右分组，不足的位补 0。</li>
+</ul>
+<hr />
+<h2>3 数值数据的编码表示</h2>
+<h3>3.1 机器数与真值</h3>
+<ul>
+<li><strong>机器数</strong>：计算机内部的 0/1 编码序列。</li>
+<li><strong>真值</strong>：机器数代表的实际数值（带正负号）。</li>
+</ul>
+<h3>3.2 定点数表示与码制</h3>
+<p><strong>原码</strong>
+- 最高位为符号位（0 正 1 负），数值位为绝对值的二进制。
+- 存在问题：+0 与 -0 表示不唯一；加减运算需区分符号和大小，硬件复杂。
+- 应用：现代计算机中浮点数的尾数采用原码定点小数。</p>
+<p><strong>补码（核心）</strong>
+- <strong>原理</strong>：模 <code>2^n</code> 系统中，<code>A - B ≡ A + (2^n - B) (mod 2^n)</code>，化减为加。
+- <strong>定义</strong>：n 位定点整数 <code>[X]补 = 2^n + X</code> <code>(-2^{n-1} ≤ X &lt; 2^{n-1})</code>。
+- <strong>求补规则</strong>：
+  - 正数：补码 = 自身。
+  - 负数：符号位为 1，数值部分 “各位取反，末位加 1”。
+- <strong>特殊数</strong>：
+  - <code>[+0]补 = [-0]补 = 00...0</code>（零表示唯一）。
+  - <code>[-2^{n-1}]补 = 10...0</code>（可多表示一个最小负数）。
+  - <code>[-1]补 = 11...1</code>。
+- <strong>补码求真值公式</strong>：<br />
+  (X = -a_{n-1}\cdot 2^{n-1} + \sum_{i=0}^{n-2} a_i\cdot 2^i)（最高位权值为负）。
+- <strong>变形补码</strong>：双符号位（00 正，11 负），用于保留溢出信息。</p>
+<p><strong>反码</strong>
+- 正数不变；负数符号位 1，数值位按位取反。
+- 存在 +0 / -0 问题，现已不用于数值数据。</p>
+<p><strong>移码</strong>
+- 在真值 X 上加偏置常数 Bias：<code>E_biased = E + Bias</code>，通常 <code>Bias = 2^{n-1}</code>。
+- <strong>与补码关系</strong>：同一数值的移码与补码仅最高位（符号位）相反。
+- <strong>主要应用</strong>：浮点数阶码，使指数比较可以直接按无符号整数进行，简化对阶。</p>
+<p><strong>无符号整数</strong>
+- 无符号位，编码全为正数，用于地址运算等场景。
+- 相同位数下最大正值大于带符号整数。
+- 位数扩展时采用 <strong>0 扩展</strong>（高位补 0）。</p>
+<h3>3.3 位数扩展与类型转换</h3>
+<ul>
+<li><strong>符号扩展</strong>：带符号整数扩展时高位补符号位（如 <code>short → int</code>）。</li>
+<li><strong>零扩展</strong>：无符号整数扩展时高位补 0。</li>
+<li><strong>C 语言混合运算</strong>：当表达式中存在有符号数与无符号数时，<strong>有符号数会被强制转换为无符号数</strong>再进行运算，容易导致非预期结果（如 <code>-1 &lt; 0U</code> 结果为假）。</li>
+</ul>
+<hr />
+<h2>4 浮点数表示（IEEE 754）</h2>
+<h3>4.1 浮点数通用形式</h3>
+<ul>
+<li><strong>三要素</strong>：符号 S、阶码 E、尾数 M（规格化：小数点前一位非零）。</li>
+<li>数值表示为：((-1)^S \times 1.M \times 2^{E - Bias})（规格化情况）。</li>
+</ul>
+<h3>4.2 IEEE 754 标准格式</h3>
+<p><strong>单精度（32 位）</strong>：S(1) + E(8, Bias=127) + M(23)<br />
+<strong>双精度（64 位）</strong>：S(1) + E(11, Bias=1023) + M(52)</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>阶码 E</th>
+<th>尾数 M</th>
+<th>表示的数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>规格化数</td>
+<td>1~254/1~2046</td>
+<td>任意</td>
+<td>((-1)^S \times 1.M \times 2^{E - Bias})</td>
+</tr>
+<tr>
+<td>非规格化数</td>
+<td>0</td>
+<td>≠0</td>
+<td>((-1)^S \times 0.M \times 2^{-126\text{ 或 }-1022})</td>
+</tr>
+<tr>
+<td>±0</td>
+<td>0</td>
+<td>0</td>
+<td>((-1)^S \times 0)</td>
+</tr>
+<tr>
+<td>±∞</td>
+<td>全1</td>
+<td>0</td>
+<td>±∞</td>
+</tr>
+<tr>
+<td>NaN</td>
+<td>全1</td>
+<td>≠0</td>
+<td>Not a Number（传播性）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>非规格化数作用</strong>：填补 0 与最小规格化数之间的间隙，实现逐渐下溢。</li>
+<li><strong>舍入与不可结合</strong>：浮点运算可能舍入，且加法不可结合。</li>
+</ul>
+<hr />
+<h2>5 非数值数据的编码</h2>
+<h3>5.1 逻辑数据</h3>
+<ul>
+<li>用位串表示逻辑值序列，由指令识别，支持按位与、或、非、移位等。</li>
+</ul>
+<h3>5.2 西文字符</h3>
+<ul>
+<li><strong>ASCII 码</strong>：7 位编码，128 个字符。</li>
+<li><strong>奇偶校验</strong>：在 7 位 ASCII 基础上增加 1 位校验位，构成 8 位。</li>
+<li><strong>奇校验</strong>：包括校验位在内“1”的个数为奇数。</li>
+<li><strong>偶校验</strong>：包括校验位在内“1”的个数为偶数。</li>
+<li><strong>能力</strong>：只能检测奇数个位的错误，不能纠正。</li>
+</ul>
+<h3>5.3 汉字编码</h3>
+<ul>
+<li><strong>输入码（外码）</strong>：用于输入汉字。</li>
+<li><strong>机内码（内码）</strong>：计算机内部存储、处理的编码。通常用两字节，且两字节最高位均为 1，以与 ASCII 码（最高位为 0）唯一区分。</li>
+<li><strong>转换规则</strong>：区位码 → 国标码（各字节+32） → 内码（各字节最高位置 1）。</li>
+<li><strong>字形码</strong>：描述汉字字形，包括点阵描述和轮廓描述（如 TrueType），预存在字库中。</li>
+<li><strong>GB2312-80 结构</strong>：符号区 + 一级常用汉字 + 二级常用汉字。符号区采用 10×10 矩阵，第 0 行全部为空码。</li>
+</ul>
+<h3>5.4 其他编码</h3>
+<ul>
+<li><strong>BCD 码</strong>：有权码（如 8421 码），无权码（余 3 码、格雷码：相邻码只有一位不同）。</li>
+</ul>
+<hr />
+<h2>6 数据的宽度与存储排列</h2>
+<h3>6.1 数据单位</h3>
+<ul>
+<li><strong>位（bit）</strong>：信息的最小单位。</li>
+<li><strong>字节（Byte）</strong>：定长 8 bits，现代计算机的最小可寻址单位。</li>
+<li><strong>字（Word）</strong>：信息处理基本单位，由 ISA 定义宽度。</li>
+<li><strong>字长（Word Length）</strong>：CPU 内部数据通路、通用寄存器的宽度，由硬件决定。<strong>字与字长是不同概念</strong>。</li>
+<li><strong>容量单位</strong>：<code>1 KB = 2^10 B</code>, <code>1 MB = 2^20 B</code>, <code>1 GB = 2^30 B</code>, <code>1 TB = 2^40 B</code>。</li>
+<li><strong>传输速率单位</strong>：<code>1 kbps = 10^3 bps</code>, <code>1 Mbps = 10^6 bps</code>。</li>
+<li><strong>IEC 前缀</strong>（消除歧义）：<code>1 KiB = 2^10 B</code>, <code>1 MiB = 2^20 B</code>（注意 KB 与 KiB 区别）。</li>
+</ul>
+<h3>6.2 字节序（大端/小端）</h3>
+<ul>
+<li><strong>数据地址</strong>：多字节数据占用连续字节单元中最小字节的地址。</li>
+<li><strong>大端模式</strong>：最高有效字节（MSB）存储在低地址。</li>
+<li><strong>小端模式</strong>：最低有效字节（LSB）存储在低地址。</li>
+<li>例：<code>0x12345678</code> 在小端模式下存储为 <code>78 56 34 12</code>。</li>
+</ul>
+<h3>6.3 边界对齐</h3>
+<ul>
+<li><strong>规则</strong>：长度为 S 字节的数据，其起始地址必须是 S 的整数倍（通常按字长对齐）。</li>
+<li><strong>目的</strong>：避免一次访存跨存储字边界，提高访问效率。</li>
+</ul>
+<hr />
+<h2>【高频考点】</h2>
+<ol>
+<li>冯·诺依曼结构“存储程序”思想及五大部件，PC、IR、MAR、MDR 的功能。</li>
+<li>十进制与 R 进制互转（特别是整数除基取余、小数乘基取整的方向）。</li>
+<li>补码的定义、求补规则（取反加一）、特殊值（0 的唯一性、最小负数）、与真值的转换公式。</li>
+<li>移码与补码的关系（符号位相反），移码用于浮点数阶码的作用。</li>
+<li>IEEE 754 单/双精度格式，规格化/非规格化/特殊值的判据与真值公式。</li>
+<li>汉字内码与 ASCII 的区分方法（内码两字节最高位均为 1）。</li>
+<li>大端/小端存储的定义与区别，边界对齐规则。</li>
+<li>C 语言中有符号与无符号混合运算的类型转换规则及结果判定。</li>
+</ol>
+<h2>【易错点】</h2>
+<ul>
+<li><strong>补码的“取反加一”</strong>：只用于求负数的补码，正数不变；反向求真值时，符号位为 1 可再取反加一得绝对值，或直接使用符号位负权公式。</li>
+<li><strong>模的概念</strong>：n 位补码系统的模为 <code>2^n</code>，不是 <code>2^n - 1</code>。</li>
+<li><strong>十进制转二进制方向</strong>：整数部分“除基取余”先得低位；小数部分“乘基取整”先得高位，书写易颠倒。</li>
+<li><strong>移码与补码</strong>：只差最高位，但移码真值计算需减去 Bias，不可混淆。</li>
+<li><strong>非规格化数</strong>：阶码全 0、尾数非 0 时隐含位为 0 而非 1，其指数为 -126 或 -1022，不是 -127/-1023。</li>
+<li><strong>奇偶校验</strong>：只能检奇数位错，不能纠错，且不能发现偶数位错。</li>
+<li><strong>无符号数扩展</strong>：用 0 扩展而非符号扩展，与带符号整数的符号扩展严格区分。</li>
+<li><strong>混合类型运算</strong>：<code>-1 &lt; 0U</code> 为假，因为有符号数 -1 被转换为无符号大整数。</li>
+<li><strong>字与字长</strong>：字由 ISA 定义，字长由硬件定义，两者可能不同（如 x86 字=16 位，字长=32/64 位）。</li>
+<li><strong>GB2312 符号区第 0 行</strong>：全部为空码，不是可显示字符。</li>
+<li><strong>大端小端</strong>：小端“低字节在低地址”，书写顺序与日常数字书写习惯相反。</li>
+</ul>
+<hr />
+</section>
+<section id="sec3"><h2>chap2 数字逻辑基础 · 复习提纲</h2>
+<h2>第2章 数字逻辑基础 复习提纲</h2>
+<p>本章是整门数字电路与逻辑设计课程的<strong>理论基础</strong>，解决“如何用数学语言描述逻辑关系、如何用物理器件实现逻辑运算、以及如何优化逻辑表达式以指导电路设计”的问题。</p>
+<hr />
+<h2>一、布尔代数基础</h2>
+<h3>1.1 基本概念</h3>
+<ul>
+<li><strong>逻辑常量与变量</strong>：取值仅可为 <code>0</code> 或 <code>1</code>（表示两种对立状态）。</li>
+<li><strong>逻辑表达式</strong>：由逻辑变量、常量经逻辑运算符连接而成。</li>
+<li><strong>逻辑函数</strong>：<code>f_i(z1,z2,...,zm) = y_i</code>，表示输入与输出的逻辑关系。</li>
+</ul>
+<h3>1.2 三种基本运算与优先级</h3>
+<ul>
+<li><strong>基本运算</strong>：与(·/∧)、或(+/∨)、非(¯/¬)。</li>
+<li><strong>优先级（高→低）</strong>：括号 → 非 → 与 → 或。</li>
+<li><strong>书写建议</strong>：不建议省略逻辑乘符号，以避免歧义。</li>
+</ul>
+<h3>1.3 公理系统</h3>
+<ul>
+<li><strong>相等公理</strong>：若 <code>X ≠ 1</code> 则 <code>X = 0</code>；若 <code>X ≠ 0</code> 则 <code>X = 1</code>。</li>
+<li><strong>取反公理</strong>：<code>¬0 = 1</code>，<code>¬1 = 0</code>。</li>
+<li><strong>常量运算公理</strong>：</li>
+<li><code>0·0 = 0</code>，<code>1+1 = 1</code></li>
+<li><code>1·1 = 1</code>，<code>0+0 = 0</code></li>
+<li><code>0·1 = 1·0 = 0</code>，<code>1+0 = 0+1 = 1</code></li>
+</ul>
+<h3>1.4 单变量定理</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>或形式</th>
+<th>与形式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一致性</td>
+<td><code>X·0 = 0</code></td>
+<td><code>X+1 = 1</code></td>
+</tr>
+<tr>
+<td>同一律</td>
+<td><code>X·1 = X</code></td>
+<td><code>X+0 = X</code></td>
+</tr>
+<tr>
+<td>幂等律</td>
+<td><code>X·X = X</code></td>
+<td><code>X+X = X</code></td>
+</tr>
+<tr>
+<td>互补律</td>
+<td><code>X·¬X = 0</code></td>
+<td><code>X+¬X = 1</code></td>
+</tr>
+<tr>
+<td>还原律</td>
+<td><code>¬(¬X) = X</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>1.5 多变量定理</h3>
+<ul>
+<li><strong>交换律</strong>：<code>X+Y = Y+X</code>，<code>X·Y = Y·X</code></li>
+<li><strong>结合律</strong>：<code>(X+Y)+Z = X+(Y+Z)</code>，<code>(X·Y)·Z = X·(Y·Z)</code></li>
+<li><strong>分配律</strong>（【重点】）：</li>
+<li><code>X·(Y+Z) = X·Y + X·Z</code></li>
+<li><code>X + Y·Z = (X+Y)·(X+Z)</code> （与算术分配律不同）</li>
+<li><strong>吸收律</strong>：<code>X + X·Y = X</code>；<code>X·(X+Y) = X</code></li>
+<li><strong>组合律</strong>：<code>X·Y + X·¬Y = X</code>；<code>(X+Y)·(X+¬Y) = X</code></li>
+<li><strong>一致律（冗余项定理）</strong>：</li>
+<li><code>X·Y + ¬X·Z + Y·Z = X·Y + ¬X·Z</code></li>
+<li><code>(X+Y)·(¬X+Z)·(Y+Z) = (X+Y)·(¬X+Z)</code></li>
+<li>其中 <code>Y·Z</code>（或 <code>Y+Z</code>）为冗余项，消除可避免时序冒险。</li>
+<li><strong>广义同一律</strong>：<code>X+X+...+X = X</code>，<code>X·X·...·X = X</code></li>
+<li><strong>德·摩根定理</strong>（【重点】）：</li>
+<li><code>¬(X1·X2·...·Xn) = ¬X1 + ¬X2 + ... + ¬Xn</code></li>
+<li><code>¬(X1+X2+...+Xn) = ¬X1·¬X2·...·¬Xn</code></li>
+<li><strong>广义德·摩根定理</strong>：<code>¬F(X1,X2,...,Xn,+,·) = F(¬X1,¬X2,...,¬Xn,·,+)</code></li>
+<li><strong>香农展开定理</strong>：</li>
+<li>与或式：<code>F = X1·F(1,X2,...,Xn) + ¬X1·F(0,X2,...,Xn)</code></li>
+<li>或与式：<code>F = [X1+F(0,X2,...,Xn)]·[¬X1+F(1,X2,...,Xn)]</code></li>
+</ul>
+<h3>1.6 常用导出公式</h3>
+<ul>
+<li><code>X + ¬X·Y = X + Y</code></li>
+<li><code>X·(¬X+Y) = X·Y</code></li>
+</ul>
+<h3>1.7 对偶定律与反演定律</h3>
+<ul>
+<li><strong>对偶定律</strong>：<code>·</code> 与 <code>+</code> 互换，<code>0</code> 与 <code>1</code> 互换，保持优先级；等式成立其对偶式也成立。</li>
+<li><strong>反演定律（求补函数）</strong>：<code>·</code> ↔ <code>+</code>，<code>0</code> ↔ <code>1</code>，原变量 ↔ 反变量，保持优先级，<strong>非单个变量上的取反号保留不变</strong>。</li>
+</ul>
+<hr />
+<h2>二、逻辑门</h2>
+<h3>2.1 基本逻辑门</h3>
+<ul>
+<li><strong>与门 (AND)</strong>：<code>F = X·Y</code>，输入全1输出才为1。</li>
+<li><strong>或门 (OR)</strong>：<code>F = X+Y</code>，有1出1。</li>
+<li><strong>非门 (NOT)</strong>：<code>F = ¬X</code>，反相。</li>
+</ul>
+<h3>2.2 复合逻辑门</h3>
+<ul>
+<li><strong>与非门 (NAND)</strong>：<code>F = ¬(X·Y)</code>，全1出0，其余出1。</li>
+<li><strong>或非门 (NOR)</strong>：<code>F = ¬(X+Y)</code>，全0出1，其余出0。</li>
+<li><strong>异或门 (XOR)</strong>：<code>F = X⊕Y = ¬X·Y + X·¬Y</code>，相异出1。</li>
+<li><strong>同或门 (NXOR)</strong>：<code>F = X⊙Y = ¬X·¬Y + X·Y</code>，相同出1。</li>
+</ul>
+<h3>2.3 真值表</h3>
+<table>
+<thead>
+<tr>
+<th>A B</th>
+<th>AND</th>
+<th>OR</th>
+<th>NAND</th>
+<th>NOR</th>
+<th>XOR</th>
+<th>NXOR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0 1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1 0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1 1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 德·摩根定理与等效逻辑符号</h3>
+<ul>
+<li><code>¬(X·Y) = ¬X + ¬Y</code>（与非门 ⇔ 带反相输入的或门）</li>
+<li><code>¬(X+Y) = ¬X·¬Y</code>（或非门 ⇔ 带反相输入的与门）</li>
+</ul>
+<hr />
+<h2>三、数字抽象与电平</h2>
+<h3>3.1 模拟量与数字量</h3>
+<ul>
+<li><strong>模拟信号</strong>：时间、数值连续；<strong>数字信号</strong>：时间、数值离散。</li>
+<li><strong>转换过程</strong>：模拟信号 → 采样 → 量化 → 编码 → 数字信号。</li>
+</ul>
+<h3>3.2 逻辑值物理表征</h3>
+<ul>
+<li><strong>正逻辑</strong>（常用）：逻辑0=低电平(L)，逻辑1=高电平(H)。</li>
+<li><strong>负逻辑</strong>：逻辑0=高电平(H)，逻辑1=低电平(L)。</li>
+</ul>
+<h3>3.3 逻辑电平阈值与直流噪声容限（【重点】）</h3>
+<ul>
+<li><strong>关键阈值</strong>：</li>
+<li><code>V_OHmin</code>：输出高电平最小值</li>
+<li><code>V_OLmax</code>：输出低电平最大值</li>
+<li><code>V_IHmin</code>：输入识别为高电平的最小值</li>
+<li><code>V_ILmax</code>：输入识别为低电平的最大值</li>
+<li><strong>未定义区</strong>：输入在 <code>V_ILmax</code> 与 <code>V_IHmin</code> 之间时逻辑状态不确定。</li>
+<li><strong>噪声容限计算公式</strong>：</li>
+<li>高态噪声容限：<code>NM_H = V_OHmin - V_IHmin</code></li>
+<li>低态噪声容限：<code>NM_L = V_ILmax - V_OLmax</code></li>
+</ul>
+<hr />
+<h2>四、CMOS晶体管与门电路实现</h2>
+<h3>4.1 MOS晶体管模型</h3>
+<ul>
+<li><strong>NMOS</strong>：<code>Vgs</code> 增大（≥0）→ 导通。</li>
+<li><strong>PMOS</strong>：<code>Vgs</code> 减小（≤0）→ 导通。</li>
+<li>可视为电压控制电阻。</li>
+</ul>
+<h3>4.2 CMOS互补结构与反相器</h3>
+<ul>
+<li><strong>结构</strong>：NMOS与PMOS成对，栅极相连接输入，漏极相连接输出；NMOS源极接地，PMOS源极接 <code>VDD</code>。</li>
+<li><strong>反相器</strong>：输入1 → NMOS导通、输出0；输入0 → PMOS导通、输出1。无直流通路，静态功耗极低。</li>
+</ul>
+<h3>4.3 基本逻辑门CMOS实现</h3>
+<ul>
+<li><strong>与非门</strong>：上拉网络（PMOS）并联，下拉网络（NMOS）串联。</li>
+<li><strong>或非门</strong>：上拉网络（PMOS）串联，下拉网络（NMOS）并联。</li>
+<li><strong>k输入扩展</strong>：</li>
+<li>k输入与非门：k个PMOS并联 + k个NMOS串联。</li>
+<li>k输入或非门：k个PMOS串联 + k个NMOS并联。</li>
+<li><strong>扇入限制</strong>：一般≤8，多输入可级联实现。</li>
+</ul>
+<h3>4.4 复合门与特殊电路</h3>
+<ul>
+<li><strong>与门</strong>：与非门 + 非门级联（6个晶体管）。</li>
+<li><strong>缓冲器</strong>：两级非门级联，增强信号驱动能力。</li>
+<li><strong>传输门</strong>：PMOS与NMOS并联，互补信号控制，功能为双向开关。</li>
+<li><strong>单级两级逻辑</strong>：</li>
+<li><strong>与或非 (AOI)</strong>：<code>Z = ¬[(A·B) + (C·D)]</code><ul>
+<li>上拉PMOS：A、B串联支路 与 C、D串联支路 再并联。</li>
+<li>下拉NMOS：A、B并联支路 与 C、D并联支路 再串联。</li>
+</ul>
+</li>
+<li><strong>或与非 (OAI)</strong>：<code>Z = ¬[(A+B)·(C+D)]</code><ul>
+<li>上拉PMOS：A、B并联支路 与 C、D并联支路 再串联。</li>
+<li>下拉NMOS：A、B串联支路 与 C、D串联支路 再并联。</li>
+</ul>
+</li>
+<li><strong>注意</strong>：严禁输出端出现 <code>VDD</code> 到地的低阻通路。</li>
+</ul>
+<h3>4.5 时序与功耗特性</h3>
+<ul>
+<li><strong>转换时间</strong>：</li>
+<li>上升时间 <code>tr</code>：10%→90% 高电平时间。</li>
+<li>下降时间 <code>tf</code>：90%→10% 低电平时间。</li>
+<li><strong>传播延迟</strong>：</li>
+<li><code>t_pHL</code>：输出从高到低的延迟（50%点）。</li>
+<li><code>t_pLH</code>：输出从低到高的延迟（50%点）。</li>
+<li><strong>动态功耗</strong>（【重点】）：
+  [
+  P_D = (C_L + C_{PD}) \times V_{CC}^2 \times f
+  ]
+  其中 <code>C_L</code> 为负载电容，<code>C_{PD}</code> 为内部功耗电容，<code>f</code> 为输出信号转换频率。</li>
+</ul>
+<hr />
+<h2>五、逻辑函数的标准表示</h2>
+<h3>5.1 逻辑函数与真值表</h3>
+<ul>
+<li><strong>逻辑函数</strong>：n 输入有 <code>2^{2^n}</code> 种可能。</li>
+<li><strong>真值表</strong>：n 输入对应 <code>2^n</code> 行，所有输入组合按二进制递增排列。是真值表、表达式、波形图、卡诺图等转换的<strong>枢纽</strong>。</li>
+</ul>
+<h3>5.2 标准表达式形式</h3>
+<ul>
+<li><strong>乘积项（与项）</strong>、<strong>求和项（或项）</strong>。</li>
+<li><strong>积之和 (SOP)</strong>：与项相或；<strong>和之积 (POS)</strong>：或项相与。</li>
+</ul>
+<h3>5.3 最小项与最大项</h3>
+<ul>
+<li><strong>最小项 <code>m_i</code></strong>：标准乘积项，每个变量出现且仅出现一次。编号 i 对应的输入组合使其值为1。</li>
+<li><strong>最大项 <code>M_i</code></strong>：标准求和项，编号 i 对应的输入组合使其值为0。</li>
+<li><strong>标准列表</strong>：</li>
+<li>最小项列表：<code>F = Σm(i1, i2, ...)</code></li>
+<li>最大项列表：<code>F = ΠM(j1, j2, ...)</code></li>
+<li><strong>转换规则</strong>（【重点】）：两组编号互为补集，并集为全集 <code>{0,1,…,2^n-1}</code>，交集为空。</li>
+<li>例：<code>F(A,B,C) = Σm(0,6,7) = ΠM(1,2,3,4,5)</code></li>
+</ul>
+<hr />
+<h2>六、逻辑函数的化简</h2>
+<h3>6.1 化简目的</h3>
+<p>减少变量数、减少门数、减小电路规模，以适应FPGA/ASIC有限资源。</p>
+<h3>6.2 代数化简法</h3>
+<ul>
+<li><strong>原理</strong>：利用互补律、吸收律、组合律、一致律等消去多余项或多余因子。</li>
+<li><strong>前提</strong>：超过两级的先化为两级，整体取反先化为单变量取反。</li>
+<li><strong>最简表达式判定</strong>（【重点】）：</li>
+<li>乘积项（与项）个数最少；</li>
+<li>每个乘积项中的变量个数最少。</li>
+<li><strong>优缺点</strong>：直观但无固定步骤，技巧性强，难以判断是否最简。</li>
+</ul>
+<h3>6.3 卡诺图化简法</h3>
+<ul>
+<li><strong>原理</strong>：真值表的图形化，利用格雷码保证几何相邻即逻辑相邻。</li>
+<li><strong>合并规则</strong>：相邻 <code>2^i</code> 个“1单元”可合并为一个乘积项，消去 <code>i</code> 个变量。相邻“0单元”合并可得到和之积的质蕴涵项。</li>
+<li><strong>蕴涵项与覆盖</strong>：</li>
+<li>蕴涵项：覆盖某些最小项的乘积项。</li>
+<li>质蕴涵项：不被其他蕴涵项覆盖的蕴涵项。</li>
+<li>实质蕴涵项：包含至少一个独有最小项的质蕴涵项。</li>
+<li>最小覆盖：包含所有实质蕴涵项 + 最少的其他质蕴涵项以覆盖全部最小项。</li>
+<li><strong>化简步骤</strong>：
+  1. 填卡诺图；
+  2. 找所有质蕴涵项（从最大圈开始）；
+  3. 标出实质蕴涵项；
+  4. 用最少质蕴涵项覆盖剩余最小项；
+  5. 写出最简表达式。</li>
+<li><strong>限制</strong>：变量数 &gt; 6 时卡诺图极为复杂，多使用EDA工具。</li>
+</ul>
+<hr />
+<h2>七、逻辑函数变换</h2>
+<h3>7.1 等效逻辑符号</h3>
+<ul>
+<li>与非门 ↔ 带反相输入的或门</li>
+<li>或非门 ↔ 带反相输入的与门</li>
+<li>通过德·摩根定理实现变换。</li>
+</ul>
+<h3>7.2 与-或 → 与非-与非</h3>
+<ul>
+<li><strong>方法</strong>（【重点】）：整体两次取反，对下层应用德·摩根。</li>
+<li>例：<code>F = XY + YZ + XZ</code> → <code>F = ¬[¬(XY)·¬(YZ)·¬(XZ)]</code></li>
+<li><strong>意义</strong>：电路可全部使用速度更快的与非门。</li>
+</ul>
+<h3>7.3 利用反相器对替换门类型</h3>
+<ul>
+<li>在两级门之间插入一对反相器，结合德·摩根定理可把与门/或门换成与非/或非门。</li>
+<li>任何积之和表达式均可用“与-或”和“与非-与非”两种结构实现。</li>
+</ul>
+<h3>7.4 不同形式表达式间的变换</h3>
+<ul>
+<li>利用布尔代数可将SOP转换为POS等，以适配不同门电路资源。</li>
+</ul>
+<hr />
+<h2>八、高频考点</h2>
+<ol>
+<li><strong>布尔代数三大重点定理</strong>：分配律 <code>X+Y·Z = (X+Y)(X+Z)</code>、一致律（冗余项消除）、德·摩根定理。</li>
+<li><strong>对偶式与反演式的求法</strong>，尤其是保持优先级和非变量取反号。</li>
+<li><strong>直流噪声容限计算</strong>：<code>NM_H = V_OHmin - V_IHmin</code>，<code>NM_L = V_ILmax - V_OLmax</code>。</li>
+<li><strong>CMOS与非门/或非门的上下拉网络结构</strong>，AOI/OAI的串并联实现。</li>
+<li><strong>动态功耗公式</strong>：<code>P_D = (C_L + C_{PD})·V_CC^2·f</code>。</li>
+<li><strong>最小项与最大项列表的相互转换</strong>（编号取补集）。</li>
+<li><strong>卡诺图化简</strong>：找质蕴涵项、实质蕴涵项，求最小覆盖。</li>
+<li><strong>与-或表达式到与非-与非表达式的转换</strong>。</li>
+</ol>
+<hr />
+<h2>九、易错点</h2>
+<ol>
+<li><strong>布尔代数优先级</strong>：不加括号时容易把 <code>A·B + C·D</code> 与或顺序搞混。</li>
+<li><strong>分配律</strong>：<code>X + Y·Z = (X+Y)(X+Z)</code> 与算术规则不同，易算错。</li>
+<li><strong>反演定律</strong>：非单个变量上的取反号（如 <code>¬(AB)</code> 整体取反）需<strong>保留</strong>，不能直接拆成单个变量反。</li>
+<li><strong>逻辑电平未定义区</strong>：输入在 <code>V_ILmax</code> 与 <code>V_IHmin</code> 之间时，输出不可预测。</li>
+<li><strong>噪声容限方向</strong>：<code>NM_H</code> 用 <code>V_OH</code> 减 <code>V_IH</code>，<code>NM_L</code> 用 <code>V_IL</code> 减 <code>V_OL</code>，减数与被减数易颠倒。</li>
+<li><strong>CMOS门结构</strong>：与非门是PMOS并联、NMOS串联；或非门相反。AOI/OAI的串并联关系容易画反。</li>
+<li><strong>卡诺图变量顺序</strong>：必须用格雷码，否则相邻性丢失。</li>
+<li><strong>代数化简最简判断</strong>：仅项数最少且每项变量最少两项同时满足才算最简，容易漏判。</li>
+<li><strong>最小项/最大项编号</strong>：最小项编号是取值组合的十进制，SOP列表与POS列表是互补关系，切忌混淆。</li>
+</ol>
+<hr />
+</section>
+<section id="sec4"><h2>chap3 组合逻辑电路 · 复习提纲</h2>
+<h2>组合逻辑电路 复习提纲</h2>
+<p>本章解决如何用基本逻辑门构建无记忆的数字电路系统，涵盖从逻辑抽象、化简、电路实现到时序分析与可靠性评估的完整设计流程。</p>
+<hr />
+<h2>1. 组合逻辑电路基本概念与构成规则</h2>
+<h3>1.1 定义</h3>
+<ul>
+<li><strong>组合逻辑电路</strong>：输出仅由当前输入决定的逻辑电路。</li>
+<li><strong>时序逻辑电路</strong>：输出由当前输入和历史状态共同决定的电路（含存储/反馈）。</li>
+<li><strong>电路构成</strong>：由逻辑门和连线（输入线、内部线、输出线）互连构成。</li>
+</ul>
+<h3>1.2 构成规则（必须同时满足）</h3>
+<ol>
+<li><strong>组件规则</strong>：每个组件本身必须是组合逻辑电路。</li>
+<li><strong>输出禁止互连</strong>：任意两个组件的输出端不能直接连接在一起。</li>
+<li><strong>禁止反馈</strong>：输出信号不能直接或间接反馈到任一组件输入端。</li>
+</ol>
+<hr />
+<h2>2. 组合逻辑电路的设计流程</h2>
+<h3>2.1 设计步骤</h3>
+<ol>
+<li><strong>逻辑抽象</strong>：根据功能列出真值表，写出最小项之和表达式 <code>F = Σm(...)</code>。</li>
+<li><strong>逻辑化简</strong>：用布尔代数或卡诺图得到最简表达式。
+   - 常用化简公式：<code>X·Y + X·Y' = X</code></li>
+<li><strong>函数转换</strong>：根据给定器件将表达式转化为适配形式。</li>
+<li><strong>画电路图</strong>：按逻辑门优先级绘制，标注位宽 <code>n</code>（多位信号）。
+   - 优先级：非 &gt; 与、与非 &gt; 异或、同或 &gt; 或、或非</li>
+<li><strong>评价电路</strong>：考虑速度、硬件开销、扇入/扇出系数等。</li>
+</ol>
+<h3>2.2 无关项（d / x）</h3>
+<ul>
+<li><strong>定义</strong>：某些输入组合输出可任取 0 或 1。</li>
+<li><strong>化简利用</strong>：可当作 0 或 1 使电路更简，但可能降低抗干扰性。</li>
+<li><strong>非法值 X</strong>：两输出端错误短接且电平冲突时的不确定状态。</li>
+<li><strong>高阻态 Hi-Z</strong>：三态门输出断开状态，电气上等效于开路。</li>
+</ul>
+<h3>2.3 三态门</h3>
+<ul>
+<li><code>EN=0</code> 时输出为 Hi‑Z；<code>EN=1</code> 时输出等于输入。</li>
+<li><strong>用途</strong>：构建共享总线，允许多器件输出到同一线。</li>
+</ul>
+<hr />
+<h2>3. 典型组合逻辑部件</h2>
+<h3>3.1 译码器</h3>
+<ul>
+<li><strong>功能</strong>：n 位输入映射为 2ⁿ 个输出端中一个有效（常用 One‑Hot 编码）。</li>
+<li><strong>74X139（2‑4 译码器）</strong></li>
+<li>高电平有效输出；<code>EN=0</code> 全部输出 <code>0</code>。</li>
+<li>输出逻辑：<code>Yi = EN · mi</code></li>
+<li><strong>74X138（3‑8 译码器）</strong></li>
+<li>低电平有效输出；3 个使能端：G1（高有效），G2A_L、G2B_L（低有效）。</li>
+<li>内部使能：<code>EN = G1 &amp; !(G2A_L) &amp; !(G2B_L)</code></li>
+<li>输出逻辑：<code>Yi_L = !(EN · Mi)</code> （<code>Mi</code> 为最大项）</li>
+<li><strong>级联扩展</strong>：利用使能端+地址线，用多片小译码器构成大译码器（如 5‑32 译码器用一片 2‑4 加四片 3‑8 实现）。</li>
+</ul>
+<h3>3.2 七段显示译码器</h3>
+<ul>
+<li><strong>结构</strong>：7 段（a~g）+ 小数点 dp。</li>
+<li><strong>接法</strong>：</li>
+<li>共阳极：公共阳极，输入 <code>0</code> 亮。</li>
+<li>共阴极：公共阴极，输入 <code>1</code> 亮。</li>
+<li><strong>真值表（共阴极，0~F）</strong>：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>数字</th>
+<th>输入(A3A2A1A0)</th>
+<th>a~g</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0000</td>
+<td>1111110</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0001</td>
+<td>0110000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0010</td>
+<td>1101101</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0011</td>
+<td>1111001</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0100</td>
+<td>0110011</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0101</td>
+<td>1011011</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0110</td>
+<td>1011111</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0111</td>
+<td>1110000</td>
+</tr>
+<tr>
+<td>8</td>
+<td>1000</td>
+<td>1111111</td>
+</tr>
+<tr>
+<td>9</td>
+<td>1001</td>
+<td>1110011</td>
+</tr>
+<tr>
+<td>A</td>
+<td>1010</td>
+<td>1110111</td>
+</tr>
+<tr>
+<td>b</td>
+<td>1011</td>
+<td>0011111</td>
+</tr>
+<tr>
+<td>C</td>
+<td>1100</td>
+<td>1001110</td>
+</tr>
+<tr>
+<td>d</td>
+<td>1101</td>
+<td>0111101</td>
+</tr>
+<tr>
+<td>E</td>
+<td>1110</td>
+<td>1001111</td>
+</tr>
+<tr>
+<td>F</td>
+<td>1111</td>
+<td>1000111</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>a 段化简举例</strong>：</li>
+<li>A~F 为无关项：<code>a = A3 + A1 + (A2 ⊕ A0)</code></li>
+<li>A~F 为有效项：<code>a = A2·A0 + ¬A2·¬A0 + A1·¬A0 + ¬A3·A1 + A3·¬A2·¬A0</code></li>
+</ul>
+<h3>3.3 编码器</h3>
+<ul>
+<li><strong>互斥编码器</strong>：任一时刻仅一个输入有效。</li>
+<li>8‑3 互斥编码器输出：
+    <code>O0 = I4 + I5 + I6 + I7
+    O1 = I2 + I3 + I6 + I7
+    O2 = I1 + I3 + I5 + I7</code></li>
+<li><strong>优先级编码器</strong>：多个输入同时有效时，对最高优先级者编码。</li>
+<li>判定逻辑（I0 优先级最高）：<ul>
+<li>若 I0=1 → 000</li>
+<li>若 I0=0, I1=1 → 001</li>
+<li>若 I0=I1=0, I2=1 → 010</li>
+<li>依此类推，其余为无关项。</li>
+</ul>
+</li>
+</ul>
+<h3>3.4 多路选择器（MUX）与多路分配器（DMUX）</h3>
+<ul>
+<li><strong>MUX</strong>：n 位选择端控制 2ⁿ 路输入选一路输出。</li>
+<li>基本 2‑路 MUX：<code>F = A·¬S + B·S</code></li>
+<li><strong>DMUX</strong>：将单路输入分配到 2ⁿ 路输出中的一路。</li>
+<li><strong>DMUX 真值表（4路）</strong>：
+  | S1 S0 | (D0,D1,D2,D3)       |
+  |-------|---------------------|
+  | 00    | (D, 0, 0, 0)        |
+  | 01    | (0, D, 0, 0)        |
+  | 10    | (0, 0, D, 0)        |
+  | 11    | (0, 0, 0, D)        |</li>
+<li><strong>MUX‑DMUX 联用</strong>：实现多通道分时共享单总线。</li>
+</ul>
+<h4>用 MUX 实现组合逻辑</h4>
+<ol>
+<li><strong>全变量选择法</strong>：n 个函数变量接选择端，数据端 <code>Di = 1</code>（若最小项 <code>mi</code> 出现）否则 <code>0</code>。</li>
+<li><strong>降维选择法</strong>：选 n‑1 个变量为选择端，剩余变量 X 作数据输入，<code>Di ∈ {0, 1, X, X'}</code>。
+   - 例：<code>F(A,B,C)=∑m(1,3,5,6)</code>，选 B、C 为选择端 → <code>D00=0, D01=1, D10=A, D11=A'</code>。</li>
+<li><strong>多变量函数</strong>：先逻辑化简，再设置选择变量和数据输入，获得最简实现。</li>
+</ol>
+<h3>3.5 加法器</h3>
+<ul>
+<li><strong>半加器</strong>：<code>S = A ⊕ B</code>，<code>CO = A·B</code></li>
+<li><strong>全加器</strong>：</li>
+<li><code>F = A ⊕ B ⊕ Cin</code></li>
+<li><code>Cout = A·B + A·Cin + B·Cin</code></li>
+<li><strong>行波进位加法器</strong>（n 位）：</li>
+<li>结构：n 个全加器级联，低位 Cout 接高位 Cin。</li>
+<li>延迟公式：<code>t_ADD = t_XYCout + (n-2)·t_CinCout + t_CinS</code></li>
+<li>特点：简单但速度慢，高位需等待进位传递。</li>
+</ul>
+<hr />
+<h2>4. 组合逻辑的时序分析</h2>
+<h3>4.1 传输延迟</h3>
+<ul>
+<li><code>t_pHL</code>：输出高→低变化延迟。</li>
+<li><code>t_pLH</code>：输出低→高变化延迟。</li>
+<li><strong>传输延迟 Tpd</strong>：输入变化到所有输出稳定所需<strong>最长时间</strong>。</li>
+<li><strong>最小延迟 Tcd</strong>：输入变化到任意输出首次变化所需<strong>最短时间</strong>。</li>
+</ul>
+<h3>4.2 关键路径与最短路径</h3>
+<ul>
+<li><strong>关键路径</strong>：输入→输出经历的最长延迟路径，<code>Tpd = Σ关键路径上各元件传输延迟</code>。</li>
+<li><strong>最短路径</strong>：输入→输出经历的最短延迟路径，<code>Tcd = Σ最短路径上各元件最小延迟</code>。</li>
+</ul>
+<hr />
+<h2>5. 竞争与冒险</h2>
+<h3>5.1 基本概念</h3>
+<ul>
+<li><strong>竞争</strong>：同一信号经不同路径到达输出端，因延迟差异产生到达时间差。</li>
+<li><strong>毛刺</strong>：竞争引起的输出尖峰错误信号。</li>
+<li><strong>冒险</strong>：存在毛刺的电路现象。</li>
+</ul>
+<h3>5.2 静态冒险检测与消除</h3>
+<ul>
+<li><strong>卡诺图检测法</strong>：两个质蕴涵项相切（相邻但未被同一圈覆盖），当信号在两者间跳变且存在延迟差时可能产生冒险。</li>
+<li><strong>静态‑1 冒险消除</strong>：在最小项之和中加入冗余“一致项”，覆盖相切边界。</li>
+<li><strong>一致项</strong>：两个乘积项去除互为补变量的因子后的剩余部分乘积。</li>
+<li><strong>静态‑0 冒险消除</strong>：在最大项之积中加入冗余项，覆盖相切边界。</li>
+<li><strong>示例</strong>：<code>F = X·¬Z + Y·Z</code>，当 X=Y=1，Z 从 1→0 时，因非门延迟出现负向毛刺。</li>
+</ul>
+<hr />
+<h2>【高频考点】</h2>
+<ol>
+<li>组合逻辑电路的三大构成规则（尤其是输出禁止互连、禁止反馈）。</li>
+<li>无关项的处理方法及对电路可靠性的影响。</li>
+<li>三态门功能与高阻态（Hi‑Z）在总线结构中的应用。</li>
+<li>74X138 使能逻辑与输出逻辑（低有效、使能端极性判断）。</li>
+<li>译码器级联扩展方法（利用使能端实现 5‑32 等大译码器）。</li>
+<li>优先级编码器的真值表与判定规则。</li>
+<li>用 MUX 实现任意组合逻辑函数的全变量选择法和降维选择法。</li>
+<li>全加器逻辑表达式与行波进位加法器的延迟计算公式。</li>
+<li>组合逻辑的 Tpd / Tcd 定义及关键路径计算。</li>
+<li>卡诺图检测静态冒险的方法及添加一致项消除的技巧。</li>
+</ol>
+<h2>【易错点】</h2>
+<ol>
+<li><strong>74X138 使能端极性</strong>：G1 高有效，G2A_L、G2B_L 低有效，必须全部满足内部使能才为 1。</li>
+<li><strong>共阳/共阴极七段显示器</strong>：共阳极输入 0 亮，共阴极输入 1 亮，真值表必须与接法对应。</li>
+<li><strong>MUX 降维实现时 Di 的确定</strong>：Di 可为某个变量或其反变量，不能遗漏函数的最小项。</li>
+<li><strong>行波进位加法器延迟</strong>：高位加法依赖低位进位，延迟公式中 <code>(n-2)</code> 项易误写为 <code>(n-1)</code>。</li>
+<li><strong>竞争与冒险</strong>：仅静态冒险可通过冗余项完全消除；并非所有竞争都造成实际毛刺，但存在相切即为潜在冒险。</li>
+<li><strong>输出禁止互连规则</strong>：三态门通过分时使能可共享总线，不等于直接互连，普通门输出直接相连会产生非法值 X。</li>
+</ol>
+<hr />
+</section>
+<section id="sec5"><h2>chap4 时序逻辑电路 · 复习提纲</h2>
+<h2>第4章 时序逻辑电路</h2>
+<p>本章解决数字系统中<strong>状态记忆与状态转移</strong>的问题，是构建计数器、寄存器、状态机和各类存储控制单元的基础，使你掌握有时序行为的电路分析与设计方法。</p>
+<hr />
+<h2>1. 时序逻辑电路概述</h2>
+<ul>
+<li><strong>组合逻辑</strong>：输出仅取决于当前输入。</li>
+<li><strong>时序逻辑</strong>：输出取决于当前输入与当前状态（过去行为的综合）。</li>
+<li><strong>三大核心问题</strong>：状态如何记忆？状态何时如何流转？怎样用工具描述？</li>
+<li><strong>基本结构</strong></li>
+<li>状态记忆模块（触发器）</li>
+<li>次态激励逻辑模块 F（输入：现态 + 外部输入 → 激励信号）</li>
+<li>输出逻辑模块 G</li>
+<li><strong>Mealy 型电路</strong>：<code>输出 = G(现态，输入)</code></li>
+<li><strong>Moore 型电路</strong>：<code>输出 = G(现态)</code> （输出与当前输入无关）</li>
+<li><strong>触发方式</strong></li>
+<li>边沿触发（时序电路主流）：状态仅在时钟边沿改变。</li>
+<li>电平触发：状态在特定电平期间改变。</li>
+<li>上升沿/正边沿触发、下降沿/负边沿触发。</li>
+<li><strong>时钟关键参数</strong></li>
+<li><code>t_CQ</code>（锁存/传输延迟）：从时钟触发边沿到 Q 端稳定所需时间。</li>
+<li><code>t_setup</code>（建立时间）：输入在时钟有效边沿<strong>之前</strong>必须稳定的时间。</li>
+<li><code>t_hold</code>（保持时间）：输入在时钟有效边沿<strong>之后</strong>必须稳定的时间。</li>
+<li>时钟频率 <code>f = 1 / t_per</code>，占空比 <code>Duty Cycle = t_H / t_per</code>。</li>
+<li>若输入在建立/保持窗口内变化，输出可能不可预测。</li>
+</ul>
+<hr />
+<h2>2. 锁存器与触发器</h2>
+<h3>2.1 双稳态元件</h3>
+<ul>
+<li>存储 1 位二进制数据，具有两个互补输出 Q 和 <code>Q̅</code>。</li>
+<li>分类：</li>
+<li>锁存器（Latch）：电平触发。</li>
+<li>触发器（Flip-flop）：边沿触发，具有时钟控制。</li>
+</ul>
+<h3>2.2 SR 锁存器</h3>
+<ul>
+<li>由交叉耦合或非门构成，输入 S(置位)、R(复位)。</li>
+<li>功能表（或非门实现）：
+  | S | R | Q | Q̅ |
+  |:-:|:-:|:-:|:-:|
+  | 0 | 0 | 保持 | 保持 |
+  | 0 | 1 | 0 | 1 |
+  | 1 | 0 | 1 | 0 |
+  | 1 | 1 | 无效 | 0 |</li>
+<li><strong>约束条件</strong>：<code>S · R ≠ 1</code>（S 和 R 不能同时为 1）</li>
+<li><strong>特征方程</strong>：<code>Q* = S + R̅ · Q</code></li>
+<li>常用于设置标志位。</li>
+</ul>
+<h3>2.3 D 锁存器</h3>
+<ul>
+<li>单个数据输入 D，S、R 互补，消除无效状态，也称透明锁存器。</li>
+<li>C = 0：保持；C = 1：<code>Q = D</code>。</li>
+<li>特征方程（C=1 时）：<code>Q* = D</code></li>
+</ul>
+<h3>2.4 D 触发器</h3>
+<ul>
+<li>由主、从 D 锁存器串联构成，边沿触发（通常上升沿）。</li>
+<li>工作过程：CLK=0 主锁存器写入、从锁存器保持；上升沿主锁存器锁存、从锁存器输出；CLK=1 主保持、从写入。</li>
+<li>特征方程：<code>Q* = D</code></li>
+<li>带使能 EN：EN=1 时 <code>Q* = D</code>，EN=0 时保持。</li>
+<li>具有异步/同步预置 PR 和清零 CLR 端。</li>
+</ul>
+<h3>2.5 边沿触发式 J-K 触发器</h3>
+<ul>
+<li>解决 SR 锁存器约束问题，J=K=1 时翻转。</li>
+<li>功能表（上升沿触发）：
+  | J | K | CLK | Q* |
+  |:-:|:-:|:--:|:--:|
+  | 0 | 0 | ↑ | 保持(Q) |
+  | 0 | 1 | ↑ | 0 |
+  | 1 | 0 | ↑ | 1 |
+  | 1 | 1 | ↑ | Q̅ (翻转) |</li>
+<li>特征方程：<code>Q* = J · Q̅ + K̅ · Q</code></li>
+</ul>
+<h3>2.6 T 触发器</h3>
+<ul>
+<li>T=1 时状态翻转，T=0 时保持。</li>
+<li>特征方程：<code>Q* = T · Q̅ + T̅ · Q = T ⊕ Q</code></li>
+<li>可由 D 触发器（Q̅ 接至 D）或 JK 触发器（J=K=T）实现，常用于计数器和分频器。</li>
+</ul>
+<hr />
+<h2>3. 同步时序逻辑电路设计</h2>
+<h3>3.1 有限状态机（FSM）基础</h3>
+<ul>
+<li>FSM 五元组：<code>(Q, Σ, δ, q0, F)</code> —— 状态集、输入字母表、转移函数、初始状态、接受状态集。</li>
+<li>状态图：圆圈表示状态，有向边表示转移，边上标注输入/输出（Mealy）或状态内标注输出（Moore）。</li>
+</ul>
+<h3>3.2 设计流程</h3>
+<ol>
+<li>需求分析 → 原始状态图/表</li>
+<li>状态化简</li>
+<li>状态编码</li>
+<li>确定触发器并推导激励方程、输出方程</li>
+<li>绘制逻辑电路图 → 自启动/挂起检查</li>
+</ol>
+<h3>3.3 状态图/表构建规则</h3>
+<ul>
+<li>从初始状态出发，遍历所有输入组合，直至无新状态产生。</li>
+<li>转移条件互斥性：从每个状态出发的各转移条件两两逻辑与 <strong>等于 0</strong>。</li>
+<li>转移条件完备性：从每个状态出发的所有转移条件逻辑或 <strong>等于 1</strong>。</li>
+</ul>
+<h3>3.4 状态化简</h3>
+<ul>
+<li>等价定义：在所有输入下输出相同，且次态相同或次态等价。</li>
+<li>等价传递性：A 等价 B 且 B 等价 C ⇒ A 等价 C，可合并为一个状态。</li>
+<li>判定情形：</li>
+<li>次态相同</li>
+<li>次态交错</li>
+<li>次态循环</li>
+<li>次态对等价</li>
+</ul>
+<h3>3.5 状态编码（相邻法三准则）</h3>
+<ol>
+<li>次态相同的现态，其编码尽量相邻。</li>
+<li>同一现态的各个次态，其编码尽量相邻。</li>
+<li>输出相同的现态，其编码尽量相邻。</li>
+</ol>
+<h3>3.6 激励方程与输出方程推导</h3>
+<ul>
+<li>D 触发器激励方程：<code>D = Q*</code></li>
+<li>根据编码后的状态转移表，利用所选触发器的特征方程导出激励方程。</li>
+<li>输出方程由状态图/表直接得到。</li>
+</ul>
+<h3>3.7 未用状态与自启动</h3>
+<ul>
+<li>编码空间大于实际状态数时，未用状态可能形成循环导致“挂起”（死锁）。</li>
+<li>自启动能力：电路从未用状态能在有限时钟内进入正常工作循环，且无错误输出。</li>
+<li>解决方案：预置处理或利用无关项修正设计。</li>
+</ul>
+<h3>3.8 时序分析（建立/保持时间容限）</h3>
+<ul>
+<li><strong>建立时间容限公式</strong>（需 &gt;0）：
+  <code>t_setup_slack = t_clk − t_ffpd(max) − t_comb(max) − t_setup</code></li>
+<li><strong>保持时间容限公式</strong>（需 &gt;0）：
+  <code>t_hold_slack = t_ffpd(min) + t_comb(min) − t_hold</code></li>
+<li><strong>最小时钟周期约束</strong>：
+  <code>t_clk &gt; t_ffpd(max) + t_comb(max) + t_setup</code></li>
+<li><strong>最小保持时间约束</strong>：
+  <code>t_hold &lt; t_ffpd(min) + t_comb(min)</code></li>
+</ul>
+<hr />
+<h2>4. 典型时序功能部件</h2>
+<h3>4.1 计数器</h3>
+<ul>
+<li><strong>基本概念</strong>：对外部激励信号计数，模为最大计数值。</li>
+<li><strong>分类</strong>：同步/异步；加法/减法/可逆；二进制/十进制/循环码；串行进位/并行进位。</li>
+</ul>
+<h4>异步(行波)加法计数器</h4>
+<ul>
+<li>结构：T' 触发器（翻转触发）串联，前级输出驱动后级时钟。</li>
+<li>若使用下降沿触发的 T' 触发器，用 <strong>Q</strong> 连接下一级时钟；当 <code>Q_i</code> 由 1→0 时 <code>Q_{i+1}</code> 翻转。</li>
+<li>计数序列：0000 → 0001 → ... → 1111 → 0000。</li>
+<li>最大延迟：第 n 位变化需经 <code>n × t_TQ</code>。</li>
+</ul>
+<h4>异步(行波)减法计数器</h4>
+<ul>
+<li>使用上升沿触发的 D 触发器（<code>Q̅</code> 接回 D）级联；前级 <strong>Q̅</strong> 作为后级时钟。</li>
+<li>若改用 <strong>Q</strong> 驱动时钟，则变为异步加法计数。</li>
+<li>计数序列：0000 → 1111 → 1110 → ... → 0001 → 0000。</li>
+</ul>
+<h4>同步并行加法计数器</h4>
+<ul>
+<li>所有触发器共同时钟，在有效边沿同时变化。</li>
+<li>某位翻转条件：其所有低位全为 1 <strong>且</strong> 计数使能有效。</li>
+<li>速度远快于行波计数器（全 1 回全 0 仅需一级与门加一个触发器延迟）。</li>
+</ul>
+<h3>4.2 寄存器与寄存器堆</h3>
+<ul>
+<li><strong>n 位寄存器</strong>：n 个 D 触发器并联，共同时钟，并行输入/输出。</li>
+<li><strong>三态门与总线</strong>：多寄存器共用总线时必须用三态门隔离，任一时刻最多一个使能。</li>
+<li><strong>寄存器堆（Register File）</strong></li>
+<li>容量：<code>2^k</code> 个寄存器，每个宽度 n 位。</li>
+<li>端口：两个读端口（RA、RB），一个写端口（RW）。</li>
+<li><strong>读操作</strong>：组合逻辑，无需时钟，直接经多路选择器输出。</li>
+<li><strong>写操作</strong>：时序逻辑，需时钟 <strong>Clk</strong> 和写使能 <strong>WE</strong>，在时钟沿写入 RW 指定寄存器；地址、数据、WE 必须满足建立时间。</li>
+<li>内部结构：k 位 RW 经译码产生 <code>2^k</code> 条使能线，与 WE 相与后控制寄存器写入；读端口由两个 <code>2^k:1</code> MUX 选通。</li>
+</ul>
+<h3>4.3 移位寄存器</h3>
+<h4>基本右移寄存器</h4>
+<ul>
+<li>D 触发器串联，前级 Q 接后级 D，共同时钟，实现数据在时钟沿下移位。</li>
+<li>串行输入，并行/串行输出。</li>
+</ul>
+<h4>通用移位寄存器（74X194 功能）</h4>
+<ul>
+<li>控制信号 S1、S0 与 CLR 决定操作：
+  | CLR | S1 S0 | 操作 |
+  |:---:|:-----:|:-----|
+  | 1 | × × | 清零 |
+  | 0 | 0 0 | 保持 |
+  | 0 | 0 1 | 右移（RIN → QD → … → QA） |
+  | 0 | 1 0 | 左移（LIN → QA → … → QD） |
+  | 0 | 1 1 | 并行加载 ABCD |</li>
+<li>每个触发器的 D 输入逻辑（4选1 MUX）：
+  <code>Di = S1̅·S0̅·Qi + S1̅·S0·Q_{i+1} + S1·S0̅·Q_{i-1} + S1·S0·IN_i</code></li>
+</ul>
+<h4>桶形移位寄存器</h4>
+<ul>
+<li>纯组合逻辑电路，无存储元件。</li>
+<li>通过多路选择器实现循环移位，移位位宽和方向由选择端决定，延迟固定。</li>
+<li>例：两位选择信号 S1S0 可实现循环左移 0~3 位。</li>
+</ul>
+<hr />
+<h2>【高频考点】</h2>
+<ol>
+<li>Mealy / Moore 型电路的区别与判断。</li>
+<li>触发器的特征方程、功能表：SR 约束条件、JK 翻转特性、T 触发器的异或表达。</li>
+<li>同步时序电路设计完整流程，特别是状态化简的等价判定与状态编码三准则。</li>
+<li>建立时间/保持时间的概念及容限公式计算，最小时钟周期约束。</li>
+<li>异步行波计数器的工作原理（加法/减法的时钟连接区别），同步并行计数器翻转条件。</li>
+<li>寄存器堆读写操作的时间特性（读无时钟、写需时钟沿和 WE）。</li>
+<li>通用移位寄存器 74X194 的控制模式及输入逻辑。</li>
+<li>桶形移位器的组合逻辑本质与循环移位功能。</li>
+</ol>
+<h2>【易错点】</h2>
+<ol>
+<li>混淆锁存器（电平触发，透明）与触发器（边沿触发）。</li>
+<li>SR 锁存器输入 <code>S=R=1</code> 是无效状态（且对或非门实现，<code>Q=Q̅=0</code>，违背互补），忘记约束条件 <code>S·R≠1</code>。</li>
+<li>Mealy 输出与输入直接相关，易在状态图标注时混淆输出位置。</li>
+<li>建立时间容限和保持时间容限公式中的 max/min 混淆，以及公式中符号位置记反。</li>
+<li>异步计数器中加法/减法靠 Q 或 Q̅ 驱动时钟区分不清；误以为所有边沿触发方式下接线相同。</li>
+<li>未用状态导致挂起或死锁，设计时忽略自启动检查。</li>
+<li>寄存器堆写操作：忘记数据和地址需在有效时钟沿前满足建立时间。</li>
+<li>移位寄存器左移/右移时串行输入端口（LIN/RIN）不同，弄错移位方向。</li>
+</ol>
+<hr />
+</section>
+<section id="sec6"><h2>chap6-运算方法和运算部件 · 复习提纲</h2>
+<h2>第6章 运算方法与运算部件 复习提纲</h2>
+<p>本章解决的核心问题：高级语言中的各类运算（算术、逻辑、移位等）如何通过底层硬件电路（以加法器为基础，辅以移位器和控制逻辑）高效、正确地实现。它是连接“指令集”与“硬件数据通路”的桥梁，揭示了计算机运算的底层机理。</p>
+<hr />
+<h2>1 计算机运算实现基础</h2>
+<h3>1.1 运算需求与实现流程</h3>
+<ul>
+<li><strong>运算类型</strong>：算术运算、按位运算、逻辑运算、移位、位扩展、位截断。</li>
+<li><strong>实现路径</strong>：编译器将表达式转为机器指令序列 → 硬件（以ALU为核心）执行指令。</li>
+<li><strong>RISC-V支持</strong>：定点运算（算术、逻辑、移位）与浮点运算（+、-、×、÷）。</li>
+</ul>
+<h3>1.2 运算部件的核心——加法器</h3>
+<p>所有运算最终均可由 <strong>“加法器 + 移位器 + 多路选择器 + 控制逻辑”</strong> 实现。</p>
+<hr />
+<h2>2 基本加法器设计</h2>
+<h3>2.1 全加器 (Full Adder)</h3>
+<ul>
+<li><strong>进位输出</strong>：<code>CarryOut = (A &amp; B) | (A &amp; CarryIn) | (B &amp; CarryIn)</code>，延迟 <code>2ty</code>。</li>
+<li><strong>和输出</strong>：<code>Sum = A ⊕ B ⊕ CarryIn</code>，延迟 <code>6ty</code>（一个异或门按 <code>3ty</code> 估算）。</li>
+</ul>
+<h3>2.2 串行进位加法器 (Ripple Carry Adder)</h3>
+<ul>
+<li><strong>结构</strong>：N个全加器串联，进位逐级传递。</li>
+<li><strong>优点</strong>：结构简单。</li>
+<li><strong>缺点</strong>：速度慢，延迟与位数 N 成正比。</li>
+<li><strong>延迟计算</strong>：进位总延迟 <code>2n ty</code>，最终和延迟 <code>(2n+1)ty</code>。</li>
+</ul>
+<h3>2.3 先行进位加法器 (Carry-Lookahead Adder, CLA)</h3>
+<ul>
+<li><strong>核心思想</strong>：根据输入直接并行计算所有进位，消除串行等待。</li>
+<li><strong>进位生成/传递函数</strong>：</li>
+<li>生成：<code>G_i = A_i · B_i</code></li>
+<li>传递：<code>P_i = A_i + B_i</code> (或 <code>A_i ⊕ B_i</code>)</li>
+<li>关系：<code>C_i = G_i + P_i · C_{i-1}</code></li>
+<li><strong>4位CLA延迟</strong>：<code>1(gp) + 2(CLU) + 3(XOR) = 6ty</code>。</li>
+<li><strong>全先行进位问题</strong>：硬件成本随位数急剧增高。</li>
+</ul>
+<h3>2.4 多级先行进位加法器</h3>
+<ul>
+<li><strong>局部（单级）先行进位</strong>：组内并行（CLA），组间串行。例：32位由4个8位CLA构成，延迟 <code>~12ty</code>。</li>
+<li><strong>多级先行进位 (BCLU)</strong>：组内并行，组间也并行。</li>
+<li><strong>组函数</strong>：4位一组的 <code>G* = G_3 + P_3G_2 + P_3P_2G_1 + P_3P_2P_1G_0</code> ，<code>P* = P_3P_2P_1P_0</code>。</li>
+<li><strong>16位两级先行进位延迟</strong>：总计 <code>10ty</code>。</li>
+</ul>
+<hr />
+<h2>3 算术逻辑单元 (ALU) 与标志位</h2>
+<h3>3.1 ALU功能与接口</h3>
+<ul>
+<li><strong>功能</strong>：完成无符号/带符号整数加减、逻辑运算（与、或、非、异或）、比较等。</li>
+<li><strong>控制信号</strong>：<code>ALUop</code>（k位，支持最多 <code>2^k</code> 种操作）。</li>
+<li><strong>输出</strong>：n位结果 <code>Result</code>，以及状态标志 <code>OF, SF, ZF, CF</code>。</li>
+</ul>
+<h3>3.2 带标志加法器与程序状态字</h3>
+<ul>
+<li><strong>OF (溢出标志)</strong>：<code>OF = C_n ⊕ C_{n-1}</code>。用于带符号数运算溢出判断。</li>
+<li><strong>SF (符号标志)</strong>：<code>SF = F_{n-1}</code>（结果最高位）。</li>
+<li><strong>ZF (零标志)</strong>：结果所有位全为0时置1。</li>
+<li><strong>CF (进位/借位标志)</strong>：<code>CF = C_out ⊕ C_in</code>。用于无符号数溢出和多精度运算。</li>
+<li><strong>保存</strong>：标志位写入标志寄存器供条件跳转指令使用。</li>
+</ul>
+<hr />
+<h2>4 定点数加减运算</h2>
+<h3>4.1 补码加减运算</h3>
+<ul>
+<li><strong>核心公式</strong>：<code>[A+B]补 = [A]补 + [B]补</code>，<code>[A-B]补 = [A]补 + [-B]补</code> (mod <code>2^n</code>)。</li>
+<li><strong>求相反数</strong>：<code>[-B]补 = ~[B]补 + 1</code>。</li>
+<li><strong>硬件实现</strong>：一个加法器 + 多路选择器，<code>Sub</code> 信号控制做 <code>A+B</code> 或 <code>A + ~B + 1</code>。</li>
+<li><strong>溢出判断</strong>：最高位与次高位进位不同（<code>C_n ⊕ C_{n-1} = 1</code>），或同号相加结果符号变反。</li>
+<li><strong>大小比较</strong>：</li>
+<li>无符号数：<code>CF=0</code> 时 <code>A &gt; B</code>。</li>
+<li>带符号数：<code>OF == SF</code> 时 <code>A &gt; B</code>。</li>
+</ul>
+<h3>4.2 原码加减运算</h3>
+<ul>
+<li><strong>应用</strong>：浮点数尾数运算。</li>
+<li><strong>核心</strong>：符号位与数值位分离处理。运算前先判符号，再对数值位进行求和或求差（用补码），根据最高位进位决定结果符号和是否需要求补，<strong>求差永不溢出</strong>。</li>
+</ul>
+<h3>4.3 移码加减运算</h3>
+<ul>
+<li><strong>应用</strong>：浮点数阶码运算。</li>
+<li><strong>核心</strong>：移码的和/差等于和/差的补码。运算后需将结果符号位取反，还原为移码。</li>
+<li><strong>溢出判断</strong>：在模 <code>2^n</code> 加法中，若两个加数符号位（最高位）相同，且与结果的符号位也相同，则溢出。</li>
+</ul>
+<hr />
+<h2>5 定点数乘法运算</h2>
+<h3>5.1 无符号数乘法</h3>
+<ul>
+<li><strong>核心</strong>：<strong>加法 + 右移</strong>。</li>
+<li><strong>改进方法</strong>：每步累加部分积后右移，替代最后一次性求和与乘数左移。</li>
+<li><strong>递推公式</strong>：<code>P_{i+1} = 2^{-1}(P_i + X × y_{n-i-1})</code>。</li>
+<li><strong>硬件实现（32位）</strong>：64位的{P, Y}寄存器对同步逻辑右移，根据Y的最低位决定是否加X，循环32次。</li>
+<li><strong>溢出判断</strong>：乘积的高n位不全为0则溢出。</li>
+</ul>
+<h3>5.2 原码乘法</h3>
+<ul>
+<li><strong>核心</strong>：符号异或得结果符，数值部分当无符号数乘。</li>
+<li><strong>一位乘法</strong>：判1位，循环n次。</li>
+<li><strong>两位乘法</strong>：判2位，循环n/2次。需引入T触发器处理 <code>+3X = -X + 4X</code>，<strong>需采用3位符号位（模8补码）</strong>防止部分积移位时出错。</li>
+</ul>
+<h3>5.3 补码乘法 (Booth算法)</h3>
+<ul>
+<li><strong>核心</strong>：符号位与数值统一参与运算。利用乘数相邻位的差值 <code>(y_{i-1} - y_i)</code> 决定操作。</li>
+<li><strong>Booth一位乘法规则</strong>：</li>
+<li><code>10</code>：减被乘数 (<code>-X</code>)</li>
+<li><code>01</code>：加被乘数 (<code>+X</code>)</li>
+<li><code>00</code>/<code>11</code>：仅<strong>算术右移</strong>。</li>
+<li><strong>Booth两位乘法</strong>：根据 <code>y_{i+1}y_i y_{i-1}</code> 三位组合，一次处理两位乘数，循环n/2次。</li>
+<li><strong>溢出判断</strong>：乘积的高n+1位为全0或全1时不溢出。等价于高n位每位等于低n位符号位。</li>
+<li><strong>重要关系</strong>：无符号乘与补码乘的<strong>低n位结果完全相同</strong>。</li>
+</ul>
+<hr />
+<h2>6 定点数除法运算</h2>
+<h3>6.1 无符号数除法</h3>
+<ul>
+<li><strong>核心</strong>：<strong>减法/加法 + 左移</strong>。</li>
+<li><strong>预处理</strong>：被除数需扩展为2n位，除数n位。若第一次试商为1，则商溢出。</li>
+<li><strong>恢复余数法</strong>：试商 <code>R-Y</code>，&lt;0则商0并 <code>R+Y</code> 恢复。</li>
+<li><strong>不恢复余数法（加减交替法）</strong>：</li>
+<li><code>R_i ≥ 0</code>（够减）：商1，下一步 <code>R_{i+1} = 2R_i - Y</code>。</li>
+<li><code>R_i &lt; 0</code>（不够减）：商0，下一步 <code>R_{i+1} = 2R_i + Y</code>。</li>
+<li>最后余数为负需加回除数修正。</li>
+</ul>
+<h3>6.2 原码除法</h3>
+<ul>
+<li><strong>核心</strong>：符号异或得商符，数值部分取绝对值进行无符号除法。余数符号与被除数同。</li>
+</ul>
+<h3>6.3 补码除法 (加减交替法)</h3>
+<ul>
+<li><strong>总则</strong>：被除数与余数做操作后，符号变则不够减，不变则够减。</li>
+<li><strong>上商与迭代规则</strong>：比较<strong>余数R与除数Y</strong>的符号。</li>
+<li><strong>同号</strong>：商1，下次 <code>2R - Y</code>。</li>
+<li><strong>异号</strong>：商0，下次 <code>2R + Y</code>。</li>
+<li><strong>末位恒置1</strong>。</li>
+<li><strong>商的修正</strong>：</li>
+<li>X与Y同号：上商即为真商。</li>
+<li>X与Y异号：需对商<strong>末位加1</strong>修正。</li>
+<li><strong>余数修正</strong>：若最终余数符号与被除数不同，则需根据X与Y的异同，执行加/减除数的修正。</li>
+</ul>
+<hr />
+<h2>7 乘除法的快速实现与转换</h2>
+<h3>7.1 快速乘法器</h3>
+<ul>
+<li><strong>流水线乘法器</strong>：将移位相加过程流水化，每级一个加法器。</li>
+<li><strong>阵列乘法器</strong>：由“与门+全加器”网格构成，全组合逻辑，速度极快。</li>
+</ul>
+<h3>7.2 变量与常数的乘除运算</h3>
+<ul>
+<li><strong>除以 <code>2^k</code></strong>：</li>
+<li><strong>无符号数/正数</strong>：直接逻辑右移k位（向零舍入）。</li>
+<li><strong>负数</strong>：<strong>不能</strong>直接算术右移，需先做 <code>(x + 2^k - 1)</code> 纠偏再右移，实现向零舍入。</li>
+</ul>
+<hr />
+<h2>8 定点运算部件与RISC-V指令</h2>
+<h3>8.1 典型运算器芯片 (AM2901A)</h3>
+<ul>
+<li><strong>结构</strong>：16×4位寄存器组、Q寄存器、ALU+移位器、Q移位器、多路选择器。</li>
+<li><strong>乘/除法实现</strong>：</li>
+<li><strong>乘法</strong>：ALU做“加”，ALU/Q移位器同步<strong>右移</strong>。</li>
+<li><strong>除法</strong>：ALU做“加减”，ALU/Q移位器同步<strong>左移</strong>。</li>
+</ul>
+<h3>8.2 RISC-V整数乘除指令</h3>
+<ul>
+<li><strong>乘法</strong>：<code>mul</code>(存低32位), <code>mulh</code>(存高32位，带符号), <code>mulhu</code>(无符号), <code>mulhsu</code>(混合)。<strong>不检测溢出</strong>，由软件判断。</li>
+<li><strong>除法</strong>：<code>div</code>/<code>rem</code>(带符号), <code>divu</code>/<code>remu</code>(无符号)。<strong>不发出异常</strong>，由系统软件处理除零。</li>
+</ul>
+<hr />
+<h2>【高频考点】</h2>
+<ol>
+<li><strong>补码加减运算与溢出判断</strong>：<code>OF = C_n ⊕ C_{n-1}</code> 及其应用。</li>
+<li><strong>利用标志位比较大小</strong>：<code>CF</code>（无符号）与 <code>OF, SF</code>（带符号）的组合条件。</li>
+<li><strong>先行进位 (CLA) 的核心思想</strong>：<code>G_i, P_i</code> 函数，并行产生进位的原理与延迟计算。</li>
+<li><strong>补码乘法 (Booth算法) 的规则</strong>：根据 <code>(y_{i-1} - y_i)</code> 或相邻3位决定“加减/移位”操作。</li>
+<li><strong>不恢复余数法（加减交替法）</strong>：原码除法（看余数正负）与补码除法（看余数除数异同）的上商与迭代口诀。</li>
+<li><strong>乘除法的溢出判断</strong>：乘法（高n位不全0/不全等于符号位），除法（第一次试商为1或补码首商条件）。</li>
+<li><strong>除以2的幂次时负数的纠偏</strong>：<code>(x + 2^k - 1) &gt;&gt; k</code> 实现向零舍入。</li>
+</ol>
+<h2>【易错点】</h2>
+<ol>
+<li><strong>延迟计算</strong>：串行进位加法器取“最高位”和的延迟公式是 <code>2n+1</code>，而非 <code>2n</code>。</li>
+<li><strong>无符号借位</strong>：<code>CF=1</code> 表示借位。</li>
+<li><strong>移码溢出</strong>：判断依据是“两个加数符号位相同且与和数符号位相同”，这里的“符号”是移码的最高位。</li>
+<li><strong>补码乘除法符号处理</strong>：乘法符号位统一参与运算；除法结果（商、余数）的修正规则复杂（末位加1、余数加/减除数），极易与恢复余数法的“取反加1”混淆。</li>
+<li><strong>带符号平方溢出</strong>：<code>5^2 = -7</code> 这类看似非负的运算可能因溢出导致结果为负。</li>
+<li><strong>负整数右移</strong>：<code>x &gt;&gt; 1</code> 不等于 <code>x / 2</code>，前者向负无穷舍入，后者向零舍入。</li>
+</ol>
+<hr />
+</section>
+<section id="sec7"><h2>chap7-指令系统 · 复习提纲</h2>
+<h2>第7章 指令系统 复习提纲</h2>
+<p><strong>本章在整门课中的作用</strong>：建立软件与硬件之间的接口模型，系统掌握指令格式、寻址方式、操作码编码、条件标志等设计原理，并深入理解RISC-V为代表的现代指令集架构，为后续处理器设计和汇编程序设计奠定基础。</p>
+<hr />
+<h2>1 指令系统基础</h2>
+<h3>1.1 指令系统的地位与基本要求</h3>
+<ul>
+<li>指令系统是软件与硬件的交界面，决定计算机的性能和成本。</li>
+<li>一条指令必须显式或隐式包含：操作功能、源操作数参照、结果值参照、下一条指令地址。</li>
+<li>指令以二进制存储，由<strong>操作码</strong>和<strong>操作数地址码</strong>组成。</li>
+</ul>
+<h3>1.2 指令格式与地址码个数</h3>
+<ul>
+<li>按地址码字段数分类：零地址、一地址、二地址、三地址、多地址指令。</li>
+<li>指令格式设计原则：指令尽量短、操作码位数足够、编码唯一、字长对齐、地址字段个数合理、格式尽量规整。</li>
+</ul>
+<hr />
+<h2>2 指令系统设计要素</h2>
+<h3>2.1 操作数类型与存放位置</h3>
+<ul>
+<li><strong>类型</strong>：地址（无符号整数）、数值数据（定点数、浮点数、十进制数）、位/位串/字符/字符串、逻辑（布尔）数据。</li>
+<li><strong>存放位置</strong>：寄存器、主存单元、立即数（嵌入指令中）。</li>
+<li><strong>字长单位</strong>：nibble(4b)、byte(8b)、half-word(16b)、word(32b)。</li>
+</ul>
+<h3>2.2 寻址方式</h3>
+<h4>2.2.1 基本寻址方式</h4>
+<ul>
+<li><strong>立即寻址</strong>：操作数 = A。速度快，但数值范围有限。</li>
+<li><strong>直接寻址</strong>：EA = A。简单，地址范围有限。</li>
+<li><strong>间接寻址</strong>：EA = (A)。地址范围大，需多次访存。</li>
+<li><strong>寄存器直接寻址</strong>：操作数 = (R)。指令短且快，寄存器数量有限。</li>
+<li><strong>寄存器间接寻址</strong>：EA = (R)。地址范围大，需额外访存。</li>
+<li><strong>偏移寻址</strong>：EA = A + (R)。灵活，组合直接与寄存器间接。</li>
+</ul>
+<h4>2.2.2 偏移寻址的三种形式（重点）</h4>
+<ul>
+<li><strong>相对寻址</strong>：<code>EA = A + (PC)</code>。相对于当前指令，位移量为A。</li>
+<li><strong>基址寻址</strong>：<code>EA = A + (B)</code>。基址寄存器B，位移量A。</li>
+<li><strong>变址寻址</strong>：<code>EA = A + (I)</code>。形式地址A，变址值(I)。</li>
+</ul>
+<h4>2.2.3 存储器操作数地址计算</h4>
+<ul>
+<li>编译器计算：<code>&amp;a[i] = base_a + i × sizeof(element)</code>。</li>
+</ul>
+<h3>2.3 操作类型与操作码编码</h3>
+<ul>
+<li>操作类型：算术逻辑运算、移位、数据传送、顺序控制、系统控制、I/O等。</li>
+<li><strong>定长操作码法</strong>：长度固定，译码简单，有信息冗余。</li>
+<li><strong>扩展操作码法</strong>：多种长度，短码是长码的前缀，编码更紧凑。</li>
+</ul>
+<h4>扩展操作码编码计算（重点）</h4>
+<ul>
+<li>核心：逐步排除已占用编码空间。</li>
+<li>例：指令字长16位，地址码6位。二地址指令15条，一地址指令34条，则零地址指令最多：<br />
+<code>(2^4 - 15) × 2^6 - 34) × 2^6</code> 种。</li>
+</ul>
+<h3>2.4 标志信息的生成与使用</h3>
+<ul>
+<li>由ALU运算或比较/测试指令生成。</li>
+</ul>
+<h4>四种常用标志位</h4>
+<ul>
+<li><strong>ZF</strong>：零标志</li>
+<li><strong>CF</strong>：进位/借位标志</li>
+<li><strong>SF</strong>（或NF）：符号标志</li>
+<li><strong>OF</strong>（或VF）：溢出标志</li>
+</ul>
+<h4>标志位在比较大小中的应用（重点）</h4>
+<ul>
+<li><strong>无符号数比较</strong> (A - B)：</li>
+<li>A &gt; B：<code>CF=0 AND ZF=0</code></li>
+<li>A ≥ B：<code>CF=0</code></li>
+<li>A &lt; B：<code>CF=1</code></li>
+<li>A ≤ B：<code>CF=1 OR ZF=1</code></li>
+<li><strong>带符号数比较</strong> (A - B)：</li>
+<li>A &gt; B：<code>SF=OF AND ZF=0</code></li>
+<li>A ≥ B：<code>SF=OF</code></li>
+<li>A &lt; B：<code>SF≠OF</code></li>
+<li>A ≤ B：<code>SF≠OF OR ZF=1</code></li>
+<li>条件转移指令根据上述条件码组合决定是否跳转。</li>
+</ul>
+<hr />
+<h2>3 指令集设计风格</h2>
+<h3>3.1 按操作数位置划分的四种风格</h3>
+<ul>
+<li><strong>累加器型</strong>：隐含累加器，如 <code>acc ← acc + mem[A]</code>。</li>
+<li><strong>栈型</strong>：操作数隐含在栈顶，如 <code>tos ← tos + next</code>。</li>
+<li><strong>通用寄存器型</strong>：操作数可指定寄存器或存储单元。</li>
+<li><strong>装入/存储型（Load/Store）</strong>：运算指令只能访问寄存器，仅Load/Store访存。（RISC基础）</li>
+</ul>
+<h3>3.2 CISC 与 RISC 对比</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>CISC</th>
+<th>RISC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指令系统</td>
+<td>指令数量多、变长、寻址方式多</td>
+<td>指令少、定长、寻址方式少</td>
+</tr>
+<tr>
+<td>访存方式</td>
+<td>运算指令可直接访存</td>
+<td>仅Load/Store访存</td>
+</tr>
+<tr>
+<td>控制方式</td>
+<td>微程序控制</td>
+<td>组合逻辑控制（硬布线）</td>
+</tr>
+<tr>
+<td>指令周期</td>
+<td>多数需多个时钟周期</td>
+<td>多数单周期（流水线）</td>
+</tr>
+<tr>
+<td>编译优化</td>
+<td>困难</td>
+<td>高效</td>
+</tr>
+<tr>
+<td>典型代表</td>
+<td>VAX、x86（兼容CISC）</td>
+<td>MIPS、RISC-V、ARM</td>
+</tr>
+</tbody>
+</table>
+<h4>CISC重要统计（高频考点）</h4>
+<ul>
+<li>简单指令占执行主导：load 22%、条件分支 20%、compare 16%、store 12%等，前10类占96%。</li>
+<li>80-20规律：80%的指令是仅占指令系统20%的简单指令；占总数20%的复杂指令占用了控制存储器容量的80%。</li>
+</ul>
+<h3>3.3 RISC-V 设计理念与模块化结构</h3>
+<ul>
+<li>开源免费，模块化设计，稳定可扩展。</li>
+<li><strong>核心基础</strong>：<code>RV32I</code>（32位基本整数指令集，40条）。</li>
+<li><strong>标准扩展</strong>：M（乘除）、F（单精度浮点）、D（双精度浮点）、A（原子操作）。</li>
+<li><strong>通用配置</strong>：<code>RV32G = RV32IMAFD</code>，压缩指令集 <code>RV32C</code>；<code>RV64G</code> 对应64位。</li>
+<li>嵌入式精简：<code>RV32E</code>（仅16个通用寄存器）。</li>
+</ul>
+<hr />
+<h2>4 RISC-V 指令集体系结构</h2>
+<h3>4.1 寄存器与调用约定</h3>
+<ul>
+<li><strong>32个通用寄存器</strong> x0–x31：</li>
+<li>x0 恒为0（写入无效），x1=ra（返回地址），x2=sp（栈指针），x3=gp，x4=tp。</li>
+<li><strong>ABI分类</strong>：</li>
+<li>临时寄存器 t0–t6：<strong>调用者保存</strong>（caller-saved）</li>
+<li>保存寄存器 s0–s11：<strong>被调用者保存</strong>（callee-saved）</li>
+<li>参数/返回值 a0–a7：调用者保存</li>
+<li>浮点寄存器 f0–f31 类似分类（ft, fs, fa）。</li>
+</ul>
+<h3>4.2 32位指令格式（6种基本格式）</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>主要字段布局</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R型</strong></td>
+<td>funct7, rs2, rs1, funct3, rd, opcode</td>
+<td>寄存器-寄存器运算</td>
+</tr>
+<tr>
+<td><strong>I型</strong></td>
+<td>imm[11:0], rs1, funct3, rd, opcode</td>
+<td>立即数运算、Load、JALR</td>
+</tr>
+<tr>
+<td><strong>S型</strong></td>
+<td>imm[11:5], rs2, rs1, funct3, imm[4:0], opcode</td>
+<td>Store</td>
+</tr>
+<tr>
+<td><strong>B型</strong></td>
+<td>imm[12</td>
+<td>10:5], rs2, rs1, funct3, imm[4:1</td>
+</tr>
+<tr>
+<td><strong>U型</strong></td>
+<td>imm[31:12], rd, opcode</td>
+<td>LUI, AUIPC</td>
+</tr>
+<tr>
+<td><strong>J型</strong></td>
+<td>imm[20</td>
+<td>10:1</td>
+</tr>
+</tbody>
+</table>
+<h4>B型立即数编码重点</h4>
+<ul>
+<li>12位有符号立即数编码分支偏移，以半字为单位。字段中填入 <code>字节偏移 ÷ 2</code>。</li>
+<li>偏移范围：±4 KiB。</li>
+</ul>
+<h4>U型与32位常数加载（重点）</h4>
+<ul>
+<li><strong>LUI</strong>：<code>rd ← imm20 &lt;&lt; 12</code>（低12位置0）。</li>
+<li><strong>AUIPC</strong>：<code>rd ← PC + (imm20 &lt;&lt; 12)</code>。</li>
+<li><strong>组合加载任意32位常数</strong>：<code>LUI + ADDI</code>。</li>
+<li><strong>低12位为负时的调整技巧</strong>：将要加载的常数视为 <code>(hi + 1) &lt;&lt; 12 + (负的立即数)</code>，先LUI装入 <code>hi+1</code>，再用ADDI加负的12位立即数。<br />
+  例如：加载 <code>0x1FFF</code>，用 <code>LUI x5, 2; ADDI x5, x5, -1</code>。</li>
+</ul>
+<h3>4.3 16位压缩指令格式（C扩展）</h3>
+<ul>
+<li>8种格式，每条16位指令由硬件扩展为等效32位指令执行，提高代码密度。</li>
+</ul>
+<h3>4.4 基本指令分类（RV32I）</h3>
+<h4>整数运算指令</h4>
+<ul>
+<li><strong>R型</strong>：ADD, SUB, SLL, SLT, SLTU, XOR, SRL, SRA, OR, AND</li>
+<li><strong>I型</strong>：ADDI, SLTI, SLTIU, XORI, ORI, ANDI, SLLI, SRLI, SRAI</li>
+<li>注意：无算术左移指令，逻辑左移与算术左移结果相同。</li>
+</ul>
+<h4>比较指令</h4>
+<ul>
+<li><code>SLT/SLTI</code>：带符号小于置1。</li>
+<li><code>SLTU/SLTIU</code>：无符号小于置1。</li>
+<li>进位检测技巧：<code>sltu rd, sum, addend</code>（若无符号加法sum &lt; 某加数，则进位）。</li>
+</ul>
+<h4>控制转移指令</h4>
+<ul>
+<li><strong>无条件跳转</strong>：</li>
+<li><code>JAL rd, imm</code>：<code>rd ← PC+4</code>，<code>PC ← PC + SEXT(imm[20:1]&lt;&lt;1)</code>，跳转范围 ±1 MiB。</li>
+<li><code>JALR rd, rs1, imm</code>：<code>rd ← PC+4</code>，<code>PC ← (rs1 + SEXT(imm)) &amp; ~1</code>，常用于返回。</li>
+<li><strong>分支指令</strong>（B型）：</li>
+<li>BEQ, BNE, BLT, BGE, BLTU, BGEU</li>
+<li>目标地址：<code>PC + SEXT(imm[12:1]&lt;&lt;1)</code>，范围 ±4 KiB。</li>
+</ul>
+<h4>存储器访问指令</h4>
+<ul>
+<li><strong>Load（I型）</strong>：LB, LH, LW, LBU, LHU。地址 <code>M[rs1 + SEXT(imm)]</code>，汇编记为 <code>imm(rs1)</code>。</li>
+<li><strong>Store（S型）</strong>：SB, SH, SW。将rs2低字节/半字/字写入内存。</li>
+<li>扩展：RV64I 增加 LWU, LD, SD。</li>
+</ul>
+<h4>系统控制指令</h4>
+<ul>
+<li>FENCE, FENCE.I：内存屏障。</li>
+<li>ECALL：自陷到操作系统。</li>
+<li>EBREAK：调试断点。</li>
+<li>CSR指令：读/写/置位/清除控制状态寄存器。</li>
+</ul>
+<h3>4.5 伪指令</h3>
+<ul>
+<li>汇编器翻译的方便指令，无独立硬件编码。</li>
+<li><code>MV rd, rs</code> → <code>ADDI rd, rs, 0</code></li>
+<li><code>J imm</code> → <code>JAL x0, imm</code></li>
+<li><code>RET</code> → <code>JALR x0, 0, ra</code></li>
+<li><code>BEQZ rs, imm</code> → <code>BEQ rs, x0, imm</code></li>
+</ul>
+<h3>4.6 M扩展（乘除法）与溢出/异常处理</h3>
+<ul>
+<li>乘法：MUL, MULH, MULHU, MULHSU（不检测溢出，由软件判断）。</li>
+<li>除法：DIV, DIVU, REM, REMU。</li>
+<li><strong>除零行为</strong>（RISC-V特性）：商为全1（-1），余数为被除数；最小负整数除以-1时，商为被除数，余数为0。<strong>不触发硬件异常</strong>，由软件处理。</li>
+<li><strong>带符号乘法溢出判定</strong>：乘积高n位每一位都相等且与低n位符号位相等 → 不溢出；否则溢出。</li>
+<li>溢出检测汇编模板：
+  <code>mul t0, a0, a1
+  mulh a0, a0, a1
+  srai t0, t0, 31
+  xor a0, a0, t0   # 结果为0表示未溢出</code></li>
+</ul>
+<h3>4.7 带符号加法溢出检测</h3>
+<ul>
+<li>条件：<code>(y &lt; 0 且 x+y ≥ x) 或 (y ≥ 0 且 x+y &lt; x)</code></li>
+<li>指令序列示意：
+  <code>slti t0, y, 0
+  slt t1, sum, x
+  bne t0, t1, overflow</code></li>
+</ul>
+<hr />
+<h2>【高频考点】</h2>
+<ol>
+<li>扩展操作码设计与编码空间计算（逐步排除法）。</li>
+<li>各种寻址方式的特点及有效地址计算（特别是相对、基址、变址）。</li>
+<li>标志位（ZF, CF, SF, OF）在有符号/无符号比较中的应用及条件组合。</li>
+<li>Load/Store风格与CISC/RISC的本质区别，80x86指令频率统计。</li>
+<li>RISC-V 指令格式：B型立即数拆分、U型常加载与低12位符号修正。</li>
+<li>B型分支偏移量计算（字节偏移 ÷ 2，左移1位）。</li>
+<li>RISC-V 寄存器调用约定（caller-saved vs callee-saved）。</li>
+<li>乘除法指令的溢出/除零行为（不抛异常，软件处理）及带符号乘法溢出检测原理。</li>
+<li>JAL/JALR 的链接与跳转范围计算。</li>
+<li>伪指令的等价翻译。</li>
+</ol>
+<h2>【易错点】</h2>
+<ul>
+<li><strong>扩展操作码计算</strong>：短操作码是全零前缀或特定前缀时易遗漏已占用编码。</li>
+<li><strong>B型立即数</strong>：填写的立即数是字节偏移的一半，不是字节数；最高位imm[12]为符号位，重新拼接后左移1位得实际有符号字节偏移。</li>
+<li><strong>LUI+ADDI加载常数</strong>：当低12位最高位为1时，ADDI进行符号扩展将导致高20位差1，需使用“hi+1”技巧修正。</li>
+<li><strong>寄存器保存责任</strong>：调用者保存（临时寄存器）与被调用者保存（保存寄存器）混淆会导致栈帧破坏；常见错误是在函数内直接用s寄存器却不保存。</li>
+<li><strong>除零与除法边界</strong>：RISC-V 不触发异常，商为-1等特殊结果易被误认为是正常值，必须软件检查。</li>
+<li><strong>符号扩展 vs 零扩展</strong>：Load 字节/半字时 LB vs LBU、LH vs LHU 选择错误会导致数据错误；立即数运算默认符号扩展。</li>
+<li><strong>无算术左移</strong>：误以为存在算术左移指令，实际逻辑左移与算术左移等价。</li>
+<li><strong>标志位比较</strong>：带符号比较时使用SF≠OF等条件，与无符号比较的CF条件混淆。</li>
+<li><strong>AUIPC获得PC</strong>：<code>auipc rd, 0</code> 得到的是当前指令地址，不是下一条地址。</li>
+</ul>
+<hr />
+</section>
+<section id="sec8"><h2>chap8-中央处理器 · 复习提纲</h2>
+<h2>第8章 中央处理器 复习提纲</h2>
+<p>本章解决的核心问题：<strong>如何将指令集架构（ISA）在硬件上正确、高效地实现</strong>。它从 CPU 的组成、数据通路、控制器，到单周期、多周期、流水线的性能与设计方法，完整构建了处理器设计的基础知识体系。</p>
+<hr />
+<h2>一、CPU 概述与性能基础</h2>
+<h3>1. CPU 基本组成</h3>
+<ul>
+<li><strong>数据通路</strong>（Datapath）：执行部件，负责数据的存储、处理与传送。</li>
+<li><strong>控制器</strong>（Control Unit）：控制部件，对指令译码并生成控制信号，指挥数据通路动作。</li>
+<li>主要寄存器：<code>PC</code>、<code>IR</code>、<code>MAR</code>、<code>MDR</code>、通用寄存器组（<code>GPRs</code>）、标志寄存器。</li>
+</ul>
+<h3>2. 指令执行过程</h3>
+<ul>
+<li>基本阶段：取指（取指令 + <code>PC←PC+4</code>）→ 译码、地址计算、取操作数、运算、存结果。</li>
+<li>异常/中断检测：每个步骤均需检测；<strong>异常</strong>来自 CPU 内部，<strong>中断</strong>来自 CPU 外部。</li>
+</ul>
+<h3>3. 数据通路中的元件</h3>
+<ul>
+<li><strong>组合逻辑元件</strong>（操作元件）：输出仅取决于当前输入（无存储），如加法器、MUX、译码器、ALU。</li>
+<li><strong>时序逻辑元件</strong>（状态元件）：具有存储功能，在时钟边沿写入，如寄存器、存储器。</li>
+<li><strong>边沿触发与定时参数（重点）</strong></li>
+<li>建立时间 <code>t_setup</code>：时钟边沿<strong>之前</strong>输入必须稳定的时间。</li>
+<li>保持时间 <code>t_hold</code>：时钟边沿<strong>之后</strong>输入必须稳定的时间。</li>
+<li>Clock‑to‑Q 时间 <code>t_ffpd</code>：时钟边沿到输出更新的延迟。</li>
+</ul>
+<h3>4. 关键存储元件</h3>
+<ul>
+<li><strong>寄存器</strong>：带写使能（WE），<code>WE=1</code> 时在时钟边沿采样输入。</li>
+<li><strong>寄存器组</strong>：两个组合读端口（地址 RA/RB） + 一个时序写端口（地址 RW、WE）。</li>
+<li><strong>理想存储器模型</strong>：读为组合逻辑，写为时序逻辑（写使能+时钟边沿）。</li>
+</ul>
+<h3>5. 同步系统与时钟周期约束</h3>
+<ul>
+<li>同步系统：所有动作由统一时钟定时。</li>
+<li>数据通路结构模型：<strong>状态元件 → 组合逻辑 → 状态元件</strong> 交替连接。</li>
+<li>时钟周期基本约束（重点）</li>
+<li>建立时间约束：<code>t_clk &gt; t_ffpd(max) + t_comb(max) + t_setup</code></li>
+<li>保持时间约束：<code>t_hold &lt; t_ffpd(min) + t_comb(min)</code></li>
+</ul>
+<h3>6. CPU 性能公式</h3>
+<ul>
+<li>用户 CPU 时间（核心公式）：<br />
+<strong><code>CPU时间 = 指令条数 × CPI × 时钟周期</code></strong></li>
+<li><strong>CPI</strong>：<code>CPI = 总时钟周期数 / 指令条数</code><br />
+  综合 CPI：<code>CPI = Σ(CPI_i × F_i)</code> （<code>F_i</code> 为指令频率）</li>
+<li>影响性能的三要素：</li>
+<li>指令条数：程序、编译器、ISA</li>
+<li>CPI：程序、编译器、ISA、微体系结构</li>
+<li>时钟频率：微体系结构、工艺</li>
+<li>MIPS：<code>MIPS = 指令条数 / (执行时间×10⁶) = 时钟频率 / (CPI×10⁶)</code><br />
+  局限性：不能准确跨机器比较（指令集和指令混合不同）。</li>
+<li>FLOPS 单位：MFLOPS(10⁶)、GFLOPS(10⁹)、TFLOPS(10¹²)、PFLOPS(10¹⁵)、EFLOPS(10¹⁸)</li>
+</ul>
+<hr />
+<h2>二、指令系统与核心部件设计</h2>
+<h3>1. 指令格式（RISC‑V RV32I 风格）</h3>
+<p>所有指令 32 位，按字地址对齐。主要格式：
+- <strong>R 型</strong>：<code>funct7 | rs2 | rs1 | funct3 | rd | opcode</code>
+- <strong>I 型</strong>：<code>imm[11:0] | rs1 | funct3 | rd | opcode</code>
+- <strong>S 型</strong>：<code>imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | opcode</code>
+- <strong>B 型</strong>：<code>imm[12|10:5] | rs2 | rs1 | funct3 | imm[4:1|11] | opcode</code>
+- <strong>U 型</strong>：<code>imm[31:12] | rd | opcode</code>
+- <strong>J 型</strong>：<code>imm[20|10:1|11|19:12] | rd | opcode</code></p>
+<h3>2. 典型指令功能（单周期 9 条：<code>add, slt, sltu, ori, lui, lw, sw, beq, jal</code>）</h3>
+<ul>
+<li>R 型 <code>add</code>：<code>R[rd] ← R[rs1] + R[rs2]</code>，溢出时产生异常。</li>
+<li>R 型 <code>slt</code>：有符号比较，<code>R[rd] ← (R[rs1] &lt; R[rs2]) ? 1 : 0</code>。</li>
+<li>R 型 <code>sltu</code>：无符号比较，结果同 slt 但按无符号比较。</li>
+<li>I 型 <code>ori</code>：<code>R[rd] ← R[rs1] | SignExt(imm12)</code> （注意逻辑指令也符号扩展）。</li>
+<li>U 型 <code>lui</code>：<code>R[rd] ← imm[31:12] &lt;&lt; 12</code> （低 12 位补 0）。</li>
+<li>I 型 <code>lw</code>：<code>R[rd] ← M[R[rs1] + SignExt(imm12)]</code>。</li>
+<li>S 型 <code>sw</code>：<code>M[R[rs1] + SignExt(imm_S)] ← R[rs2]</code> （立即数为 S 型拼接）。</li>
+<li>B 型 <code>beq</code>：若 <code>R[rs1] == R[rs2]</code>，则 <code>PC ← PC + SignExt(imm_B)×2</code>，否则 <code>PC+4</code>。</li>
+<li>J 型 <code>jal</code>：<code>R[rd] ← PC+4</code>；<code>PC ← PC + SignExt(imm_J)×2</code>。</li>
+</ul>
+<h3>3. 立即数扩展器</h3>
+<p>五种立即数拼接规则（重点）：
+- <strong>immI</strong>：<code>{{20{Instr[31]}}, Instr[31:20]}</code> （12 位符号扩展）
+- <strong>immU</strong>：<code>{Instr[31:12], 12'b0}</code> （低 12 位补 0，非符号扩展）
+- <strong>immS</strong>：<code>{{20{Instr[31]}}, Instr[31:25], Instr[11:7]}</code>
+- <strong>immB</strong>：<code>{{20{Instr[31]}}, Instr[7], Instr[30:25], Instr[11:8], 1'b0}</code> （最低位强制为 0，对齐）
+- <strong>immJ</strong>：<code>{{12{Instr[31]}}, Instr[19:12], Instr[20], Instr[30:21], 1'b0}</code>
+- ExtOp 编码（3 位）：
+  - <code>000</code>→immI；<code>001</code>→immU；<code>010</code>→immS；<code>011</code>→immB；<code>100</code>→immJ。</p>
+<h3>4. ALU 设计</h3>
+<ul>
+<li>支持操作：<code>add</code>, <code>or</code>, <code>srcB</code>（直通 B）, <code>slt</code>, <code>sltu</code>, <code>sub</code>（判0）。</li>
+<li>ALU 控制信号编码 <code>ALUctr[3:0]</code>：</li>
+<li><code>0000</code> add，<code>0010</code> slt，<code>0011</code> sltu，<code>0110</code> or，<code>1000</code> sub，<code>1111</code> srcB。</li>
+<li>R‑type 和 I‑type‑ALU：<code>ALUctr = {1'b0, funct3}</code>。</li>
+<li><code>lw/sw/jal</code>：<code>0000</code>（add）；<code>lui</code>：<code>1111</code>；<code>beq</code>：<code>1000</code>。</li>
+<li>内部控制信号：</li>
+<li><code>SUBctr = 1</code> 用于 slt / sltu / sub。</li>
+<li><code>SIGctr = 1</code> 用于有符号比较 slt，<code>0</code> 用于无符号 sltu。</li>
+<li><code>OPctr</code>：选择加法结果（00）、或门（01）、直通 B（10）、Less 比较（11）。</li>
+<li>Less 信号：有符号 <code>Less = Add‑Sign XOR Add‑Overflow</code>；无符号 <code>Less = Add‑Sign</code>。</li>
+</ul>
+<h3>5. 取指部件与 PC 更新</h3>
+<ul>
+<li>公共操作：取指 <code>Instruction ← M[PC]</code>，然后 <code>PC ← PC + 4</code>（逻辑顺序不可颠倒）。</li>
+<li>下地址逻辑（组合电路）：</li>
+<li><code>Jump=1</code> 时选择跳转目标；<code>Branch=1</code> 且 <code>Zero=1</code> 时选择分支目标；否则 <code>PC+4</code>。</li>
+</ul>
+<hr />
+<h2>三、单周期数据通路设计</h2>
+<h3>1. 设计步骤</h3>
+<ul>
+<li>用 RTL 描述指令功能 → 确定所需元件并互连 → 确定控制信号取值 → 汇总真值表 → 生成控制器逻辑。</li>
+</ul>
+<h3>2. 各指令数据通路</h3>
+<ul>
+<li><strong>R 型</strong>：<code>busA=R[rs1], busB=R[rs2]</code> → ALU 运算 → 写回 <code>rd</code>。无需扩展器，<code>ALUBSrc=0</code>。</li>
+<li><strong>I 型运算（ori）</strong>：<code>busA=R[rs1]</code>，B 端选立即数<code>immI</code> → ALU 运算 → 写回。<code>ALUBSrc=1</code>。</li>
+<li><strong>U 型（lui）</strong>：立即数 <code>immU</code> 经 ALU 直通（<code>srcB</code>）→ 写回 <code>rd</code>，<code>ALUBSrc=1</code>。</li>
+<li><strong>lw</strong>：ALU 计算地址（<code>R[rs1] + immI</code>）→ 读数据存储器 → <code>MemtoReg=1</code> 写回。</li>
+<li><strong>sw</strong>：ALU 计算地址（<code>R[rs1] + immS</code>）→ <code>MemWr=1</code>，将 <code>R[rs2]</code> 写入内存。<code>RegWr=0</code>。</li>
+<li><strong>beq</strong>：ALU 减法判零（<code>Zero</code>）→ 下地址逻辑根据 <code>Branch &amp; Zero</code> 选择分支目标或 <code>PC+4</code>。无写回。</li>
+<li><strong>jal</strong>：ALU 计算返回地址 <code>PC+4</code> 并写回 <code>rd</code>；下地址逻辑 <code>Jump=1</code> 选择跳转目标 <code>PC + immJ×2</code>。新增 <code>ALUASrc=1</code> 选择 PC、<code>ALUBSrc</code> 选择常数 4。</li>
+</ul>
+<h3>3. 控制信号真值表与控制器实现</h3>
+<ul>
+<li>汇总 9 条指令的所有控制信号取值（<code>RegWr</code>, <code>ALUASrc</code>, <code>ALUBSrc</code>, <code>ALUctr</code>, <code>MemWr</code>, <code>MemtoReg</code>, <code>Branch</code>, <code>Jump</code>, <code>ExtOp</code>）。</li>
+<li>单值信号逻辑：找出真值表中使信号为 ‘1’ 的指令，将其 op 码最小项相或。（示例：<code>Branch</code> 对应 B 型 op 码；<code>Jump</code> 对应 J 型 op 码）</li>
+<li><code>ALUctr</code> 由主控根据指令类型和 <code>funct3</code> 译码生成。</li>
+<li>实现方式：PLA（与阵列译出指令类型 → 或阵列生成控制信号）。</li>
+</ul>
+<h3>4. 单周期性能与时钟周期</h3>
+<ul>
+<li>CPI = 1。</li>
+<li>时钟周期由最长指令 <code>lw</code> 的关键路径决定：<br />
+<code>T_clk = t_ffpd(PC) + t_inst_mem + t_reg_read + t_alu + t_data_mem + t_reg_setup + t_clock_skew</code></li>
+<li>性能瓶颈：简单指令被迫使用同一个长周期，造成大量时间浪费。</li>
+</ul>
+<hr />
+<h2>四、多周期处理器设计</h2>
+<h3>1. 设计思想</h3>
+<ul>
+<li>将指令执行拆分为多个阶段，每阶段一个较短时钟周期，不同指令使用不同周期数。</li>
+<li>时钟周期以最耗时阶段（如访存）为准，功能部件可在不同周期复用（如指令与数据内存合一、ALU 复用）。</li>
+</ul>
+<h3>2. 多周期划分（以 5 阶段为例）</h3>
+<ul>
+<li>阶段约束：每个阶段最多完成一次访存、一次寄存器读/写或一次 ALU 运算。</li>
+<li>典型指令周期数：Load 5、Store 4、R‑type 4、Branch 3、Jump 3。</li>
+</ul>
+<h3>3. 控制器设计</h3>
+<ul>
+<li><strong>硬连线控制器</strong>：用 FSM + PLA 组合逻辑直接生成控制信号，速度快，但复杂指令系统难维护。</li>
+<li><strong>微程序控制器</strong>：控制信号以微程序形式固化在控存 ROM 中。</li>
+<li>微指令、微命令、µPC、µIR。</li>
+<li>水平型微指令：并行度高、微程序短、字长长。</li>
+<li>垂直型微指令：编码效率高、易于编制、速度慢。</li>
+</ul>
+<h3>4. 性能对比</h3>
+<ul>
+<li>多周期 CPI = Σ(指令占比_i × 指令周期数_i)。<br />
+  示例：若 Load 22%×5 + Store 11%×4 + R‑type 49%×4 + Branch 16%×3 + Jump 2%×3 = 4.04。</li>
+<li>时钟周期约为单周期的 1/5，总执行时间约为单周期的 0.8 倍。</li>
+</ul>
+<hr />
+<h2>五、流水线处理器设计</h2>
+<h3>1. 经典五级流水线</h3>
+<ul>
+<li>IF（取指/PC+4）→ ID（译码/读寄存器/立即数扩展）→ EX（执行/ALU/转移地址）→ MEM（访存）→ WB（写回）</li>
+<li>所有指令均按 5 段对齐，缺失阶段补 NOP。</li>
+</ul>
+<h3>2. 流水线冒险（重点）</h3>
+<ul>
+<li><strong>结构冒险</strong>：同一部件在同一时钟被多条指令争用。解决：指令/数据 Cache 分离；功能部件固定在相同流水段使用。</li>
+<li><strong>数据冒险</strong>：</li>
+<li>ALU 结果相关：<strong>转发（Forwarding）</strong> 可解决。</li>
+<li>Load‑use 冒险：需 <strong>阻塞（Stall）一个周期 + 转发</strong>。</li>
+<li>编译器可调整指令顺序或插入 NOP 辅助。</li>
+<li><strong>控制冒险</strong>：</li>
+<li>转移目标未确定前已有错误指令进入。</li>
+<li>解决方法：插入 NOP / 硬件清空错误指令、静态分支预测（总预测不跳转，准确率 65‑85%）、动态分支预测（准确率 90%+）、延迟分支（编译器调度）。</li>
+</ul>
+<h3>3. 流水线性能</h3>
+<ul>
+<li>时钟周期仍取最长段延迟（如 200ps）。</li>
+<li>平均 CPI 考虑冒险开销（示例）：约 1.17。</li>
+<li>总时间 ≈ 平均 CPI × 时钟周期 × N，远优于单周期和多周期。</li>
+<li>理想加速比 = 流水线级数，实际受冒险和寄存器开销限制。</li>
+</ul>
+<h3>4. 局限性</h3>
+<ul>
+<li>并非所有指令都有相同流水段；段长不均；深度增加时流水线寄存器开销增大；冒险降低效率。</li>
+</ul>
+<hr />
+<h2>六、异常与中断处理</h2>
+<ul>
+<li>异常（内部，如溢出、非法指令）、中断（外部 I/O 请求）。</li>
+<li>处理步骤：
+  1. 关中断。
+  2. 保护断点和程序状态：<code>EPC ← 断点</code>，<code>Cause ← 异常原因编码</code>。
+  3. 转入异常处理程序。</li>
+<li>关键寄存器：</li>
+<li><strong>EPC</strong>：故障类异常存 <code>PC-4</code>，自陷/中断存 <code>PC</code>。</li>
+<li><strong>Cause</strong>：记录异常原因。</li>
+<li>多周期处理器中增加异常处理状态（如状态10/11），添加 <code>EPCWr</code>、<code>CauseWr</code>等控制信号。</li>
+</ul>
+<hr />
+<h2>【高频考点】</h2>
+<ol>
+<li><strong>CPU 时间公式</strong>：<code>CPU时间 = 指令条数 × CPI × 时钟周期</code>，三要素的影响因素。</li>
+<li><strong>同步电路时序约束</strong>：建立时间与保持时间公式，及其在确定时钟周期中的应用。</li>
+<li><strong>单周期数据通路</strong>：9 条指令（R/I/U/S/B/J）的完整数据流及控制信号设置，特别是 <code>lw</code>、<code>beq</code>、<code>jal</code>。</li>
+<li><strong>控制信号真值表</strong>与 <code>ALUctr</code> 生成规则：<code>ALUctr = {1'b0, funct3}</code> 对于 R/I 型。</li>
+<li><strong>立即数扩展</strong>：五种立即数（immI, immU, immS, immB, immJ）的拼接规则与 ExtOp 编码。</li>
+<li><strong>单周期性能瓶颈与关键路径</strong>：<code>lw</code> 指令的延迟组成。</li>
+<li><strong>多周期处理器 CPI 计算</strong>：按指令频率加权平均的方法。</li>
+<li><strong>流水线三大冒险</strong>：结构、数据、控制冒险的定义、典型场景及解决技术（转发、阻塞、预测）。</li>
+<li><strong>流水线性能计算</strong>：比较单周期、多周期、流水线的总执行时间。</li>
+<li><strong>异常处理</strong>：EPC 断点的两种确定方式，Cause 寄存器作用。</li>
+</ol>
+<hr />
+<h2>【易错点】</h2>
+<ol>
+<li><strong>I 型逻辑指令（如 <code>ori</code>, <code>andi</code>）的立即数仍为符号扩展</strong>，不是零扩展。</li>
+<li><strong>S 型立即数</strong>字段被拆成两段（<code>Instr[31:25]</code> 和 <code>Instr[11:7]</code>），容易拼错。</li>
+<li><strong>B/J 型立即数</strong>最低位固定为 0（半字对齐），且偏移量计算需要 <strong>先符号扩展，再左移 1 位</strong>。</li>
+<li><strong>取指与 PC 更新顺序</strong>必须先取指再 <code>PC←PC+4</code>，逻辑顺序不能颠倒。</li>
+<li><strong><code>beq</code> 的 <code>MemtoReg</code></strong> 是无关项，但需确保不会意外产生寄存器写使能。</li>
+<li><strong>单周期中 <code>lw</code> 的 rd 字段可能误连</strong>：RISC‑V 中 lw 的 rd 是 <code>Instr[11:7]</code>，不是 <code>Instr[24:20]</code>（图示可能有误，需按规范检查）。</li>
+<li><strong>ALU 比较操作</strong>：<code>slt</code> 和 <code>sltu</code> 都需 <code>SUBctr=1</code>，仅 <code>SIGctr</code> 区分有/无符号。</li>
+<li><strong>流水线冒险的误区</strong>：流水线不能缩短单条指令执行时间；性能瓶颈在最慢的阶段；深度增加时流水线寄存器开销比例上升。</li>
+<li><strong>错误预测的控制冒险</strong>：必须确保错误指令结果不写入状态元件（寄存器/存储器）。</li>
+<li><strong>多周期微程序控制器</strong>：水平型与垂直型微指令的优缺点不可混淆（水平型并行高但字长长，垂直型反之）。</li>
+</ol>
+<hr />
+</section>
+</main></div><script>var links=[].slice.call(document.querySelectorAll('nav a')),secs=[].slice.call(document.querySelectorAll('section'));
+function os(){var y=scrollY+80,cur=secs[0];secs.forEach(function(s){if(s.offsetTop<=y)cur=s;});
+links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur.id);});}
+addEventListener('scroll',os);os();</script></body></html>
