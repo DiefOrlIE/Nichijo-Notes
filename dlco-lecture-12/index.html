@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLCO 详细讲义（上）</title>
+<style>
+  :root {
+    --bg:#faf7f2; --ink:#2b2620; --muted:#7a6f63; --line:#e4ddd1;
+    --accent:#8b5a3c; --card:#fffdf9; --code:#f3ece0;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); color:var(--ink); line-height:1.85;
+    font-family:"Times New Roman","宋体",SimSun,"Songti SC",serif;
+  }
+  .wrap { display:flex; max-width:1180px; margin:0 auto; }
+  /* sidebar */
+  nav {
+    width:280px; flex:0 0 280px; padding:32px 18px; position:sticky; top:0;
+    height:100vh; overflow-y:auto; border-right:1px solid var(--line);
+    font-size:0.9em;
+  }
+  nav .navtitle { font-weight:700; color:var(--accent); font-size:1.1em; margin-bottom:14px; }
+  nav a { display:block; text-decoration:none; color:var(--muted); padding:3px 0; border-left:2px solid transparent; padding-left:10px; transition:.15s; }
+  nav a:hover { color:var(--accent); border-left-color:var(--accent); }
+  nav .nav-h1 { color:var(--ink); font-weight:600; margin-top:10px; }
+  nav .nav-h2 { padding-left:24px; font-size:0.94em; }
+  /* content */
+  main { flex:1; min-width:0; padding:48px 56px 90px; }
+  h1 { font-size:1.9em; border-bottom:2px solid var(--accent); padding-bottom:10px; margin:48px 0 22px; }
+  h1:first-of-type { margin-top:0; }
+  h2 { font-size:1.45em; margin:38px 0 16px; padding-left:12px; border-left:4px solid var(--accent); }
+  h3 { font-size:1.15em; margin:26px 0 12px; color:#5a4632; }
+  p { margin:12px 0; }
+  blockquote {
+    margin:18px 0; padding:12px 20px; background:var(--card);
+    border-left:4px solid var(--accent); color:#5a4632; border-radius:0 6px 6px 0;
+  }
+  code { background:var(--code); padding:1px 6px; border-radius:4px; font-family:Consolas,"Courier New",monospace; font-size:0.92em; }
+  pre { background:#2b2620; color:#f0e9dc; padding:16px 20px; border-radius:8px; overflow-x:auto; line-height:1.6; }
+  pre code { background:none; color:inherit; padding:0; }
+  table { border-collapse:collapse; margin:18px 0; width:100%; background:var(--card); }
+  th,td { border:1px solid var(--line); padding:8px 12px; text-align:left; }
+  th { background:#f0e7d8; font-weight:700; }
+  tr:nth-child(even) td { background:#fdfaf4; }
+  ul,ol { padding-left:26px; }
+  li { margin:5px 0; }
+  strong { color:#7a3f1f; }
+  hr { border:none; border-top:1px solid var(--line); margin:40px 0; }
+  .figure { margin:20px 0; text-align:center; }
+  .figure svg { max-width:100%; height:auto; }
+  @media (max-width:820px) {
+    nav { display:none; }
+    main { padding:28px 20px 60px; }
+  }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+<nav>
+  <div class="navtitle">DLCO 详细讲义（上）</div>
+  <a class="nav-h1" href="#dlco">DLCO 详细讲义（上）</a>
+<a class="nav-h2" href="#_1">全课主线一句话</a>
+<a class="nav-h1" href="#_2">第一部分 二进制信息表示</a>
+<a class="nav-h2" href="#11">1.1 进位计数制</a>
+<a class="nav-h2" href="#12">1.2 定点数的编码:原码 / 反码 / 补码 / 移码</a>
+<a class="nav-h2" href="#13-ieee-754">1.3 浮点数 IEEE 754（重点深讲）</a>
+<a class="nav-h2" href="#14-bcd">1.4 BCD 码与其他编码</a>
+<a class="nav-h2" href="#15">1.5 高级语言数据类型的机器表示</a>
+<a class="nav-h2" href="#16">1.6 非数值数据的编码</a>
+<a class="nav-h2" href="#17">1.7 数据的存储方式:宽度 + 大端小端（重点深讲）</a>
+<a class="nav-h1" href="#_11">第二部分 基于布尔代数的计算组件设计</a>
+<a class="nav-h2" href="#21">2.1 数字抽象与逻辑门</a>
+<a class="nav-h2" href="#22">2.2 布尔代数（基础定律）</a>
+<a class="nav-h2" href="#23">2.3 逻辑函数:表示、化简、变换、分析（重点深讲卡诺图）</a>
+<a class="nav-h2" href="#24-cmos">2.4 逻辑门的 CMOS 实现</a>
+<a class="nav-h2" href="#25">2.5 组合逻辑电路设计</a>
+<a class="nav-h2" href="#26">2.6 时序分析:时延与竞争冒险</a>
+<a class="nav-h2" href="#27">2.7 时序逻辑电路设计（重点详解）</a>
+</nav>
+<main>
+<h1 id="dlco">DLCO 详细讲义（上）</h1>
+<blockquote>
+<p>按老师《课程回顾》主线编排 · <strong>第一部分 二进制信息表示</strong> + <strong>第二部分 基于布尔代数的计算组件设计</strong>
+风格:主线驱动、重点深讲、边角带过。已整合并扩展 chap1/chap2 的针对性讲解。</p>
+</blockquote>
+<h2 id="_1">全课主线一句话</h2>
+<p>整门课只做一件事:<strong>怎么用 0/1 和电路把"计算"实现出来</strong>。四步递进——
+<strong>① 信息怎么变成 0/1(表示)→ ② 0/1 怎么用电路算(布尔代数+门电路+组合/时序)→ ③ 这些电路怎么搭成会执行指令的计算机(运算器+ISA+CPU)。</strong>
+本讲义覆盖 ① 和 ②,是 ③ 的地基。贯穿全册的一个核心观念先记住:</p>
+<blockquote>
+<p><strong>一串 0/1 本身没有意义,意义来自"按什么规则解释它"。</strong> 同样的字节,当补码整数、当浮点、当字符、当大端/小端,结果完全不同。第一部分的所有难点都是这句话的展开。</p>
+</blockquote>
+<hr />
+<h1 id="_2">第一部分 二进制信息表示</h1>
+<p>计算机里只有高低电平两种状态,记为 0/1。所有信息——整数、小数、字符、汉字、真值——都要先<strong>编码</strong>成 0/1 串才能存储和运算。这一部分回答三个问题:<strong>怎么编(格式)、能表示多大范围(范围)、编完怎么算(运算)</strong>。</p>
+<h2 id="11">1.1 进位计数制</h2>
+<p><strong>基数 R + 位权</strong>是一切进制的骨架。R 进制每位取 <code>0 ~ R−1</code>,第 i 位的权是 <code>Rⁱ</code>。</p>
+<ul>
+<li><strong>R 进制 → 十进制</strong>:按权展开求和。<code>(1011.1)₂ = 1×2³+0×2²+1×2¹+1×2⁰+1×2⁻¹ = 11.5</code></li>
+<li><strong>十进制 → R 进制</strong>:整数部分"除 R 取余、倒序读";小数部分"乘 R 取整、顺序读"。</li>
+<li><strong>二 ↔ 八 ↔ 十六</strong>:二进制 <strong>3 位一组</strong>对应八进制,<strong>4 位一组</strong>对应十六进制(从小数点向两侧分组,不足补 0)。</li>
+</ul>
+<blockquote>
+<p>题眼:十六进制是二进制的"速记",<code>1111 = F</code>、<code>1010 = A</code>。读机器数时先把十六进制拆成 4 位二进制再看,几乎所有第一章计算题都从这一步开始。</p>
+</blockquote>
+<h2 id="12">1.2 定点数的编码:原码 / 反码 / 补码 / 移码</h2>
+<p><strong>定点数</strong>=小数点位置固定的数(通常约定在最低位之后→纯整数,或符号位之后→纯小数)。同一个<strong>真值</strong>(数学上的值)在机器里有不同的<strong>机器数</strong>编码方式。设字长 n 位,最高位为符号位(0 正 1 负)。</p>
+<h3 id="_3">原码</h3>
+<p>符号位 + 绝对值。直观,但 <strong>0 有 +0/−0 两种表示</strong>,且加减法要先比较符号、很麻烦。现代机器只在<strong>浮点尾数</strong>里用原码定点小数。</p>
+<h3 id="_4">反码</h3>
+<p>正数同原码;负数=符号位不变、数值位按位取反。是补码的过渡产物,<code>0</code> 仍有两种表示。</p>
+<h3 id="_5">补码（核心,整个第一章的地基）</h3>
+<ul>
+<li><strong>钟表类比</strong>:12 点的钟,倒拨 3 = 正拨 9,因为 <code>9 ≡ −3 (mod 12)</code>。补码就是用"正数的加法"实现"减法"。</li>
+<li><strong>定义</strong>:<code>[X]补 = 2ⁿ + X (mod 2ⁿ)</code>。正数补码=自身;负数=<code>2ⁿ+X</code>。</li>
+<li><strong>求负数的快捷法</strong>:按位<strong>取反 + 1</strong>。例(8 位):<code>+5 = 0000 0101</code> → <code>−5 = 1111 1011</code>。</li>
+<li><strong>范围</strong>:<code>[−2ⁿ⁻¹, 2ⁿ⁻¹−1]</code>,<strong>负数比正数多一个</strong>(因为 0 只占一个编码)。8 位补码是 <code>[−128, +127]</code>。</li>
+<li><strong>关键特性</strong>:<code>0</code> 表示<strong>唯一</strong>;符号位<strong>参与运算</strong>(不是单纯标记),这是补码和原码的根本区别;模是 <code>2ⁿ</code>(不是 <code>2ⁿ−1</code>)。</li>
+<li><strong>求真值</strong>:符号位为 1 时,可"再取反加一得绝对值"再添负号,或直接用<strong>符号位负权公式</strong> <code>X = −xₙ₋₁·2ⁿ⁻¹ + Σ xᵢ·2ⁱ</code>。</li>
+</ul>
+<h3 id="_6">移码</h3>
+<ul>
+<li>在补码基础上<strong>把符号位取反</strong>,即 <code>[X]移 = 2ⁿ⁻¹ + X</code>(偏置 Bias)。</li>
+<li>用途:<strong>浮点数的阶码</strong>。移码让数值大小和无符号位模式单调一致,<strong>能按位直接比较大小</strong>,便于浮点比较与排阶。</li>
+<li>记忆:同一数值,<strong>移码与补码只差最高位</strong>(符号位相反)。</li>
+</ul>
+<h3 id="8-5">四码对比(以 8 位 −5 为例)</h3>
+<table>
+<thead>
+<tr>
+<th>编码</th>
+<th>−5 的机器数</th>
+<th>0 的表示</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原码</td>
+<td>1000 0101</td>
+<td>+0/−0 两个</td>
+<td>浮点尾数</td>
+</tr>
+<tr>
+<td>反码</td>
+<td>1111 1010</td>
+<td>两个</td>
+<td>过渡</td>
+</tr>
+<tr>
+<td>补码</td>
+<td>1111 1011</td>
+<td>唯一</td>
+<td>整数运算主力</td>
+</tr>
+<tr>
+<td>移码</td>
+<td>0111 1011</td>
+<td>唯一</td>
+<td>浮点阶码</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-ieee-754">1.3 浮点数 IEEE 754（重点深讲）</h2>
+<p><strong>为什么要浮点</strong>:定点数的范围和精度是矛盾的——小数点钉死后,要么表示范围小、要么精度差。浮点把"小数点位置"也编码进去(用阶码),实现范围和精度的折中。</p>
+<h3 id="32">单精度 32 位字段</h3>
+<pre><code> S(1位)   E(8位,阶码)    M(23位,尾数)
+[31]     [30 ... 23]     [22 ... 0]
+</code></pre>
+<h3 id="_7">真值公式</h3>
+<pre><code>value = (−1)^S × (1 + M) × 2^(E − 127)
+</code></pre>
+<ul>
+<li><strong>S</strong>:符号位,0 正 1 负。</li>
+<li><strong>M(尾数)</strong>:存小数部分,<strong>原码</strong>;真实尾数是 <code>1.M</code>,前导的 <strong>1 隐含、不占位</strong>(规格化数默认有,省一位换精度)。</li>
+<li><strong>E(阶码)</strong>:<strong>移码</strong>存储,偏置 <strong>127</strong>,真实指数 <code>= E − 127</code>。</li>
+</ul>
+<h3 id="1bee00000h">例 1:BEE00000H = ?</h3>
+<pre><code>= 1011 1110 1110 0000 ...
+S = 1                        → 负
+E = 0111 1101 = 125          → 指数 = 125 − 127 = −2
+M = 110... = 0.75            → 尾数 1.M = 1.75
+value = −1 × 1.75 × 2⁻² = −0.4375
+</code></pre>
+<h3 id="21275">例 2:−12.75 → ?</h3>
+<pre><code>12.75 = 1100.11₂ = 1.10011 × 2³
+S = 1;  指数 3 → E = 3+127 = 130 = 1000 0010
+M = 100 1100 0...
+结果 = C14C0000H
+</code></pre>
+<h3 id="_8">特殊值速查</h3>
+<table>
+<thead>
+<tr>
+<th>E</th>
+<th>M</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全 0</td>
+<td>全 0</td>
+<td>±0</td>
+</tr>
+<tr>
+<td>全 0</td>
+<td>≠0</td>
+<td>非规格化数(denormal)</td>
+</tr>
+<tr>
+<td>全 1</td>
+<td>全 0</td>
+<td>±∞</td>
+</tr>
+<tr>
+<td>全 1</td>
+<td>≠0</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>双精度 64 位同理:E=11 位偏置 <strong>1023</strong>,M=52 位。记住"S/E/M、隐含 1、阶码移码、尾数原码"四要素即可套任何精度。</p>
+</blockquote>
+<h2 id="14-bcd">1.4 BCD 码与其他编码</h2>
+<p><strong>BCD(二进制编码十进制)</strong>:每个十进制位用 4 位二进制单独表示,便于十进制 I/O。
+- <strong>8421 码</strong>:有权码,直接按位权;<code>9 = 1001</code>。
+- <strong>余 3 码</strong>:无权码,= 8421 + 3,自补特性便于减法。
+- <strong>格雷码</strong>:无权码,<strong>相邻两数只有一位不同</strong>,用于减少计数翻转的瞬时错误(和后面卡诺图相邻性同源)。</p>
+<h2 id="15">1.5 高级语言数据类型的机器表示</h2>
+<p>C 里的类型就是"约定好的解释规则 + 宽度":</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>机器表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>补码整数(通常 32 位)</td>
+</tr>
+<tr>
+<td><code>unsigned</code></td>
+<td>无符号整数(全部位都是数值)</td>
+</tr>
+<tr>
+<td><code>float</code>/<code>double</code></td>
+<td>IEEE 754 单/双精度</td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>ASCII / 整数(8 位)</td>
+</tr>
+<tr>
+<td>指针</td>
+<td>无符号地址</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>signed vs unsigned 比较陷阱</strong>:有符号数和无符号数比较时,<strong>有符号数被隐式转成无符号</strong>。<code>−1 &lt; 0U</code> 结果为 <strong>假</strong>——<code>−1</code> 的全 1 位模式被当无符号读=最大值。这也是 <code>for(unsigned i=n; i&gt;=0; i--)</code> 死循环的根源。本质还是那句话:<strong>位不变,解释规则一变,结论就反</strong>。</p>
+</blockquote>
+<h2 id="16">1.6 非数值数据的编码</h2>
+<p><strong>三要素</strong>:编码<strong>对象</strong>(要表示什么)、编码<strong>方式</strong>(用几位、怎么映射)、<strong>计算方式</strong>(能不能直接参与算术)。</p>
+<ul>
+<li><strong>ASCII</strong>:7 位,128 个字符;实际存 8 位,高位常作<strong>奇偶校验</strong>位。<code>'A'=0x41</code>、<code>'a'=0x61</code>、<code>'0'=0x30</code>。</li>
+<li><strong>汉字编码</strong>(三层):</li>
+<li><strong>输入码(外码)</strong>:拼音/五笔等,用于敲入。</li>
+<li><strong>机内码(内码)</strong>:机内存储处理,通常 2 字节,且<strong>两字节最高位都置 1</strong>——以便和最高位为 0 的 ASCII 唯一区分。转换链:<strong>区位码 →(各字节+32)国标码 →(各字节最高位置 1)内码</strong>。</li>
+<li><strong>字形码</strong>:点阵或轮廓(TrueType),存在字库里供显示。</li>
+<li><strong>Unicode / UTF-8</strong>:统一字符集;UTF-8 变长编码,ASCII 兼容(单字节),汉字通常 3 字节。</li>
+</ul>
+<h2 id="17">1.7 数据的存储方式:宽度 + 大端小端（重点深讲）</h2>
+<ul>
+<li><strong>宽度与单位</strong>:<code>1 KB=2¹⁰ B</code>、<code>MB=2²⁰</code>、<code>GB=2³⁰</code>。多字节数据按<strong>边界对齐</strong>存放(地址通常是宽度的整数倍),提升访存效率。</li>
+<li><strong>字节序</strong>:多字节数据在内存里字节的排列顺序。</li>
+<li><strong>大端 Big-endian</strong>:最高有效字节(MSB)放<strong>低地址</strong>("高位在前",像人读数)。</li>
+<li><strong>小端 Little-endian</strong>:最低有效字节(LSB)放<strong>低地址</strong>(Intel x86 用小端)。例:<code>0x12345678</code> 小端存为 <code>78 56 34 12</code>。</li>
+</ul>
+<h3 id="_9">题眼:整数解释看端序,字符串解释不看端序</h3>
+<p>整数是一个整体,拆字节后顺序受端序影响;字符串是<strong>逐字符的字节序列</strong>,<strong>按地址从低到高逐个读</strong>,与端序无关。</p>
+<p>诊断卷复盘(小端,<code>0x69617363</code>):</p>
+<pre><code>地址:  +0    +1    +2    +3
+字节: 0x63  0x73  0x61  0x69
+ASCII: 'c'   's'   'a'   'i'
+</code></pre>
+<ul>
+<li>当<strong>字符串</strong>逐字节读 → <strong>"csai"</strong>(按地址读,与端序无关)。</li>
+<li>当<strong>整数</strong>读 → 数值 <code>0x69617363</code>,<code>&gt;&gt; 24</code> 取最高字节 <code>= 0x69 = 105</code>。</li>
+</ul>
+<h3 id="_10">第一部分小结</h3>
+<p>四码(原/反/补/移)→ 浮点(移码阶+原码尾数拼出来)→ 字符/汉字编码 → 字节在内存怎么摆。串起来的暗线只有一条:<strong>0/1 的含义由解释规则决定</strong>。把这条想透,第一章的填空与编解码题就不会丢分。</p>
+<hr />
+<h1 id="_11">第二部分 基于布尔代数的计算组件设计</h1>
+<p>第一部分把信息变成了 0/1。这一部分回答:<strong>0/1 怎么用电路算出来?</strong> 路径是——
+<strong>数字抽象(把模拟电压抽象成 0/1)→ 布尔代数(用代数描述逻辑)→ 门电路与 CMOS 实现(物理落地)→ 组合逻辑(无记忆,即时算)→ 时序逻辑(有记忆,能存状态)。</strong></p>
+<h2 id="21">2.1 数字抽象与逻辑门</h2>
+<ul>
+<li><strong>数字抽象</strong>:把连续的模拟电压切成两段映射为 0/1。中间设过渡带,并留<strong>噪声容限</strong>(见 2.4),保证小干扰不会让 1 被误读成 0。这是数字电路抗噪、可级联的根本。</li>
+<li><strong>基本逻辑门</strong>:与(AND)、或(OR)、非(NOT);复合门<strong>与非 NAND、或非 NOR、异或 XOR</strong>。与非门/或非门是<strong>功能完备</strong>的(单一种门可搭出任意逻辑)。</li>
+<li><strong>可编程逻辑</strong>:PLD/FPGA 用<strong>查找表(LUT)</strong> 存真值表来"配置"任意逻辑函数——硬件功能由写入的配置决定,这是 chap5(本册略)的 FPGA 思想雏形。</li>
+</ul>
+<h2 id="22">2.2 布尔代数（基础定律）</h2>
+<p>变量只取 0/1,运算只有 与(·)、或(+)、非(¯)。常用定律:</p>
+<ul>
+<li>交换 / 结合 / <strong>分配(两条)</strong>:<code>X(Y+Z)=XY+XZ</code>(同算术);<strong><code>X+YZ=(X+Y)(X+Z)</code></strong>(与算术<strong>不同</strong>,布尔特有,考点)。</li>
+<li><strong>吸收</strong>:<code>X+XY=X</code>、<code>X(X+Y)=X</code>。</li>
+<li><strong>德摩根</strong>:<code>¬(XY)=¬X+¬Y</code>、<code>¬(X+Y)=¬X·¬Y</code>。求补函数时,<strong>整体取反号保留、不可拆成单变量反</strong>。</li>
+<li><strong>一致律(冗余项 / consensus)</strong>:<code>XY + X̄Z + YZ = XY + X̄Z</code>,<code>YZ</code> 多余。</li>
+<li><strong>为什么多余</strong>:<code>YZ=1</code> 即 <code>Y=Z=1</code> 时,<code>X=1</code> 则 <code>XY=1</code>、<code>X=0</code> 则 <code>X̄Z=1</code>,前两项总有一项已为 1。</li>
+<li><strong>记住这个被删的 <code>YZ</code></strong> —— 它在 2.6 防冒险时要加回来,是第二部分最漂亮的呼应。</li>
+</ul>
+<h2 id="23">2.3 逻辑函数:表示、化简、变换、分析（重点深讲卡诺图）</h2>
+<h3 id="_12">表示</h3>
+<ul>
+<li><strong>真值表</strong>:穷举所有输入组合的输出,唯一确定一个函数。</li>
+<li><strong>最小项之和(SOP)</strong>:每个使函数=1 的输入组合写成一个<strong>最小项</strong>(全变量相与),再相或。<code>F=Σm(...)</code>。</li>
+<li><strong>最大项之积(POS)</strong>:每个使函数=0 的组合写成一个<strong>最大项</strong>(全变量相或),再相与。<code>F=ΠM(...)</code>。</li>
+<li><strong>互补关系</strong>:同一函数,<strong>最小项编号与最大项编号互补</strong>(凡不在 Σm 里的编号都在 ΠM 里)。最大项写法:变量为 1 取反变量、为 0 取原变量(和最小项相反)。</li>
+</ul>
+<h3 id="_13">卡诺图化简（核心技能 · 重点详解）</h3>
+<blockquote>
+<p>你已经会那套动作:<strong>把相邻的 1 圈起来、圈尽量大、圈尽量少</strong>。下面要做的只有一件事——<strong>给你每一步动作配上正式名字</strong>。名字对上了,题目里的"质蕴含项""最小覆盖"就全看懂了。</p>
+</blockquote>
+<h4 id="_14">先打地基:卡诺图为什么能化简</h4>
+<p>把真值表画成方格图,<strong>相邻两格之间只差一个变量</strong>(用格雷码排列行列:<code>00 01 11 10</code>,而不是 <code>00 01 10 11</code>)。正因为相邻只差一位,两个相邻的 1 合并时,那个"变来变去"的变量就被消掉了。</p>
+<ul>
+<li><strong>合并 2ⁱ 个相邻 1 格 → 消去 i 个变量。</strong> 1 格→消 0 个,2 格→消 1 个,4 格→消 2 个,8 格→消 3 个。<strong>圈越大,留下的乘积项越短。</strong> 这就是你"圈尽量大"的理由。</li>
+</ul>
+<h4 id="_15">四个名字(从你会的动作出发,逐个对上)</h4>
+<ol>
+<li><strong>蕴含项(implicant)</strong> = 你画的<strong>任何一个合法的圈</strong>(全是 1、大小是 2ⁱ 的矩形组)。它对应一个乘积项(与项)。叫"蕴含"是因为:<strong>这个项 =1 时,函数 F 必定 =1</strong>(这个项"蕴含"了 F)。说人话:<strong>圈 = 蕴含项</strong>。</li>
+<li><strong>质蕴含项(prime implicant,又叫主蕴含项)</strong> = <strong>扩到不能再扩的圈</strong>(再想变大就会圈进 0)。也就是"极大圈"。说人话:<strong>你"圈尽量大"圈到头的那个圈,就是质蕴含项。</strong></li>
+<li><strong>本质质蕴含项(essential prime implicant,又叫实质 / 核心质蕴含项)</strong> = 某个 1 格<strong>只有这一个质蕴含项能罩住它</strong>(独占),那这个圈<strong>非选不可</strong>。说人话:<strong>有的 1 只有一个圈够得着,那个圈就是必选的。</strong></li>
+<li><strong>最小覆盖(minimum cover)</strong> = 用<strong>最少的质蕴含项</strong>把所有 1 盖全。做法两步:<strong>先把所有本质质蕴含项全选上;还有没盖到的 1,再用最少的质蕴含项补全。</strong> 说人话:<strong>必选的先拿,剩下的缺口用最少的圈补。</strong></li>
+</ol>
+<h4 id="fabcd-m013571315">完整例子:<code>F(A,B,C,D) = Σm(0,1,3,5,7,13,15)</code></h4>
+<p>按行 <code>AB</code>、列 <code>CD</code>(都用格雷码 <code>00 01 11 10</code>)填图,再圈圈:</p>
+<div class="figure"><svg viewBox="0 0 470 360" xmlns="http://www.w3.org/2000/svg" style="max-width:470px;background:#fffdf9;border:1px solid #e4ddd1;border-radius:6px;">
+<style>.kc{fill:#fff;stroke:#cdbfa8;stroke-width:1}.k1{fill:#f3ece0}.kt{font-family:serif;font-size:16px;fill:#2b2620}.kh{font-family:serif;font-size:13px;fill:#7a6f63}.kr1{fill:none;stroke:#b04a4a;stroke-width:2.5}.kr2{fill:none;stroke:#4a7a45;stroke-width:2.5}.kr3{fill:none;stroke:#5a5ab0;stroke-width:2.5}.klb{font-family:serif;font-size:13px}</style>
+<text x="92" y="52" class="kh">AB＼CD</text>
+<text x="150" y="62" class="kh">00</text><text x="210" y="62" class="kh">01</text><text x="270" y="62" class="kh">11</text><text x="330" y="62" class="kh">10</text>
+<text x="98" y="105" class="kh">00</text><text x="98" y="165" class="kh">01</text><text x="98" y="225" class="kh">11</text><text x="98" y="285" class="kh">10</text>
+<g>
+<rect x="120" y="70" width="60" height="60" class="kc k1"/><text x="146" y="106" class="kt">1</text>
+<rect x="180" y="70" width="60" height="60" class="kc k1"/><text x="206" y="106" class="kt">1</text>
+<rect x="240" y="70" width="60" height="60" class="kc k1"/><text x="266" y="106" class="kt">1</text>
+<rect x="300" y="70" width="60" height="60" class="kc"/><text x="326" y="106" class="kh">0</text>
+<rect x="120" y="130" width="60" height="60" class="kc"/><text x="146" y="166" class="kh">0</text>
+<rect x="180" y="130" width="60" height="60" class="kc k1"/><text x="206" y="166" class="kt">1</text>
+<rect x="240" y="130" width="60" height="60" class="kc k1"/><text x="266" y="166" class="kt">1</text>
+<rect x="300" y="130" width="60" height="60" class="kc"/><text x="326" y="166" class="kh">0</text>
+<rect x="120" y="190" width="60" height="60" class="kc"/><text x="146" y="226" class="kh">0</text>
+<rect x="180" y="190" width="60" height="60" class="kc k1"/><text x="206" y="226" class="kt">1</text>
+<rect x="240" y="190" width="60" height="60" class="kc k1"/><text x="266" y="226" class="kt">1</text>
+<rect x="300" y="190" width="60" height="60" class="kc"/><text x="326" y="226" class="kh">0</text>
+<rect x="120" y="250" width="60" height="60" class="kc"/><text x="146" y="286" class="kh">0</text>
+<rect x="180" y="250" width="60" height="60" class="kc"/><text x="206" y="286" class="kh">0</text>
+<rect x="240" y="250" width="60" height="60" class="kc"/><text x="266" y="286" class="kh">0</text>
+<rect x="300" y="250" width="60" height="60" class="kc"/><text x="326" y="286" class="kh">0</text>
+</g>
+<rect x="123" y="73" width="114" height="54" rx="10" class="kr1"/>
+<rect x="187" y="77" width="106" height="106" rx="12" class="kr2"/>
+<rect x="191" y="141" width="98" height="98" rx="12" class="kr3"/>
+<text x="120" y="332" class="klb" fill="#b04a4a">■ ĀB̄C̄ (m0,m1)</text>
+<text x="250" y="332" class="klb" fill="#4a7a45">■ ĀD (m1,m3,m5,m7)</text>
+<text x="250" y="350" class="klb" fill="#5a5ab0">■ BD (m5,m7,m13,m15)</text>
+</svg></div>
+<p><strong>第一步,画圈认"质蕴含项"</strong>(每个圈都扩到不能再大):
+- 🔴 <code>ĀB̄C̄</code> = {m0, m1}(顶行左 2 格,只能 2 格,扩不动)。
+- 🟢 <code>ĀD</code> = {m1, m3, m5, m7}(上中 2×2 块,A=0、D=1)。
+- 🔵 <code>BD</code> = {m5, m7, m13, m15}(中间 2×2 块,B=1、D=1)。</p>
+<p>这三个都扩到头了,所以都是<strong>质蕴含项</strong>。</p>
+<p><strong>第二步,找"本质质蕴含项"</strong>(看哪些 1 是独占的):
+- <code>m0</code> 只有 🔴 罩得住(它 D=0,进不了 🟢🔵)→ <strong>🔴 本质,必选</strong>。
+- <code>m3</code> 只有 🟢 罩得住(B=0 进不了 🔵,C=1 进不了 🔴)→ <strong>🟢 本质,必选</strong>。
+- <code>m13</code> 只有 🔵 罩得住(A=1 进不了 🟢🔴)→ <strong>🔵 本质,必选</strong>。</p>
+<p>三个圈都是本质的,全选 → 已盖全所有 1。</p>
+<p><strong>最简结果:<code>F = ĀB̄C̄ + ĀD + BD</code>。</strong></p>
+<blockquote>
+<p>注意 <code>m5、m7</code> 同时落在 🟢 和 🔵 里(<strong>重叠</strong>)——这完全允许!化简只要求<strong>每个 1 至少被一个圈罩住</strong>,不要求圈之间不重叠。</p>
+</blockquote>
+<h4 id="_16">什么时候"有得选"(非本质质蕴含项)</h4>
+<p>上例三个圈全是本质的,没得选。但若某个 1 格能被<strong>两个质蕴含项</strong>同时罩住、又没有哪个是因它而必选——这时它俩谁都不是本质项,你就得在它们之间挑:<strong>选能顺带多盖几个还没盖的 1、且总数最少的那个。</strong> 这一步取舍,就是"最小覆盖"里"用最少质蕴含项补全缺口"的含义。</p>
+<h4 id="dont-care">无关项(don't care,记作 ×)</h4>
+<p>有些输入组合不会出现或不关心输出,填 <code>×</code>。化简时 <strong>× 可当 1 也可当 0</strong>:<strong>哪种能把圈做得更大就当哪种</strong>(当 1 圈进去),用不上的 × 就当 0。善用无关项常能进一步把项化简。</p>
+<blockquote>
+<p><strong>呼应 2.6 冒险</strong>:最小覆盖追"圈最少",但两个圈"相切"的边界会埋下静态冒险;防冒险要<strong>故意再加一个冗余圈(一致项)</strong>搭住边界——和"圈最少"的目标正好相反。化简与防冒险是一对矛盾,按需取舍。</p>
+</blockquote>
+<h2 id="24-cmos">2.4 逻辑门的 CMOS 实现</h2>
+<ul>
+<li><strong>MOS 管当开关</strong>:NMOS 栅极高电平导通、PMOS 栅极低电平导通,两者互补。</li>
+<li><strong>互补 CMOS 结构</strong>:上拉网络(PMOS,接 VDD)+ 下拉网络(NMOS,接地),同一输入下<strong>一通一断</strong>,绝不让 VDD 到地形成低阻通路(否则短路烧电流)。</li>
+<li><strong>结构口诀</strong>:<strong>输出由下拉(NMOS)决定;与→串联,或→并联;PMOS 永远与 NMOS 对偶(串↔并)。</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>门</th>
+<th>下拉 NMOS</th>
+<th>上拉 PMOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>与非 NAND <code>¬(A·B)</code></td>
+<td>串联</td>
+<td>并联</td>
+</tr>
+<tr>
+<td>或非 NOR <code>¬(A+B)</code></td>
+<td>并联</td>
+<td>串联</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>噪声容限</strong>(余量必为正,= "输出的保证" − "输入的要求"):
+  <code>NM_H = V_OHmin − V_IHmin</code>,<code>NM_L = V_ILmax − V_OLmax</code>。</li>
+<li><strong>动态功耗</strong> <code>P_D = (C_L + C_PD)·V_CC²·f</code>,<strong>∝ 电压平方 × 频率</strong>——降压收益是平方级,这是降压降频省电的原理。</li>
+</ul>
+<h2 id="25">2.5 组合逻辑电路设计</h2>
+<p><strong>组合逻辑 = 无记忆</strong>:输出只取决于当前输入。三条构成规则:①每个组件本身是组合电路;②任两组件输出端不可直接互连;③<strong>无反馈</strong>(输出不能直接/间接接回输入)。</p>
+<ul>
+<li><strong>分析</strong>:给电路 → 写表达式 → 列真值表 → 说明功能。</li>
+<li><strong>设计</strong>:需求 → 真值表 → 卡诺图化简 → 画门电路。</li>
+</ul>
+<h3 id="_17">常规组件</h3>
+<ul>
+<li><strong>译码器</strong>:n 输入 → 2ⁿ 选 1 输出有效。如 74X138(3-8)。用<strong>使能端 + 地址线</strong>可<strong>级联</strong>成大译码器(5-32 = 一片 2-4 + 四片 3-8)。</li>
+<li><strong>编码器</strong>:译码器的逆。<strong>优先级编码器</strong>在多个输入同时有效时,对<strong>最高优先级</strong>者编码。</li>
+<li><strong>多路选择器 MUX</strong>:n 位选择端从 <code>2ⁿ</code> 路输入选一路。2 路:<code>F = A·¬S + B·S</code>。<strong>可实现任意组合逻辑</strong>(全变量选择法/降维选择法,Dᵢ 可为某变量或其反)。</li>
+<li><strong>加法器</strong>:运算器的基石,单独展开见下面 2.5+。</li>
+</ul>
+<h3 id="25-1-n">2.5+ 加法器(从 1 位搭到 n 位 · 重点详解）</h3>
+<p>加法器是整个运算器(乃至 CPU)的核心组件。这里从最小的"1 位相加"一步步搭到"n 位相加",并讲清<strong>为什么快慢差这么多</strong>。延迟约定(后面都用):<strong>与门/或门 = 1ty,异或门 = 3ty</strong>。</p>
+<h4 id="half-adder-1">半加器 Half Adder：只加两个 1 位</h4>
+<p>最朴素的需求:把两个 1 位的数 <code>A</code>、<code>B</code> 相加,得到本位和 <code>S</code> 与进位 <code>CO</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">CO(进位)</th>
+<th style="text-align: center;">S(和)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><code>S = A ⊕ B</code></strong>(两数不同则和为 1),<strong><code>CO = A·B</code></strong>(两个都是 1 才进位)。</li>
+<li>门级:<strong>一个异或门 + 一个与门</strong>。</li>
+<li><strong>局限</strong>:它<strong>没有进位输入</strong>,接收不了低位送来的进位 → <strong>没法级联</strong>做多位加法。这就是为什么需要全加器。</li>
+</ul>
+<h4 id="full-adder">全加器 Full Adder：能接收低位进位</h4>
+<p>多位加法时,每一位除了加 <code>A</code>、<code>B</code>,还要加上<strong>低位传来的进位 <code>Cin</code></strong>,一共三个 1 位相加:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">Cin</th>
+<th style="text-align: center;">Cout</th>
+<th style="text-align: center;">S</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><code>S = A ⊕ B ⊕ Cin</code></strong>:三个数里 1 的个数为奇数 → 和为 1。</li>
+<li><strong><code>Cout = A·B + (A⊕B)·Cin</code></strong>(= <code>AB + ACin + BCin</code>):三个里<strong>至少两个是 1</strong> 就进位(多数表决)。</li>
+<li><strong>可由两个半加器 + 一个或门搭成</strong>:先 <code>A</code> 半加 <code>B</code>,再把结果半加 <code>Cin</code>,两个半加器的进位用或门并起来。</li>
+<li><strong>延迟(重点)</strong>:和 <code>S</code> 走两级异或 → <code>3+3 = 6ty</code>;进位 <code>Cout</code> 走一级与 + 一级或 → <code>1+1 = 2ty</code>。<strong>记住:进位比和算得快(2ty vs 6ty)</strong>,这一点对下面的延迟分析很关键。</li>
+</ul>
+<h4 id="ripple-carry-adder">行波进位加法器 Ripple-Carry Adder：把全加器串起来</h4>
+<p>要加 n 位,就把 n 个全加器<strong>级联</strong>:第 0 位的 <code>Cout</code> 接第 1 位的 <code>Cin</code>,逐级往上,进位像<strong>波纹(ripple)</strong>一样从最低位一路传到最高位(<code>C0</code> 是最低位进位输入,做减法时置 1)。</p>
+<div class="figure"><svg viewBox="0 0 620 170" xmlns="http://www.w3.org/2000/svg" style="max-width:620px;background:#fffdf9;border:1px solid #e4ddd1;border-radius:6px;">
+<style>.fa{fill:#fff;stroke:#8b5a3c;stroke-width:1.5}.fw{stroke:#7a6f63;stroke-width:1.5;fill:none}.cw{stroke:#b04a4a;stroke-width:2;fill:none;marker-end:url(#ca)}.ft{font-family:serif;font-size:13px;fill:#2b2620}.fm{font-family:serif;font-size:11px;fill:#7a6f63}.cm{font-family:serif;font-size:11px;fill:#b04a4a}</style>
+<defs><marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#b04a4a"/></marker></defs>
+<rect x="470" y="60" width="80" height="56" rx="5" class="fa"/><text x="500" y="92" class="ft">FA0</text>
+<rect x="330" y="60" width="80" height="56" rx="5" class="fa"/><text x="360" y="92" class="ft">FA1</text>
+<rect x="190" y="60" width="80" height="56" rx="5" class="fa"/><text x="220" y="92" class="ft">FA2</text>
+<rect x="50" y="60" width="80" height="56" rx="5" class="fa"/><text x="80" y="92" class="ft">FA3</text>
+<text x="492" y="48" class="fm">A0 B0</text><text x="352" y="48" class="fm">A1 B1</text><text x="212" y="48" class="fm">A2 B2</text><text x="72" y="48" class="fm">A3 B3</text>
+<text x="500" y="140" class="fm">S0</text><text x="360" y="140" class="fm">S1</text><text x="220" y="140" class="fm">S2</text><text x="80" y="140" class="fm">S3</text>
+<line x1="500" y1="116" x2="500" y2="132" class="fw"/><line x1="360" y1="116" x2="360" y2="132" class="fw"/><line x1="220" y1="116" x2="220" y2="132" class="fw"/><line x1="80" y1="116" x2="80" y2="132" class="fw"/>
+<line x1="600" y1="88" x2="550" y2="88" class="fw"/><text x="565" y="82" class="fm">C0</text>
+<line x1="470" y1="88" x2="410" y2="88" class="cw"/><text x="425" y="82" class="cm">C1</text>
+<line x1="330" y1="88" x2="270" y2="88" class="cw"/><text x="285" y="82" class="cm">C2</text>
+<line x1="190" y1="88" x2="130" y2="88" class="cw"/><text x="145" y="82" class="cm">C3</text>
+<line x1="50" y1="88" x2="10" y2="88" class="cw"/><text x="14" y="82" class="cm">C4</text>
+<text x="150" y="160" class="cm">红线 = 进位链:必须从 FA0 一路传到 FA3(逐级等待)</text>
+</svg></div>
+<ul>
+<li><strong>延迟分析(必考)</strong>:最坏情况下,最高位的结果必须<strong>等进位从最低位一路传上来</strong>。</li>
+<li>进位 <code>C0 → Cn</code> 总延迟 = <strong>2n 级门延迟</strong>(每级全加器产生进位约 2ty)。</li>
+<li>最高位的<strong>和</strong> <code>Sn₋₁</code> 还要再过一级 → <strong>2n+1 级门延迟</strong>。</li>
+<li><strong>结论</strong>:延迟 <strong>∝ n</strong>,<strong>线性增长</strong>。位数越多越慢——64 位行波加法器的进位链长得无法接受。</li>
+<li>这正是瓶颈所在 → <strong>先行进位加法器(CLA)</strong> 就是为打断这条串行进位链而生(详见下册第三部分 A.1)。</li>
+</ul>
+<h2 id="26">2.6 时序分析:时延与竞争冒险</h2>
+<ul>
+<li><strong>传播延迟</strong>:信号经过门需要时间;路径不同 → 到达时刻不同。</li>
+<li><strong>竞争冒险</strong>:同一信号经<strong>不同延迟的路径</strong>汇合,在切换瞬间可能产生<strong>毛刺(glitch)</strong>。</li>
+<li><strong>静态-1 冒险</strong>:输出本应稳定 1,却闪出一个 0。</li>
+<li><strong>卡诺图判断</strong>:SOP 实现下,两个相邻 1 格分属两个<strong>"相切但不被同一圈覆盖"</strong>的质蕴涵圈,输入在两格间跳变(只变一个变量)时两条路径延迟不等 → 毛刺。</li>
+<li><strong>消除</strong>:加一个<strong>冗余的一致项圈</strong>搭住相切边界,使跳变全程<strong>始终有一圈 = 1</strong>。</li>
+<li><strong>题眼</strong>:化简追求最简会<strong>删冗余项</strong>,但最简电路可能有冒险;防冒险要<strong>故意把冗余项加回来</strong>——正是 2.2 那个 <code>YZ</code> 的回归。化简与防冒险方向相反,按需取舍。</li>
+</ul>
+<h2 id="27">2.7 时序逻辑电路设计（重点详解）</h2>
+<blockquote>
+<p>这一节是很多人"学不明白"的地方。别急,我们<strong>从"为什么需要记忆"一步步搭到触发器</strong>,每一步都讲清"上一步有什么毛病、这一步怎么补"。读完你会发现:锁存器→触发器,就是一条"不断打补丁"的链。</p>
+</blockquote>
+<h3 id="270-vs">2.7.0 为什么需要"记忆"?——组合 vs 时序</h3>
+<p>组合电路像一个<strong>计算器</strong>:你按下按键,它立刻算出结果;手一松,它什么都不记得。但很多任务必须<strong>记住之前发生过什么</strong>:</p>
+<ul>
+<li>数到第几个了?(计数器)</li>
+<li>刚才连续来了几个 1?(序列检测)</li>
+<li>CPU 现在执行到指令的第几个阶段?(控制器)</li>
+</ul>
+<p><strong>记忆 = 能保持一个状态,直到被告知改变。</strong> 时序逻辑的输出 = 当前输入 <strong>+ 历史状态</strong>。它靠<strong>反馈</strong>(把输出绕回输入)造出记忆。</p>
+<blockquote>
+<p><strong>全课最大的题眼</strong>:组合(无记忆)vs 时序(有记忆)这条分界线,一直延伸到第三部分——<strong>CPU 本质就是一个放大版的有限状态机(FSM)</strong>:数据通路是组合逻辑,控制器是时序逻辑。这一节学的状态机设计,就是后面 CPU 控制器的雏形。</p>
+</blockquote>
+<h3 id="271">2.7.1 记忆的物理原理:双稳态(交叉耦合)</h3>
+<p>怎么用门电路造出"能赖着不动"的状态?答案是<strong>把两个反相器首尾相接</strong>(交叉耦合):</p>
+<div class="figure"><svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;background:#fffdf9;border:1px solid #e4ddd1;border-radius:6px;">
+<style>.bx{fill:#fff;stroke:#8b5a3c;stroke-width:1.5}.wr{stroke:#7a6f63;stroke-width:1.5;fill:none}.tt{font-family:serif;font-size:13px;fill:#2b2620}.tg{font-family:serif;font-size:12px;fill:#4a7a45}</style>
+<polygon points="150,55 210,75 150,95" class="bx"/><text x="165" y="79" class="tt">非1</text>
+<polygon points="370,85 310,105 370,125" class="bx"/><text x="325" y="109" class="tt">非2</text>
+<path d="M210,75 H260 V55 H150 V60" class="wr"/>
+<path d="M310,105 H260 V125 H370 V120" class="wr"/>
+<line x1="210" y1="75" x2="310" y2="75" class="wr"/><line x1="310" y1="75" x2="310" y2="85" class="wr"/>
+<text x="222" y="70" class="tt">Q</text>
+<text x="222" y="140" class="tt">Q̄</text>
+<line x1="150" y1="95" x2="150" y2="125" class="wr"/><line x1="150" y1="125" x2="310" y2="125" class="wr"/>
+<text x="40" y="80" class="tg">假设 Q=1 → Q̄=0 → Q=1 ✔ 自洽</text>
+<text x="40" y="100" class="tg">假设 Q=0 → Q̄=1 → Q=0 ✔ 自洽</text>
+</svg></div>
+<p>走查一下:若 <code>Q=1</code>,经下面那条路反相成 <code>Q̄=0</code>,再反相回来又是 <code>Q=1</code>——<strong>自洽,稳定</strong>;若 <code>Q=0</code> 同理也自洽。所以这个电路有<strong>两个稳定状态(双稳态)</strong>,会一直赖在其中一个不动 = <strong>记住了 1 位信息</strong>。</p>
+<p>但纯反相器没有输入口,<strong>没法写入</strong>。要能改写,就把反相器换成<strong>或非门/与非门</strong>,腾出输入端 → 这就是 SR 锁存器。</p>
+<h3 id="272-sr">2.7.2 SR 锁存器:第一个能写入的记忆单元</h3>
+<p>用<strong>两个交叉耦合的或非门</strong>,留出 <code>S</code>(Set,置 1)和 <code>R</code>(Reset,置 0)两个输入。记住或非门的脾气:<strong>任一输入为 1,输出就被强拉为 0</strong>。逐情况走查(这是理解锁存器的核心,自己动手推一遍):</p>
+<table>
+<thead>
+<tr>
+<th>S</th>
+<th>R</th>
+<th>行为</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td><strong>保持</strong></td>
+<td>两门输入只剩反馈,维持原状态(记忆态)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>置位 Q=1</td>
+<td>S 把 Q̄ 拉 0,Q 被顶到 1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>复位 Q=0</td>
+<td>R 把 Q 拉 0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td><strong>禁止</strong></td>
+<td>Q、Q̄ 同时被拉 0,违背互补;且松手瞬间状态不定</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>特征方程</strong>:<code>Q* = S + R̄·Q</code>,约束 <code>S·R ≠ 1</code>。</li>
+<li>怎么读它:<strong>次态 = 要么被 Set 顶上去(<code>S</code>),要么(没被 Reset 时 <code>R̄</code>)保持原值(<code>Q</code>)</strong>。</li>
+<li>用途:存标志位、按键消抖。<strong>痛点</strong>:<code>S=R=1</code> 非法,用起来得时刻提防。</li>
+</ul>
+<h3 id="273-d">2.7.3 D 锁存器:消掉"禁止态",但带来"透明"问题</h3>
+<p>既然 <code>S=R=1</code> 是祸根,那就<strong>逼 S、R 永远互补</strong>:只留一个数据输入 <code>D</code>,再加一个控制端 <code>C</code>(使能/时钟),内部令 <code>S=D·C</code>、<code>R=D̄·C</code>。</p>
+<ul>
+<li><code>C=1</code> 时:<code>Q* = D</code>(输出跟着 D 走,叫<strong>透明</strong>);<code>C=0</code> 时:保持。</li>
+<li>好处:再也没有禁止态了。</li>
+<li><strong>新麻烦——"透明"</strong>:<code>C=1</code> 的<strong>整段时间</strong>里,<code>D</code> 怎么抖 <code>Q</code> 就怎么跟,像一扇<strong>开着的门</strong>挡不住中间的毛刺。这在时序系统里是大问题(下一步解决)。</li>
+</ul>
+<h3 id="274">2.7.4 关键跨越:从锁存器到触发器——为什么非要"边沿"</h3>
+<p><strong>锁存器 = 电平触发</strong>(<code>C=1</code> 的整段都透明);<strong>触发器 = 边沿触发</strong>(只在时钟跳变的<strong>那一瞬间</strong>采样一次)。为什么必须边沿?</p>
+<p>时序电路里,<strong>新算出的状态要绕回去参与算下一个状态</strong>。如果用透明的 D 锁存器:<code>C=1</code> 期间新状态一出现,立刻又被当输入算了一遍,一个时钟里可能连翻好几次——这叫<strong>空翻</strong>,完全失控。</p>
+<p><strong>边沿触发</strong>只在时钟沿那一刻锁一次值,锁完"门"就关死;这一拍内输入再怎么变都不影响输出。于是状态<strong>每个时钟周期干净地走一步</strong>。</p>
+<h3 id="275-d">2.7.5 D 触发器:用"主从结构"实现只在沿采样</h3>
+<p>把<strong>两个 D 锁存器串联</strong>:主锁存器(master)接 <code>CLK</code>,从锁存器(slave)接 <code>C̄LK</code>,两者使能恰好相反,永远一开一关:</p>
+<div class="figure"><svg viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;background:#fffdf9;border:1px solid #e4ddd1;border-radius:6px;">
+<style>.bx2{fill:#fff;stroke:#8b5a3c;stroke-width:1.5}.wr2{stroke:#7a6f63;stroke-width:1.5;fill:none}.t2{font-family:serif;font-size:13px;fill:#2b2620}.t2m{font-family:serif;font-size:12px;fill:#7a6f63}.clk{stroke:#4a7a45;stroke-width:2;fill:none}</style>
+<rect x="120" y="40" width="90" height="60" rx="5" class="bx2"/><text x="138" y="66" class="t2">主锁存</text><text x="150" y="84" class="t2m">CLK</text>
+<rect x="300" y="40" width="90" height="60" rx="5" class="bx2"/><text x="318" y="66" class="t2">从锁存</text><text x="330" y="84" class="t2m">C̄LK</text>
+<line x1="60" y1="70" x2="120" y2="70" class="wr2"/><text x="62" y="62" class="t2">D</text>
+<line x1="210" y1="70" x2="300" y2="70" class="wr2"/><text x="240" y="62" class="t2m">主输出</text>
+<line x1="390" y1="70" x2="450" y2="70" class="wr2"/><text x="430" y="62" class="t2">Q</text>
+<text x="40" y="135" class="t2m">CLK=0:主透明(收 D)、从关闭(Q 不变) → D 先"预备"在主里</text>
+<text x="40" y="158" class="t2m">CLK 上升沿:主关闭(锁住此刻 D)、从透明(放出来) → Q 在沿这一刻更新一次</text>
+<text x="40" y="181" class="t2m">CLK=1:主已关,后面 D 再变也进不去 → 一拍只走一步,空翻消除</text>
+<path d="M120 205 h30 v-15 h30 v15 h30 v-15 h30 v15 h30" class="clk"/><text x="300" y="210" class="t2m">↑ 只在上升沿采样</text>
+</svg></div>
+<ul>
+<li><code>CLK=0</code>:主透明(跟随 <code>D</code>)、从关闭(保持 <code>Q</code>)。输入被"预备"在主里,还没出来。</li>
+<li><code>CLK</code> 上升沿那一刻切换:主关闭(锁住此刻的 <code>D</code>)、从透明(把锁住的值放出来)。</li>
+<li>效果:<strong>输出只在上升沿更新一次</strong> = 边沿采样。特征方程 <code>Q* = D</code>。</li>
+</ul>
+<h3 id="276-jk-t-d">2.7.6 JK 与 T 触发器:在 D 基础上加花样</h3>
+<ul>
+<li><strong>JK 触发器</strong>:把 SR 的禁止态 <code>J=K=1</code> 重新定义为<strong>翻转</strong>。特征方程 <code>Q* = J·Q̄ + K̄·Q</code>。</li>
+<li>四种功能:<code>JK=00</code> 保持、<code>01</code> 置 0、<code>10</code> 置 1、<code>11</code> 翻转。</li>
+<li>记法:<code>Q̄</code> 这一项被 <code>J</code> 控制(只有 <code>J=1</code> 才允许 <code>0→1</code>),<code>Q</code> 这一项被 <code>K̄</code> 控制(只有 <code>K=0</code> 才保持)。</li>
+<li><strong>T 触发器</strong>:把 J、K 接成同一根线 <code>T</code>。特征方程 <code>Q* = T·Q̄ + T̄·Q = T ⊕ Q</code>。</li>
+<li><code>T=1</code> 翻转、<code>T=0</code> 保持。用于<strong>计数器、分频器</strong>(每来一个脉冲翻一次 = 二分频)。</li>
+<li>T 可由 D 实现(<code>D = T ⊕ Q</code>)或由 JK 实现(<code>J = K = T</code>)。</li>
+</ul>
+<h3 id="_18">各类存储单元特性方程汇总</h3>
+<table>
+<thead>
+<tr>
+<th>器件</th>
+<th>特性方程 <code>Q*</code></th>
+<th>一句话功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SR 锁存器</td>
+<td><code>S + R̄·Q</code>（约束 <code>S·R=0</code>）</td>
+<td>S 置 1、R 置 0、00 保持、11 禁止</td>
+</tr>
+<tr>
+<td>D 锁存器/触发器</td>
+<td><code>D</code></td>
+<td>次态=输入,无禁止态</td>
+</tr>
+<tr>
+<td>JK 触发器</td>
+<td><code>J·Q̄ + K̄·Q</code></td>
+<td>00 保持 / 01 置0 / 10 置1 / 11 翻转</td>
+</tr>
+<tr>
+<td>T 触发器</td>
+<td><code>T ⊕ Q</code></td>
+<td>T=1 翻转,T=0 保持</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么用特征方程(代入即可)</strong>,两个小例子:
+- JK 触发器,现态 <code>Q=1</code>,输入 <code>J=0, K=1</code> → <code>Q* = 0·0̄ + 1̄·1 = 0 + 0 = 0</code>(被复位)。
+- T 触发器,现态 <code>Q=1</code>,<code>T=1</code> → <code>Q* = 1 ⊕ 1 = 0</code>(翻转)。</p>
+<blockquote>
+<p>三个高频易错:① 把锁存器(电平/透明)当成触发器(边沿);② SR 忘记 <code>S=R=1</code> 无效约束;③ 异步计数器里加法/减法靠 <code>Q</code> 还是 <code>Q̄</code> 接下级时钟,别记反。</p>
+</blockquote>
+<h3 id="277">2.7.7 同步时序设计:五步套路 + 一个能跟到底的例子</h3>
+<ul>
+<li><strong>Mealy 型</strong>:<code>输出 = G(现态, 输入)</code>;<strong>Moore 型</strong>:<code>输出 = G(现态)</code>(与当前输入无关)。状态图里 Mealy 把输出标在<strong>边上</strong>,Moore 标在<strong>状态内</strong>。</li>
+<li><strong>设计五步</strong>(后面 CPU 控制器也是这一套):
+  1. 需求分析 → 原始状态图/表
+  2. 状态化简(合并等价状态)
+  3. 状态编码(给每个状态分配二进制)
+  4. 选触发器 → 用<strong>特征方程反推激励方程</strong>,再写输出方程
+  5. 画电路</li>
+</ul>
+<h4 id="42-t">完整例子:设计一个同步模 4(2 位)加法计数器,用 T 触发器</h4>
+<p>要的行为:<code>00 → 01 → 10 → 11 → 00</code> 循环(两位 <code>Q1Q0</code>)。</p>
+<p><strong>第 1 步</strong>,列状态转移表(现态 → 次态):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">现态 Q1 Q0</th>
+<th style="text-align: center;">次态 Q1* Q0*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0 0</td>
+<td style="text-align: center;">0 1</td>
+</tr>
+<tr>
+<td style="text-align: center;">0 1</td>
+<td style="text-align: center;">1 0</td>
+</tr>
+<tr>
+<td style="text-align: center;">1 0</td>
+<td style="text-align: center;">1 1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1 1</td>
+<td style="text-align: center;">0 0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第 2 步</strong>,用 T 触发器的"翻转"特性反推激励:<strong>要不要翻(T=1) = 现态和次态是否不同</strong>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">现态 Q1 Q0</th>
+<th style="text-align: center;">次态 Q1* Q0*</th>
+<th style="text-align: center;">Q0 翻吗→T0</th>
+<th style="text-align: center;">Q1 翻吗→T1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0 0</td>
+<td style="text-align: center;">0 1</td>
+<td style="text-align: center;">0→1 翻 <strong>1</strong></td>
+<td style="text-align: center;">0→0 不 <strong>0</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">0 1</td>
+<td style="text-align: center;">1 0</td>
+<td style="text-align: center;">1→0 翻 <strong>1</strong></td>
+<td style="text-align: center;">0→1 翻 <strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">1 0</td>
+<td style="text-align: center;">1 1</td>
+<td style="text-align: center;">0→1 翻 <strong>1</strong></td>
+<td style="text-align: center;">1→1 不 <strong>0</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">1 1</td>
+<td style="text-align: center;">0 0</td>
+<td style="text-align: center;">1→0 翻 <strong>1</strong></td>
+<td style="text-align: center;">1→0 翻 <strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>第 3 步</strong>,从表里读出激励方程:
+- <code>T0</code> 这一列全是 1 → <strong><code>T0 = 1</code></strong>(最低位每拍都翻)。
+- <code>T1</code> 在 <code>Q0=1</code> 时为 1、<code>Q0=0</code> 时为 0 → <strong><code>T1 = Q0</code></strong>(只有低位是 1 时高位才翻,正是"逢二进一")。</p>
+<p><strong>第 4 步</strong>,画电路:两个 T 触发器共用同一时钟;<code>T0</code> 接常 1,<code>T1</code> 接 <code>Q0</code>。完成——这就是最小的同步计数器,把"用特征方程反推激励"的套路走了一遍。</p>
+<blockquote>
+<p><strong>序列检测器</strong>(课上例子:检测连续 4 个 1)是 Moore 型,4 个状态 A→B→C→D,每多一个 1 前进一个状态、遇 0 退回 A、到 D 输出 1。套路完全相同:画状态图 → 编码 → 选触发器 → 反推激励/输出方程。</p>
+</blockquote>
+<h3 id="278">2.7.8 计数器、寄存器、移位寄存器</h3>
+<ul>
+<li><strong>异步(行波)计数器</strong>:T′ 触发器级联,<strong>前级输出驱动后级时钟</strong>;加法/减法靠用 <code>Q</code> 还是 <code>Q̄</code> 接下级时钟区分。缺点:进位逐级传播,<strong>慢</strong>。</li>
+<li><strong>同步并行计数器</strong>:所有触发器<strong>共用时钟</strong>同时翻转,<strong>快</strong>(上面那个模 4 计数器就是同步的)。</li>
+<li><strong>寄存器</strong>:n 个 D 触发器并联,共时钟,并行存取 n 位。</li>
+<li><strong>移位寄存器</strong>:D 触发器<strong>串联</strong>(前级 <code>Q</code> 接后级 <code>D</code>),每个时钟沿数据整体移一位。<strong>通用移位寄存器 74X194</strong> 用 4 选 1 MUX 选"保持 / 左移 / 右移 / 并行加载"四种模式;左移和右移的串行输入端(LIN/RIN)不同,别弄反方向。移位寄存器后面用于乘除法的"部分积移位"。</li>
+</ul>
+<h3 id="279">2.7.9 同步时序电路的时序约束:建立/保持时间与最小时钟周期（重点详解）</h3>
+<blockquote>
+<p>这一节回答一个核心问题:<strong>时钟到底能开多快?</strong> 答案不是随便定的,而是被几个"硬件物理时间"卡死的。先认清四个参数,再看两条约束。</p>
+</blockquote>
+<h4 id="_19">同步电路的标准模型:触发器 → 组合逻辑 → 触发器</h4>
+<p>同步时序电路都长这个样:一个触发器的输出 <code>Q</code>,经过一坨<strong>组合激励逻辑</strong>,算出次态,送到下一个(或同一个)触发器的 <code>D</code> 输入端,等下一个时钟沿被采样。所有动作以同一个时钟为节拍。</p>
+<h4 id="_20">四个关键时间参数(先建立直觉)</h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>全称</th>
+<th>含义</th>
+<th>属于谁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>t_ffpd</code></strong></td>
+<td>触发器传播延迟(FF prop. delay)</td>
+<td>时钟沿到来后,经过这么久 <code>Q</code> 才稳定输出新值(CLK→Q)</td>
+<td>触发器自身</td>
+</tr>
+<tr>
+<td><strong><code>t_comb</code></strong></td>
+<td>组合电路传播延迟</td>
+<td>信号穿过中间那坨组合逻辑要的时间</td>
+<td>组合逻辑</td>
+</tr>
+<tr>
+<td><strong><code>t_setup</code></strong></td>
+<td>建立时间</td>
+<td>时钟沿<strong>到来前</strong>,<code>D</code> 必须已稳定的<strong>提前量</strong></td>
+<td>触发器要求</td>
+</tr>
+<tr>
+<td><strong><code>t_hold</code></strong></td>
+<td>保持时间</td>
+<td>时钟沿<strong>到来后</strong>,<code>D</code> 必须继续稳定的<strong>滞后量</strong></td>
+<td>触发器要求</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>t_setup</code>、<code>t_hold</code> 是触发器对<strong>输入 <code>D</code></strong> 提的"采样窗口"要求:在时钟沿前后这一小段(setup 之前 + hold 之后)里,<code>D</code> 不许变,否则触发器采不准、可能进入<strong>亚稳态</strong>(输出长时间停在不确定的中间值)。</p>
+</blockquote>
+<h4 id="_21">一个时钟周期里发生了什么(看时序图)</h4>
+<div class="figure"><svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" style="max-width:640px;background:#fffdf9;border:1px solid #e4ddd1;border-radius:6px;">
+<style>.wf{stroke:#2b2620;stroke-width:2;fill:none}.gd{stroke:#cdbfa8;stroke-width:1;stroke-dasharray:3 3}.rl{font-family:serif;font-size:13px;fill:#2b2620}.an{stroke:#8b5a3c;stroke-width:1.4;fill:none;marker-start:url(#m1);marker-end:url(#m1)}.ans{stroke:#b04a4a;stroke-width:1.4;fill:none;marker-start:url(#m2);marker-end:url(#m2)}.tl{font-family:serif;font-size:11.5px;fill:#8b5a3c}.tls{font-family:serif;font-size:11.5px;fill:#b04a4a}</style>
+<defs>
+<marker id="m1" markerWidth="7" markerHeight="7" refX="3.5" refY="3" orient="auto"><path d="M0,0 L4,3 L0,6 Z" fill="#8b5a3c"/></marker>
+<marker id="m2" markerWidth="7" markerHeight="7" refX="3.5" refY="3" orient="auto"><path d="M0,0 L4,3 L0,6 Z" fill="#b04a4a"/></marker>
+</defs>
+<!-- vertical edge guides -->
+<line x1="120" y1="30" x2="120" y2="250" class="gd"/>
+<line x1="500" y1="30" x2="500" y2="250" class="gd"/>
+<text x="92" y="26" class="tl">时钟沿①</text><text x="476" y="26" class="tl">时钟沿②</text>
+<!-- CLK -->
+<text x="20" y="64" class="rl">CLK</text>
+<path d="M60,75 H120 V45 H300 V75 H500 V45 H600" class="wf"/>
+<!-- Q: launches t_ffpd after edge1 -->
+<text x="20" y="134" class="rl">Q(前级)</text>
+<path d="M60,145 H180 V115 H600" class="wf"/>
+<line x1="120" y1="160" x2="180" y2="160" class="an"/><text x="124" y="174" class="tl">t_ffpd</text>
+<!-- D: changes t_comb after Q -->
+<text x="20" y="214" class="rl">D(后级)</text>
+<path d="M60,225 H320 V195 H600" class="wf"/>
+<line x1="180" y1="240" x2="320" y2="240" class="an"/><text x="210" y="254" class="tl">t_comb</text>
+<!-- setup window before edge2 -->
+<line x1="455" y1="195" x2="500" y2="195" class="ans"/><text x="430" y="189" class="tls">t_setup</text>
+<line x1="455" y1="30" x2="455" y2="250" class="gd"/>
+<text x="330" y="214" class="tls">D 必须在沿②前 t_setup 就稳定 ✔</text>
+</svg></div>
+<ol>
+<li><strong>时钟沿①</strong> 到来 → 前级触发器经 <code>t_ffpd</code> 后,<code>Q</code> 稳定出新值。</li>
+<li><code>Q</code> 穿过组合逻辑,再经 <code>t_comb</code>,到达后级的 <code>D</code>,稳定下来。</li>
+<li>后级要在<strong>时钟沿②</strong>采样这个 <code>D</code>,所以 <code>D</code> 必须<strong>在沿②之前至少 <code>t_setup</code> 就已稳定</strong>。</li>
+<li>整条链占用的时间 = <code>t_ffpd + t_comb</code>,它必须 ≤ <code>t_clk − t_setup</code>。把这条不等式整理,就是下面的约束(1)。</li>
+</ol>
+<h4 id="_22">两条时序约束(必考公式)</h4>
+<p><strong>约束(1)·最长路径决定最高频率(setup 约束)</strong></p>
+<blockquote>
+<p><code>t_clk  &gt;  t_ffpd(max) + t_comb(max) + t_setup</code></p>
+</blockquote>
+<ul>
+<li>直觉:<strong>最慢的那条路</strong>也要赶在下一个时钟沿前 <code>t_setup</code> 稳定。所以时钟周期不能太短。</li>
+<li>它决定<strong>最小时钟周期 / 最高工作频率</strong> <code>f_max = 1 / t_clk(min)</code>。</li>
+<li><strong>建立时间容限</strong> = <code>t_clk − t_ffpd(max) − t_comb(max) − t_setup</code>,必须 <strong>&gt; 0</strong>。</li>
+</ul>
+<p><strong>约束(2)·最短路径决定 hold(hold 约束,与时钟周期无关!)</strong></p>
+<blockquote>
+<p><code>t_hold  &lt;  t_ffpd(min) + t_comb(min)</code></p>
+</blockquote>
+<ul>
+<li>直觉:时钟沿①刚采样完,新数据<strong>不能冲得太快</strong>——若 <code>t_ffpd + t_comb</code> 太小,新值在本拍 hold 窗口还没结束时就杀到 <code>D</code>,会<strong>破坏这一拍正在采样的旧值</strong>。</li>
+<li>关键:这条<strong>不含 <code>t_clk</code></strong>,<strong>把时钟放慢也救不了 hold 违例</strong>!只能靠加大最短路径延迟(如插缓冲)来修。</li>
+<li><strong>保持时间容限</strong> = <code>t_ffpd(min) + t_comb(min) − t_hold</code>,必须 <strong>&gt; 0</strong>。</li>
+</ul>
+<blockquote>
+<p>一句话记牢:<strong>setup 怕路太慢(限制最高频率),hold 怕路太快(和频率无关)</strong>。考试常考"求最小时钟周期/最高频率"——直接套约束(1)。</p>
+</blockquote>
+<h4 id="_23">数值例子(套公式即可)</h4>
+<p>设 <code>t_ffpd = 2~3ns</code>(min 2、max 3),<code>t_comb = 1~5ns</code>(min 1、max 5),<code>t_setup = 1ns</code>,<code>t_hold = 1.5ns</code>。
+- <strong>最小时钟周期</strong>:<code>t_clk &gt; 3 + 5 + 1 = 9ns</code> → <code>t_clk(min) = 9ns</code>,<strong>最高频率 ≈ 1/9ns ≈ 111 MHz</strong>。
+- <strong>hold 校验</strong>:需 <code>t_hold &lt; t_ffpd(min) + t_comb(min) = 2 + 1 = 3ns</code>;<code>1.5 &lt; 3</code> ✔ 满足(与时钟无关)。</p>
+<blockquote>
+<p>进阶(了解):若考虑<strong>时钟偏移 <code>t_skew</code></strong>(同一时钟到两个触发器的到达时刻有差),setup 约束变成 <code>t_clk &gt; t_ffpd + t_comb + t_setup + t_skew</code>。第三部分单周期 CPU 的关键路径公式里就带了这一项。</p>
+</blockquote>
+<h3 id="_24">第二部分小结</h3>
+<p>从"模拟电压抽象成 0/1"出发,布尔代数描述逻辑、CMOS 落地为电路、组合逻辑做即时运算、时序逻辑加上记忆做状态机。<strong>组合 vs 时序的二分</strong>和<strong>FSM 设计套路</strong>是连接第三部分(CPU)的桥。下一册(第三部分)会把这里的加法器、寄存器、状态机组装成真正会执行指令的计算机。</p>
+</main>
+</div>
+</body>
+</html>

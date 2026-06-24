@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLCO 模拟卷 · 前两部分（精简版）</title>
+<style>
+  :root{
+    --ink:#1d1b16; --mute:#6b665c; --line:#dcd6c8; --paper:#fbf9f3; --card:#fff;
+    --hi:#8a1c1c; --hi-bg:#f7ecec; --blue:#1f3a5f; --blue-bg:#eaf0f7;
+    --gold:#9a7b1a; --green:#2c5a2c; --green-bg:#e9f1e9; --flag:#c0392b; --purple:#5a3a8a;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:"SimSun","宋体","Times New Roman",serif; color:var(--ink);
+    background:var(--paper); max-width:920px; margin:0 auto; padding:30px 38px;
+    line-height:1.75; font-size:16px;}
+  h1{font-size:27px; text-align:center; margin:0 0 4px;}
+  .sub{text-align:center; color:var(--mute); font-size:13px; margin-bottom:18px;}
+  .howto{background:var(--blue-bg); border:1px solid #cdd9e8; border-radius:8px;
+    padding:14px 18px; font-size:14px; margin-bottom:18px;}
+  .howto b{color:var(--blue);}
+  .bar{position:sticky; top:0; z-index:20; background:var(--paper);
+    border-bottom:2px solid var(--line); padding:10px 0; margin-bottom:8px;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  button{font-family:inherit; font-size:14px; padding:6px 14px; border:1px solid var(--blue);
+    background:#fff; color:var(--blue); border-radius:6px; cursor:pointer;}
+  button:hover{background:var(--blue); color:#fff;}
+  button.warn{border-color:var(--flag); color:var(--flag);}
+  button.warn:hover{background:var(--flag); color:#fff;}
+  #out{width:100%; min-height:54px; margin-top:6px; font-family:inherit; font-size:14px;
+    border:1px solid var(--line); border-radius:6px; padding:8px; background:#fff;}
+  h2{font-size:20px; margin:26px 0 10px; padding:7px 12px; border-left:5px solid var(--hi);
+    background:var(--hi-bg);}
+  .part{font-size:15px; text-align:center; color:var(--blue); font-weight:bold;
+    margin:30px 0 6px; padding:8px; border-top:2px solid var(--blue); border-bottom:2px solid var(--blue);
+    background:var(--blue-bg);}
+  .q{background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:12px 16px; margin:11px 0;}
+  .q.flagged{border-color:var(--flag); box-shadow:0 0 0 1px var(--flag) inset;}
+  .qhead{display:flex; align-items:baseline; gap:8px;}
+  .qid{font-family:"Times New Roman",serif; font-weight:bold; color:var(--blue); flex:0 0 auto;}
+  .badge{font-size:11px; font-family:sans-serif; padding:1px 7px; border-radius:3px; flex:0 0 auto;}
+  .b-fill{background:#eef3e9; color:var(--green); border:1px solid #cfe0c4;}
+  .b-exp{background:#f3eee9; color:var(--gold); border:1px solid #e4d8c4;}
+  .b-judge{background:#eaf0f7; color:var(--blue); border:1px solid #cdd9e8;}
+  .b-calc{background:#efeaf6; color:var(--purple); border:1px solid #d8cce6;}
+  .qbody{flex:1;}
+  .flagbox{margin-left:auto; flex:0 0 auto; font-size:13px; color:var(--flag);
+    font-family:sans-serif; white-space:nowrap; cursor:pointer; user-select:none;}
+  .flagbox input{vertical-align:middle; transform:scale(1.15); margin-right:3px;}
+  details{margin-top:9px; border-top:1px dashed var(--line); padding-top:7px;}
+  summary{cursor:pointer; color:var(--hi); font-size:14px; font-family:sans-serif;}
+  details[open] summary{margin-bottom:6px;}
+  .ans{font-size:15px;}
+  .ans .key{color:var(--hi); font-weight:bold;}
+  .ans .ex{color:var(--mute); font-size:14px; margin-top:5px; display:block;}
+  code{font-family:"Cambria Math","Times New Roman",serif; background:#f0ece0;
+    padding:1px 4px; border-radius:3px; font-size:14px;}
+  @media print{ .bar,.flagbox,.howto{display:none;} body{max-width:none;}
+    details>summary{display:none;} details>div{display:block!important;} }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+
+<h1>DLCO 模拟卷 · 前两部分（精简版）</h1>
+<div class="sub">二进制信息表示 + 基于布尔代数的计算组件设计 · 38 题（含对照真题补漏 6 题）· 考察理解</div>
+
+<div class="howto">
+<b>怎么用：</b>逐题先自己作答，再点「参考答案」核对。<b>答不出或对错了就勾右侧「🚩没把握」。</b>
+做完点顶栏<b>「汇总没把握的题」</b>，把题号发我，我据此定位薄弱点。
+徽章：<span class="badge b-fill">填空</span> <span class="badge b-exp">解释</span> <span class="badge b-judge">判断</span> <span class="badge b-calc">计算</span>。
+</div>
+
+<div class="bar">
+  <button onclick="toggleAll(true)">全部展开答案</button>
+  <button onclick="toggleAll(false)">全部收起</button>
+  <button class="warn" onclick="collect()">汇总没把握的题 →</button>
+  <span id="cnt" style="font-size:13px;color:var(--mute);"></span>
+  <textarea id="out" placeholder="点「汇总没把握的题」后，这里会列出你勾选的题号，复制发我。"></textarea>
+</div>
+
+<div class="part">第一部分　二进制信息表示</div>
+
+<h2>一、进位计数制与定点数编码</h2>
+
+<div class="q"><div class="qhead"><span class="qid">1.1</span><span class="badge b-calc">计算</span>
+<div class="qbody">按权展开：<code>(1011.1)₂</code> = ______（十进制）；十进制 13 转二进制 = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>11.5</code>；<code>1101</code>。<span class="ex">整数除 2 取余倒读，小数乘 2 取整顺读；十六进制 4 位一组、八进制 3 位一组。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.2</span><span class="badge b-calc">计算</span>
+<div class="qbody">8 位补码：<code>[−5]补</code> = ______；8 位补码表示范围 = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>1111 1011</code>（+5=0000 0101 取反加一）；<code>[−128, +127]</code>。<span class="ex">负数比正数多一个，最小负数 −2ⁿ⁻¹。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.3</span><span class="badge b-exp">解释</span>
+<div class="qbody">补码相比原码，主要好处是什么？（说出两点）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">① <span class="key">0 表示唯一</span>（原码有 +0/−0）；② <span class="key">减法统一为加法</span>、符号位直接参与运算，无需单独判符号 → 硬件简单。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.4</span><span class="badge b-fill">填空</span>
+<div class="qbody">同一数值的移码与补码关系是 ______；移码主要用在 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">只差最高位（<span class="key">符号位相反</span>）；浮点数的<span class="key">阶码</span>（使指数能按无符号数直接比较大小）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.5</span><span class="badge b-judge">判断</span>
+<div class="qbody">n 位补码系统的模是 <code>2ⁿ − 1</code>。（对／错）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">错</span>，模是 <code>2ⁿ</code>。</div></details></div>
+
+<h2>二、浮点数 IEEE 754</h2>
+
+<div class="q"><div class="qhead"><span class="qid">1.6</span><span class="badge b-fill">填空</span>
+<div class="qbody">单精度 32 位划分：S ______ 位，E ______ 位（偏置 ______），M ______ 位。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">1；8（偏置 <span class="key">127</span>）；23。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.7</span><span class="badge b-exp">解释</span>
+<div class="qbody">浮点尾数为什么有个"隐含的 1"？阶码为什么用移码？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">规格化数尾数恒为 <code>1.xxx</code>，前导 1 固定故不存、省 1 位换精度；阶码用移码使浮点数能按<span class="key">无符号整数顺序直接比较大小</span>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.8</span><span class="badge b-calc">计算</span>
+<div class="qbody">求单精度 <code>BEE00000H</code> 的真值。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>−0.4375</code>。<span class="ex">S=1 负；E=0111 1101=125→指数 −2；M=.110…=0.75→尾数 1.75；值 = −1.75×2⁻² = −0.4375。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.9</span><span class="badge b-judge">判断</span>
+<div class="qbody">IEEE 754 浮点数的尾数采用补码存储；阶码全 1、尾数全 0 表示 ±∞。（两句都对吗？）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">前半句<span class="key">错</span>——尾数用<b>原码</b>（移码的是阶码）；后半句对。<span class="ex">阶码全 1 尾数≠0=NaN；阶码全 0 尾数≠0=非规格化数。</span></div></details></div>
+
+<h2>三、非数值数据与数据类型</h2>
+
+<div class="q"><div class="qhead"><span class="qid">1.10</span><span class="badge b-exp">解释</span>
+<div class="qbody">C 语言中 <code>-1 &lt; 0U</code> 的结果是真还是假？为什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">假</span>。有符号与无符号比较时有符号被转为无符号，−1 的全 1 位被当作最大无符号数，故 > 0U。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.11</span><span class="badge b-fill">填空</span>
+<div class="qbody">8421 码、余 3 码、格雷码中，无权码且"相邻只差一位"的是 ______；ASCII 是 ______ 位编码、共 ______ 个字符。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">格雷码</span>；7；128。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.12</span><span class="badge b-exp">解释</span>
+<div class="qbody">汉字机内码如何与 ASCII 码区分？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">机内码<span class="key">两字节最高位都置 1</span>，而 ASCII 最高位为 0，据此唯一区分。<span class="ex">转换链：区位码 →(+32)国标码 →(最高位置1)机内码。</span></div></details></div>
+
+<h2>四、数据存储与字节序</h2>
+
+<div class="q"><div class="qhead"><span class="qid">1.13</span><span class="badge b-calc">计算</span>
+<div class="qbody"><code>0x12345678</code> 在小端机器上从低地址起逐字节存放为 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>78 56 34 12</code>。<span class="ex">小端 = 最低有效字节放低地址。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">1.14</span><span class="badge b-exp">解释</span>
+<div class="qbody">（题眼）同一段字节，"按整数读"和"按字符串读"，哪个受字节序影响？为什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">整数受字节序影响</span>（整体拆字节后顺序不同）；<span class="key">字符串不受影响</span>，因为它按地址从低到高逐字符读，与端序无关。</div></details></div>
+
+<div class="part">第二部分　基于布尔代数的计算组件设计</div>
+
+<h2>五、数字抽象与布尔代数</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.1</span><span class="badge b-exp">解释</span>
+<div class="qbody">什么是数字抽象？噪声容限的作用是什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">把连续模拟电压划成两段映射为 0/1；噪声容限是"输出保证电平"与"输入识别阈值"之间的<span class="key">余量</span>，保证小干扰不会让 0/1 被误读，使电路可级联、抗噪。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.2</span><span class="badge b-exp">解释</span>
+<div class="qbody">FPGA / PLD 用什么器件实现任意逻辑函数？基本思想是什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">查找表（LUT）</span>：把真值表的输出预存在小存储器里，用输入当地址查出结果 → 硬件功能可由配置决定。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.3</span><span class="badge b-fill">填空</span>
+<div class="qbody">德摩根：<code>¬(X·Y)</code> = ______；<code>¬(X+Y)</code> = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>¬X+¬Y</code>；<code>¬X·¬Y</code>。<span class="ex">分配律两条：X(Y+Z)=XY+XZ；X+YZ=(X+Y)(X+Z)。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.4</span><span class="badge b-calc">计算</span>
+<div class="qbody">化简 <code>XY + ¬X·Z + YZ</code> = ______；被消去的是哪一项？为什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>XY + ¬X·Z</code>；消去 <span class="key">YZ</span>（一致 / 冗余项）。因 YZ=1 时 X=1→XY=1、X=0→¬XZ=1，前两项必有一项已为 1。</div></details></div>
+
+<h2>六、逻辑函数与卡诺图化简</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.5</span><span class="badge b-exp">解释</span>
+<div class="qbody">用自己的话说出 <b>蕴含项</b>、<b>质蕴含项</b>、<b>本质质蕴含项</b> 的区别，以及"最小覆盖"怎么求。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">蕴含项</span>=卡诺图上任一合法的全 1 圈（对应一个乘积项）；<span class="key">质蕴含项</span>=扩到不能再大的圈；<span class="key">本质质蕴含项</span>=某 1 格只被它一个圈覆盖、必选的圈。<span class="key">最小覆盖</span>=先选所有本质质蕴含项，再用最少的其他质蕴含项补全剩余 1 格。<span class="ex">合并 2ⁱ 格消 i 个变量。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.6</span><span class="badge b-judge">判断</span>
+<div class="qbody">卡诺图按格雷码 <code>00 01 11 10</code> 排列，是为了让相邻格只差一个变量；无关项 × 可当 0 也可当 1。（对／错）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">对</span>。相邻只差一位才能合并消变量；× 哪种能把圈做更大就当哪种。</div></details></div>
+
+<h2>七、CMOS 实现与组合逻辑组件</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.7</span><span class="badge b-fill">填空</span>
+<div class="qbody">CMOS 与非门：下拉 NMOS ______ 联、上拉 PMOS ______ 联（或非门相反）；高态噪声容限 <code>NM_H</code> = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">串；并；<code>V_OHmin − V_IHmin</code>。<span class="ex">口诀：与→下拉串、或→下拉并，PMOS 与 NMOS 对偶；上下拉绝不能同时导通（否则 VDD 到地短路）。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.8</span><span class="badge b-fill">填空</span>
+<div class="qbody">2 选 1 MUX 输出 <code>F</code> = ______；MUX 能否实现任意组合逻辑函数？______；组合逻辑三规则之一是"无 ______"。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>A·¬S + B·S</code>；能；反馈。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.9</span><span class="badge b-calc">计算</span>
+<div class="qbody">半加器：<code>S</code> = ______，<code>CO</code> = ______；全加器：<code>S</code> = ______，<code>Cout</code> = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>A⊕B</code>，<code>A·B</code>；<code>A⊕B⊕Cin</code>，<code>AB+(A⊕B)Cin</code>。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.10</span><span class="badge b-exp">解释</span>
+<div class="qbody">行波进位加法器为什么慢？先行进位（CLA）用什么思想解决？（写出"生成 G"和"传播 P"的含义）</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">高位进位必须等低位<span class="key">逐级传来</span>，延迟 ∝ n（约 2n 级门）。CLA 定义 <code>Gᵢ=AᵢBᵢ</code>（本位必产生进位）、<code>Pᵢ=Aᵢ⊕Bᵢ</code>（把低位进位传上去），用 <code>Cᵢ=Gᵢ+PᵢCᵢ₋₁</code> 展开，使所有进位由输入<span class="key">并行</span>算出、不再逐级等待。</div></details></div>
+
+<h2>八、竞争冒险</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.11</span><span class="badge b-exp">解释</span>
+<div class="qbody">怎么用卡诺图判断电路存在静态冒险？怎么消除？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">判断</span>：两个为 1 的质蕴含圈"相切而未被同一圈覆盖"，输入跨边界跳变（仅一个变量变）时因路径延迟差出现毛刺。<span class="key">消除</span>：在与或式中加一个<span class="key">冗余的一致项圈</span>搭住相切边界。</div></details></div>
+
+<h2>九、锁存器与触发器</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.12</span><span class="badge b-fill">填空</span>
+<div class="qbody">（必考）锁存器是 ______ 触发，触发器是 ______ 触发；SR 锁存器 <code>S=R=1</code> 是 ______ 态，特征方程 <code>Q*</code> = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">电平（透明）；边沿；禁止（无效）；<code>Q* = S + ¬R·Q</code>（约束 S·R=0）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.13</span><span class="badge b-exp">解释</span>
+<div class="qbody">为什么时序电路要用边沿触发的触发器，而不直接用透明的 D 锁存器？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">D 锁存器使能期间<span class="key">透明</span>，新状态会立刻反馈再次参与运算、一个周期内多次翻转（<span class="key">空翻</span>）；边沿触发只在时钟沿采样一次，状态每周期干净走一步。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.14</span><span class="badge b-calc">计算</span>
+<div class="qbody">① T 触发器现态 <code>Q=1</code>、<code>T=1</code>，次态 <code>Q*</code> = ______，常用于 ______；② JK 触发器现态 <code>Q=0</code>、<code>J=1,K=0</code>，次态 <code>Q*</code> = ______（JK 特征方程 <code>Q*=J·¬Q+¬K·Q</code>）。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">① <code>0</code>（Q*=T⊕Q=1⊕1=0），计数器 / 分频；② <code>1</code>（Q*=1·1+1·0=1）。</div></details></div>
+
+<h2>十、同步时序设计与时序约束</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.15</span><span class="badge b-fill">填空</span>
+<div class="qbody">输出只取决于现态的是 ______ 型，取决于现态和输入的是 ______ 型；设计步骤关键：原始状态图 → 状态化简 → 状态编码 → 选触发器用 ______ 推激励方程 → 画电路。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">Moore；Mealy；特征方程。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.16</span><span class="badge b-calc">计算</span>
+<div class="qbody">用 T 触发器设计同步模 4 加法计数器（<code>Q1Q0: 00→01→10→11→00</code>），激励方程 <code>T0</code> = ______，<code>T1</code> = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>T0 = 1</code>（最低位每拍都翻）；<code>T1 = Q0</code>（低位为 1 时高位才翻，逢二进一）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.17</span><span class="badge b-exp">解释</span>
+<div class="qbody">n 个 D 触发器串联（前级 Q 接后级 D）构成什么电路？异步（行波）计数器和同步并行计数器哪个快、为什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">移位寄存器</span>。<span class="key">同步快</span>：异步靠前级输出驱动后级时钟、进位逐级传递有累积延迟；同步所有触发器共时钟同时翻转，无逐级延迟。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.18</span><span class="badge b-calc">计算</span>
+<div class="qbody">建立时间、保持时间分别指什么？设 <code>t_ffpd(max)=3ns</code>、<code>t_comb(max)=5ns</code>、<code>t_setup=1ns</code>，求最小时钟周期与最高频率。把时钟放慢能解决 hold 违例吗？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><b>setup</b>=时钟沿前 D 须已稳定的提前量，<b>hold</b>=沿后须继续稳定的滞后量。<code>t_clk &gt; 3+5+1=9ns</code> → 最小周期 <span class="key">9ns</span>、最高 ≈ <code>111 MHz</code>。<span class="key">不能</span>放慢时钟救 hold：hold 约束 <code>t_hold &lt; t_ffpd(min)+t_comb(min)</code> 不含 t_clk，与时钟无关。</div></details></div>
+
+<h2>十一、对照真题补漏（去年填空/设计考过、上面没覆盖的）</h2>
+
+<div class="q"><div class="qhead"><span class="qid">2.19</span><span class="badge b-calc">计算</span>
+<div class="qbody">（真题填空）<code>F(A,B,C,D)</code> 的最小项为 <code>Σm(1,3,5,7,9,11,13,15)</code>，则其最大项为 <code>ΠM(______)</code>；序号最大的最大项 <code>M14</code> 的逻辑表达式 = ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">最大项编号与最小项<span class="key">互补</span> → <code>ΠM(0,2,4,6,8,10,12,14)</code>；<code>M14</code>：14=1110，最大项是和项、变量为 1 取反变量、为 0 取原变量 → <code>¬A+¬B+¬C+D</code>。<span class="ex">其实这个 F 就是"D=1"（全是奇数项）。</span></div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.20</span><span class="badge b-calc">计算</span>
+<div class="qbody">（真题填空）16 个状态至少需要 ______ 位二进制编码；12 位地址的最大可寻址空间为 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>4</code> 位（⌈log₂16⌉=4）；<code>2¹² = 4096 = 4K</code> 个单元。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.21</span><span class="badge b-exp">解释</span>
+<div class="qbody">（真题填空·解词）CPLD 和 FPGA 分别是什么？基本结构有何不同？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">CPLD</span>（复杂可编程逻辑器件）：基于<span class="key">乘积项（与-或阵列）</span>结构，规模较小、延迟可预测、多为非易失。<span class="key">FPGA</span>（现场可编程门阵列）：基于<span class="key">查找表 LUT + 可编程互连</span>，规模大、灵活，通常靠 SRAM 配置（掉电丢失）。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.22</span><span class="badge b-exp">解释</span>
+<div class="qbody">（真题填空）状态图的"完备性"指什么？"互斥性"又指什么？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><span class="key">完备性</span>：每个状态对输入的<span class="key">所有取值组合都有对应转移</span>（不遗漏）。<span class="key">互斥性</span>：同一状态下任意两条转移的条件<span class="key">不能同时成立</span>（不冲突）。二者保证状态转移确定、无歧义。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.23</span><span class="badge b-exp">解释</span>
+<div class="qbody">（真题设计题）什么是"未用状态分析"？什么样的电路具有"自启动"能力？</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans">用 k 位编码 m 个状态时，<code>2ᵏ−m</code> 个用不到的编码就是<span class="key">未用状态</span>。分析方法：假设电路因干扰误入某未用状态，沿状态转移看它能否<span class="key">在有限个时钟内回到有效工作状态</span>。若能（且过程中无错误输出）则电路<span class="key">具有自启动能力</span>；否则需指定未用状态的次态来修正设计。</div></details></div>
+
+<div class="q"><div class="qhead"><span class="qid">2.24</span><span class="badge b-calc">计算</span>
+<div class="qbody">（真题填空·CMOS 逆向）某 3 输入 CMOS 电路：下拉网络是 3 个 NMOS <b>串联</b>、上拉是 3 个 PMOS <b>并联</b>。写出逻辑表达式 <code>F</code> = ______，功能为 ______。</div>
+<label class="flagbox"><input type="checkbox">🚩没把握</label></div>
+<details><summary>参考答案</summary><div class="ans"><code>F = ¬(A·B·C)</code>；<span class="key">三输入与非门</span>。<span class="ex">下拉串联=只有 ABC 全 1 才把输出拉 0 → 与非。给电路反推功能时，盯住下拉网络即可。</span></div></details></div>
+
+<script>
+function toggleAll(open){ document.querySelectorAll('details').forEach(d=>d.open=open); }
+function collect(){
+  var ids=[];
+  document.querySelectorAll('.q').forEach(function(q){
+    var cb=q.querySelector('.flagbox input');
+    if(cb && cb.checked){ ids.push(q.querySelector('.qid').textContent.trim()); }
+  });
+  var out=document.getElementById('out');
+  if(ids.length===0){ out.value='（还没勾选任何「🚩没把握」的题）'; }
+  else{ out.value='我在 DLCO 前两部分模拟卷里没把握的题：'+ids.join(', ')+'。请帮我定位薄弱点并给针对性讲解。'; out.select(); }
+  document.getElementById('cnt').textContent='共勾选 '+ids.length+' 题';
+}
+document.querySelectorAll('.flagbox input').forEach(function(cb){
+  cb.addEventListener('change',function(){ cb.closest('.q').classList.toggle('flagged',cb.checked); });
+});
+</script>
+</body>
+</html>
