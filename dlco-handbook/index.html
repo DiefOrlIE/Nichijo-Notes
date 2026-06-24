@@ -93,8 +93,7 @@
 <a class="nav-h2" href="#a1-cla">A.1 加法器的进化:从行波到先行进位(CLA)</a>
 <a class="nav-h2" href="#a2-alu">A.2 带标志加法器与 ALU</a>
 <a class="nav-h2" href="#a3">A.3 定点数加减运算</a>
-<a class="nav-h2" href="#a4-booth">A.4 定点数乘法(重点:Booth 算法)</a>
-<a class="nav-h2" href="#a4-booth_1">A.4+ 补码两位 Booth 乘法(详解 · 去年大题)</a>
+<a class="nav-h2" href="#a4">A.4 定点数乘法:计算方法与原理证明</a>
 <a class="nav-h2" href="#a5">A.5 定点数除法(思路)</a>
 <a class="nav-h2" href="#a6-ieee-754">A.6 浮点运算 IEEE 754</a>
 <a class="nav-h1" href="#b-isa">第三部分 B · 指令集架构 (ISA)</a>
@@ -111,7 +110,7 @@
 <a class="nav-h2" href="#c3-cpu-45">C.3 单周期 CPU 数据通路(45 分大题级,务必吃透)</a>
 <a class="nav-h2" href="#c4-cpu">C.4 多周期 CPU(了解)</a>
 <a class="nav-h2" href="#c5-cpu">C.5 流水线 CPU(了解)</a>
-<a class="nav-h2" href="#_11">全课闭环小结</a>
+<a class="nav-h2" href="#_8">全课闭环小结</a>
 </nav>
 <main>
 <h1 id="dlco">DLCO 详细讲义（上）</h1>
@@ -1074,49 +1073,165 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 <li><strong>原码加减</strong>:符号位与数值位<strong>分离</strong>处理,先判符号再对数值位求和/求差(求差用补码),按最高位进位定结果符号。<strong>求差永不溢出</strong>。</li>
 <li><strong>移码加减</strong>:移码的和/差 = 和/差的补码,运算后<strong>把结果符号位取反</strong>还原成移码。用于浮点阶码。</li>
 </ul>
-<h2 id="a4-booth">A.4 定点数乘法(重点:Booth 算法)</h2>
+<h2 id="a4">A.4 定点数乘法:计算方法与原理证明</h2>
+<blockquote>
+<p>这一节把所有乘法算法<strong>串成一条逻辑链</strong>:先用最朴素的"无符号乘法"建立"部分积右移"的核心机制 → 原码乘法只是给它套上"符号异或";→ 补码乘法(Booth)用一个<strong>重编码恒等式</strong>让符号位也能直接参与;→ 两位乘法是把两步合并提速。每个算法都给出<strong>为什么成立</strong>的证明,看一遍就能懂。</p>
+</blockquote>
+<h3 id="a40">A.4.0 共同基础:无符号数乘法(部分积右移)</h3>
+<p>两个 n 位无符号数相乘,按定义:</p>
+<div class="formula">X × Y = X × (yₙ₋₁·2ⁿ⁻¹ + … + y₁·2¹ + y₀·2⁰) = Σᵢ X·yᵢ·2ⁱ</div>
+<p><strong>朴素做法</strong>:对每个 <code>yᵢ=1</code> 把 <code>X</code> 左移 i 位再相加——但被乘数要左移、需要 2n 位加法器,浪费。</p>
+<p><strong>改进(核心机制)</strong>:不左移被乘数,而是<strong>每加一项后把部分积右移一位</strong>。这样加法永远作用在部分积的高 n 位,<strong>n 位加法器就够</strong>。其递推式(从乘数最低位 <code>y₀</code> 开始,<code>P₀=0</code>):</p>
+<div class="formula">Pᵢ₊₁ = 2⁻¹ · (Pᵢ + X·yᵢ)　　<span class="lbl">i = 0, 1, …, n−1</span></div>
 <ul>
-<li><strong>原码一位乘法</strong>:符号单独算(异或),数值部分<strong>部分积逐位累加 + 右移</strong>,循环 n 次。</li>
-<li><strong>补码 Booth 一位乘法(必考)</strong>:能直接处理带符号数。在乘数最低位后补一个 <code>y₋₁ = 0</code>,从低位起看<strong>相邻两位 <code>(yᵢ, yᵢ₋₁)</code></strong>,按 <code>yᵢ₋₁ − yᵢ</code> 决定操作:</li>
+<li><code>yᵢ=1</code> → 加 X 再右移;<code>yᵢ=0</code> → 只右移。</li>
+<li><strong>为什么右移等价于"项的 2ⁱ 权"</strong>:第 i 步加进来的 <code>X</code> 此后还要被右移 (n−1−i) 次,每右移一次就再乘一个 2⁻¹;循环结束时所有项的权重恰好对齐成 <code>X·yᵢ·2ⁱ</code> 的总和。最终 <code>Pₙ = X×Y</code>。</li>
 </ul>
+<blockquote>
+<p><strong>这套"判乘数位 → 加/不加 → 右移"是所有定点乘法的母版</strong>,下面三种算法都只是改"判什么、加什么"。</p>
+</blockquote>
+<h3 id="a41">A.4.1 原码一位乘法(用于浮点尾数)</h3>
+<p>原码的符号位和数值位是<strong>分离</strong>的,所以:
+- <strong>积的符号</strong> = 两数符号位<strong>异或</strong>;
+- <strong>积的数值</strong> = <code>|X| × |Y|</code>,直接套 A.4.0 的无符号乘法。</p>
+<p><strong>例</strong>:<code>[x]原 = 0.1110</code>,<code>[y]原 = 1.1101</code>。
+- 数值:<code>1110 × 1101 = 1011 0110</code>;符号:<code>0 ⊕ 1 = 1</code>。
+- 结果 <code>[x×y]原 = 1.1011 0110</code>。</p>
+<h3 id="a42">A.4.2 原码两位乘法(提速一倍)</h3>
+<p>每次看乘数<strong>两位</strong>、循环 <code>n/2</code> 次。两位的权决定加几倍 X:<code>00→+0</code>、<code>01→+X</code>、<code>10→+2X</code>、<code>11→+3X</code>,然后部分积<strong>右移两位</strong>(相当于 ÷4)。</p>
+<p><strong>麻烦在 <code>11</code>(要 +3X)</strong>:<code>3X</code> 无法一步加。利用 <code>3X = 4X − X</code>,把它拆成:</p>
+<div class="formula">11: Pᵢ₊₁ = 2⁻²(Pᵢ + 3X) = 2⁻²(Pᵢ − X) + X</div>
+<p>即<strong>本次做 −X,并用一个 T 触发器记下"下一轮欠一个 +X"</strong>;因为部分积右移两位 = ÷4,下一轮补的那个 <code>+X</code> 正好等价于本轮的 <code>+4X</code>。于是判断要同时看<strong>两位 + T</strong>(共三位):</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">yᵢ yᵢ₋₁</th>
+<th style="text-align: center;">yᵢ₋₁ yᵢ</th>
+<th style="text-align: center;">T(上轮借位)</th>
+<th style="text-align: center;">操作</th>
+<th style="text-align: center;">T 置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">00</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">00</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">+X</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">01</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">+X</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">01</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">+2X</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">+2X</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">−X</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">−X</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">+0</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>−X</code> 用 <strong><code>+[−X]补</code></strong> 实现;部分积采用<strong>模 8 补码(三位符号位)+ 算术右移</strong>——因为右移两位时若只用两位符号(模 4),中间部分积的符号会算错(变负),必须多留一位符号位。</li>
+</ul>
+<p><strong>例</strong>:<code>[X]原 = 0.111001</code>,<code>[Y]原 = 0.100111</code> → <code>[X×Y]原 = 0.1000 1010 1111</code>。(速度快一倍,但硬件代价更大。)</p>
+<h3 id="a43-booth">A.4.3 补码一位乘法:Booth 算法(必考,带证明)</h3>
+<p><strong>为什么不能直接用无符号乘法?</strong> 因为 <code>[X×Y]补 ≠ [X]补 × [Y]补</code>(补码的符号位带负权,直接相乘会错)。Booth 算法的精髓是用一个<strong>重编码恒等式</strong>让符号位也能统一参与。</p>
+<p><strong>证明(重编码)</strong>:设 <code>[Y]补 = yₙ₋₁…y₁y₀</code>,其真值由补码定义:</p>
+<div class="formula">Y = −yₙ₋₁·2ⁿ⁻¹ + yₙ₋₂·2ⁿ⁻² + … + y₀·2⁰</div>
+<p>补一个 <code>y₋₁ = 0</code>,然后对每个权用恒等式 <code>2ⁱ = 2ⁱ⁺¹ − 2ⁱ</code> 改写、错位相消,可得<strong>Booth 重编码</strong>:</p>
+<div class="formula">Y = Σᵢ (yᵢ₋₁ − yᵢ)·2ⁱ　　<span class="lbl">i = 0 … n−1</span></div>
+<blockquote>
+<p>验证思路:把右边展开 = Σ yᵢ₋₁·2ⁱ − Σ yᵢ·2ⁱ;前一项换元 j=i−1 后,与后一项逐位合并,最高位 <code>−yₙ₋₁·2ⁿ⁻¹</code> 自动带上负号——结果正好还原成补码真值公式。<strong>等式两边恒等,所以这个改写不改变 Y 的值。</strong></p>
+</blockquote>
+<p>两边乘 <code>X</code> 即得<strong>乘积递推</strong>:</p>
+<div class="formula">X×Y = Σᵢ (yᵢ₋₁ − yᵢ)·X·2ⁱ　　→　　Pᵢ = 2⁻¹·(Pᵢ₋₁ + (yᵢ₋₁ − yᵢ)·X)</div>
+<p>系数 <code>(yᵢ₋₁ − yᵢ)</code> 只可能是 −1 / 0 / +1,所以每步只要 <strong>看相邻两位 <code>(yᵢ, yᵢ₋₁)</code></strong>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">yᵢ</th>
+<th style="text-align: center;">yᵢ₋₁</th>
+<th style="text-align: center;">系数</th>
 <th style="text-align: left;">操作(对部分积)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">0 0</td>
-<td style="text-align: left;">+0,右移</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">+0,算术右移</td>
 </tr>
 <tr>
-<td style="text-align: center;">0 1</td>
-<td style="text-align: left;"><strong>+X</strong>(加被乘数),右移</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">+1</td>
+<td style="text-align: left;"><strong>+X</strong>(1 串结尾),算术右移</td>
 </tr>
 <tr>
-<td style="text-align: center;">1 0</td>
-<td style="text-align: left;"><strong>−X</strong>(减被乘数),右移</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">−1</td>
+<td style="text-align: left;"><strong>−X</strong>(1 串开头),算术右移</td>
 </tr>
 <tr>
-<td style="text-align: center;">1 1</td>
-<td style="text-align: left;">+0,右移</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;">+0,算术右移</td>
 </tr>
 </tbody>
 </table>
-<p>直觉:Booth 把"一串连续的 1"看成"高位加、低位减"的差,从而把多次加法压成两次。</p>
-<ul>
-<li><strong>Booth 两位乘法</strong>:见下面 A.4+ 专门详解(去年大题在此)。</li>
-</ul>
-<h2 id="a4-booth_1">A.4+ 补码两位 Booth 乘法(详解 · 去年大题)</h2>
-<h3 id="_4">为什么能"两位一跳"</h3>
-<p>一位 Booth 每次看相邻两位、循环 n 次。把<strong>相邻的两步一位 Booth 合并</strong>,就得到两位 Booth:每次看<strong>三位窗口 <code>yᵢ₊₁ yᵢ yᵢ₋₁</code></strong>,一次处理乘数的两位,循环 <strong>n/2</strong> 次,速度翻倍。合并后的系数是 <code>(yᵢ₋₁ + yᵢ − 2·yᵢ₊₁)</code>,取值范围只有 <strong>{−2, −1, 0, +1, +2}</strong>。</p>
 <blockquote>
-<p><strong>关键好处:补码 Booth 两位乘天然只需要 0、±X、±2X,永远不会出现 +3X</strong>(系数最多到 2)。<code>±2X</code> 只是把 <code>[X]补</code> / <code>[−X]补</code> 左移一位,容易得到。(注:原码两位乘才会撞上 +3X,要拆成 <code>−X+4X</code>;别和这里混。)</p>
+<p><strong>直觉(1 串原理)</strong>:一串连续的 1 满足 <code>2ᵏ + … + 2ʲ = 2ᵏ⁺¹ − 2ʲ</code>。所以遇到一长串 1,不必逐位加,只在<strong>串的开头(进入 1)减 X、串的结尾(离开 1)加 X</strong>——把许多次加法压成两次。</p>
 </blockquote>
-<h3 id="_5">操作表(背这张表 + 会查就行)</h3>
-<p>对每个三位窗口 <code>yᵢ₊₁ yᵢ yᵢ₋₁</code>,先做对应加法,再让部分积<strong>算术右移两位</strong>:</p>
+<p><strong>例</strong>:<code>[X]补 = 1101</code>(−3),<code>[Y]补 = 0110</code>(6),<code>[−X]补 = 0011</code>。逐位看 <code>(yᵢ, yᵢ₋₁)</code>(补 y₋₁=0):<code>y₀y₋₁=00</code>→移;<code>y₁y₀=11</code>→移;<code>y₂y₁=01</code>→+X;<code>y₃y₂=10</code>→−X。算下来 <code>[X×Y]补 = 1110 1110 = −18</code> ✓。</p>
+<h3 id="a44">A.4.4 补码两位乘法(提速 · 去年大题)</h3>
+<p>把<strong>相邻两步一位 Booth 合并</strong>,就得到两位 Booth:每次看<strong>三位窗口 <code>yᵢ₊₁ yᵢ yᵢ₋₁</code></strong>、处理乘数两位、循环 <strong>n/2</strong> 次。</p>
+<p><strong>证明(合并)</strong>:连写两步一位 Booth 递推并代入,</p>
+<div class="formula" style="text-align:left;">
+Pᵢ₊₂ = 2⁻¹(Pᵢ₊₁ + (yᵢ − yᵢ₊₁)·X)<br>
+　　　= 2⁻¹( 2⁻¹(Pᵢ + (yᵢ₋₁ − yᵢ)·X) + (yᵢ − yᵢ₊₁)·X )<br>
+　　　= 2⁻²·( Pᵢ + (yᵢ₋₁ + yᵢ − 2·yᵢ₊₁)·X )
+</div>
+
+<p>合并系数 <code>(yᵢ₋₁ + yᵢ − 2·yᵢ₊₁)</code> 取值只有 <strong>{−2, −1, 0, +1, +2}</strong>。</p>
+<blockquote>
+<p><strong>关键好处:补码两位乘天然只需 0、±X、±2X,永远不会出现 +3X</strong>(系数最多到 2)。<code>±2X</code> 只是把 <code>[X]补</code>/<code>[−X]补</code> 左移一位。(原码两位乘才会撞上 +3X、要拆 <code>−X+4X</code>,见 A.4.2,别混。)</p>
+</blockquote>
+<p><strong>操作表</strong>(看三位窗口 → 加 → 算术右移两位):</p>
 <table>
 <thead>
 <tr>
@@ -1186,19 +1301,8 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>记忆:<strong>末位看"借/还"</strong>——和一位 Booth 同理,系数 = "右边那位减左边",连续 1 串只在两端动手。<code>±2X</code> 出现在窗口正好跨过 1 串边界(<code>011</code>/<code>100</code>)时。</p>
-</blockquote>
-<h3 id="_6">规则要点(易错)</h3>
-<ol>
-<li>乘数最低位后补<strong>附加位 <code>y₋₁ = 0</code></strong>。</li>
-<li>部分积寄存器最高位前<strong>再加一位附加符号位</strong>(防 <code>±2X</code> 相加时符号溢出),移位时用<strong>算术右移</strong>(符号位填充)。</li>
-<li>字长 n 取偶数(总是 8 的倍数),循环 <strong>n/2</strong> 次。</li>
-<li>结束时:乘积<strong>高位在 P、低位在 Y</strong>。</li>
-</ol>
-<h3 id="_7">完整例题(逐步可跟)</h3>
-<p><strong>已知 <code>[X]补 = 1101</code>(即 −3),<code>[Y]补 = 0110</code>(即 +6),求 <code>[X×Y]补</code>。</strong>
-先备好 <code>[−X]补 = 0011</code>(+3)、<code>2[X]补 = 11010</code>、<code>2[−X]补 = 00110</code>。n=4 → 循环 2 次。</p>
+<p><strong>规则要点</strong>:① 补附加位 <code>y₋₁=0</code>;② 部分积最高位前<strong>再加一位附加符号位</strong>(防 ±2X 相加溢出),移位用<strong>算术右移</strong>;③ n 取偶数,循环 <strong>n/2</strong> 次;④ 结束时乘积高位在 P、低位在 Y。</p>
+<p><strong>完整例题</strong>:<code>[X]补 = 1101</code>(−3),<code>[Y]补 = 0110</code>(+6)。备 <code>[−X]补=0011</code>、<code>2[X]补=11010</code>、<code>2[−X]补=00110</code>,n=4 → 2 次循环。</p>
 <table>
 <thead>
 <tr>
@@ -1236,7 +1340,7 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 <td style="text-align: center;"><code>00001</code></td>
 <td style="text-align: center;"><code>1001</code></td>
 <td style="text-align: center;">1</td>
-<td>得 <code>[P₂]补</code>,低 2 位移入 Y</td>
+<td>得 <code>[P₂]补</code></td>
 </tr>
 <tr>
 <td>看 <code>y₃y₂y₁=011</code></td>
@@ -1261,15 +1365,54 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 </tr>
 </tbody>
 </table>
-<p>拼接 P‖Y 取低 8 位:<strong><code>[X×Y]补 = 1110 1110</code></strong>。
-验证:<code>−3 × 6 = −18</code>,而 <code>−18</code> 的 8 位补码 = <code>256−18 = 238 = 11101110</code> ✓。与一位 Booth 结果相同,但循环次数减半。</p>
+<p>拼接 P‖Y 取低 8 位:<strong><code>[X×Y]补 = 1110 1110 = −18</code></strong> ✓。与一位 Booth 结果相同,循环次数减半。</p>
+<h3 id="a45">A.4.5 关于"移码乘法"的澄清</h3>
+<p><strong>定点乘法没有"移码乘法"这一独立算法。</strong> 移码的用途只有两个:浮点数的<strong>阶码</strong>表示、以及<strong>移码加减</strong>(移码的和/差 = 和/差的补码,算完把符号位取反还原)。</p>
+<p>在<strong>浮点乘法</strong>里移码确实会出现,但不是"把两个移码相乘":阶码做的是<strong>相加</strong>——而且因为两个移码各含一个偏置(<code>E=e+Bias</code>),直接相加会多出一个 Bias,需要<strong>减去一个偏置修正</strong>(<code>E_积 = E_X + E_Y − Bias</code>);真正相乘的是<strong>尾数</strong>(用上面的原码/补码乘法)。所以一提"乘法",移码就退场——它的战场是加减和阶码,不参与乘。</p>
+<h3 id="_4">四种定点乘法一览</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>判断依据</th>
+<th style="text-align: center;">循环次数</th>
+<th>关键点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原码一位</td>
+<td>乘数 1 位</td>
+<td style="text-align: center;">n</td>
+<td>符号异或 + 无符号乘</td>
+</tr>
+<tr>
+<td>原码两位</td>
+<td>2 位 + T</td>
+<td style="text-align: center;">n/2</td>
+<td>3X 拆 −X+4X,三符号位</td>
+</tr>
+<tr>
+<td>补码一位 Booth</td>
+<td>相邻 2 位</td>
+<td style="text-align: center;">n</td>
+<td>重编码 (yᵢ₋₁−yᵢ),1 串两端动手</td>
+</tr>
+<tr>
+<td>补码两位</td>
+<td>3 位窗口</td>
+<td style="text-align: center;">n/2</td>
+<td>系数 {−2…2},无 3X</td>
+</tr>
+</tbody>
+</table>
 <h2 id="a5">A.5 定点数除法(思路)</h2>
 <p>商逐位求,每步<strong>上商 + 移位 + 加减</strong>:
 - <strong>恢复余数法</strong>:试减,若余数为负则把减掉的加回来(恢复),上商 0。
 - <strong>不恢复余数(加减交替)法</strong>:余数为负时不恢复,下一步改做加法,省去恢复步骤,更快。</p>
 <h2 id="a6-ieee-754">A.6 浮点运算 IEEE 754</h2>
-<h3 id="_8">浮点加减(会做,重点)—— 五步</h3>
-<p>设两数 <code>A = M_A × 2^{E_A}</code>、<code>B = M_B × 2^{E_B}</code>:
+<h3 id="_5">浮点加减(会做,重点)—— 五步</h3>
+<p>设两数 <code>A = M_A × 2^(E_A)</code>、<code>B = M_B × 2^(E_B)</code>:
 1. <strong>对阶</strong>:把<strong>小阶向大阶看齐</strong>(小阶尾数右移,移动位数 = 阶差)。为什么小向大?大阶尾数右移会丢高位有效数字,损失更大。
 2. <strong>尾数加减</strong>:对齐后直接加减尾数。
 3. <strong>规格化</strong>:结果调整成 <code>1.xxx</code> 形式——尾数 ≥2 就右移、阶码 +1(右规);尾数 &lt;1 就左移、阶码 −1(左规)。
@@ -1281,7 +1424,7 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 尾数加:<code>1.0100 + 0.0110 = 1.1010 × 2¹</code>,已规格化。
 结果 <code>= 11.01₂ = 3.25</code>。验证:A=2.5,B=0.75,和=3.25 ✓。</p>
 </blockquote>
-<h3 id="_9">浮点乘除(了解)</h3>
+<h3 id="_6">浮点乘除(了解)</h3>
 <ul>
 <li>乘法:<strong>阶码相加</strong>(再减一个偏置)、<strong>尾数相乘</strong>,再规格化。</li>
 <li>除法:阶码相减、尾数相除。</li>
@@ -1440,7 +1583,7 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 </tr>
 </tbody>
 </table>
-<h3 id="_10">立即数拼接(高频易错)</h3>
+<h3 id="_7">立即数拼接(高频易错)</h3>
 <ul>
 <li><strong>immI</strong> = 符号扩展 <code>Instr[31:20]</code>(12 位)。</li>
 <li><strong>immU</strong> = <code>{Instr[31:12], 12'b0}</code>(<strong>低 12 位补 0,不是符号扩展</strong>)。</li>
@@ -1569,7 +1712,7 @@ C4 = G4 + P4·G3 + P4·P3·G2 + P4·P3·P2·G1 + P4·P3·P2·P1·C0
 <li><strong>控制冒险</strong>:转移目标未定就取错指令 → <strong>分支预测</strong>(静态 65–85% / 动态 90%+)、延迟分支、清空错误指令。</li>
 </ul>
 <hr />
-<h2 id="_11">全课闭环小结</h2>
+<h2 id="_8">全课闭环小结</h2>
 <ul>
 <li><strong>上册</strong>:0/1 表示信息(第一部分)→ 布尔代数 + 门电路 + 组合/时序逻辑造出会算的电路(第二部分)。</li>
 <li><strong>下册</strong>:加法器拼出定点/浮点运算(A)→ ISA 定义软硬件契约(B)→ 数据通路 + 控制器把 ISA 实现成 CPU(C)。</li>
