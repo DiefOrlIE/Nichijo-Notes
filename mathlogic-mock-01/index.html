@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数理逻辑 · 模拟卷（一）</title>
+<style>
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--ok:#2f6b3a;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 26px 120px;}
+  header.title{text-align:center;border-bottom:3px double var(--accent);padding-bottom:16px;margin-bottom:10px;}
+  header.title h1{font-size:30px;margin:0 0 4px;} header.title .sub{color:var(--soft);font-size:15px;}
+  .bar{position:sticky;top:0;z-index:10;background:rgba(251,249,244,.96);backdrop-filter:blur(3px);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:16px 0 26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .bar button{font-family:inherit;font-size:15px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:#fff;padding:7px 14px;border-radius:20px;}
+  .bar button.ghost{background:#fff;color:var(--accent);}
+  .bar .hint{font-size:14px;color:var(--soft);}
+  #summary{margin:0 0 24px;padding:0;}
+  #summary.show{padding:12px 16px;background:var(--hl);border:1px solid #e2c98a;border-radius:8px;}
+  h2.sec{font-size:22px;margin:34px 0 6px;padding-left:10px;border-left:6px solid var(--accent);}
+  .q{border:1px solid var(--line);border-radius:10px;background:var(--box);padding:14px 18px;margin:16px 0;}
+  .q .qh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .q .qno{font-weight:bold;color:var(--accent2);}
+  .q .pts{font-size:13px;color:var(--soft);white-space:nowrap;}
+  .flag{font-size:14px;color:var(--soft);white-space:nowrap;user-select:none;cursor:pointer;}
+  .flag input{transform:scale(1.15);margin-right:4px;vertical-align:middle;}
+  .stmt{margin:8px 0;} .stmt ol{margin:6px 0;padding-left:26px;} .stmt li{margin:4px 0;}
+  details{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;}
+  summary{cursor:pointer;color:var(--accent);font-size:15px;list-style:none;}
+  summary::-webkit-details-marker{display:none;} summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .ans{margin-top:10px;color:#33312c;background:#fbf7ee;border-left:3px solid var(--ok);padding:8px 14px;border-radius:0 6px 6px 0;}
+  .ans b{color:var(--ok);}
+  .f{display:block;text-align:center;margin:10px 0;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  sub,sup{font-size:.72em;} .small{font-size:14px;color:var(--soft);}
+  .deriv{overflow-x:auto;padding:12px 2px;text-align:center;}
+  .infer{display:inline-flex;flex-direction:column;align-items:center;margin:0 5px;vertical-align:bottom;}
+  .infer .prem{display:flex;flex-direction:row;align-items:flex-end;justify-content:center;gap:16px;padding:0 5px 3px;}
+  .infer .bar2{align-self:stretch;border-top:1.3px solid var(--ink);position:relative;}
+  .infer .bar2 span{position:absolute;right:-4px;top:-2px;transform:translateX(100%);font-size:12px;color:var(--accent);white-space:nowrap;}
+  .infer .conc{padding:3px 7px 0;white-space:nowrap;font-size:14.5px;}
+  .leaf{white-space:nowrap;font-size:14.5px;padding:0 5px;}
+  table.tt{border-collapse:collapse;margin:8px 0;font-size:15px;} table.tt th,table.tt td{border:1px solid var(--line);padding:4px 9px;text-align:center;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+<header class="title">
+  <h1>数理逻辑 · 模拟卷（一）</h1>
+  <div class="sub">仿 2025 期末结构 ｜ 难度贴近真题 ｜ 判断 24 分 + 大题 76 分　·　葛存菁班</div>
+</header>
+
+<div class="bar">
+  <button onclick="collect()">🚩 汇总没把握题号</button>
+  <button class="ghost" onclick="toggleAll(true)">展开全部答案</button>
+  <button class="ghost" onclick="toggleAll(false)">收起全部答案</button>
+  <span class="hint">做题时勾选「🚩没把握」，最后点汇总生成一句话发给阿卡酱。</span>
+</div>
+<div id="summary"></div>
+
+<!-- ============ 一 判断题 ============ -->
+<h2 class="sec">一、判断题（每题 3 分，共 24 分）</h2>
+<p class="small">判断对错并说明理由（理由是给自己复盘用）。</p>
+
+<div class="q">
+  <div class="qh"><span class="qno">1.</span><label class="flag"><input type="checkbox" data-q="一.1">🚩没把握</label></div>
+  <div class="stmt">一个公式可能既不是永真式，又不是矛盾式。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>对。</b>如命题符 p：v(p)=1 时为真、v(p)=0 时为假，故既非永真也非矛盾。公式三分为永真 / 矛盾 / 两者皆非（可满足而非永真）。</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">2.</span><label class="flag"><input type="checkbox" data-q="一.2">🚩没把握</label></div>
+  <div class="stmt">{¬, ↔} 是命题联结词的完全组。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>错。</b>因 a↔b ≡ ¬(a⊕b) = a⊕b⊕1、¬a = a⊕1，故仅由 ¬ 与 ↔ 生成的公式都是<b>仿射（线性）函数</b>，即形如 x<sub>i₁</sub>⊕…⊕x<sub>iₖ</sub>⊕c（⊕ 为异或，仿射函数在复合下封闭）。而 ∧ <u>不是</u>仿射函数，无法被表示，故 {¬,↔} 不完全。完全组需保留 ¬ 再配 ∧/∨/→ 之一。</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">3.</span><label class="flag"><input type="checkbox" data-q="一.3">🚩没把握</label></div>
+  <div class="stmt">命题逻辑自然推理系统 G′ 中，每个可证矢列都存在无 Cut 的证明树。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>对。</b>Cut 消除定理（推论 1.50）。完全性的构造证明只用到除 Cut 外的规则，故可证者必有无 Cut 证明。</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">4.</span><label class="flag"><input type="checkbox" data-q="一.4">🚩没把握</label></div>
+  <div class="stmt">在一阶自然推理系统 G 中，⊢ P(x)[y/x] → ∀x.P(x) 可证。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>错。</b>对目标用 ∀R 须引入<u>新变元</u>，得到 P(y) ⊢ P(z)（z 新），前后件无公共公式，非公理；其它规则也走不通。语义上取模型使 P(y) 真但某元素不满足 P，则该式为假、非永真，由可靠性不可证。（对比：→∃x.P(x) 可证。）</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">5.</span><label class="flag"><input type="checkbox" data-q="一.5">🚩没把握</label></div>
+  <div class="stmt">若 Γ ⊨ A，则 Γ ∪ {¬A} 不可满足。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>对。</b>引理 3.20。反设 Γ∪{¬A} 有模型 (𝕄,σ)，则它满足 Γ 却满足 ¬A（即不满足 A），与 Γ⊨A 矛盾。</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">6.</span><label class="flag"><input type="checkbox" data-q="一.6">🚩没把握</label></div>
+  <div class="stmt">一阶结构的论域可以是空集。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>错。</b>定义 3.10 要求论域 M <u>非空</u>。否则 ∀/∃ 的语义与 ∃x.(x≐x) 等会出问题。（注意：常元符集、函数符集可以为空，但论域不行。）</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">7.</span><label class="flag"><input type="checkbox" data-q="一.7">🚩没把握</label></div>
+  <div class="stmt">若公式集 Γ 的每个有穷子集都可满足，则 Γ 可满足。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>对。</b>这正是紧致性定理（定理 6.21 / 命题逻辑版 1.51）。注意方向：是"有穷子集可满足 ⟹ 整体可满足"，反方向（整体⟹有穷）平凡成立。</div></details>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="qno">8.</span><label class="flag"><input type="checkbox" data-q="一.8">🚩没把握</label></div>
+  <div class="stmt">设 Γ 为极大协调集，A 为公式。若不存在 Γ 的有穷子集 Δ 使 Δ ⊢ A 可证，则 ¬A ∈ Γ。</div>
+  <details><summary>参考答案</summary><div class="ans"><b>对。</b>由命题 6.6，极大协调集对任意 A 有 A∈Γ 或 ¬A∈Γ；又由命题 6.7，A∈Γ ⟺ 存在 Δ⊆Γ 使 Δ⊢A 可证。题设否定了后者，故 A∉Γ，只能 ¬A∈Γ。</div></details>
+</div>
+
+<!-- ============ 二 范式 ============ -->
+<h2 class="sec">二、求范式（10 分）</h2>
+<div class="q">
+  <div class="qh"><span class="qno">二.</span><label class="flag"><input type="checkbox" data-q="二">🚩没把握</label></div>
+  <div class="stmt">求公式 <em class="k">(P → Q) → R</em> 的析取范式（DNF）与合取范式（CNF）。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>真值表</b>（(P→Q)→R）：
+    <table class="tt"><tr><th>P</th><th>Q</th><th>R</th><th>值</th></tr>
+      <tr><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+      <tr><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+      <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+      <tr><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    </table>
+    <b>DNF</b>（取真值为 1 的行）：<br>
+    (P∧Q∧R) ∨ (P∧¬Q∧R) ∨ (P∧¬Q∧¬R) ∨ (¬P∧Q∧R) ∨ (¬P∧¬Q∧R)<br><br>
+    <b>CNF</b>（取真值为 0 的行 110/010/000，每行取反成析取子句）：<br>
+    (¬P∨¬Q∨R) ∧ (P∨¬Q∨R) ∧ (P∨Q∨R)<br>
+    <span class="small">亦可用等值演算：(P→Q)→R ≃ ¬(¬P∨Q)∨R ≃ (P∧¬Q)∨R，即为一个 DNF；再分配得 CNF (P∨R)∧(¬Q∨R)。两种 DNF/CNF 只要逻辑等价均可（此处等值演算给出更简形式）。</span>
+  </div></details>
+</div>
+
+<!-- ============ 三 形式化 ============ -->
+<h2 class="sec">三、形式化与判断（8 分）<span class="small">　[对应真题三·同考点替位]</span></h2>
+<div class="q">
+  <div class="qh"><span class="qno">三.</span><label class="flag"><input type="checkbox" data-q="三">🚩没把握</label></div>
+  <div class="stmt">论域为某班全体学生。P(x)：x 通过了考试；Q(x)：x 认真复习。<br>
+    (1) 用一阶公式形式化："只有认真复习的学生才通过考试"。<br>
+    (2) 形式化："并非所有学生都通过了考试"。<br>
+    (3) 判断 (1)(2) 能否推出"存在学生没有认真复习"，并说明。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    (1) "只有 Q 才 P"＝"P 蕴含 Q"：<span class="f">∀x.(P(x) → Q(x))</span>
+    (2) <span class="f">¬∀x.P(x)　（≃ ∃x.¬P(x)）</span>
+    (3) <b>不能</b>。反例模型：设有学生 a、b，令 Q(a)=Q(b)=真（都认真复习），P(a)=真、P(b)=假。则 (1) 真（凡通过者都复习了）、(2) 真（b 没通过），但"存在没认真复习的学生" ∃x.¬Q(x) 为假。故 (1)(2) ⊭ ∃x.¬Q(x)。
+  </div></details>
+</div>
+
+<!-- ============ 四 构造模型证永真 ============ -->
+<h2 class="sec">四、证明公式永真 / 判非永真（10 分）</h2>
+<div class="q">
+  <div class="qh"><span class="qno">四.</span><label class="flag"><input type="checkbox" data-q="四">🚩没把握</label></div>
+  <div class="stmt">(1) 证明 <em class="k">⊨ ∃x.∀y.P(x,y) → ∀y.∃x.P(x,y)</em>。<br>
+    (2) 举模型说明其<b>逆</b>命题 ∀y.∃x.P(x,y) → ∃x.∀y.P(x,y) <b>非</b>永真。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>(1) 反证。</b>设某 (𝕄,σ) 使整式为 F，则 (∃x.∀y.P(x,y))<sub>𝕄</sub>[σ]=T 且 (∀y.∃x.P(x,y))<sub>𝕄</sub>[σ]=F。<br>
+    由前者：存在 a∈M，使对一切 b∈M，P(a,b) 真。<br>
+    由后者：存在 b₀∈M，使对一切 c∈M，P(c,b₀) 假——特别地 P(a,b₀) 假。<br>
+    但前者给出 P(a,b₀) 真，矛盾。故原式永真。<br><br>
+    <b>(2) 取反模型。</b>论域 M={1,2}，P 解释为 ≠（即 P(c,d) 真 ⟺ c≠d）。则对每个 y 都存在 x≠y（∀y.∃x.P 真）；但不存在一个 x 与所有 y 都不等（∃x.∀y.P 假，因任何 x 都有 P(x,x) 假）。故逆命题在此模型为假，非永真。
+  </div></details>
+</div>
+
+<!-- ============ 五 替换 ============ -->
+<h2 class="sec">五、替换计算与替换引理（10 分）<span class="small">　[对应真题五·同考点替位]</span></h2>
+<div class="q">
+  <div class="qh"><span class="qno">五.</span><label class="flag"><input type="checkbox" data-q="五">🚩没把握</label></div>
+  <div class="stmt">设公式 A = <em class="k">∀y.( R(x,y) → ∃x.S(x,y) )</em>，项 t = f(y)。<br>
+    (1) 计算 A[t/x]，写出每一步用到的替换规则。<br>
+    (2) 叙述公式替换引理（引理 3.25），并说明 (1) 中为何需要改名。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>(1)</b> A 中 x 的自由出现只在 R(x,y) 里（∃x.S(x,y) 中的 x 是约束的）。因 t=f(y) 含自由变元 y，而最外层是 ∀y，落入定义 3.7 情形 (7)，须先把 y 改名为新变元 z：<br>
+    A[f(y)/x] = ∀z.( R(x,y)→∃x.S(x,y) )[z/y][f(y)/x]<br>
+    = ∀z.( R(f(y),z) → ∃x.S(x,z) )<br>
+    <span class="small">（R(x,y) 先 [z/y] 得 R(x,z)，再 [f(y)/x] 得 R(f(y),z)；∃x.S(x,y) 中 x 约束、不受 [f(y)/x] 影响，其 y 经 [z/y] 变 z。）</span><br><br>
+    <b>(2)</b> 引理 3.25：(A[t/x])<sub>𝕄</sub>[σ] = A<sub>𝕄</sub>[σ[x:=t<sub>𝕄</sub>[σ]]]。即"先语法代入再求值 = 先把 x 的值改成 t 的值再求值"。<br>
+    需改名的原因：若不把 ∀y 改成 ∀z 而直接代入，t=f(y) 中的自由 y 会被 ∀y <b>捕获</b>，使语法替换的结果与语义改值不再一致，引理 3.25 会失效。
+  </div></details>
+</div>
+
+<!-- ============ 六 命题证明树 ============ -->
+<h2 class="sec">六、画证明树 · 命题逻辑 G′（8 分）</h2>
+<div class="q">
+  <div class="qh"><span class="qno">六.</span><label class="flag"><input type="checkbox" data-q="六">🚩没把握</label></div>
+  <div class="stmt">在 G′ 中证明 <em class="k">⊢ (A→B) → ((B→C) → (A→C))</em> 可证（画出证明树）。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <div class="deriv"><div class="infer">
+      <div class="prem"><div class="infer">
+        <div class="prem"><div class="infer">
+          <div class="prem"><div class="infer">
+            <div class="prem">
+              <span class="leaf">B→C, A ⊢ A, C</span>
+              <div class="infer">
+                <div class="prem"><span class="leaf">B, A ⊢ B, C</span><span class="leaf">B, C, A ⊢ C</span></div>
+                <div class="bar2"><span>→L (B→C)</span></div><div class="conc">B, B→C, A ⊢ C</div>
+              </div>
+            </div>
+            <div class="bar2"><span>→L (A→B)</span></div><div class="conc">A→B, B→C, A ⊢ C</div>
+          </div></div>
+          <div class="bar2"><span>→R</span></div><div class="conc">A→B, B→C ⊢ A→C</div>
+        </div></div>
+        <div class="bar2"><span>→R</span></div><div class="conc">A→B ⊢ (B→C)→(A→C)</div>
+      </div></div>
+      <div class="bar2"><span>→R</span></div><div class="conc">⊢ (A→B)→((B→C)→(A→C))</div>
+    </div></div>
+    <span class="small">四个叶子均为公理：B→C,A⊢A,C（含 A）；B,A⊢B,C（含 B）；B,C,A⊢C（含 C）。</span>
+  </div></details>
+</div>
+
+<!-- ============ 七 一阶证明树 ============ -->
+<h2 class="sec">七、画证明树 · 一阶逻辑 G（10 分）</h2>
+<div class="q">
+  <div class="qh"><span class="qno">七.</span><label class="flag"><input type="checkbox" data-q="七">🚩没把握</label></div>
+  <div class="stmt">在 G 中证明 <em class="k">⊢ ∀x.(P(x)→Q(x)) → (∀x.P(x) → ∀x.Q(x))</em> 可证（画出证明树；注意 ∀R 用新变元）。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <div class="deriv"><div class="infer">
+      <div class="prem"><div class="infer">
+        <div class="prem"><div class="infer">
+          <div class="prem"><div class="infer">
+            <div class="prem"><div class="infer">
+              <div class="prem">
+                <span class="leaf">∀x(P→Q), P(y), ∀x.P ⊢ P(y), Q(y)</span>
+                <span class="leaf">Q(y), ∀x(P→Q), P(y), ∀x.P ⊢ Q(y)</span>
+              </div>
+              <div class="bar2"><span>→L</span></div>
+              <div class="conc">P(y)→Q(y), ∀x(P→Q), P(y), ∀x.P ⊢ Q(y)</div>
+            </div></div>
+            <div class="bar2"><span>∀L 于 ∀x(P→Q)，取 t=y</span></div>
+            <div class="conc">∀x(P→Q), P(y), ∀x.P ⊢ Q(y)</div>
+          </div></div>
+          <div class="bar2"><span>∀L 于 ∀x.P，取 t=y</span></div>
+          <div class="conc">∀x(P→Q), ∀x.P ⊢ Q(y)</div>
+        </div></div>
+        <div class="bar2"><span>∀R（y 新变元）</span></div>
+        <div class="conc">∀x(P→Q), ∀x.P ⊢ ∀x.Q</div>
+      </div></div>
+      <div class="bar2"><span>两次 →R</span></div>
+      <div class="conc">⊢ ∀x(P→Q) → (∀x.P → ∀x.Q)</div>
+    </div></div>
+    <span class="small">关键：先对结论 ∀x.Q 用 ∀R 引入新变元 y（此时 y 不在前件出现），再用 ∀L 把两个全称前提都实例化到同一个 y。两叶子分别含公共 P(y)、Q(y)，为公理。</span>
+  </div></details>
+</div>
+
+<!-- ============ 八 结构归纳 ============ -->
+<h2 class="sec">八、结构归纳（10 分）</h2>
+<div class="q">
+  <div class="qh"><span class="qno">八.</span><label class="flag"><input type="checkbox" data-q="八">🚩没把握</label></div>
+  <div class="stmt">设 x 为变元、s 为项。<b>对项 t 与公式 A 的结构作归纳</b>，证明：<br>
+    若 x ∉ FV(t)，则 t[s/x] = t；若 x ∉ FV(A)，则 A[s/x] = A。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>第一部分（对项 t 结构归纳）</b>，待证 P(t)：x∉FV(t) ⟹ t[s/x]=t。<br>
+    · 基础：t=y 为变元。若 x∉FV(y)={y} 则 y≠x，故 y[s/x]=y。t=c 常元：c[s/x]=c。✓<br>
+    · 步骤：t=f(t₁,…,tₙ)。设 x∉FV(t)=⋃FV(tᵢ)，则对每个 i，x∉FV(tᵢ)，由归纳假设 tᵢ[s/x]=tᵢ。故 t[s/x]=f(t₁[s/x],…,tₙ[s/x])=f(t₁,…,tₙ)=t。✓<br><br>
+    <b>第二部分（对公式 A 结构归纳）</b>，待证 Q(A)：x∉FV(A) ⟹ A[s/x]=A。<br>
+    · 基础（原子）：A 为 (u≐v) 或 P(t₁,…,tₙ)。x∉FV(A)=⋃FV(tᵢ)，由第一部分各项不变，故 A[s/x]=A。✓<br>
+    · ¬：A=¬B，FV(A)=FV(B)，由归纳假设 B[s/x]=B，故 (¬B)[s/x]=¬(B[s/x])=¬B。✓<br>
+    · ∗：A=B∗C，FV(A)=FV(B)∪FV(C)，x 不属于其中之一，归纳假设给 B[s/x]=B、C[s/x]=C。✓<br>
+    · 量词：A=Qy.B。<br>
+    　— 若 y=x：A[s/x]=(Qx.B)[s/x]=Qx.B=A（情形 (5)）。✓<br>
+    　— 若 y≠x：因 x∉FV(A)=FV(B)−{y} 且 x≠y，得 x∉FV(B)；由归纳假设 B[s/x]=B。又 x∉FV(A) 时该替换不触发捕获，(Qy.B)[s/x]=Qy.(B[s/x])=Qy.B=A。✓<br>
+    由结构归纳，命题成立。<b>∎</b><br>
+    <span class="small">要点：公式归纳的基础调用项归纳；量词情形按 y 是否等于 x 分类。</span>
+  </div></details>
+</div>
+
+<!-- ============ 九 极大协调集 ============ -->
+<h2 class="sec">九、极大协调集（10 分）</h2>
+<div class="q">
+  <div class="qh"><span class="qno">九.</span><label class="flag"><input type="checkbox" data-q="九">🚩没把握</label></div>
+  <div class="stmt">设 Γ 为极大协调集。证明：对任何公式 A，<b>A ∈ Γ 或 ¬A ∈ Γ</b>（命题 6.6 的核心方向）。</div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>证（反证 + Cut）。</b>已知 Con(Γ) 且 Γ 极大。可用判据：Con(Γ∪{B}) ⟹ B∈Γ（命题 6.5）。<br>
+    反设存在 A 使 <b>A∉Γ 且 ¬A∉Γ</b>。<br>
+    由命题 6.5（逆否）：A∉Γ ⟹ Incon(Γ∪{A})；¬A∉Γ ⟹ Incon(Γ∪{¬A})。<br>
+    于是存在有穷 Δ₁,Δ₂⊆Γ 使 <span class="term">Δ₁, A ⊢</span> 与 <span class="term">Δ₂, ¬A ⊢</span> 在 G 中可证。<br>
+    由 Δ₁,A⊢ 经 ¬R 得 Δ₁ ⊢ ¬A；与 Δ₂,¬A⊢ 对 ¬A 作 Cut：<br>
+    <div class="deriv"><div class="infer">
+      <div class="prem">
+        <div class="infer"><div class="prem"><span class="leaf">Δ₁, A ⊢</span></div><div class="bar2"><span>¬R</span></div><div class="conc">Δ₁ ⊢ ¬A</div></div>
+        <span class="leaf">Δ₂, ¬A ⊢</span>
+      </div>
+      <div class="bar2"><span>Cut</span></div><div class="conc">Δ₁, Δ₂ ⊢</div>
+    </div></div>
+    得 Δ₁,Δ₂ ⊢ 可证，即 Γ 的有穷子集 Δ₁∪Δ₂ 推出 ⊥，故 Incon(Γ)，与 Con(Γ) 矛盾。<br>
+    因此对任何 A，A∈Γ 或 ¬A∈Γ。<b>∎</b><br>
+    <span class="small">这正是完全性证明中"极大协调集像真值指派"的依据；与命题 6.7（可证即归属）配合，撑起 Henkin 构造。</span>
+  </div></details>
+</div>
+
+<div style="height:40px"></div>
+<div class="bar"><button onclick="collect()">🚩 汇总没把握题号</button><span class="hint">勾完点这里。</span></div>
+<div id="summary"></div>
+
+<script>
+function toggleAll(open){document.querySelectorAll('details').forEach(function(d){d.open=open;});}
+function collect(){
+  var checked = Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]:checked'));
+  var qs = checked.map(function(c){return c.getAttribute('data-q');});
+  // 去重保序
+  var seen={}, uniq=[]; qs.forEach(function(q){if(!seen[q]){seen[q]=1;uniq.push(q);}});
+  var boxes = document.querySelectorAll('#summary');
+  var msg;
+  if(uniq.length===0){ msg = '我把模拟卷（一）做完了，没有勾选「没把握」的题目。'; }
+  else { msg = '阿卡酱，模拟卷（一）里我没把握的题目是：第 ' + uniq.join('、') + ' 题，帮我讲讲这些。'; }
+  boxes.forEach(function(b){ b.className='show'; b.textContent='';
+    var p=document.createElement('div'); p.textContent=msg; p.style.marginBottom='8px';
+    var btn=document.createElement('button'); btn.textContent='📋 复制这句话';
+    btn.style.cssText='font-family:inherit;font-size:14px;cursor:pointer;border:1px solid #7a2e1d;background:#7a2e1d;color:#fff;padding:5px 12px;border-radius:16px;';
+    btn.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(msg);btn.textContent='✓ 已复制';setTimeout(function(){btn.textContent='📋 复制这句话';},1500);};
+    b.appendChild(p); b.appendChild(btn);
+  });
+  document.getElementById('summary').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</div>
+</body>
+</html>

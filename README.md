@@ -26,6 +26,8 @@
 - `mathlogic-09/` — 第 9 讲 一阶逻辑(四)
 - `mathlogic-10/` — 第 10 讲 一阶逻辑的自然推理系统 G
 - `mathlogic-11/` — 第 11 讲 完全性定理(一) · 协调性与极大协调性
+- `mathlogic-handbook/` — 讲义合集 全 9 讲 · 一阶逻辑全程讲义合订
+- `mathlogic-mock-01/` — 模拟卷(一) · 期末模拟自测
 
 ### 程序设计 (Programming)
 - `week14-ml-background/` — Week14 实验 背景知识 · PCA / KNN / 逻辑斯蒂回归

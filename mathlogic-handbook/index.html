@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数理逻辑 · 全讲讲义合集（9讲）</title>
+<style>
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--def:#1f4e5f;--thm:#7a2e1d;--proof:#3a3a3a;--note:#5a6b2f;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:840px;margin:0 auto;padding:48px 40px 120px;margin-left:288px;}
+  @media (max-width:1080px){.wrap{margin-left:264px;}}
+  header.title{border-bottom:3px double var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  header.title h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px;}
+  header.title .sub{color:var(--soft);font-size:16px;} header.title .meta{color:var(--accent2);font-size:15px;margin-top:8px;}
+  h2{font-size:24px;margin:46px 0 14px;padding-left:12px;border-left:6px solid var(--accent);}
+  h3{font-size:20px;margin:30px 0 10px;color:var(--accent2);}
+  p{margin:12px 0;text-align:justify;} a{color:var(--accent2);}
+  nav.toc{position:fixed;top:0;left:0;width:264px;height:100vh;overflow-y:auto;background:#f3eee2;border-right:1px solid var(--line);padding:30px 20px 40px;}
+  nav.toc b{display:block;margin-bottom:14px;font-size:16px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:8px;}
+  nav.toc ol{margin:0;padding-left:0;list-style:none;} nav.toc li{margin:1px 0;font-size:15px;line-height:1.45;}
+  nav.toc li a{display:block;padding:6px 10px;border-radius:6px;color:var(--soft);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca;color:var(--ink);} nav.toc li a.active{background:#fff;color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+  @media (max-width:820px){nav.toc{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);}nav.toc ol{columns:2;column-gap:24px;}.wrap{margin-left:auto !important;max-width:880px;padding-top:24px;}}
+  .box{border:1px solid var(--line);border-radius:8px;background:var(--box);padding:14px 18px;margin:16px 0;position:relative;}
+  .box .tag{position:absolute;top:-12px;left:14px;background:var(--box);padding:0 10px;font-weight:bold;font-size:15px;letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm);background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note);background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px;padding:6px 16px;border-left:3px dashed #bdb6a6;color:var(--proof);}
+  .proof .pf{font-style:italic;color:var(--accent);font-weight:bold;margin-right:6px;} .qed{float:right;}
+  .f{display:block;text-align:center;margin:14px 0;font-size:19px;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb);border:1px solid #e2c98a;border-radius:8px;padding:14px 18px;margin:18px 0;} .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse;width:100%;margin:14px 0;font-size:15.5px;} table.kv th,table.kv td{border:1px solid var(--line);padding:7px 10px;text-align:center;vertical-align:top;} table.kv th{background:#f1ead9;}
+  table.kv td.l{text-align:left;}
+  sub,sup{font-size:.72em;} .small{font-size:15px;color:var(--soft);}
+  hr.sec{border:none;border-top:1px solid var(--line);margin:40px 0;}
+
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--def:#1f4e5f;--thm:#7a2e1d;--proof:#3a3a3a;--note:#5a6b2f;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:840px;margin:0 auto;padding:48px 40px 120px;margin-left:288px;}
+  @media (max-width:1080px){.wrap{margin-left:264px;}}
+  header.title{border-bottom:3px double var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  header.title h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px;}
+  header.title .sub{color:var(--soft);font-size:16px;} header.title .meta{color:var(--accent2);font-size:15px;margin-top:8px;}
+  h2{font-size:24px;margin:46px 0 14px;padding-left:12px;border-left:6px solid var(--accent);}
+  h3{font-size:20px;margin:30px 0 10px;color:var(--accent2);}
+  p{margin:12px 0;text-align:justify;} a{color:var(--accent2);}
+  nav.toc{position:fixed;top:0;left:0;width:264px;height:100vh;overflow-y:auto;background:#f3eee2;border-right:1px solid var(--line);padding:30px 20px 40px;}
+  nav.toc b{display:block;margin-bottom:14px;font-size:16px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:8px;}
+  nav.toc ol{margin:0;padding-left:0;list-style:none;} nav.toc li{margin:1px 0;font-size:15px;line-height:1.45;}
+  nav.toc li a{display:block;padding:6px 10px;border-radius:6px;color:var(--soft);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca;color:var(--ink);} nav.toc li a.active{background:#fff;color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+  @media (max-width:820px){nav.toc{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);}nav.toc ol{columns:2;column-gap:24px;}.wrap{margin-left:auto !important;max-width:880px;padding-top:24px;}}
+  .box{border:1px solid var(--line);border-radius:8px;background:var(--box);padding:14px 18px;margin:16px 0;position:relative;}
+  .box .tag{position:absolute;top:-12px;left:14px;background:var(--box);padding:0 10px;font-weight:bold;font-size:15px;letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm);background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note);background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px;padding:6px 16px;border-left:3px dashed #bdb6a6;color:var(--proof);}
+  .proof .pf{font-style:italic;color:var(--accent);font-weight:bold;margin-right:6px;} .qed{float:right;}
+  .f{display:block;text-align:center;margin:14px 0;font-size:19px;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb);border:1px solid #e2c98a;border-radius:8px;padding:14px 18px;margin:18px 0;} .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px;} table.kv th,table.kv td{border:1px solid var(--line);padding:6px 9px;text-align:center;vertical-align:top;} table.kv th{background:#f1ead9;} table.kv td.l{text-align:left;}
+  sub,sup{font-size:.72em;} .small{font-size:15px;color:var(--soft);}
+  hr.sec{border:none;border-top:1px solid var(--line);margin:40px 0;}
+  .calc{font-family:"Cambria Math","Times New Roman",serif;background:#fbf7ee;border:1px solid var(--line);border-radius:6px;padding:10px 16px;margin:12px 0;line-height:2;} .calc .step{display:block;} .calc .why{color:var(--note);font-size:14px;margin-left:10px;}
+
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--def:#1f4e5f;--thm:#7a2e1d;--proof:#3a3a3a;--note:#5a6b2f;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 40px 120px;margin-left:288px;}
+  @media (max-width:1080px){.wrap{margin-left:264px;}}
+  header.title{border-bottom:3px double var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  header.title h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px;}
+  header.title .sub{color:var(--soft);font-size:16px;} header.title .meta{color:var(--accent2);font-size:15px;margin-top:8px;}
+  h2{font-size:24px;margin:46px 0 14px;padding-left:12px;border-left:6px solid var(--accent);}
+  h3{font-size:20px;margin:30px 0 10px;color:var(--accent2);}
+  p{margin:12px 0;text-align:justify;} a{color:var(--accent2);}
+  nav.toc{position:fixed;top:0;left:0;width:264px;height:100vh;overflow-y:auto;background:#f3eee2;border-right:1px solid var(--line);padding:30px 20px 40px;}
+  nav.toc b{display:block;margin-bottom:14px;font-size:16px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:8px;}
+  nav.toc ol{margin:0;padding-left:0;list-style:none;} nav.toc li{margin:1px 0;font-size:15px;line-height:1.45;}
+  nav.toc li a{display:block;padding:6px 10px;border-radius:6px;color:var(--soft);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca;color:var(--ink);} nav.toc li a.active{background:#fff;color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+  @media (max-width:820px){nav.toc{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);}nav.toc ol{columns:2;column-gap:24px;}.wrap{margin-left:auto !important;max-width:880px;padding-top:24px;}}
+  .box{border:1px solid var(--line);border-radius:8px;background:var(--box);padding:14px 18px;margin:16px 0;position:relative;}
+  .box .tag{position:absolute;top:-12px;left:14px;background:var(--box);padding:0 10px;font-weight:bold;font-size:15px;letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm);background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note);background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px;padding:6px 16px;border-left:3px dashed #bdb6a6;color:var(--proof);}
+  .proof .pf{font-style:italic;color:var(--accent);font-weight:bold;margin-right:6px;} .qed{float:right;}
+  .f{display:block;text-align:center;margin:14px 0;font-size:19px;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb);border:1px solid #e2c98a;border-radius:8px;padding:14px 18px;margin:18px 0;} .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse;width:100%;margin:14px 0;font-size:15.5px;} table.kv th,table.kv td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;} table.kv th{background:#f1ead9;}
+  table.rules{border-collapse:collapse;width:100%;margin:14px 0;} table.rules td{border:1px solid var(--line);padding:10px 12px;vertical-align:middle;width:50%;}
+  sub,sup{font-size:.72em;} .small{font-size:15px;color:var(--soft);}
+  hr.sec{border:none;border-top:1px solid var(--line);margin:40px 0;}
+  .deriv{overflow-x:auto;padding:14px 4px;margin:12px 0;text-align:center;}
+  .infer{display:inline-flex;flex-direction:column;align-items:center;margin:0 6px;vertical-align:bottom;}
+  .infer .prem{display:flex;flex-direction:row;align-items:flex-end;justify-content:center;gap:18px;padding:0 6px 3px;}
+  .infer .bar{align-self:stretch;border-top:1.4px solid var(--ink);position:relative;}
+  .infer .bar span{position:absolute;right:-4px;top:-2px;transform:translateX(100%);font-size:12.5px;color:var(--accent);white-space:nowrap;}
+  .infer .conc{padding:3px 8px 0;white-space:nowrap;font-size:15.5px;}
+  .leaf{white-space:nowrap;font-size:15.5px;padding:0 6px;}
+
+  :root{
+    --ink:#1a1a1a; --soft:#555; --line:#d9d2c4; --paper:#fbf9f4;
+    --accent:#7a2e1d; --accent2:#1f4e5f; --hl:#fbf2cf; --box:#fff;
+    --def:#1f4e5f; --thm:#7a2e1d; --proof:#3a3a3a; --note:#5a6b2f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:"Times New Roman","宋体",SimSun,serif; font-size:18px; line-height:1.85;}
+  .wrap{max-width:840px; margin:0 auto; padding:48px 40px 120px; margin-left:288px;}
+  @media (max-width:1080px){ .wrap{margin-left:264px;} }
+  header.title{border-bottom:3px double var(--accent); padding-bottom:18px; margin-bottom:8px;}
+  header.title h1{font-size:30px; margin:0 0 6px; letter-spacing:.5px;}
+  header.title .sub{color:var(--soft); font-size:16px;}
+  header.title .meta{color:var(--accent2); font-size:15px; margin-top:8px;}
+  h2{font-size:24px; margin:46px 0 14px; padding-left:12px; border-left:6px solid var(--accent);}
+  h3{font-size:20px; margin:30px 0 10px; color:var(--accent2);}
+  p{margin:12px 0; text-align:justify;}
+  a{color:var(--accent2);}
+  nav.toc{position:fixed; top:0; left:0; width:264px; height:100vh; overflow-y:auto; background:#f3eee2; border-right:1px solid var(--line); padding:30px 20px 40px;}
+  nav.toc b{display:block; margin-bottom:14px; font-size:16px; letter-spacing:1px; color:var(--accent); border-bottom:2px solid var(--accent); padding-bottom:8px;}
+  nav.toc ol{margin:0; padding-left:0; list-style:none;}
+  nav.toc li{margin:1px 0; font-size:15px; line-height:1.45;}
+  nav.toc li a{display:block; padding:6px 10px; border-radius:6px; color:var(--soft); text-decoration:none; border-left:3px solid transparent; transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca; color:var(--ink);}
+  nav.toc li a.active{background:#fff; color:var(--accent); border-left-color:var(--accent); font-weight:bold;}
+  @media (max-width:820px){
+    nav.toc{position:static; width:auto; height:auto; border-right:none; border-bottom:1px solid var(--line);}
+    nav.toc ol{columns:2; column-gap:24px;}
+    .wrap{margin-left:auto !important; max-width:880px; padding-top:24px;}
+  }
+  .box{border:1px solid var(--line); border-radius:8px; background:var(--box); padding:14px 18px; margin:16px 0; position:relative;}
+  .box .tag{position:absolute; top:-12px; left:14px; background:var(--box); padding:0 10px; font-weight:bold; font-size:15px; letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm); background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note); background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px; padding:6px 16px; border-left:3px dashed #bdb6a6; color:var(--proof);}
+  .proof .pf{font-style:italic; color:var(--accent); font-weight:bold; margin-right:6px;}
+  .qed{float:right;}
+  .f{display:block; text-align:center; margin:14px 0; font-size:19px;}
+  .f .lab{color:var(--soft); font-size:14px; margin-left:10px;}
+  em.k{font-style:normal; background:var(--hl); padding:0 3px; border-radius:3px;}
+  .term{font-style:italic;}
+  .center{text-align:center; margin:14px 0;}
+  .pill{display:inline-block; border:1.5px solid var(--accent2); border-radius:20px; padding:4px 14px; margin:4px; background:#fff; font-size:15.5px;}
+  .arrow{color:var(--accent); font-weight:bold; font-size:18px; margin:0 2px;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb); border:1px solid #e2c98a; border-radius:8px; padding:14px 18px; margin:18px 0;}
+  .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse; width:100%; margin:14px 0; font-size:16px;}
+  table.kv th,table.kv td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+  table.kv th{background:#f1ead9;}
+  sub,sup{font-size:.72em;}
+  .small{font-size:15px; color:var(--soft);}
+  hr.sec{border:none; border-top:1px solid var(--line); margin:40px 0;}
+  .calc{font-family:"Cambria Math","Times New Roman",serif; background:#fbf7ee; border:1px solid var(--line); border-radius:6px; padding:10px 16px; margin:12px 0; line-height:2;}
+  .calc .step{display:block;} .calc .why{color:var(--note); font-size:14px; margin-left:10px;}
+  .tree-svg{display:block; margin:14px auto;}
+
+  :root{
+    --ink:#1a1a1a; --soft:#555; --line:#d9d2c4; --paper:#fbf9f4;
+    --accent:#7a2e1d; --accent2:#1f4e5f; --hl:#fbf2cf; --box:#fff;
+    --def:#1f4e5f; --thm:#7a2e1d; --proof:#3a3a3a; --note:#5a6b2f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:"Times New Roman","宋体",SimSun,serif; font-size:18px; line-height:1.85;}
+  .wrap{max-width:840px; margin:0 auto; padding:48px 40px 120px; margin-left:288px;}
+  @media (max-width:1080px){ .wrap{margin-left:264px;} }
+  header.title{border-bottom:3px double var(--accent); padding-bottom:18px; margin-bottom:8px;}
+  header.title h1{font-size:30px; margin:0 0 6px; letter-spacing:.5px;}
+  header.title .sub{color:var(--soft); font-size:16px;}
+  header.title .meta{color:var(--accent2); font-size:15px; margin-top:8px;}
+  h2{font-size:24px; margin:46px 0 14px; padding-left:12px; border-left:6px solid var(--accent);}
+  h3{font-size:20px; margin:30px 0 10px; color:var(--accent2);}
+  p{margin:12px 0; text-align:justify;}
+  a{color:var(--accent2);}
+  nav.toc{position:fixed; top:0; left:0; width:264px; height:100vh; overflow-y:auto; background:#f3eee2; border-right:1px solid var(--line); padding:30px 20px 40px;}
+  nav.toc b{display:block; margin-bottom:14px; font-size:16px; letter-spacing:1px; color:var(--accent); border-bottom:2px solid var(--accent); padding-bottom:8px;}
+  nav.toc ol{margin:0; padding-left:0; list-style:none;}
+  nav.toc li{margin:1px 0; font-size:15px; line-height:1.45;}
+  nav.toc li a{display:block; padding:6px 10px; border-radius:6px; color:var(--soft); text-decoration:none; border-left:3px solid transparent; transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca; color:var(--ink);}
+  nav.toc li a.active{background:#fff; color:var(--accent); border-left-color:var(--accent); font-weight:bold;}
+  @media (max-width:820px){
+    nav.toc{position:static; width:auto; height:auto; border-right:none; border-bottom:1px solid var(--line);}
+    nav.toc ol{columns:2; column-gap:24px;}
+    .wrap{margin-left:auto !important; max-width:880px; padding-top:24px;}
+  }
+  .box{border:1px solid var(--line); border-radius:8px; background:var(--box); padding:14px 18px; margin:16px 0; position:relative;}
+  .box .tag{position:absolute; top:-12px; left:14px; background:var(--box); padding:0 10px; font-weight:bold; font-size:15px; letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm); background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note); background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px; padding:6px 16px; border-left:3px dashed #bdb6a6; color:var(--proof);}
+  .proof .pf{font-style:italic; color:var(--accent); font-weight:bold; margin-right:6px;}
+  .qed{float:right;}
+  .f{display:block; text-align:center; margin:14px 0; font-size:19px;}
+  em.k{font-style:normal; background:var(--hl); padding:0 3px; border-radius:3px;}
+  .term{font-style:italic;}
+  .center{text-align:center; margin:14px 0;}
+  .pill{display:inline-block; border:1.5px solid var(--accent2); border-radius:20px; padding:4px 14px; margin:4px; background:#fff; font-size:15.5px;}
+  .arrow{color:var(--accent); font-weight:bold; font-size:18px; margin:0 2px;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb); border:1px solid #e2c98a; border-radius:8px; padding:14px 18px; margin:18px 0;}
+  .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse; width:100%; margin:14px 0; font-size:16px;}
+  table.kv th,table.kv td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+  table.kv th{background:#f1ead9;}
+  sub,sup{font-size:.72em;}
+  .small{font-size:15px; color:var(--soft);}
+  hr.sec{border:none; border-top:1px solid var(--line); margin:40px 0;}
+  .calc{font-family:"Cambria Math","Times New Roman",serif; background:#fbf7ee; border:1px solid var(--line); border-radius:6px; padding:10px 16px; margin:12px 0; line-height:2;}
+  .calc .step{display:block;} .calc .why{color:var(--note); font-size:14px; margin-left:10px;}
+
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--def:#1f4e5f;--thm:#7a2e1d;--proof:#3a3a3a;--note:#5a6b2f;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:840px;margin:0 auto;padding:48px 40px 120px;margin-left:288px;}
+  @media (max-width:1080px){.wrap{margin-left:264px;}}
+  header.title{border-bottom:3px double var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  header.title h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px;}
+  header.title .sub{color:var(--soft);font-size:16px;} header.title .meta{color:var(--accent2);font-size:15px;margin-top:8px;}
+  h2{font-size:24px;margin:46px 0 14px;padding-left:12px;border-left:6px solid var(--accent);}
+  h3{font-size:20px;margin:30px 0 10px;color:var(--accent2);}
+  p{margin:12px 0;text-align:justify;} a{color:var(--accent2);}
+  nav.toc{position:fixed;top:0;left:0;width:264px;height:100vh;overflow-y:auto;background:#f3eee2;border-right:1px solid var(--line);padding:30px 20px 40px;}
+  nav.toc b{display:block;margin-bottom:14px;font-size:16px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:8px;}
+  nav.toc ol{margin:0;padding-left:0;list-style:none;} nav.toc li{margin:1px 0;font-size:15px;line-height:1.45;}
+  nav.toc li a{display:block;padding:6px 10px;border-radius:6px;color:var(--soft);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca;color:var(--ink);} nav.toc li a.active{background:#fff;color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+  @media (max-width:820px){nav.toc{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);}nav.toc ol{columns:2;column-gap:24px;}.wrap{margin-left:auto !important;max-width:880px;padding-top:24px;}}
+  .box{border:1px solid var(--line);border-radius:8px;background:var(--box);padding:14px 18px;margin:16px 0;position:relative;}
+  .box .tag{position:absolute;top:-12px;left:14px;background:var(--box);padding:0 10px;font-weight:bold;font-size:15px;letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm);background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note);background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px;padding:6px 16px;border-left:3px dashed #bdb6a6;color:var(--proof);}
+  .proof .pf{font-style:italic;color:var(--accent);font-weight:bold;margin-right:6px;} .qed{float:right;}
+  .f{display:block;text-align:center;margin:14px 0;font-size:19px;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb);border:1px solid #e2c98a;border-radius:8px;padding:14px 18px;margin:18px 0;} .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse;width:100%;margin:14px 0;font-size:15.5px;} table.kv th,table.kv td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;} table.kv th{background:#f1ead9;}
+  sub,sup{font-size:.72em;} .small{font-size:15px;color:var(--soft);}
+  hr.sec{border:none;border-top:1px solid var(--line);margin:40px 0;}
+  .calc{font-family:"Cambria Math","Times New Roman",serif;background:#fbf7ee;border:1px solid var(--line);border-radius:6px;padding:10px 16px;margin:12px 0;line-height:2;} .calc .step{display:block;} .calc .why{color:var(--note);font-size:14px;margin-left:10px;}
+
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--def:#1f4e5f;--thm:#7a2e1d;--proof:#3a3a3a;--note:#5a6b2f;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:840px;margin:0 auto;padding:48px 40px 120px;margin-left:288px;}
+  @media (max-width:1080px){.wrap{margin-left:264px;}}
+  header.title{border-bottom:3px double var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  header.title h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px;}
+  header.title .sub{color:var(--soft);font-size:16px;} header.title .meta{color:var(--accent2);font-size:15px;margin-top:8px;}
+  h2{font-size:24px;margin:46px 0 14px;padding-left:12px;border-left:6px solid var(--accent);}
+  h3{font-size:20px;margin:30px 0 10px;color:var(--accent2);}
+  p{margin:12px 0;text-align:justify;} a{color:var(--accent2);}
+  nav.toc{position:fixed;top:0;left:0;width:264px;height:100vh;overflow-y:auto;background:#f3eee2;border-right:1px solid var(--line);padding:30px 20px 40px;}
+  nav.toc b{display:block;margin-bottom:14px;font-size:16px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:8px;}
+  nav.toc ol{margin:0;padding-left:0;list-style:none;} nav.toc li{margin:1px 0;font-size:15px;line-height:1.45;}
+  nav.toc li a{display:block;padding:6px 10px;border-radius:6px;color:var(--soft);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca;color:var(--ink);} nav.toc li a.active{background:#fff;color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+  @media (max-width:820px){nav.toc{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);}nav.toc ol{columns:2;column-gap:24px;}.wrap{margin-left:auto !important;max-width:880px;padding-top:24px;}}
+  .box{border:1px solid var(--line);border-radius:8px;background:var(--box);padding:14px 18px;margin:16px 0;position:relative;}
+  .box .tag{position:absolute;top:-12px;left:14px;background:var(--box);padding:0 10px;font-weight:bold;font-size:15px;letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm);background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note);background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px;padding:6px 16px;border-left:3px dashed #bdb6a6;color:var(--proof);}
+  .proof .pf{font-style:italic;color:var(--accent);font-weight:bold;margin-right:6px;} .qed{float:right;}
+  .f{display:block;text-align:center;margin:14px 0;font-size:19px;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb);border:1px solid #e2c98a;border-radius:8px;padding:14px 18px;margin:18px 0;} .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse;width:100%;margin:14px 0;font-size:15.5px;} table.kv th,table.kv td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;} table.kv th{background:#f1ead9;}
+  sub,sup{font-size:.72em;} .small{font-size:15px;color:var(--soft);}
+  hr.sec{border:none;border-top:1px solid var(--line);margin:40px 0;}
+  .calc{font-family:"Cambria Math","Times New Roman",serif;background:#fbf7ee;border:1px solid var(--line);border-radius:6px;padding:10px 16px;margin:12px 0;line-height:2;} .calc .step{display:block;} .calc .why{color:var(--note);font-size:14px;margin-left:10px;}
+
+  :root{--ink:#1a1a1a;--soft:#555;--line:#d9d2c4;--paper:#fbf9f4;--accent:#7a2e1d;--accent2:#1f4e5f;--hl:#fbf2cf;--box:#fff;--def:#1f4e5f;--thm:#7a2e1d;--proof:#3a3a3a;--note:#5a6b2f;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman","宋体",SimSun,serif;font-size:18px;line-height:1.85;}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 40px 120px;margin-left:288px;}
+  @media (max-width:1080px){.wrap{margin-left:264px;}}
+  header.title{border-bottom:3px double var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  header.title h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px;}
+  header.title .sub{color:var(--soft);font-size:16px;} header.title .meta{color:var(--accent2);font-size:15px;margin-top:8px;}
+  h2{font-size:24px;margin:46px 0 14px;padding-left:12px;border-left:6px solid var(--accent);}
+  h3{font-size:20px;margin:30px 0 10px;color:var(--accent2);}
+  p{margin:12px 0;text-align:justify;} a{color:var(--accent2);}
+  nav.toc{position:fixed;top:0;left:0;width:264px;height:100vh;overflow-y:auto;background:#f3eee2;border-right:1px solid var(--line);padding:30px 20px 40px;}
+  nav.toc b{display:block;margin-bottom:14px;font-size:16px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:8px;}
+  nav.toc ol{margin:0;padding-left:0;list-style:none;} nav.toc li{margin:1px 0;font-size:15px;line-height:1.45;}
+  nav.toc li a{display:block;padding:6px 10px;border-radius:6px;color:var(--soft);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca;color:var(--ink);} nav.toc li a.active{background:#fff;color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+  @media (max-width:820px){nav.toc{position:static;width:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);}nav.toc ol{columns:2;column-gap:24px;}.wrap{margin-left:auto !important;max-width:880px;padding-top:24px;}}
+  .box{border:1px solid var(--line);border-radius:8px;background:var(--box);padding:14px 18px;margin:16px 0;position:relative;}
+  .box .tag{position:absolute;top:-12px;left:14px;background:var(--box);padding:0 10px;font-weight:bold;font-size:15px;letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm);background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note);background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px;padding:6px 16px;border-left:3px dashed #bdb6a6;color:var(--proof);}
+  .proof .pf{font-style:italic;color:var(--accent);font-weight:bold;margin-right:6px;} .qed{float:right;}
+  .f{display:block;text-align:center;margin:14px 0;font-size:19px;}
+  em.k{font-style:normal;background:var(--hl);padding:0 3px;border-radius:3px;} .term{font-style:italic;}
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb);border:1px solid #e2c98a;border-radius:8px;padding:14px 18px;margin:18px 0;} .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse;width:100%;margin:14px 0;font-size:15.5px;} table.kv th,table.kv td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;} table.kv th{background:#f1ead9;}
+  sub,sup{font-size:.72em;} .small{font-size:15px;color:var(--soft);}
+  hr.sec{border:none;border-top:1px solid var(--line);margin:40px 0;}
+  /* rules table */
+  table.rules{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px;} table.rules td{border:1px solid var(--line);padding:10px 12px;vertical-align:middle;width:50%;}
+  /* Gentzen inference renderer (recursive) */
+  .deriv{overflow-x:auto;padding:14px 4px;margin:12px 0;text-align:center;}
+  .infer{display:inline-flex;flex-direction:column;align-items:center;margin:0 6px;vertical-align:bottom;}
+  .infer .prem{display:flex;flex-direction:row;align-items:flex-end;justify-content:center;gap:18px;padding:0 6px 3px;}
+  .infer .bar{align-self:stretch;border-top:1.4px solid var(--ink);position:relative;}
+  .infer .bar span{position:absolute;right:-4px;top:-2px;transform:translateX(100%);font-size:12.5px;color:var(--accent);white-space:nowrap;}
+  .infer .conc{padding:3px 8px 0;white-space:nowrap;font-size:15.5px;}
+  .leaf{white-space:nowrap;font-size:15.5px;padding:0 6px;}
+  .calc{font-family:"Cambria Math","Times New Roman",serif;background:#fbf7ee;border:1px solid var(--line);border-radius:6px;padding:10px 16px;margin:12px 0;line-height:2;} .calc .step{display:block;} .calc .why{color:var(--note);font-size:14px;margin-left:10px;}
+
+  :root{
+    --ink:#1a1a1a; --soft:#555; --line:#d9d2c4; --paper:#fbf9f4;
+    --accent:#7a2e1d; --accent2:#1f4e5f; --hl:#fbf2cf; --box:#fff;
+    --def:#1f4e5f; --thm:#7a2e1d; --proof:#3a3a3a; --note:#5a6b2f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Times New Roman","宋体",SimSun,serif;
+    font-size:18px; line-height:1.85;
+  }
+  .wrap{max-width:840px; margin:0 auto; padding:48px 40px 120px; margin-left:288px;}
+  @media (max-width:1080px){ .wrap{margin-left:264px;} }
+  header.title{border-bottom:3px double var(--accent); padding-bottom:18px; margin-bottom:8px;}
+  header.title h1{font-size:30px; margin:0 0 6px; letter-spacing:.5px;}
+  header.title .sub{color:var(--soft); font-size:16px;}
+  header.title .meta{color:var(--accent2); font-size:15px; margin-top:8px;}
+  h2{font-size:24px; margin:46px 0 14px; padding-left:12px; border-left:6px solid var(--accent);}
+  h3{font-size:20px; margin:30px 0 10px; color:var(--accent2);}
+  p{margin:12px 0; text-align:justify;}
+  .lead{color:var(--soft); font-style:italic;}
+  a{color:var(--accent2);}
+  /* TOC sidebar */
+  nav.toc{
+    position:fixed; top:0; left:0; width:264px; height:100vh; overflow-y:auto;
+    background:#f3eee2; border-right:1px solid var(--line); padding:30px 20px 40px;
+  }
+  nav.toc b{display:block; margin-bottom:14px; font-size:16px; letter-spacing:1px; color:var(--accent); border-bottom:2px solid var(--accent); padding-bottom:8px;}
+  nav.toc ol{margin:0; padding-left:0; list-style:none; counter-reset:toc;}
+  nav.toc li{margin:1px 0; font-size:15px; line-height:1.45;}
+  nav.toc li a{display:block; padding:6px 10px; border-radius:6px; color:var(--soft); text-decoration:none; border-left:3px solid transparent; transition:all .15s;}
+  nav.toc li a:hover{background:#e7dfca; color:var(--ink);}
+  nav.toc li a.active{background:#fff; color:var(--accent); border-left-color:var(--accent); font-weight:bold;}
+  @media (max-width:820px){
+    nav.toc{position:static; width:auto; height:auto; border-right:none; border-bottom:1px solid var(--line);}
+    nav.toc ol{columns:2; column-gap:24px;}
+    .wrap{margin-left:auto !important; max-width:880px; padding-top:24px;}
+  }
+  /* blocks */
+  .box{border:1px solid var(--line); border-radius:8px; background:var(--box); padding:14px 18px; margin:16px 0; position:relative;}
+  .box .tag{position:absolute; top:-12px; left:14px; background:var(--box); padding:0 10px; font-weight:bold; font-size:15px; letter-spacing:.5px;}
+  .def{border-left:5px solid var(--def);} .def .tag{color:var(--def);}
+  .thm{border-left:5px solid var(--thm); background:#fffdfb;} .thm .tag{color:var(--thm);}
+  .note{border-left:5px solid var(--note); background:#fafcf3;} .note .tag{color:var(--note);}
+  .proof{margin:10px 0 18px; padding:6px 16px; border-left:3px dashed #bdb6a6; color:var(--proof);}
+  .proof .pf{font-style:italic; color:var(--accent); font-weight:bold; margin-right:6px;}
+  .qed{float:right;}
+  /* formula */
+  .f{display:block; text-align:center; margin:14px 0; font-size:19px;}
+  .f .lab{color:var(--soft); font-size:14px; margin-left:10px;}
+  em.k{font-style:normal; background:var(--hl); padding:0 3px; border-radius:3px;}
+  .term{font-style:italic;}
+  /* inference rule renderer (Gentzen) */
+  .infer{display:inline-flex; flex-direction:column; align-items:stretch; margin:6px 14px; vertical-align:middle; text-align:center;}
+  .infer .prem{padding:0 10px 3px; white-space:nowrap;}
+  .infer .bar{border-top:1.4px solid var(--ink); position:relative;}
+  .infer .bar span{position:absolute; right:-3px; top:-9px; transform:translateX(100%); font-size:13px; color:var(--accent); white-space:nowrap; padding-left:5px;}
+  .infer .conc{padding:3px 10px 0; white-space:nowrap;}
+  .center{text-align:center; margin:14px 0;}
+  .tree{display:flex; justify-content:center; flex-wrap:wrap; align-items:flex-end; gap:4px;}
+  /* chain svg holder */
+  .chain{margin:20px auto; display:block;}
+  .pill{display:inline-block; border:1.5px solid var(--accent2); border-radius:20px; padding:4px 14px; margin:4px; background:#fff; font-size:15.5px;}
+  .arrow{color:var(--accent); font-weight:bold; font-size:18px; margin:0 2px;}
+  /* exam callout */
+  .exam{background:linear-gradient(180deg,#fff7e8,#fdeecb); border:1px solid #e2c98a; border-radius:8px; padding:14px 18px; margin:18px 0;}
+  .exam b{color:var(--accent);}
+  table.kv{border-collapse:collapse; width:100%; margin:14px 0; font-size:16px;}
+  table.kv th,table.kv td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+  table.kv th{background:#f1ead9;}
+  sub,sup{font-size:.72em;}
+  .small{font-size:15px; color:var(--soft);}
+  hr.sec{border:none; border-top:1px solid var(--line); margin:40px 0;}
+  .back{position:fixed; left:18px; bottom:18px; background:var(--accent); color:#fff; text-decoration:none; padding:8px 14px; border-radius:20px; font-size:14px; box-shadow:0 2px 8px rgba(0,0,0,.2);}
+
+
+/* ===== 合集覆盖样式 ===== */
+nav.toc{display:none;}
+nav.merged{position:fixed;top:0;left:0;width:288px;height:100vh;overflow-y:auto;
+  background:#f3eee2;border-right:1px solid var(--line);padding:22px 16px 50px;z-index:10;}
+nav.merged .side-title{font-size:17px;font-weight:bold;color:var(--accent);
+  border-bottom:2px solid var(--accent);padding-bottom:10px;margin-bottom:12px;letter-spacing:.5px;}
+nav.merged .grp{font-size:13px;color:#8a7a52;letter-spacing:2px;margin:16px 0 4px;font-weight:bold;}
+nav.merged ul{list-style:none;margin:0;padding:0;}
+nav.merged li.lec{margin:2px 0;}
+nav.merged .lec-a{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;
+  color:var(--ink);text-decoration:none;font-size:15.5px;font-weight:bold;border-left:3px solid transparent;}
+nav.merged .lec-a:hover{background:#e7dfca;}
+nav.merged li.lec.active>.lec-a{background:#fff;color:var(--accent);border-left-color:var(--accent);}
+nav.merged .lec-num{display:inline-block;min-width:24px;text-align:center;font-size:12px;
+  background:var(--accent2);color:#fff;border-radius:4px;padding:1px 0;}
+nav.merged .sub{max-height:0;overflow:hidden;transition:max-height .25s ease;margin-left:8px;border-left:1px dashed #cdbcaa;}
+nav.merged li.lec.active .sub{max-height:600px;}
+nav.merged .sub li a{display:block;padding:4px 10px;font-size:13.5px;color:var(--soft);
+  text-decoration:none;border-left:2px solid transparent;}
+nav.merged .sub li a:hover{color:var(--ink);}
+nav.merged .sub li a.active{color:var(--accent);border-left-color:var(--accent);font-weight:bold;}
+.wrap{margin-left:312px !important;max-width:860px;}
+@media (max-width:1100px){.wrap{margin-left:300px !important;}}
+.lecture-block{padding-top:8px;}
+.lecture-block+.lecture-block{margin-top:30px;border-top:4px double var(--accent);padding-top:18px;}
+.lecture-block header.title{scroll-margin-top:12px;}
+.topbar{position:sticky;top:0;background:rgba(251,249,244,.94);backdrop-filter:blur(3px);
+  z-index:5;padding:10px 0;margin:-48px 0 18px;border-bottom:1px solid var(--line);
+  font-size:14px;color:var(--soft);}
+.topbar b{color:var(--accent);}
+@media (max-width:820px){nav.merged{position:static;width:auto;height:auto;border-right:none;
+  border-bottom:1px solid var(--line);} .wrap{margin-left:auto !important;}}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style></head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<nav class="merged"><div class="side-title">数理逻辑 · 全讲合集</div>
+<div class="grp">命题逻辑（~30%）</div><ul class="grp-list">
+<li class="lec"><a class="lec-a" href="#L02"><span class="lec-num">02</span>命题逻辑语法</a><ul class="sub"><li><a href="#L02-s0">0 · 命题逻辑的位置</a></li><li><a href="#L02-s1">1 · 命题与联结词</a></li><li><a href="#L02-s2">2 · 字母表与表达式</a></li><li><a href="#L02-s3">3 · 命题公式 PROP</a></li><li><a href="#L02-s4">4 · 结构归纳法 ★</a></li><li><a href="#L02-s5">5 · 唯一可读性与辖域</a></li><li><a href="#L02-s6">6 · 简写与判定算法</a></li><li><a href="#L02-s7">7 · 小结与考点</a></li></ul></li>
+<li class="lec"><a class="lec-a" href="#L03"><span class="lec-num">03</span>命题逻辑语义</a><ul class="sub"><li><a href="#L03-s0">0 · 语义要给什么</a></li><li><a href="#L03-s1">1 · 赋值与解释</a></li><li><a href="#L03-s2">2 · 可满足 / 永真 / 矛盾</a></li><li><a href="#L03-s3">3 · 语义结论 Γ⊨A</a></li><li><a href="#L03-s4">4 · 逻辑等价与等值替换</a></li><li><a href="#L03-s5">5 · 范式 DNF/CNF ★</a></li><li><a href="#L03-s6">6 · 联结词完全组 ★</a></li><li><a href="#L03-s7">7 · 小结与考点</a></li></ul></li>
+<li class="lec"><a class="lec-a" href="#L04"><span class="lec-num">04</span>命题自然推理系统G'</a><ul class="sub"><li><a href="#L04-s0">0 · ⊢ 一侧的机器</a></li><li><a href="#L04-s1">1 · G′ 的公理与规则</a></li><li><a href="#L04-s2">2 · 有效与反例</a></li><li><a href="#L04-s3">3 · 证明树与可证 ★</a></li><li><a href="#L04-s4">4 · 可靠性</a></li><li><a href="#L04-s5">5 · 完全性（构造性）</a></li><li><a href="#L04-s6">6 · 导出规则</a></li><li><a href="#L04-s7">7 · 紧致性定理</a></li><li><a href="#L04-s8">8 · 小结与考点</a></li></ul></li>
+</ul>
+<div class="grp">一阶逻辑（核心）</div><ul class="grp-list">
+<li class="lec"><a class="lec-a" href="#L06"><span class="lec-num">06</span>一阶逻辑语法</a><ul class="sub"><li><a href="#L06-s0">0 · 为什么需要一阶逻辑</a></li><li><a href="#L06-s1">1 · 字母表（定义3.1）</a></li><li><a href="#L06-s2">2 · 项 term（定义3.2）</a></li><li><a href="#L06-s3">3 · 公式 formula（定义3.3）</a></li><li><a href="#L06-s4">4 · 结构唯一性与括号引理</a></li><li><a href="#L06-s5">5 · 结构归纳法 ★</a></li><li><a href="#L06-s6">6 · 自由变元（3.4/3.5）</a></li><li><a href="#L06-s7">7 · 替换 ★（3.6/3.7）</a></li><li><a href="#L06-s8">8 · 小结与考点</a></li></ul></li>
+<li class="lec"><a class="lec-a" href="#L07"><span class="lec-num">07</span>一阶逻辑语义</a><ul class="sub"><li><a href="#L07-s0">0 · 语义要解决什么</a></li><li><a href="#L07-s1">1 · 结构（定义3.10）</a></li><li><a href="#L07-s2">2 · 赋值与模型（3.11/3.12）</a></li><li><a href="#L07-s3">3 · 项的解释（3.13）</a></li><li><a href="#L07-s4">4 · 公式的解释（3.15）</a></li><li><a href="#L07-s5">5 · 真值只看自由变元</a></li><li><a href="#L07-s6">6 · 可满足/永真/语义后承 ★</a></li><li><a href="#L07-s7">7 · 逻辑等价与等值替换</a></li><li><a href="#L07-s8">8 · 小结与考点</a></li></ul></li>
+<li class="lec"><a class="lec-a" href="#L08"><span class="lec-num">08</span>替换引理</a><ul class="sub"><li><a href="#L08-s0">0 · 替换引理要焊什么</a></li><li><a href="#L08-s1">1 · 替换定义复习</a></li><li><a href="#L08-s2">2 · 项替换引理 3.24</a></li><li><a href="#L08-s3">3 · 公式替换引理 3.25 ★</a></li><li><a href="#L08-s4">4 · 量词情形（改名难点）</a></li><li><a href="#L08-s5">5 · 应用 ⊨∀x.A→A[t/x]</a></li><li><a href="#L08-s6">6 · 小结与考点</a></li></ul></li>
+<li class="lec"><a class="lec-a" href="#L10"><span class="lec-num">10</span>一阶自然推理系统G</a><ul class="sub"><li><a href="#L10-s0">0 · ⊢ 一侧的机器</a></li><li><a href="#L10-s1">1 · G 的公理与规则</a></li><li><a href="#L10-s2">2 · 证明树与可证</a></li><li><a href="#L10-s3">3 · 画证明树示范 ★</a></li><li><a href="#L10-s4">4 · 导出规则 ★</a></li><li><a href="#L10-s5">5 · 有效与可靠性</a></li><li><a href="#L10-s6">6 · 量词规则的陷阱</a></li><li><a href="#L10-s7">7 · 小结与考点</a></li></ul></li>
+</ul>
+<div class="grp">元理论（三大定理）</div><ul class="grp-list">
+<li class="lec"><a class="lec-a" href="#L09"><span class="lec-num">09</span>哥德尔码与Hintikka集</a><ul class="sub"><li><a href="#L09-s0">0 · 这一讲的作用</a></li><li><a href="#L09-s1">1 · 序列数</a></li><li><a href="#L09-s2">2 · 哥德尔码</a></li><li><a href="#L09-s3">3 · Hintikka 集定义</a></li><li><a href="#L09-s4">4 · Hintikka 集可满足 ★</a></li><li><a href="#L09-s5">5 · 小结与考点</a></li></ul></li>
+<li class="lec"><a class="lec-a" href="#L11"><span class="lec-num">11</span>完全性与紧致性</a><ul class="sub"><li><a href="#L11-s0">0 · 为什么要有完全性</a></li><li><a href="#L11-s1">1 · 前置回顾（⊢/⊨/G）</a></li><li><a href="#L11-s2">2 · 协调性 Con / Incon</a></li><li><a href="#L11-s3">3 · 极大协调集 ★</a></li><li><a href="#L11-s4">4 · 协调 ↔ 可满足 的桥</a></li><li><a href="#L11-s5">5 · 带等词的系统 Ge</a></li><li><a href="#L11-s6">6 · Henkin 集 ★</a></li><li><a href="#L11-s7">7 · 完全性定理 ★★★</a></li><li><a href="#L11-s8">8 · 紧致性定理 ★★</a></li><li><a href="#L11-s9">9 · 不可判定性与不完全性</a></li><li><a href="#L11-s10">10 · 考点提示与真题钩子</a></li></ul></li>
+</ul></nav>
+<div class="wrap">
+<div class="topbar">数理逻辑 · 全讲讲义合集 ｜ 葛存菁班 ｜ 共 9 讲（命题 3 + 一阶 4 + 元理论 2）｜ 左栏点击跳转，滚动自动高亮</div>
+<section class="lecture-block" id="L02">
+
+
+<header class="title">
+  <h1>命题逻辑语法：公式的结构</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 02（葛存菁）</div>
+  <div class="meta">主线定位：命题逻辑是整门课的起点，也是一阶逻辑的特例（0 元谓词＝命题符）。本讲把"合法公式"严格定清楚——字母表 → 表达式 → 公式，并给出<strong>结构归纳法</strong>与<strong>唯一可读性</strong>，二者是后续所有递归定义与证明的地基。</div>
+</header>
+
+<h2 id="L02-s0">0 · 命题逻辑在课程中的位置</h2>
+<p>命题逻辑只关心命题之间的<b>真值组合关系</b>，不深入命题内部。它结构最简单，却已包含整门课的全部"套路"：语法（本讲）→ 语义（讲03）→ 自然推理与可靠完全（讲04）。一阶逻辑（讲06 起）不过是给它加上量词与谓词。期末命题逻辑约占 30%，是稳定送分区。</p>
+
+<h2 id="L02-s1">1 · 命题与联结词</h2>
+<div class="box def"><span class="tag">定义 1.1 · 命题</span>
+  <p>命题是<b>能判断真假的陈述句</b>：陈述客观事实，且真假必居其一、只居其一。</p>
+  <p class="small">是命题：1+1&gt;2；P=NP。不是命题：疑问句、祈使句、含自由变量的 a&gt;b、自指悖论"我正在撒谎"。</p>
+</div>
+<p>以 1 表真、0 表假。复合命题真值<b>完全由其简单命题真值决定</b>。五个联结词的真值表：</p>
+<table class="kv">
+  <tr><th>p</th><th>q</th><th>¬p</th><th>p∧q</th><th>p∨q</th><th>p⊕q（异或）</th><th>p→q</th><th>p↔q</th></tr>
+  <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+  <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+  <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+  <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+</table>
+<p class="small">要点：→ 仅在"前真后假"时为假（其余皆真，包括前件为假的"空真"）；∨ 是相容或，⊕ 才是互斥或。</p>
+
+<h2 id="L02-s2">2 · 字母表与表达式</h2>
+<div class="box def"><span class="tag">定义 1.6 · 字母表</span>
+  <p>三类符号：(1) 命题符 p, q, r, …（可数无穷，|PS|=|ℕ|）；(2) 联结符 ¬ ∧ ∨ →；(3) 辅助符 ( )。</p>
+  <p class="small">注：有些书把 ↔ 也列入联结符；本课程取最小集 {¬,∧,∨,→}，↔ 视作缩写。</p>
+</div>
+<div class="box def"><span class="tag">表达式 · 段</span>
+  <p><b>表达式</b>是有限符号串，长度为符号个数（空表达式 ∅）。UV 表拼接。<b>段</b>：若 U=W₁VW₂ 则 V 是 U 的段；V≠U 时为真段。<b>初始段/结尾段</b>：U=VW 时 V 为初始段、W 为结尾段（非空则"真"）。</p>
+</div>
+
+<h2 id="L02-s3">3 · 命题公式 PROP</h2>
+<div class="box def"><span class="tag">定义 1.8 / 1.10 · 命题公式（三种等价定义）</span>
+  <p><b>归纳生成</b>：(i) PS⊆PROP；(ii) A∈PROP ⟹ (¬A)∈PROP；(iii) A,B∈PROP ⟹ (A∗B)∈PROP，∗∈{∧,∨,→}。</p>
+  <p><b>最小集合</b>：PROP 是满足 (i)(ii)(iii) 的最小集合（在 C<sub>¬</sub>,C<sub>∧</sub>,C<sub>∨</sub>,C<sub>→</sub> 下 PS 的归纳闭包）。</p>
+  <p><b>BNF</b>：φ ::= P ｜ (¬φ) ｜ (φ₁∧φ₂) ｜ (φ₁∨φ₂) ｜ (φ₁→φ₂)，P∈PS。</p>
+</div>
+<div class="box thm"><span class="tag">引理 1.11 · 构造序列</span>
+  <p>A∈PROP ⟺ 存在有穷序列 A₀,…,Aₙ=A，使每个 Aᵢ 或为命题符、或由更前的项经 ¬ / ∗ 生成。该序列称 A 的构造序列。</p>
+  <p class="small">证：令 PROP′ 为有构造序列者，证 PROP′⊆PROP（对 i 归纳）且 PROP⊆PROP′（验 PROP′ 满足 1.10 三条，由最小性得）。这是"归纳定义 = 自底向上构造"的等价性。</p>
+</div>
+
+<h2 id="L02-s4">4 · 结构归纳法 ★</h2>
+<div class="box thm"><span class="tag">定理 1.12 · 结构归纳原理</span>
+  <p>性质 R 若满足：(i) 每个命题符有 R；(ii) R(A)⟹R((¬A))；(iii) R(A)∧R(B)⟹R((A∗B))，则<b>所有</b>命题公式都有 R。</p>
+</div>
+<div class="proof"><span class="pf">证.</span> 令 S={A∈PROP : R(A)}。条件 (i)(ii)(iii) 恰说明 S 满足定义 1.10 的三条，由 PROP 的<b>最小性</b> PROP⊆S，故所有公式有 R。<span class="qed">∎</span></div>
+<div class="box note"><span class="tag">模板 · 对命题公式结构归纳</span>
+  <p><b>基础</b>：证所有命题符有 R。<b>假设</b>：设 A、B 有 R。<b>步骤</b>：对 (¬A)、(A∗B) 各情形用假设推出仍有 R。<br>推论：|PROP|=|ℕ|（可数无穷，因每个公式有限步生成且 |PS|=|ℕ|）。</p>
+</div>
+<div class="exam"><b>真题第八题（结构归纳）</b>虽以一阶"项与公式"出题，但这套命题版模板是同一思路的母本——先吃透这里，一阶版（<a href="#L06">讲06</a>）只是多了量词两种情形。</div>
+
+<h2 id="L02-s5">5 · 唯一可读性与辖域</h2>
+<div class="box thm"><span class="tag">括号引理与结构定理</span>
+  <p><b>引理 1.14（括号引理）</b>：任何公式左右括号数目相等。<b>引理 1.15</b>：公式的非空真初始段中左括号多于右括号（真结尾段反之），故<u>真初始段/真结尾段都不是公式</u>。</p>
+  <p><b>定理 1.16（唯一可读性）</b>：任一公式恰为五种形式之一——原子、(¬A)、(A∧B)、(A∨B)、(A→B)，且形式唯一（含 (¬A)=(¬A₁)⟹A=A₁，(A∗B)=(A₁∗′B₁)⟹∗=∗′,A=A₁,B=B₁）。</p>
+</div>
+<p class="small">唯一可读性是"公式能被无歧义地解析"的保证，是 §4 结构归纳合法、以及语义、替换得以良定义的根基。证 (2) 用到引理 1.15：两个不同公式以同符号开头则一个是另一个的真初始段，矛盾。</p>
+<div class="box def"><span class="tag">定义 1.17 · 辖域</span>
+  <p>若 (¬A) 是 C 的段，则 A 是该 ¬ 在 C 中的<b>辖域</b>；若 (A∗B) 是 C 的段，则 A、B 分别是 ∗ 的<b>左/右辖域</b>。<b>定理 1.18</b>：每个联结符的辖域唯一。</p>
+  <p class="small">例：((¬(p→q))∨(q∧(¬r)))，第一个 ¬ 的辖域是 (p→q)，∨ 的左辖域是 (¬(p→q))。</p>
+</div>
+
+<h2 id="L02-s6">6 · 简写与判定算法</h2>
+<p><b>简写约定</b>：省最外层括号；引入 [ ] { }；优先级 <span class="term">¬ ＞ ∧ ＞ ∨ ＞ →</span>。注意：<b>讨论结构时不能省括号</b>。</p>
+<div class="box note"><span class="tag">判断"是否公式"的算法（问题规约思想）</span>
+  <p>空串非公式；单符号是公式 ⟺ 它是命题符；长度&gt;1 必以 ( 开头。看第二个符号：若是 ¬，则须为 (¬V)，规约为"V 是否公式"；否则从左扫描到左右括号配平处定出 (V∗W)，规约为"V、W 是否公式"。有限步终止。</p>
+  <p class="small">括号配平只是公式的<b>必要非充分</b>条件（如 (p) 括号平衡但不是公式）。</p>
+</div>
+
+<h2 id="L02-s7">7 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td class="l">字母表、表达式、段</td><td>记忆</td><td>基础概念</td></tr>
+  <tr><td class="l">PROP 三种定义、构造序列</td><td>记忆</td><td>判断合法性</td></tr>
+  <tr><td class="l"><b>结构归纳法（定理1.12）</b></td><td>记忆+证明</td><td>真题第八题母本</td></tr>
+  <tr><td class="l">唯一可读性 1.16、辖域 1.17</td><td>理解</td><td>递归定义的根基</td></tr>
+  <tr><td class="l">判定算法（问题规约）</td><td>理解</td><td>考纲"问题规约"</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：语法定清楚后，<a href="#L03">讲03 命题语义</a>给公式赋真值，引出可满足、永真、<b>范式（真题二）</b>与<b>联结词完全组（真题判断2）</b>。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 02 转录整理，记号沿用葛存菁老师体系（PS/PROP、∗∈{∧,∨,→}）。结构归纳与唯一可读性建议优先吃透。</p>
+
+
+</section>
+<section class="lecture-block" id="L03">
+
+
+<header class="title">
+  <h1>命题逻辑语义：真值、范式与完全组</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 03（葛存菁）</div>
+  <div class="meta">主线定位：给语法以意义。赋值 v 决定每个公式的真值，由此得到可满足 / 永真 / 语义结论 / 逻辑等价。本讲两大考点：<strong>求析取/合取范式（真题第二题）</strong>与<strong>联结词完全组（真题判断2）</strong>。</div>
+</header>
+
+<h2 id="L03-s0">0 · 语义要给什么</h2>
+<p>语法（讲02）只说"怎么写合法"。语义给每个命题符指定真假（赋值 v），再沿结构算出任意公式的真值（解释 v̂）。在此之上定义三件大事：公式自身的性质（可满足/永真），公式间的关系（逻辑等价、语义结论），以及"标准形"（范式）。</p>
+
+<h2 id="L03-s1">1 · 赋值与解释</h2>
+<div class="box def"><span class="tag">定义 1.21 / 1.22 · 赋值与解释</span>
+  <p>联结词解释为布尔函数 H<sub>¬</sub>,H<sub>∧</sub>,H<sub>∨</sub>,H<sub>→</sub>（真值表同讲02）。<b>赋值</b> v: PS→𝔹 给每个命题符一个真值；其<b>解释</b> v̂: PROP→𝔹 递归定义：v̂(P)=v(P)；v̂(¬A)=H<sub>¬</sub>(v̂(A))；v̂(A∗B)=H<sub>∗</sub>(v̂(A),v̂(B))。</p>
+</div>
+<div class="box thm"><span class="tag">引理 1.23 · 真值只依赖出现的命题符</span>
+  <p>令 FV(A)={出现在 A 中的命题符}。若 v₁|FV(A)=v₂|FV(A)，则 v̂₁(A)=v̂₂(A)。</p>
+  <p class="small">证：对 A 结构归纳。基础 A∈PS 显然；步骤 ¬、∗ 由归纳假设搬运布尔函数即得。——这是讲02 结构归纳法的第一个实战。</p>
+</div>
+
+<h2 id="L03-s2">2 · 可满足 / 永真 / 矛盾</h2>
+<div class="box def"><span class="tag">定义 1.24 / 1.25</span>
+  <p>v <b>满足</b> A（v⊨A）指 v̂(A)=T；A <b>可满足</b>指存在 v 使 v⊨A。<br>
+  A <b>永真式（重言式）</b>（⊨A）指对一切 v 有 v̂(A)=T；A <b>矛盾式</b>指对一切 v 为 F。</p>
+  <p class="small">关键关系：A <b>不</b>永真 ⟺ ¬A 可满足；A <b>不</b>矛盾 ⟺ A 可满足。</p>
+</div>
+<div class="exam"><b>真题判断题钩子</b>：「一个公式可能既不是永真式，又不是矛盾式」——<b>对</b>。如 p：当 v(p)=1 时真、v(p)=0 时假，两者都不是。三分天下：永真 / 矛盾 / 两者皆非（可满足但非永真）。</div>
+<p>判定工具：<b>真值表</b>（穷举 2ⁿ 行）或<b>反证</b>（设公式为 F 推矛盾）。</p>
+
+<h2 id="L03-s3">3 · 语义结论 Γ⊨A</h2>
+<div class="box def"><span class="tag">定义 1.26 · 语义结论</span>
+  <p>A 是 Γ 的<b>语义结论</b>（Γ⊨A）指：对一切 v，若 v⊨Γ（Γ 中每式都真）则 v⊨A。</p>
+  <p class="small">特例 ∅⊨A：因"v⊨∅"对任何 v 恒真（∅ 中无公式可违背），故 ∅⊨A ⟺ A 永真。</p>
+</div>
+<div class="box note"><span class="tag">例 · A→B, B→C ⊨ A→C（反证法）</span>
+  <div class="calc">
+    <span class="step">设某 v 使 v̂(A→B)=1, v̂(B→C)=1, 但 v̂(A→C)=0</span>
+    <span class="step">由 v̂(A→C)=0 得 v(A)=1, v(C)=0</span>
+    <span class="step">v(A)=1 与 (A→B)真 ⟹ v(B)=1；再与 (B→C)真 ⟹ v(C)=1，与 v(C)=0 矛盾。<span class="why">∎</span></span>
+  </div>
+</div>
+<div class="box thm"><span class="tag">定理 1.27 · 演绎定理（语义版）</span>
+  <p>A₁,…,Aₙ ⊨ A ⟺ ⊨ A₁→(…→(Aₙ→A)…) ⟺ ⊨ (A₁∧…∧Aₙ)→A。把"前提集后承"转成"单个永真式"。</p>
+</div>
+
+<h2 id="L03-s4">4 · 逻辑等价与等值替换</h2>
+<div class="box def"><span class="tag">定义 1.28 · 逻辑等价 A≃B</span>
+  <p>A≃B 指对一切 v，v⊨A ⟺ v⊨B（等价地 v̂(A)=v̂(B)，或 A⊨B 且 B⊨A）。命题 1.29：≃ 是等价关系，且对 ¬、∗ 保持（同余）。</p>
+  <p class="small">注意区分：A≃B 是<b>语义</b>相等，A=B 是<b>表达式</b>相等。</p>
+</div>
+<div class="box thm"><span class="tag">定理 1.30 · 等值替换</span>
+  <p>若 B≃C，把 A 中 B 的某些出现换成 C 得 A′，则 A≃A′。（对 A 结构归纳，用命题 1.29 的同余性。）</p>
+</div>
+<div class="box note"><span class="tag">常用等值式（求范式的工具箱）</span>
+  <p>消去 →/↔/⊕：A→B≃¬A∨B；A↔B≃(¬A∨B)∧(A∨¬B)；A⊕B≃¬(A↔B)。<br>
+  内移 ¬（De Morgan）：¬¬A≃A；¬(A₁∧…∧Aₙ)≃¬A₁∨…∨¬Aₙ；¬(A₁∨…)≃¬A₁∧…。<br>
+  分配：A∧(B₁∨…∨Bₙ)≃(A∧B₁)∨…；A∨(B₁∧…)≃(A∨B₁)∧…。<br>
+  化简：A∨A≃A；A∧A≃A；A∨(A∧B)≃A；含互补文字的子句可删。</p>
+</div>
+
+<h2 id="L03-s5">5 · 范式 DNF / CNF ★（真题第二题）</h2>
+<div class="box def"><span class="tag">定义 1.33 / 1.34 · 文字、子句、范式</span>
+  <p><b>文字</b>：命题符或其否定。<b>子句</b>：文字的析取式（或合取式）。<br>
+  <b>析取范式 DNF（∨∧-nf）</b>：若干<u>合取子句</u>的<b>析取</b>，形如 ⋁ᵢ(⋀ₖ Pᵢ,ₖ)。<br>
+  <b>合取范式 CNF（∧∨-nf）</b>：若干<u>析取子句</u>的<b>合取</b>，形如 ⋀ⱼ(⋁ₖ Qⱼ,ₖ)。</p>
+  <p class="small">每个子句都含全部命题符且互不相同时，称<b>完全</b>（主）范式。</p>
+</div>
+<div class="box thm"><span class="tag">定理 1.35 / 命题 1.36 · 范式存在</span>
+  <p>任何真值函数 f: 𝔹ⁿ→𝔹 都可表为某 DNF 与某 CNF；因此<b>任何命题都有逻辑等价的 DNF 与 CNF</b>。</p>
+  <p class="small">构造思想（真值表法）：DNF 取 f 为真的每一行写一个合取子句（该行取 1 的符写本身、取 0 的写否定），再把这些合取子句析取起来；CNF 取 f 为假的每一行写一个析取子句（取 1 的写否定、取 0 的写本身），再合取。</p>
+</div>
+<div class="box note"><span class="tag">完整算例 · 求 ((P∧Q)→R)∧P 的 DNF 与 CNF</span>
+  <table class="kv">
+    <tr><th>P</th><th>Q</th><th>R</th><th>值</th><th>DNF 取真行 → 合取子句</th><th>CNF 取假行 → 析取子句</th></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td class="l">P∧Q∧R</td><td></td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td></td><td class="l">¬P∨¬Q∨R</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td class="l">P∧¬Q∧R</td><td></td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td class="l">P∧¬Q∧¬R</td><td></td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td></td><td class="l">P∨¬Q∨¬R</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td></td><td class="l">P∨¬Q∨R</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td></td><td class="l">P∨Q∨¬R</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td></td><td class="l">P∨Q∨R</td></tr>
+  </table>
+  <p><b>DNF</b>：(P∧Q∧R) ∨ (P∧¬Q∧R) ∨ (P∧¬Q∧¬R)</p>
+  <p><b>CNF</b>：(¬P∨¬Q∨R) ∧ (P∨¬Q∨¬R) ∧ (P∨¬Q∨R) ∧ (P∨Q∨¬R) ∧ (P∨Q∨R)</p>
+  <p class="small">另一条路是<b>等值演算法</b>：先消 →（≃¬(P∧Q)∨R）∧P，再 De Morgan、分配律逐步整理。两法结果逻辑等价；考试两种都可，真值表法更不易错。</p>
+</div>
+<div class="box thm"><span class="tag">定理 1.37 / 推论 1.38 · 范式判定永真/矛盾</span>
+  <p>DNF 是矛盾式 ⟺ 每个合取子句含互补文字（如 …∧p∧¬p∧…）；CNF 是永真式 ⟺ 每个析取子句含互补文字。由此可机械判定原公式的永真/矛盾性。</p>
+</div>
+
+<h2 id="L03-s6">6 · 联结词完全组 ★（真题判断2）</h2>
+<div class="box def"><span class="tag">完全组</span>
+  <p>联结词集合<b>完全（完备）</b>指：任意 n 元真值函数都能仅用该集合中的联结词表示。</p>
+</div>
+<div class="box thm"><span class="tag">定理 1.39 / 推论 1.40</span>
+  <p><b>{¬,∧,∨} 完全</b>（由定理 1.35：任何真值函数都有只含 ¬,∧,∨ 的范式）。<br>
+  又因 A∧B≃¬(¬A∨¬B)、A∨B≃¬(¬A∧¬B)、A→B≃¬A∨B，可消去一个二元词，得：<br>
+  <b>{¬,∧}、{¬,∨}、{¬,→} 都是完全组。</b></p>
+</div>
+<div class="exam"><b>真题判断题（2）</b>：「{¬,∧}、{¬,∨}、{¬,→} 均可作为完全组」——<b>对</b>，正是推论 1.40。记忆要点：保留 ¬ 再配 ∧/∨/→ 三者之一即可；{∧,∨,→}（无 ¬）则<u>不</u>完全（无法表达 ¬，因它们都保持"全真→真"）。</div>
+
+<h2 id="L03-s7">7 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td class="l">赋值/解释、引理1.23</td><td>记忆</td><td>结构归纳实例</td></tr>
+  <tr><td class="l">可满足/永真/矛盾</td><td>记忆</td><td>判断题（"既非永真又非矛盾"）</td></tr>
+  <tr><td class="l">语义结论 Γ⊨A、演绎定理</td><td>记忆+证明</td><td>真值表/反证</td></tr>
+  <tr><td class="l">逻辑等价、等值替换、等值式表</td><td>记忆</td><td>化简与求范式</td></tr>
+  <tr><td class="l"><b>DNF / CNF 求法</b></td><td>记忆+计算</td><td><b>真题第二题</b></td></tr>
+  <tr><td class="l"><b>联结词完全组</b></td><td>记忆</td><td><b>真题判断2</b></td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：语义给出 ⊨。<a href="#L04">讲04 命题自然推理 G′</a>给出 ⊢（证明树），并证可靠性、<b>完全性</b>（构造性）、命题<b>紧致性</b>；真题第六题"画证明树"即出自那里。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 03 转录整理，记号沿用葛存菁老师体系（v̂、≃、DNF/CNF）。求范式建议优先练真值表法。</p>
+
+
+</section>
+<section class="lecture-block" id="L04">
+
+
+<header class="title">
+  <h1>命题自然推理系统 G′：证明树、可靠与完全</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 04（葛存菁）</div>
+  <div class="meta">主线定位：命题逻辑 ⊢ 一侧的机器。G′ 用矢列上的证明树形式化推理，并证 ⊢ 与 ⊨ 等价（可靠性 + <strong>构造性完全性</strong>）。它与一阶 G（<a href="#L10">讲10</a>）同构，<strong>真题第六题"画证明树"多考 G′</strong>。</div>
+</header>
+
+<h2 id="L04-s0">0 · 从语义到语法</h2>
+<p>语义判定真假要穷举赋值。G′ 改走纯符号路线：从公理出发、按规则搭证明树。本讲建立 G′，学会画证明树，并证它<b>既可靠（⊢⟹⊨）又完全（⊨⟹⊢）</b>——两者合一即 ⊢ 与 ⊨ 重合。</p>
+
+<h2 id="L04-s1">1 · G′ 的公理与规则（定义 1.41）</h2>
+<div class="box def"><span class="tag">定义 1.41 · 矢列与 G′</span>
+  <p>Γ,Δ,Λ,Θ 为命题有穷集（可空）。<b>矢列</b> Γ⊢Δ（前件 Γ、后件 Δ）。<b>公理</b>：Γ,A,Δ ⊢ Λ,A,Θ（前后件含公共公式）。被作用的公式称<b>主命题</b>，其余称<b>辅命题</b>。规则如下（无量词，是 G 去掉 ∀/∃ 的版本）：</p>
+</div>
+<table class="rules">
+  <tr><td><b>¬L</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,Δ ⊢ Λ,A</span></div><div class="bar"></div><div class="conc">Γ,¬A,Δ ⊢ Λ</div></div></div></td>
+      <td><b>¬R</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A ⊢ Λ,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,¬A,Θ</div></div></div></td></tr>
+  <tr><td><b>∧L</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A,B,Δ ⊢ Λ</span></div><div class="bar"></div><div class="conc">Γ,A∧B,Δ ⊢ Λ</div></div></div></td>
+      <td><b>∧R</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ⊢Λ,A,Θ</span><span class="leaf">Γ⊢Λ,B,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,A∧B,Θ</div></div></div></td></tr>
+  <tr><td><b>∨L</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A,Δ⊢Λ</span><span class="leaf">Γ,B,Δ⊢Λ</span></div><div class="bar"></div><div class="conc">Γ,A∨B,Δ ⊢ Λ</div></div></div></td>
+      <td><b>∨R</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ ⊢ Λ,A,B,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,A∨B,Θ</div></div></div></td></tr>
+  <tr><td><b>→L</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,Δ⊢Λ,A</span><span class="leaf">Γ,B,Δ⊢Λ</span></div><div class="bar"></div><div class="conc">Γ,A→B,Δ ⊢ Λ</div></div></div></td>
+      <td><b>→R</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A ⊢ Λ,B,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,A→B,Θ</div></div></div></td></tr>
+  <tr><td colspan="2" style="text-align:center;"><b>Cut</b><div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ ⊢ Λ,A</span><span class="leaf">Δ,A ⊢ Θ</span></div><div class="bar"></div><div class="conc">Γ,Δ ⊢ Λ,Θ</div></div></div></td></tr>
+</table>
+
+<h2 id="L04-s2">2 · 有效与反例（定义 1.42）</h2>
+<div class="box def"><span class="tag">定义 1.42 · 有效 / 反例</span>
+  <p>Γ={A₁,…,Aₘ}, Δ={B₁,…,Bₙ}。<b>有反例</b>：存在 v 使 v⊨(⋀Aᵢ)∧(⋀¬Bⱼ)（v 反驳之）。<b>有效</b>（Γ⊨Δ）：对一切 v，v⊨(⋀Aᵢ)→(⋁Bⱼ)。</p>
+  <p class="small">注意 Γ⊨Δ 是"前件全真 ⟹ 后件<b>至少一个</b>真"，与语义结论 Γ⊨A 的多后承推广一致。</p>
+</div>
+<div class="box thm"><span class="tag">命题 1.43</span><p>Γ⊢Δ 有效 ⟺ 无反例。（一个是 → 永真，一个是其否定可满足，互为否定。）</p></div>
+
+<h2 id="L04-s3">3 · 证明树与可证 ★（真题第六题）</h2>
+<div class="box def"><span class="tag">定义 1.45 / 1.46</span><p><b>证明树</b>：公理是单点树；规则把已证前提接成结论的树。<b>可证</b>：存在证明树。画法<b>自底向上</b>，拆到叶子全为公理。</p></div>
+
+<h3>例 · ⊢ A∨¬A</h3>
+<div class="deriv"><div class="infer">
+  <div class="prem"><div class="infer"><div class="prem"><span class="leaf">A ⊢ A</span></div><div class="bar"><span>¬R</span></div><div class="conc">⊢ A, ¬A</div></div></div>
+  <div class="bar"><span>∨R</span></div><div class="conc">⊢ A∨¬A</div>
+</div></div>
+
+<h3>例 · ⊢ ¬(A∧¬A)</h3>
+<div class="deriv"><div class="infer">
+  <div class="prem"><div class="infer"><div class="prem"><div class="infer">
+    <div class="prem"><span class="leaf">A ⊢ A</span></div><div class="bar"><span>¬L</span></div><div class="conc">A,¬A ⊢</div>
+  </div></div><div class="bar"><span>∧L</span></div><div class="conc">A∧¬A ⊢</div></div></div>
+  <div class="bar"><span>¬R</span></div><div class="conc">⊢ ¬(A∧¬A)</div>
+</div></div>
+
+<h3>例 · ¬A→B ⊢ ¬B→A（带分支）</h3>
+<div class="deriv"><div class="infer">
+  <div class="prem"><div class="infer">
+    <div class="prem"><div class="infer">
+      <div class="prem">
+        <div class="infer"><div class="prem"><span class="leaf">¬B,A ⊢ A</span></div><div class="bar"><span>¬R</span></div><div class="conc">¬B ⊢ A,¬A</div></div>
+        <div class="infer"><div class="prem"><span class="leaf">B ⊢ A,B</span></div><div class="bar"><span>¬L</span></div><div class="conc">B,¬B ⊢ A</div></div>
+      </div>
+      <div class="bar"><span>→L</span></div><div class="conc">¬A→B, ¬B ⊢ A</div>
+    </div></div>
+    <div class="bar"><span>→R</span></div><div class="conc">¬A→B ⊢ ¬B→A</div>
+  </div></div>
+</div></div>
+<div class="box note"><span class="tag">画证明树口诀</span><p>① 右边先拆主联结词（→R/∨R/∧R/¬R）；② 左边拆（∧L/∨L/→L/¬L）；③ ∨L、→L、∧R 会<b>分叉</b>成两枝；④ 直到每个叶子前后件出现<b>公共公式</b>成为公理。</p></div>
+
+<h2 id="L04-s4">4 · 可靠性（定理 1.47）</h2>
+<div class="box thm"><span class="tag">定理 1.47 · Soundness</span><p>若 Γ⊢Δ 在 G′ 中可证，则 Γ⊨Δ 有效。</p></div>
+<div class="proof"><span class="pf">证（对证明树结构归纳）.</span>
+  <p><b>基础</b>：公理有效（前件全真则公共公式 A 真，A 也在后件）。<b>步骤</b>：引理 1.44——除 Cut 外每条规则"前提全有效 ⟺ 结论有效"（用"反驳结论 ⟺ 反驳某前提"逐规则核对）；Cut 单向"前提有效⟹结论有效"（若 v 反驳结论，按 v̂(A) 分两种情形必反驳某前提）。由归纳假设得结论有效。<span class="qed">∎</span></p>
+</div>
+
+<h2 id="L04-s5">5 · 完全性（定理 1.48，构造性）</h2>
+<div class="box thm"><span class="tag">定理 1.48 · Completeness</span><p>若 Γ⊢Δ 有效，则它在 G′ 中可证。</p></div>
+<div class="proof"><span class="pf">证（对联结词总数 m 归纳，给出算法）.</span>
+  <p><b>基础 m=0</b>：Γ⊢Δ 形如 P₁,…,Pₘ ⊢ Q₁,…,Qₙ（全命题符）。因有效，必有某命题符同时出现在两边——否则可令左边全 1、右边全 0 造出反例。故它是公理，无规则可证。</p>
+  <p><b>步骤</b>：取 Γ 或 Δ 中某个最外联结词，<b>反向施用对应规则</b>把它消去，得到联结词更少的前提；由引理 1.44 前提仍有效，联结词数 ≤ m−1，归纳假设给出前提的无 Cut 证明，接上规则即得结论的证明（规则数 ≤ 2ᵐ）。<span class="qed">∎</span></p>
+  <p class="small">这个证明本身就是一个<b>判定算法</b>：从最外联结词逐个消去，要么终止于公理（可证、有效），要么停在一个非公理的纯命题符矢列（不可证，且它给出反例赋值）。</p>
+</div>
+<div class="box note"><span class="tag">推论 1.49 / 1.50</span><p>Γ⊢Δ 可证 ⟺ 有效；且凡可证者皆有<b>无 Cut</b> 证明（Cut 消除）。</p></div>
+<div class="exam"><b>真题判断题钩子（3）</b>：「若某矢列可证，则存在该矢列的无 cut 证明树」——<b>对</b>，即推论 1.50（Cut 消除）。完全性的构造证明本来就只用到无 Cut 规则。</div>
+
+<h2 id="L04-s6">6 · 导出规则</h2>
+<table class="kv">
+  <tr><th>规则</th><th>形式</th><th>导出关键</th></tr>
+  <tr><td>归谬律</td><td>由 Γ,A⊢B 与 Γ,A⊢¬B，得 Γ⊢¬A</td><td>¬L 得 Γ,A,¬B⊢，Cut 出 Γ,A⊢ ，¬R 得 Γ⊢¬A</td></tr>
+  <tr><td>MP</td><td>由 ⊢A 与 ⊢A→B，得 ⊢B</td><td>先证 A,A→B⊢B（→L），两次 Cut</td></tr>
+  <tr><td>¬¬A⊢A、A⊢¬¬A、A,¬A⊢B</td><td>双否、爆炸</td><td>公理 + ¬L/¬R</td></tr>
+</table>
+
+<h2 id="L04-s7">7 · 紧致性定理（定理 1.51）</h2>
+<div class="box thm"><span class="tag">定理 1.51 · 命题紧致性</span>
+  <p>设 Γ 为命题集（可无穷）。若 Γ 的<b>每个有穷子集都可满足</b>，则 Γ 可满足。</p>
+</div>
+<div class="proof"><span class="pf">证（有穷可满足的极大扩张 + 典范赋值）.</span>
+  <p>称 Δ <b>有穷可满足</b>指其每个有穷子集可满足。<b>引理 1.54</b>：若 Δ 有穷可满足、Δ∪{A} 不是，则 Δ∪{¬A} 是（否则取两个坏的有穷子集合并得一个既驳 A 又驳 ¬A 的可满足赋值，荒谬）。</p>
+  <p>把全体命题枚举 A₀,A₁,…，令 Γ₀=Γ，Γₙ₊₁=Γₙ∪{Aₙ}（若仍有穷可满足）否则 Γₙ∪{¬Aₙ}。对 n 归纳：各 Γₙ 有穷可满足。令 Δ=⋃Γₙ，则 Δ 有穷可满足且对每个命题符 p<b>恰含 p 或 ¬p 之一</b>。定义 v(p)=T ⟺ p∈Δ，对结构归纳证"A∈Δ⟹v⊨A、¬A∈Δ⟹v⊭A"，故 v⊨Δ⊇Γ。<span class="qed">∎</span></p>
+  <p class="small">注：这是命题逻辑版；一阶版（<a href="#L11">讲11</a>定理6.21）改由完全性 + "协调是有穷性质"两行得证。两者精神一致——整体性质被有穷性质决定。</p>
+</div>
+
+<h2 id="L04-s8">8 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td>G′ 公理与规则</td><td>记忆</td><td>画证明树基础</td></tr>
+  <tr><td><b>画证明树</b></td><td>记忆+证明</td><td><b>真题第六题</b></td></tr>
+  <tr><td>有效/反例、可靠性 1.47</td><td>记忆+证明</td><td>结构归纳</td></tr>
+  <tr><td><b>构造性完全性 1.48</b>、Cut 消除</td><td>记忆+理解</td><td>真题判断3（无 cut 证明树）</td></tr>
+  <tr><td>导出规则（归谬、MP）</td><td>记忆</td><td>考纲"导出规则"</td></tr>
+  <tr><td>命题紧致性 1.51</td><td>理解+证明</td><td>与一阶紧致对照</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：命题逻辑语法→语义→推理至此闭环。一阶逻辑（<a href="#L06">讲06</a>起）在此之上加量词与谓词；一阶自然推理 G（<a href="#L10">讲10</a>）与 G′ 同构，只多了 ∀/∃ 四条规则。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 04 转录整理，记号沿用葛存菁老师体系（矢列 Γ⊢Δ、有效 Γ⊨Δ）。建议把 §3 三棵证明树默画到脱稿，并理解 §5 完全性证明同时是判定算法。</p>
+
+
+</section>
+<section class="lecture-block" id="L06">
+
+
+<header class="title">
+  <h1>一阶逻辑语法：从符号到公式</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 06（葛存菁）</div>
+  <div class="meta">主线定位：命题逻辑表达力不够（处理不了"所有/存在"）。本讲搭起一阶逻辑的<strong>语法骨架</strong>——字母表 → 项 → 公式，并配两件贯穿后续的工具：<strong>结构归纳法</strong>与<strong>替换</strong>。它是语义（07）、替换引理（08）、自然推理（10）的共同地基。</div>
+</header>
+
+<!-- 0 -->
+<h2 id="L06-s0">0 · 为什么需要一阶逻辑</h2>
+<p>看一个命题逻辑无能为力的推理：</p>
+<div class="box note"><span class="tag">动机例</span>
+  <p>前提：所有的牛都有角；有些动物是牛。结论：所有动物都有角。——这是个<b>错误</b>推理。</p>
+  <p>若用命题逻辑，把三句记作 p, q, r，只能写成 (p∧q)→r，<u>看不出</u>对错——命题逻辑把"所有""有些"整句吞掉了，丢失了内部结构。</p>
+</div>
+<p>解决之道是把句子拆细：用<b>谓词</b>刻画性质与关系（"x 是牛"P(x)、"x 有角"Q(x)），用<b>量词</b> ∀（所有）、∃（存在）绑定个体变元。于是上例形式化为</p>
+<div class="f">(∀x.(P(x)→Q(x))) ∧ (∃y.(R(y)∧P(y))) → ∀z.(R(z)→Q(z))</div>
+<p>它的真假可在语义层面机械判定（下一讲），而这一讲先把"什么是合法的项与公式"严格定清楚。</p>
+
+<!-- 1 -->
+<h2 id="L06-s1">1 · 一阶语言的字母表（定义 3.1）</h2>
+<div class="box def"><span class="tag">定义 3.1 · 字母表</span>
+  <p>一阶语言的字母表由两部分组成。</p>
+  <p><b>(1) 逻辑符（所有一阶语言共用）</b>：</p>
+  <ul>
+    <li>变元集 V：<b>可数无穷</b>集 V = {x₀, x₁, …, xₙ, …}，‖V‖=‖ℕ‖（注意与命题符不同）；</li>
+    <li>联结词 ¬ ∧ ∨ →（完全子集 {¬,→}）；量词 ∀ ∃；等词 ≐；辅助符 ( ) . ,</li>
+  </ul>
+  <p><b>(2) 非逻辑符 ℒ（因语言而异）</b>：</p>
+  <ul>
+    <li>(a) 常元符集 ℒ<sub>c</sub> = {c₀,c₁,…}，可数（<b>可为 0 个</b>）；</li>
+    <li>(b) 函数符集 ℒ<sub>f</sub> = {f₀,f₁,…}，每个 f 配正整数元数 μ(f)；</li>
+    <li>(c) 谓词符集 ℒ<sub>p</sub> = {P₀,P₁,…}，每个 P 配非负整数元数 μ(P)。</li>
+  </ul>
+</div>
+<div class="box note"><span class="tag">六点说明（易考辨析）</span>
+  <p>① 变元集恒为可数无穷。② 等词 ≐ 是一个<b>特别的谓词</b>（不是联结词，区别于 ↔）；用 ℒ<sub>e</sub> 记带 ≐ 的语言。③ 当 μ(P)=0 时 P 称<b>命题符</b>——命题逻辑是一阶逻辑的特例。④ ℒ<sub>f</sub>、ℒ<sub>p</sub> 可为空。⑤ 各一阶语言<u>逻辑符全同，只在非逻辑符上不同</u>。⑥ 记 ℒ = ℒ<sub>c</sub>∪ℒ<sub>f</sub>∪ℒ<sub>p</sub>。</p>
+</div>
+<div class="exam"><b>真题判断题钩子</b>：「一阶语言的常元符集所含元素不能是无穷多个」——<b>错</b>。定义 3.1 明说 ℒ<sub>c</sub> 可数（可 0 个、可可数<u>无穷</u>个）。"可数无穷"是允许的。</div>
+<p><b>例（初等算术语言 𝒜）</b>：常元 {0}，函数 {S, +, ·}（S 为一元后继），谓词 {&lt;}。<br>
+<b>例（群论语言 𝔾）</b>：常元 {e}，函数 {·(二元), ⁻¹(一元)}。</p>
+
+<!-- 2 -->
+<h2 id="L06-s2">2 · 项（term，定义 3.2）</h2>
+<p>项是"指称个体"的符号串（名词性）。三种等价定义，都说同一件事：</p>
+<div class="box def"><span class="tag">定义 3.2 · 项（三种等价说法）</span>
+  <p><b>归纳生成式</b>：由下列规则有限次生成即为项——(i) 每个变元符是项；(ii) 每个常元符是项；(iii) 若 f 为 n 元函数、t₁,…,tₙ 为项，则 f(t₁,…,tₙ) 为项。</p>
+  <p><b>最小集合（闭包）式</b>：全体项之集 T 是满足 V⊆T、ℒ<sub>c</sub>⊆T、且对函数应用封闭的<u>最小</u>集合。</p>
+  <p><b>BNF 式</b>：&nbsp; <span class="term">t ::= x ｜ c ｜ f(t₁,…,tₙ)</span></p>
+</div>
+<p class="small">"有限次生成 / 最小集合"两种措辞等价：最小性恰好排除了无穷长或凭空冒出的怪物，保证<b>每个项都有有限的生成历史</b>——这正是结构归纳法（§5）能成立的根。</p>
+
+<!-- 3 -->
+<h2 id="L06-s3">3 · 公式（formula，定义 3.3）</h2>
+<div class="box def"><span class="tag">定义 3.3 · 原子公式与公式</span>
+  <p><b>原子公式</b>：(i) 若 s,t 为项，则 (s ≐ t) 是原子公式；(ii) 若 R 为 n 元谓词、t₁,…,tₙ 为项，则 R(t₁,…,tₙ) 是原子公式。</p>
+  <p><b>公式</b>（有限次生成）：(i) 原子公式是公式；(ii) 若 A 是公式则 (¬A) 是公式；(iii) 若 A,B 是公式则 (A∗B) 是公式，∗∈{∧,∨,→}；(iv) 若 A 是公式、x 是变元，则 (∀x.A) 与 (∃x.A) 是公式。</p>
+  <p>BNF：<span class="term">A ::= (t₁≐t₂) ｜ R(t₁,…,tₙ) ｜ (¬A) ｜ (A∧B) ｜ (A∨B) ｜ (A→B) ｜ (∀x.A) ｜ (∃x.A)</span></p>
+</div>
+<div class="box note"><span class="tag">层次纪律（最常错处）</span>
+  <p>① <b>等词与谓词作用在项上</b>，结果是（原子）公式；② <b>联结词与量词只能作用在公式上</b>。<br>
+  于是 ¬f(x)、f(x)∧g(x,y) 都<b>不是</b>合法公式——f、g 是函数，它们造出的是项，项不能直接被 ¬、∧ 连接。必须先用谓词把项变成公式。</p>
+</div>
+<p><b>书写简写</b>（与命题逻辑类似）：省最外层括号、省 (Qx.A) 的外括号、引入 [ ] { }、约定优先级 <span class="term">≐ ＞ ¬ ＞ ∧ ＞ ∨ ＞ →</span>。例如群论公理 (∀x.((m(x,e)≐x)∧(m(e,x)≐x))) 可简写 ∀x.(m(x,e)≐x ∧ m(e,x)≐x)。</p>
+
+<!-- 4 -->
+<h2 id="L06-s4">4 · 结构的唯一性与括号引理</h2>
+<div class="box thm"><span class="tag">定理 3.8 / 3.9 · 形式唯一</span>
+  <p><b>3.8（项）</b>：任一项恰为以下之一且形式唯一——变元符、常元符、或 f(t₁,…,tₙ)。</p>
+  <p><b>3.9（公式）</b>：任一公式恰为以下<b>八种</b>形式之一且唯一——(s≐t)、R(t₁,…,tₙ)、(¬A)、(A∧B)、(A∨B)、(A→B)、(∀x.A)、(∃x.A)。</p>
+  <p class="small">证法：对结构作归纳（与命题逻辑公式结构的讨论平行）。<b>括号引理</b>：任一公式左右括号个数相等——同样对结构归纳即得。</p>
+</div>
+<p>"形式唯一"听着平凡，却是<b>一切递归定义合法的前提</b>：正因为每个公式只能以一种方式拆开，FV(·)、替换、语义解释这些"按结构分情况"的定义才不会自相矛盾。</p>
+
+<!-- 5 -->
+<h2 id="L06-s5">5 · 结构归纳法 ★（考纲点名 · 真题第八题）</h2>
+<p>要证"所有项 / 所有公式都具有性质 R"，标准武器是<b>结构归纳</b>——沿着定义 3.2 / 3.3 的生成方式逐层验证。</p>
+<div class="box def"><span class="tag">模板 A · 对项的结构归纳</span>
+  <p><b>基础</b>：证每个变元符、每个常元符具有 R。</p>
+  <p><b>假设</b>：设项 t₁,…,tₙ 都具有 R。</p>
+  <p><b>步骤</b>：利用假设，证 f(t₁,…,tₙ) 仍具有 R（f 为任意 n 元函数符）。</p>
+</div>
+<div class="box def"><span class="tag">模板 B · 对公式的结构归纳</span>
+  <p><b>基础</b>：先用模板 A 处理项，证两类<b>原子公式</b> (s≐t)、R(t₁,…,tₙ) 具有 R。</p>
+  <p><b>假设</b>：设公式 A、B 具有 R。</p>
+  <p><b>步骤</b>：对 (¬A)、(A∗B)、(∀x.A)、(∃x.A) 逐情形，用假设证生成的公式仍具有 R。</p>
+</div>
+<div class="exam"><b>真题第八题"对项和公式的结构作归纳"</b>就是直接考这套模板。下笔要点：① 明确待证性质 R(·)；② <b>项与公式分两层</b>（公式归纳的基础要先调用项归纳）；③ 每个构造子（¬/∧/∨/→/∀/∃）单列一种情形，不要漏量词那两种；④ 步骤里清楚标出"由归纳假设"。下一讲的好几个引理（如 3.14、3.16）都是这套模板的实例，可当范文背。</div>
+
+<!-- 6 -->
+<h2 id="L06-s6">6 · 自由变元（定义 3.4 / 3.5）</h2>
+<div class="box def"><span class="tag">定义 3.4 · 项的自由变元 FV(t)</span>
+  <p>(1) FV(x)={x}；(2) FV(c)=∅；(3) FV(f(t₁,…,tₙ)) = ⋃ᵢ FV(tᵢ)。</p>
+  <p>x 是 t 的自由变元指 x∈FV(t)；t 为<b>闭项</b>指 FV(t)=∅。例：FV(m(x,e))={x}。</p>
+</div>
+<div class="box def"><span class="tag">定义 3.5 · 公式的自由变元 FV(A)</span>
+  <p>(1) FV(t₁≐t₂)=FV(t₁)∪FV(t₂)；(2) FV(P(t₁,…,tₙ))=⋃ᵢFV(tᵢ)；(3) FV(¬A)=FV(A)；(4) FV(A∗B)=FV(A)∪FV(B)；<b>(5) FV(Qx.A)=FV(A)−{x}</b>（量词把 x 绑住）。</p>
+  <p>x 是 A 的自由变元指 x∈FV(A)；A 为<b>句子</b>指 FV(A)=∅。</p>
+</div>
+<div class="box note"><span class="tag">自由出现 vs 约束出现</span>
+  <p>同一个变元在一个公式里可以<b>既自由又约束</b>。称 x 在 A 中第 i 次出现是<b>约束的</b>，指存在 A 的子公式 Qx.B 使该次出现落在其内。<br>
+  例 ∃x.(P(x,y) ∧ ∀y.R(x,y)) → Q(x,z) 中的 y：第 1 次（P 里）自由，第 2、3 次（∀y 辖域内）约束。</p>
+</div>
+
+<!-- 7 -->
+<h2 id="L06-s7">7 · 替换 ★（定义 3.6 / 3.7）</h2>
+<p>"把项 t 代入变元 x"是日后量词规则、替换引理的核心操作。难点全在<b>避免变元被意外捕获</b>。</p>
+<div class="box def"><span class="tag">定义 3.6 · 项的替换 s[t/x]</span>
+  <p>(1) x[t/x]=t；(2) y[t/x]=y（y≠x）；(3) c[t/x]=c；(4) f(t₁,…,tₙ)[t/x]=f(t₁[t/x],…,tₙ[t/x])。</p>
+</div>
+<div class="box def"><span class="tag">定义 3.7 · 公式的替换 A[t/x]</span>
+  <p>(1)(2) 原子：把替换推进到各项；(3) (¬A)[t/x]=(¬A[t/x])；(4) (A∗B)[t/x]=(A[t/x]∗B[t/x])；</p>
+  <p><b>(5)</b> (Qx.A)[t/x] = (Qx.A)　<span class="small">——被同名量词绑住，x 已非自由，不动；</span></p>
+  <p><b>(6)</b> (Qy.A)[t/x] = (Qy.A[t/x])，若 y≠x 且 <b>y∉FV(t)</b>　<span class="small">——安全，直接推进；</span></p>
+  <p><b>(7)</b> (Qy.A)[t/x] = (Qz.A[z/y][t/x])，若 y≠x 且 <b>y∈FV(t)</b>，其中 z 取"不在 FV(t)、不在 A 中出现"的<u>足标最小新变元</u>。<span class="small">——危险！先把 y 改名为 z（避免 t 里的 y 被 Qy 捕获），再替换。</span></p>
+</div>
+<div class="box note"><span class="tag">五条注记</span>
+  <p>① 改名：把 ∀x.A 改成 ∀y.A[y/x]（y 不在 A 中出现）不改变含义；② <b>先改名后替代</b>；③ 替代不应改变约束关系；④ <b>盲目替代会出错</b>（捕获）；⑤ (7) 中的 z 是全新变元。</p>
+</div>
+<div class="box thm"><span class="tag">完整算例 · 带改名的替换</span>
+  <p>设 A = P(x) → ∃y.(Q(y) ∧ R(y,x))，求 A[y/x]。注意 t=y 而 ∃y 会捕获它，故走情形 (7)。</p>
+  <div class="calc">
+    <span class="step">A[y/x] = (P(x) → ∃y.(Q(y)∧R(y,x)))[y/x]</span>
+    <span class="step">= P(x)[y/x] → (∃y.(Q(y)∧R(y,x)))[y/x] <span class="why">(4) 推进 →</span></span>
+    <span class="step">= P(y) → ∃z.((Q(y)∧R(y,x))[z/y][y/x]) <span class="why">(7) y∈FV(t)，改名 y↦z</span></span>
+    <span class="step">= P(y) → ∃z.(Q(z[y/x]) ∧ R(z[y/x], x[y/x])) <span class="why">先做 [z/y]</span></span>
+    <span class="step">= P(y) → ∃z.(Q(z) ∧ R(z, y)) <span class="why">再做 [y/x]</span></span>
+  </div>
+  <p class="small">若<b>不</b>改名而盲目代入，会得到 ∃y.(Q(y)∧R(y,y))——原本自由的 x 变成了被 ∃y 捕获的 y，语义被篡改。改名（→z）正是为了防止这种捕获。</p>
+</div>
+
+<!-- 8 -->
+<h2 id="L06-s8">8 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td>字母表 3.1（变元可数无穷、等词是谓词、μ(P)=0 即命题符、ℒc 可无穷）</td><td>记忆</td><td>判断题（真题"常元符不能无穷"是错的）</td></tr>
+  <tr><td>项 3.2 / 公式 3.3 的三种定义、层次纪律</td><td>记忆</td><td>判断合法性、写形式化</td></tr>
+  <tr><td><b>结构归纳法</b>（模板 A/B）</td><td>记忆+证明</td><td><b>真题第八题</b>直接出</td></tr>
+  <tr><td>自由变元 FV、自由/约束出现</td><td>记忆</td><td>替换、语义的前置概念</td></tr>
+  <tr><td><b>替换 3.6 / 3.7</b>（含 (7) 改名避捕获）</td><td>记忆+计算</td><td>计算题；<a href="#L08">替换引理（讲08）</a>的基础</td></tr>
+  <tr><td>形式化（用逻辑公式描述实际问题）</td><td>理解+应用</td><td>考纲点名"问题规约"，常以应用题出现</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：语法只规定"怎么写得合法"，还没说"什么意思、什么时候为真"。下一讲<a href="#L07">一阶逻辑语义</a>给出结构、赋值、模型与"真"的定义，并由此引出<b>可满足 / 永真 / 语义后承</b>——那是真题第四题"构造模型证永真"的战场。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 06 转录整理，记号沿用葛存菁老师体系（等词 ≐、FV、A[t/x]）。结构归纳与替换是后续多讲反复调用的工具，建议优先吃透。</p>
+
+
+</section>
+<section class="lecture-block" id="L07">
+
+
+<header class="title">
+  <h1>一阶逻辑语义：结构、模型与真</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 07（葛存菁）</div>
+  <div class="meta">主线定位：语法（06）只规定"怎么写合法"，本讲赋予符号<strong>意义</strong>——用<strong>结构 + 赋值 = 模型</strong>定义公式的真值，进而得到<strong>可满足 / 永真 / 语义后承</strong>。这是 ⊨ 一侧的全部基础，也是真题第四题"构造模型证永真"的战场。</div>
+</header>
+
+<!-- 0 -->
+<h2 id="L07-s0">0 · 语义要解决什么</h2>
+<p>公式 ∀x.(x &lt; x+1) 是真是假？这问题<b>无法脱离语境</b>回答——要先说定：论域是谁（自然数？整数？），&lt;、+ 各指什么。把这些约定打包，就是一个<b>结构</b>；再给自由变元指定具体取值，就是<b>赋值</b>；二者合起来是<b>模型</b>。本讲沿"项的指称 → 公式的真值"递归，把"真"严格定义出来。</p>
+<div class="center">
+  <span class="pill">结构 𝕄 = (M, I)</span><span class="arrow">+</span>
+  <span class="pill">赋值 σ: V→M</span><span class="arrow">=</span>
+  <span class="pill">模型 (𝕄, σ)</span><span class="arrow">⟹</span>
+  <span class="pill">每个公式得真值 ∈ {T,F}</span>
+</div>
+
+<!-- 1 -->
+<h2 id="L07-s1">1 · 结构（定义 3.10）</h2>
+<div class="box def"><span class="tag">定义 3.10 · 结构 Structure</span>
+  <p>语言 ℒ 的一个<b>结构</b> 𝕄 = (M, I)：</p>
+  <p>(1) <b>论域</b> M 为<u>非空</u>集；</p>
+  <p>(2) <b>解释</b> I 把非逻辑符映到 M 上的对象：</p>
+  <ul>
+    <li>(a) 常元 c ↦ I(c) ∈ M（一个个体）；</li>
+    <li>(b) n 元函数 f ↦ I(f): Mⁿ → M（一个真函数）；</li>
+    <li>(c) 0 元谓词 P ↦ I(P) ∈ 𝔹={T,F}（即命题符取真值）；</li>
+    <li>(d) n 元谓词 P ↦ I(P) ⊆ Mⁿ（一个 n 元<b>关系</b>）。</li>
+  </ul>
+  <p class="small">约定记 c<sub>𝕄</sub>=I(c)、f<sub>𝕄</sub>=I(f)、P<sub>𝕄</sub>=I(P)。习惯上用论域 M 代指整个结构。</p>
+</div>
+<p><b>例（算术标准模型）</b>：对算术语言 𝒜，取 ℕ=(ℕ, I)，I(0)=0、I(S)=后继、I(+)=加、I(·)=乘、I(&lt;)=自然序，称为<b>标准模型</b>。</p>
+<div class="exam"><b>真题判断题钩子</b>：「可用 {(0,1),(0,2),(1,2),(0,3),…} 这样的方式表示"小于"关系」——<b>对</b>。由 3.10(d)，n 元谓词就解释为 Mⁿ 的子集；二元谓词 &lt; 正是序对集合 {⟨a,b⟩ : a&lt;b}。这道判断题考的就是"谓词＝关系＝序对集"这一条。</div>
+
+<!-- 2 -->
+<h2 id="L07-s2">2 · 赋值与模型（定义 3.11 / 3.12）</h2>
+<div class="box def"><span class="tag">定义 3.11 · 赋值与模型</span>
+  <p>设 𝕄 为 ℒ-结构。(1) 𝕄 上的<b>赋值</b> σ 是映射 σ: V → M（给每个变元一个论域元素）；(2) ℒ 的一个<b>模型</b>是二元组 (𝕄, σ)。</p>
+</div>
+<div class="box def"><span class="tag">定义 3.12 · 改值记号 σ[xᵢ:=a]</span>
+  <p>把 σ 在 xᵢ 处改成 a、其余不变：&nbsp; (σ[xᵢ:=a])(xⱼ) = a（若 j=i）；= σ(xⱼ)（若 j≠i）。</p>
+  <p class="small">这个"临时改一个变元的值"是量词语义的关键零件——∀/∃ 正是通过遍历 σ[x:=a] 来"扫过论域"。</p>
+</div>
+
+<!-- 3 -->
+<h2 id="L07-s3">3 · 项的解释（定义 3.13）</h2>
+<p>项指称一个个体，其值 t<sub>𝕄</sub>[σ] ∈ M 沿结构递归算出：</p>
+<div class="box def"><span class="tag">定义 3.13 · 项的解释 t𝕄[σ]</span>
+  <p>(1) x<sub>𝕄</sub>[σ] = σ(x)；(2) c<sub>𝕄</sub>[σ] = c<sub>𝕄</sub>（=I(c)）；(3) (f(t₁,…,tₙ))<sub>𝕄</sub>[σ] = f<sub>𝕄</sub>((t₁)<sub>𝕄</sub>[σ],…,(tₙ)<sub>𝕄</sub>[σ])。</p>
+  <p><b>引理 3.14</b>：t<sub>𝕄</sub>[σ] ∈ M（对项的结构归纳即得——模板 A 的实例）。</p>
+</div>
+<div class="box note"><span class="tag">算例（标准模型 ℕ，σ(xₙ)=n）</span>
+  <div class="calc">
+    <span class="step">(+(x₁, S(x₇)))<sub>ℕ</sub>[σ] = (x₁)<sub>ℕ</sub>[σ] + (S(x₇))<sub>ℕ</sub>[σ] <span class="why">(3)</span></span>
+    <span class="step">= σ(x₁) + 后继(σ(x₇)) = 1 + 后继(7) = 1 + 8 = 9</span>
+  </div>
+</div>
+
+<!-- 4 -->
+<h2 id="L07-s4">4 · 公式的解释（定义 3.15）</h2>
+<p>联结词先解释为 𝔹 上的布尔函数（B<sub>¬</sub>、B<sub>∧</sub>、B<sub>∨</sub>、B<sub>→</sub>，真值表与命题逻辑<b>完全一致</b>）。然后定义公式真值：</p>
+<div class="box def"><span class="tag">定义 3.15 · 公式的解释 A𝕄[σ]</span>
+  <p>(1) <b>谓词</b>：(P(t₁,…,tₙ))<sub>𝕄</sub>[σ] = T ⟺ ⟨(t₁)<sub>𝕄</sub>[σ],…,(tₙ)<sub>𝕄</sub>[σ]⟩ ∈ P<sub>𝕄</sub>；</p>
+  <p>(2) <b>等词</b>：(t₁≐t₂)<sub>𝕄</sub>[σ] = T ⟺ (t₁)<sub>𝕄</sub>[σ] 与 (t₂)<sub>𝕄</sub>[σ] 是同一元素；</p>
+  <p>(3)(4) <b>联结词</b>：(¬A)<sub>𝕄</sub>[σ]=B<sub>¬</sub>(A<sub>𝕄</sub>[σ])，(A∗B)<sub>𝕄</sub>[σ]=B<sub>∗</sub>(A<sub>𝕄</sub>[σ],B<sub>𝕄</sub>[σ])；</p>
+  <p>(5) <b>全称</b>：(∀x.A)<sub>𝕄</sub>[σ]=T ⟺ <b>对一切</b> a∈M，A<sub>𝕄</sub>[σ[x:=a]]=T；</p>
+  <p>(6) <b>存在</b>：(∃x.A)<sub>𝕄</sub>[σ]=T ⟺ <b>存在</b> a∈M，A<sub>𝕄</sub>[σ[x:=a]]=T。</p>
+  <p><b>引理 3.16</b>：A<sub>𝕄</sub>[σ] ∈ {T,F}（对公式结构归纳——模板 B 实例）。</p>
+</div>
+<div class="box note"><span class="tag">等价写法 · 满足关系 𝕄 ⊨σ A</span>
+  <p>同一语义可改用关系式表达，更顺手：𝕄 ⊨<sub>σ</sub> ¬A ⟺ 非 𝕄⊨<sub>σ</sub>A；𝕄⊨<sub>σ</sub>A∧B ⟺ 两者皆满足；<b>𝕄⊨<sub>σ</sub>∀x.A ⟺ 对一切 a∈M，𝕄⊨<sub>σ[x:=a]</sub>A</b>；∃ 同理取"存在"。后文证明多用此写法。</p>
+</div>
+<div class="box note"><span class="tag">算例 · 求 (∀x₃.(x₃ &lt; x₁+x₄))ℕ[σ]，σ(xₙ)=n</span>
+  <div class="calc">
+    <span class="step">(∀x₃.(x₃ &lt; x₁+x₄))<sub>ℕ</sub>[σ] = T ⟺ 对一切 a∈ℕ，(x₃ &lt; x₁+x₄)<sub>ℕ</sub>[σ[x₃:=a]] = T</span>
+    <span class="step">其中 (x₃)<sub>ℕ</sub>[σ[x₃:=a]] = a，&nbsp; (x₁+x₄)<sub>ℕ</sub>[σ[x₃:=a]] = σ(x₁)+σ(x₄) = 1+4 = 5</span>
+    <span class="step">故内层 = T ⟺ a &lt; 5；"对一切 a∈ℕ 都 a&lt;5" 不成立 ⟹ 整式 = <b>F</b>。</span>
+  </div>
+</div>
+
+<!-- 5 -->
+<h2 id="L07-s5">5 · 真值只取决于自由变元（一致性引理）</h2>
+<div class="box thm"><span class="tag">引理 3.16′ · Coincidence</span>
+  <p>设 A 为 ℒ-公式，(𝕄,σ₁)、(𝕄,σ₂) 为模型。若 <b>σ₁ 与 σ₂ 在 FV(A) 上一致</b>（σ₁|FV(A)=σ₂|FV(A)），则 A<sub>𝕄</sub>[σ₁] = A<sub>𝕄</sub>[σ₂]。</p>
+</div>
+<div class="proof"><span class="pf">证（先项后公式，两层结构归纳——模板 A+B 的范例）.</span>
+  <p><b>项层 (∗)</b>：若 σ₁|FV(t)=σ₂|FV(t) 则 t<sub>𝕄</sub>[σ₁]=t<sub>𝕄</sub>[σ₂]。基础：t 为变元/常元显然。步骤：t=f(t₁,…,tₙ)，因 FV(t)=⋃FV(tᵢ)，故各 tᵢ 满足前提，由归纳假设 (tᵢ)<sub>𝕄</sub>[σ₁]=(tᵢ)<sub>𝕄</sub>[σ₂]，再套 f<sub>𝕄</sub> 即得。</p>
+  <p><b>公式层</b>：基础（原子）由项层 (∗) 得；联结词情形由归纳假设逐一搬运；<b>量词情形 A=∀x.B</b>：因 FV(∀x.B)=FV(B)−{x}，对任意 a∈M 有 σ₁[x:=a]|FV(B)=σ₂[x:=a]|FV(B)（在 x 上都取 a、其余按前提一致），由归纳假设 B<sub>𝕄</sub>[σ₁[x:=a]]=B<sub>𝕄</sub>[σ₂[x:=a]]，于是两边"对一切 a"的真值相同。∃ 同理。<span class="qed">∎</span></p>
+</div>
+<p class="small">推论：<b>句子（FV=∅）的真值与赋值无关</b>，只看结构。这就是为什么谈句子时可直接写 𝕄 ⊨ A。</p>
+
+<!-- 6 -->
+<h2 id="L07-s6">6 · 可满足 / 永真 / 语义后承 ★（真题第四题）</h2>
+<div class="box def"><span class="tag">定义 3.17–3.19 · 三组核心语义概念</span>
+  <p><b>可满足</b>：A 对 (𝕄,σ) 可满足记 𝕄⊨<sub>σ</sub>A，即 A<sub>𝕄</sub>[σ]=T；A <b>可满足</b>指<u>存在</u>某 (𝕄,σ) 使 𝕄⊨<sub>σ</sub>A。（公式集 Γ 类推：𝕄⊨<sub>σ</sub>Γ 指 Γ 中每个公式都被满足。）</p>
+  <p><b>永真</b>：⊨A 指<u>对任何</u>模型 (𝕄,σ) 有 𝕄⊨<sub>σ</sub>A。&nbsp; 另记 𝕄⊨A 指"对 𝕄 上一切 σ"。</p>
+  <p><b>语义后承</b>：Γ⊨A 指<u>凡满足 Γ 的模型都满足 A</u>。特别地 ∅⊨A ⟺ ⊨A（永真）。</p>
+</div>
+<div class="box note"><span class="tag">辨析三层"⊨"</span>
+  <p>𝕄⊨<sub>σ</sub>A（某模型下真）⊊ 𝕄⊨A（某结构下恒真）⊊ ⊨A（所有结构恒真）。<b>否定</b>对应：𝕄⊭A 指存在 σ 使 A 为 F；⊭A 指存在模型使 A 为 F。证"非永真"只需<b>举一个反模型</b>。</p>
+</div>
+
+<h3>形式逻辑基本定律（永真的范例 · 真题第四题模板）</h3>
+<div class="box thm"><span class="tag">例 · 三大定律永真</span>
+  <p>① ⊨ A∨¬A（排中）；② ⊨ ¬(A∧¬A)（矛盾）；③ ⊨ ∀x.(x≐x)（同一）。</p>
+</div>
+<div class="proof"><span class="pf">证 ①（反证 + 拆语义，这就是"构造模型/反证证永真"的标准下笔）.</span>
+  <p>反设有模型 (𝕄,σ) 使 (A∨¬A)<sub>𝕄</sub>[σ]=F。则 B<sub>∨</sub>(A<sub>𝕄</sub>[σ], B<sub>¬</sub>(A<sub>𝕄</sub>[σ]))=F，故 A<sub>𝕄</sub>[σ]=F 且 B<sub>¬</sub>(A<sub>𝕄</sub>[σ])=F，即 A<sub>𝕄</sub>[σ]=F 且 A<sub>𝕄</sub>[σ]=T，矛盾。</p>
+  <p><span class="pf">证 ③.</span> 反设某 (𝕄,σ) 使 (∀x.(x≐x))<sub>𝕄</sub>[σ]=F，则存在 a∈M 使 (x≐x)<sub>𝕄</sub>[σ[x:=a]]=F，即 a≠a，荒谬。故对一切 a 成立，整式为 T。<span class="qed">∎</span></p>
+</div>
+<div class="exam"><b>真题第四题"证明公式永真（构造模型）"下笔三步</b>：① <b>反设</b>存在模型使公式为 F；② 按定义 3.15 逐层把 F <b>拆开</b>（联结词拆成子式真值约束、∀拆成"存在 a 使…"、∃拆成"对一切 a…"）；③ 推出 <b>A<sub>𝕄</sub>[σ] 同时为 T 又为 F</b> 之类的矛盾。若是证"<u>非</u>永真/可满足"，则反过来——直接<b>构造一个具体模型</b>（给出论域、解释、赋值）验证之。</div>
+
+<div class="box thm"><span class="tag">引理 3.20 · 后承与不可满足（完全性钩子）</span>
+  <p>若 Γ⊨A，则 Γ∪{¬A} <b>不可满足</b>。<br><span class="small">证：反设 Γ∪{¬A} 可满足，则有 (𝕄,σ) 同时满足 Γ 与 ¬A，即满足 Γ 却不满足 A，与 Γ⊨A 矛盾。</span></p>
+  <p class="small">这条把"语义后承"翻译成"加否定后不可满足"，正是<a href="#L11">完全性定理（讲11）</a>情形 2 的入口。</p>
+</div>
+<div class="box note"><span class="tag">综合算例 · 证 ∀x.(A→B) ⊨ ∀x.A → ∀x.B</span>
+  <div class="calc">
+    <span class="step">反设有 (𝕄,σ)：(∀x.(A→B))<sub>𝕄</sub>[σ]=T (1)，(∀x.A→∀x.B)<sub>𝕄</sub>[σ]=F (2)</span>
+    <span class="step">由 (2)：(∀x.A)<sub>𝕄</sub>[σ]=T 且 (∀x.B)<sub>𝕄</sub>[σ]=F</span>
+    <span class="step">即 对一切 a，A<sub>𝕄</sub>[σ[x:=a]]=T；且 存在 b，B<sub>𝕄</sub>[σ[x:=b]]=F</span>
+    <span class="step">对该 b：A<sub>𝕄</sub>[σ[x:=b]]=T 且 B<sub>𝕄</sub>[σ[x:=b]]=F ⟹ (A→B)<sub>𝕄</sub>[σ[x:=b]]=F</span>
+    <span class="step">⟹ (∀x.(A→B))<sub>𝕄</sub>[σ]=F，与 (1) 矛盾。<span class="why">∎</span></span>
+  </div>
+</div>
+
+<!-- 7 -->
+<h2 id="L07-s7">7 · 逻辑等价与等值替换</h2>
+<div class="box def"><span class="tag">定义 3.20 · 逻辑等价 A ≃ B</span>
+  <p>A≃B 指对<u>任意</u>模型 (𝕄,σ)，𝕄⊨<sub>σ</sub>A ⟺ 𝕄⊨<sub>σ</sub>B。</p>
+  <p><b>例</b>：¬∀x.A ≃ ∃x.¬A（量词对偶）。证法：两边在任意 (𝕄,σ) 下按 3.15 展开，真值条件互为否定，逐一对上。</p>
+</div>
+<div class="box thm"><span class="tag">定理 3.21 · 等值替换</span>
+  <p>若 B≃C，且把 A 中 B 的某些出现换成 C 得 A′，则 A≃A′。</p>
+  <p class="small">这是"等值的部件可以互换"的合法性依据——化简公式、求范式（命题逻辑那几讲）时反复用到。证法：对 A 的结构归纳。</p>
+</div>
+
+<!-- 8 -->
+<h2 id="L07-s8">8 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td>结构 3.10（谓词=关系=Mⁿ子集）</td><td>记忆</td><td>判断题（"序对集表示&lt;"是对的）</td></tr>
+  <tr><td>赋值/模型、改值 σ[x:=a]</td><td>记忆</td><td>量词语义的零件</td></tr>
+  <tr><td>项/公式的解释 3.13/3.15、求值算例</td><td>记忆+计算</td><td>给模型求公式真值的计算题</td></tr>
+  <tr><td>一致性引理 3.16′（真值只看 FV）</td><td>理解+证明</td><td>结构归纳范文；句子真值与 σ 无关</td></tr>
+  <tr><td><b>可满足/永真/语义后承 3.17–3.19</b></td><td>记忆</td><td>定义出发证明的对象</td></tr>
+  <tr><td><b>构造模型 / 反证证永真</b>（基本定律、∀分配）</td><td>记忆+证明</td><td><b>真题第四题</b>直接出</td></tr>
+  <tr><td>逻辑等价 ≃、等值替换 3.21</td><td>记忆</td><td>化简、求范式</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：现在 ⊨（语义）这套已经齐备。接下来 <a href="#L08">替换引理（讲08）</a> 打通"语法替换 A[t/x]"与"语义改值 σ[x:=a]"的桥，<a href="#L10">自然推理系统 G（讲10）</a> 给出 ⊢（语法），最终在<a href="#L11">讲11</a>由完全性定理把 ⊢ 与 ⊨ 合一。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 07 转录整理，记号沿用葛存菁老师体系（结构 (M,I)、模型 (𝕄,σ)、t𝕄[σ]、A𝕄[σ]、≃）。第 6 节是真题第四题的核心，务必练熟"反设→拆语义→出矛盾"的套路。</p>
+
+
+</section>
+<section class="lecture-block" id="L08">
+
+
+<header class="title">
+  <h1>替换引理：语法替换 = 语义改值</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 08（葛存菁）</div>
+  <div class="meta">主线定位：语法上"把 t 代进 x"（A[t/x]）与语义上"把 x 的值临时改成 t 的值"（σ[x:=t𝕄[σ]]）<strong>应当一致</strong>。本讲严格证明这件事——它是 ∀/∃ 规则可靠性、完全性证明里不可或缺的一块。考纲<strong>点名"替换 & 替换引理"</strong>。</div>
+</header>
+
+<!-- 0 -->
+<h2 id="L08-s0">0 · 替换引理要焊接什么</h2>
+<p>有两种"代入"，长得像但来自不同世界：</p>
+<ul>
+  <li><b>语法替换</b> A[t/x]：纯符号操作，把公式 A 里自由的 x 换成项 t（讲06 定义 3.6/3.7）。</li>
+  <li><b>语义改值</b> σ[x:=a]：把赋值 σ 在 x 处改成论域元素 a（讲07 定义 3.12）。</li>
+</ul>
+<p>替换引理断言：先在<b>语法</b>里代入 t、再求值，等于直接把 x 的值改成 <b>t 的语义值</b> t<sub>𝕄</sub>[σ] 后求值。一句话——</p>
+<div class="f"><em class="k">"代进去再算" = "把值改了再算"</em></div>
+<p>有了它，量词规则（∀L 用任意项 t、∀R 用新变元 y）的语义才说得通，讲10 可靠性、讲11 完全性才能顺利展开。</p>
+
+<!-- 1 -->
+<h2 id="L08-s1">1 · 替换定义复习（来自讲06）</h2>
+<div class="box def"><span class="tag">项替换 s[t/x]（定义 3.6）</span>
+  <p>(1) x[t/x]=t；(2) y[t/x]=y（y≠x）；(3) c[t/x]=c；(4) f(t₁,…,tₙ)[t/x]=f(t₁[t/x],…,tₙ[t/x])。</p>
+</div>
+<div class="box def"><span class="tag">公式替换 A[t/x]（定义 3.7，要点）</span>
+  <p>原子推进；(5) (Qx.A)[t/x]=(Qx.A)；(6) (Qy.A)[t/x]=(Qy.A[t/x])（y≠x, y∉FV(t)）；(7) y∈FV(t) 时先改名：(Qy.A)[t/x]=(Qz.A[z/y][t/x])，z 为新变元。</p>
+</div>
+<p class="small">证明里之所以要分量词的三个子情形，根源就在定义 3.7 的 (5)(6)(7)。</p>
+
+<!-- 2 -->
+<h2 id="L08-s2">2 · 项替换引理（引理 3.24）</h2>
+<div class="box thm"><span class="tag">引理 3.24 · 项</span>
+  <p>设 (𝕄,σ) 为 ℒ-模型，s,t 为项。则 <span class="f">(t[s/x])<sub>𝕄</sub>[σ] = t<sub>𝕄</sub>[σ[x:=s<sub>𝕄</sub>[σ]]]</span></p>
+</div>
+<div class="proof"><span class="pf">证（对项 t 的结构归纳）.</span> 记 a := s<sub>𝕄</sub>[σ]。逐情形核对左右两边相等：</div>
+<table class="kv">
+  <tr><th>t 的形态</th><th>左边 (t[s/x])𝕄[σ]</th><th>右边 t𝕄[σ[x:=a]]</th></tr>
+  <tr><td>x</td><td>s𝕄[σ] = a</td><td>(σ[x:=a])(x) = a ✓</td></tr>
+  <tr><td>y (≠x)</td><td>y𝕄[σ] = σ(y)</td><td>(σ[x:=a])(y) = σ(y) ✓</td></tr>
+  <tr><td>c</td><td>c𝕄</td><td>c𝕄 ✓</td></tr>
+  <tr><td>f(u₁,…,uₙ)</td><td>f𝕄((u₁[s/x])𝕄[σ],…) <span class="small">归纳假设</span> = f𝕄((u₁)𝕄[σ[x:=a]],…)</td><td>f𝕄((u₁)𝕄[σ[x:=a]],…) ✓</td></tr>
+</table>
+<p class="qed" style="margin-top:-6px;">∎</p>
+<div class="box note"><span class="tag">算例</span>
+  <div class="calc">
+    <span class="step">(S(x+y)[s/x])<sub>𝕄</sub>[σ] = (S(s+y))<sub>𝕄</sub>[σ] = s<sub>𝕄</sub>[σ] + σ(y) + 1</span>
+    <span class="step">(S(x+y))<sub>𝕄</sub>[σ[x:=s<sub>𝕄</sub>[σ]]] = (σ[x:=s<sub>𝕄</sub>[σ]])(x) + σ(y) + 1 = s<sub>𝕄</sub>[σ] + σ(y) + 1 ✓</span>
+  </div>
+</div>
+
+<!-- 3 -->
+<h2 id="L08-s3">3 · 公式替换引理（引理 3.25）★</h2>
+<div class="box thm"><span class="tag">引理 3.25 · 公式</span>
+  <p>设 (𝕄,σ) 为 ℒ-模型，A 为公式，t 为项。则 <span class="f">(A[t/x])<sub>𝕄</sub>[σ] = A<sub>𝕄</sub>[σ[x:=t<sub>𝕄</sub>[σ]]]</span></p>
+</div>
+<div class="proof"><span class="pf">证.</span>
+  <p>令 <b>ρ := σ[x:=t<sub>𝕄</sub>[σ]]</b>。两边都属于 {T,F}，故只需证它们同真同假，即证</p>
+  <p class="f">(∗) &nbsp; 𝕄 ⊨<sub>σ</sub> A[t/x] &nbsp;⟺&nbsp; 𝕄 ⊨<sub>ρ</sub> A，</p>
+  <p>对公式 A 的结构归纳。</p>
+  <p><b>原子 · 情况1（A 为 u≐v）</b>：</p>
+  <div class="calc">
+    <span class="step">𝕄⊨<sub>σ</sub> A[t/x] ⟺ 𝕄⊨<sub>σ</sub> u[t/x]≐v[t/x]</span>
+    <span class="step">⟺ (u[t/x])<sub>𝕄</sub>[σ] = (v[t/x])<sub>𝕄</sub>[σ] <span class="why">公式解释</span></span>
+    <span class="step">⟺ u<sub>𝕄</sub>[ρ] = v<sub>𝕄</sub>[ρ] <span class="why">引理 3.24</span></span>
+    <span class="step">⟺ 𝕄⊨<sub>ρ</sub> u≐v ⟺ 𝕄⊨<sub>ρ</sub> A</span>
+  </div>
+  <p><b>原子 · 情况2（A 为 P(t₁,…,tₙ)）</b>：同理，把"∈ P<sub>𝕄</sub>"两边各项用引理 3.24 从 σ 搬到 ρ。</p>
+  <p><b>情况3（A=¬B）</b>：𝕄⊨<sub>σ</sub>(¬B)[t/x] ⟺ (B[t/x])<sub>𝕄</sub>[σ]=F ⟺（归纳假设）B<sub>𝕄</sub>[ρ]=F ⟺ 𝕄⊨<sub>ρ</sub>¬B。</p>
+  <p><b>情况4/5（A=B∧C, B∨C, B→C）</b>：把替换推进到子式，对 B、C 各用归纳假设，再按联结词语义拼回。</p>
+  <p>量词情况见下一节（最关键）。<span class="qed">∎</span></p>
+</div>
+
+<!-- 4 -->
+<h2 id="L08-s4">4 · 量词情形：三个子情形与改名难点</h2>
+<p>设 A=∀y.B（∃y.B 同理）。按定义 3.7 的 (5)(6)(7) 分三种：</p>
+<div class="box note"><span class="tag">子情形 6.1 · y = x</span>
+  <p>此时 (∀x.B)[t/x]=∀x.B（x 被自己的量词绑住，替换不动它）。对任意 a∈M，σ[x:=a]=ρ[x:=a]（因为 ρ 只在 x 处与 σ 不同，而这里又把 x 重设为 a）。于是</p>
+  <div class="calc">
+    <span class="step">𝕄⊨<sub>σ</sub>(∀x.B)[t/x] ⟺ 对一切 a, B<sub>𝕄</sub>[σ[x:=a]]=T ⟺ 对一切 a, B<sub>𝕄</sub>[ρ[x:=a]]=T ⟺ 𝕄⊨<sub>ρ</sub>∀x.B ✓</span>
+  </div>
+</div>
+<div class="box note"><span class="tag">子情形 6.2 · y≠x 且 y∉FV(t)（安全）</span>
+  <p>(∀y.B)[t/x]=∀y.(B[t/x])。对任意 a：</p>
+  <div class="calc">
+    <span class="step">(B[t/x])<sub>𝕄</sub>[σ[y:=a]] = B<sub>𝕄</sub>[σ[y:=a][x:=t<sub>𝕄</sub>[σ[y:=a]]]] <span class="why">归纳假设</span></span>
+    <span class="step">= B<sub>𝕄</sub>[σ[y:=a][x:=t<sub>𝕄</sub>[σ]]] <span class="why">y∉FV(t)，改 y 不影响 t 的值</span></span>
+    <span class="step">= B<sub>𝕄</sub>[σ[x:=t<sub>𝕄</sub>[σ]][y:=a]] = B<sub>𝕄</sub>[ρ[y:=a]] <span class="why">y≠x，两次改值可换序</span></span>
+  </div>
+  <p>对一切 a 成立即 𝕄⊨<sub>σ</sub>(∀y.B)[t/x] ⟺ 𝕄⊨<sub>ρ</sub>∀y.B。</p>
+</div>
+<div class="box note"><span class="tag">子情形 6.3 · y≠x 且 y∈FV(t)（须改名）</span>
+  <p>(∀y.B)[t/x]=∀z.B[z/y][t/x]，z 为新变元。先用 6.2（因 z≠x 且 z∉FV(t)）把外层处理掉，再用归纳假设与"z∉FV(B)"（引理 3.16′）把 z 退回 y：</p>
+  <div class="calc">
+    <span class="step">𝕄⊨<sub>σ</sub>(∀y.B)[t/x] ⟺ 𝕄⊨<sub>ρ</sub>∀z.B[z/y] <span class="why">6.2 应用于外层</span></span>
+    <span class="step">⟺ 对一切 a, B<sub>𝕄</sub>[ρ[z:=a][y:=a]]=T <span class="why">归纳假设，z𝕄[ρ[z:=a]]=a</span></span>
+    <span class="step">⟺ 对一切 a, B<sub>𝕄</sub>[ρ[y:=a]]=T <span class="why">z∉FV(B)</span> ⟺ 𝕄⊨<sub>ρ</sub>∀y.B ✓</span>
+  </div>
+</div>
+<div class="box note"><span class="tag">为什么必须改名</span>
+  <p>若 y∈FV(t) 还硬走 6.2，t 里的 y 会被 ∀y 捕获，语义被篡改。改名成全新的 z 就切断了这种捕获——这与讲06 §7 替换定义里 (7) 的动机完全一致。</p>
+</div>
+
+<!-- 5 -->
+<h2 id="L08-s5">5 · 直接应用：全称实例永真</h2>
+<div class="box thm"><span class="tag">命题 · ⊨ ∀x.A → A[t/x]</span>
+  <p>对任意公式 A 与任意项 t，∀x.A → A[t/x] 永真。</p>
+</div>
+<div class="proof"><span class="pf">证（反证）.</span>
+  <p>设有 (𝕄,σ) 使 (∀x.A → A[t/x])<sub>𝕄</sub>[σ]=F，则 (∀x.A)<sub>𝕄</sub>[σ]=T 且 (A[t/x])<sub>𝕄</sub>[σ]=F。</p>
+  <p>前者即"对一切 a∈M，A<sub>𝕄</sub>[σ[x:=a]]=T"，取 a = t<sub>𝕄</sub>[σ] 得 A<sub>𝕄</sub>[σ[x:=t<sub>𝕄</sub>[σ]]]=T。</p>
+  <p>后者由<b>替换引理 3.25</b>等于 A<sub>𝕄</sub>[σ[x:=t<sub>𝕄</sub>[σ]]]=F。同一个值既 T 又 F，矛盾。<span class="qed">∎</span></p>
+</div>
+<p class="small">这正是 ∀L / ∃R 规则在语义层面的根据：把全称式实例化到任意项 t 是"保真"的。讲10 可靠性证明里的 ∀L 情形（引理 4.9）直接引用本结论。</p>
+
+<!-- 6 -->
+<h2 id="L08-s6">6 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td>项替换引理 3.24（结构归纳 + 表格核对）</td><td>记忆+证明</td><td>结构归纳范文</td></tr>
+  <tr><td><b>公式替换引理 3.25</b>（ρ=σ[x:=t𝕄[σ]]，对结构归纳）</td><td>记忆+证明</td><td>考纲点名；证明题</td></tr>
+  <tr><td>量词三子情形（6.1/6.2/6.3，改名避捕获）</td><td>理解</td><td>难点；理解"为何要改名"</td></tr>
+  <tr><td>应用 ⊨∀x.A→A[t/x]</td><td>记忆</td><td>∀L/∃R 的语义根据</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：替换引理把"语法代入"与"语义取值"对齐。下一讲 <a href="#L10">一阶自然推理系统 G（讲10）</a> 正式给出 ⊢（证明树），其量词规则 ∀L/∀R/∃L/∃R 的<b>可靠性</b>证明，骨子里用的就是本讲的 3.25。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 08 转录整理。两条替换引理是结构归纳的标准范例，建议把 3.25 的"令 ρ、证 (∗)、逐情形"框架当模板记下。</p>
+
+
+</section>
+<section class="lecture-block" id="L09">
+
+
+<header class="title">
+  <h1>哥德尔码与 Hintikka 集</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 09（葛存菁）｜ <b>理解档</b></div>
+  <div class="meta">主线定位：两件元理论工具。<strong>哥德尔码</strong>把语法对象编码成自然数（让"逻辑谈论自己"成为可能，是不完全性的前提）；<strong>Hintikka 集</strong>给出"一个公式集语法上自洽 ⟹ 它有模型"的判据，是<a href="#L11">完全性定理（讲11）</a>的发动机。本讲按"会用、理解思路"对待，不要求默写全部细节。</div>
+</header>
+
+<h2 id="L09-s0">0 · 这一讲的作用</h2>
+<p>前面我们造了一阶的语法（讲06）、语义（讲07）、证明系统（讲10）。讲11 的完全性要把"协调"变成"有模型"，需要两块预制件：① 能把无穷多语法对象<b>数字化</b>（序列数 + 哥德尔码），② 一个从"语法闭合条件"直接<b>读出模型</b>的机制（Hintikka 集）。本讲就备好这两块。</p>
+
+<h2 id="L09-s1">1 · 序列数（定义 3.26）</h2>
+<div class="box def"><span class="tag">定义 3.26 · 序列数</span>
+  <p>把有限自然数序列编码成一个自然数：<span class="f">⟨a₀,…,aₙ⟩ ≙ ∏ᵢ₌₀ⁿ Pᵢ<sup>aᵢ</sup></span> 其中 Pᵢ 是第 i 个素数（P₀=2, P₁=3, P₂=5,…）。</p>
+</div>
+<div class="box thm"><span class="tag">命题 3.27 / 3.29 · 唯一可解码</span>
+  <p>由<b>算术基本定理</b>（唯一素因子分解），⟨a₀,…,aₙ⟩=⟨b₀,…,bₘ⟩ ⟹ n=m 且各 aᵢ=bᵢ。提取函数 ep(x,n)=x 分解式中 Pₙ 的幂次，满足 ep<sub>i</sub>⟨a₀,…,aₙ⟩=aᵢ。</p>
+  <p class="small">例：x=2²·3·11 ⟹ ep₀=2, ep₁=1, ep₂=0, ep₃=0, ep₄=1。编码可逆——这是后面一切"机械还原"的根。</p>
+</div>
+
+<h2 id="L09-s2">2 · 哥德尔码（定义 3.31）</h2>
+<div class="box def"><span class="tag">定义 3.31 · Gödel 码 #X</span>
+  <p>先给每个符号一个码（如 #(xₙ)=⟨0,n⟩、#(¬)=⟨1,0⟩、#(∀)=⟨2,0⟩、#(≐)=⟨3,0⟩、#(fᵢⱼ)=⟨5,i,j⟩、#(Pᵢⱼ)=⟨6,i,j⟩……）；再对项、公式<b>按结构递归</b>用序列数把子码打包，例如 #(¬A)=⟨#(¬),#A⟩、#(A∗B)=⟨#(∗),#A,#B⟩、#(∀x.A)=⟨#(∀),#x,#(.),#A⟩。</p>
+</div>
+<div class="box thm"><span class="tag">定理 3.32 · 一一对应且可机械还原</span>
+  <p>ℒ 的每个符号、项、公式对应<b>唯一</b>的自然数（它的哥德尔码），且<b>存在算法</b>从码还原出原语法对象。</p>
+</div>
+<div class="exam"><b>真题判断题钩子（6）</b>：「任意一阶逻辑公式都存在唯一的哥德尔编码，建立了公式集到自然数集的映射」——定理 3.32 保证了在<u>固定编码方案</u>下每个公式的码唯一、且编码是单射（不同对象不同码）。判这道题要扣住"唯一可解码"（来自算术基本定理）这一点。</div>
+
+<h2 id="L09-s3">3 · Hintikka 集（定义 3.33）</h2>
+<p>Hintikka 集是一个对各种逻辑形态"局部自洽且向下闭合"的公式集——它<b>不</b>要求像极大协调集那样对每句话都表态，只要求"已经收进来的复合公式，其应有的成分也在里面"。</p>
+<div class="box def"><span class="tag">定义 3.33 · Hintikka 集（17 条，节选关键）</span>
+  <p>① 原子 A 与 ¬A 不同属 Ψ；② ¬¬A∈Ψ⟹A∈Ψ；③ A→B∈Ψ⟹¬A∈Ψ 或 B∈Ψ；⑤ A∧B∈Ψ⟹A∈Ψ 且 B∈Ψ；⑥ ¬(A∧B)∈Ψ⟹¬A∈Ψ 或 ¬B∈Ψ；……</p>
+  <p><b>量词（关键）</b>：⑨ ∀x.A∈Ψ ⟹ 对<u>一切</u>项 t，A[t/x]∈Ψ；⑩ ¬∀x.A∈Ψ ⟹ <u>存在</u>项 t，¬A[t/x]∈Ψ；⑪⑫ 对 ∃ 对偶。<br>
+  <b>等词</b>：⑬–⑰ 自反 t≐t∈Ψ、对称、传递、函数/谓词同余式 ∈Ψ。</p>
+</div>
+<p class="small">对比：Hintikka 集 ⊆ 极大协调 Henkin 集（讲11 定理 6.18 证 Henkin⟹Hintikka）。Hintikka 是"够用就好"的最弱条件，恰好够造出模型。</p>
+
+<h2 id="L09-s4">4 · Hintikka 集可满足 ★（定理 3.34）</h2>
+<div class="box thm"><span class="tag">定理 3.34 · 模型存在</span>
+  <p>若 Ψ 为 Hintikka 集，则 Ψ <b>可满足</b>。</p>
+</div>
+<div class="proof"><span class="pf">证（典范模型 / 项模型——以"项的等价类"为论域）.</span>
+  <p><b>① 造论域</b>：在项集 T 上定义 s~t ⟺ (s≐t)∈Ψ。由等词条件 ⑬⑭⑮，~ 是等价关系（命题 3.36）；记 [t] 为等价类。引理 3.38：~ 与函数/谓词相容（同余），保证下面定义不依赖代表元的选取。</p>
+  <p><b>② 造结构 H</b>（定义 3.39）：论域 H={[t]:t∈T}；c<sub>H</sub>=[c]；f<sub>H</sub>([t₁],…)=[f(t₁,…)]；P<sub>H</sub>([t₁],…) 真 ⟺ P(t₁,…)∈Ψ；赋值 σ(x)=[x]。</p>
+  <p><b>③ 关键引理 3.40</b>：对任意项 t，t<sub>H</sub>[σ]=[t]（对 t 结构归纳）。</p>
+  <p><b>④ 主引理 3.41</b>：对公式 A 结构归纳证 <b>"A∈Ψ⟹A 在 H 下真，且 ¬A∈Ψ⟹A 在 H 下假"</b>。原子用 ②③；联结词用对应 Hintikka 条件 + 归纳假设；<b>量词 ∀x.B</b> 这一步同时用上 Hintikka 条件 ⑨、<a href="#L08">替换引理（讲08）</a>与引理 3.40：</p>
+  <div class="calc">
+    <span class="step">∀x.B∈Ψ ⟹ 对一切 t, B[t/x]∈Ψ <span class="why">条件⑨</span></span>
+    <span class="step">⟹ 对一切 t, B[t/x] 在 H 真 <span class="why">归纳假设</span></span>
+    <span class="step">⟹ 对一切 t, B 在 σ[x:=t_H[σ]] 真 <span class="why">替换引理</span></span>
+    <span class="step">⟹ 对一切 t, B 在 σ[x:=[t]] 真 = 对一切 u∈H, B 在 σ[x:=u] 真 <span class="why">引理3.40，H 中元素都是某 [t]</span></span>
+    <span class="step">⟹ ∀x.B 在 H 下真。</span>
+  </div>
+  <p>于是 H ⊨<sub>σ</sub> Ψ，即 Ψ 可满足。<span class="qed">∎</span></p>
+</div>
+<div class="box note"><span class="tag">为什么这是完全性的发动机</span>
+  <p>讲11 的链条 "Con(Γ) ⟹ Henkin 集 Ψ⊇Γ ⟹ Ψ 是 Hintikka 集 ⟹ Ψ 可满足 ⟹ Γ 可满足" 中，<b>最后两步的"可满足"正是本定理 3.34 提供的</b>。Henkin 见证性（∃x.A 必有具体项见证）恰好补上 Hintikka 条件 ⑩⑪所需的"项"，二者严丝合缝。</p>
+</div>
+
+<h2 id="L09-s5">5 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td>序列数 ⟨…⟩=∏Pᵢ^aᵢ、ep 提取</td><td>理解</td><td>编码可逆（算术基本定理）</td></tr>
+  <tr><td><b>哥德尔码</b>、定理 3.32</td><td>理解</td><td><b>真题判断6</b>（唯一编码/单射入 ℕ）</td></tr>
+  <tr><td>Hintikka 集定义（向下闭合）</td><td>理解</td><td>对比极大协调/Henkin</td></tr>
+  <tr><td><b>Hintikka 可满足（定理 3.34，项模型）</b></td><td>理解+思路</td><td>完全性的核心引理（讲11 调用）</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：本讲的项模型构造与定理 3.34，是 <a href="#L11">讲11 完全性定理</a> 的最后一块拼图。复习时只需会复述"~ 等价类作论域、∈ 读真值、量词步用替换引理"的<b>思路</b>，不必默写 17 条全部细节。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 09 转录整理，记号沿用葛存菁老师体系（⟨…⟩、#X、[t]、Hintikka 集）。理解档：抓"编码可逆"与"项模型读真值"两个核心即可。</p>
+
+
+</section>
+<section class="lecture-block" id="L10">
+
+
+<header class="title">
+  <h1>一阶自然推理系统 G：矢列、证明树与可靠性</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 10（葛存菁）</div>
+  <div class="meta">主线定位：这是 ⊢（语法可证）一侧的核心机器。把"推理"形式化为<strong>矢列上的证明树</strong>，并证明它<strong>可靠</strong>（证得出的都语义有效）。<strong>真题第六、七题"画证明树"直接考本讲</strong>；可靠性与讲11完全性合成 ⊢⟺⊨。</div>
+</header>
+
+<!-- 0 -->
+<h2 id="L10-s0">0 · 从语义到语法：为什么要 G</h2>
+<p>语义（讲07）能判定真假，但要"穷举所有模型"，对一阶逻辑不可行。<b>自然推理系统 G</b> 换一条路：只靠有限条<u>纯符号规则</u>搭出证明树，机械地判定可证性。本讲建立 G、学会画证明树，并证明 G <b>可靠</b>（Soundness：⊢ ⟹ ⊨）。反方向的完全性留到讲11。</p>
+
+<!-- 1 -->
+<h2 id="L10-s1">1 · G 的公理与规则（定义 4.1）</h2>
+<div class="box def"><span class="tag">定义 4.1 · 矢列与 G</span>
+  <p>Γ, Δ, Λ, Θ 为公式的<b>有穷集</b>。<b>矢列</b> Γ ⊢ Δ 读作"前件 Γ（合取）可推出后件 Δ（析取）之一"。G 由一条公理与若干规则组成。</p>
+  <p><b>公理</b>（前后件有公共公式 A）：&nbsp; <span class="term">Γ, A, Δ ⊢ Λ, A, Θ</span></p>
+</div>
+<table class="rules">
+  <tr>
+    <td><b>¬L</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,Δ ⊢ Λ,A</span></div><div class="bar"></div><div class="conc">Γ,¬A,Δ ⊢ Λ</div></div></div></td>
+    <td><b>¬R</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A ⊢ Λ,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,¬A,Θ</div></div></div></td>
+  </tr>
+  <tr>
+    <td><b>∧L</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A,B,Δ ⊢ Λ</span></div><div class="bar"></div><div class="conc">Γ,A∧B,Δ ⊢ Λ</div></div></div></td>
+    <td><b>∧R</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ⊢Λ,A,Θ</span><span class="leaf">Γ⊢Λ,B,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,A∧B,Θ</div></div></div></td>
+  </tr>
+  <tr>
+    <td><b>∨L</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A,Δ⊢Λ</span><span class="leaf">Γ,B,Δ⊢Λ</span></div><div class="bar"></div><div class="conc">Γ,A∨B,Δ ⊢ Λ</div></div></div></td>
+    <td><b>∨R</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ ⊢ Λ,A,B,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,A∨B,Θ</div></div></div></td>
+  </tr>
+  <tr>
+    <td><b>→L</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,Δ⊢Λ,A</span><span class="leaf">Γ,B,Δ⊢Λ</span></div><div class="bar"></div><div class="conc">Γ,A→B,Δ ⊢ Λ</div></div></div></td>
+    <td><b>→R</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A ⊢ Λ,B,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,A→B,Θ</div></div></div></td>
+  </tr>
+  <tr>
+    <td><b>∀L</b>（t 任意项）<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A[t/x],∀x.A,Δ ⊢ Λ</span></div><div class="bar"></div><div class="conc">Γ,∀x.A,Δ ⊢ Λ</div></div></div></td>
+    <td><b>∀R</b>（<span style="color:var(--accent)">y 新变元</span>）<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ ⊢ Λ,A[y/x],Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,∀x.A,Θ</div></div></div></td>
+  </tr>
+  <tr>
+    <td><b>∃L</b>（<span style="color:var(--accent)">y 新变元</span>）<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ,A[y/x],Δ ⊢ Λ</span></div><div class="bar"></div><div class="conc">Γ,∃x.A,Δ ⊢ Λ</div></div></div></td>
+    <td><b>∃R</b>（t 任意项）<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ ⊢ Λ,A[t/x],∃x.A,Θ</span></div><div class="bar"></div><div class="conc">Γ ⊢ Λ,∃x.A,Θ</div></div></div></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align:center;"><b>Cut</b>　<div class="deriv"><div class="infer"><div class="prem"><span class="leaf">Γ ⊢ Λ,A</span><span class="leaf">Δ,A ⊢ Θ</span></div><div class="bar"></div><div class="conc">Γ,Δ ⊢ Λ,Θ</div></div></div></td>
+  </tr>
+</table>
+<div class="box note"><span class="tag">量词规则的"项 vs 新变元"——最易错</span>
+  <p><b>∀L / ∃R</b> 引入<u>任意项 t</u>（A[t/x]）：把全称往下用、把存在往上证，可以挑任意 t。<br>
+  <b>∀R / ∃L</b> 必须用<u>全新变元 y</u>（特征变元，eigenvariable）：y 不得在结论矢列中出现。直觉——要证"对所有 x"，得取一个"任取的、不受约束的"代表 y；要从"存在 x"往下用，也只能给它一个全新名字。<b>这条限制是判断"可证/不可证"的命门（见 §6）。</b></p>
+</div>
+<div class="box thm"><span class="tag">定理 4.2 · Cut 可消除</span>
+  <p>Cut 规则可由其它规则导出——任何用到 Cut 的证明都能改写成<b>无 Cut</b> 的证明树。</p>
+</div>
+<div class="exam"><b>真题判断题钩子</b>：「命题逻辑自然推理系统中，若某矢列可证，则存在该矢列的<u>无 cut</u> 证明树」——<b>对</b>。这正是 Cut 消除定理（定理 4.2 的命题逻辑版）。Cut 方便引用引理，但理论上可省。</div>
+
+<!-- 2 -->
+<h2 id="L10-s2">2 · 证明树与可证（定义 4.3 / 4.4）</h2>
+<div class="box def"><span class="tag">定义 4.3 / 4.4</span>
+  <p><b>证明树</b>：(1) 公理本身是单点证明树；(2)(3) 若某规则的前提已有证明树，则把规则接上去得到结论的证明树。<b>叶子必须全是公理</b>。</p>
+  <p>矢列 Γ ⊢ Δ <b>可证</b>指存在它的证明树。</p>
+</div>
+<p class="small">画证明树是"<b>自底向上</b>"倒推：从目标矢列出发，每步选一条规则把它拆成更简单的前提，直到所有叶子都成为公理（前后件出现公共公式）。</p>
+
+<!-- 3 -->
+<h2 id="L10-s3">3 · 画证明树示范 ★（真题第六、七题）</h2>
+<p>A(t) 是 A[t/x] 的简写。读法：自底向上，每条横线右侧标所用规则。</p>
+
+<h3>例 4.2(1)　⊢ ∀x.A(x) → A(t)</h3>
+<div class="deriv">
+  <div class="infer">
+    <div class="prem"><div class="infer">
+      <div class="prem"><span class="leaf">A(t), ∀x.A(x) ⊢ A(t)</span></div>
+      <div class="bar"><span>∀L</span></div>
+      <div class="conc">∀x.A(x) ⊢ A(t)</div>
+    </div></div>
+    <div class="bar"><span>→R</span></div>
+    <div class="conc">⊢ ∀x.A(x) → A(t)</div>
+  </div>
+</div>
+<p class="small">顶端 A(t),∀x.A(x) ⊢ A(t) 前后件都含 A(t)，是公理 → 收工。</p>
+
+<h3>例 4.2(2)　⊢ A(t) → ∃x.A(x)</h3>
+<div class="deriv">
+  <div class="infer">
+    <div class="prem"><div class="infer">
+      <div class="prem"><span class="leaf">A(t) ⊢ A(t), ∃x.A(x)</span></div>
+      <div class="bar"><span>∃R</span></div>
+      <div class="conc">A(t) ⊢ ∃x.A(x)</div>
+    </div></div>
+    <div class="bar"><span>→R</span></div>
+    <div class="conc">⊢ A(t) → ∃x.A(x)</div>
+  </div>
+</div>
+
+<h3>例 4.2(3)　⊢ (∀x.(P(x)→Q(x)) ∧ P(t)) → Q(t)（带分支）</h3>
+<div class="deriv">
+  <div class="infer">
+    <div class="prem"><div class="infer">
+      <div class="prem"><div class="infer">
+        <div class="prem"><div class="infer">
+          <div class="prem">
+            <span class="leaf">∀x.(P→Q), P(t) ⊢ P(t), Q(t)</span>
+            <span class="leaf">Q(t), ∀x.(P→Q), P(t) ⊢ Q(t)</span>
+          </div>
+          <div class="bar"><span>→L</span></div>
+          <div class="conc">P(t)→Q(t), ∀x.(P→Q), P(t) ⊢ Q(t)</div>
+        </div></div>
+        <div class="bar"><span>∀L</span></div>
+        <div class="conc">∀x.(P(x)→Q(x)), P(t) ⊢ Q(t)</div>
+      </div></div>
+      <div class="bar"><span>∧L</span></div>
+      <div class="conc">∀x.(P(x)→Q(x)) ∧ P(t) ⊢ Q(t)</div>
+    </div></div>
+    <div class="bar"><span>→R</span></div>
+    <div class="conc">⊢ (∀x.(P(x)→Q(x)) ∧ P(t)) → Q(t)</div>
+  </div>
+</div>
+<p class="small">两个叶子都是公理（左叶含公共 P(t)，右叶含公共 Q(t)）。这是"全称实例 + 分离"的典型三段论骨架，真题最爱。</p>
+
+<div class="box note"><span class="tag">画证明树的下笔顺序（口诀）</span>
+  <p>① <b>先拆主联结词</b>：目标右边是 →，先 →R 把前件搬到左边；② <b>左边的 ∧ 用 ∧L 摊开</b>；③ <b>全称前提用 ∀L 实例化</b>到需要的项 t；④ <b>→L 分叉</b>：左枝证前件、右枝接后件；⑤ 直到每个叶子前后件<b>出现公共公式</b>成为公理。存在量词在后件用 ∃R、在前件用 ∃L（注意新变元）。</p>
+</div>
+
+<!-- 4 -->
+<h2 id="L10-s4">4 · 导出规则 ★（考纲"如何导出某个规则"）</h2>
+<p>下列规则虽不在 G 的原始清单里，但都能用公理 + 基本规则 + Cut <b>导出</b>，可当引理直接用。</p>
+<table class="kv">
+  <tr><th>导出规则</th><th>形式</th><th>导出关键</th></tr>
+  <tr><td>(1) 反证法</td><td>由 ¬A,Γ⊢B 与 ¬A,Γ⊢¬B，得 Γ⊢A</td><td>两前提 Cut 出 ¬A,Γ⊢，¬R 得 Γ⊢¬¬A，再 Cut 公理 ¬¬A⊢A</td></tr>
+  <tr><td>(2) 分情况</td><td>由 A,Γ⊢B 与 ¬A,Γ⊢B，得 Γ⊢B</td><td>第一前提 ¬R 得 Γ⊢B,¬A，与第二前提 Cut</td></tr>
+  <tr><td>(3) 逆否</td><td>由 Γ⊢A→B，得 Γ⊢¬B→¬A</td><td>子树证 A→B ⊢ ¬B→¬A，再 Cut</td></tr>
+  <tr><td>(4) 矛盾规则</td><td>由 Γ⊢A 与 Γ⊢¬A，得 Γ⊢B（爆炸）</td><td>两次 Cut，经公理 A⊢A,B 与 ¬A⊢¬A,B</td></tr>
+  <tr><td>(5) MP</td><td>由 Γ⊢A 与 Γ⊢A→B，得 Γ⊢B</td><td>见下证</td></tr>
+  <tr><td>(6) 三段论</td><td>由 Γ⊢A(t) 与 Γ⊢∀x.(A(x)→B(x))，得 Γ⊢B(t)</td><td>∀L 实例化 + MP</td></tr>
+</table>
+<div class="box note"><span class="tag">示范 · 导出 MP</span>
+  <div class="deriv">
+    <div class="infer">
+      <div class="prem">
+        <span class="leaf">Γ ⊢ A</span>
+        <div class="infer">
+          <div class="prem"><div class="infer">
+            <div class="prem"><span class="leaf">A ⊢ A,B</span><span class="leaf">A,B ⊢ B</span></div>
+            <div class="bar"><span>→L</span></div>
+            <div class="conc">A, A→B ⊢ B</div>
+          </div><span class="leaf">Γ ⊢ A→B</span></div>
+          <div class="bar"><span>Cut</span></div>
+          <div class="conc">Γ, A→B ⊢ B</div>
+        </div>
+      </div>
+      <div class="bar"><span>Cut</span></div>
+      <div class="conc">Γ ⊢ B</div>
+    </div>
+  </div>
+  <p class="small">先证 A, A→B ⊢ B（→L 拆出两公理），再把 Γ⊢A、Γ⊢A→B 两次 Cut 进去。考"导出某规则"时，这种"先搭核心小证明树、再 Cut 拼接前提"的套路通用。</p>
+</div>
+
+<!-- 5 -->
+<h2 id="L10-s5">5 · 有效与可靠性</h2>
+<div class="box def"><span class="tag">定义 4.6 · 矢列有效</span>
+  <p>Γ={A₁,…,Aₙ}、Δ={B₁,…,Bₘ}，称 Γ⊢Δ <b>有效</b>（记 Γ⊨Δ）指 ⊨ (⋀Aᵢ) → (⋁Bⱼ)。<br>特例：Γ 空时 ⊨Δ 指 ⊨⋁Bⱼ；Δ 空时 Γ⊨ 指 ⊨¬(⋀Aᵢ)；两边皆空约定为<b>非</b>有效。</p>
+</div>
+<div class="box thm"><span class="tag">命题 4.7 · 有效 / 反例的语义刻画</span>
+  <p>Γ⊢Δ <b>有反例</b>（即非有效）⟺ 存在模型 (𝕄,σ) 使 <u>Γ 全真且 Δ 全假</u>。</p>
+</div>
+<div class="box thm"><span class="tag">定理 4.11 · 可靠性 Soundness</span>
+  <p>若 Γ⊢Δ 在 G 中可证，则 Γ⊨Δ。</p>
+</div>
+<div class="proof"><span class="pf">证（对证明树结构归纳）.</span>
+  <p><b>基础</b>：公理 Γ,A,Δ⊢Λ,A,Θ 有效（引理 4.8）——任何模型里若左边全真则 A 真，而 A 也在右边，故右边析取已真。</p>
+  <p><b>步骤</b>：引理 4.9 表明<u>除 Cut 外</u>每条规则"前提全有效 ⟺ 结论有效"（其中 <b>∀L 情形</b>恰用替换引理：M⊨<sub>σ</sub>∀x.A ⟹ M⊨<sub>σ</sub>A[t/x]，见<a href="#L08">讲08 §5</a>）；引理 4.10 表明 Cut"前提全有效 ⟹ 结论有效"（单向即够）。由归纳假设前提有效，故结论有效。<span class="qed">∎</span></p>
+  <p class="small">注意 Cut 只有单向（前提有效⟹结论有效），反向不成立：⊢¬A 与 ⊢A 经 Cut 得 ⊢，但若 ⊢A 有效则 ⊢¬A 未必。可靠性只需要这单向。</p>
+</div>
+
+<!-- 6 -->
+<h2 id="L10-s6">6 · 量词规则的陷阱（可证 vs 不可证）</h2>
+<p>同一个目标，换个量词就可能从"可证"变"不可证"，关键全在 ∀R 的新变元限制。</p>
+<div class="box note"><span class="tag">对比 · P 为一元谓词</span>
+  <p><b>(1) ⊢ P(x)[y/x] → ∃x.P(x)　可证</b>：</p>
+  <div class="deriv"><div class="infer">
+    <div class="prem"><div class="infer">
+      <div class="prem"><span class="leaf">P(y) ⊢ P(y), ∃x.P(x)</span></div>
+      <div class="bar"><span>∃R</span></div>
+      <div class="conc">P(y) ⊢ ∃x.P(x)</div>
+    </div></div>
+    <div class="bar"><span>→R</span></div>
+    <div class="conc">⊢ P(x)[y/x] → ∃x.P(x)</div>
+  </div></div>
+  <p>（P(x)[y/x]=P(y)；∃R 取项 t=y，叶子成公理。）</p>
+  <p><b>(2) ⊢ P(x)[y/x] → ∀x.P(x)　不可证</b>：要对目标用 ∀R，须引入<u>新变元</u>，但此时只能得到 P(y) ⊢ P(x′)（x′ 新），前后件无公共公式，<b>无法</b>成为公理；其它规则也走不通。从语义看：取模型使 P(y) 真但某元素不满足 P，则 P(y)→∀x.P(x) 为假，故<b>非永真</b>，由可靠性它必不可证。</p>
+</div>
+<div class="exam"><b>判可证性两手抓</b>：要证<b>可证</b>——画出一棵叶子全为公理的证明树；要证<b>不可证</b>——找一个<b>反例模型</b>（命题 4.7）使矢列有反例，再由可靠性（可证⟹有效）反推不可证。两个方向都要会。</div>
+
+<!-- 7 -->
+<h2 id="L10-s7">7 · 小结与考点</h2>
+<table class="kv">
+  <tr><th>知识点</th><th>档位</th><th>考法 / 去向</th></tr>
+  <tr><td>G 的公理与 12 条规则（含 ∀/∃ 的项 vs 新变元）</td><td>记忆</td><td>画证明树的基础，必背</td></tr>
+  <tr><td><b>画证明树</b>（自底向上、叶子为公理）</td><td>记忆+证明</td><td><b>真题第六、七题</b>直接出</td></tr>
+  <tr><td>Cut 消除（定理 4.2）</td><td>理解</td><td>判断题（"可证⟹有无 cut 证明树"）</td></tr>
+  <tr><td><b>导出规则</b>（反证/分情况/逆否/矛盾/MP/三段论）</td><td>记忆+证明</td><td>考纲"如何导出某规则"</td></tr>
+  <tr><td>有效 4.6、可靠性 4.11（对证明树结构归纳）</td><td>记忆+证明</td><td>证明题；连接 ⊢ 与 ⊨</td></tr>
+  <tr><td>可证 vs 不可证（∀R 新变元限制 + 反例模型）</td><td>理解+应用</td><td>判断可证性</td></tr>
+</table>
+<div class="exam"><b>承上启下</b>：G 给出 ⊢ 并被证<b>可靠</b>（⊢⟹⊨）。反方向"⊨⟹⊢"（完全性）与带等词的 Ge、紧致性，全在<a href="#L11">讲11</a>。命题逻辑版的自然推理 G′（讲04）与本讲同构，真题第六题多半考 G′、第七题考一阶 G。</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 10 转录整理，记号沿用葛存菁老师体系（矢列 Γ⊢Δ、A(t)=A[t/x]、特征变元）。建议把 §3 的几棵证明树反复默画到能脱稿。</p>
+
+
+</section>
+<section class="lecture-block" id="L11">
+
+
+<header class="title">
+  <h1>一阶逻辑元理论：完全性与紧致性</h1>
+  <div class="sub">数理逻辑 · 详细讲义 ｜ 对应课件 11（葛存菁）</div>
+  <div class="meta">主线定位：把<strong>语法（⊢ 可证）</strong>与<strong>语义（⊨ 有效）</strong>焊接起来——这是整门课的拱顶石，也是期末分值最集中的元理论区。</div>
+</header>
+
+<nav class="toc">
+  <b>本讲地图</b>
+  <ol>
+    <li><a href="#L11-s0">0 · 为什么要有完全性</a></li>
+    <li><a href="#L11-s1">1 · 前置回顾（⊢/⊨/G）</a></li>
+    <li><a href="#L11-s2">2 · 协调性 Con / Incon</a></li>
+    <li><a href="#L11-s3">3 · 极大协调集 ★</a></li>
+    <li><a href="#L11-s4">4 · 协调 ↔ 可满足 的桥</a></li>
+    <li><a href="#L11-s5">5 · 带等词的系统 Ge</a></li>
+    <li><a href="#L11-s6">6 · Henkin 集 ★</a></li>
+    <li><a href="#L11-s7">7 · 完全性定理 ★★★</a></li>
+    <li><a href="#L11-s8">8 · 紧致性定理 ★★</a></li>
+    <li><a href="#L11-s9">9 · 不可判定性与不完全性</a></li>
+    <li><a href="#L11-s10">10 · 考点提示与真题钩子</a></li>
+  </ol>
+</nav>
+
+<!-- ============ 0 ============ -->
+<h2 id="L11-s0">0 · 为什么要有完全性定理</h2>
+<p>到这一讲为止，我们手里有两套彼此独立的工具：</p>
+<ul>
+  <li><b>语义</b>侧：模型 𝕄、赋值 σ，以及「<em class="k">Γ ⊨ A</em>」——凡满足 Γ 的模型都满足 A（语义后承 / 有效）。</li>
+  <li><b>语法</b>侧：自然推理系统 G/Ge，以及「<em class="k">Γ ⊢ A</em>」——存在一棵以 Γ ⊢ A 为根的证明树（纯符号操作，可证）。</li>
+</ul>
+<p>两者的定义毫无关系：一个谈"所有模型"，一个谈"画得出证明树"。<b>可靠性定理</b>说 ⊢ ⟹ ⊨（能证的都对），上一阶段已得。本讲要补上反方向——</p>
+<div class="f"><em class="k">完全性定理（Gödel, 1930）：&nbsp; Γ ⊨ A &nbsp;⟺&nbsp; Γ ⊢ A</em></div>
+<p>即"凡是<b>对的</b>（语义有效）都<b>证得出</b>（语法可证）"。一旦打通，⊢ 与 ⊨ 完全重合，我们就能放心地用有限的符号推理去捕捉无限多模型上的真理。证明的主武器是 Henkin 于 1950 年代给出的<b>极大协调集 + 常元见证</b>构造。整条逻辑链是：</p>
+
+<div class="center">
+  <span class="pill">Con(Γ) 协调</span><span class="arrow">→</span>
+  <span class="pill">扩成 Henkin 集 Ψ</span><span class="arrow">→</span>
+  <span class="pill">Ψ 是 Hintikka 集</span><span class="arrow">→</span>
+  <span class="pill">Ψ 可满足</span><span class="arrow">→</span>
+  <span class="pill">Γ 可满足</span>
+</div>
+<p class="small">把这条链记牢，第 7 节的完全性定理证明不过是它的一句话改写。</p>
+
+<!-- ============ 1 ============ -->
+<h2 id="L11-s1">1 · 前置回顾：矢列、G 系统与两种"⊢/⊨"</h2>
+<p>本讲全程在<b>矢列（sequent）</b>上工作。矢列 <span class="term">Γ ⊢ Δ</span> 读作"由前件 Γ 可推出后件 Δ 之一"，G 系统给出它的公理与左右规则（∧L/∧R、→R、¬L、∀L/∀R、Cut、矛盾规则……）。下面三条性质在本讲被反复当作"零件"调用，务必熟记：</p>
+<div class="box note"><span class="tag">回顾 · 三个零件</span>
+  <p>① <b>矛盾规则</b>：从 <span class="term">A, ¬A ⊢</span> 可推出 <span class="term">⊢ ⊥</span>；由 ⊥ 可推出任意公式（爆炸）。</p>
+  <p>② <b>Cut 规则</b>：<span class="term">Γ ⊢ A</span> 与 <span class="term">Γ, A ⊢ Δ</span> 可拼成 <span class="term">Γ ⊢ Δ</span>。它是"把已证引理代入"的形式化。</p>
+  <p>③ <b>可靠性</b>：若 <span class="term">Γ ⊢ A</span> 在 G 中可证，则 <span class="term">Γ ⊨ A</span>。</p>
+</div>
+<p>记号约定：<span class="term">Γ ⊢</span>（后件为空）意为 Γ 推出 ⊥，即 Γ 自相矛盾。空格分隔的有穷列表 <span class="term">Δ = {A₁,…,Aₖ}</span> 视情形当公式集或当矢列前件。</p>
+
+<!-- ============ 2 ============ -->
+<h2 id="L11-s2">2 · 协调性：Con(Γ) 与 Incon(Γ)</h2>
+<p>完全性要从"语法上不出毛病"出发，这个性质就是协调。</p>
+<div class="box def"><span class="tag">定义 6.1 · 协调 / 矛盾</span>
+  <p>设 Γ 为公式集。</p>
+  <p>(1) Γ <b>矛盾</b>：存在 Γ 的<u>有穷</u>子集 Δ，使 <span class="term">Δ ⊢</span> 在 G 中可证（即 Δ 推出 ⊥）。记 <em class="k">Incon(Γ)</em>。</p>
+  <p>(2) Γ <b>协调</b>：Γ 不矛盾。记 <em class="k">Con(Γ)</em>。</p>
+  <p class="small">例：{A, ¬A} 矛盾。注意"有穷子集"——协调是个有穷性概念，这正是日后紧致性的根。</p>
+</div>
+
+<div class="box thm"><span class="tag">命题 6.2 · Incon 的四个等价面孔</span>
+  <p>以下四点等价：</p>
+  <p>(1) Incon(Γ)；&nbsp;(2) 有公式 A 与有穷 Δ⊆Γ，使 <span class="term">Δ ⊢ A</span> 且 <span class="term">Δ ⊢ ¬A</span> 均可证；</p>
+  <p>(3) 对<b>任何</b>公式 A，有有穷 Δ⊆Γ 使 <span class="term">Δ ⊢ A</span> 可证（"什么都证得出"＝爆炸）；&nbsp;(4) 对任何 A，有有穷 Δ⊆Γ 使 <span class="term">Δ ⊢ A</span> 且 <span class="term">Δ ⊢ ¬A</span>。</p>
+</div>
+<div class="proof"><span class="pf">证（环证 1⇒2⇒3⇒4⇒1）.</span>
+  <p><b>(1)⇒(2)</b>：Δ ⊢ 可证，由弱化即得 Δ ⊢ A 与 Δ ⊢ ¬A。</p>
+  <p><b>(2)⇒(3)</b>：由 Δ ⊢ A、Δ ⊢ ¬A 经矛盾规则得 Δ ⊢，再爆炸得 Δ ⊢ B 对任意 B。</p>
+  <p><b>(3)⇒(4)</b>：对任意 B，把 (3) 用在 A := B∧¬B 上得 Δ ⊢ B∧¬B，拆∧即得 Δ ⊢ B 与 Δ ⊢ ¬B：</p>
+  <div class="tree">
+    <div class="infer"><div class="prem">B, ¬B ⊢ B</div><div class="bar"><span>∧L</span></div><div class="conc">B∧¬B ⊢ B</div></div>
+    <div class="infer"><div class="prem">Δ ⊢ B∧¬B&nbsp;&nbsp;&nbsp;B∧¬B ⊢ B</div><div class="bar"><span>Cut</span></div><div class="conc">Δ ⊢ B</div></div>
+  </div>
+  <p><b>(4)⇒(1)</b>：取任一 A，由 Δ ⊢ A 与 Δ ⊢ ¬A 合成 Δ ⊢ ⊥：</p>
+  <div class="tree">
+    <div class="infer"><div class="prem">A ⊢ A</div><div class="bar"><span>¬L</span></div><div class="conc">A, ¬A ⊢ ⊥</div></div>
+    <div class="infer"><div class="prem">Δ ⊢ A&nbsp;&nbsp;Δ ⊢ ¬A</div><div class="bar"><span>∧R</span></div><div class="conc">Δ ⊢ A∧¬A</div></div>
+    <div class="infer"><div class="prem">Δ ⊢ A∧¬A&nbsp;&nbsp;A∧¬A ⊢ ⊥</div><div class="bar"><span>Cut</span></div><div class="conc">Δ ⊢ ⊥</div></div>
+  </div>
+  <span class="qed">∎</span>
+</div>
+<div class="box note"><span class="tag">命题 6.3 · Con 的对偶</span>
+  <p>把 6.2 逐条取反即得 Con(Γ) 的等价刻画，例如：Con(Γ) ⟺ 对任何有穷 Δ⊆Γ，<span class="term">Δ ⊢</span> 不可证 ⟺ 存在某公式 A，对任何有穷 Δ⊆Γ，<span class="term">Δ ⊢ A</span> 不可证（"至少有一句证不出"）。</p>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2 id="L11-s3">3 · 极大协调集 ★（真题常驻考点）</h2>
+<p>协调还不够强，我们需要"塞满到不能再塞"的协调集——它的好处是：对每个公式都<b>表态</b>（要么收 A、要么收 ¬A），从而行为像一个真值指派。</p>
+<div class="box def"><span class="tag">定义 6.4 · 极大协调</span>
+  <p>Γ <b>极大协调</b>指：(1) Con(Γ)；且 (2) 对任何公式集 Δ，若 Con(Δ) 且 Γ⊆Δ，则 Γ=Δ。</p>
+  <p class="small">"再加任何东西都会破坏协调或没有新意"——极大性。</p>
+</div>
+<div class="box thm"><span class="tag">命题 6.5 · 可操作判据</span>
+  <p>Γ 极大协调 ⟺ (1) Con(Γ) 且 (2) 对任何公式 A，<b>若 Con(Γ∪{A}) 则 A∈Γ</b>。</p>
+</div>
+<div class="proof"><span class="pf">证.</span>
+  <p><b>(⇒)</b> 设 Γ 极大协调。若 Con(Γ∪{A})，因 Γ⊆Γ∪{A}，由极大性得 Γ∪{A}=Γ，故 A∈Γ。</p>
+  <p><b>(⇐)</b> 设条件 (1)(2) 成立。任取 Con(Δ) 且 Γ⊆Δ，反设 Γ≠Δ，则有 A∈Δ−Γ。由 Γ∪{A}⊆Δ 且 Con(Δ) 得 Con(Γ∪{A})，于是 (2) 给出 A∈Γ，矛盾。故 Γ=Δ。<span class="qed">∎</span></p>
+</div>
+<div class="box thm"><span class="tag">命题 6.6 · 完全表态（最常用）</span>
+  <p>Γ 极大协调 ⟺ (1) Con(Γ) 且 (2) 对任何公式 A，<b>A∈Γ 或 ¬A∈Γ</b>。</p>
+</div>
+<div class="proof"><span class="pf">证.</span>
+  <p><b>(⇒)</b> 反证：设 A∉Γ 且 ¬A∉Γ。由命题 6.5，Incon(Γ∪{A}) 且 Incon(Γ∪{¬A})，于是存在有穷 Δ₁,Δ₂⊆Γ 使 <span class="term">Δ₁, A ⊢</span> 与 <span class="term">Δ₂, ¬A ⊢</span> 可证。把二者对 A 做 Cut，得 <span class="term">Δ₁, Δ₂ ⊢</span> 可证，即 Incon(Γ)，矛盾。</p>
+  <p><b>(⇐)</b> 由 6.5 只需证 Con(Γ∪{A})⇒A∈Γ。由 (2)，A∈Γ 或 ¬A∈Γ；而 ¬A∈Γ 会与 Con(Γ∪{A}) 冲突，故 ¬A∉Γ，只能 A∈Γ。<span class="qed">∎</span></p>
+</div>
+<div class="box thm"><span class="tag">命题 6.7 · 可证即归属</span>
+  <p>设 Γ 极大协调，A 为公式。则<b>（存在有穷 Δ⊆Γ 使 Δ ⊢ A 可证）⟺ A∈Γ</b>。</p>
+</div>
+<div class="proof"><span class="pf">证.</span>
+  <p><b>(⇒)</b> 设 Δ ⊢ A 可证。若 Incon(Γ∪{A})，则有有穷 Δ′⊆Γ 使 <span class="term">Δ′, A ⊢</span> 可证；对 A 做 Cut 得 <span class="term">Δ, Δ′ ⊢</span> 可证，与 Con(Γ) 矛盾。故 Con(Γ∪{A})，由 6.5 得 A∈Γ。</p>
+  <p><b>(⇐)</b> A∈Γ 时取 Δ={A}，Δ ⊢ A 是公理，显然可证。<span class="qed">∎</span></p>
+</div>
+<p class="small">直觉总结：极大协调集 = "对每句话都投了赞成/反对票、且票数自洽"的集合。它的成员关系 ∈ 恰好就能当作真值——这是第 6、7 节构造模型的关键。</p>
+
+<!-- ============ 4 ============ -->
+<h2 id="L11-s4">4 · 架桥：协调 ↔ 可满足</h2>
+<p>完全性的实质是"协调 ⟹ 可满足"。先把容易的半边和两个工具命题立住。</p>
+<div class="box thm"><span class="tag">命题 6.8 · 可满足 ⟹ 协调（易半边）</span>
+  <p>(1) 若 Γ 可满足，则 Con(Γ)；&nbsp;(2) 若 Γ 矛盾，则 Γ 不可满足。</p>
+</div>
+<div class="proof"><span class="pf">证.</span>
+  <p>(1) 设 (𝕄,σ) ⊨ Γ。反设 Incon(Γ)，则有有穷 Δ⊆Γ 使 Δ ⊢ A∧¬A 可证；由<b>可靠性</b>得 Δ ⊨ A∧¬A。又 𝕄 ⊨<sub>σ</sub> Γ ⟹ 𝕄 ⊨<sub>σ</sub> Δ，于是 𝕄 ⊨<sub>σ</sub> A∧¬A，荒谬。(2) 是 (1) 的逆否。<span class="qed">∎</span></p>
+</div>
+<div class="exam">
+  <b>真题陷阱（2025 判断题 7）</b>：「若公式集协调，则它一定可满足；<u>反之不然</u>」。<br>
+  前半句"协调⟹可满足"是<b>完全性定理</b>（难半边，第 7 节才证）；但"可满足⟹协调"由命题 6.8(1) 也成立。两个方向都对，所以"反之不然"是<b>错的</b>——协调与可满足在一阶逻辑里其实<b>等价</b>。这道题考的就是你是否把两个方向都想清楚。
+</div>
+<div class="box note"><span class="tag">命题 6.9 · 协调集的延拓</span>
+  <p>设 Γ 为有穷公式集且 Con(Γ)。则 (1) 若 <span class="term">Γ ⊢ A</span> 可证，则 Con(Γ∪{A})；(2) 若 <span class="term">Γ ⊢ A</span> 不可证，则 Con(Γ∪{¬A})。</p>
+  <p class="small">证：(1) 若 Incon(Γ∪{A})，则有 Δ⊆Γ 使 Δ,A ⊢ 可证，与 Γ ⊢ A 做 Cut 得 Γ ⊢，矛盾。(2) 若 Incon(Γ∪{¬A})，则 Γ,¬A ⊢ 可证，由 ¬L 反推得 Γ ⊢ A 可证，矛盾。</p>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 id="L11-s5">5 · 带等词的自然推理系统 Ge</h2>
+<p>真实的一阶逻辑带等词 ≐。把它纳入语法，只需在 G 上添三条等词公理。</p>
+<div class="box def"><span class="tag">定义 6.10 · Ge 系统</span>
+  <p>Ge ＝ G ＋ 以下三条公理（s, t 为任意项，f 为 n 元函数，p 为 n 元谓词，含等词）：</p>
+  <div class="f">(1) ⊢ s ≐ s</div>
+  <div class="f">(2) s₁≐t₁, …, sₙ≐tₙ ⊢ f(s₁,…,sₙ) ≐ f(t₁,…,tₙ)</div>
+  <div class="f">(3) s₁≐t₁, …, sₙ≐tₙ, p(s₁,…,sₙ) ⊢ p(t₁,…,tₙ)</div>
+  <p class="small">分别是自反性、函数同余、谓词同余。用矢量记号 s⃗≐t⃗ 缩写 (s₁≐t₁)∧…∧(sₙ≐tₙ)。</p>
+</div>
+<div class="box thm"><span class="tag">命题 6.12 · 等词的基本性质</span>
+  <p>在 Ge 中可证：(1) ⊢ s≐s；(2) ⊢ (s≐t)→(t≐s)（对称）；(3) ⊢ (s≐t)→((t≐u)→(s≐u))（传递）；(4)(5) 函数与谓词在 ≐ 下的替换不变性。</p>
+</div>
+<div class="proof"><span class="pf">证（以对称性 (2) 示范）.</span>
+  <p>用公理 (3) 取 p 为 ≐、把模式实例化为 "s≐s, s≐t ⊢ t≐s"，配上公理 (1) 的 ⊢ s≐s 做 Cut，再 →R 内化为蕴含：</p>
+  <div class="tree">
+    <div class="infer"><div class="prem">s≐t, s≐s ⊢ t≐s&nbsp;&nbsp;&nbsp;⊢ s≐s</div><div class="bar"><span>Cut</span></div><div class="conc">s≐t ⊢ t≐s</div></div>
+    <div class="infer"><div class="prem">s≐t ⊢ t≐s</div><div class="bar"><span>→R</span></div><div class="conc">⊢ (s≐t)→(t≐s)</div></div>
+  </div>
+  <span class="qed">∎</span>
+</div>
+<div class="box note"><span class="tag">命题 6.13 · Ge 与 G 的互译</span>
+  <p>令 Γe ＝ {∀x(x≐x), ∀x∀y(x≐y→f(x)≐f(y)), ∀x∀y(x≐y→(p(x)→p(y)))}（等词公理的全称闭包）。则<br>
+  <span class="f"><span class="term">Γ ⊢ Δ 在 Ge 中可证 &nbsp;⟺&nbsp; Γe, Γ ⊢ Δ 在 G 中可证。</span></span>
+  证法：<b>对证明树结构作归纳</b>（基础验公理互推、步骤逐规则搬运 Γe）。这是把"等词"当成普通公理处理的合法性依据。</p>
+</div>
+<div class="box thm"><span class="tag">定理 6.14 · Ge 的可靠性</span>
+  <p>若 Γ ⊢ Δ 在 Ge 中可证，则 Γ ⊨ Δ。证：只需验三条等词公理在任何模型中永真（≐ 解释为真正的相等），其余归于 G 的可靠性。</p>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2 id="L11-s6">6 · Henkin 集 ★（完全性的发动机）</h2>
+<p>极大协调集能"对每句话表态"，但一阶逻辑还有量词的麻烦：集合里有 ∃x.A 却未必有具体的"见证项"。Henkin 集就是补上见证的极大协调集。</p>
+<div class="box def"><span class="tag">定义 6.15 · Henkin 集</span>
+  <p>Γ 为 <b>Henkin 集</b> 指：(1) Γ 极大协调；(2) <b>见证性</b>：若 ∃x.A∈Γ，则存在项 t 使 A[t/x]∈Γ。</p>
+</div>
+<div class="box def"><span class="tag">定义 6.16 · 扩充语言</span>
+  <p>设一阶语言 ℒ 可数（‖ℒ‖=ℵ₀）。添加可数无穷个<b>全新常元</b> {cₙ : n∈ℕ}，得 ℒ′ = ℒ ∪ {cₙ}。这些常元专门用来当见证。</p>
+</div>
+
+<div class="box thm"><span class="tag">定理 6.17 · Henkin 构造（核心）</span>
+  <p>设 Φ 为公式集且 Con(Φ)。则存在 ℒ′ 上的公式集 Ψ⊇Φ，使 Ψ 为 ℒ′ 的 Henkin 集。</p>
+</div>
+<div class="proof"><span class="pf">证（逐步扩张 + 并集）.</span>
+  <p>把 ℒ′ 的全体公式枚举为 φ₀, φ₁, …, φₙ, …（可数）。归纳定义 Ψₙ：</p>
+  <div class="f">Ψ₀ = Φ</div>
+  <p style="text-align:center;">Ψₙ₊₁ ＝ 看 φₙ 能否相容地并入：</p>
+  <table class="kv">
+    <tr><th>情形</th><th>条件</th><th>Ψₙ₊₁ 取作</th></tr>
+    <tr><td>①</td><td>Incon(Ψₙ∪{φₙ})</td><td>Ψₙ（丢弃 φₙ）</td></tr>
+    <tr><td>②</td><td>Con(Ψₙ∪{φₙ}) 且 φₙ 不呈 ∃x.A 形</td><td>Ψₙ ∪ {φₙ}</td></tr>
+    <tr><td>③</td><td>Con(Ψₙ∪{φₙ}) 且 φₙ ＝ ∃x.A</td><td>Ψₙ ∪ {φₙ, A[c/x]}，c 为<b>尚未用过</b>的新常元</td></tr>
+  </table>
+  <p>最后令 <span class="term">Ψ = ⋃{Ψₙ : n∈ℕ}</span>。需验证六条性质：</p>
+  <p><b>(1) Φ⊆Ψ</b>：显然（Ψ₀=Φ）。</p>
+  <p><b>(2) 对每个 n，Con(Ψₙ)</b>：对 n 归纳。基础 Ψ₀=Φ 协调。步骤中情形①② 显然保持协调；难点是<b>情形③</b>：反设 Incon(Ψₙ∪{φₙ, A[c/x]})，则有有穷 Δ⊆Ψₙ∪{φₙ} 使 <span class="term">Δ, A[c/x] ⊢</span> 可证，其证明树记为 T。因 c 是新常元、在 Δ 与 ∃x.A 中均不出现，把 T 里的 c 整体替换成一个新变元 y，仍是合法证明，得 <span class="term">Δ, A[y/x] ⊢</span> 可证；再由 <b>∃L 规则</b>得 <span class="term">Δ, ∃x.A ⊢</span> 可证，与 Con(Ψₙ∪{φₙ}) 矛盾。故 Con(Ψₙ₊₁)。</p>
+  <p><b>(3) Con(Ψ)</b>：协调是有穷性质。反设 Incon(Ψ)，则有有穷 Δ⊆Ψ 使 Δ ⊢ 可证。Δ={A₁,…,Aₖ} 有穷，每个 Aᵢ∈Ψ_{nᵢ}，取 l=max nᵢ 则 Δ⊆Ψ_l；但 Con(Ψ_l)，矛盾。</p>
+  <p><b>(4)</b> 每个 Ψₙ 中新引入的常元有穷（对 n 归纳）。</p>
+  <p><b>(5) Ψ 极大协调</b>：已知协调，由命题 6.5 只需证 Con(Ψ∪{φₙ})⟹φₙ∈Ψ。设 Con(Ψ∪{φₙ})，则 Con(Ψₙ∪{φₙ})，落入情形②或③，于是 φₙ∈Ψₙ₊₁⊆Ψ。</p>
+  <p><b>(6) Ψ 见证（Henkin）</b>：设 ∃x.A∈Ψ，设它是枚举里的 φₙ。则 φₙ∈Ψ ⟹ Con(Ψₙ∪{φₙ})（情形③），故引入了见证 A[c/x]∈Ψₙ₊₁⊆Ψ。<span class="qed">∎</span></p>
+</div>
+
+<div class="box thm"><span class="tag">定理 6.18 · Henkin 集 ⟹ Hintikka 集</span>
+  <p>若 Γ 为 Henkin 集，则 Γ 为 Hintikka 集（即对每种逻辑联结/量词形态，Γ 的成员关系满足 Hintikka 的"局部一致"闭合条件）。</p>
+</div>
+<div class="proof"><span class="pf">证（对照 Hintikka 定义逐条验证，反复用 6.6/6.7 与可证即归属）.</span>
+  <p>① 因 Con(Γ)，原子 A 与 ¬A 不同属 Γ。</p>
+  <p>② ¬¬A∈Γ：因 ¬¬A ⊢ A 可证，故 Γ ⊢ A 可证，由极大协调（6.7）得 A∈Γ。</p>
+  <p>③ A→B∈Γ：反设 ¬A∉Γ 且 B∉Γ，由 6.6 得 A∈Γ 且 ¬B∈Γ；但 A, A→B ⊢ B 可证 ⟹ B∈Γ，矛盾。故 ¬A∈Γ 或 B∈Γ。</p>
+  <p>④ ¬(A→B)∈Γ：因 ¬(A→B) ⊢ A 与 ⊢ ¬B 可证，故 A∈Γ 且 ¬B∈Γ。</p>
+  <p>⑤ A∧B∈Γ ⟹ A∈Γ 且 B∈Γ；⑥ ¬(A∧B)∈Γ ⟹ ¬A∈Γ 或 ¬B∈Γ（反证 + 6.6）。⑦⑧ ∨、¬∨ 同理。</p>
+  <p>⑨ <b>∀x.A∈Γ ⟹ 对任意项 t，A[t/x]∈Γ</b>：因 ∀x.A ⊢ A[t/x] 可证。</p>
+  <p>⑩ <b>¬∀x.A∈Γ</b>：因 ¬∀x.A ⊢ ∃x.¬A 可证，故 ∃x.¬A∈Γ；<u>此处用上 Henkin 见证性</u>，得某项 t 使 ¬A[t/x]∈Γ。（∃、¬∃ 同理）</p>
+  <p>⑬–⑰ 三条等词条件由 6.7 配等词公理即得。<span class="qed">∎</span></p>
+  <p class="small">关键体会：⑩ 这类"撕开量词"的步骤，正是<b>非</b>仅有极大协调、还必须有 Henkin 见证的原因。</p>
+</div>
+<div class="box note"><span class="tag">回顾衔接 · Hintikka 集可满足</span>
+  <p>课件 9 已证：<b>每个 Hintikka 集都可满足</b>——以项（的等价类）为论域作典范模型（term model），∈ 关系直接读出真值。本讲直接调用这一结论。</p>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2 id="L11-s7">7 · 完全性定理 ★★★</h2>
+<div class="box thm"><span class="tag">定理 6.19 · 协调 ⟹ 可满足（模型存在定理）</span>
+  <p>若 Con(Γ)，则 Γ 可满足。</p>
+</div>
+<div class="proof"><span class="pf">证（把第 0 节那条链走一遍）.</span>
+  <div class="center">
+    Con(Γ)
+    <span class="arrow">⟹</span> 存在 Henkin 集 Ψ⊇Γ <span class="small">（定理 6.17）</span>
+    <span class="arrow">⟹</span> Ψ 为 Hintikka 集 <span class="small">（定理 6.18）</span>
+    <span class="arrow">⟹</span> Ψ 可满足 <span class="small">（Hintikka 可满足，课件 9）</span>
+    <span class="arrow">⟹</span> Γ⊆Ψ 也可满足。
+  </div>
+  <span class="qed">∎</span>
+</div>
+
+<div class="box thm"><span class="tag">定理 6.20 · 完全性定理（Completeness）</span>
+  <p><span class="f"><em class="k">Γ ⊨ A &nbsp;⟺&nbsp; Γ ⊢ A</em></span></p>
+</div>
+<div class="proof"><span class="pf">证.</span>
+  <p><b>(⟸)</b> 即可靠性，已有。</p>
+  <p><b>(⟹)</b> 设 Γ ⊨ A，分两种情形：</p>
+  <p>情形 1：Incon(Γ)。由爆炸，Γ ⊢ A 直接可证。</p>
+  <p>情形 2：Con(Γ)。反设 Γ ⊢ A <b>不</b>可证，由命题 6.9(2) 得 Con(Γ∪{¬A})；再由模型存在定理 6.19，Γ∪{¬A} 有模型 (𝕄,σ)，即 𝕄 ⊨<sub>σ</sub> Γ 且 𝕄 ⊨<sub>σ</sub> ¬A。但 Γ ⊨ A 要求 𝕄 ⊨<sub>σ</sub> A，矛盾。故 Γ ⊢ A 可证。<span class="qed">∎</span></p>
+</div>
+<div class="note small" style="padding-left:8px;">一句话记忆：<b>完全性 = "证不出 A" 必能造出一个"满足 Γ 却否定 A"的反模型</b>（情形 2 的反设→反模型）。这台"造反模型"的机器就是 Henkin 构造。</div>
+
+<!-- ============ 8 ============ -->
+<h2 id="L11-s8">8 · 紧致性定理 ★★</h2>
+<div class="box thm"><span class="tag">定理 6.21 · 紧致性定理（Compactness）</span>
+  <p>设 Γ 为公式集。若 Γ 的<b>每个有穷子集都可满足</b>，则 Γ <b>整体可满足</b>。</p>
+</div>
+<div class="proof"><span class="pf">证（出奇地短——全靠"协调是有穷性质"）.</span>
+  <p>反设 Γ 不可满足。由<b>模型存在定理 6.19</b>（协调⟹可满足）取逆否：不可满足 ⟹ Incon(Γ)。于是存在 Γ 的<u>有穷</u>子集 Δ 使 Δ ⊢ A∧¬A 可证，由可靠性知 Δ 矛盾、不可满足。这与"每个有穷子集都可满足"矛盾。<span class="qed">∎</span></p>
+</div>
+<div class="box note"><span class="tag">为什么紧致性"免费"</span>
+  <p>协调（定义 6.1）只看<b>有穷</b>子集的可证性，可满足又经完全性等价于协调——于是"整体性质"被"有穷性质"完全决定。紧致性正是这层有穷性的语义投影。它是后续模型论（非标准模型、超积）的基石。</p>
+</div>
+<div class="exam"><b>常见应用句式</b>：要证"某个无穷公理集 Γ 有模型"，只需证"任意有穷片段都有模型"（通常构造一个足够大的有穷结构即可）。紧致性把无穷难题降维成有穷难题。</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="L11-s9">9 · 尾声：不可判定性与不完全性（理解档）</h2>
+<p>完全性说"对的都证得出"，但<b>没</b>说"有算法判定对不对"。这一节是会用思想即可、不要求默写整证的内容。</p>
+<div class="box note"><span class="tag">不可判定 vs 半可判定（Church/Turing, 1936–37）</span>
+  <p><b>不可判定</b>：不存在<u>总能停机</u>的算法，对任意 (Γ, F) 判定 Γ⊨F 是否成立。<br>
+  <b>半可判定</b>：存在算法在 Γ⊨F 时<u>有限步内确认</u>——即在自然推理系统里搜索 Γ⊢F 的证明树；可证则必能找到（完全性保证），不可证则可能不停机。</p>
+</div>
+<div class="box note"><span class="tag">哥德尔不完全性定理（Gödel, 1931）</span>
+  <p>任何<b>协调且蕴含皮亚诺算术 PA</b> 的（可有效公理化的）系统 F，都<b>不完备</b>：存在算术语句 G<sub>F</sub> 在 F 内既不可证也不可否证。</p>
+  <p class="small">机制三件套：① <b>哥德尔码</b> #A 把语法对象编码为自然数（课件 9）；② 证明关系 Prf<sub>F</sub>(x,y)、可证谓词 Prov<sub>F</sub>(y)=∃x.Prf<sub>F</sub>(x,y) 在 F 内可表达；③ <b>对角化引理</b>构造自指语句 G<sub>F</sub>，使 F ⊢ G<sub>F</sub> ↔ ¬Prov<sub>F</sub>(#G<sub>F</sub>)——"我不可证"。若 G<sub>F</sub> 可证则 F 矛盾；若 ¬G<sub>F</sub> 可证亦然。</p>
+  <p class="small"><b>切勿混淆</b>：<u>完全性</u>（本讲，关于一阶逻辑演算，⊢=⊨，成立）≠ <u>不完全性</u>（关于含算术的理论，⊢⊊真，不可避免）。考点常在判断题里拿这对名字设陷阱。</p>
+</div>
+
+<!-- ============ 10 ============ -->
+<h2 id="L11-s10">10 · 考点提示与真题钩子</h2>
+<table class="kv">
+  <tr><th>考点</th><th>档位</th><th>怎么考 / 真题钩子</th></tr>
+  <tr><td>协调 / 矛盾定义、命题 6.2–6.3</td><td>记忆</td><td>判断题；作为大题的引用零件</td></tr>
+  <tr><td><b>极大协调集</b>（6.4–6.7）</td><td>记忆+证明</td><td><b>2025 第九题直接出</b>；命题 6.5/6.6/6.7 的证明要能默写</td></tr>
+  <tr><td>协调↔可满足（6.8）</td><td>记忆</td><td><b>2025 判断题 7</b>（"反之不然"是错的）</td></tr>
+  <tr><td>Henkin 构造（6.17）</td><td>理解</td><td>证明思路 + 情形③新常元见证的作用；情形③协调性是难点</td></tr>
+  <tr><td>完全性定理（6.20）</td><td>记忆+证明</td><td>能复述"反设→Con(Γ∪{¬A})→反模型"主线</td></tr>
+  <tr><td>紧致性（6.21）</td><td>记忆+应用</td><td>短证要会默写；会用"有穷子集可满足⟹整体可满足"做题</td></tr>
+  <tr><td>不完全性 / 哥德尔码</td><td>理解</td><td>判断题辨析"完全性≠不完全性"；哥德尔码是否单射入 ℕ</td></tr>
+</table>
+<div class="exam">
+  <b>串讲 · 2025 真题第九题"极大协调集"如何下笔</b>：题目通常要你证命题 6.5 / 6.6 / 6.7 之一，或证"任一协调集可扩成极大协调集"（Lindenbaum，思路同定理 6.17 去掉见证那步）。模板：<b>① 摆定义 6.4 → ② 用命题 6.5 把"极大"翻译成"Con(Γ∪{A})⟹A∈Γ"这个可操作判据 → ③ 反证 + Cut 拼矛盾</b>。证明里每一步"可证"都要能指出用的是哪条规则（矛盾规则 / Cut / ¬L）。
+</div>
+
+<hr class="sec">
+<p class="small">本讲义依据课件 11 转录整理，记号沿用葛存菁老师课堂体系（等词 ≐、矢列 Γ⊢Δ、G/Ge 系统）。证明细节以课件为准；§9 为思想性补充，按"理解档"对待。</p>
+
+
+</section>
+
+</div>
+<script>
+(function(){
+  var lecs=Array.prototype.slice.call(document.querySelectorAll('.lecture-block'));
+  var lecLis=Array.prototype.slice.call(document.querySelectorAll('nav.merged li.lec'));
+  var subAs=Array.prototype.slice.call(document.querySelectorAll('nav.merged .sub a'));
+  function idOf(a){return a.getAttribute('href').slice(1);}
+  var subTargets=subAs.map(function(a){return {a:a,el:document.getElementById(idOf(a))};}).filter(function(x){return x.el;});
+  function onScroll(){
+    var pos=window.scrollY+140, curLec=lecs[0];
+    lecs.forEach(function(s){if(s.offsetTop<=pos)curLec=s;});
+    lecLis.forEach(function(li){
+      var on=li.querySelector('.lec-a').getAttribute('href').slice(1)===curLec.id;
+      li.classList.toggle('active',on);
+    });
+    var curSub=null;
+    subTargets.forEach(function(x){if(x.el.offsetTop<=pos)curSub=x;});
+    subAs.forEach(function(a){a.classList.remove('active');});
+    if(curSub) curSub.a.classList.add('active');
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll); onScroll();
+})();
+</script>
+</body></html>
