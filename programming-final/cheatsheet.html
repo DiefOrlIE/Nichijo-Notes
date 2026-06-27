@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程序设计 · 速查与易错合集</title>
+<style>
+  :root{
+    --paper:#fbf8f1; --ink:#23201b; --sub:#6a635a; --line:#e3dccd;
+    --accent:#7a5c2e; --accent2:#9c7b46;
+    --code-bg:#2b2722; --code-ink:#f2ede3;
+    --key-bg:#fbf4dd; --key-bd:#c9a227; --key-ink:#7a5a06;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:"Songti SC","SimSun","Noto Serif SC",serif; font-size:16.5px; line-height:1.8;}
+  p,li,td,th,h1,h2,h3,h4{font-family:"Times New Roman","Songti SC","SimSun","Noto Serif SC",serif;}
+  .wrap{display:flex; max-width:1180px; margin:0 auto;}
+  nav{width:250px; flex:0 0 250px; align-self:flex-start; position:sticky; top:0; height:100vh; overflow-y:auto; padding:26px 14px 40px 20px; border-right:1px solid var(--line); font-size:14px;}
+  nav .navtitle{font-size:16px; font-weight:bold; color:var(--accent); margin-bottom:10px;}
+  nav a{display:block; color:var(--sub); text-decoration:none; padding:3px 8px; border-radius:5px; border-left:2px solid transparent;}
+  nav a:hover{color:var(--ink); background:#f3ecdd;}
+  nav a.active{color:var(--accent); border-left-color:var(--accent); background:#f3ecdd; font-weight:bold;}
+  main{flex:1 1 auto; min-width:0; padding:30px 44px 120px 44px;}
+  header.hero{border-bottom:2px solid var(--accent); padding-bottom:16px; margin-bottom:8px;}
+  header.hero h1{font-size:28px; margin:0 0 6px; color:var(--accent);}
+  header.hero .meta{color:var(--sub); font-size:14.5px;}
+  h2{font-size:23px; color:var(--accent); margin:42px 0 12px; padding-top:8px; border-bottom:1px solid var(--line); padding-bottom:6px;}
+  h3{font-size:18px; margin:24px 0 6px; color:#3a342b;}
+  p{margin:8px 0;}
+  code.inl{font-family:"Consolas","Courier New",monospace; background:#efe7d6; padding:1px 6px; border-radius:4px; font-size:14px; color:#6b4f23;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:8px; padding:14px 17px; overflow-x:auto; font-size:14px; line-height:1.55; font-family:"Consolas","Courier New",monospace; margin:10px 0;}
+  pre .cm{color:#9aa18f;} pre .kw{color:#e8a35c;} pre .st{color:#9ccb86;}
+  .key{background:var(--key-bg); border-left:4px solid var(--key-bd); border-radius:6px; padding:10px 15px; margin:12px 0;}
+  .key .bt{font-weight:bold; color:var(--key-ink); display:block; margin-bottom:3px;}
+  table{border-collapse:collapse; width:100%; margin:12px 0; font-size:14.5px;}
+  th,td{border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top;}
+  th{background:#f1e9d8; color:var(--accent);}
+  td code{font-family:"Consolas","Courier New",monospace; font-size:13.5px;}
+  @media(max-width:860px){ nav{display:none;} main{padding:24px 18px 80px;} }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+<nav id="toc">
+<div class="navtitle">速查 & 易错合集</div>
+<div class="grp">📎 配套</div>
+<a class="lv2" href="index.html">📘 讲义合集</a>
+<a class="lv2" href="mock.html">📝 模拟卷</a>
+<div class="grp">上篇 · 代码模板与套路</div>
+<a href="#L1-io">① 输入输出套路</a>
+  <a href="#L1-basic">② 基础算法骨架</a>
+  <a href="#L1-func">③ 函数式套路</a>
+  <a href="#L1-oop">④ OOP 模板</a>
+  <a href="#L1-ml">⑤ 机器学习骨架</a>
+  <a href="#L1-logic">⑥ 逻辑推理模板</a>
+  <a href="#L1-np">⑦ NumPy API</a>
+  <a href="#L1-pd">⑧ Pandas API</a>
+  <a href="#L1-sci">⑨ SymPy / SciPy API</a>
+  <a href="#L1-syntax">⑩ 易错语法速记</a>
+<div class="grp">下篇 · 易错点清单</div>
+<a href="#L2-legend">图例</a>
+  <a href="#L2-basic">① Python 基础</a>
+  <a href="#L2-data">② 数据结构</a>
+  <a href="#L2-flow">③ 流程控制</a>
+  <a href="#L2-func">④ 函数与函数式</a>
+  <a href="#L2-oop">⑤ 面向对象</a>
+  <a href="#L2-err">⑥ 异常 / 模块</a>
+  <a href="#L2-np">⑦ NumPy</a>
+  <a href="#L2-sci">⑧ SymPy/SciPy/Pandas</a>
+  <a href="#L2-ml">⑨ 机器学习</a>
+  <a href="#L2-logic">⑩ 逻辑推理</a>
+</nav>
+<main>
+<header class="hero">
+<h1>代码模板速查 & 易错点清单</h1>
+<div class="meta">上篇：手写骨架 + API 速查　下篇：语法陷阱 / 边界 / 常踩坑</div>
+<div style="margin:14px 0 8px;"><a href="index.html" style="display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:7px;margin:4px 8px 4px 0;font-family:Times New Roman,serif;">📘 讲义合集</a> <a href="mock.html" style="display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:7px;margin:4px 8px 4px 0;font-family:Times New Roman,serif;">📝 模拟卷</a></div>
+</header>
+<section class="lecture-block">
+<header class="hero">
+  <h1>代码模板与算法套路速查</h1>
+  <div class="meta">人工智能程序设计 · 笔试手写常用骨架 + 高频 API 速查（OJ 题已改编为可手写形式）</div>
+</header>
+
+<h2 id="L1-io">① 输入输出套路（OJ 必备）</h2>
+<table>
+<tr><th>需求</th><th>写法</th></tr>
+<tr><td>单个整数</td><td><code>n = int(input())</code></td></tr>
+<tr><td>一行多个整数</td><td><code>a = list(map(int, input().split()))</code></td></tr>
+<tr><td>一行多个浮点</td><td><code>a = list(map(float, input().split()))</code></td></tr>
+<tr><td>多组：解包</td><td><code>t, a, x = input().split()</code> 再各自转型</td></tr>
+<tr><td>读 n 行</td><td><code>for _ in range(n): line = input()</code></td></tr>
+<tr><td>读到 EOF</td><td><code>try: ...input()... except EOFError: break</code></td></tr>
+<tr><td>读回列表/字典字面量</td><td><code>data = eval(input())</code></td></tr>
+<tr><td>批量输出</td><td><code>print("\n".join(map(str, out)))</code></td></tr>
+<tr><td>保留小数</td><td><code>print(f"{x:.2f}")</code> / <code>print(f"{x:.6f}")</code></td></tr>
+<tr><td>分隔/结尾</td><td><code>print(a, b, sep=" ", end="\n")</code></td></tr>
+</table>
+<div class="key"><span class="bt">通过 exec 测试自定义类的题（如 Vector/账户）</span>
+<pre><span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">try</span>:
+        exec(input())     <span class="cm"># 把测试语句当代码执行</span>
+    <span class="kw">except</span> EOFError:
+        <span class="kw">break</span></pre>
+</div>
+
+<h2 id="L1-basic">② 基础算法骨架</h2>
+<h3>二分查找</h3>
+<pre><span class="kw">def</span> bsearch(a, target):
+    lo, hi = <span class="st">0</span>, len(a) - <span class="st">1</span>
+    <span class="kw">while</span> lo &lt;= hi:               <span class="cm"># 等号不能丢</span>
+        mid = (lo + hi) // <span class="st">2</span>
+        <span class="kw">if</span> a[mid] == target: <span class="kw">return</span> mid
+        <span class="kw">elif</span> a[mid] &lt; target: lo = mid + <span class="st">1</span>
+        <span class="kw">else</span>:               hi = mid - <span class="st">1</span>
+    <span class="kw">return</span> -<span class="st">1</span>
+<span class="cm"># 二维矩阵当展平一维：mat[mid//n][mid%n]</span></pre>
+<h3>质数判定</h3>
+<pre><span class="kw">def</span> is_prime(x):
+    <span class="kw">if</span> x &lt; <span class="st">2</span>: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="st">2</span>, int(x**<span class="st">0.5</span>) + <span class="st">1</span>):   <span class="cm"># 只需到根号 x</span>
+        <span class="kw">if</span> x % i == <span class="st">0</span>: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="kw">True</span></pre>
+<h3>记忆化递归（防超时）</h3>
+<pre>cache = {}
+<span class="kw">def</span> f(n):
+    <span class="kw">if</span> n <span class="kw">in</span> cache: <span class="kw">return</span> cache[n]
+    <span class="kw">if</span> n &lt;= <span class="st">2</span>: <span class="kw">return</span> base_value(n)
+    cache[n] = f(n-<span class="st">1</span>) + f(n-<span class="st">2</span>) + f(n-<span class="st">3</span>)   <span class="cm"># 例：细胞分裂</span>
+    <span class="kw">return</span> cache[n]</pre>
+
+<h2 id="L1-func">③ 函数式套路</h2>
+<h3>闭包计数器 / 带状态函数</h3>
+<pre><span class="kw">def</span> make_counter(s, d):
+    t = -<span class="st">1</span>
+    <span class="kw">def</span> c():
+        <span class="kw">nonlocal</span> t            <span class="cm"># 必须，否则 t+=1 报错</span>
+        t += <span class="st">1</span>
+        <span class="kw">return</span> s + d * t
+    <span class="kw">return</span> c</pre>
+<h3>高阶：通用框架 + 复合 + 柯里化</h3>
+<pre><span class="kw">def</span> summation(n, term):              <span class="cm"># 把"第k项"抽成参数</span>
+    <span class="kw">return</span> sum(term(k) <span class="kw">for</span> k <span class="kw">in</span> range(<span class="st">1</span>, n+<span class="st">1</span>))
+
+<span class="kw">def</span> compose(f, g):                    <span class="cm"># h(x)=f(g(x))</span>
+    <span class="kw">return</span> <span class="kw">lambda</span> x: f(g(x))
+
+<span class="kw">def</span> curry2(f):                        <span class="cm"># f(x,y) → f(x)(y)</span>
+    <span class="kw">return</span> <span class="kw">lambda</span> x: <span class="kw">lambda</span> y: f(x, y)
+
+<span class="kw">def</span> repeat_apply(func):               <span class="cm"># 连续作用 t 次</span>
+    <span class="kw">def</span> outer(t):
+        g = <span class="kw">lambda</span> x: x
+        <span class="kw">for</span> _ <span class="kw">in</span> range(t): g = compose(g, func)
+        <span class="kw">return</span> g
+    <span class="kw">return</span> outer</pre>
+<h3>装饰器</h3>
+<pre><span class="kw">def</span> deco(fn):
+    <span class="kw">def</span> wrapped(*args, **kw):
+        <span class="cm"># 前置增强</span>
+        r = fn(*args, **kw)
+        <span class="cm"># 后置增强</span>
+        <span class="kw">return</span> r
+    <span class="kw">return</span> wrapped</pre>
+<div class="key"><span class="bt">闭包绑定循环变量陷阱</span>循环里建多个函数要用默认参数固定当前值：<code class="inl">def f(y, a=x[1]): return y+a</code>，否则所有函数共享最后的循环值。</div>
+
+<h2 id="L1-oop">④ OOP 模板</h2>
+<h3>继承 + super + 重写</h3>
+<pre><span class="kw">class</span> Base:
+    <span class="kw">def</span> __init__(self, a):
+        self.a = a
+<span class="kw">class</span> Sub(Base):
+    <span class="kw">def</span> __init__(self, a, b):
+        super().__init__(a)       <span class="cm"># 复用父类初始化，不可漏</span>
+        self.b = b</pre>
+<h3>常用特殊方法</h3>
+<pre><span class="kw">class</span> C:
+    <span class="kw">def</span> __init__(self, x): self.x = x
+    <span class="kw">def</span> __str__(self):  <span class="kw">return</span> f<span class="st">"C({self.x})"</span>     <span class="cm"># print/str</span>
+    <span class="kw">def</span> __eq__(self, o): <span class="kw">return</span> self.x == o.x   <span class="cm"># ==</span>
+    <span class="kw">def</span> __add__(self, o):<span class="kw">return</span> C(self.x+o.x)   <span class="cm"># +</span>
+    <span class="kw">def</span> __len__(self):  <span class="kw">return</span> self.x          <span class="cm"># len()</span>
+    <span class="kw">def</span> __call__(self): <span class="kw">return</span> self.x          <span class="cm"># 实例当函数</span></pre>
+<h3>迭代器协议</h3>
+<pre><span class="kw">class</span> Rev:
+    <span class="kw">def</span> __init__(self, lst):
+        self.lst = list(reversed(lst)); self.i = <span class="st">0</span>
+    <span class="kw">def</span> __iter__(self): <span class="kw">return</span> self
+    <span class="kw">def</span> __next__(self):
+        <span class="kw">if</span> self.i &gt;= len(self.lst): <span class="kw">raise</span> StopIteration
+        v = self.lst[self.i]; self.i += <span class="st">1</span>; <span class="kw">return</span> v</pre>
+<h3>封装 / 类属性计数 / 静态方法</h3>
+<pre><span class="kw">class</span> Account:
+    total = <span class="st">0</span>                        <span class="cm"># 类属性</span>
+    <span class="kw">def</span> __init__(self, bal=<span class="st">0</span>):
+        self.__bal = bal              <span class="cm"># 私有→_Account__bal</span>
+        Account.total += <span class="st">1</span>
+    <span class="kw">def</span> get_balance(self): <span class="kw">return</span> self.__bal
+    <span class="ot">@staticmethod</span>
+    <span class="kw">def</span> from_str(s):
+        name, money = s.split(<span class="st">","</span>)
+        <span class="kw">return</span> Account(float(money))</pre>
+
+<h2 id="L1-ml">⑤ 机器学习骨架</h2>
+<h3>PCA</h3>
+<pre><span class="kw">def</span> pca(X, d):
+    X = X - X.mean(axis=<span class="st">0</span>)
+    C = (X.T @ X) / X.shape[<span class="st">0</span>]
+    vals, vecs = np.linalg.eigh(C)
+    order = np.argsort(vals)[::-<span class="st">1</span>]
+    <span class="kw">return</span> X @ vecs[:, order[:d]]</pre>
+<h3>KNN</h3>
+<pre><span class="kw">def</span> knn(train_X, train_y, x, k, p=<span class="st">2</span>):
+    d = [(sum(abs(a-b)**p <span class="kw">for</span> a,b <span class="kw">in</span> zip(x,v))**(<span class="st">1</span>/p), j)
+         <span class="kw">for</span> j,v <span class="kw">in</span> enumerate(train_X)]
+    d.sort()                          <span class="cm"># 距离同则下标小在前</span>
+    <span class="kw">from</span> collections <span class="kw">import</span> Counter
+    cnt = Counter(train_y[j] <span class="kw">for</span> _,j <span class="kw">in</span> d[:k])
+    mx = max(cnt.values())
+    <span class="kw">return</span> min(c <span class="kw">for</span> c,n <span class="kw">in</span> cnt.items() <span class="kw">if</span> n==mx)  <span class="cm"># 平票取最小</span></pre>
+<h3>逻辑回归（批量梯度下降）</h3>
+<pre><span class="kw">def</span> sigmoid(z):
+    <span class="kw">return</span> <span class="st">1</span>/(<span class="st">1</span>+math.exp(-z)) <span class="kw">if</span> z&gt;=<span class="st">0</span> <span class="kw">else</span> math.exp(z)/(<span class="st">1</span>+math.exp(z))
+<span class="cm"># w_j -= α·(1/N)·Σ(ŷ_i - y_i)·x_ij ; b -= α·(1/N)·Σ(ŷ_i - y_i)</span></pre>
+<h3>K-Means</h3>
+<pre><span class="cm"># 1.初始化k个中心(常取前k个点) 2.分配:每点归最近中心</span>
+<span class="cm"># 3.更新:中心=簇内均值  4.重复直到不变/到迭代上限</span>
+labels = [np.argmin([np.linalg.norm(x-c) <span class="kw">for</span> c <span class="kw">in</span> centers]) <span class="kw">for</span> x <span class="kw">in</span> X]
+centers = [X[np.array(labels)==j].mean(axis=<span class="st">0</span>) <span class="kw">for</span> j <span class="kw">in</span> range(k)]</pre>
+<h3>规范化</h3>
+<pre>z = (X - X.mean(<span class="st">0</span>)) / X.std(<span class="st">0</span>)              <span class="cm"># z-score</span>
+mm = (X - X.min(<span class="st">0</span>)) / (X.max(<span class="st">0</span>) - X.min(<span class="st">0</span>))  <span class="cm"># min-max</span></pre>
+
+<h2 id="L1-logic">⑥ 逻辑推理模板</h2>
+<h3>解释函数（递归求真值）</h3>
+<pre><span class="kw">def</span> interp(f, w):
+    <span class="kw">if</span> isinstance(f, str): <span class="kw">return</span> w[f]
+    op = f[<span class="st">0</span>]
+    <span class="kw">if</span> op==<span class="st">"not"</span>: <span class="kw">return</span> <span class="kw">not</span> interp(f[<span class="st">1</span>], w)
+    <span class="kw">if</span> op==<span class="st">"and"</span>: <span class="kw">return</span> interp(f[<span class="st">1</span>],w) <span class="kw">and</span> interp(f[<span class="st">2</span>],w)
+    <span class="kw">if</span> op==<span class="st">"or"</span>:  <span class="kw">return</span> interp(f[<span class="st">1</span>],w) <span class="kw">or</span>  interp(f[<span class="st">2</span>],w)
+    <span class="kw">if</span> op==<span class="st">"imp"</span>: <span class="kw">return</span> (<span class="kw">not</span> interp(f[<span class="st">1</span>],w)) <span class="kw">or</span> interp(f[<span class="st">2</span>],w)</pre>
+<h3>前向链接（Horn 子句）</h3>
+<pre><span class="kw">def</span> forward(facts, rules):           <span class="cm"># rules: [(前提集, 结论)]</span>
+    facts = set(facts); changed = <span class="kw">True</span>
+    <span class="kw">while</span> changed:
+        changed = <span class="kw">False</span>
+        <span class="kw">for</span> prem, conc <span class="kw">in</span> rules:
+            <span class="kw">if</span> prem &lt;= facts <span class="kw">and</span> conc <span class="kw">not</span> <span class="kw">in</span> facts:
+                facts.add(conc); changed = <span class="kw">True</span>
+    <span class="kw">return</span> facts</pre>
+
+<h2 id="L1-np">⑦ NumPy API 速查</h2>
+<table>
+<tr><th>类别</th><th>常用</th></tr>
+<tr><td>创建</td><td><code>np.array</code> <code>arange</code> <code>linspace</code> <code>zeros/ones/full</code> <code>eye</code> <code>reshape</code></td></tr>
+<tr><td>属性</td><td><code>shape</code> <code>ndim</code> <code>size</code> <code>dtype</code> <code>strides</code> <code>.T</code></td></tr>
+<tr><td>索引</td><td>切片(视图) / 花式 <code>a[[1,2]]</code>(副本) / 布尔 <code>a[a&gt;0]</code>(副本)</td></tr>
+<tr><td>变形</td><td><code>reshape</code> <code>ravel</code>(视图) <code>flatten</code>(副本) <code>squeeze</code> <code>np.newaxis</code></td></tr>
+<tr><td>聚合</td><td><code>sum/mean/std/min/max</code> + <code>axis=</code>；<code>argmin/argmax</code></td></tr>
+<tr><td>条件</td><td><code>np.where(c,x,y)</code>；只传 c 返回索引；<code>np.select</code></td></tr>
+<tr><td>ufunc 参数</td><td><code>np.add(x,y,out=,where=)</code></td></tr>
+<tr><td>高级</td><td><code>np.add.reduce/accumulate/outer/at</code></td></tr>
+<tr><td>线代</td><td><code>a@b</code> <code>np.dot</code> <code>np.linalg.eigh/eig/inv/svd</code></td></tr>
+<tr><td>翻转/拼接</td><td><code>a[::-1]</code> <code>a[:,::-1]</code> <code>np.block</code> <code>np.concatenate</code></td></tr>
+</table>
+<div class="key"><span class="bt">axis 记忆</span><code class="inl">axis=0</code> 压缩行（得每列结果），<code class="inl">axis=1</code> 压缩列（得每行结果）；聚合后该轴消失。</div>
+
+<h2 id="L1-pd">⑧ Pandas API 速查</h2>
+<table>
+<tr><th>操作</th><th>写法</th></tr>
+<tr><td>创建</td><td><code>pd.Series(data, index=)</code> / <code>pd.DataFrame({...})</code></td></tr>
+<tr><td>选列/造列</td><td><code>df["c"]</code> / <code>df["new"] = df["a"]+df["b"]</code></td></tr>
+<tr><td>缺失值</td><td><code>dropna()</code> <code>fillna(0)</code> <code>s1.add(s2, fill_value=0)</code> <code>reindex()</code></td></tr>
+<tr><td>分组聚合</td><td><code>df.groupby("k").agg(tot=("v","sum"))</code> <code>.reset_index()</code></td></tr>
+<tr><td>排序筛选</td><td><code>df.sort_values(by=[..], ascending=[..])</code> <code>df[df["x"]&gt;=T]</code></td></tr>
+<tr><td>合并</td><td><code>pd.merge(l, r, on="k", how="left", indicator=True)</code></td></tr>
+<tr><td>去重/计数</td><td><code>drop_duplicates()</code> <code>groupby(..).size()</code></td></tr>
+<tr><td>透视</td><td><code>pd.pivot_table(df, values=, index=, columns=)</code></td></tr>
+</table>
+<div class="key"><span class="bt">索引对齐</span>Series/DataFrame 运算按标签对齐，单方独有标签结果为 <code class="inl">NaN</code>，整列类型升 float64。</div>
+
+<h2 id="L1-sci">⑨ SymPy / SciPy API 速查</h2>
+<table>
+<tr><th>SymPy</th><th>用途</th></tr>
+<tr><td><code>Symbol/symbols</code> <code>sympify</code></td><td>建符号 / 字符串转表达式</td></tr>
+<tr><td><code>expand</code> <code>factor</code> <code>simplify</code></td><td>展开 / 因式分解 / 化简</td></tr>
+<tr><td><code>diff(e,x,n)</code> <code>integrate(e,(x,a,b))</code></td><td>求导 / 积分</td></tr>
+<tr><td><code>limit(e,x,0)</code> <code>e.series(x,0,n)</code></td><td>极限 / 泰勒展开</td></tr>
+<tr><td><code>solve(eq,x)</code> <code>subs</code> <code>evalf</code> <code>lambdify(x,e,'numpy')</code></td><td>解方程 / 代入 / 求值 / 转数值函数</td></tr>
+</table>
+<table>
+<tr><th>SciPy</th><th>用途</th></tr>
+<tr><td><code>linalg.solve(A,b)</code> <code>linalg.eig(A)</code> <code>linalg.det(A)</code></td><td>解方程组 / 特征值 / 行列式</td></tr>
+<tr><td><code>optimize.minimize_scalar(f)</code> <code>optimize.root(f,x0)</code></td><td>极值 / 求根（返回对象 .x .fun）</td></tr>
+<tr><td><code>optimize.linprog(c, A_ub, b_ub, bounds)</code></td><td>线性规划（最小化；最大化要 c 取反）</td></tr>
+<tr><td><code>integrate.quad(f, a, b)</code></td><td>定积分，返回 (值, 误差)</td></tr>
+</table>
+
+<h2 id="L1-syntax">⑩ 易错语法速记</h2>
+<table>
+<tr><th>写法</th><th>结果/要点</th></tr>
+<tr><td><code>7/2</code> · <code>7//2</code> · <code>-1//5</code></td><td><code>3.5</code> · <code>3</code> · <code>-1</code>（地板除向下取整）</td></tr>
+<tr><td><code>a += [x]</code>（list）</td><td>原地修改（=extend），别名同变；<code>a=a+[x]</code> 才新建</td></tr>
+<tr><td><code>sort()</code> vs <code>sorted()</code></td><td>前者原地、返回 None；后者返回新列表</td></tr>
+<tr><td><code>def f(lst=[])</code></td><td>可变默认参数共享，改用 <code>=None</code> 哨兵</td></tr>
+<tr><td>切片 vs 花式索引</td><td>切片视图、花式/布尔副本</td></tr>
+<tr><td>迭代器/生成器</td><td>只能消费一次，耗尽再用为空</td></tr>
+<tr><td><code>finally</code> 里 return</td><td>覆盖 try/except 的返回值</td></tr>
+<tr><td><code>except</code> 顺序</td><td>具体异常写前面，<code>Exception</code> 写最后</td></tr>
+<tr><td>空集合</td><td><code>set()</code>，<code>{}</code> 是空字典</td></tr>
+<tr><td>单元素元组</td><td><code>(1,)</code> 逗号不能少</td></tr>
+<tr><td><code>input()</code></td><td>永远返回 str，要转型</td></tr>
+<tr><td><code>1j**2</code></td><td><code>(-1+0j)</code>；单写 <code>j</code> 是 NameError</td></tr>
+<tr><td>lambda</td><td>只能写表达式，不能有语句</td></tr>
+</table>
+
+<p style="text-align:center; color:var(--sub); margin-top:50px;">— 速查表结束 —</p>
+</section>
+<hr style="border:0;border-top:3px double var(--accent);margin:60px 0;">
+<section class="lecture-block">
+<header class="hero">
+  <h1>易错点清单</h1>
+  <div class="meta">人工智能程序设计 · 语法陷阱 / 边界条件 / 常踩的坑（考前快速扫一遍）</div>
+</header>
+
+<p id="L2-legend"><span class="tag g-syntax">语法陷阱</span><span class="tag g-bound">边界条件</span><span class="tag g-trap">常踩的坑</span></p>
+
+<h2 id="L2-basic">① Python 基础</h2>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>地板除负数向下取整</span><code class="inl">-1 // 5 == -1</code>（不是 0），<code class="inl">7 // 2 == 3</code>；<code class="inl">/</code> 结果永远是 float（<code class="inl">6/3==2.0</code>）。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>input 返回字符串</span><code class="inl">input()</code> 永远是 str，参与数值运算前必须 <code class="inl">int()/float()/eval()</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>强类型不隐式转换</span><code class="inl">"5" + 5</code> 报 <code class="inl">TypeError</code>；变量却可动态改类型（<code class="inl">x=3; x="a"</code> 合法）。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>不可变对象"修改"换 id</span><code class="inl">x=x+1</code> 新建对象（id 变）；<code class="inl">y=x</code> 后改 x 不影响 y。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>复数 j</span><code class="inl">1j**2 == (-1+0j)</code>；单写 <code class="inl">j</code> 是 <code class="inl">NameError</code>。</div>
+
+<h2 id="L2-data">② 数据结构</h2>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span><code class="inl">a += [x]</code> 是原地修改</span>对 list 等价 <code class="inl">extend</code>，所有别名一起变；<code class="inl">a = a + [x]</code> 才新建。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>原地方法返回 None</span><code class="inl">sort()/reverse()/append()</code> 返回 None；要新列表用 <code class="inl">sorted()/reversed()</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>浅拷贝不拷内层</span><code class="inl">b=a.copy()</code> 改 <code class="inl">b[2][0]</code> 会连带改 a 的嵌套子列表；要彻底独立用 <code class="inl">deepcopy</code>。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>切片左闭右开</span><code class="inl">a[:-1]</code> 去掉最后一个；切片返回<strong>新列表</strong>不改原；越界索引才报 <code class="inl">IndexError</code>，切片越界不报。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>不可变容器含可变元素</span><code class="inl">t=([1,2],3)</code>：<code class="inl">t[0].append(9)</code> 合法，<code class="inl">t[0]=[..]</code> 报错。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>单元素元组 / 空集合</span><code class="inl">(1,)</code> 逗号不能少；空集合是 <code class="inl">set()</code>，<code class="inl">{}</code> 是空字典。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>find vs index</span><code class="inl">find</code> 找不到返回 <code class="inl">-1</code>，<code class="inl">index</code> 找不到抛 <code class="inl">ValueError</code>；字典 <code class="inl">d[k]</code> 缺键 <code class="inl">KeyError</code>，<code class="inl">d.get(k,默认)</code> 安全。</div>
+
+<h2 id="L2-flow">③ 流程控制</h2>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>短路返回操作数本身</span><code class="inl">3 and 5 == 5</code>，<code class="inl">0 or "x" == "x"</code>——不一定是 True/False。假值：<code class="inl">0 None '' [] {} ()</code>。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>迭代器/生成器只用一次</span>耗尽后再遍历为空；生成器表达式用圆括号且是生成器不是元组。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>print 的 sep/end</span><code class="inl">print(a,b,sep="-",end="!")</code>；默认 sep 空格、end 换行。</div>
+
+<h2 id="L2-func">④ 函数与函数式</h2>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>可变默认参数</span><code class="inl">def f(val,lst=[])</code> 多次调用共享同一 list、累积；改用 <code class="inl">lst=None</code> 哨兵。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>赋值即局部 / UnboundLocalError</span>函数内只要给某名字赋值，它整段就是局部变量；想改外层/全局须 <code class="inl">nonlocal</code>/<code class="inl">global</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>闭包绑定循环变量</span>循环里造多个函数，闭包共享同一变量、最终都拿末值；用默认参数固定：<code class="inl">def g(y,a=x): ...</code>。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>map/filter 惰性</span>返回迭代器，需 <code class="inl">list()</code> 才看到值，且只能消费一次。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>递归终止条件</span>必写基准情形，否则无限递归（深度约 1000）；重复子问题用字典记忆化防超时。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>参数定义顺序</span>位置 → 默认 → <code class="inl">*args</code> → 仅关键字 → <code class="inl">**kwargs</code>；调用时位置参数必在关键字前。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>多返回值是元组</span><code class="inl">return a,b</code> 返回 <code class="inl">(a,b)</code>，可整体接或解包；无 return 返回 None。</div>
+
+<h2 id="L2-oop">⑤ 面向对象</h2>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>类属性遮蔽</span><code class="inl">obj.x=v</code> 总在实例上新建、遮蔽类属性；改类属性须用 <code class="inl">类.x=v</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>子类重写 __init__ 漏 super</span>子类 <code class="inl">__init__</code> 不调 <code class="inl">super().__init__(...)</code>，父类属性全丢。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>super 是 MRO 下一个</span>多继承里 <code class="inl">super()</code> 不是"父类"而是 MRO 里下一个；"先 super 再打印"的输出顺序与 MRO 相反。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>Duck Typing 运行时才报错</span>调用前不查类型，缺方法时运行到才抛 <code class="inl">AttributeError</code>；可用 <code class="inl">hasattr</code>/<code class="inl">try-except</code> 防。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>name mangling</span><code class="inl">__x</code> 实际改名 <code class="inl">_类名__x</code>，外部 <code class="inl">obj.__x</code> 访问失败；非加密。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>混合类型运算</span>运算符重载遇不支持类型应返回 <code class="inl">NotImplemented</code>，触发反向方法 <code class="inl">__radd__</code> 等。</div>
+
+<h2 id="L2-err">⑥ 异常 / 模块</h2>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>finally 的 return 覆盖</span><code class="inl">finally</code> 里 <code class="inl">return</code> 会盖掉 try/except 的返回值。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>except 匹配顺序</span>先匹配先处理；<code class="inl">except Exception</code> 写最前会吞掉一切，具体异常要写前面。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>__exit__ 返回值决定异常去留</span>返回 <code class="inl">True</code> 压制异常、<code class="inl">None/False</code> 继续抛；<code class="inl">with</code> 本身不等于捕获异常。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>自定义异常漏 super</span>构造里必须 <code class="inl">super().__init__(msg)</code>，否则消息为空。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>缺 __name__ 守卫</span>无 <code class="inl">if __name__=="__main__":</code> 时，模块被 import 也会跑顶层测试代码。</div>
+
+<h2 id="L2-np">⑦ NumPy</h2>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>视图 vs 副本</span>切片/整数索引是视图（改连带改原），花式/布尔索引是副本（不影响原）。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>广播从右对齐</span>维度不足左补 1；每维相等或有一个为 1 才兼容，否则报错。判 shape 别从左对。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>axis 方向</span><code class="inl">axis=0</code> 压行得每列、<code class="inl">axis=1</code> 压列得每行；聚合后该轴消失。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>重复索引累加</span><code class="inl">a[idx]+=1</code> 重复索引只加一次；要逐次累加用 <code class="inl">np.add.at</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>转置后 reshape 可能复制</span><code class="inl">.T</code> 只改 strides 不动数据；其后默认 <code class="inl">reshape</code> 因内存不连续会触发复制。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>where 两种用法</span><code class="inl">np.where(c,x,y)</code> 返回数组；<code class="inl">np.where(c)</code> 返回索引元组。除零警告用 <code class="inl">np.errstate</code> 屏蔽。</div>
+
+<h2 id="L2-sci">⑧ SymPy / SciPy / Pandas</h2>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>SymPy Float 精度</span><code class="inl">Float(0.3,25)</code> 不精确；要精确传字符串 <code class="inl">Float('0.3',25)</code>。<code class="inl">Sum/Product</code> 要 <code class="inl">.doit()</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>linprog 默认最小化</span>最大化要目标系数取反、结果再取反；<code class="inl">&gt;=</code> 约束两边乘 -1；bounds 默认 <code class="inl">(0,None)</code>。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>quad 被积函数要向量化</span>用 <code class="inl">np.exp</code> 不用 <code class="inl">math.exp</code>；返回 <code class="inl">(值,误差)</code> 二元组要解包。<code class="inl">solve</code> 要非奇异方阵。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>Pandas 索引对齐生 NaN</span>不同 index 的 Series/DataFrame 运算只对齐共同标签，单方独有为 NaN、类型升 float64；用 <code class="inl">fill_value</code>/<code class="inl">fillna</code> 处理。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>merge 默认 inner</span>不匹配的键被丢；键非一一对应会产生笛卡尔积式扩张。</div>
+
+<h2 id="L2-ml">⑨ 机器学习</h2>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>PCA 必须中心化</span>不中心化第一主成分会偏向均值方向；特征尺度差异大要先 z-score；特征向量符号 v/-v 都对（作业要按规则定符号）。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>规范化参数只从训练集算</span>min/max、μ/σ 必须训练集拟合、测试集套用，防数据泄露；常数列 σ=0 要防除零。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>KNN 平票 / 距离同序</span>平票取类别编号最小；距离相同训练集先出现的排前（排序键带下标保稳定）。k 大欠拟合、k 小过拟合。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>K-Means 初始敏感</span>可能收敛局部最优；作业里初始中心常固定取前 k 个点；K-Centroid 中心必须是真实样本点（非均值）。</div>
+<div class="item"><span class="h"><span class="tag g-syntax">语法陷阱</span>置信度用整数比较</span>判 <code class="inl">100*σ(X∪Y) &gt;= C*σ(X)</code> 避免浮点误差。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>逻辑回归是分类</span>名字带"回归"但做分类；sigmoid 分段写防溢出；阈值 0.5 决策。</div>
+
+<h2 id="L2-logic">⑩ 逻辑推理</h2>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>蕴含真值</span><code class="inl">f→g</code> 只有前真后假才为假；前件为假时整体恒真。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>无效推理形式</span>肯定后件（<code class="inl">Q,P→Q ⇒ P</code>）、否定前件（<code class="inl">¬P,P→Q ⇒ ¬Q</code>）都<strong>无效</strong>。</div>
+<div class="item"><span class="h"><span class="tag g-bound">边界条件</span>⊨ vs ⊢</span><code class="inl">KB⊨f</code>（语义）⟺ <code class="inl">KB∪{¬f}</code> 不可满足；<code class="inl">⊢</code> 是语法可证。正确≠完备。</div>
+<div class="item"><span class="h"><span class="tag g-trap">常踩的坑</span>Apriori 方向</span>"非频繁项集的超集必非频繁"用于剪枝；不能反过来由超集推子集。</div>
+
+<p style="text-align:center; color:var(--sub); margin-top:50px;">— 易错点清单结束 · 考前再扫一遍 —</p>
+</section>
+</main>
+</div>
+<script>
+const links=[...document.querySelectorAll('#toc a[href^="#"]')];const map={};
+links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const sects=Object.keys(map).map(id=>document.getElementById(id));
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});},{rootMargin:'-10% 0px -80% 0px',threshold:0});
+sects.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

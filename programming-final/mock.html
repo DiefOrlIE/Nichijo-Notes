@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人工智能程序设计 · 模拟卷</title>
+<style>
+  :root{
+    --paper:#fbf8f1; --ink:#23201b; --sub:#6a635a; --line:#e3dccd;
+    --accent:#7a5c2e; --accent2:#9c7b46;
+    --code-bg:#2b2722; --code-ink:#f2ede3;
+    --ans-bg:#f3f6f1; --ans-bd:#4a8a5a;
+    --easy:#4a8a5a; --mid:#c9a227; --hard:#c0533f;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:"Songti SC","SimSun","Noto Serif SC",serif; font-size:17px; line-height:1.8;}
+  p,li,td,th,h1,h2,h3,h4,summary{font-family:"Times New Roman","Songti SC","SimSun","Noto Serif SC",serif;}
+  .container{max-width:920px; margin:0 auto; padding:0 22px 120px;}
+  header.hero{border-bottom:2px solid var(--accent); padding:26px 0 16px; margin-bottom:8px;}
+  header.hero h1{font-size:28px; margin:0 0 6px; color:var(--accent);}
+  header.hero .meta{color:var(--sub); font-size:14.5px;}
+  /* 顶栏 */
+  .topbar{position:sticky; top:0; z-index:50; background:rgba(251,248,241,.96); backdrop-filter:blur(4px); border-bottom:1px solid var(--line); padding:10px 0; margin-bottom:18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
+  .btn{font-family:"Times New Roman",serif; font-size:15px; background:var(--accent); color:#fff; border:none; border-radius:6px; padding:7px 16px; cursor:pointer;}
+  .btn:hover{background:#5f4621;}
+  .btn.sec{background:#efe7d6; color:var(--accent);}
+  #summary{flex:1 1 320px; min-height:24px; font-size:14px; color:var(--sub); background:#f3ecdd; border-radius:6px; padding:6px 12px;}
+  h2.sec{font-size:22px; color:var(--accent); margin:38px 0 6px; border-bottom:1px solid var(--line); padding-bottom:6px;}
+  .secnote{color:var(--sub); font-size:14px; margin:0 0 10px;}
+  .q{border:1px solid var(--line); border-radius:9px; padding:14px 18px; margin:16px 0; background:#fffdf8;}
+  .qhead{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;}
+  .qid{font-weight:bold; color:var(--accent); font-size:16px;}
+  .tag{font-size:12px; padding:1px 9px; border-radius:10px; color:#fff; font-family:"Times New Roman",serif;}
+  .t-easy{background:var(--easy);} .t-mid{background:var(--mid);} .t-hard{background:var(--hard);}
+  .t-type{background:#7d756a;}
+  .flagwrap{margin-left:auto; font-size:14px; color:var(--hard); cursor:pointer; user-select:none; white-space:nowrap;}
+  .flagwrap input{transform:scale(1.25); margin-right:5px; vertical-align:middle; cursor:pointer;}
+  .qbody p{margin:6px 0;}
+  code.inl{font-family:"Consolas","Courier New",monospace; background:#efe7d6; padding:1px 6px; border-radius:4px; font-size:14px; color:#6b4f23;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:7px; padding:13px 16px; overflow-x:auto; font-size:14px; line-height:1.55; font-family:"Consolas","Courier New",monospace; margin:10px 0;}
+  pre .cm{color:#9aa18f;} pre .kw{color:#e8a35c;} pre .st{color:#9ccb86;}
+  details{margin-top:10px; border-top:1px dashed var(--line); padding-top:8px;}
+  summary{cursor:pointer; color:var(--accent); font-weight:bold; font-size:15px; outline:none;}
+  summary:hover{color:#5f4621;}
+  .ans{background:var(--ans-bg); border-left:4px solid var(--ans-bd); border-radius:6px; padding:10px 15px; margin-top:10px; font-size:15.5px;}
+  .ans pre{margin:8px 0;}
+  .ans b{color:#2f6b3e;}
+  .flagged{box-shadow:0 0 0 2px var(--hard) inset;}
+  table{border-collapse:collapse; margin:8px 0; font-size:14.5px;}
+  th,td{border:1px solid var(--line); padding:5px 10px;}
+  th{background:#f1e9d8;}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="container">
+<header class="hero">
+  <h1>人工智能程序设计 · 模拟卷</h1>
+  <div class="meta">贴近 2025 真题结构 · 难度配比 基础:中等:难 ≈ 3:5:2 · 共 33 题 &nbsp;|&nbsp; 题型：概念简答 / 阅读程序写输出 / 补全·实现·手写 / 算法分析 / 综合应用</div>
+</header>
+
+<div class="topbar">
+  <button class="btn" onclick="collect()">📋 汇总没把握题号</button>
+  <button class="btn sec" onclick="openAll(true)">展开全部答案</button>
+  <button class="btn sec" onclick="openAll(false)">收起全部答案</button>
+  <div id="summary">勾选每题右上角「🚩没把握」，点左侧按钮汇总成一句话复制给阿卡酱。</div>
+</div>
+
+<!-- ============ 一、概念简答 ============ -->
+<h2 class="sec">一、概念简答（对应真题第一大题 6×5=30）</h2>
+<p class="secnote">要求：抓住定义 + 关键性质，分点作答。</p>
+
+<div class="q" id="q1">
+  <div class="qhead"><span class="qid">Q1</span><span class="tag t-type">简答</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q1">🚩没把握</label></div>
+  <div class="qbody"><p>解释型语言与编译型语言的执行过程有何不同？比较两者的运行效率差异。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>编译型</b>（C/C++）：运行前由编译器把整份源码一次性翻译成机器码、链接成可执行文件，运行时脱离编译器直接执行。<br>
+    <b>解释型</b>（Python）：由解释器在运行时逐行翻译并执行，每次运行都需解释器在场。<br>
+    <b>效率</b>：编译型把翻译成本前置，运行时是纯机器码，<b>更快</b>；解释型边翻译边执行有额外开销，<b>较慢</b>，但即改即运行、便于调试、跨平台（源码+解释器即可）。
+  </div></details>
+</div>
+
+<div class="q" id="q2">
+  <div class="qhead"><span class="qid">Q2</span><span class="tag t-type">简答</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q2">🚩没把握</label></div>
+  <div class="qbody"><p>解释字符串、列表、元组的含义，并指出其中哪些是可变对象。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>字符串 str</b>：不可变的字符序列；<b>列表 list</b>：可变的有序序列，能增删改；<b>元组 tuple</b>：不可变的有序序列。<br>
+    三者中<b>只有 list 可变</b>，str、tuple 不可变。意义：不可变对象可做字典键/集合元素（可哈希），对它"修改"会新建对象（id 变）；可变对象原地修改（id 不变）。
+  </div></details>
+</div>
+
+<div class="q" id="q3">
+  <div class="qhead"><span class="qid">Q3</span><span class="tag t-type">简答</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q3">🚩没把握</label></div>
+  <div class="qbody"><p>分别解释纯函数和高阶函数的含义，并判断一个函数能否同时是纯函数和高阶函数。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>纯函数</b>：返回值只依赖输入参数、且无副作用（不改变外部状态），相同输入永远同样输出。<br>
+    <b>高阶函数</b>：以函数为参数，或返回函数。<br>
+    <b>能同时是</b>：两者约束的维度不同——"纯"管有无副作用，"高阶"管是否传入/返回函数，互相正交。例 <code class="inl">compose(f,g)=lambda x:f(g(x))</code>：接收并返回函数（高阶），又不碰外部状态（纯）。
+  </div></details>
+</div>
+
+<div class="q" id="q4">
+  <div class="qhead"><span class="qid">Q4</span><span class="tag t-type">简答</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q4">🚩没把握</label></div>
+  <div class="qbody"><p>哪些行为会产生函数副作用？函数副作用会带来哪些影响？</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>产生副作用的行为</b>：修改全局变量（或用 global/nonlocal 改外层绑定）、修改传入的可变对象（list/dict/对象属性）、I/O（print、读写文件、读键盘、网络）。<br>
+    <b>影响</b>：函数不再自包含，行为依赖/改变隐藏状态，导致难以推理、难测试、难并发，且 bug 难复现（同样输入结果可能不同）。工程上应把副作用收敛到少数边界。
+  </div></details>
+</div>
+
+<div class="q" id="q5">
+  <div class="qhead"><span class="qid">Q5</span><span class="tag t-type">简答</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q5">🚩没把握</label></div>
+  <div class="qbody"><p>分别解释抽象和封装的含义，并说明两者的异同。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>抽象</b>：从使用者视角，只关心对象"能做什么"、忽略"怎么实现"（关注接口/行为）。<br>
+    <b>封装</b>：从实现者视角，把数据与实现细节隐藏，只暴露受控接口，防止外部乱改内部状态（关注隐藏/保护）。<br>
+    <b>同</b>：都为控制复杂度，都区分对外接口与内部细节。<b>异</b>：抽象决定"该露什么"，封装负责"把不该露的藏好"。
+  </div></details>
+</div>
+
+<div class="q" id="q6">
+  <div class="qhead"><span class="qid">Q6</span><span class="tag t-type">简答</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q6">🚩没把握</label></div>
+  <div class="qbody"><p>说明 PCA 的主要思想及实现步骤。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>思想</b>：找一个线性变换把 D 维数据投影到 d 维（d&lt;D），使投影后<b>方差最大</b>（沿信息最丰富的方向建坐标系，尽量保留信息），等价于重构误差最小。<br>
+    <b>步骤</b>：① 中心化（各特征减均值）；②（尺度差异大时）z-score 规范化；③ 算协方差矩阵 C=(1/m)XᵀX；④ 对 C 特征值分解；⑤ 按特征值从大到小取前 d 个特征向量组成 W；⑥ 投影 Z=X·W。<br>
+    <b>要点</b>：必须中心化；特征值=该方向方差，越大越重要；方差贡献率 λ_i/Σλ 用于选 d。
+  </div></details>
+</div>
+
+<div class="q" id="q7">
+  <div class="qhead"><span class="qid">Q7</span><span class="tag t-type">简答</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q7">🚩没把握</label></div>
+  <div class="qbody"><p>NumPy 中视图（view）与副本（copy）有何区别？哪些索引返回视图、哪些返回副本？</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>视图</b>与原数组共享底层数据，改视图会改原数组；<b>副本</b>是独立数据，互不影响。<br>
+    <b>基本切片</b>（<code class="inl">a[1:3]</code>）和整数索引 → 通常返回<b>视图</b>；<b>花式索引</b>（整数数组/列表下标）和<b>布尔索引</b> → 总是返回<b>副本</b>。要独立拷贝用 <code class="inl">.copy()</code>。
+  </div></details>
+</div>
+
+<div class="q" id="q8">
+  <div class="qhead"><span class="qid">Q8</span><span class="tag t-type">简答</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q8">🚩没把握</label></div>
+  <div class="qbody"><p>什么是过拟合与欠拟合？为什么不能只根据训练误差选择模型？</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>欠拟合</b>：模型太简单，训练误差和泛化误差都高。<b>过拟合</b>：模型太复杂，训练误差很低但泛化误差高（测试集差）。<br>
+    随复杂度↑，训练误差持续↓但泛化误差先↓后↑。只看训练误差会选到过拟合的复杂模型，<b>泛化差</b>；应用验证集/<b>交叉验证</b>评估泛化能力来选模型。
+  </div></details>
+</div>
+
+<div class="q" id="q9">
+  <div class="qhead"><span class="qid">Q9</span><span class="tag t-type">简答</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q9">🚩没把握</label></div>
+  <div class="qbody"><p>解释逻辑推理系统的"正确性（soundness）"与"完备性（completeness）"，并说明 ⊨ 与 ⊢ 的区别。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>⊨</b>（语义蕴含）：满足 KB 的所有世界里 f 都为真；<b>⊢</b>（语法可证）：用推理规则能推出 f。<br>
+    <b>正确性</b>：若 KB⊢f 则 KB⊨f（推出来的都真，不乱推）。<b>完备性</b>：若 KB⊨f 则 KB⊢f（所有真的都能推出）。<br>
+    系统可"正确但不完备"（规则太少）；关键转化：<code class="inl">KB⊨f</code> ⟺ <code class="inl">KB∪{¬f}</code> 不可满足。
+  </div></details>
+</div>
+
+<div class="q" id="q10">
+  <div class="qhead"><span class="qid">Q10</span><span class="tag t-type">简答</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q10">🚩没把握</label></div>
+  <div class="qbody"><p><code class="inl">global</code> 与 <code class="inl">nonlocal</code> 的作用与适用场景分别是什么？</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>global x</b>：在函数内修改<b>全局</b>变量绑定（如改模块级计数器）。<br>
+    <b>nonlocal x</b>：在嵌套函数内修改<b>最近的外层函数</b>（非全局）的变量绑定（如闭包更新状态）。<br>
+    背景：函数内只要对某名字赋值，默认就当它是局部变量；要改外层/全局须显式声明，否则会新建局部变量甚至触发 <code class="inl">UnboundLocalError</code>。
+  </div></details>
+</div>
+
+<!-- ============ 二、阅读程序写输出 ============ -->
+<h2 class="sec">二、阅读程序写输出（对应真题第二大题 6×5=30）</h2>
+<p class="secnote">要求：写出每个 <code class="inl">print</code> 的结果（注意一题可能多个 print）。</p>
+
+<div class="q" id="q11">
+  <div class="qhead"><span class="qid">Q11</span><span class="tag t-type">读输出</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q11">🚩没把握</label></div>
+  <div class="qbody">
+<pre>a = [<span class="st">0</span>, <span class="st">1</span>, <span class="st">2</span>, <span class="st">3</span>, <span class="st">4</span>]
+print(a[-<span class="st">1</span>])
+print(a[:-<span class="st">1</span>])
+b = a
+a += [<span class="st">5</span>]
+print(b)
+print(a[::-<span class="st">1</span>])</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>4
+[0, 1, 2, 3]
+[0, 1, 2, 3, 4, 5]
+[5, 4, 3, 2, 1, 0]</pre>
+    <b>关键</b>：<code class="inl">a += [5]</code> 对列表是<b>原地</b>修改（等价 extend），<code class="inl">b</code> 与 <code class="inl">a</code> 指向同一列表，所以 <code class="inl">b</code> 也变成含 5 的列表。<code class="inl">a[:-1]</code>、<code class="inl">a[::-1]</code> 都返回新列表、不改原列表。
+  </div></details>
+</div>
+
+<div class="q" id="q12">
+  <div class="qhead"><span class="qid">Q12</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q12">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">def</span> f(val, lst=[]):
+    lst.append(val)
+    <span class="kw">return</span> lst
+print(f(<span class="st">1</span>))
+print(f(<span class="st">2</span>))
+print(f(<span class="st">1</span>))</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>[1]
+[1, 2]
+[1, 2, 1]</pre>
+    <b>可变默认参数陷阱</b>：默认值 <code class="inl">[]</code> 在函数定义时只创建一次、绑定在函数对象上，多次未传参的调用<b>共享同一列表</b>，修改累积。
+  </div></details>
+</div>
+
+<div class="q" id="q13">
+  <div class="qhead"><span class="qid">Q13</span><span class="tag t-type">读输出</span><span class="tag t-hard">难</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q13">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">class</span> Base:
+    <span class="kw">def</span> info(self): print(<span class="st">"Base"</span>)
+<span class="kw">class</span> X(Base):
+    <span class="kw">def</span> info(self): super().info(); print(<span class="st">"X"</span>)
+<span class="kw">class</span> Y(Base):
+    <span class="kw">def</span> info(self): super().info(); print(<span class="st">"Y"</span>)
+<span class="kw">class</span> Z(X, Y):
+    <span class="kw">def</span> info(self): super().info(); print(<span class="st">"Z"</span>)
+Z().info()</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>Base
+Y
+X
+Z</pre>
+    <b>MRO</b>：Z→X→Y→Base→object。<code class="inl">super()</code> 调"MRO 里下一个"。每个 info 先 super 再打印：一路递归到 Base 先打印 Base，再回溯打印 Y、X、Z。口诀：先 super 的，打印顺序与 MRO 相反。
+  </div></details>
+</div>
+
+<div class="q" id="q14">
+  <div class="qhead"><span class="qid">Q14</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q14">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">def</span> f(animal): animal.fly()
+<span class="kw">class</span> Bird:
+    <span class="kw">def</span> fly(self): print(<span class="st">"bird flying"</span>)
+<span class="kw">class</span> Dog: <span class="kw">pass</span>
+f(Bird())
+f(Dog())</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>bird flying
+AttributeError: 'Dog' object has no attribute 'fly'</pre>
+    Bird 有 fly 正常；Dog 没有 fly，运行到 <code class="inl">animal.fly()</code> 才抛 <b>AttributeError</b>。体现 Python 的<b>动态类型 + Duck Typing</b>：调用前不检查类型。修复：给 Dog 加 fly，或用 <code class="inl">hasattr</code>/<code class="inl">try-except</code>。
+  </div></details>
+</div>
+
+<div class="q" id="q15">
+  <div class="qhead"><span class="qid">Q15</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q15">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+a = np.arange(<span class="st">12</span>).reshape(<span class="st">3</span>, <span class="st">4</span>)
+print(a[[<span class="st">1</span>,<span class="st">2</span>,<span class="st">0</span>]][:, [<span class="st">2</span>,<span class="st">0</span>,<span class="st">1</span>,<span class="st">3</span>]])</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>[[ 6  4  5  7]
+ [10  8  9 11]
+ [ 2  0  1  3]]</pre>
+    先 <code class="inl">a[[1,2,0]]</code> 取行 1,2,0 → <code class="inl">[[4,5,6,7],[8,9,10,11],[0,1,2,3]]</code>；再 <code class="inl">[:,[2,0,1,3]]</code> 每行取列 2,0,1,3。逐行：[4567]→[6,4,5,7]；[8,9,10,11]→[10,8,9,11]；[0123]→[2,0,1,3]。
+  </div></details>
+</div>
+
+<div class="q" id="q16">
+  <div class="qhead"><span class="qid">Q16</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q16">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">def</span> make(s, d):
+    t = -<span class="st">1</span>
+    <span class="kw">def</span> c():
+        <span class="kw">nonlocal</span> t
+        t += <span class="st">1</span>
+        <span class="kw">return</span> s + d * t
+    <span class="kw">return</span> c
+c1 = make(<span class="st">5</span>, <span class="st">2</span>)
+c2 = make(<span class="st">10</span>, -<span class="st">1</span>)
+print(c1(), c1(), c1())
+print(c2(), c2())</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>5 7 9
+10 9</pre>
+    <b>闭包</b>：每次 <code class="inl">make</code> 生成独立的 <code class="inl">t</code>，<code class="inl">c1</code> 与 <code class="inl">c2</code> 状态互不干扰。<code class="inl">c1</code>：t 依次 0,1,2 → 5,7,9；<code class="inl">c2</code>：t 依次 0,1 → 10,9。
+  </div></details>
+</div>
+
+<div class="q" id="q17">
+  <div class="qhead"><span class="qid">Q17</span><span class="tag t-type">读输出</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q17">🚩没把握</label></div>
+  <div class="qbody">
+<pre>g = (i*i <span class="kw">for</span> i <span class="kw">in</span> range(<span class="st">4</span>))
+print(list(g))
+print(list(g))
+print(<span class="st">3</span> <span class="kw">and</span> <span class="st">5</span>, <span class="st">0</span> <span class="kw">or</span> <span class="st">"x"</span>)</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>[0, 1, 4, 9]
+[]
+5 x</pre>
+    生成器<b>只能消费一次</b>，第二次 <code class="inl">list(g)</code> 为空。短路求值返回操作数本身：<code class="inl">3 and 5→5</code>（都真返回后者），<code class="inl">0 or "x"→"x"</code>（前假返回后者）。
+  </div></details>
+</div>
+
+<div class="q" id="q18">
+  <div class="qhead"><span class="qid">Q18</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q18">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">class</span> A:
+    x = <span class="st">0.2</span>
+a, b = A(), A()
+a.x = <span class="st">0.3</span>
+print(a.x, b.x, A.x)
+A.x = <span class="st">0.4</span>
+print(a.x, b.x, A.x)</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>0.3 0.2 0.2
+0.3 0.4 0.4</pre>
+    <code class="inl">a.x=0.3</code> 在实例 a 上新建实例属性、<b>遮蔽</b>类属性，b 和类不受影响。改 <code class="inl">A.x=0.4</code> 后：b 没遮蔽跟着变 0.4，a 仍读自己的 0.3。
+  </div></details>
+</div>
+
+<div class="q" id="q19">
+  <div class="qhead"><span class="qid">Q19</span><span class="tag t-type">读输出</span><span class="tag t-hard">难</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q19">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">def</span> t():
+    <span class="kw">try</span>:
+        <span class="kw">return</span> <span class="st">"try"</span>
+    <span class="kw">except</span>:
+        <span class="kw">return</span> <span class="st">"except"</span>
+    <span class="kw">finally</span>:
+        <span class="kw">return</span> <span class="st">"finally"</span>
+print(t())</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>finally</pre>
+    <code class="inl">finally</code> 里的 <code class="inl">return</code> 会<b>覆盖</b> try/except 中的返回值——无论 try 是否正常，最终返回 <code class="inl">"finally"</code>。
+  </div></details>
+</div>
+
+<div class="q" id="q20">
+  <div class="qhead"><span class="qid">Q20</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q20">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+s1 = pd.Series([<span class="st">1</span>,<span class="st">2</span>,<span class="st">3</span>], index=[<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span>])
+s2 = pd.Series([<span class="st">4</span>,<span class="st">5</span>,<span class="st">6</span>], index=[<span class="st">"b"</span>,<span class="st">"c"</span>,<span class="st">"d"</span>])
+print(s1 + s2)</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>a    NaN
+b    6.0
+c    8.0
+d    NaN
+dtype: float64</pre>
+    Series 运算<b>按标签对齐</b>，只有双方都有的标签（b、c）参与；单方独有的 a、d 结果为 <code class="inl">NaN</code>，类型升为 float64。
+  </div></details>
+</div>
+
+<div class="q" id="q21">
+  <div class="qhead"><span class="qid">Q21</span><span class="tag t-type">读输出</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q21">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+m = np.arange(<span class="st">6</span>).reshape(<span class="st">2</span>, <span class="st">3</span>)
+print(m.sum(axis=<span class="st">0</span>))
+print(m.sum(axis=<span class="st">1</span>))
+print((np.ones((<span class="st">3</span>,<span class="st">1</span>)) + np.arange(<span class="st">4</span>)).shape)</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>[3 5 7]
+[ 3 12]
+(3, 4)</pre>
+    <code class="inl">axis=0</code> 沿行向下压缩 → 每列和 [0+3,1+4,2+5]=[3,5,7]；<code class="inl">axis=1</code> 每行和 [0+1+2, 3+4+5]=[3,12]。广播：(3,1) 与 (4,)→(1,4) → 结果 (3,4)。
+  </div></details>
+</div>
+
+<div class="q" id="q22">
+  <div class="qhead"><span class="qid">Q22</span><span class="tag t-type">读输出</span><span class="tag t-hard">难</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q22">🚩没把握</label></div>
+  <div class="qbody">
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+a = np.array([<span class="st">1</span>,<span class="st">2</span>,<span class="st">3</span>,<span class="st">4</span>])
+a[[<span class="st">0</span>,<span class="st">1</span>,<span class="st">2</span>,<span class="st">2</span>]] += <span class="st">1</span>
+print(a)
+b = np.array([<span class="st">1</span>,<span class="st">2</span>,<span class="st">3</span>,<span class="st">4</span>])
+np.add.at(b, [<span class="st">0</span>,<span class="st">1</span>,<span class="st">2</span>,<span class="st">2</span>], <span class="st">1</span>)
+print(b)</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre>[2 3 4 4]
+[2 3 5 4]</pre>
+    <code class="inl">a[idx]+=1</code> 对重复索引 2 <b>只加一次</b>（先取值再整体写回，后写覆盖前写）；<code class="inl">np.add.at</code> 是无缓冲原地操作，重复索引 2 <b>累加两次</b>（3→5）。
+  </div></details>
+</div>
+
+<!-- ============ 三、补全 / 实现 / 手写 ============ -->
+<h2 class="sec">三、补全 · 实现 · 手写代码（对应真题第三大题 2×10=20）</h2>
+<p class="secnote">要求：写出可运行的关键代码，注意边界与终止条件。</p>
+
+<div class="q" id="q23">
+  <div class="qhead"><span class="qid">Q23</span><span class="tag t-type">补全</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q23">🚩没把握</label></div>
+  <div class="qbody"><p>补全递归阶乘函数的缺失部分（终止条件 + 递归式）：</p>
+<pre><span class="kw">def</span> fact(n):
+    ____________   <span class="cm"># 终止条件</span>
+    <span class="kw">return</span> ____________</pre>
+  </div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre><span class="kw">def</span> fact(n):
+    <span class="kw">if</span> n == <span class="st">0</span>:
+        <span class="kw">return</span> <span class="st">1</span>
+    <span class="kw">return</span> n * fact(n - <span class="st">1</span>)</pre>
+    基准情形 <code class="inl">n==0 → 1</code> 不可少，否则无限递归。
+  </div></details>
+</div>
+
+<div class="q" id="q24">
+  <div class="qhead"><span class="qid">Q24</span><span class="tag t-type">实现</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q24">🚩没把握</label></div>
+  <div class="qbody"><p>（真题原题）在一个<b>二维</b>有序列表（每行内升序、行间也升序，即把它看成展平后整体升序）上实现二分查找，找到目标返回 <code class="inl">(行, 列)</code>，找不到返回 <code class="inl">(-1,-1)</code>。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    思路：把 m×n 矩阵当成长度 m·n 的有序一维序列做二分，下标 <code class="inl">mid</code> 映射回 <code class="inl">(mid//n, mid%n)</code>。
+<pre><span class="kw">def</span> search2d(mat, target):
+    <span class="kw">if</span> <span class="kw">not</span> mat <span class="kw">or</span> <span class="kw">not</span> mat[<span class="st">0</span>]:
+        <span class="kw">return</span> (-<span class="st">1</span>, -<span class="st">1</span>)
+    m, n = len(mat), len(mat[<span class="st">0</span>])
+    lo, hi = <span class="st">0</span>, m * n - <span class="st">1</span>
+    <span class="kw">while</span> lo &lt;= hi:
+        mid = (lo + hi) // <span class="st">2</span>
+        v = mat[mid // n][mid % n]
+        <span class="kw">if</span> v == target:
+            <span class="kw">return</span> (mid // n, mid % n)
+        <span class="kw">elif</span> v &lt; target:
+            lo = mid + <span class="st">1</span>
+        <span class="kw">else</span>:
+            hi = mid - <span class="st">1</span>
+    <span class="kw">return</span> (-<span class="st">1</span>, -<span class="st">1</span>)</pre>
+    <b>易错</b>：<code class="inl">while lo&lt;=hi</code>（等号不能丢）；映射 <code class="inl">mid//n, mid%n</code> 用列数 n。
+  </div></details>
+</div>
+
+<div class="q" id="q25">
+  <div class="qhead"><span class="qid">Q25</span><span class="tag t-type">实现</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q25">🚩没把握</label></div>
+  <div class="qbody"><p>（真题原题）实现游戏角色基类 <code class="inl">Character</code>（含名字、血量、攻击力，方法：攻击、是否存活）和子类 <code class="inl">Mage</code>（法师，多一个法力值，新增释放法术技能，伤害翻倍）。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre><span class="kw">class</span> Character:
+    <span class="kw">def</span> __init__(self, name, hp, atk):
+        self.name, self.hp, self.atk = name, hp, atk
+    <span class="kw">def</span> attack(self, other):
+        other.hp -= self.atk
+        <span class="kw">return</span> f<span class="st">"{self.name}攻击{other.name}，伤害{self.atk}"</span>
+    <span class="kw">def</span> is_alive(self):
+        <span class="kw">return</span> self.hp &gt; <span class="st">0</span>
+
+<span class="kw">class</span> Mage(Character):
+    <span class="kw">def</span> __init__(self, name, hp, atk, mp):
+        super().__init__(name, hp, atk)   <span class="cm"># 复用父类初始化</span>
+        self.mp = mp
+    <span class="kw">def</span> cast(self, other):
+        <span class="kw">if</span> self.mp &lt; <span class="st">10</span>:
+            <span class="kw">return</span> f<span class="st">"{self.name}法力不足"</span>
+        self.mp -= <span class="st">10</span>
+        other.hp -= self.atk * <span class="st">2</span>
+        <span class="kw">return</span> f<span class="st">"{self.name}释放法术，伤害{self.atk*2}"</span></pre>
+    <b>给分点</b>：基类放共有属性/方法；子类 <code class="inl">super().__init__</code> 后再加自己的；新增/重写方法体现继承与多态。
+  </div></details>
+</div>
+
+<div class="q" id="q26">
+  <div class="qhead"><span class="qid">Q26</span><span class="tag t-type">手写</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q26">🚩没把握</label></div>
+  <div class="qbody"><p>设计二维向量类 <code class="inl">Vector</code>，支持加法、数乘、点乘和 <code class="inl">str</code> 表示，使 <code class="inl">print(Vector(3,4)+Vector(1,2))</code> 得 <code class="inl">(4, 6)</code>，<code class="inl">print(Vector(3,4)*Vector(1,2))</code> 得 <code class="inl">11</code>。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre><span class="kw">class</span> Vector:
+    <span class="kw">def</span> __init__(self, x, y):
+        self.x, self.y = x, y
+    <span class="kw">def</span> __add__(self, o):
+        <span class="kw">return</span> Vector(self.x+o.x, self.y+o.y)
+    <span class="kw">def</span> __mul__(self, o):
+        <span class="kw">if</span> isinstance(o, Vector):
+            <span class="kw">return</span> self.x*o.x + self.y*o.y     <span class="cm"># 点乘→标量</span>
+        <span class="kw">return</span> Vector(self.x*o, self.y*o)       <span class="cm"># 数乘</span>
+    <span class="kw">def</span> __str__(self):
+        <span class="kw">return</span> f<span class="st">"({self.x}, {self.y})"</span></pre>
+    <b>要点</b>：用 <code class="inl">isinstance</code> 区分点乘/数乘；需要 <code class="inl">5*v</code> 也支持则加 <code class="inl">__rmul__</code>。
+  </div></details>
+</div>
+
+<div class="q" id="q27">
+  <div class="qhead"><span class="qid">Q27</span><span class="tag t-type">手写</span><span class="tag t-hard">难</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q27">🚩没把握</label></div>
+  <div class="qbody"><p>用 NumPy 手写 PCA：输入数据矩阵 <code class="inl">X</code>（m×D，按行存样本）和目标维度 <code class="inl">d</code>，返回降维后的 <code class="inl">Z</code>（m×d）。不许调用现成 PCA。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">def</span> pca(X, d):
+    X = X - X.mean(axis=<span class="st">0</span>)            <span class="cm"># 1.中心化</span>
+    C = (X.T @ X) / X.shape[<span class="st">0</span>]        <span class="cm"># 2.协方差矩阵</span>
+    vals, vecs = np.linalg.eigh(C)       <span class="cm"># 3.特征分解(对称用eigh)</span>
+    order = np.argsort(vals)[::-<span class="st">1</span>]      <span class="cm"># 4.特征值降序</span>
+    W = vecs[:, order[:d]]               <span class="cm"># 5.取前d个特征向量</span>
+    <span class="kw">return</span> X @ W                        <span class="cm"># 6.投影</span></pre>
+    <b>易错</b>：必须先中心化；<code class="inl">argsort</code> 默认升序要 <code class="inl">[::-1]</code> 反转；用 <code class="inl">eigh</code> 比 <code class="inl">eig</code> 稳。
+  </div></details>
+</div>
+
+<div class="q" id="q28">
+  <div class="qhead"><span class="qid">Q28</span><span class="tag t-type">补全</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q28">🚩没把握</label></div>
+  <div class="qbody"><p>补全 KNN 分类核心：给定到各训练点的距离 <code class="inl">dist</code> 和标签 <code class="inl">y</code>，取最近 k 个投票，平票选编号最小的类。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> collections <span class="kw">import</span> Counter
+<span class="kw">def</span> vote(dist, y, k):
+    idx = np.argsort(dist)[:k]            <span class="cm"># 最近 k 个的下标</span>
+    labels = [y[i] <span class="kw">for</span> i <span class="kw">in</span> idx]
+    cnt = Counter(labels)
+    mx = max(cnt.values())
+    <span class="kw">return</span> min(c <span class="kw">for</span> c, n <span class="kw">in</span> cnt.items() <span class="kw">if</span> n == mx)  <span class="cm"># 平票取最小编号</span></pre>
+    <b>要点</b>：<code class="inl">argsort</code> 稳定，距离相同先出现的排前；平票用 <code class="inl">min</code> 选编号最小类。
+  </div></details>
+</div>
+
+<div class="q" id="q29">
+  <div class="qhead"><span class="qid">Q29</span><span class="tag t-type">补全</span><span class="tag t-easy">基础</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q29">🚩没把握</label></div>
+  <div class="qbody"><p>判断下列广播是否合法，合法写出结果 shape，否则写 illegal：<br>
+  ① (3,5) 与 (5,)　② (2,1) 与 (1,3)　③ (4,3) 与 (4,)　④ (3,1,5) 与 (4,5)</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    ① <b>(3,5)</b>：(5,)左补成(1,5)，与(3,5)兼容。<br>
+    ② <b>(2,3)</b>：(2,1)与(1,3)各自拉伸。<br>
+    ③ <b>illegal</b>：(4,)右对齐到末维，3≠4 且都不为 1。<br>
+    ④ <b>(3,4,5)</b>：(4,5)左补成(1,4,5)，与(3,1,5) → 各维取 max(3,1)=3、max(1,4)=4、5。
+  </div></details>
+</div>
+
+<!-- ============ 四、算法分析 + 综合应用 ============ -->
+<h2 class="sec">四、算法分析与综合应用（对应真题第四大题 2×10=20）</h2>
+
+<div class="q" id="q30">
+  <div class="qhead"><span class="qid">Q30</span><span class="tag t-type">综合</span><span class="tag t-hard">难</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q30">🚩没把握</label></div>
+  <div class="qbody"><p>（真题原题）已知若干银行客户信息（年龄、年收入等属性）及违约风险标签（低/中/高=0/1/2），要训练模型对新客户预测违约风险。请用 Python 代码或伪代码描述实现思路，并说明若效果不好如何改进。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>定性</b>：输入特征向量、输出 y∈{0,1,2}，属<b>多分类有监督学习</b>。<br>
+    <b>流程</b>：① 预处理：数值特征 z-score 规范化、类别特征独热编码、处理缺失值（参数只从训练集算）；② 选模型：逻辑回归(OvR) 或 KNN，用训练集拟合；③ 评估：交叉验证看精度/泛化、诊断过欠拟合；④ 预测：新样本同样预处理后输出概率最大的类。
+<pre>X, y = load_train()
+X = zscore(onehot(fillna(X)))
+model = train_classifier(X, y)     <span class="cm"># 逻辑回归(OvR)/KNN</span>
+pred = model.predict(preprocess(x_new))</pre>
+    <b>改进</b>：① 数据：补充/均衡样本、处理类别不平衡（过采样/调权重）、特征工程、PCA 降维；② 模型：换决策树/随机森林/SVM/神经网络、调超参（k、学习率）；③ 泛化：过拟合加正则/简化/加数据，欠拟合加特征/换复杂模型，用交叉验证选模型。
+  </div></details>
+</div>
+
+<div class="q" id="q31">
+  <div class="qhead"><span class="qid">Q31</span><span class="tag t-type">综合</span><span class="tag t-hard">难</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q31">🚩没把握</label></div>
+  <div class="qbody"><p>（真题原题）给定某棋类游戏规则，要在对局中预测双方胜率。请把该问题转成人工智能程序可处理的形式，说明大致思路，并说明效果不好如何改进。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <b>思路A（搜索+评估）</b>：把局面形式化为状态（棋盘数组）、定义动作/状态转换/终止；用 Minimax + Alpha-Beta 剪枝向前看若干步；设计评估函数对非终局打分（子力/位置/连子），归一化作胜率估计。<br>
+    <b>思路B（监督学习）</b>：把局面编码成特征向量，用大量对局数据标注最终胜负，训练分类/回归模型输出获胜概率。<br>
+    <b>改进</b>：搜索路线——加深层数、改进启发式排序与评估函数、引入开局/残局库；学习路线——扩充并均衡数据（自对弈）、更强特征/模型、用<b>强化学习</b>（自我博弈，类 AlphaZero 把搜索与神经网络结合），交叉验证防过拟合。
+  </div></details>
+</div>
+
+<div class="q" id="q32">
+  <div class="qhead"><span class="qid">Q32</span><span class="tag t-type">算法分析</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q32">🚩没把握</label></div>
+  <div class="qbody"><p>比较 BFS 与 DFS 在完备性、最优性、空间复杂度上的差异。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    <table>
+    <tr><th></th><th>BFS</th><th>DFS</th></tr>
+    <tr><td>完备性</td><td>有解必找到（分支有限）</td><td>无深度限制时可能不终止</td></tr>
+    <tr><td>最优性</td><td>边权为 1 时保证最短路</td><td>不保证最短</td></tr>
+    <tr><td>空间</td><td>大（需存整层节点）</td><td>小（只存当前路径）</td></tr>
+    </table>
+    BFS 用队列逐层扩展，DFS 用栈一条路走到底再回溯。
+  </div></details>
+</div>
+
+<div class="q" id="q33">
+  <div class="qhead"><span class="qid">Q33</span><span class="tag t-type">算法分析</span><span class="tag t-mid">中等</span>
+    <label class="flagwrap"><input type="checkbox" class="flag" data-q="Q33">🚩没把握</label></div>
+  <div class="qbody"><p>给定 5 条事务：T1{牛奶,面包}、T2{牛奶,尿布,啤酒}、T3{面包,尿布,啤酒}、T4{牛奶,面包,尿布,啤酒}、T5{牛奶,面包,尿布}。计算：①支持度 support({尿布,啤酒})；②置信度 confidence(啤酒→尿布)、confidence(尿布→啤酒)。并说明 Apriori 剪枝原理。</p></div>
+  <details><summary>参考答案</summary><div class="ans">
+    含{尿布,啤酒}的事务：T2,T3,T4 → σ=3，<b>support = 3/5 = 0.6</b>。<br>
+    σ(啤酒)=T2,T3,T4=3；σ(尿布)=T2,T3,T4,T5=4。<br>
+    <b>confidence(啤酒→尿布) = 3/3 = 1.0</b>；<b>confidence(尿布→啤酒) = 3/4 = 0.75</b>。注意同一项集不同方向置信度不同。<br>
+    <b>Apriori 原理</b>：频繁项集的所有子集必频繁 ⟺ 非频繁项集的所有超集必非频繁——据此剪掉含非频繁子集的候选，不再生成检验。
+  </div></details>
+</div>
+
+</div>
+<script>
+function collect(){
+  const checked = [...document.querySelectorAll('.flag:checked')].map(c => c.dataset.q);
+  const bar = document.getElementById('summary');
+  if(checked.length === 0){ bar.textContent = '还没有勾选任何题。勾选「🚩没把握」后再汇总。'; return; }
+  bar.textContent = '我没把握的题号：' + checked.join('、') + '（共 ' + checked.length + ' 题），帮我讲解。';
+}
+function openAll(open){ document.querySelectorAll('details').forEach(d => d.open = open); }
+// 勾选高亮整题
+document.querySelectorAll('.flag').forEach(c => {
+  c.addEventListener('change', e => {
+    e.target.closest('.q').classList.toggle('flagged', e.target.checked);
+  });
+});
+</script>
+</body>
+</html>

@@ -30,6 +30,7 @@
 - `mathlogic-mock-01/` — 模拟卷(一) · 期末模拟自测
 
 ### 程序设计 (Programming)
+- `programming-final/` — 期末笔试复习包 · 讲义合集 + 模拟卷 + 速查/易错清单（全 18 讲）
 - `week14-ml-background/` — Week14 实验 背景知识 · PCA / KNN / 逻辑斯蒂回归
 - `programming-cram/` — 程序设计机测 · 考前串讲
 - `week15-tutorial/` — Week 15 复习讲义 · 监督/无监督 · 聚类 · 关联规则 · 异常检测

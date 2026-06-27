@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人工智能程序设计 · 讲义合集</title>
+<style>
+  :root{
+    --paper:#fbf8f1; --ink:#23201b; --sub:#6a635a; --line:#e3dccd;
+    --accent:#7a5c2e; --accent2:#9c7b46;
+    --code-bg:#2b2722; --code-ink:#f2ede3;
+    --warn-bg:#fcf0ee; --warn-bd:#c0533f; --warn-ink:#8a3322;
+    --key-bg:#fbf4dd; --key-bd:#c9a227; --key-ink:#7a5a06;
+    --exam-bg:#eaf1f6; --exam-bd:#3f6f9c; --exam-ink:#28507a;
+    --out-bg:#edf5ec; --out-bd:#4a8a5a; --out-ink:#2f6b3e;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:"Songti SC","SimSun","Noto Serif SC",serif; font-size:17px; line-height:1.85;}
+  p,li,td,th,h1,h2,h3,h4{font-family:"Times New Roman","Songti SC","SimSun","Noto Serif SC",serif;}
+  .wrap{display:flex; max-width:1180px; margin:0 auto;}
+  nav{width:260px; flex:0 0 260px; align-self:flex-start; position:sticky; top:0; height:100vh; overflow-y:auto; padding:26px 16px 40px 22px; border-right:1px solid var(--line); font-size:14.5px;}
+  nav .navtitle{font-size:16px; font-weight:bold; color:var(--accent); margin-bottom:10px; letter-spacing:.5px;}
+  nav a{display:block; color:var(--sub); text-decoration:none; padding:3px 8px; border-radius:5px; border-left:2px solid transparent;}
+  nav a:hover{color:var(--ink); background:#f3ecdd;}
+  nav a.active{color:var(--accent); border-left-color:var(--accent); background:#f3ecdd; font-weight:bold;}
+  nav a.lv2{padding-left:20px; font-size:13.5px;}
+  nav .grp{margin-top:14px; font-weight:bold; color:var(--ink);}
+  main{flex:1 1 auto; min-width:0; padding:30px 44px 120px 44px;}
+  header.hero{border-bottom:2px solid var(--accent); padding-bottom:18px; margin-bottom:8px;}
+  header.hero h1{font-size:30px; margin:0 0 6px; color:var(--accent);}
+  header.hero .meta{color:var(--sub); font-size:15px;}
+  h2{font-size:24px; color:var(--accent); margin:48px 0 14px; padding-top:10px; border-bottom:1px solid var(--line); padding-bottom:6px;}
+  h3{font-size:19.5px; margin:30px 0 8px; color:#3a342b;}
+  h4{font-size:17px; margin:18px 0 6px; color:#4a4338;}
+  p{margin:10px 0;} ul,ol{margin:10px 0;} li{margin:5px 0;}
+  code.inl{font-family:"Consolas","Courier New",monospace; background:#efe7d6; padding:1px 6px; border-radius:4px; font-size:14.5px; color:#6b4f23;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:8px; padding:16px 18px; overflow-x:auto; font-size:14.5px; line-height:1.6; font-family:"Consolas","Courier New",monospace; margin:12px 0; border:1px solid #11100d;}
+  pre .cm{color:#9aa18f;} pre .kw{color:#e8a35c;} pre .st{color:#9ccb86;} pre .ot{color:#f2ede3;}
+  .box{border-left:4px solid; border-radius:6px; padding:12px 16px; margin:14px 0;}
+  .box .bt{font-weight:bold; display:block; margin-bottom:4px; font-size:15px;}
+  .warn{background:var(--warn-bg); border-color:var(--warn-bd);} .warn .bt{color:var(--warn-ink);}
+  .key{background:var(--key-bg); border-color:var(--key-bd);} .key .bt{color:var(--key-ink);}
+  .exam{background:var(--exam-bg); border-color:var(--exam-bd);} .exam .bt{color:var(--exam-ink);}
+  .out{background:var(--out-bg); border-color:var(--out-bd); font-family:"Consolas","Courier New",monospace; font-size:14px; white-space:pre-wrap;}
+  .out .bt{color:var(--out-ink); font-family:"Times New Roman",serif;}
+  .badge{display:inline-block; font-size:12px; padding:1px 9px; border-radius:11px; vertical-align:middle; margin-left:8px; font-family:"Times New Roman",serif; font-weight:bold;}
+  .b-exam{background:var(--exam-bd); color:#fff;} .b-key{background:var(--key-bd); color:#fff;}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:15px;}
+  th,td{border:1px solid var(--line); padding:7px 11px; text-align:left; vertical-align:top;}
+  th{background:#f1e9d8; color:var(--accent);}
+  .def{background:#f7f2e6; border:1px solid var(--line); border-left:4px solid var(--accent2); border-radius:6px; padding:10px 16px; margin:12px 0;}
+  .def b{color:var(--accent);}
+  .lead{font-size:16px; color:#4a4338; background:#f3ecdd; border-radius:8px; padding:14px 18px; margin:14px 0;}
+  hr.sec{border:0; border-top:1px dashed var(--line); margin:40px 0;}
+  @media(max-width:860px){ nav{display:none;} main{padding:24px 18px 80px;} }
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+<nav id="toc">
+<div class="navtitle">讲义合集 · 程序设计</div>
+<div class="grp">📎 配套</div>
+<a class="lv2" href="mock.html">📝 模拟卷</a>
+<a class="lv2" href="cheatsheet.html">📑 速查 & 易错清单</a>
+<div class="grp">讲义① Python 基础</div>
+<a href="#L1-intro">导读：真题映射</a>
+  <div class="grp">1.1 初识 Python</div>
+  <a class="lv2" href="#L1-interp">解释型 vs 编译型</a>
+  <a class="lv2" href="#L1-typing">动态类型 vs 强类型</a>
+  <a class="lv2" href="#L1-bind">变量绑定与 id</a>
+  <a class="lv2" href="#L1-num">数值、除法与地板除</a>
+  <a class="lv2" href="#L1-expr">表达式求值 / input / eval</a>
+  <div class="grp">1.2 数据结构</div>
+  <a class="lv2" href="#L1-list">列表：索引/切片/增删</a>
+  <a class="lv2" href="#L1-copy">浅拷贝 vs 深拷贝</a>
+  <a class="lv2" href="#L1-comp">列表/字典/集合解析</a>
+  <a class="lv2" href="#L1-str">字符串：不可变与方法</a>
+  <a class="lv2" href="#L1-tuple">元组与 packing/unpacking</a>
+  <a class="lv2" href="#L1-mutable">可变 vs 不可变</a>
+  <a class="lv2" href="#L1-dictset">字典与集合</a>
+  <div class="grp">1.3 流程控制</div>
+  <a class="lv2" href="#L1-if">if / 逻辑值 / 短路</a>
+  <a class="lv2" href="#L1-ternary">条件表达式</a>
+  <a class="lv2" href="#L1-loop">while / break / continue</a>
+  <a class="lv2" href="#L1-iter">for / 迭代器 / 生成器</a>
+  <a class="lv2" href="#L1-io">输入输出与文件</a>
+<div class="grp">讲义② 函数基础与程序组织</div>
+<a href="#L2-intro">导读</a>
+  <div class="grp">1.4 函数初步</div>
+  <a class="lv2" href="#L2-fdef">函数定义与函数名绑定</a>
+  <a class="lv2" href="#L2-param">参数：位置/关键字/默认</a>
+  <a class="lv2" href="#L2-args">*args 与 **kwargs</a>
+  <a class="lv2" href="#L2-return">多返回值与 docstring</a>
+  <a class="lv2" href="#L2-recur">递归</a>
+  <div class="grp">1.5 搜索与问题求解</div>
+  <a class="lv2" href="#L2-search">穷举搜索</a>
+  <a class="lv2" href="#L2-formal">问题形式化六要素</a>
+  <a class="lv2" href="#L2-bfsdfs">BFS / DFS / 启发式</a>
+  <div class="grp">1.8 模块与包</div>
+  <a class="lv2" href="#L2-module">模块与命名空间</a>
+  <a class="lv2" href="#L2-name">__name__ == "__main__"</a>
+  <a class="lv2" href="#L2-package">包 / __init__ / __all__</a>
+  <div class="grp">1.9 异常处理</div>
+  <a class="lv2" href="#L2-err">三类错误 / EAFP</a>
+  <a class="lv2" href="#L2-try">try/except/else/finally</a>
+  <a class="lv2" href="#L2-raise">raise / 自定义异常</a>
+  <a class="lv2" href="#L2-with">with 上下文管理器</a>
+<div class="grp">讲义③ 函数式与面向对象</div>
+<a href="#L3-intro">导读：真题映射</a>
+  <div class="grp">1.6 函数式编程</div>
+  <a class="lv2" href="#L3-frame">帧模型与作用域 LEGB</a>
+  <a class="lv2" href="#L3-global">global / nonlocal</a>
+  <a class="lv2" href="#L3-closure">闭包 Closure</a>
+  <a class="lv2" href="#L3-pure">纯函数与副作用</a>
+  <a class="lv2" href="#L3-default">可变默认参数陷阱</a>
+  <a class="lv2" href="#L3-hof">高阶函数：函数作参数</a>
+  <a class="lv2" href="#L3-mapfilter">map / filter / reduce / lambda</a>
+  <a class="lv2" href="#L3-compose">函数复合与柯里化</a>
+  <a class="lv2" href="#L3-deco">装饰器</a>
+  <a class="lv2" href="#L3-gen">生成器 yield</a>
+  <div class="grp">1.7 面向对象</div>
+  <a class="lv2" href="#L3-class">类、对象、__init__、self</a>
+  <a class="lv2" href="#L3-attr">实例属性 vs 类属性</a>
+  <a class="lv2" href="#L3-encap">封装、抽象、name mangling</a>
+  <a class="lv2" href="#L3-inherit">继承、重写、super</a>
+  <a class="lv2" href="#L3-mro">多继承与 MRO</a>
+  <a class="lv2" href="#L3-poly">多态与 Duck Typing</a>
+  <a class="lv2" href="#L3-magic">特殊方法</a>
+  <a class="lv2" href="#L3-impl">真题实现题：游戏角色类</a>
+<div class="grp">讲义④ 科学计算栈</div>
+<a href="#L4-intro">导读：真题映射</a>
+  <div class="grp">2.1 IPython 与生态</div>
+  <a class="lv2" href="#L4-eco">五大库定位</a>
+  <a class="lv2" href="#L4-ipython">In/Out / magic</a>
+  <div class="grp">2.2 NumPy（重点）</div>
+  <a class="lv2" href="#L4-why">为什么比 list 快</a>
+  <a class="lv2" href="#L4-stride">行主序与 strides</a>
+  <a class="lv2" href="#L4-view">视图 vs 副本</a>
+  <a class="lv2" href="#L4-fancy">花式索引（真题阅读5）</a>
+  <a class="lv2" href="#L4-shape">reshape/ravel/flatten</a>
+  <a class="lv2" href="#L4-ufunc">ufunc / out / where</a>
+  <a class="lv2" href="#L4-broad">广播规则</a>
+  <a class="lv2" href="#L4-agg">axis 聚合与 where</a>
+  <a class="lv2" href="#L4-adv">reduceat / at / outer</a>
+  <div class="grp">2.3 SymPy</div>
+  <a class="lv2" href="#L4-sym">符号 vs 数值</a>
+  <a class="lv2" href="#L4-symop">化简/subs/lambdify</a>
+  <a class="lv2" href="#L4-calc">微积分/极限/级数/解方程</a>
+  <div class="grp">2.4 SciPy</div>
+  <a class="lv2" href="#L4-linalg">linalg：solve / eig</a>
+  <a class="lv2" href="#L4-opt">optimize / linprog</a>
+  <a class="lv2" href="#L4-quad">integrate.quad</a>
+  <div class="grp">2.5 Pandas / 可视化</div>
+  <a class="lv2" href="#L4-series">Series 与索引对齐</a>
+  <a class="lv2" href="#L4-df">DataFrame / groupby / merge</a>
+  <a class="lv2" href="#L4-plot">可视化</a>
+<div class="grp">讲义⑤ 机器学习与逻辑推理</div>
+<a href="#L5-intro">导读：真题映射</a>
+  <div class="grp">3.1 数据表示与降维</div>
+  <a class="lv2" href="#L5-norm">规范化 min-max / z-score</a>
+  <a class="lv2" href="#L5-onehot">类别编码（独热）</a>
+  <a class="lv2" href="#L5-pca">PCA（真题简答6）</a>
+  <div class="grp">3.2 有监督学习</div>
+  <a class="lv2" href="#L5-sup">回归 vs 分类 / 评估</a>
+  <a class="lv2" href="#L5-fit">过拟合 / 欠拟合 / 交叉验证</a>
+  <a class="lv2" href="#L5-linreg">线性回归闭式解</a>
+  <a class="lv2" href="#L5-logreg">逻辑回归</a>
+  <a class="lv2" href="#L5-knn">KNN</a>
+  <div class="grp">3.3 无监督学习</div>
+  <a class="lv2" href="#L5-kmeans">K-Means 聚类</a>
+  <a class="lv2" href="#L5-apriori">关联规则 / Apriori</a>
+  <a class="lv2" href="#L5-anomaly">异常检测（相对密度）</a>
+  <div class="grp">3.4 逻辑与推理</div>
+  <a class="lv2" href="#L5-logic">命题逻辑语法/语义</a>
+  <a class="lv2" href="#L5-kb">知识库 / 蕴含 / ⊨ vs ⊢</a>
+  <a class="lv2" href="#L5-rules">推理规则 / 正确性完备性</a>
+  <a class="lv2" href="#L5-horn">Horn 子句 / 前向链接</a>
+  <div class="grp">综合应用题</div>
+  <a class="lv2" href="#L5-app1">真题①：违约风险分类</a>
+  <a class="lv2" href="#L5-app2">真题②：棋类胜率→AI</a>
+</nav>
+<main>
+<header class="hero">
+<h1>人工智能程序设计 · 复习讲义合集</h1>
+<div class="meta">覆盖全 18 讲（1.1–3.4）· 按主线深讲配示例 · 全程对照 2025 真题</div>
+<div style="margin:14px 0 8px;"><a href="mock.html" style="display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:7px;margin:4px 8px 4px 0;font-family:Times New Roman,serif;">📝 模拟卷</a> <a href="cheatsheet.html" style="display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 18px;border-radius:7px;margin:4px 8px 4px 0;font-family:Times New Roman,serif;">📑 速查 & 易错清单</a></div>
+</header>
+<section class="lecture-block">
+<header class="hero">
+  <h1>Python 基础</h1>
+  <div class="meta">人工智能程序设计 · 讲义① （1.1 初识 + 1.2 数据结构 + 1.3 流程控制）&nbsp;|&nbsp; 覆盖 2025 真题 简答1/2、阅读题1</div>
+</header>
+
+<section id="L1-intro">
+  <div class="lead"><b>读法。</b> 每个知识点按「定义 → 性质/原理 → 用法 → 要点/易错」展开。<span class="badge b-exam">真题</span> 标去年怎么考，<span class="badge b-key">高频</span> 是必背点，红块是失分陷阱，绿块是真实输出。</div>
+  <div class="box exam"><span class="bt">真题映射（2025.6.12）</span>
+    · 简答 1：解释型 vs 编译型语言的执行过程与效率 → <a href="#L1-interp">解释 vs 编译</a><br>
+    · 简答 2：字符串/列表/元组的含义，哪些可变 → <a href="#L1-mutable">可变 vs 不可变</a><br>
+    · 阅读 1：list 各种操作 <code class="inl">a[-1]</code>、<code class="inl">a[:-1]</code>、<code class="inl">a += [1]</code> → <a href="#L1-list">列表</a>
+  </div>
+</section>
+
+<h2 id="L1-interp">1.1 ① 解释型 vs 编译型 <span class="badge b-exam">真题简答1</span></h2>
+<div class="def"><b>定义。</b> <b>编译型</b>语言（C/C++）先由编译器把整份源码一次性翻译成机器码、链接成可执行文件，之后运行不再需要编译器。<b>解释型</b>语言（Python）由解释器在运行时逐条翻译并执行，每次运行都要解释器在场。</div>
+<p><b>执行过程对比（简答要写）。</b></p>
+<table>
+<tr><th></th><th>编译型 (C/C++)</th><th>解释型 (Python)</th></tr>
+<tr><td>翻译时机</td><td>运行前一次性编译为机器码</td><td>运行时逐行解释执行</td></tr>
+<tr><td>运行依赖</td><td>脱离编译器，直接跑可执行文件</td><td>每次运行都需解释器环境</td></tr>
+<tr><td>速度</td><td>快（已是机器码）</td><td>慢（边翻译边执行有开销）</td></tr>
+<tr><td>开发调试</td><td>改动需重新编译，循环长</td><td>即改即运行，适合快速开发</td></tr>
+<tr><td>跨平台</td><td>需为各平台分别编译</td><td>源码 + 对应解释器即可移植</td></tr>
+</table>
+<div class="box key"><span class="bt">🔑 效率差异的本质</span>解释型每跑一行都要现场翻译，省去了编译步骤但牺牲运行速度；编译型把翻译成本前置，运行时是纯机器码所以快。Python 的官方解释器是 <b>CPython</b>。补充：Python 也兼具交互式（逐句）和文件式（<code class="inl">python x.py</code>）两种运行方式，用的是同一个解释器。</div>
+
+<h2 id="L1-typing">1.1 ② 动态类型 vs 强类型</h2>
+<div class="def"><b>定义。</b> <b>动态类型</b>：变量声明时不指定类型，类型在运行时由它当前指向的值决定，同一变量可先后指向不同类型。<b>强类型</b>：每个值都有明确类型，不同类型间不会<u>隐式</u>转换，乱用就报错。</div>
+<p><b>原理：两个维度别混。</b> 「动态/静态」说的是<strong>变量要不要提前声明类型</strong>；「强/弱」说的是<strong>类型之间会不会偷偷转换</strong>。Python 两者兼具——变量自由变类型（动态），但 <code class="inl">"5" + 5</code> 不会自动把字符串转数字（强）。</p>
+<pre>x = <span class="ot">3</span>
+x = <span class="st">'5'</span>        <span class="cm"># 合法：动态类型，x 改指字符串</span>
+<span class="kw">print</span>(<span class="st">"5"</span> + <span class="ot">5</span>)   <span class="cm"># TypeError：强类型，不隐式转换</span></pre>
+<div class="box out"><span class="bt">输出</span>TypeError: can only concatenate str (not "int") to str</div>
+<div class="box key"><span class="bt">🔑 简答举例</span>说动态：<code class="inl">x=3</code> 后可 <code class="inl">x='abc'</code>；说强：<code class="inl">"5"+5</code> 报错，要显式 <code class="inl">int("5")+5</code>。</div>
+
+<h2 id="L1-bind">1.1 ③ 变量绑定与 id（标签模型）</h2>
+<div class="def"><b>定义。</b> Python 的变量是<strong>贴在对象上的标签</strong>，不是装值的盒子。<code class="inl">x = 3</code> 让标签 <code class="inl">x</code> 指向值为 3 的对象；赋值只是「重新贴标签」，不复制对象。</div>
+<p><b>原理。</b> <code class="inl">y = x</code> 让 <code class="inl">y</code> 和 <code class="inl">x</code> 贴在同一个对象上。之后 <code class="inl">x = 4</code> 是把 <code class="inl">x</code> 这张标签<u>改贴</u>到新对象 4 上，原来的 3 没动，<code class="inl">y</code> 还指着它。<code class="inl">id(obj)</code> 返回对象身份（可理解为地址），可用来观察是不是同一个对象。</p>
+<pre>x = <span class="ot">3</span>
+y = x
+x = <span class="ot">4</span>
+<span class="kw">print</span>(y)   <span class="cm"># 3，y 仍指最初的对象</span></pre>
+<div class="box out"><span class="bt">输出</span>3</div>
+<div class="box key"><span class="bt">🔑 不可变对象的"修改"会换 id</span><code class="inl">int</code>/<code class="inl">str</code> 不可变，<code class="inl">x = x + 1</code> 是新建一个对象再贴标签，<code class="inl">id(x)</code> 会变；而对 <code class="inl">list</code> 这种可变对象原地 <code class="inl">append</code>，<code class="inl">id</code> 不变。<code class="inl">is</code> 比身份（同一对象），<code class="inl">==</code> 比值。</div>
+
+<h2 id="L1-num">1.1 ④ 数值、除法与地板除</h2>
+<p><b>数值类型：</b> <code class="inl">int</code>（任意大整数）、<code class="inl">float</code>、<code class="inl">complex</code>（虚部用 <code class="inl">j</code>，且必须写 <code class="inl">1j</code> 不能单写 <code class="inl">j</code>）、<code class="inl">bool</code>（本质是 0/1）。</p>
+<div class="box warn"><span class="bt">易错：除法与地板除</span>
+<ul>
+<li><code class="inl">/</code> 真除法，结果<strong>永远是 float</strong>：<code class="inl">6/3 → 2.0</code>。</li>
+<li><code class="inl">//</code> 地板除，<strong>向下取整</strong>（朝负无穷），负数最坑：<code class="inl">-1 // 5 → -1</code>（不是 0！），<code class="inl">7 // 2 → 3</code>。</li>
+<li><code class="inl">**</code> 乘方；<code class="inl">%</code> 取余，符号跟除数。</li>
+</ul>
+</div>
+<pre><span class="kw">print</span>(<span class="ot">7</span> / <span class="ot">2</span>, <span class="ot">7</span> // <span class="ot">2</span>, -<span class="ot">1</span> // <span class="ot">5</span>, <span class="ot">2</span> ** <span class="ot">10</span>)</pre>
+<div class="box out"><span class="bt">输出</span>3.5 3 -1 1024</div>
+
+<h2 id="L1-expr">1.1 ⑤ 表达式求值 / input / eval</h2>
+<p><b>求值规则。</b> 值求值得自身；变量求值得它当前指向的对象；运算符表达式先算两边再应用规则；函数调用先对函数名和实参求值，再执行函数体、以返回值作结果。优先级大致：算术 &gt; 比较 &gt; 逻辑，拿不准就加括号。</p>
+<div class="box key"><span class="bt">🔑 input 永远返回字符串</span><code class="inl">input()</code> 读入一行<strong>字符串</strong>；要数字必须转换：<code class="inl">int(input())</code>、<code class="inl">float(input())</code>，或 <code class="inl">eval(input())</code>（把字符串当表达式求值，能读回 list/dict 等，但有安全风险）。</p></div>
+<pre>n = int(input())          <span class="cm"># 输入 "42" → 整数 42</span>
+nums = list(map(int, input().split()))   <span class="cm"># "1 2 3" → [1,2,3]</span></pre>
+<div class="box exam"><span class="bt">交互式行为</span>在交互环境直接敲一个表达式会自动打印其值（结果为 <code class="inl">None</code> 则不打印）——阅读题里若给的是 <code class="inl">&gt;&gt;&gt;</code> 会话要注意这点。</div>
+
+<hr class="sec">
+
+<h2 id="L1-list">1.2 ① 列表：索引 / 切片 / 增删 <span class="badge b-exam">真题阅读题1</span></h2>
+<div class="def"><b>定义。</b> <b>列表</b>是有序、<strong>可变</strong>的元素序列，用 <code class="inl">[]</code>，元素类型可混、可嵌套。</div>
+<p><b>索引。</b> 下标从 0 起；负索引从尾起，<code class="inl">-1</code> 是最后一个。越界抛 <code class="inl">IndexError</code>。</p>
+<p><b>切片 <code class="inl">a[start:end:step]</code>。</b> <strong>左闭右开</strong>，不含 <code class="inl">end</code>；省略则到头/到尾；<code class="inl">step</code> 为负表示逆序。切片<strong>返回新列表</strong>（不影响原列表）。</p>
+<pre>a = [<span class="ot">0</span>, <span class="ot">1</span>, <span class="ot">2</span>, <span class="ot">3</span>, <span class="ot">4</span>]
+<span class="kw">print</span>(a[-<span class="ot">1</span>])      <span class="cm"># 最后一个</span>
+<span class="kw">print</span>(a[:-<span class="ot">1</span>])     <span class="cm"># 去掉最后一个（新列表）</span>
+<span class="kw">print</span>(a[::-<span class="ot">1</span>])    <span class="cm"># 逆序（新列表）</span>
+a += [<span class="ot">5</span>]           <span class="cm"># 原地扩展，等价 a.extend([5])</span>
+<span class="kw">print</span>(a)</pre>
+<div class="box out"><span class="bt">输出</span>4
+[0, 1, 2, 3]
+[4, 3, 2, 1, 0]
+[0, 1, 2, 3, 4, 5]</div>
+<div class="box warn"><span class="bt">易错（真题阅读题 1 必考点）</span>
+<ul>
+<li><code class="inl">a[:-1]</code> 是「除最后一个」的<strong>新列表</strong>，不改 <code class="inl">a</code>；</li>
+<li><code class="inl">a += [1]</code> 对列表是<strong>原地</strong>修改（等价 <code class="inl">extend</code>），不是新建；<code class="inl">a = a + [1]</code> 才是新建；</li>
+<li><code class="inl">sort()</code>/<code class="inl">reverse()</code>/<code class="inl">append()</code> 原地操作、<strong>返回 None</strong>；想要新列表用 <code class="inl">sorted()</code>/<code class="inl">reversed()</code>；</li>
+<li><code class="inl">pop(i)</code> 删并返回该位置元素，<code class="inl">remove(x)</code> 删第一个等于 x 的元素。</li>
+</ul>
+</div>
+
+<h2 id="L1-copy">1.2 ② 浅拷贝 vs 深拷贝 <span class="badge b-key">高频</span></h2>
+<div class="def"><b>定义。</b> <b>浅拷贝</b>（<code class="inl">a.copy()</code>、<code class="inl">a[:]</code>、<code class="inl">list(a)</code>）只复制最外层容器，内部的子对象仍是<strong>共享引用</strong>；<b>深拷贝</b>（<code class="inl">copy.deepcopy</code>）递归复制到底，完全独立。</div>
+<p><b>原理与陷阱。</b> 浅拷贝后，外层是两个不同列表（改外层互不影响），但如果元素是可变子对象（嵌套列表），两边指的是同一个子对象，改它会同时影响双方。</p>
+<pre><span class="kw">from</span> copy <span class="kw">import</span> deepcopy
+a = [<span class="ot">1</span>, <span class="ot">2</span>, [<span class="ot">3</span>, <span class="ot">4</span>]]
+b = a.copy()       <span class="cm"># 浅拷贝</span>
+b[<span class="ot">2</span>][<span class="ot">0</span>] = <span class="ot">9</span>        <span class="cm"># 改的是共享的子列表</span>
+<span class="kw">print</span>(a)            <span class="cm"># a 也被改了！</span>
+c = deepcopy(a)
+c[<span class="ot">2</span>][<span class="ot">0</span>] = <span class="ot">0</span>        <span class="cm"># 深拷贝，互不影响</span>
+<span class="kw">print</span>(a)</pre>
+<div class="box out"><span class="bt">输出</span>[1, 2, [9, 4]]
+[1, 2, [9, 4]]</div>
+
+<h2 id="L1-comp">1.2 ③ 列表 / 字典 / 集合解析</h2>
+<div class="def"><b>定义。</b> <b>解析（comprehension）</b>是「用一行表达式从可迭代对象造出新容器」的语法：<code class="inl">[expr for item in it if cond]</code>。</div>
+<p><b>原理：多层顺序。</b> 多个 <code class="inl">for</code> 时，<strong>从左到右</strong>就是从外到内的嵌套；<code class="inl">if</code> 跟在对应 <code class="inl">for</code> 后做过滤。</p>
+<pre><span class="kw">print</span>([x**<span class="ot">2</span> <span class="kw">for</span> x <span class="kw">in</span> range(<span class="ot">5</span>) <span class="kw">if</span> x%<span class="ot">2</span>==<span class="ot">0</span>])          <span class="cm"># [0, 4, 16]</span>
+<span class="kw">print</span>([(x,y) <span class="kw">for</span> x <span class="kw">in</span> [<span class="ot">1</span>,<span class="ot">2</span>] <span class="kw">for</span> y <span class="kw">in</span> [<span class="ot">3</span>,<span class="ot">4</span>]])    <span class="cm"># [(1,3),(1,4),(2,3),(2,4)]</span>
+<span class="kw">print</span>({k: k*k <span class="kw">for</span> k <span class="kw">in</span> range(<span class="ot">3</span>)})              <span class="cm"># {0:0, 1:1, 2:4}（字典解析）</span></pre>
+<div class="box out"><span class="bt">输出</span>[0, 4, 16]
+[(1, 3), (1, 4), (2, 3), (2, 4)]
+{0: 0, 1: 1, 2: 4}</div>
+<div class="box exam"><span class="bt">易错</span>嵌套解析做矩阵转置：<code class="inl">[[row[i] for row in m] for i in range(len(m[0]))]</code>——外层选列、内层取每行该列。</div>
+
+<h2 id="L1-str">1.2 ④ 字符串：不可变与常用方法</h2>
+<div class="def"><b>定义。</b> <b>字符串</b>是<strong>不可变</strong>的字符序列。所有「修改」方法都返回<u>新字符串</u>，原串不变。</div>
+<pre>s = <span class="st">"hello"</span>
+<span class="cm"># s[0] = 'H'      → TypeError，不可变</span>
+<span class="kw">print</span>(s.upper(), s)   <span class="cm"># 方法返回新串，s 没变</span></pre>
+<div class="box out"><span class="bt">输出</span>HELLO hello</div>
+<p><b>常用方法。</b> <code class="inl">split(sep)</code> 拆分（默认按空白且丢空串）、<code class="inl">strip()</code> 去两端空白、<code class="inl">join</code> 连接（<code class="inl">"-".join(["a","b"]) → "a-b"</code>）、<code class="inl">replace(old,new)</code>、<code class="inl">find(sub)</code>（找不到返回 <code class="inl">-1</code>）vs <code class="inl">index(sub)</code>（找不到抛 <code class="inl">ValueError</code>）。</p>
+<p><b>格式化。</b> 首选 f-string：<code class="inl">f"{name} 得 {score:.2f} 分"</code>；也有 <code class="inl">"{:.2f}".format(x)</code> 和旧式 <code class="inl">"%s" % x</code>。</p>
+<div class="box key"><span class="bt">🔑 拼接效率</span>循环里反复 <code class="inl">s += ...</code> 每次都新建字符串，低效；改用 list 收集再 <code class="inl">"".join(parts)</code>。</div>
+
+<h2 id="L1-tuple">1.2 ⑤ 元组与 packing / unpacking</h2>
+<div class="def"><b>定义。</b> <b>元组</b>是有序、<strong>不可变</strong>的序列。<u>逗号</u>才是关键，括号可省：<code class="inl">1, 2, 3</code> 即元组。单元素必须带逗号 <code class="inl">(1,)</code>，空元组 <code class="inl">()</code>。</div>
+<p><b>packing / unpacking。</b> 用逗号把多个值打包成元组叫 packing；把序列拆给多个变量叫 unpacking，数目要匹配（否则 <code class="inl">ValueError</code>）；<code class="inl">*</code> 可吸收剩余元素成 list。</p>
+<pre>a, b = <span class="ot">1</span>, <span class="ot">2</span>
+a, b = b, a                       <span class="cm"># 交换：右边先打包成 (2,1) 再解包</span>
+first, *mid, last = [<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>,<span class="ot">4</span>,<span class="ot">5</span>]   <span class="cm"># first=1, mid=[2,3,4], last=5</span>
+<span class="kw">print</span>(a, b, first, mid, last)</pre>
+<div class="box out"><span class="bt">输出</span>2 1 1 [2, 3, 4] 5</div>
+<div class="box warn"><span class="bt">易错：不可变容器里的可变元素</span>元组「不可变」指它存的<u>引用</u>不能换，但如果元素本身是 list，仍能改那个 list 的内容：
+<pre>t = ([<span class="ot">1</span>,<span class="ot">2</span>], <span class="ot">3</span>)
+t[<span class="ot">0</span>].append(<span class="ot">99</span>)   <span class="cm"># 允许 → t 变 ([1,2,99], 3)</span>
+<span class="cm"># t[0] = [4,5]    → TypeError，不能换引用</span></pre>
+</div>
+
+<h2 id="L1-mutable">1.2 ⑥ 可变 vs 不可变 <span class="badge b-exam">真题简答2</span></h2>
+<div class="box exam"><span class="bt">简答题 2：str / list / tuple 含义 + 哪些可变</span>
+<b>字符串 str</b>：不可变的字符序列。<b>列表 list</b>：可变的有序序列，能增删改。<b>元组 tuple</b>：不可变的有序序列。<br>
+<b>可变的只有 list</b>；str、tuple <strong>不可变</strong>。更全的分类见下表。
+</div>
+<table>
+<tr><th>不可变（immutable）</th><th>可变（mutable）</th></tr>
+<tr><td><code class="inl">int</code> <code class="inl">float</code> <code class="inl">bool</code> <code class="inl">str</code> <code class="inl">tuple</code> <code class="inl">frozenset</code></td><td><code class="inl">list</code> <code class="inl">dict</code> <code class="inl">set</code>，多数自定义对象</td></tr>
+</table>
+<div class="box key"><span class="bt">🔑 为什么这点重要（简答可展开"影响"）</span>
+① 只有不可变对象能做 <strong>字典的键 / 集合元素</strong>（要可哈希）——所以 tuple 能当键，list 不能；
+② 不可变对象作默认参数更安全（见函数式讲的「可变默认参数陷阱」）；
+③ 对不可变对象「修改」会新建对象（<code class="inl">id</code> 变），对可变对象原地改（<code class="inl">id</code> 不变）。
+</div>
+
+<h2 id="L1-dictset">1.2 ⑦ 字典与集合</h2>
+<div class="def"><b>字典 dict</b>：键值对映射，键唯一且<strong>不可变</strong>，值任意。<b>集合 set</b>：无序、不重复元素的容器。</div>
+<p><b>字典用法。</b> <code class="inl">d[key]</code> 取值（键不存在抛 <code class="inl">KeyError</code>），<code class="inl">d.get(key, 默认)</code> 安全取；<code class="inl">d[key]=v</code> 增改；<code class="inl">key in d</code> 判键；<code class="inl">d.items()/keys()/values()</code> 视图。Python 3.7+ 保留插入顺序。按值排序：<code class="inl">sorted(d.items(), key=lambda kv: kv[1])</code>。</p>
+<p><b>集合用法。</b> 自动去重；<code class="inl">add</code>/<code class="inl">remove</code>/<code class="inl">discard</code>；运算 <code class="inl">|</code> 并、<code class="inl">&</code> 交、<code class="inl">-</code> 差、<code class="inl">^</code> 对称差。<strong>空集合只能 <code class="inl">set()</code></strong>，<code class="inl">{}</code> 是空字典。</p>
+<pre>words = <span class="st">"the cat the hat"</span>.split()
+<span class="kw">print</span>({w <span class="kw">for</span> w <span class="kw">in</span> words})          <span class="cm"># 去重，无序</span>
+<span class="kw">print</span>({<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>} &amp; {<span class="ot">2</span>,<span class="ot">3</span>,<span class="ot">4</span>})       <span class="cm"># 交集 {2, 3}</span></pre>
+<div class="box out"><span class="bt">输出</span>{'the', 'cat', 'hat'}
+{2, 3}</div>
+
+<hr class="sec">
+
+<h2 id="L1-if">1.3 ① if / 逻辑值 / 短路</h2>
+<p><b>分支。</b> <code class="inl">if / elif / else</code> 从上到下测试，<strong>第一个为真</strong>的分支执行，其余跳过。</p>
+<div class="def"><b>逻辑假值。</b> <code class="inl">0</code>、<code class="inl">0.0</code>、<code class="inl">None</code>、<code class="inl">False</code>、空容器（<code class="inl">''</code> <code class="inl">[]</code> <code class="inl">{}</code> <code class="inl">()</code> <code class="inl">set()</code>）都为假，其余为真。</div>
+<div class="box key"><span class="bt">🔑 短路求值（高频）</span>
+<ul>
+<li><code class="inl">A and B</code>：A 为假就直接返回 A，不算 B；都真则返回 B。</li>
+<li><code class="inl">A or B</code>：A 为真就直接返回 A，不算 B；都假则返回 B。</li>
+</ul>
+注意返回的是<strong>操作数本身</strong>，不一定是 True/False：<code class="inl">0 or "x" → "x"</code>，<code class="inl">3 and 5 → 5</code>。</div>
+
+<h2 id="L1-ternary">1.3 ② 条件表达式（三元）</h2>
+<div class="def"><b>定义。</b> <code class="inl">X if 条件 else Y</code>：条件真取 X，否则取 Y。可嵌套：<code class="inl">X if c1 else Y if c2 else Z</code>。</div>
+<pre><span class="kw">print</span>([<span class="st">"Even"</span> <span class="kw">if</span> i%<span class="ot">2</span>==<span class="ot">0</span> <span class="kw">else</span> <span class="st">"Odd"</span> <span class="kw">for</span> i <span class="kw">in</span> range(<span class="ot">4</span>)])</pre>
+<div class="box out"><span class="bt">输出</span>['Even', 'Odd', 'Even', 'Odd']</div>
+
+<h2 id="L1-loop">1.3 ③ while / break / continue</h2>
+<p><b>while。</b> 先判断条件，真则执行循环体再回判断；为假退出。注意初始化、终止条件，防死循环。</p>
+<p><b>break / continue。</b> <code class="inl">break</code> 立刻终止整个循环；<code class="inl">continue</code> 跳过本轮剩余语句、回到循环头继续下一轮。</p>
+<pre><span class="cm"># 第 n 个斐波那契数（0,1,1,2,3,5,...）</span>
+n = <span class="ot">7</span>
+pred, curr = <span class="ot">0</span>, <span class="ot">1</span>
+idx = <span class="ot">2</span>
+<span class="kw">while</span> idx &lt; n:
+    pred, curr = curr, pred + curr   <span class="cm"># 同步更新，靠 packing/unpacking</span>
+    idx += <span class="ot">1</span>
+<span class="kw">print</span>(curr)</pre>
+<div class="box out"><span class="bt">输出</span>8</div>
+
+<h2 id="L1-iter">1.3 ④ for / 迭代器 / 生成器</h2>
+<div class="def"><b>定义。</b> <b>可迭代对象</b>能被 <code class="inl">iter()</code> 变成<b>迭代器</b>；迭代器实现 <code class="inl">__next__</code>，用 <code class="inl">next()</code> 逐个取，取完抛 <code class="inl">StopIteration</code>。<code class="inl">for</code> 循环本质就是不断 <code class="inl">next()</code>。</div>
+<div class="box warn"><span class="bt">易错：迭代器只能用一次</span>
+<pre>x = iter([<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>])
+<span class="kw">print</span>(next(x))      <span class="cm"># 1</span>
+<span class="kw">print</span>(tuple(x))     <span class="cm"># (2, 3) 取走剩余</span>
+<span class="kw">print</span>(tuple(x))     <span class="cm"># () 已空</span></pre>
+但原列表不受影响，仍可重新 <code class="inl">iter</code>。
+</div>
+<p><b>生成器。</b> 惰性的迭代器。生成器表达式用圆括号 <code class="inl">(i*i for i in range(5))</code>；含 <code class="inl">yield</code> 的函数是生成器函数（详见讲义②）。同样<strong>只能消费一次</strong>。</p>
+
+<h2 id="L1-io">1.3 ⑤ 输入输出与文件</h2>
+<p><b>print 的 sep / end。</b> <code class="inl">sep</code> 插在多个输出项之间（默认空格），<code class="inl">end</code> 接在末尾（默认换行）。</p>
+<pre><span class="kw">print</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, sep=<span class="st">"-"</span>, end=<span class="st">"!\n"</span>)</pre>
+<div class="box out"><span class="bt">输出</span>a-b-c!</div>
+<p><b>文件与 with。</b> <code class="inl">with open(path) as f:</code> 块结束自动关闭文件（即使异常也释放）。常见读法：</p>
+<pre><span class="kw">with</span> open(<span class="st">"data.txt"</span>) <span class="kw">as</span> f:
+    lines = [line.strip() <span class="kw">for</span> line <span class="kw">in</span> f]   <span class="cm"># 逐行读、去换行</span></pre>
+<div class="box key"><span class="bt">🔑 输入解析套路</span>一行多个数字：<code class="inl">nums = list(map(int, input().split()))</code>；这是 OJ/笔试读输入的标准写法。</div>
+
+<p style="text-align:center; color:var(--sub); margin-top:60px;">— 讲义① 结束，覆盖 1.1 / 1.2 / 1.3 —</p>
+</section>
+<hr style="border:0;border-top:3px double var(--accent);margin:60px 0;">
+<section class="lecture-block">
+<header class="hero">
+  <h1>函数基础与程序组织</h1>
+  <div class="meta">人工智能程序设计 · 讲义② （1.4 函数初步 + 1.5 搜索 + 1.8 模块 + 1.9 异常）</div>
+</header>
+
+<section id="L2-intro">
+  <div class="lead"><b>读法。</b> 每点按「定义 → 性质/原理 → 用法 → 要点/易错」展开，代码作佐证。<span class="badge b-key">高频</span> 必背，红块失分陷阱，绿块真实输出。本讲的递归、参数规则、<code class="inl">try/finally</code> 执行顺序、<code class="inl">with</code> 协议都是阅读题与简答常客。</div>
+</section>
+
+<h2 id="L2-fdef">1.4 ① 函数定义与函数名绑定</h2>
+<div class="def"><b>定义。</b> 函数是对「一段功能」的封装（功能抽象），用 <code class="inl">def</code> 定义、用 <code class="inl">名字(...)</code> 调用。<code class="inl">def f(...)</code> 做的事是：建立一个函数对象，并把名字 <code class="inl">f</code> 绑定到它。</div>
+<p><b>原理：函数名只是普通变量。</b> 函数名和别的变量没区别，只是恰好指向一个「可调用对象」。可以把它赋给别的名字共用同一函数；也可以把它重新绑定成别的类型——那时再调用就会报错。</p>
+<pre><span class="kw">def</span> add3(x):
+    <span class="kw">return</span> x + <span class="ot">3</span>
+
+g = add3            <span class="cm"># g 与 add3 指向同一函数</span>
+<span class="kw">print</span>(g(<span class="ot">10</span>))         <span class="cm"># 13</span>
+add3 = <span class="ot">5</span>            <span class="cm"># 把名字改绑成整数</span>
+<span class="cm"># add3(1)          → TypeError: 'int' object is not callable</span></pre>
+<div class="box out"><span class="bt">输出</span>13</div>
+<div class="box warn"><span class="bt">易错</span>函数体不能为空（用 <code class="inl">pass</code> 占位）；没有 <code class="inl">return</code> 时函数返回 <code class="inl">None</code>；<code class="inl">return</code> 一执行函数立即结束。</div>
+
+<h2 id="L2-param">1.4 ② 参数：位置 / 关键字 / 默认</h2>
+<div class="def"><b>定义。</b> <b>位置参数</b>按顺序对应；<b>关键字参数</b>调用时写 <code class="inl">形参名=值</code>、与顺序无关；<b>默认参数</b>定义时给形参默认值，调用可省略。</div>
+<pre><span class="kw">def</span> div(num, denom=<span class="ot">1</span>):     <span class="cm"># denom 有默认值</span>
+    <span class="kw">return</span> num / denom
+
+<span class="kw">print</span>(div(<span class="ot">6</span>, <span class="ot">3</span>))            <span class="cm"># 位置：num=6, denom=3 → 2.0</span>
+<span class="kw">print</span>(div(<span class="ot">6</span>))               <span class="cm"># 用默认 denom=1 → 6.0</span>
+<span class="kw">print</span>(div(denom=<span class="ot">3</span>, num=<span class="ot">6</span>))   <span class="cm"># 关键字：顺序无关 → 2.0</span></pre>
+<div class="box out"><span class="bt">输出</span>2.0
+6.0
+2.0</div>
+<div class="box warn"><span class="bt">易错</span>调用时<strong>位置参数必须在关键字参数之前</strong>，<code class="inl">div(num=6, 3)</code> 报语法错误。默认值若是<strong>可变对象</strong>（如 <code class="inl">lst=[]</code>）会在多次调用间共享——详见讲义③「可变默认参数陷阱」。</div>
+
+<h2 id="L2-args">1.4 ③ *args 与 **kwargs</h2>
+<div class="def"><b>定义。</b> 形参前加 <code class="inl">*</code>（如 <code class="inl">*args</code>）把多余的<strong>位置实参打包成元组</strong>；加 <code class="inl">**</code>（如 <code class="inl">**kwargs</code>）把多余的<strong>关键字实参打包成字典</strong>。这种「把零散参数收进一个容器」叫 packing。</div>
+<pre><span class="kw">def</span> show(first, *args, **kwargs):
+    <span class="kw">print</span>(first)      <span class="cm"># 第一个位置参数</span>
+    <span class="kw">print</span>(args)       <span class="cm"># 剩余位置参数 → 元组</span>
+    <span class="kw">print</span>(kwargs)     <span class="cm"># 剩余关键字参数 → 字典</span>
+
+show(<span class="ot">1</span>, <span class="ot">2</span>, <span class="ot">3</span>, a=<span class="ot">4</span>, b=<span class="ot">5</span>)</pre>
+<div class="box out"><span class="bt">输出</span>1
+(2, 3)
+{'a': 4, 'b': 5}</div>
+<div class="box key"><span class="bt">🔑 参数定义顺序（必记）</span>定义时合法顺序：<b>普通位置 → 默认参数 → <code class="inl">*args</code> → 仅关键字参数 → <code class="inl">**kwargs</code></b>。顺序错就语法错误。调用时反向用 <code class="inl">*序列</code>/<code class="inl">**字典</code> 可把容器拆开传入（unpacking）。</div>
+
+<h2 id="L2-return">1.4 ④ 多返回值与 docstring</h2>
+<p><b>多返回值的本质是元组。</b> <code class="inl">return a, b</code> 实际返回 <code class="inl">(a, b)</code>，接收时既可整体接成元组，也可解包成多个变量。</p>
+<pre><span class="kw">def</span> compute(x, y):
+    <span class="st">"""返回 x 与 y 的和与差"""</span>   <span class="cm"># docstring</span>
+    <span class="kw">return</span> x + y, x - y
+
+z = compute(<span class="ot">3</span>, <span class="ot">5</span>)        <span class="cm"># z = (8, -2)</span>
+s, d = compute(<span class="ot">3</span>, <span class="ot">5</span>)     <span class="cm"># 解包：s=8, d=-2</span>
+<span class="kw">print</span>(z, s, d)</pre>
+<div class="box out"><span class="bt">输出</span>(8, -2) 8 -2</div>
+<p><b>docstring。</b> 函数体第一句若是字符串字面量，即文档字符串，可用 <code class="inl">help(f)</code> 或 <code class="inl">f.__doc__</code> 查看，也供 <code class="inl">doctest</code> 提取测试。</p>
+
+<h2 id="L2-recur">1.4 ⑤ 递归 <span class="badge b-key">高频</span></h2>
+<div class="def"><b>定义。</b> <b>递归</b>是函数直接或间接调用自身，把原问题拆成<strong>规模更小的同构子问题</strong>（分而治之）。必须有<strong>终止条件（基准情形）</strong>，否则无限递归（Python 默认深度约 1000）。</div>
+<p><b>原理：怎么想递归。</b> 两步——① 基准情形：最小问题直接给答案；② 递归情形：假设「更小的子问题已经能解」，用它拼出当前问题的解。正确性常用数学归纳法。</p>
+<pre><span class="kw">def</span> fact(n):
+    <span class="kw">if</span> n == <span class="ot">0</span>:          <span class="cm"># 基准情形</span>
+        <span class="kw">return</span> <span class="ot">1</span>
+    <span class="kw">return</span> n * fact(n - <span class="ot">1</span>)   <span class="cm"># 递归情形</span>
+
+<span class="kw">print</span>(fact(<span class="ot">5</span>))     <span class="cm"># 120</span></pre>
+<div class="box out"><span class="bt">输出</span>120</div>
+<p><b>用法：经典题型。</b> 阶乘、斐波那契、硬币兑换计数、汉诺塔。汉诺塔思路（把 n 个盘从 A 经 C 移到 B）：先把上面 n-1 个移到 C，再把最大盘移到 B，最后把 n-1 个从 C 移到 B。</p>
+<div class="box warn"><span class="bt">易错</span>① 忘写终止条件 → 无限递归崩栈；② 朴素斐波那契 <code class="inl">fib(n-1)+fib(n-2)</code> 有大量重复计算，作业里要求用<strong>字典缓存（记忆化）</strong>提速：算过的存起来，再遇到直接取。</div>
+
+<hr class="sec">
+
+<h2 id="L2-search">1.5 ① 穷举搜索</h2>
+<div class="def"><b>定义。</b> <b>搜索/问题求解</b>是在某个状态空间里通过「遍历 + 条件判断」找出满足要求的解。简单问题搜索空间小、可直接穷举。</div>
+<p><b>原理与用法。</b> 对搜索空间内所有候选逐一生成、用领域规则判断是否合法/是否目标。空间不清晰时要先<strong>自行构造</strong>包含所有可能解的空间。优化方向：缩小搜索空间、提高遍历效率。</p>
+<pre><span class="cm"># 三位水仙花数：各位的立方和等于自身</span>
+<span class="kw">for</span> num <span class="kw">in</span> range(<span class="ot">100</span>, <span class="ot">1000</span>):
+    a, b, c = num // <span class="ot">100</span>, (num // <span class="ot">10</span>) % <span class="ot">10</span>, num % <span class="ot">10</span>
+    <span class="kw">if</span> a**<span class="ot">3</span> + b**<span class="ot">3</span> + c**<span class="ot">3</span> == num:
+        <span class="kw">print</span>(num, end=<span class="st">" "</span>)</pre>
+<div class="box out"><span class="bt">输出</span>153 370 371 407</div>
+
+<h2 id="L2-formal">1.5 ② 复杂问题形式化（六要素）</h2>
+<div class="def"><b>定义。</b> 复杂问题（八数码、华容道、棋类）的解是一串动作序列。把它形式化要描述六个要素。</div>
+<table>
+<tr><th>要素</th><th>含义</th></tr>
+<tr><td>初始状态 initial state</td><td>问题开始时的状态</td></tr>
+<tr><td>动作 action</td><td>可执行的操作</td></tr>
+<tr><td>可行性 applicable</td><td>当前状态下该动作是否合法</td></tr>
+<tr><td>状态转换 transition</td><td>执行动作后状态如何变化</td></tr>
+<tr><td>终止状态 terminal</td><td>目标 / 结束条件</td></tr>
+<tr><td>代价/奖赏 cost/reward</td><td>衡量解优劣的数值（步数、剩余子数）</td></tr>
+</table>
+<p><b>状态搜索树。</b> 根=初始状态，子节点=执行某动作后的新状态，根到目标节点的一条路径=一个解。分支因子与深度决定搜索复杂度；图搜索要避免重复扩展同一状态。</p>
+<div class="box warn"><span class="bt">易错</span>「动作合法性」与「状态转换」要分开：转换只负责改模型，合法性由外部规则判断；终止状态可能多个，需在其中按代价挑最优。</div>
+
+<h2 id="L2-bfsdfs">1.5 ③ BFS / DFS / 启发式搜索</h2>
+<p><b>无信息搜索（盲搜）。</b> 不用问题含义的启发信息，只求不重不漏地遍历。</p>
+<table>
+<tr><th></th><th>BFS 广度优先</th><th>DFS 深度优先</th></tr>
+<tr><td>扩展方式</td><td>逐层扩展（队列）</td><td>一条路走到底再回溯（栈）</td></tr>
+<tr><td>最短路</td><td>边权为 1 时保证最短</td><td>不保证最短</td></tr>
+<tr><td>空间</td><td>大（要存整层节点）</td><td>小（只存当前路径）</td></tr>
+<tr><td>完备性</td><td>有解必能找到</td><td>无深度限制时可能不终止</td></tr>
+</table>
+<p><b>有信息搜索（启发式）。</b> 用领域知识估计状态「好坏」指导方向：</p>
+<ul>
+<li><b>贪心搜索</b>：每步选当前看起来最好的（如离终点最近），快但可能陷局部最优、不保证最优。</li>
+<li><b>A*</b>：评价函数 f(n) = g(n) + h(n)，g 是已走实际代价、h 是到目标的启发估计。当 h <strong>可采纳</strong>（不高估真实代价）时，A* 保证最优。</li>
+</ul>
+<div class="box key"><span class="bt">🔑 术语简答</span><b>完备性</b>：有解时能否保证找到；<b>最优性</b>：找到的解是否代价最小。BFS 完备、边权为 1 时最优；A* 的最优性依赖启发函数可采纳性。</div>
+<pre><span class="cm"># 通用状态搜索框架：pop(0)→BFS，pop()→DFS</span>
+frontier = [initial_state]
+<span class="kw">while</span> frontier:
+    cur = frontier.pop(<span class="ot">0</span>)
+    <span class="kw">if</span> is_goal(cur):
+        <span class="kw">return</span> get_path(cur)
+    <span class="kw">for</span> act <span class="kw">in</span> applicable_actions(cur):
+        frontier.append(apply_action(cur, act))</pre>
+
+<hr class="sec">
+
+<h2 id="L2-module">1.8 ① 模块与命名空间</h2>
+<div class="def"><b>定义。</b> 一个 <code class="inl">.py</code> 文件就是一个<b>模块</b>，是比函数、类更大的代码组织单元，拥有自己独立的全局命名空间。<code class="inl">import m</code> 会<strong>执行 m 的全部顶层代码</strong>，并把其中定义的名字收进 <code class="inl">m</code> 这个命名空间，之后用 <code class="inl">m.名字</code> 访问。</div>
+<p><b>原理：命名空间隔离。</b> 不同模块的同名变量互不相干。下例主模块的 <code class="inl">x</code> 与 <code class="inl">mod.x</code> 是两个独立绑定；函数内 <code class="inl">x += 5</code> 是重新绑定局部 <code class="inl">x</code>，不影响外部。</p>
+<pre><span class="cm"># mod.py</span>
+x = <span class="ot">8</span>
+<span class="kw">def</span> work(x):
+    x += <span class="ot">5</span>
+    <span class="kw">print</span>(x)
+
+<span class="cm"># main.py</span>
+<span class="kw">import</span> mod
+x = <span class="ot">10</span>
+mod.work(x)        <span class="cm"># 15</span>
+<span class="kw">print</span>(mod.x, x)    <span class="cm"># 8 10（互不影响）</span></pre>
+<div class="box out"><span class="bt">输出</span>15
+8 10</div>
+<p><b>导入形式。</b> <code class="inl">import m [as 别名]</code>；<code class="inl">from m import a, b</code>（名字直接进当前命名空间，无需前缀）；<code class="inl">from m import *</code> 导入所有非 <code class="inl">_</code> 开头的公共名（不推荐，污染命名空间）。<code class="inl">sys.argv</code> 取命令行参数（<code class="inl">argv[0]</code> 是脚本名）。</p>
+
+<h2 id="L2-name">1.8 ② __name__ == "__main__"</h2>
+<div class="def"><b>定义。</b> 每个模块有内置变量 <code class="inl">__name__</code>：被<strong>直接运行</strong>时它等于 <code class="inl">"__main__"</code>；被 <strong>import 导入</strong>时它等于模块名。</div>
+<p><b>用法。</b> 用它把「只在直接运行时执行的测试代码」和「被导入时不该执行的代码」隔开——这是几乎每个脚本都有的入口写法。</p>
+<pre><span class="kw">def</span> useful():
+    ...
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:   <span class="cm"># 仅直接运行本文件时执行</span>
+    useful()
+    <span class="kw">print</span>(<span class="st">"run as main"</span>)</pre>
+<div class="box warn"><span class="bt">易错</span>不加这个判断，模块被别人 <code class="inl">import</code> 时，文件里的测试/打印代码也会跟着执行，造成意外输出。</div>
+
+<h2 id="L2-package">1.8 ③ 包 / __init__ / __all__</h2>
+<div class="def"><b>定义。</b> <b>包（package）</b>是含有 <code class="inl">__init__.py</code> 的<strong>目录</strong>，用来组织多个模块/子包。首次导入包或其子模块时 <code class="inl">__init__.py</code> 会被执行。</div>
+<p><b>用法。</b> <code class="inl">import 包.模块</code> 或 <code class="inl">from 包.子包 import 模块</code>。<code class="inl">__all__ = [...]</code> 写在 <code class="inl">__init__.py</code> 里，控制 <code class="inl">from 包 import *</code> 导出哪些名字（只影响 <code class="inl">*</code> 导入）。</p>
+<div class="box key"><span class="bt">🔑 记忆口诀</span>文件是模块、目录带 <code class="inl">__init__</code> 就是包；脚本主名 <code class="inl">__main__</code>、导入名是模块名；命名空间隔离、<code class="inl">__all__</code> 控导出；<strong>模块整个运行期只加载一次</strong>，字节码缓存在 <code class="inl">__pycache__</code>。组织层次：函数 → 类 → 模块 → 包 → 库。</div>
+
+<hr class="sec">
+
+<h2 id="L2-err">1.9 ① 三类错误 / EAFP</h2>
+<table>
+<tr><th>类型</th><th>说明</th><th>发现方式</th></tr>
+<tr><td>逻辑错误</td><td>能运行但结果不对</td><td><code class="inl">assert</code>、<code class="inl">doctest</code>、调试</td></tr>
+<tr><td>语法错误</td><td>违反语法（括号/缩进/冒号）</td><td>解释器直接抛 <code class="inl">SyntaxError</code>，程序起不来</td></tr>
+<tr><td>运行时异常</td><td>逻辑对但特定输入/环境出错</td><td>运行到才抛（除零、文件不存在等）</td></tr>
+</table>
+<div class="box key"><span class="bt">🔑 EAFP vs LBYL（高频简答）</span>
+<b>EAFP</b>（Easier to Ask Forgiveness than Permission）：先直接做，出错再用 <code class="inl">try/except</code> 兜——Python 推崇的风格，把异常当正常控制流。
+<b>LBYL</b>（Look Before You Leap）：动手前先用 <code class="inl">if</code> 检查。Python 因为动态类型/鸭子类型，常用 EAFP 而非到处 <code class="inl">isinstance</code> 检查。
+</div>
+
+<h2 id="L2-try">1.9 ② try / except / else / finally</h2>
+<div class="def"><b>定义。</b> <code class="inl">try</code> 放可能出错的代码；<code class="inl">except 类型</code> 按类型捕获；<code class="inl">else</code> 仅当 <code class="inl">try</code> <strong>没出异常</strong>时执行；<code class="inl">finally</code> <strong>无论如何都执行</strong>，常用于释放资源。</div>
+<div class="box warn"><span class="bt">易错：except 顺序</span>一旦匹配某个 <code class="inl">except</code>，后面的不再检查。若先写 <code class="inl">except Exception:</code> 会吃掉一切，其后更具体的 <code class="inl">except ZeroDivisionError:</code> <strong>永远不会执行</strong>——具体异常要写在前面。</div>
+<div class="box key"><span class="bt">🔑 finally 的 return 覆盖（阅读题常考）</span>
+<pre><span class="kw">def</span> test():
+    <span class="kw">try</span>:
+        <span class="kw">return</span> <span class="st">"try"</span>
+    <span class="kw">finally</span>:
+        <span class="kw">return</span> <span class="st">"finally"</span>   <span class="cm"># 覆盖 try 的返回值</span>
+<span class="kw">print</span>(test())</pre>
+<div class="box out"><span class="bt">输出</span>finally</div>
+<code class="inl">finally</code> 里的 <code class="inl">return</code> 会盖掉 <code class="inl">try</code>/<code class="inl">except</code> 的返回值，这是高频陷阱。</div>
+
+<h2 id="L2-raise">1.9 ③ raise / 常见异常 / 自定义异常</h2>
+<p><b>raise 与异常链。</b> <code class="inl">raise ValueError("msg")</code> 主动抛；<code class="inl">except</code> 里裸 <code class="inl">raise</code> 重抛当前异常；<code class="inl">raise New from e</code> 建立异常链（原异常存 <code class="inl">__cause__</code>）。</p>
+<p><b>常见内置异常：</b> <code class="inl">NameError</code>（未定义）、<code class="inl">TypeError</code>（类型不匹配）、<code class="inl">ValueError</code>（类型对值不合理，如 <code class="inl">int("abc")</code>）、<code class="inl">AttributeError</code>（无此属性）、<code class="inl">ZeroDivisionError</code>、<code class="inl">FileNotFoundError</code>、<code class="inl">KeyError</code>/<code class="inl">IndexError</code>。都继承自 <code class="inl">Exception</code>（再上是 <code class="inl">BaseException</code>）。</p>
+<div class="def"><b>自定义异常。</b> 继承 <code class="inl">Exception</code>，构造里务必 <code class="inl">super().__init__(msg)</code>，否则异常消息为空。</div>
+<pre><span class="kw">class</span> DividingError(Exception):
+    <span class="kw">def</span> __init__(self, msg, x, y):
+        self.x, self.y = x, y
+        super().__init__(msg)        <span class="cm"># 不能漏</span>
+
+<span class="kw">try</span>:
+    <span class="kw">raise</span> DividingError(<span class="st">"除法错误"</span>, <span class="ot">10</span>, <span class="ot">0</span>)
+<span class="kw">except</span> DividingError <span class="kw">as</span> e:
+    <span class="kw">print</span>(e, e.x, e.y)</pre>
+<div class="box out"><span class="bt">输出</span>除法错误 10 0</div>
+
+<h2 id="L2-with">1.9 ④ with 上下文管理器</h2>
+<div class="def"><b>定义。</b> <code class="inl">with expr as name:</code> 进入代码块前调 <code class="inl">expr</code> 的 <code class="inl">__enter__</code>（返回值给 <code class="inl">name</code>），退出时<strong>无论是否异常</strong>都调 <code class="inl">__exit__</code>，用于成对的「获取/释放」资源（文件、锁、连接）。</div>
+<p><b>原理：__exit__ 的返回值决定异常去留。</b> <code class="inl">__exit__(self, exc_type, exc_val, exc_tb)</code> 收到块内异常信息（无异常则三者为 <code class="inl">None</code>）。<strong>返回 <code class="inl">True</code> 会压制异常</strong>（不再向外传播），返回 <code class="inl">None</code>/<code class="inl">False</code> 则异常继续抛。</p>
+<pre><span class="kw">class</span> Ctx:
+    <span class="kw">def</span> __enter__(self):
+        <span class="kw">print</span>(<span class="st">"enter"</span>); <span class="kw">return</span> self
+    <span class="kw">def</span> __exit__(self, t, v, tb):
+        <span class="kw">print</span>(<span class="st">"exit"</span>, t)
+        <span class="kw">return</span> <span class="kw">True</span>          <span class="cm"># 压制异常</span>
+
+<span class="kw">with</span> Ctx():
+    <span class="kw">raise</span> RuntimeError(<span class="st">"boom"</span>)
+<span class="kw">print</span>(<span class="st">"还会执行到这"</span>)         <span class="cm"># 异常被吞，继续运行</span></pre>
+<div class="box out"><span class="bt">输出</span>enter
+exit &lt;class 'RuntimeError'&gt;
+还会执行到这</div>
+<div class="box warn"><span class="bt">易错</span><code class="inl">with</code> 本身<u>不等于</u>捕获异常，它只保证 <code class="inl">__exit__</code> 一定被调用。也可用 <code class="inl">@contextlib.contextmanager</code> 装饰生成器函数来实现（<code class="inl">yield</code> 前是 enter、后是 exit）。多资源：<code class="inl">with A() as a, B() as b:</code>。</div>
+
+<p style="text-align:center; color:var(--sub); margin-top:60px;">— 讲义② 结束，覆盖 1.4 / 1.5 / 1.8 / 1.9 —</p>
+</section>
+<hr style="border:0;border-top:3px double var(--accent);margin:60px 0;">
+<section class="lecture-block">
+<header class="hero">
+  <h1>函数式编程 &amp; 面向对象</h1>
+  <div class="meta">人工智能程序设计 · 讲义③ （1.6 函数式 + 1.7 面向对象）&nbsp;|&nbsp; 覆盖 2025 真题 简答3/4/5、阅读题2/3/4、实现题2</div>
+</header>
+
+<section id="L3-intro">
+  <div class="lead">
+    <b>怎么用这份讲义。</b> 每个知识点按「<b>定义 → 性质/原理 → 用法 → 要点/易错</b>」展开，代码只作佐证。
+    蓝色 <span class="badge b-exam">真题</span> 块标出去年怎么考；金色 <span class="badge b-key">高频</span> 块是必须默写的硬核点；
+    红色块是阅卷失分陷阱；绿色块是代码真实输出。
+  </div>
+  <div class="box exam"><span class="bt">真题映射（2025.6.12）</span>
+    · 简答 3：纯函数 vs 高阶函数，能否兼得 → <a href="#L3-pure">纯函数</a> / <a href="#L3-hof">高阶函数</a><br>
+    · 简答 4：哪些行为产生副作用、有何影响 → <a href="#L3-pure">纯函数与副作用</a><br>
+    · 简答 5：抽象 vs 封装的异同 → <a href="#L3-encap">封装、抽象</a><br>
+    · 阅读 2：多继承方法调用顺序（MRO）→ <a href="#L3-mro">MRO</a><br>
+    · 阅读 3：默认参数 <code class="inl">def f(val, lst=[])</code> 连续调用 → <a href="#L3-default">可变默认参数陷阱</a><br>
+    · 阅读 4：Duck Typing，bird 有 fly、dog 无 fly → <a href="#L3-poly">Duck Typing</a><br>
+    · 实现 2：游戏角色基类 + 法师子类 → <a href="#L3-impl">实现题</a>
+  </div>
+</section>
+
+<h2 id="L3-frame">1.6 ① 帧模型与作用域（LEGB）</h2>
+<div class="def"><b>定义。</b> <b>帧（frame）</b>是 Python 运行时用来存放「名字 → 对象」绑定关系的环境。程序启动时存在唯一的 <b>全局帧（Global frame）</b>；每次<strong>调用</strong>函数会新建一个<strong>局部帧（local frame）</strong>，存放这次调用的形参与函数内新变量。</div>
+<p><b>原理：定义 ≠ 执行。</b> <code class="inl">def</code> 这条语句只做一件事——在当前帧里建立「函数名 → 函数对象」一条绑定，<u>并不运行函数体</u>。函数体里的代码要等到被<strong>调用</strong>时才执行，而每次调用都开一个全新的、互相隔离的局部帧。所以同一个函数调用两次，两次的局部变量彼此独立。</p>
+<pre><span class="kw">def</span> square(x):
+    <span class="kw">return</span> x * x
+
+a = square(<span class="ot">3</span>)   <span class="cm"># 新建局部帧 #1：x=3</span>
+b = square(<span class="ot">4</span>)   <span class="cm"># 新建局部帧 #2：x=4，与 #1 无关</span></pre>
+<p><b>用法：名字怎么找。</b> 当代码里用到一个名字，解释器按 <b>LEGB</b> 顺序逐层往外找，找到第一个就停：</p>
+<ul>
+<li><b>L</b>ocal — 当前函数的局部帧；</li>
+<li><b>E</b>nclosing — 外层（嵌套）函数的帧；</li>
+<li><b>G</b>lobal — 模块的全局帧；</li>
+<li><b>B</b>uilt-in — 内置命名空间（<code class="inl">len</code>、<code class="inl">print</code> 等）。</li>
+</ul>
+<pre>x = <span class="ot">10</span>
+<span class="kw">def</span> outer():
+    x = <span class="ot">20</span>
+    <span class="kw">def</span> inner():
+        <span class="kw">print</span>(x)   <span class="cm"># L:inner无 → E:outer有(20) → 停</span>
+    inner()
+outer()</pre>
+<div class="box out"><span class="bt">输出</span>20</div>
+<div class="box key"><span class="bt">🔑 词法作用域（必记）</span>作用域由函数<strong>定义时所在的位置</strong>决定，<u>不是</u>调用时的位置。把一个函数传到别处去调用，它查找外层变量时认的仍然是「定义时的老家」，这正是闭包成立的前提。</div>
+
+<h2 id="L3-global">1.6 ② global 与 nonlocal</h2>
+<div class="def"><b>定义。</b> <code class="inl">global x</code> 声明函数内对 <code class="inl">x</code> 的赋值作用于<strong>全局帧</strong>；<code class="inl">nonlocal x</code> 声明作用于最近的<strong>外层函数帧</strong>（非全局）。</div>
+<p><b>性质：赋值即"声明局部"。</b> 这是 Python 一条容易翻车的规则——只要函数体内某处对一个名字<strong>赋值</strong>，该名字在<u>整个函数内</u>都被当作局部变量（编译期就定了），哪怕赋值写在后面。只读不写则按 LEGB 往外找，不受影响。</p>
+<div class="box warn"><span class="bt">易错：UnboundLocalError</span>
+<pre><span class="kw">def</span> f():
+    <span class="kw">print</span>(x)   <span class="cm"># 本想读全局 x</span>
+    x = <span class="ot">5</span>     <span class="cm"># 但函数里有赋值 → x 全程是局部名</span>
+x = <span class="ot">10</span>
+f()            <span class="cm"># UnboundLocalError: 局部 x 赋值前被引用</span></pre>
+因为出现了 <code class="inl">x = 5</code>，<code class="inl">print(x)</code> 读的是「还没赋值的局部 x」，于是报错。要读全局就别在函数里给它赋值，或加 <code class="inl">global x</code>。
+</div>
+<p><b>用法：什么时候用哪个。</b></p>
+<table>
+<tr><th>关键字</th><th>修改的目标帧</th><th>典型场景</th></tr>
+<tr><td><code class="inl">global x</code></td><td>全局帧</td><td>函数内要改模块级变量（计数器、配置）</td></tr>
+<tr><td><code class="inl">nonlocal x</code></td><td>最近的外层函数帧</td><td>闭包内要更新外层函数的状态变量</td></tr>
+</table>
+<pre>x = <span class="ot">10</span>
+<span class="kw">def</span> change():
+    <span class="kw">global</span> x
+    x = <span class="ot">5</span>
+change(); <span class="kw">print</span>(x)   <span class="cm"># 5</span></pre>
+<div class="box key"><span class="bt">🔑 高频简答</span>区分二者：<code class="inl">global</code> 改全局变量，<code class="inl">nonlocal</code> 改外层函数（非全局）的局部变量。<code class="inl">nonlocal</code> 要求外层确实已存在该变量，否则语法错误；二者都属于「制造副作用」的手段（见 <a href="#L3-pure">纯函数</a>）。</div>
+
+<h2 id="L3-closure">1.6 ③ 闭包 Closure</h2>
+<div class="def"><b>定义。</b> 当一个内层函数<strong>引用了外层函数的局部变量</strong>，并被当作返回值带出外层函数，这个「内层函数 + 它记住的外层环境」就构成<strong>闭包</strong>。</div>
+<p><b>原理：环境被"封存"。</b> 正常情况下外层函数返回后它的局部帧就销毁了。但若内层函数引用了外层变量，Python 会把这些变量「封存」在内层函数对象上（<code class="inl">__closure__</code>），外层即使早已结束，内层仍能访问、并通过 <code class="inl">nonlocal</code> 修改它们。这让一个普通函数拥有了<strong>跨调用持续的私有状态</strong>，效果类似一个轻量对象。</p>
+<p><b>用法：造一个带记忆的函数。</b> 下面 <code class="inl">make_counter</code> 每调用一次工厂就生产一个独立计数器，各自维护自己的 <code class="inl">times</code>：</p>
+<pre><span class="kw">def</span> make_counter(s, d):
+    times = -<span class="ot">1</span>
+    <span class="kw">def</span> counter():
+        <span class="kw">nonlocal</span> times    <span class="cm"># 不写它，times+=1 会被当成新局部变量</span>
+        times += <span class="ot">1</span>
+        <span class="kw">return</span> s + d * times
+    <span class="kw">return</span> counter
+
+c = make_counter(<span class="ot">5</span>, <span class="ot">2</span>)
+<span class="kw">print</span>(c(), c(), c())   <span class="cm"># 状态在三次调用间延续</span></pre>
+<div class="box out"><span class="bt">输出</span>5 7 9</div>
+<p><b>要点。</b> ① 闭包的核心是「函数 + 它定义时的环境」；② 要在闭包里修改外层变量，必须 <code class="inl">nonlocal</code>，否则触发前面讲的「赋值即局部」；③ 每次调用工厂都生成一份独立环境，互不干扰。</p>
+<div class="box exam"><span class="bt">作业关联</span>「多计数器系统」作业的 <code class="inl">make_counter(s,d)</code> 就是它。笔试里闭包常以「阅读写输出」（连续调用看累积）和「补全函数」（实现计数器/累加器）出现。</div>
+
+<h2 id="L3-pure">1.6 ④ 纯函数与副作用 <span class="badge b-exam">真题简答3/4</span></h2>
+<div class="def"><b>定义。</b> <b>纯函数</b>：返回值只依赖输入参数，且不改变任何外部状态——相同输入永远得到相同输出。<b>副作用</b>：函数执行时改变了函数外部可观察的状态。</div>
+<p><b>性质：为什么在意"纯"。</b> 纯函数是「可预测」的：能脱离上下文单独测试、可缓存、可并行、调试时只看输入就能复现。一旦有副作用，函数行为就依赖/改变隐藏状态，结果可能随调用历史变化，bug 难复现。</p>
+<p><b>产生副作用的典型行为（简答题 4 答案要点）：</b></p>
+<ul>
+<li>修改全局变量，或用 <code class="inl">global</code>/<code class="inl">nonlocal</code> 改外层绑定；</li>
+<li>修改传入的可变对象（list、dict、对象属性）；</li>
+<li>I/O：<code class="inl">print</code> 输出、读写文件、读键盘、访问网络。</li>
+</ul>
+<pre><span class="kw">def</span> modify(lst):
+    lst[<span class="ot">0</span>] = <span class="ot">99</span>      <span class="cm"># 改了调用者的列表 → 副作用</span>
+a = [<span class="ot">1</span>, <span class="ot">2</span>, <span class="ot">3</span>]
+modify(a)
+<span class="kw">print</span>(a)</pre>
+<div class="box out"><span class="bt">输出</span>[99, 2, 3]</div>
+<div class="box warn"><span class="bt">影响（简答要写）</span>副作用使程序状态难以追踪：函数不再「自包含」，难测试、难并发、bug 难复现（同样输入结果可能不同）。工程上应尽量把副作用收敛到少数边界处。</div>
+<div class="box key"><span class="bt">🔑 简答题 3 的关键判断</span>
+<b>一个函数能否既是纯函数又是高阶函数？能。</b>「纯」约束的是<strong>有没有副作用</strong>，「高阶」约束的是<strong>参不参与函数的传入/返回</strong>——两个维度正交，互不排斥。例：<code class="inl">compose(f,g)=lambda x:f(g(x))</code> 接收并返回函数（高阶），又不碰任何外部状态（纯）。反例：一个把结果写进全局日志的高阶函数就不纯。
+</div>
+
+<h2 id="L3-default">1.6 ⑤ 可变默认参数陷阱 <span class="badge b-exam">真题阅读题3</span></h2>
+<p>真题原题：<code class="inl">def f(val, lst=[]): lst.append(val); return lst</code>，问 <code class="inl">f(1)</code>、<code class="inl">f(2)</code>、<code class="inl">f(1)</code> 三次输出。</p>
+<div class="def"><b>原理。</b> 默认参数的值在<strong>函数定义时只求值一次</strong>，并保存在函数对象上（<code class="inl">f.__defaults__</code>）。若默认值是<strong>可变对象</strong>，则<u>所有未显式传参的调用共享同一个对象</u>，对它的修改会在调用间累积。</p>
+<pre><span class="kw">def</span> f(val, lst=[]):
+    lst.append(val)
+    <span class="kw">return</span> lst
+
+<span class="kw">print</span>(f(<span class="ot">1</span>))   <span class="cm"># 用那个共享 lst</span>
+<span class="kw">print</span>(f(<span class="ot">2</span>))   <span class="cm"># 还是同一个 lst</span>
+<span class="kw">print</span>(f(<span class="ot">1</span>))   <span class="cm"># 继续累积</span></pre>
+<div class="box out"><span class="bt">输出</span>[1]
+[1, 2]
+[1, 2, 1]</div>
+<div class="box warn"><span class="bt">正确写法：用 None 哨兵</span>
+<pre><span class="kw">def</span> f(val, lst=<span class="kw">None</span>):
+    <span class="kw">if</span> lst <span class="kw">is</span> <span class="kw">None</span>:
+        lst = []        <span class="cm"># 每次调用新建</span>
+    lst.append(val)
+    <span class="kw">return</span> lst</pre>
+默认值用不可变的 <code class="inl">None</code>，函数内判断后再新建，避免共享。
+</div>
+
+<h2 id="L3-hof">1.6 ⑥ 高阶函数：函数作参数 <span class="badge b-exam">真题简答3</span></h2>
+<div class="def"><b>定义。</b> <b>高阶函数</b>是「以函数为参数」或「返回函数」的函数。前提是 Python 里函数是<strong>一等公民</strong>（first-class）：能赋值给变量、放进容器、当参数传、当返回值。</div>
+<p><b>性质：它在抽象什么。</b> 高阶函数把「通用流程」与「可变的那一步」分离。比如「对 1..n 求和」是固定流程，「第 k 项怎么算」是可变部分——把后者抽成参数 <code class="inl">term</code> 传进来，同一套求和框架就能算平方和、立方和、各种级数，不必重复写循环。</p>
+<pre><span class="kw">def</span> summation(n, term):     <span class="cm"># term 是"第k项怎么算"的函数</span>
+    total = <span class="ot">0</span>
+    <span class="kw">for</span> k <span class="kw">in</span> range(<span class="ot">1</span>, n + <span class="ot">1</span>):
+        total += term(k)
+    <span class="kw">return</span> total
+
+<span class="kw">print</span>(summation(<span class="ot">100</span>, <span class="kw">lambda</span> x: x * x))   <span class="cm"># 平方和</span></pre>
+<div class="box out"><span class="bt">输出</span>338350</div>
+<p><b>用法要点。</b> 看到「同一段逻辑只有中间一步在变」就该想到抽成高阶函数；传入的可以是具名函数、<code class="inl">lambda</code>，甚至另一个高阶函数返回的函数。</p>
+<div class="box exam"><span class="bt">作业关联</span>「麦克劳林级数」作业 <code class="inl">summation(n_terms, term_func, x)</code> 就是这个模式，传 <code class="inl">exp_term</code>/<code class="inl">cos_term</code>/<code class="inl">geometric_term</code> 复用同一求和逻辑；「迭代逼近」作业的 <code class="inl">improve(update, accurate, guess)</code> 把「更新规则」「停止条件」都抽成函数参数。</div>
+
+<h2 id="L3-mapfilter">1.6 ⑦ map / filter / reduce / lambda</h2>
+<div class="def"><b>定义。</b> 这三个是内置的高阶函数，对应函数式三大基本操作；<code class="inl">lambda</code> 是写「一次性小函数」的匿名函数语法。</div>
+<table>
+<tr><th>函数</th><th>做什么</th><th>返回</th></tr>
+<tr><td><code class="inl">map(f, it)</code></td><td>对每个元素施加 f（变换）</td><td>惰性迭代器</td></tr>
+<tr><td><code class="inl">filter(f, it)</code></td><td>保留 f 为真的元素（筛选）</td><td>惰性迭代器</td></tr>
+<tr><td><code class="inl">reduce(f, it)</code></td><td>两两累积折叠成单值（在 <code class="inl">functools</code>）</td><td>单个值</td></tr>
+</table>
+<pre><span class="kw">from</span> functools <span class="kw">import</span> reduce
+<span class="kw">print</span>(list(map(<span class="kw">lambda</span> x: x**<span class="ot">2</span>, [<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>])))            <span class="cm"># [1, 4, 9]</span>
+<span class="kw">print</span>(list(filter(<span class="kw">lambda</span> x: x%<span class="ot">2</span>==<span class="ot">0</span>, range(<span class="ot">10</span>))))      <span class="cm"># [0, 2, 4, 6, 8]</span>
+<span class="kw">print</span>(reduce(<span class="kw">lambda</span> a,b: a*b, [<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>,<span class="ot">4</span>]))           <span class="cm"># 24</span></pre>
+<p><b>原理：reduce 怎么折叠。</b> <code class="inl">reduce(f, [a,b,c,d])</code> 等价于 <code class="inl">f(f(f(a,b),c),d)</code>——从左到右把前面的累积结果和下一个元素喂给 <code class="inl">f</code>。上例即 <code class="inl">((1*2)*3)*4 = 24</code>。</p>
+<div class="box warn"><span class="bt">易错：惰性求值</span><code class="inl">map</code>/<code class="inl">filter</code> 返回的是<strong>迭代器</strong>而非 list，不 <code class="inl">list()</code> 直接 <code class="inl">print</code> 会看到 <code class="inl">&lt;map object ...&gt;</code>；且迭代器<strong>只能消费一次</strong>，遍历完再用就空了。</div>
+<div class="box key"><span class="bt">🔑 lambda 限制</span><code class="inl">lambda 形参: 表达式</code> 只能是<strong>单个表达式</strong>，不能含赋值、循环、<code class="inl">return</code> 等语句；它的外层作用域同样按定义位置确定（词法作用域）。</div>
+
+<h2 id="L3-compose">1.6 ⑧ 函数复合与柯里化</h2>
+<h3>函数复合（compose）</h3>
+<div class="def"><b>定义。</b> 函数复合把两个函数串起来：<code class="inl">compose(f, g)</code> 返回一个新函数 h，满足 <code class="inl">h(x) = f(g(x))</code>——先用 g 处理 x，再把结果交给 f。</div>
+<p><b>原理与意义。</b> 复合是「函数返回函数」的最简例子：它不立刻算结果，而是<strong>把两步处理打包成一步</strong>，返回一个还没运行的新函数，等真正传入 x 时才依次执行。这让我们能像搭积木一样，用小函数拼出复杂的处理管道，而不必写一堆中间变量。注意顺序——数学习惯里 <code class="inl">f∘g</code> 是「先 g 后 f」。</p>
+<pre><span class="kw">def</span> compose(f, g):
+    <span class="kw">return</span> <span class="kw">lambda</span> x: f(g(x))   <span class="cm"># 返回新函数，此刻不计算</span>
+
+square = <span class="kw">lambda</span> x: x * x
+inc    = <span class="kw">lambda</span> x: x + <span class="ot">1</span>
+h = compose(square, inc)         <span class="cm"># h(x) = (x+1)^2</span>
+<span class="kw">print</span>(h(<span class="ot">12</span>))                  <span class="cm"># 先 inc(12)=13，再 square(13)=169</span></pre>
+<div class="box out"><span class="bt">输出</span>169</div>
+<h3>柯里化（currying）</h3>
+<div class="def"><b>定义。</b> <b>柯里化</b>是把「一个接收多个参数的函数」改造成「一串每次只接收一个参数的函数」：原来 <code class="inl">f(x, y)</code> 一次传两个，柯里化后变成 <code class="inl">f(x)(y)</code>——先传 x 得到一个「记住了 x、还差 y」的新函数，再传 y 才算出结果。</div>
+<p><b>原理：为什么能这样。</b> 靠的还是<strong>闭包</strong>。外层吃掉 x 后返回一个内层函数，这个内层函数通过闭包记住了 x；等它再被调用、拿到 y，就能算 <code class="inl">f(x, y)</code>。本质是「分批收集参数，凑齐了再算」。</p>
+<p><b>用法：它解决什么问题。</b> ① 参数复用——先固定一部分参数得到一个专用函数（偏应用），比如 <code class="inl">add(10)</code> 得到一个「加 10 器」反复用；② 让函数能优雅地参与复合/管道，因为复合要求每个环节都是「一进一出」的单参函数。</p>
+<pre><span class="kw">def</span> curry2(f):
+    <span class="kw">return</span> <span class="kw">lambda</span> x: <span class="kw">lambda</span> y: f(x, y)   <span class="cm"># 两层 lambda，逐个收参</span>
+
+add = curry2(<span class="kw">lambda</span> x, y: x + y)
+add10 = add(<span class="ot">10</span>)        <span class="cm"># 固定 x=10，得到"加10器"（闭包记住了10）</span>
+<span class="kw">print</span>(add10(<span class="ot">5</span>))       <span class="cm"># 再传 y=5 → 15</span>
+<span class="kw">print</span>(add(<span class="ot">3</span>)(<span class="ot">7</span>))      <span class="cm"># 一次性连续传 → 10</span></pre>
+<div class="box out"><span class="bt">输出</span>15
+10</div>
+<div class="box exam"><span class="bt">作业关联</span>「跳转策略」作业全程柯里化：<code class="inl">compose(f)(g)</code>、<code class="inl">repeat_apply(func)(t)</code>、<code class="inl">make_min()(graph)</code>——每层括号喂一个参数，每层都靠闭包记住上一层。读懂「函数返回函数、用括号逐层调用」就能拿下这类题。</div>
+
+<h2 id="L3-deco">1.6 ⑨ 装饰器</h2>
+<div class="def"><b>定义。</b> <b>装饰器</b>是一个高阶函数：接收一个函数，返回一个「包了一层额外行为」的新函数。<code class="inl">@deco</code> 写在函数定义上方，等价于 <code class="inl">f = deco(f)</code>。</div>
+<p><b>原理。</b> 装饰器内部定义一个 <code class="inl">wrapped</code>，在调用原函数前后插入逻辑（日志、计时、权限、缓存），再把 <code class="inl">wrapped</code> 返回顶替原函数。因为是「函数进、增强版函数出」，所以它本质就是高阶函数 + 闭包（<code class="inl">wrapped</code> 记住了被包的 <code class="inl">fn</code>）。</p>
+<pre><span class="kw">def</span> trace(fn):
+    <span class="kw">def</span> wrapped(x):
+        <span class="kw">print</span>(<span class="st">'calling'</span>, fn.__name__, x)   <span class="cm"># 前置增强</span>
+        <span class="kw">return</span> fn(x)                       <span class="cm"># 调原函数</span>
+    <span class="kw">return</span> wrapped
+
+<span class="ot">@trace</span>                <span class="cm"># 等价于 triple = trace(triple)</span>
+<span class="kw">def</span> triple(x):
+    <span class="kw">return</span> <span class="ot">3</span> * x
+
+<span class="kw">print</span>(triple(<span class="ot">12</span>))</pre>
+<div class="box out"><span class="bt">输出</span>calling triple 12
+36</div>
+<div class="box key"><span class="bt">🔑 高频</span>会解释 <code class="inl">@deco</code> 的语法糖含义，并能手写一个简单装饰器（如打印参数与返回值、统计调用次数）。</div>
+
+<h2 id="L3-gen">1.6 ⑩ 生成器 yield</h2>
+<div class="def"><b>定义。</b> 函数体内含 <code class="inl">yield</code> 的就是<strong>生成器函数</strong>。调用它<u>不执行函数体</u>，而是立即返回一个<strong>生成器对象</strong>；每次对它 <code class="inl">next()</code>（或 for 迭代），函数从上次 <code class="inl">yield</code> 暂停处恢复，运行到下一个 <code class="inl">yield</code> 吐出一个值再次暂停。</div>
+<p><b>性质：惰性 + 状态保持。</b> 生成器「要一个算一个」，不一次性把所有结果存进内存，因此能表示超大序列甚至无限序列；且暂停时它的局部变量被完整保留，下次接着用。</p>
+<pre><span class="kw">def</span> gen(n):
+    <span class="kw">for</span> i <span class="kw">in</span> range(n):
+        <span class="kw">yield</span> i
+g = gen(<span class="ot">3</span>)
+<span class="kw">print</span>(next(g), next(g))   <span class="cm"># 0 1（中途暂停，状态保留在循环里）</span>
+<span class="kw">print</span>(list(gen(<span class="ot">3</span>)))       <span class="cm"># [0, 1, 2]（另起一个生成器，从头）</span></pre>
+<div class="box out"><span class="bt">输出</span>0 1
+[0, 1, 2]</div>
+<div class="box warn"><span class="bt">易错</span>生成器只能迭代一次，耗尽后再 <code class="inl">list()</code> 得到 <code class="inl">[]</code>。生成器表达式 <code class="inl">(x*x for x in it)</code> 用圆括号，返回的是生成器而非元组。</div>
+
+<hr class="sec">
+
+<h2 id="L3-class">1.7 ① 类、对象、__init__、self</h2>
+<div class="def"><b>定义。</b> <b>类（class）</b>描述一类对象共有的数据属性与方法，是一种自定义类型；<b>对象（object）</b>是类的具体实例，各自持有独立的状态。</div>
+<p><b>原理：创建对象时发生了什么。</b> 像调用函数一样写 <code class="inl">类名(...)</code>，Python 会新建一个空实例，然后自动调用 <code class="inl">__init__(self, ...)</code> 对它初始化——<code class="inl">self</code> 就是「刚建好的这个实例」，由解释器自动传入，不用你手动给。实例属性必须通过 <code class="inl">self.属性 = 值</code> 绑定，才会挂到这个对象上。</p>
+<pre><span class="kw">class</span> Account:
+    <span class="kw">def</span> __init__(self, holder):
+        self.holder = holder    <span class="cm"># 绑定实例属性</span>
+        self.balance = <span class="ot">0</span>
+
+a = Account(<span class="st">"Li"</span>)
+b = Account(<span class="st">"Li"</span>)
+<span class="kw">print</span>(a is b)   <span class="cm"># 两次创建是两个独立对象</span></pre>
+<div class="box out"><span class="bt">输出</span>False</div>
+<p><b>要点。</b> 实例方法第一个参数固定是 <code class="inl">self</code>；<code class="inl">a.method()</code> 等价于 <code class="inl">类.method(a)</code>，解释器自动把 <code class="inl">a</code> 填给 <code class="inl">self</code>。</p>
+
+<h2 id="L3-attr">1.7 ② 实例属性 vs 类属性（遮蔽）</h2>
+<div class="def"><b>定义。</b> <b>类属性</b>定义在类体里、被所有实例共享；<b>实例属性</b>在 <code class="inl">self.x=</code> 时创建、为每个实例独有。</div>
+<p><b>原理：查找与遮蔽。</b> 读 <code class="inl">obj.x</code> 时按 <b>实例 → 类 → 基类</b> 顺序找第一个。关键陷阱在「写」：<code class="inl">obj.x = v</code> 永远是在<strong>实例上新建/覆盖</strong>实例属性，<u>不会</u>动到类属性。于是该实例之后读到的是自己的新值（遮蔽了类属性），但其他实例和类本身不受影响。要改类属性，必须用 <code class="inl">类名.x = v</code>。</p>
+<pre><span class="kw">class</span> A:
+    interest = <span class="ot">0.2</span>           <span class="cm"># 类属性，初始共享</span>
+a, b = A(), A()
+a.interest = <span class="ot">0.3</span>            <span class="cm"># 只在 a 上新建实例属性 → 遮蔽</span>
+<span class="kw">print</span>(a.interest, b.interest, A.interest)
+A.interest = <span class="ot">0.4</span>            <span class="cm"># 改类属性：影响所有"没遮蔽的"</span>
+<span class="kw">print</span>(a.interest, b.interest, A.interest)</pre>
+<div class="box out"><span class="bt">输出</span>0.3 0.2 0.2
+0.3 0.4 0.4</div>
+<div class="box key"><span class="bt">🔑 阅读写输出高频</span>第二行 <code class="inl">a</code> 仍是 0.3——因为它早已有自己的实例属性，类属性变成 0.4 也盖不过它；<code class="inl">b</code> 没遮蔽，跟着类属性变成 0.4。这种「类属性 + 实例遮蔽」的输出是常考点。类属性常用于「对象计数」（<code class="inl">__init__</code> 里 <code class="inl">类.count += 1</code>）。</div>
+
+<h2 id="L3-encap">1.7 ③ 封装、抽象、name mangling <span class="badge b-exam">真题简答5</span></h2>
+<div class="box exam"><span class="bt">简答题 5：抽象 vs 封装的异同</span>
+<b>相同点</b>：都是控制复杂度的手段，都强调「分开对外接口与内部细节」。<br>
+<b>抽象</b>：站在<strong>使用者视角</strong>，只关心对象「能做什么」，忽略「怎么做」——关注接口与行为。<br>
+<b>封装</b>：站在<strong>实现者视角</strong>，把数据和实现细节<strong>藏起来</strong>，只暴露受控接口，防止外部乱改内部状态——关注隐藏与保护。<br>
+一句话：抽象决定「该露出什么」，封装负责「把不该露的藏好」。二者常配合：先抽象出接口，再用封装守住实现。
+</div>
+<p><b>Python 怎么实现封装。</b> Python 没有真正的 <code class="inl">private</code>，靠命名约定表达意图：</p>
+<table>
+<tr><th>写法</th><th>含义</th></tr>
+<tr><td><code class="inl">_x</code></td><td>约定为「受保护」，外部不应使用（无强制力，纯君子协定）</td></tr>
+<tr><td><code class="inl">__x</code></td><td>触发 <b>name mangling（名称改写）</b>，实际被改名为 <code class="inl">_ClassName__x</code></td></tr>
+</table>
+<p><b>原理：name mangling。</b> 双下划线开头的属性会被编译器自动改名为 <code class="inl">_类名__x</code>，于是 <code class="inl">obj.__x</code> 从外部直接访问会失败（找不到原名），起到「防误用」的封装效果——但它<u>不是加密</u>，知道改写规则照样能访问。</p>
+<pre><span class="kw">class</span> Account:
+    <span class="kw">def</span> __init__(self):
+        self.__balance = <span class="ot">0</span>      <span class="cm"># 实际存为 _Account__balance</span>
+a = Account()
+<span class="cm"># a.__balance            → AttributeError</span>
+<span class="kw">print</span>(a._Account__balance)   <span class="cm"># 0：知道改写名仍可访问（不推荐）</span></pre>
+<div class="box out"><span class="bt">输出</span>0</div>
+
+<h2 id="L3-inherit">1.7 ④ 继承、重写、super</h2>
+<div class="def"><b>定义。</b> <b>继承</b>让子类（派生类）自动拥有父类（基类）的属性与方法，建立 is-a 关系；<b>重写（override）</b>是子类定义同名方法覆盖父类版本；<code class="inl">super()</code> 用来在子类里调用父类的实现。</div>
+<p><b>原理与用法。</b> 子类找方法时按「实例 → 子类 → 父类」顺序，所以子类重写后优先用子类的。但重写不等于「丢弃父类逻辑」——常见做法是子类先 <code class="inl">super().方法()</code> 复用父类逻辑，再加自己的部分。<strong>最关键的一条</strong>：子类一旦重写 <code class="inl">__init__</code>，父类的初始化就<u>不会自动执行</u>，必须显式 <code class="inl">super().__init__(...)</code>，否则父类负责的属性全部缺失。</p>
+<pre><span class="kw">class</span> Account:
+    <span class="kw">def</span> __init__(self, holder):
+        self.holder = holder
+    <span class="kw">def</span> withdraw(self, amt):
+        <span class="kw">return</span> amt
+
+<span class="kw">class</span> Checking(Account):
+    <span class="kw">def</span> __init__(self, holder, fee):
+        super().__init__(holder)          <span class="cm"># 不写这句 holder 就丢了</span>
+        self.fee = fee
+    <span class="kw">def</span> withdraw(self, amt):              <span class="cm"># 重写：扣手续费后复用父类逻辑</span>
+        <span class="kw">return</span> super().withdraw(amt + self.fee)
+
+c = Checking(<span class="st">"Li"</span>, <span class="ot">1</span>)
+<span class="kw">print</span>(c.holder, c.withdraw(<span class="ot">100</span>))</pre>
+<div class="box out"><span class="bt">输出</span>Li 101</div>
+
+<h2 id="L3-mro">1.7 ⑤ 多继承与 MRO <span class="badge b-exam">真题阅读题2</span></h2>
+<div class="def"><b>定义。</b> 一个类可同时继承多个父类。当多个父类有同名方法时，调用哪个由 <b>MRO（Method Resolution Order，方法解析顺序）</b>决定——它是一个把所有相关类排成线性序列的列表，可用 <code class="inl">类.__mro__</code> 查看。</div>
+<p><b>原理。</b> MRO 规则可简化记为：<strong>派生类在前、基类按声明从左到右、所有类最后汇到 <code class="inl">object</code></strong>（严格算法是 C3 线性化，本课按这个直觉即可）。查找方法时沿 MRO 列表从前往后找第一个拥有它的类。真题阅读题 2 就是考这个：<code class="inl">class A(B, C)</code> 调 <code class="inl">A().f()</code>，A 没有就找 B，B 没有再找 C。</p>
+<p><b>关键：<code class="inl">super()</code> 不是"调父类"，是"调 MRO 里的下一个"。</b> 这点最容易错。在多继承里 <code class="inl">super()</code> 沿 MRO 把调用<strong>接力</strong>传给下一个类，从而每个类只做自己那段、再交棒，形成<strong>协作式方法链</strong>。</p>
+<pre><span class="kw">class</span> Base:
+    <span class="kw">def</span> info(self): <span class="kw">print</span>(<span class="st">"Base"</span>)
+<span class="kw">class</span> X(Base):
+    <span class="kw">def</span> info(self):
+        super().info(); <span class="kw">print</span>(<span class="st">"X"</span>)
+<span class="kw">class</span> Y(Base):
+    <span class="kw">def</span> info(self):
+        super().info(); <span class="kw">print</span>(<span class="st">"Y"</span>)
+<span class="kw">class</span> Z(X, Y):
+    <span class="kw">def</span> info(self):
+        super().info(); <span class="kw">print</span>(<span class="st">"Z"</span>)
+
+Z().info()
+<span class="cm"># MRO: Z → X → Y → Base → object</span></pre>
+<div class="box out"><span class="bt">输出</span>Base
+Y
+X
+Z</div>
+<div class="box key"><span class="bt">🔑 怎么推这个输出</span>每个 <code class="inl">info</code> 都「先 super 再打印」。沿 MRO：Z 先交棒给 X，X 交给 Y，Y 交给 Base；Base 没有 super 链，打印 <code class="inl">Base</code> 返回；然后回溯依次打印 Y、X、Z。所以是 Base→Y→X→Z。<u>口诀</u>：先 super 的，打印顺序和 MRO 相反。</div>
+
+<h2 id="L3-poly">1.7 ⑥ 多态与 Duck Typing <span class="badge b-exam">真题阅读题4</span></h2>
+<div class="def"><b>定义。</b> <b>多态</b>：相同的调用作用在不同对象上产生不同行为。Python 靠 <b>Duck Typing（鸭子类型）</b>实现——「能不能对一个对象做某操作，取决于它<u>有没有相应的方法</u>，而不看它属于什么类型」。名字来自：走起来像鸭子、叫起来像鸭子，那就当它是鸭子。</p></div>
+<p><b>原理。</b> Python 是动态类型语言，调用 <code class="inl">obj.method()</code> 前<u>不做类型检查</u>，而是运行到那一刻才去对象上找 <code class="inl">method</code>；找到就调，找不到才抛 <code class="inl">AttributeError</code>。所以不同类只要都实现了同名方法，就能被同一段代码统一处理——这就是多态的来源，也省去了 Java 那种「必须共同继承某接口」的约束。</p>
+<pre><span class="kw">def</span> f(animal):
+    animal.fly()              <span class="cm"># 不关心 animal 是什么类，只要有 fly</span>
+
+<span class="kw">class</span> Bird:
+    <span class="kw">def</span> fly(self): <span class="kw">print</span>(<span class="st">"bird flying"</span>)
+<span class="kw">class</span> Dog:
+    <span class="kw">pass</span>
+
+f(Bird())   <span class="cm"># 有 fly → 正常</span>
+f(Dog())    <span class="cm"># 没 fly → 运行到这才报错</span></pre>
+<div class="box out"><span class="bt">输出</span>bird flying
+AttributeError: 'Dog' object has no attribute 'fly'</div>
+<div class="box exam"><span class="bt">真题阅读题 4 答题要点</span>
+① 现象：传 Bird 正常，传 Dog 报 <code class="inl">AttributeError</code>。<br>
+② 体现的特点：Python 是<strong>动态类型 + Duck Typing</strong>，调用前不检查类型，运行到 <code class="inl">.fly()</code> 才查方法。<br>
+③ 修改：给 Dog 也加 <code class="inl">fly</code> 方法；或在 <code class="inl">f</code> 里用 <code class="inl">hasattr(animal,'fly')</code> 判断，或 EAFP 风格 <code class="inl">try: animal.fly() except AttributeError: ...</code>。
+</div>
+
+<h2 id="L3-magic">1.7 ⑦ 特殊方法（运算符重载 / 迭代器 / 可调用）</h2>
+<div class="def"><b>定义。</b> <b>特殊方法</b>（又叫魔术方法，<code class="inl">__xxx__</code>）是 Python 预定义的钩子：你在类里实现它，就能让对象响应内置语法——<code class="inl">+</code>、<code class="inl">==</code>、<code class="inl">len()</code>、<code class="inl">for</code>、<code class="inl">print()</code> 等。这是「让自定义类型用起来像内置类型」的关键。</div>
+<table>
+<tr><th>方法</th><th>由什么触发</th></tr>
+<tr><td><code class="inl">__str__</code> / <code class="inl">__repr__</code></td><td><code class="inl">print()</code>、<code class="inl">str()</code> / <code class="inl">repr()</code></td></tr>
+<tr><td><code class="inl">__eq__</code> <code class="inl">__lt__</code> …</td><td><code class="inl">==</code> <code class="inl">&lt;</code> 等比较</td></tr>
+<tr><td><code class="inl">__add__</code> <code class="inl">__mul__</code></td><td><code class="inl">+</code> <code class="inl">*</code></td></tr>
+<tr><td><code class="inl">__len__</code> <code class="inl">__getitem__</code></td><td><code class="inl">len(obj)</code> / <code class="inl">obj[k]</code></td></tr>
+<tr><td><code class="inl">__iter__</code> <code class="inl">__next__</code></td><td><code class="inl">for</code> 循环 / <code class="inl">next()</code></td></tr>
+<tr><td><code class="inl">__call__</code></td><td>把实例当函数调用 <code class="inl">obj()</code></td></tr>
+</table>
+<p><b>用法示例：运算符重载。</b> 给 <code class="inl">Vector</code> 实现 <code class="inl">__add__</code>/<code class="inl">__mul__</code>/<code class="inl">__str__</code>，它就能用 <code class="inl">+</code>、<code class="inl">*</code> 运算并被 <code class="inl">print</code> 友好显示：</p>
+<pre><span class="kw">class</span> Vector:
+    <span class="kw">def</span> __init__(self, x, y):
+        self.x, self.y = x, y
+    <span class="kw">def</span> __add__(self, o):
+        <span class="kw">return</span> Vector(self.x + o.x, self.y + o.y)
+    <span class="kw">def</span> __mul__(self, o):
+        <span class="kw">if</span> isinstance(o, Vector):              <span class="cm"># 向量*向量 → 点乘(标量)</span>
+            <span class="kw">return</span> self.x*o.x + self.y*o.y
+        <span class="kw">return</span> Vector(self.x*o, self.y*o)      <span class="cm"># 向量*数 → 数乘</span>
+    <span class="kw">def</span> __str__(self):
+        <span class="kw">return</span> f<span class="st">"({self.x}, {self.y})"</span>
+
+<span class="kw">print</span>(Vector(<span class="ot">3</span>,<span class="ot">4</span>) + Vector(<span class="ot">1</span>,<span class="ot">2</span>))   <span class="cm"># (4, 6)</span>
+<span class="kw">print</span>(Vector(<span class="ot">3</span>,<span class="ot">4</span>) * Vector(<span class="ot">1</span>,<span class="ot">2</span>))   <span class="cm"># 3*1+4*2 = 11</span></pre>
+<div class="box out"><span class="bt">输出</span>(4, 6)
+11</div>
+<p><b>另两类高频。</b> 实现 <code class="inl">__iter__</code>+<code class="inl">__next__</code> 让对象能进 <code class="inl">for</code> 循环（迭代器协议，结束时 <code class="inl">raise StopIteration</code>）；实现 <code class="inl">__call__</code> 让实例「能像函数一样被调用」。</p>
+<div class="box exam"><span class="bt">作业关联</span>对应 <code class="inl">Vector</code>、<code class="inl">ReverseList</code>（<code class="inl">__iter__/__next__</code> 倒序迭代）、<code class="inl">TaskScheduler</code>（子类各自重写 <code class="inl">__call__</code>，调度器统一 <code class="inl">task()</code> 调用 → 多态）。混合类型运算时返回 <code class="inl">NotImplemented</code>，可让 Python 转去试另一操作数的反向方法 <code class="inl">__radd__</code>。</div>
+
+<h2 id="L3-impl">1.7 ⑧ 真题实现题：游戏角色基类 + 法师子类 <span class="badge b-exam">真题实现题2</span></h2>
+<p>真题要求「实现一个游戏角色的基类和一个法师的子类」。这题把本讲的 <code class="inl">__init__</code>、<code class="inl">super()</code>、方法重写、多态全考了。下面给一份结构完整、可直接照搬的答案。</p>
+<p><b>设计思路。</b> 基类 <code class="inl">Character</code> 放所有角色共有的属性（名字、血量、攻击力）和行为（攻击、判定存活、字符串显示）；子类 <code class="inl">Mage</code> 通过 <code class="inl">super().__init__</code> 复用父类初始化，再加自己的法力值 <code class="inl">mp</code> 和专属技能 <code class="inl">cast</code>。</p>
+<pre><span class="kw">class</span> Character:
+    <span class="kw">def</span> __init__(self, name, hp, attack):
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+
+    <span class="kw">def</span> attack_target(self, other):
+        other.hp -= self.attack
+        <span class="kw">return</span> f<span class="st">"{self.name} 攻击 {other.name}，造成 {self.attack} 点伤害"</span>
+
+    <span class="kw">def</span> is_alive(self):
+        <span class="kw">return</span> self.hp > <span class="ot">0</span>
+
+    <span class="kw">def</span> __str__(self):
+        <span class="kw">return</span> f<span class="st">"{self.name}(HP={self.hp})"</span>
+
+
+<span class="kw">class</span> Mage(Character):
+    <span class="kw">def</span> __init__(self, name, hp, attack, mp):
+        super().__init__(name, hp, attack)   <span class="cm"># 复用父类初始化</span>
+        self.mp = mp
+
+    <span class="kw">def</span> cast(self, other):                   <span class="cm"># 子类新增技能</span>
+        <span class="kw">if</span> self.mp < <span class="ot">10</span>:
+            <span class="kw">return</span> f<span class="st">"{self.name} 法力不足"</span>
+        self.mp -= <span class="ot">10</span>
+        other.hp -= self.attack * <span class="ot">2</span>       <span class="cm"># 法术伤害翻倍</span>
+        <span class="kw">return</span> f<span class="st">"{self.name} 对 {other.name} 释放法术，造成 {self.attack*2} 点伤害"</span>
+
+
+hero = Character(<span class="st">"战士"</span>, <span class="ot">100</span>, <span class="ot">15</span>)
+mage = Mage(<span class="st">"法师"</span>, <span class="ot">80</span>, <span class="ot">12</span>, <span class="ot">30</span>)
+<span class="kw">print</span>(mage.cast(hero))
+<span class="kw">print</span>(hero)</pre>
+<div class="box out"><span class="bt">输出</span>法师 对 战士 释放法术，造成 24 点伤害
+战士(HP=76)</div>
+<div class="box key"><span class="bt">🔑 答题要点</span>① 基类放共有属性/方法；② 子类 <code class="inl">__init__</code> 必须先 <code class="inl">super().__init__(...)</code> 再加自己的属性；③ 子类可新增方法、也可重写父类方法；④ 父类方法对子类对象照样可用（继承），不同子类的同名方法行为不同（多态）。</div>
+
+<p style="text-align:center; color:var(--sub); margin-top:60px;">— 讲义③ 结束，覆盖 1.6 / 1.7 两讲 —</p>
+</section>
+<hr style="border:0;border-top:3px double var(--accent);margin:60px 0;">
+<section class="lecture-block">
+<header class="hero">
+  <h1>科学计算栈</h1>
+  <div class="meta">人工智能程序设计 · 讲义④ （2.1 IPython + 2.2 NumPy + 2.3 SymPy + 2.4 SciPy + 2.5 Pandas/可视化）&nbsp;|&nbsp; 覆盖 2025 真题 阅读题5</div>
+</header>
+
+<section id="L4-intro">
+  <div class="lead"><b>读法。</b> 每点按「定义 → 性质/原理 → 用法 → 要点/易错」展开。NumPy 是本讲核心（阅读题与图文作业大头），SymPy/SciPy/Pandas 偏 API 熟练度。</div>
+  <div class="box exam"><span class="bt">真题映射（2025.6.12）</span>
+    · 阅读 5：<code class="inl">a = np.arange(12).reshape(3,4); print(a[[1,2,0]][:,[2,0,1,3]])</code> → <a href="#L4-fancy">花式索引</a><br>
+    · 图文作业大量考：视图 vs 副本、广播规则、axis 聚合、SymPy 泰勒展开、SciPy 积分/优化、Pandas groupby
+  </div>
+</section>
+
+<h2 id="L4-eco">2.1 ① 五大库定位</h2>
+<div class="def"><b>定义。</b> <b>SciPy 生态</b>是一套基于 Python 的科学计算开源库集合。各库分工明确，简答常考「谁干什么」。</div>
+<table>
+<tr><th>库</th><th>定位</th></tr>
+<tr><td>NumPy</td><td>基础，核心是多维数组 ndarray，提供快速数组运算</td></tr>
+<tr><td>SciPy</td><td>建在 NumPy 上的高级数值算法：积分、优化、插值、线代、统计</td></tr>
+<tr><td>Pandas</td><td>带标签的表格数据结构与分析（Series / DataFrame）</td></tr>
+<tr><td>Matplotlib</td><td>底层绘图可视化</td></tr>
+<tr><td>SymPy</td><td>符号数学（精确计算、微积分、解方程）</td></tr>
+</table>
+
+<h2 id="L4-ipython">2.1 ② IPython：In/Out 与 magic</h2>
+<p><b>输入输出缓存。</b> <code class="inl">In</code> 是列表（存历史输入字符串），<code class="inl">Out</code> 是字典（键为序号、值为输出），<code class="inl">_</code> 引用上一个输出。<code class="inl">!命令</code> 执行系统 shell。</p>
+<p><b>Magic 命令。</b> <code class="inl">%</code> 作用于单行（line magic），<code class="inl">%%</code> 作用于整个 cell（cell magic）。高频：<code class="inl">%run 脚本</code>（运行并把其命名空间带进来）、<code class="inl">%timeit</code>（多次运行测平均耗时，比较算法效率）、<code class="inl">%time</code>（单次计时）、<code class="inl">%prun</code>（逐函数性能剖析）。</p>
+<div class="box key"><span class="bt">🔑 简答可能考</span>line vs cell magic 的符号与作用域；<code class="inl">%timeit</code> 用途（比较效率）；<code class="inl">%run</code> 会把脚本变量"污染"进当前环境。</div>
+
+<hr class="sec">
+
+<h2 id="L4-why">2.2 ① 为什么 NumPy 比 list 快</h2>
+<div class="def"><b>定义。</b> <b>ndarray</b> 是 NumPy 的核心——<strong>同质类型、固定长度</strong>的多维数组，存在<strong>连续内存</strong>里。</div>
+<div class="box key"><span class="bt">🔑 简答三点</span>
+① <b>连续内存 + 类型统一</b>：避免 Python 每个对象的装箱开销和逐元素类型检查；
+② <b>向量化</b>：用底层 C 循环替代 Python 显式 for，少了解释器开销；
+③ <b>底层优化</b>：基于 C 实现并调用 BLAS 等线代库，利用 CPU 缓存。
+</div>
+
+<h2 id="L4-stride">2.2 ② 行主序与 strides</h2>
+<div class="def"><b>定义。</b> <b>strides（步长）</b>是一个元组，表示「在某个维度上前进一个元素，内存里要跳过多少字节」。<b>行主序</b>（C 默认）同一行元素内存连续；列主序（Fortran）同一列连续。NumPy 默认行主序。</div>
+<p><b>原理。</b> 对 <code class="inl">shape=(2,3)</code>、<code class="inl">int64</code>（8 字节）、行主序：跨一行要跳过 3×8=24 字节，跨一列跳 8 字节，故 <code class="inl">strides=(24, 8)</code>。</p>
+<pre>a = np.arange(<span class="ot">6</span>).reshape(<span class="ot">2</span>, <span class="ot">3</span>)   <span class="cm"># int64</span>
+<span class="kw">print</span>(a.strides)                <span class="cm"># (24, 8)</span></pre>
+<div class="box out"><span class="bt">输出</span>(24, 8)</div>
+<div class="box warn"><span class="bt">易错</span>转置 <code class="inl">.T</code> 只改 <code class="inl">shape</code> 和 <code class="inl">strides</code>，<strong>不移动数据</strong>，所以转置后按某轴访问可能变慢（缓存命中差）。按行访问（连续）快、按列访问（跨步）慢。</div>
+
+<h2 id="L4-view">2.2 ③ 视图 vs 副本 <span class="badge b-key">高频简答</span></h2>
+<div class="def"><b>定义。</b> <b>视图（view）</b>与原数组<strong>共享底层数据</strong>，改视图会改原数组；<b>副本（copy）</b>是独立数据，互不影响。</div>
+<div class="box key"><span class="bt">🔑 谁是视图谁是副本</span>
+<b>基本切片</b>（<code class="inl">a[1:3]</code>）和整数索引 → 通常是<strong>视图</strong>；
+<b>花式索引</b>（用整数数组/列表当下标）和<strong>布尔索引</strong> → 总是<strong>副本</strong>。
+想要独立拷贝用 <code class="inl">.copy()</code>。
+</div>
+<pre>a = np.array([<span class="ot">0</span>,<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>])
+b = a[<span class="ot">1</span>:<span class="ot">3</span>]        <span class="cm"># 视图</span>
+b[<span class="ot">0</span>] = <span class="ot">99</span>         <span class="cm"># 连带改原数组</span>
+<span class="kw">print</span>(a)
+c = a[[<span class="ot">0</span>,<span class="ot">2</span>]]      <span class="cm"># 花式索引 → 副本</span>
+c[<span class="ot">0</span>] = -<span class="ot">1</span>         <span class="cm"># 不影响原数组</span>
+<span class="kw">print</span>(a)</pre>
+<div class="box out"><span class="bt">输出</span>[ 0 99  2  3]
+[ 0 99  2  3]</div>
+
+<h2 id="L4-fancy">2.2 ④ 花式索引 <span class="badge b-exam">真题阅读题5</span></h2>
+<p>真题：<code class="inl">a = np.arange(12).reshape(3,4); print(a[[1,2,0]][:,[2,0,1,3]])</code>。这是「先按行花式索引，再按列花式索引」。</p>
+<div class="def"><b>原理：分两步看。</b> <code class="inl">a[[1,2,0]]</code> 取第 1、2、0 行重排成新数组；再 <code class="inl">[:, [2,0,1,3]]</code> 对每一行取第 2、0、1、3 列重排。</div>
+<pre>a = np.arange(<span class="ot">12</span>).reshape(<span class="ot">3</span>, <span class="ot">4</span>)
+<span class="cm"># a = [[ 0  1  2  3]</span>
+<span class="cm">#      [ 4  5  6  7]</span>
+<span class="cm">#      [ 8  9 10 11]]</span>
+b = a[[<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">0</span>]]            <span class="cm"># 取行 1,2,0</span>
+<span class="cm"># b = [[ 4  5  6  7]</span>
+<span class="cm">#      [ 8  9 10 11]</span>
+<span class="cm">#      [ 0  1  2  3]]</span>
+<span class="kw">print</span>(b[:, [<span class="ot">2</span>,<span class="ot">0</span>,<span class="ot">1</span>,<span class="ot">3</span>]])   <span class="cm"># 每行取列 2,0,1,3</span></pre>
+<div class="box out"><span class="bt">输出</span>[[ 6  4  5  7]
+ [10  8  9 11]
+ [ 2  0  1  3]]</div>
+<div class="box key"><span class="bt">🔑 答题口诀</span>逐行写：行 1=[4567]→取列2013→[6,4,5,7]；行 2=[8,9,10,11]→[10,8,9,11]；行 0=[0123]→[2,0,1,3]。花式索引返回副本。</div>
+
+<h2 id="L4-shape">2.2 ⑤ reshape / ravel / flatten</h2>
+<table>
+<tr><th>方法</th><th>作用</th><th>视图/副本</th></tr>
+<tr><td><code class="inl">reshape(s)</code></td><td>改形状（默认按行 order='C'）</td><td>内存兼容时视图，否则副本</td></tr>
+<tr><td><code class="inl">ravel()</code></td><td>展平成一维</td><td>通常视图</td></tr>
+<tr><td><code class="inl">flatten()</code></td><td>展平成一维</td><td>总是副本</td></tr>
+<tr><td><code class="inl">squeeze()</code></td><td>删长度为 1 的维</td><td>视图</td></tr>
+<tr><td><code class="inl">.T</code> / <code class="inl">transpose</code></td><td>转置</td><td>视图</td></tr>
+</table>
+<div class="box warn"><span class="bt">易错</span>转置后再 <code class="inl">reshape</code> 因内存不连续可能触发复制；<code class="inl">resize</code> 与 <code class="inl">reshape</code> 不同：<code class="inl">resize</code> 可强行改大小、不足时循环填充。</div>
+
+<h2 id="L4-ufunc">2.2 ⑥ ufunc / out / where</h2>
+<div class="def"><b>定义。</b> <b>ufunc</b>（通用函数）是对数组<strong>逐元素</strong>运算的向量化函数：<code class="inl">+ - * / **</code> 对应 <code class="inl">np.add</code> 等，还有 <code class="inl">np.sin</code>/<code class="inl">np.exp</code>/<code class="inl">np.sqrt</code>。比 Python 循环快一两个数量级。</div>
+<p><b>两个高频参数。</b> <code class="inl">out=</code> 把结果写进指定数组（复用内存）；<code class="inl">where=</code> 用布尔数组指定<strong>只对 True 位置</strong>运算。</p>
+<pre>x = np.array([<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>,<span class="ot">4</span>])
+np.add(x, <span class="ot">10</span>, out=x, where=(x &gt; <span class="ot">2</span>))   <span class="cm"># 只给 &gt;2 的元素加 10</span>
+<span class="kw">print</span>(x)</pre>
+<div class="box out"><span class="bt">输出</span>[ 1  2 13 14]</div>
+<div class="box key"><span class="bt">🔑 作业高频</span>「自定义平方根（负数取绝对值开根再取反）」就靠 <code class="inl">out</code>+<code class="inl">where</code> 分两块向量化实现，避免循环。</div>
+
+<h2 id="L4-broad">2.2 ⑦ 广播规则 <span class="badge b-key">高频</span></h2>
+<div class="def"><b>定义。</b> <b>广播</b>让不同形状的数组能逐元素运算：自动把较小数组「拉伸」到兼容形状（逻辑复制，不真分配内存）。</div>
+<p><b>规则（从右向左对齐比较）。</b></p>
+<ol>
+<li>维度数不同时，给短的左边补 1，直到维度数相同；</li>
+<li>每一维：长度相等，或其中一个为 1，则兼容；</li>
+<li>否则报 <code class="inl">ValueError: operands could not be broadcast together</code>。</li>
+</ol>
+<pre>a = np.ones((<span class="ot">3</span>, <span class="ot">1</span>))      <span class="cm"># (3,1)</span>
+b = np.arange(<span class="ot">4</span>)        <span class="cm"># (4,) → 左补成 (1,4)</span>
+<span class="kw">print</span>((a + b).shape)    <span class="cm"># (3,1) 与 (1,4) → (3,4)</span></pre>
+<div class="box out"><span class="bt">输出</span>(3, 4)</div>
+<div class="box exam"><span class="bt">图文作业考法</span>给两个 shape 判断能否广播、结果 shape。例 <code class="inl">(2,1)</code> 与 <code class="inl">(1,3)</code> → <code class="inl">(2,3)</code>；<code class="inl">(3,5)</code> 与 <code class="inl">(5,)</code> → <code class="inl">(3,5)</code>。不兼容（如 <code class="inl">(3,)</code> 与 <code class="inl">(4,)</code>）则非法。</div>
+
+<h2 id="L4-agg">2.2 ⑧ axis 聚合与 where</h2>
+<div class="def"><b>定义。</b> 聚合函数 <code class="inl">sum/mean/std/min/max/argmax</code> 默认对整个数组算；给 <code class="inl">axis</code> 则<strong>沿该轴聚合，结果里这个轴消失</strong>。</div>
+<p><b>原理。</b> <code class="inl">axis=0</code> 沿行方向（纵向往下）压缩，得每列结果；<code class="inl">axis=1</code> 沿列方向压缩，得每行结果。</p>
+<pre>m = np.arange(<span class="ot">6</span>).reshape(<span class="ot">2</span>, <span class="ot">3</span>)   <span class="cm"># [[0,1,2],[3,4,5]]</span>
+<span class="kw">print</span>(m.sum(axis=<span class="ot">0</span>))   <span class="cm"># 每列和 → 形状 (3,)</span>
+<span class="kw">print</span>(m.sum(axis=<span class="ot">1</span>))   <span class="cm"># 每行和 → 形状 (2,)</span></pre>
+<div class="box out"><span class="bt">输出</span>[3 5 7]
+[ 3 12]</div>
+<div class="box warn"><span class="bt">易错：np.where 两种用法</span><code class="inl">np.where(cond, x, y)</code> 按条件逐元素选 x 或 y（返回数组）；只传 <code class="inl">np.where(cond)</code> 返回满足条件的<strong>索引元组</strong>。</div>
+
+<h2 id="L4-adv">2.2 ⑨ reduceat / at / outer（阅读题）</h2>
+<ul>
+<li><code class="inl">ufunc.reduce(a, axis)</code>：沿轴归约，降一维（<code class="inl">np.add.reduce</code> = 求和）。</li>
+<li><code class="inl">ufunc.outer(a, b)</code>：a 每个元素与 b 每个元素两两运算，得 <code class="inl">(a.size, b.size)</code>。</li>
+<li><code class="inl">ufunc.at(a, idx, v)</code>：在指定索引<strong>原地无缓冲</strong>操作，能正确处理<strong>重复索引</strong>累加。</li>
+</ul>
+<pre>a = np.array([<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>,<span class="ot">4</span>])
+np.add.at(a, [<span class="ot">0</span>,<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">2</span>], <span class="ot">1</span>)   <span class="cm"># 索引2出现两次，各加一次</span>
+<span class="kw">print</span>(a)
+<span class="kw">print</span>(np.multiply.outer([<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>], [<span class="ot">4</span>,<span class="ot">5</span>]))</pre>
+<div class="box out"><span class="bt">输出</span>[2 3 5 4]
+[[ 4  5]
+ [ 8 10]
+ [12 15]]</div>
+<div class="box key"><span class="bt">🔑 对比</span>普通 <code class="inl">a[idx] += 1</code> 对重复索引只加一次（先取值再整体写回）；<code class="inl">np.add.at</code> 才会逐次累加。</div>
+
+<hr class="sec">
+
+<h2 id="L4-sym">2.3 ① 符号 vs 数值</h2>
+<div class="def"><b>定义。</b> <b>SymPy</b> 做<strong>符号计算</strong>：把 π 当成精确的 π，而非 3.14——无浮点截断误差。数值计算（NumPy/SciPy）则对具体数字算。</div>
+<pre><span class="kw">import</span> sympy
+x = sympy.Symbol(<span class="st">"x"</span>)
+a, b, c = sympy.symbols(<span class="st">"a, b, c"</span>)
+<span class="kw">print</span>(sympy.sin(sympy.pi))    <span class="cm"># 0（精确）</span></pre>
+<div class="box out"><span class="bt">输出</span>0</div>
+<div class="box warn"><span class="bt">易错：精度</span><code class="inl">sympy.Float(0.3, 25)</code> 得 0.2999...（因为 0.3 本就是不精确的 Python 浮点）；要精确得传字符串 <code class="inl">sympy.Float('0.3', 25)</code>。</div>
+
+<h2 id="L4-symop">2.3 ② 化简 / subs / lambdify</h2>
+<table>
+<tr><th>操作</th><th>函数</th></tr>
+<tr><td>通用化简 / 三角化简</td><td><code class="inl">simplify</code> / <code class="inl">trigsimp</code></td></tr>
+<tr><td>展开 / 因式分解</td><td><code class="inl">expand</code> / <code class="inl">factor</code></td></tr>
+<tr><td>代入值 / 求数值</td><td><code class="inl">expr.subs(x, 3)</code> / <code class="inl">evalf()</code>、<code class="inl">sympy.N(expr, 50)</code></td></tr>
+<tr><td>转可计算函数</td><td><code class="inl">sympy.lambdify(x, expr, 'numpy')</code></td></tr>
+</table>
+<pre>sympy.expand((x+<span class="ot">1</span>)*(x+<span class="ot">2</span>))      <span class="cm"># x**2 + 3*x + 2</span>
+sympy.factor(<span class="ot">3</span>*x**<span class="ot">3</span>+<span class="ot">2</span>*x**<span class="ot">2</span>+<span class="ot">1</span>)   <span class="cm"># (x+1)*(3*x**2 - x + 1)</span>
+(x + <span class="ot">1</span>).subs(x, <span class="ot">3</span>)            <span class="cm"># 4（代入）</span></pre>
+<div class="box key"><span class="bt">🔑 lambdify 作用</span>把符号表达式编译成接收 NumPy 数组的快速函数，批量求值远快于循环 <code class="inl">subs</code>。SciPy 作业里 <code class="inl">f_prime_num = sympy.lambdify(x, f_prime, 'numpy')</code> 就是为了把符号导数交给 <code class="inl">quad</code> 数值积分。</div>
+
+<h2 id="L4-calc">2.3 ③ 微积分 / 极限 / 级数 / 解方程</h2>
+<pre>sympy.diff(sympy.sin(x), x)                   <span class="cm"># cos(x)</span>
+sympy.diff(sympy.sin(x), x, <span class="ot">2</span>)               <span class="cm"># -sin(x)（2阶）</span>
+sympy.integrate(sympy.sin(x), x)              <span class="cm"># -cos(x)（不定积分，不加C）</span>
+sympy.integrate(sympy.sin(x), (x, <span class="ot">0</span>, sympy.pi)) <span class="cm"># 2（定积分）</span>
+sympy.limit(sympy.sin(x)/x, x, <span class="ot">0</span>)            <span class="cm"># 1</span>
+sympy.sin(x).series(x, <span class="ot">0</span>, <span class="ot">5</span>)               <span class="cm"># x - x**3/6 + O(x**5)（泰勒）</span>
+sympy.solve(x**<span class="ot">2</span> + <span class="ot">2</span>*x - <span class="ot">3</span>, x)            <span class="cm"># [-3, 1]</span></pre>
+<div class="box exam"><span class="bt">图文作业关联</span>「把 cos(x)·sin(x) 泰勒展开到 x⁵」用 <code class="inl">.series(x,0,6).removeO()</code>；解方程组传方程列表与变量列表 <code class="inl">solve([eq1,eq2],[x,y])</code>。<code class="inl">Sum</code>/<code class="inl">Product</code> 要 <code class="inl">.doit()</code> 才求闭式。</div>
+
+<hr class="sec">
+
+<h2 id="L4-linalg">2.4 ① SciPy linalg：solve / eig</h2>
+<div class="def"><b>定义。</b> <b>SciPy</b> 建在 NumPy 上做<strong>数值</strong>算法（不处理符号）。<code class="inl">scipy.linalg.solve(A, b)</code> 解线性方程组 <code class="inl">A @ x = b</code>。</div>
+<pre><span class="kw">from</span> scipy <span class="kw">import</span> linalg
+A = np.array([[<span class="ot">1</span>,<span class="ot">3</span>,<span class="ot">1</span>],[<span class="ot">2</span>,<span class="ot">1</span>,<span class="ot">3</span>],[<span class="ot">2</span>,<span class="ot">2</span>,<span class="ot">1</span>]])
+b = np.array([<span class="ot">10</span>,<span class="ot">13</span>,<span class="ot">9</span>])
+<span class="kw">print</span>(linalg.solve(A, b))   <span class="cm"># [1. 2. 3.]</span></pre>
+<div class="box out"><span class="bt">输出</span>[1. 2. 3.]</div>
+<p><b>其他。</b> <code class="inl">linalg.det(A)</code> 行列式、<code class="inl">np.linalg.matrix_rank(A)</code> 秩、<code class="inl">linalg.eig(A)</code> 返回 <code class="inl">(特征值, 特征向量矩阵)</code>（特征向量按列）。</p>
+<div class="box warn"><span class="bt">易错</span><code class="inl">solve</code> 要求 A 是非奇异方阵，奇异矩阵行列式为 0、秩不足、求解失败。</div>
+
+<h2 id="L4-opt">2.4 ② optimize / linprog</h2>
+<p><b>极值与求根。</b> <code class="inl">minimize_scalar(f)</code> 找单变量函数局部最小（返回对象，<code class="inl">res.x</code> 最小点、<code class="inl">res.fun</code> 最小值）；<code class="inl">root(func, x0)</code> 求 <code class="inl">func(x)=0</code> 的根。</p>
+<div class="box key"><span class="bt">🔑 linprog 最大化转最小化（高频陷阱）</span>
+<code class="inl">linprog</code> 只做<strong>最小化</strong>、约束方向是 <code class="inl">&lt;=</code>。所以：
+① 最大化 <code class="inl">max cᵀx</code> → 目标系数<strong>取反</strong> <code class="inl">c=-c</code>，最优值再取反 <code class="inl">-res.fun</code>；
+② <code class="inl">&gt;=</code> 约束两边<strong>乘 -1</strong> 变 <code class="inl">&lt;=</code>；
+③ <code class="inl">bounds</code> 默认 <code class="inl">(0,None)</code> 非负，无下界要写 <code class="inl">(None,None)</code>。
+</div>
+<pre><span class="kw">from</span> scipy <span class="kw">import</span> optimize <span class="kw">as</span> opt
+<span class="cm"># max 45x0+20x1+45x2  s.t. 2x0+x1+3x2&lt;=100, 3x0+2x1+3x2&lt;=120</span>
+c = [-<span class="ot">45</span>, -<span class="ot">20</span>, -<span class="ot">45</span>]                <span class="cm"># 取反</span>
+A_ub = [[<span class="ot">2</span>,<span class="ot">1</span>,<span class="ot">3</span>], [<span class="ot">3</span>,<span class="ot">2</span>,<span class="ot">3</span>]]
+b_ub = [<span class="ot">100</span>, <span class="ot">120</span>]
+res = opt.linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=[(<span class="ot">0</span>,<span class="kw">None</span>)]*<span class="ot">3</span>)
+<span class="cm"># 最优解 res.x；原最大利润 = -res.fun</span></pre>
+
+<h2 id="L4-quad">2.4 ③ integrate.quad</h2>
+<div class="def"><b>定义。</b> <code class="inl">integrate.quad(func, a, b)</code> 数值计算定积分 ∫ₐᵇ func(x)dx，返回元组 <code class="inl">(积分值, 误差估计)</code>。</div>
+<pre><span class="kw">from</span> scipy <span class="kw">import</span> integrate
+f = <span class="kw">lambda</span> x: np.exp(-x**<span class="ot">2</span>)
+val, err = integrate.quad(f, <span class="ot">0</span>, <span class="ot">1</span>)
+<span class="kw">print</span>(round(val, <span class="ot">6</span>))   <span class="cm"># 0.746824</span></pre>
+<div class="box out"><span class="bt">输出</span>0.746824</div>
+<div class="box warn"><span class="bt">易错</span>被积函数要能接收数组输入，所以用 <code class="inl">np.exp</code> 而非 <code class="inl">math.exp</code>；返回的是<strong>二元组</strong>，记得解包取第一个。</div>
+
+<hr class="sec">
+
+<h2 id="L4-series">2.5 ① Pandas Series 与索引对齐</h2>
+<div class="def"><b>定义。</b> <b>Series</b> 是带标签的一维数组（"有名字的 NumPy 数组"），每个值对应一个 <code class="inl">index</code> 标签。</div>
+<p><b>创建。</b> 从列表（可自定义 index）、ndarray、字典（key 变 index）、标量（所有标签指向同一值）。</p>
+<div class="box key"><span class="bt">🔑 索引对齐（高频，会产生 NaN）</span>两个 Series 做运算时<strong>自动按标签对齐</strong>（与顺序无关），只有双方都有的标签参与，单方独有的位置结果为 <code class="inl">NaN</code>，且类型升为 <code class="inl">float64</code>。</div>
+<pre>s1 = pd.Series([<span class="ot">1</span>,<span class="ot">2</span>,<span class="ot">3</span>], index=[<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span>])
+s2 = pd.Series([<span class="ot">4</span>,<span class="ot">5</span>,<span class="ot">6</span>], index=[<span class="st">"b"</span>,<span class="st">"c"</span>,<span class="st">"d"</span>])
+<span class="kw">print</span>(s1 + s2)</pre>
+<div class="box out"><span class="bt">输出</span>a    NaN
+b    6.0
+c    8.0
+d    NaN
+dtype: float64</div>
+<p><b>缺失值处理。</b> <code class="inl">s1.add(s2, fill_value=0)</code> 对齐前先填 0；<code class="inl">reindex()</code> 重排、<code class="inl">fillna(0)</code> 填补。</p>
+
+<h2 id="L4-df">2.5 ② DataFrame / groupby / merge</h2>
+<div class="def"><b>定义。</b> <b>DataFrame</b> 是二维带标签表（有行 index 和列 columns，每列可不同类型），可看作"Series 的字典"。</div>
+<p><b>选择与运算。</b> <code class="inl">df["col"]</code> 取列（得 Series）；<code class="inl">df["e"]=df["a"]+df["b"]</code> 造新列。DataFrame 间运算<strong>行列双向标签对齐</strong>，缺失填 NaN。</p>
+<p><b>groupby（split-apply-combine）。</b> 按列分组 → 应用聚合 → 合并：</p>
+<pre>df.groupby(<span class="st">"product"</span>).agg(
+    total_qty=(<span class="st">"quantity"</span>, <span class="st">"sum"</span>),
+    total_amt=(<span class="st">"amount"</span>, <span class="st">"sum"</span>),
+).reset_index()</pre>
+<p><b>merge / pivot。</b> <code class="inl">pd.merge(left, right, on="key")</code> 类 SQL JOIN（默认 inner，不匹配的键丢弃）；<code class="inl">pd.pivot_table(df, values="D", index="A", columns="B")</code> 透视表（默认聚合 mean）。</p>
+<div class="box exam"><span class="bt">作业关联</span>「电商销售统计」用 <code class="inl">groupby+agg+sort_values+筛选</code>；「出勤率」用 <code class="inl">drop_duplicates+groupby.size+merge(indicator=True)</code>。这些是 OJ/图文作业的 Pandas 核心套路。</div>
+
+<h2 id="L4-plot">2.5 ③ 可视化</h2>
+<p><b>Matplotlib</b> 是底层绘图（<code class="inl">plt.scatter/plot/bar/subplot</code>，需手动设标题/轴标签/图例）；<b>Seaborn</b> 是其高级封装，做统计图（<code class="inl">sns.scatterplot/barplot/heatmap</code>），与 DataFrame 配合紧密，可用色相/样式区分类别。考试多以概念简答出现（对比两者定位）。</p>
+
+<p style="text-align:center; color:var(--sub); margin-top:60px;">— 讲义④ 结束，覆盖 2.1–2.5 —</p>
+</section>
+<hr style="border:0;border-top:3px double var(--accent);margin:60px 0;">
+<section class="lecture-block">
+<header class="hero">
+  <h1>机器学习与逻辑推理</h1>
+  <div class="meta">人工智能程序设计 · 讲义⑤ （3.1 降维 + 3.2 有监督 + 3.3 无监督 + 3.4 逻辑）&nbsp;|&nbsp; 覆盖 2025 真题 简答6、综合应用题1/2</div>
+</header>
+
+<section id="L5-intro">
+  <div class="lead"><b>读法。</b> 每点按「定义 → 性质/原理 → 用法 → 要点/易错」。机器学习在本课<strong>重思路与伪代码</strong>，不要求默写整套训练循环；但 PCA / K-Means / 逻辑回归 的步骤要能讲清、能手写关键片段。</div>
+  <div class="box exam"><span class="bt">真题映射（2025.6.12）</span>
+    · 简答 6：PCA 主要思想及实现步骤 → <a href="#L5-pca">PCA</a><br>
+    · 综合应用 1：银行客户违约风险（0/1/2）分类建模 → <a href="#L5-app1">综合应用①</a>（用到 <a href="#L5-logreg">逻辑回归</a>/<a href="#L5-knn">KNN</a>、<a href="#L5-norm">规范化</a>、<a href="#L5-fit">过拟合诊断</a>）<br>
+    · 综合应用 2：棋类游戏胜率预测转成 AI 问题 → <a href="#L5-app2">综合应用②</a>
+  </div>
+</section>
+
+<h2 id="L5-norm">3.1 ① 规范化 min-max / z-score</h2>
+<div class="def"><b>定义。</b> <b>数据表示</b>是把现实对象转成数值向量 x∈ℝᵈ。当不同特征量纲差异大（身高 cm vs 体重 kg）时要<strong>规范化</strong>，否则数值大的特征会主导模型。</div>
+<table>
+<tr><th></th><th>min-max 规范化</th><th>z-score 标准化</th></tr>
+<tr><td>公式</td><td>x′ = (x − x_min)/(x_max − x_min)</td><td>x′ = (x − μ)/σ</td></tr>
+<tr><td>结果范围</td><td>压到 [0,1]</td><td>均值 0、标准差 1，不保证有界</td></tr>
+<tr><td>对异常值</td><td>敏感（极值压缩正常数据）</td><td>相对稳健，但极端值仍影响 μ、σ</td></tr>
+<tr><td>适用</td><td>需有界输出</td><td>假设高斯的模型（线性模型、PCA）</td></tr>
+</table>
+<div class="box warn"><span class="bt">易错：防数据泄露</span>所有参数（min/max、μ/σ、编码映射）必须<strong>只在训练集上计算</strong>，再原样应用到验证/测试集。某特征标准差为 0（常数列）时要剔除或置 0，避免除零。</div>
+
+<h2 id="L5-onehot">3.1 ② 类别特征编码（独热）</h2>
+<div class="def"><b>定义。</b> 把"大/中/小"这类文本类别转成可计算的数值。</div>
+<ul>
+<li><b>整数编码</b>（大=1,中=2,小=3）：<u>不推荐</u>直接喂模型，会引入虚假的大小/距离关系。</li>
+<li><b>独热编码 One-Hot</b>：每个类别变一个 0/1 列，只有一个为 1。<code class="inl">pd.get_dummies(df['size'])</code>。避免了虚假序关系。</li>
+<li><b>嵌入 Embedding</b>：类别映射为低维稠密向量、由模型学习，适合类别多的情况。</li>
+</ul>
+
+<h2 id="L5-pca">3.1 ③ PCA 主成分分析 <span class="badge b-exam">真题简答6</span></h2>
+<div class="box exam"><span class="bt">简答题 6：PCA 主要思想及实现步骤</span>
+<b>主要思想</b>：寻找一个线性变换，把 D 维数据投影到 d 维（d&lt;D），使<strong>投影后方差最大</strong>——即沿数据「最分散、信息最丰富」的方向建立新坐标系，尽量保留信息。它等价于「使重构误差最小」。
+</div>
+<div class="def"><b>实现步骤（要能默写）。</b></div>
+<ol>
+<li><b>中心化</b>：每个特征减去其均值（X ← X − mean(X, axis=0)）；</li>
+<li>（特征尺度差异大时）先做 <b>z-score 规范化</b>；</li>
+<li>算<b>协方差矩阵</b> C = (1/m) XᵀX；</li>
+<li>对 C 做<b>特征值分解</b>，得特征值 λ 与特征向量 v；</li>
+<li>按 λ <b>从大到小</b>排序，取前 d 个特征向量组成投影矩阵 W (D×d)；</li>
+<li><b>投影</b>：Z = X·W（得到 m×d 的降维数据）。</li>
+</ol>
+<div class="formula">C v = λ v ， λ 越大 ⇒ 该方向投影方差越大（信息越多）</div>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">def</span> pca(X, d):
+    X = X - X.mean(axis=<span class="ot">0</span>)              <span class="cm"># 1.中心化</span>
+    C = (X.T @ X) / X.shape[<span class="ot">0</span>]          <span class="cm"># 3.协方差矩阵</span>
+    vals, vecs = np.linalg.eigh(C)         <span class="cm"># 4.对称矩阵特征分解</span>
+    order = np.argsort(vals)[::-<span class="ot">1</span>]        <span class="cm"># 5.特征值降序</span>
+    W = vecs[:, order[:d]]
+    <span class="kw">return</span> X @ W                          <span class="cm"># 6.投影</span></pre>
+<div class="box key"><span class="bt">🔑 要点 / 易错</span>
+① <b>必须中心化</b>，否则第一主成分会偏向均值方向；
+② 特征向量 v 与 −v 都对；作业里规定「绝对值最大分量为负则整体乘 −1」来定符号；
+③ 用 <code class="inl">eigh</code>（对称矩阵专用）比 <code class="inl">eig</code> 稳；
+④ <b>方差贡献率</b> = λ_i / Σλ，用于选 d（如保留 95%）；
+⑤ <b>去噪解释</b>：小特征值对应噪声/细节方向，丢掉它们既降维又去噪；
+⑥ 复杂度 O(D³)（特征分解），D 很大时用 SVD/对偶形式。
+</div>
+
+<hr class="sec">
+
+<h2 id="L5-sup">3.2 ① 回归 vs 分类 / 评估</h2>
+<div class="def"><b>定义。</b> <b>有监督学习</b>用输入-输出对 (x,y) 学一个映射 f 使 y≈f(x)。<b>回归</b>：y 连续（房价）；<b>分类</b>：y 离散（二分类 0/1、多分类）。</div>
+<p><b>评估指标。</b> 回归常用 <b>MSE</b>（均方误差），分类用错误率 = 错分数/总数，精度 = 1 − 错误率。</p>
+<div class="formula">MSE = (1/n) Σ (f(xᵢ) − yᵢ)²</div>
+
+<h2 id="L5-fit">3.2 ② 过拟合 / 欠拟合 / 交叉验证 <span class="badge b-key">高频</span></h2>
+<div class="def"><b>定义。</b> <b>训练误差</b>是模型在训练集上的误差；<b>泛化误差</b>是在未见过的测试集上的误差，衡量真实能力。</div>
+<table>
+<tr><th></th><th>欠拟合 underfit</th><th>过拟合 overfit</th></tr>
+<tr><td>模型</td><td>过于简单</td><td>过于复杂</td></tr>
+<tr><td>训练误差</td><td>高</td><td>很低（几乎完美拟合）</td></tr>
+<tr><td>泛化误差</td><td>高</td><td>高（测试集差）</td></tr>
+</table>
+<p><b>数据集划分。</b> <b>留出法</b>：训练/测试集互不相交（关键：无重叠样本）。<b>k 折交叉验证</b>：分 k 份，每次 1 份测试、k−1 份训练，重复 k 次取平均，更充分利用数据、评估更稳。</p>
+<div class="box key"><span class="bt">🔑 简答常考</span>「随模型复杂度↑，训练误差持续↓，泛化误差先↓后↑」——拐点左侧欠拟合、右侧过拟合；所以<strong>不能只看训练误差选模型</strong>，要看泛化（用验证集/交叉验证）。</div>
+
+<h2 id="L5-linreg">3.2 ③ 线性回归闭式解</h2>
+<div class="def"><b>定义。</b> 假设 y 是输入的线性组合 y = wᵀx + b，目标是<strong>最小化 MSE</strong>。</div>
+<p><b>闭式解（正规方程）。</b> 把偏置并进去（每个样本补一列 1），则</p>
+<div class="formula">ŵ = (XᵀX)⁻¹ Xᵀ y</div>
+<pre>X = np.array([<span class="ot">1.</span>,<span class="ot">2.</span>,<span class="ot">3.</span>,<span class="ot">4.</span>])
+y = np.array([<span class="ot">2.</span>,<span class="ot">4.1</span>,<span class="ot">5.9</span>,<span class="ot">8.2</span>])
+Xb = np.vstack([X, np.ones(len(X))]).T   <span class="cm"># 每行 [xᵢ, 1]</span>
+w, b = np.linalg.inv(Xb.T @ Xb) @ Xb.T @ y
+<span class="kw">print</span>(round(w,<span class="ot">2</span>), round(b,<span class="ot">2</span>))</pre>
+<div class="box out"><span class="bt">输出</span>2.04 -0.05</div>
+<div class="box warn"><span class="bt">易错</span>记得加偏置列；<code class="inl">XᵀX</code> 可能不可逆（特征共线/样本太少），大规模数据用<strong>梯度下降</strong>更实际。对数线性回归 <code class="inl">ln y = wᵀx+b</code> 把标记取对数即可套用线性回归。</div>
+
+<h2 id="L5-logreg">3.2 ④ 逻辑回归</h2>
+<div class="def"><b>定义。</b> <b>逻辑回归</b>是<strong>分类</strong>模型（名字带"回归"但做分类）。先算线性 z = wᵀx+b，再用 <b>Sigmoid</b> 压成 (0,1) 的概率。</div>
+<div class="formula">ŷ = σ(z) = 1 / (1 + e⁻ᶻ)</div>
+<p><b>原理。</b> ŷ 解释为"属于正类的概率"，ŷ≥0.5 判 1、否则 0。它实际是用线性模型预测<b>对数几率</b> ln[P(y=1)/P(y=0)] = wᵀx+b。参数用<strong>极大似然</strong>估计，等价于最小化<strong>交叉熵损失</strong>（凸函数，用梯度下降求解）。</p>
+<pre><span class="kw">def</span> sigmoid(z):
+    <span class="kw">return</span> <span class="ot">1</span> / (<span class="ot">1</span> + np.exp(-z))
+
+z = np.dot(w, x_new) + b
+pred = <span class="ot">1</span> <span class="kw">if</span> sigmoid(z) &gt;= <span class="ot">0.5</span> <span class="kw">else</span> <span class="ot">0</span></pre>
+<div class="box exam"><span class="bt">作业关联</span>OJ「逻辑回归」作业要求手写批量梯度下降：<code class="inl">w := w − α·(1/N)Σ(ŷᵢ−yᵢ)xᵢⱼ</code>，<code class="inl">b := b − α·(1/N)Σ(ŷᵢ−yᵢ)</code>。sigmoid 要分段写防溢出。</div>
+
+<h2 id="L5-knn">3.2 ⑤ KNN（K 近邻）</h2>
+<div class="def"><b>定义。</b> 对新样本，找训练集中最近的 k 个邻居：分类用<strong>多数投票</strong>，回归用<strong>均值</strong>。</div>
+<p><b>性质：懒惰学习。</b> KNN 没有显式训练过程，预测时才扫描全部训练样本算距离——预测开销大（O(N·维度)）。</p>
+<div class="box key"><span class="bt">🔑 k 值影响</span>k 小 → 决策边界曲折、易受噪声（偏过拟合）；k 大 → 边界平滑、更简单（偏欠拟合）；k=N → 永远预测全局多数类。距离：欧氏（p=2）、曼哈顿（p=1），统称闵可夫斯基。</div>
+<pre><span class="kw">def</span> knn_predict(X_train, y_train, x, k):
+    d = np.linalg.norm(X_train - x, axis=<span class="ot">1</span>)   <span class="cm"># 到每个训练点距离</span>
+    idx = np.argsort(d)[:k]                    <span class="cm"># 最近 k 个</span>
+    <span class="kw">from</span> collections <span class="kw">import</span> Counter
+    <span class="kw">return</span> Counter(y_train[idx]).most_common(<span class="ot">1</span>)[<span class="ot">0</span>][<span class="ot">0</span>]</pre>
+<div class="box warn"><span class="bt">易错（作业平票规则）</span>OJ 里规定：票数相同选<strong>类别编号最小</strong>；距离相同时<strong>训练集先出现的</strong>排前。手写时排序键要带上原始下标保证稳定。</div>
+
+<hr class="sec">
+
+<h2 id="L5-kmeans">3.3 ① K-Means 聚类 <span class="badge b-key">高频</span></h2>
+<div class="def"><b>定义。</b> <b>聚类</b>把样本分成若干簇，使簇内相似、簇间相异（无标签）。<b>K-Means</b> 是最常用的聚类算法。</div>
+<p><b>步骤（要能默写）。</b></p>
+<ol>
+<li>初始化 k 个聚类中心；</li>
+<li><b>分配</b>：每个样本归到最近的中心（<code class="inl">argmin ‖x − μⱼ‖²</code>）；</li>
+<li><b>更新</b>：每个簇的新中心 = 该簇所有点的<strong>均值</strong>；</li>
+<li>重复 2–3 直到分配不再变化（或达最大迭代）。</li>
+</ol>
+<div class="box key"><span class="bt">🔑 要点 / 易错</span>
+① <b>对初始点敏感</b>，可能陷局部最优 → 多次运行选优 / K-Means++；
+② 需<strong>预先指定 k</strong>，可用肘部法则/轮廓系数辅助选；
+③ 易受异常点拉偏中心；
+④ 变体 <b>K-Centroid</b>（作业里）：中心必须是簇内某个真实样本点（到簇内其他点距离和最小者），不是均值。
+</div>
+
+<h2 id="L5-apriori">3.3 ② 关联规则 / Apriori <span class="badge b-key">高频</span></h2>
+<div class="def"><b>定义。</b> 从事务集（如购物篮）里挖 <b>X→Y</b> 规则。<b>支持度</b> support(X) = 含 X 的事务数 / 总事务数；<b>置信度</b> confidence(X→Y) = σ(X∪Y)/σ(X) = P(Y|X)。</div>
+<div class="formula">s(X→Y) = σ(X∪Y)/|T| ， c(X→Y) = σ(X∪Y)/σ(X)</div>
+<div class="box key"><span class="bt">🔑 Apriori 原理（剪枝核心）</span>
+<b>频繁项集的所有子集必频繁</b>；等价地，<b>非频繁项集的所有超集必非频繁</b>——所以一旦某项集不频繁，它的超集直接剪掉、不再生成检验。注意不能反过来说。
+</div>
+<p><b>算法流程。</b> ① 扫描得 1-频繁项集 L₁；② 由 L_{k−1} 生成候选 C_k（前 k−2 项相同才合并，且所有 k−1 子集都频繁）；③ 扫描计数、保留支持度达标的成 L_k；④ 重复到无新频繁项集。规则生成：对每个频繁项集取非空真子集 X 作前件，按置信度阈值剪枝（从前件大的开始）。</p>
+<div class="box warn"><span class="bt">易错：浮点比较</span>判置信度用 <code class="inl">100*σ(X∪Y) &gt;= C*σ(X)</code> 整数比较，避免浮点误差（作业明确要求）。</div>
+
+<h2 id="L5-anomaly">3.3 ③ 异常检测（相对密度）</h2>
+<div class="def"><b>定义。</b> <b>异常/离群点</b>是与多数模式不一致的点。基于密度的方法：点的<strong>局部密度</strong> = 到其 k 近邻平均距离的倒数（越稀疏密度越低）。</div>
+<p><b>相对密度（解决多密度问题）。</b> 单看密度无法区分「稀疏簇里的正常点」和「密集簇里的孤立点」。相对密度 = 该点密度 / 其 k 近邻的平均密度：</p>
+<div class="formula">score(x) = density(x) / avg_neighbor_density(x)</div>
+<p>比值远小于 1（邻居比它密得多）⇒ 越可能异常。作业里用 <code class="inl">density(i)=平均k近邻距离</code> 的版本，则 score 越大越异常——注意看清题目定义方向。</p>
+
+<hr class="sec">
+
+<h2 id="L5-logic">3.4 ① 命题逻辑：语法与语义</h2>
+<div class="def"><b>定义。</b> <b>形式逻辑系统</b>三要素：<b>语法</b>（合式公式的写法）、<b>语义</b>（用"世界/模型"给公式真值）、<b>推理规则</b>（按语法形式推出新公式）。这是高频简答。</div>
+<p><b>命题逻辑语法。</b> 原子命题 P、Q…；连接词：¬（否定）、∧（合取）、∨（析取）、→（蕴含）、↔（双向）。</p>
+<div class="box warn"><span class="bt">易错：蕴含 →</span><code class="inl">f → g</code> <strong>只有前件真、后件假时才为假</strong>，其余都真（前件为假时整体恒真）。<code class="inl">f ↔ g</code> = (f→g)∧(g→f)。</div>
+<p><b>语义。</b> 一个<b>世界/模型</b>是对所有原子命题的一组真值指派；n 个原子 ⇒ 2ⁿ 个可能世界。解释函数 I(f,w) 算 f 在世界 w 下的真值；使 f 为真的所有世界集合就是 f 的语义。</p>
+<pre><span class="kw">def</span> interpret(f, world):
+    <span class="kw">if</span> is_atom(f):       <span class="kw">return</span> world[f]
+    op = f[<span class="ot">0</span>]
+    <span class="kw">if</span> op == <span class="st">"not"</span>:    <span class="kw">return</span> <span class="kw">not</span> interpret(f[<span class="ot">1</span>], world)
+    <span class="kw">if</span> op == <span class="st">"and"</span>:    <span class="kw">return</span> interpret(f[<span class="ot">1</span>],world) <span class="kw">and</span> interpret(f[<span class="ot">2</span>],world)
+    <span class="kw">if</span> op == <span class="st">"or"</span>:     <span class="kw">return</span> interpret(f[<span class="ot">1</span>],world) <span class="kw">or</span>  interpret(f[<span class="ot">2</span>],world)
+    <span class="kw">if</span> op == <span class="st">"imp"</span>:    <span class="kw">return</span> (<span class="kw">not</span> interpret(f[<span class="ot">1</span>],world)) <span class="kw">or</span> interpret(f[<span class="ot">2</span>],world)</pre>
+
+<h2 id="L5-kb">3.4 ② 知识库 / 蕴含 / ⊨ vs ⊢</h2>
+<div class="def"><b>定义。</b> <b>知识库 KB</b> 是一组命题公式，其语义是<strong>同时满足所有公式</strong>的世界集合。约束越多、可能世界越少。</div>
+<p><b>KB 与公式 f 的三种关系：</b></p>
+<table>
+<tr><th>关系</th><th>含义</th></tr>
+<tr><td>蕴含 KB ⊨ f</td><td>KB 为真的所有世界里 f 也真（f 不带来新信息）</td></tr>
+<tr><td>矛盾 KB ⊨ ¬f</td><td>不存在同时满足 KB 和 f 的世界</td></tr>
+<tr><td>关联 contingent</td><td>既非蕴含也非矛盾，f 能增加新信息</td></tr>
+</table>
+<div class="box key"><span class="bt">🔑 ⊨ vs ⊢ + 关键转化</span>
+<b>⊨</b>（语义蕴含）：所有满足 KB 的世界 f 都真。<b>⊢</b>（语法可证）：用推理规则能推出 f。
+关键：<code class="inl">KB ⊨ f</code> 当且仅当 <code class="inl">KB ∪ {¬f}</code> <strong>不可满足</strong>——把蕴含判定转成 SAT。SAT 是 NP-complete，穷举 2ⁿ 个世界只在原子少时可行。
+</div>
+
+<h2 id="L5-rules">3.4 ③ 推理规则 / 正确性 / 完备性</h2>
+<p><b>常见有效规则：</b></p>
+<ul>
+<li>肯定前件 Modus Ponens：<code class="inl">P, P→Q ⇒ Q</code></li>
+<li>否定后件 Modus Tollens：<code class="inl">¬Q, P→Q ⇒ ¬P</code></li>
+<li>析取三段论：<code class="inl">P∨Q, ¬P ⇒ Q</code>；合取消去：<code class="inl">P∧Q ⇒ P</code></li>
+</ul>
+<div class="box warn"><span class="bt">易错：无效推理</span><b>肯定后件</b>（<code class="inl">Q, P→Q ⇒ P</code>）和<b>否定前件</b>（<code class="inl">¬P, P→Q ⇒ ¬Q</code>）都是<strong>无效</strong>的，常作判断题陷阱。</div>
+<div class="box key"><span class="bt">🔑 正确性 vs 完备性（简答辨析）</span>
+<b>正确性 Soundness</b>：若 KB ⊢ f 则 KB ⊨ f（推出来的都是真的，不乱推）。
+<b>完备性 Completeness</b>：若 KB ⊨ f 则 KB ⊢ f（所有真的都能推出来）。
+一个系统可以"正确但不完备"（规则太少）；命题逻辑本身是完备的。
+</div>
+
+<h2 id="L5-horn">3.4 ④ Horn 子句 / 前向链接</h2>
+<div class="def"><b>定义。</b> <b>Horn 子句</b>是最多含一个正文字的受限析取，常写成 <code class="inl">(P₁∧…∧Pₙ) → Q</code>、事实 <code class="inl">Q</code>、或查询。在 Horn 子句集上用肯定前件做推理可达到<strong>正确且完备</strong>，且高效（多项式）。</div>
+<p><b>前向链接 Forward Chaining。</b> 从已知事实出发，反复应用蕴含式：只要某规则前件全部已成立，就把其结论加入事实集，直到推出目标或无新事实可加。</p>
+<pre><span class="cm"># KB: 事实 P,Q;  规则 P∧Q→R, R→S。 问 S?</span>
+<span class="cm"># 过程：{P,Q} →(P∧Q→R) 加入 R → {P,Q,R} →(R→S) 加入 S ⇒ KB ⊢ S</span></pre>
+<div class="box key"><span class="bt">🔑 高频</span>能判断公式是否为 Horn 子句、能手工模拟前向链接推出目标、或补全前向链接代码（判断 <code class="inl">prem ⊆ facts</code> 则 <code class="inl">facts.add(conc)</code>）。</div>
+
+<hr class="sec">
+
+<h2 id="L5-app1">综合应用① 银行客户违约风险分类 <span class="badge b-exam">真题综合1</span></h2>
+<div class="box exam"><span class="bt">题意</span>已知若干银行客户账户信息（年龄、年收入等属性）及对应违约风险标签（低/中/高 = 0/1/2），训练模型，对新客户预测违约风险，并说明「若效果不好如何改进」。</div>
+<p><b>答题框架（这是一个三分类有监督学习问题）。</b></p>
+<ol>
+<li><b>问题定性</b>：输入 = 客户特征向量 x，输出 = 类别 y∈{0,1,2}，属<strong>多分类</strong>有监督学习。</li>
+<li><b>数据预处理</b>：数值特征做 z-score <a href="#L5-norm">规范化</a>（年龄、年收入量纲差异大）；类别特征做<a href="#L5-onehot">独热编码</a>；处理缺失值。</li>
+<li><b>选模型</b>：可用 <a href="#L5-logreg">逻辑回归</a>（多分类用 One-vs-Rest）或 <a href="#L5-knn">KNN</a>；训练集拟合参数。</li>
+<li><b>评估</b>：<a href="#L5-fit">留出/交叉验证</a>，看精度与泛化误差，诊断过/欠拟合。</li>
+<li><b>预测</b>：对新客户向量同样预处理后送入模型，输出概率最大的类别。</li>
+</ol>
+<pre><span class="cm"># 伪代码</span>
+X, y = load_train()                 <span class="cm"># 特征矩阵 + 标签(0/1/2)</span>
+X = zscore(onehot(fillna(X)))       <span class="cm"># 预处理(参数存训练集)</span>
+model = train_classifier(X, y)      <span class="cm"># 逻辑回归(OvR) 或 KNN</span>
+y_pred = model.predict(preprocess(x_new))</pre>
+<div class="box key"><span class="bt">🔑 "效果不好如何改进"（必答，给分点）</span>
+① <b>数据层面</b>：补充更多/更均衡样本，处理类别不平衡（违约样本通常少，可过采样/调权重）；做特征工程、特征选择/降维（<a href="#L5-pca">PCA</a>）；
+② <b>模型层面</b>：换更强模型（决策树/随机森林/SVM/神经网络）、调超参数（KNN 的 k、学习率）；
+③ <b>泛化层面</b>：过拟合则加正则化/简化模型/加数据，欠拟合则加特征/换复杂模型；用交叉验证更可靠地选模型。
+</div>
+
+<h2 id="L5-app2">综合应用② 棋类胜率预测 → AI 问题 <span class="badge b-exam">真题综合2</span></h2>
+<div class="box exam"><span class="bt">题意</span>给出某棋类游戏规则，要求在对局中预测双方胜率，把这个问题转成「人工智能程序可处理的形式」，说明思路，并说明效果不好如何改进。</div>
+<p><b>答题框架（两条主流思路，任答其一并讲清即可）。</b></p>
+<h4>思路 A：搜索 + 评估（对应讲义② 1.5 搜索）</h4>
+<ol>
+<li><b>状态形式化</b>：把棋盘局面表示为状态（如二维数组），定义动作（合法落子）、状态转换、终止状态（分出胜负）；</li>
+<li><b>博弈搜索</b>：用 Minimax + Alpha-Beta 剪枝在状态搜索树上向前看若干步；</li>
+<li><b>评估函数</b>：对非终局局面打分（子力、位置、连子等），分数越高对某方越有利，归一化即可作为"胜率"估计。</li>
+</ol>
+<h4>思路 B：监督学习（对应本讲 3.2）</h4>
+<ol>
+<li><b>数据表示</b>：把局面编码成特征向量（每格状态、轮到谁、关键棋形计数）；</li>
+<li><b>标注</b>：用大量历史/自对弈对局，标签为最终胜负（或胜率）；</li>
+<li><b>训练分类/回归模型</b>（逻辑回归/神经网络）：输入局面 → 输出某方获胜概率。</li>
+</ol>
+<div class="box key"><span class="bt">🔑 "效果不好如何改进"</span>
+搜索路线：加深搜索层数 + 更好的剪枝/启发式排序、改进评估函数、引入开局库/残局库；
+学习路线：扩充并均衡训练数据（自对弈生成）、更强特征/模型、用强化学习（自我博弈，类 AlphaZero 把搜索与神经网络结合）、调参与交叉验证防过拟合。
+</div>
+
+<p style="text-align:center; color:var(--sub); margin-top:60px;">— 讲义⑤ 结束，覆盖 3.1–3.4 + 综合应用题 —</p>
+</section>
+</main>
+</div>
+<script>
+const links=[...document.querySelectorAll('#toc a[href^="#"]')];const map={};
+links.forEach(a=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)map[id]=a;});
+const sects=Object.keys(map).map(id=>document.getElementById(id));
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('active'));const a=map[e.target.id];if(a)a.classList.add('active');}});},{rootMargin:'-10% 0px -80% 0px',threshold:0});
+sects.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
