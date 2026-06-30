@@ -45,6 +45,7 @@
 - `linear-algebra-review/` — 高等代数(下)期末知识清单 + 自测题目(exercises.html)
 - `calm-down-guide/` — 如何静下来 · 重要事件前的情绪调节
 - `habit-formation-methodology/` — 习惯的科学 · 为什么打球不需要坚持
+- `sixiu-cards/` — 思修 · 考点背诵卡片 · 填空+标题双模式 50 张
 
 ## 结构约定
 每个讲稿一个文件夹,内含 `index.html` + `pages/` 原书页面截图。入口 `index.html` 是各讲稿的卡片导航页。
