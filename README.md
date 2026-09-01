@@ -37,6 +37,9 @@
 - `networking-servers-guide/` — 计算机网络与服务器 · 从零搭起你的网站和代理
 - `flask-comment-site-handson/` — 实战篇 Flask 评论站 · 从 0 到上线(逐行)
 
+### 最优化方法 (Optimization)
+- `optimization-lec2/` — 第 2 讲 Mathematical Background · 预习笔记(Boyd 附录 A, p1–58)
+
 ### 其他芝士
 - `task-overload/` — 时间&任务管理方法论 · 系统报告
 - `fourier-guide/` — 傅里叶级数 · 快速计算指导

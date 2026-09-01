@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecture 2 预习笔记 · 最优化方法</title>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    macros: {
+      R: '\\mathbf{R}',
+      S: '\\mathbf{S}',
+      tr: '\\operatorname{tr}',
+      dom: '\\operatorname{\\mathbf{dom}}',
+      diag: '\\operatorname{\\mathbf{diag}}',
+      rank: '\\operatorname{\\mathbf{rank}}',
+      sign: '\\operatorname{\\mathbf{sign}}',
+      Ran: '\\mathcal{R}',
+      Nul: '\\mathcal{N}'
+    }
+  },
+  chtml: { scale: 1.06, displayAlign: 'left', displayIndent: '0.5em' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().then(function () {
+        document.getElementById('mathwarn').style.display = 'none';
+      });
+    }
+  }
+};
+</script>
+<script>
+/* MathJax 3.2.2 加载器：国内 CDN 优先，逐个降级；全部带 SRI 完整性校验，
+   镜像若被篡改则哈希不匹配 → 浏览器拒绝执行 → 自动切换下一个源。 */
+(function () {
+  var SRCS = [
+    'https://cdn.staticfile.net/mathjax/3.2.2/es5/tex-mml-chtml.js',
+    'https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js',
+    'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js'
+  ];
+  var SRI = 'sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei';
+  var i = 0;
+  function fail() {
+    var w = document.getElementById('mathwarn');
+    if (w) {
+      w.style.display = '';
+      w.textContent = '公式引擎加载失败（三个 CDN 均不可达）。公式将以 LaTeX 源码形式显示；换个网络环境刷新即可恢复。';
+    }
+  }
+  function load() {
+    if (i >= SRCS.length) { fail(); return; }
+    var old = document.getElementById('MathJax-script');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var s = document.createElement('script');
+    s.id = 'MathJax-script';
+    s.async = true;
+    s.integrity = SRI;
+    s.crossOrigin = 'anonymous';
+    s.onerror = load;
+    s.src = SRCS[i++];
+    document.head.appendChild(s);
+  }
+  load();
+})();
+</script>
+
+<style>
+:root{
+  --bg:#faf8f4;
+  --paper:#ffffff;
+  --ink:#1e1b17;
+  --ink-soft:#4a453e;
+  --ink-faint:#7a7269;
+  --rule:#e2dbd0;
+  --accent:#8a4b2a;
+  --accent-soft:#f3e9e2;
+  --star:#b8860b;
+  --warn-bg:#fdf5e3;
+  --warn-bd:#e0c98a;
+  --key-bg:#f2f6f3;
+  --key-bd:#b9cfc2;
+  --serif-zh:"宋体","SimSun","Songti SC","Noto Serif CJK SC",serif;
+  --serif-en:"Times New Roman","Liberation Serif",Times,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#171512; --paper:#1e1b18; --ink:#ece7df; --ink-soft:#c3bcb1;
+    --ink-faint:#8e867b; --rule:#37322c; --accent:#d9a179; --accent-soft:#2c2420;
+    --star:#d9b44a; --warn-bg:#2b2418; --warn-bd:#5c4d2c;
+    --key-bg:#1c2420; --key-bd:#395145;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:1.5rem}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif-en),var(--serif-zh);
+  font-size:17px; line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:0 1.2rem; display:flex; gap:2.4rem; align-items:flex-start}
+nav{
+  position:sticky; top:0; flex:0 0 208px; padding:2.6rem 0 2rem;
+  max-height:100vh; overflow-y:auto; font-size:14.5px;
+}
+nav .navtitle{font-size:12px; letter-spacing:.14em; color:var(--ink-faint); text-transform:uppercase; margin-bottom:.9rem}
+nav a{display:block; color:var(--ink-soft); text-decoration:none; padding:.24rem 0 .24rem .7rem; border-left:2px solid var(--rule); line-height:1.5}
+nav a:hover{color:var(--accent); border-left-color:var(--accent)}
+nav a.sub{padding-left:1.5rem; font-size:13.5px; color:var(--ink-faint)}
+main{flex:1 1 auto; min-width:0; background:var(--paper); border:1px solid var(--rule); padding:3rem 3.2rem 4rem; margin:2rem 0 4rem}
+@media (max-width:900px){
+  .wrap{display:block; padding:0 .8rem}
+  nav{position:static; max-height:none; padding:1.6rem 0 0; flex:none;
+       display:flex; flex-wrap:wrap; gap:.2rem .9rem; border-bottom:1px solid var(--rule); padding-bottom:1rem}
+  nav .navtitle{width:100%}
+  nav a{border-left:none; padding:.15rem 0}
+  nav a.sub{display:none}
+  main{padding:1.8rem 1.1rem 3rem; margin:1rem 0 2rem}
+}
+
+header.head{border-bottom:2px solid var(--ink); padding-bottom:1.4rem; margin-bottom:2.2rem}
+header.head .kicker{font-size:13px; letter-spacing:.16em; color:var(--ink-faint); text-transform:uppercase}
+header.head h1{font-size:2.1rem; margin:.5rem 0 .3rem; line-height:1.3; font-weight:700}
+header.head .sub{color:var(--ink-soft); font-size:15.5px}
+
+h2{font-size:1.5rem; margin:3.2rem 0 1rem; padding-bottom:.4rem; border-bottom:1px solid var(--rule); font-weight:700}
+h2:first-of-type{margin-top:1.5rem}
+h3{font-size:1.16rem; margin:2.2rem 0 .7rem; font-weight:700; color:var(--ink)}
+h4{font-size:1.02rem; margin:1.5rem 0 .5rem; font-weight:700; color:var(--ink-soft)}
+p{margin:.85rem 0}
+ul,ol{margin:.7rem 0; padding-left:1.5rem}
+li{margin:.35rem 0}
+strong{font-weight:700}
+code{font-family:"Consolas","Courier New",monospace; font-size:.9em; background:var(--accent-soft); padding:.08em .35em; border-radius:2px}
+
+.lede{background:var(--accent-soft); border-left:3px solid var(--accent); padding:1.1rem 1.3rem; margin:1.6rem 0; font-size:16.5px}
+.lede p:first-child{margin-top:0} .lede p:last-child{margin-bottom:0}
+
+.box{border:1px solid var(--rule); padding:1rem 1.25rem; margin:1.4rem 0; background:var(--bg)}
+.box .lab{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:.4rem}
+.box p:last-child{margin-bottom:0}
+
+.warn{background:var(--warn-bg); border:1px solid var(--warn-bd); padding:1rem 1.25rem; margin:1.4rem 0}
+.warn .lab{font-weight:700; color:var(--accent)}
+.key{background:var(--key-bg); border:1px solid var(--key-bd); padding:1rem 1.25rem; margin:1.4rem 0}
+.key .lab{font-weight:700; margin-bottom:.3rem}
+.warn p:last-child,.key p:last-child{margin-bottom:0}
+.warn p:first-child,.key p:first-child{margin-top:0}
+
+table{border-collapse:collapse; width:100%; margin:1.3rem 0; font-size:15.5px}
+.scroll{overflow-x:auto; margin:1.3rem 0}
+.scroll table{margin:0}
+th,td{border:1px solid var(--rule); padding:.55rem .8rem; text-align:left; vertical-align:top}
+th{background:var(--bg); font-weight:700; font-size:14.5px}
+tbody tr:nth-child(even){background:color-mix(in srgb, var(--bg) 55%, transparent)}
+
+.stars{color:var(--star); letter-spacing:.05em; white-space:nowrap}
+.pill{display:inline-block; font-size:12px; padding:.1em .55em; border:1px solid var(--rule); color:var(--ink-faint); margin-left:.4em; vertical-align:.12em; white-space:nowrap}
+
+mjx-container[display="true"]{margin:1.15rem 0 !important; overflow-x:auto; overflow-y:hidden; padding:.1rem 0}
+mjx-container{color:var(--ink)}
+
+#mathwarn{background:var(--warn-bg); border:1px solid var(--warn-bd); padding:.7rem 1rem; margin-bottom:1.5rem; font-size:14.5px; color:var(--ink-soft)}
+
+footer{margin-top:3.5rem; padding-top:1.2rem; border-top:1px solid var(--rule); font-size:14px; color:var(--ink-faint)}
+
+  .home-back{position:fixed;left:14px;bottom:14px;z-index:1000;background:#fffdf7;border:1px solid #d9c894;border-radius:20px;padding:6px 14px;text-decoration:none;color:#2a2620;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:inherit;transition:background .15s,border-color .15s}
+  .home-back:hover{background:#f3ead4;border-color:#8b5a3c}
+</style>
+</head>
+<body>
+<a class="home-back" href="../" title="返回笔记入口">← 返回入口</a>
+<div class="wrap">
+
+<nav>
+  <div class="navtitle">目录</div>
+  <a href="#prio">〇 · 优先级判断</a>
+  <a href="#norm">一 · 范数</a>
+  <a href="#norm-def" class="sub">定义与单位球</a>
+  <a href="#norm-op" class="sub">算子范数</a>
+  <a href="#norm-dual" class="sub">★ 对偶范数</a>
+  <a href="#norm-three" class="sub">★ 矩阵三范数</a>
+  <a href="#ana">二 · 分析</a>
+  <a href="#der">三 · 导数</a>
+  <a href="#der-five" class="sub">五个必背公式</a>
+  <a href="#der-lse" class="sub">★ log-sum-exp</a>
+  <a href="#der-logdet" class="sub">log-det 仿射复合</a>
+  <a href="#la">四 · 线性代数</a>
+  <a href="#la-psd" class="sub">PD / PSD</a>
+  <a href="#la-svd" class="sub">★ P55 课堂提问</a>
+  <a href="#la-schur" class="sub">★ Schur 补</a>
+  <a href="#focus">五 · 上课听什么</a>
+</nav>
+
+<main>
+
+<header class="head">
+  <div class="kicker">最优化方法 · Lecture 2 预习</div>
+  <h1>Mathematical Background</h1>
+  <div class="sub">Boyd《Convex Optimization》附录 A ｜ 58 页 ｜ 张利军</div>
+</header>
+
+<div id="mathwarn">公式正在加载（需联网获取 MathJax，国内 CDN 优先）。若长时间显示此提示，说明网络不通，公式将以 LaTeX 源码形式显示。</div>
+
+<div class="lede">
+<p><strong>结论先行：这讲不难，但"密"。</strong>58 页全是定义和公式的堆叠，没有一个需要绕弯的证明。真正陌生的只有 <strong>4 个点</strong>，其余都是线代 / 数分的复习。</p>
+<p>30 分钟应该只攻这 4 个点，剩下的上课听一遍就够。</p>
+</div>
+
+<!-- ===================== 优先级 ===================== -->
+<h2 id="prio">〇 · 优先级判断</h2>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:44%">内容</th><th style="width:26%">你的状态</th><th>预习价值</th></tr></thead>
+<tbody>
+<tr><td>内积、$l_1/l_2/l_\infty$ 范数、开闭集、$\sup/\inf$、range/nullspace、特征分解</td><td>线代 + 数分学过</td><td class="stars">★</td></tr>
+<tr><td><strong>对偶范数 (dual norm)</strong></td><td>全新</td><td class="stars">★★★★★</td></tr>
+<tr><td><strong>矩阵范数三兄弟 + 算子范数</strong></td><td>全新</td><td class="stars">★★★★</td></tr>
+<tr><td><strong>矩阵 / 向量求导 + 链式法则</strong>（logsumexp、logdet）</td><td>半新，作业必考</td><td class="stars">★★★★★</td></tr>
+<tr><td><strong>Schur complement</strong></td><td>全新</td><td class="stars">★★★</td></tr>
+<tr><td>closed function / epigraph、SVD vs 特征分解、伪逆</td><td>半新</td><td class="stars">★★</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="key">
+<div class="lab">如果只剩 10 分钟</div>
+<p>看 <strong>对偶范数</strong>（P13–16）+ <strong>五个求导公式</strong>（P28、P30、P40）+ <strong>矩阵三范数与奇异值的 $l_1/l_2/l_\infty$ 对应</strong>。这三块占了本讲价值的 70%。</p>
+</div>
+
+<!-- ===================== 范数 ===================== -->
+<h2 id="norm">一 · 范数：从"长度"到"单位球"</h2>
+
+<h3 id="norm-def">1. 定义（4 条公理，P6）</h3>
+<p>$f:\R^n\to\R$，$\dom f=\R^n$，称为<strong>范数</strong>当且仅当：</p>
+<ul>
+<li><strong>非负</strong>：$f(x)\ge 0$</li>
+<li><strong>definite</strong>：$f(x)=0$ 只在 $x=0$</li>
+<li><strong>齐次</strong>：$f(tx)=|t|\,f(x)$</li>
+<li><strong>三角不等式</strong>：$f(x+y)\le f(x)+f(y)$</li>
+</ul>
+<p>注意齐次性用的是 $|t|$ 而不是 $t$ —— 这就是为什么范数的图像是个对称的碗。距离由此定义：$\mathrm{dist}(x,y)=\|x-y\|$。</p>
+
+<h4>关键视角：范数 $\Longleftrightarrow$ 单位球（P7，这页最值得看）</h4>
+<p>讲义说了一件很漂亮的事：<strong>范数与"对称、凸、闭、有界、有内点"的集合是一一对应的。</strong></p>
+<ul>
+<li>给一个范数 $\Rightarrow$ 单位球 $\mathcal B=\{x:\|x\|\le 1\}$ 一定满足那 5 条性质；</li>
+<li>反过来给这样一个集合 $C$ $\Rightarrow$ 它就是某个范数的单位球，这个范数是</li>
+</ul>
+$$\|x\| \;=\; \bigl(\sup\{\,t\ge 0 \;:\; tx\in C\,\}\bigr)^{-1}$$
+<div class="box">
+<div class="lab">这个公式怎么理解</div>
+<p>把 $x$ 沿它自己的方向拉伸，一直拉到刚好顶到 $C$ 的边界；设最多能拉 $t^\star$ 倍，那么 $\|x\|=1/t^\star$。$x$ 越小 $\Rightarrow$ 能拉得越远（$t^\star$ 大）$\Rightarrow$ 范数越小。合理。</p>
+</div>
+
+<div class="key">
+<div class="lab">为什么这个视角重要</div>
+<p>以后你看到 $l_1$ 球是菱形、$l_2$ 球是圆、$l_\infty$ 球是正方形，就不再是"记形状"，而是<strong>范数就是形状</strong>。Lasso 为什么产生稀疏解？因为菱形的顶点在坐标轴上。这个直觉从这里来。</p>
+</div>
+
+<h4>常见范数（P8–P9）</h4>
+<p><strong>向量：</strong></p>
+$$\|x\|_1=\sum_{i=1}^n|x_i|,\qquad \|x\|_\infty=\max_i |x_i|,\qquad \|x\|_p=\Bigl(\sum_{i=1}^n|x_i|^p\Bigr)^{1/p}\;(p\ge 1)$$
+<p><strong>$P$-二次范数</strong>（$P\in\S_{++}^n$）：</p>
+$$\|x\|_P=(x^\top P x)^{1/2}=\|P^{1/2}x\|_2$$
+<p>单位球是<strong>椭球</strong>。理解为：先用 $P^{1/2}$ 把空间拉伸一下，再量欧氏长度。</p>
+
+<p><strong>矩阵</strong>（把矩阵当成一长条向量的"平凡"做法）：</p>
+$$\|X\|_{\mathrm{sav}}=\sum_{i=1}^m\sum_{j=1}^n|X_{ij}|,\qquad
+\|X\|_{\mathrm{mav}}=\max_{i,j}|X_{ij}|,\qquad
+\|X\|_F=\Bigl(\sum_{i=1}^m\sum_{j=1}^n X_{ij}^2\Bigr)^{1/2}$$
+<p>其中 Frobenius 范数来自矩阵内积 $\langle X,Y\rangle=\tr(X^\top Y)$：$\|X\|_F=\tr(X^\top X)^{1/2}$。</p>
+
+<h4>范数等价性（P10）</h4>
+<p>任意两个 $\R^n$ 上的范数 $\|\cdot\|_a,\|\cdot\|_b$，存在常数 $\alpha,\beta>0$ 使</p>
+$$\alpha\|x\|_a\;\le\;\|x\|_b\;\le\;\beta\|x\|_a,\qquad \forall x\in\R^n$$
+<div class="box">
+<div class="lab">含义</div>
+<p>有限维空间里，用哪个范数讨论"收敛""有界""开闭集"都一样。所以后面谈收敛性时不用纠结范数选择。<strong>无限维就不成立了</strong>，这是泛函分析的分水岭。</p>
+</div>
+<p>第二条：任何范数都能被一个椭球范数上下夹住，误差因子 $\sqrt n$（John 椭球定理）：</p>
+$$\|x\|_P\;\le\;\|x\|\;\le\;\sqrt n\,\|x\|_P$$
+
+<h3 id="norm-op">2. 算子范数（P11–P12）—— 第一个新东西</h3>
+$$\|X\|_{a,b}=\sup\{\,\|Xu\|_a \;:\; \|u\|_b\le 1\,\}$$
+<div class="box">
+<div class="lab">直觉</div>
+<p>矩阵是一个线性映射，算子范数问的是：<strong>这个映射最多能把一个单位向量放大多少倍</strong>。它是一个"最大增益"。</p>
+</div>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:24%">诱导范数</th><th style="width:40%">结果</th><th>记法</th></tr></thead>
+<tbody>
+<tr><td>$\|X\|_2$（$l_2\to l_2$）</td><td>$\sigma_{\max}(X)=\lambda_{\max}(X^\top X)^{1/2}$</td><td><strong>谱范数</strong>，最大奇异值</td></tr>
+<tr><td>$\|X\|_\infty$（$l_\infty\to l_\infty$）</td><td>$\displaystyle\max_{i=1,\dots,m}\sum_{j=1}^n |X_{ij}|$</td><td><strong>最大行和</strong></td></tr>
+<tr><td>$\|X\|_1$（$l_1\to l_1$）</td><td>$\displaystyle\max_{j=1,\dots,n}\sum_{i=1}^m |X_{ij}|$</td><td><strong>最大列和</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="warn">
+<span class="lab">⚠ 最容易踩的坑</span>
+<p>矩阵的 $\|X\|_1$ <strong>不是</strong>所有元素绝对值之和（那个叫 $\|X\|_{\mathrm{sav}}$）；矩阵的 $\|X\|_2$ <strong>不是</strong> Frobenius 范数。同样的下标，向量情形和矩阵情形含义完全不同。<strong>考试爱考这个。</strong></p>
+</div>
+
+<h3 id="norm-dual">3. ★ 对偶范数（P13–P16）—— 本讲最抽象的点</h3>
+$$\|z\|_* \;=\; \sup\{\, z^\top x \;:\; \|x\|\le 1 \,\}$$
+<div class="box">
+<div class="lab">怎么理解</div>
+<p>把 $z$ 看成一个"测量仪器"—— 它作用在 $x$ 上给出一个数 $z^\top x$。对偶范数问的是：<strong>这个仪器在单位球上最大能读出多少</strong>。</p>
+<p>所以对偶范数衡量的是 $z$ 作为<strong>线性泛函</strong>的强度，而原范数衡量的是 $x$ 作为<strong>向量</strong>的大小。两者是"同一个空间的两种度量身份"。</p>
+</div>
+
+<h4>核心不等式（广义 Cauchy–Schwarz）</h4>
+$$z^\top x \;\le\; \|x\|\cdot\|z\|_*$$
+<p>讲义 P13 给的证明就两行，自己走一遍：设 $x\ne 0$，令 $u=x/\|x\|$，则 $\|u\|=1$，于是</p>
+$$z^\top\frac{x}{\|x\|}\;\le\;\sup\{z^\top x:\|x\|\le 1\}\;=\;\|z\|_*$$
+<p>两边乘 $\|x\|$ 即得。取 $\|\cdot\|=l_2$ 就退化成普通 Cauchy–Schwarz（因为 $l_2$ 自对偶）。</p>
+
+<h4>必背的对偶对</h4>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:42%">原范数</th><th>对偶范数</th></tr></thead>
+<tbody>
+<tr><td>$l_2$</td><td>$l_2$（<strong>自对偶</strong>）</td></tr>
+<tr><td>$l_\infty$</td><td>$l_1$</td></tr>
+<tr><td>$l_1$</td><td>$l_\infty$</td></tr>
+<tr><td>$l_p$</td><td>$l_q$，其中 $\dfrac1p+\dfrac1q=1$</td></tr>
+<tr><td>矩阵谱范数 $\|\cdot\|_2$</td><td><strong>核范数</strong> $\|Z\|_*=\sigma_1(Z)+\cdots+\sigma_r(Z)=\tr(Z^\top Z)^{1/2}$</td></tr>
+<tr><td>Frobenius $\|\cdot\|_F$</td><td>Frobenius（自对偶）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h4>双对偶定理</h4>
+$$\|\cdot\|_{**}=\|\cdot\|$$
+<p>对偶的对偶回到自己。这是后面 <strong>Fenchel 共轭、拉格朗日对偶</strong>的雏形 —— "对偶两次回到原点"这个模式会在这门课里反复出现。</p>
+
+<h3 id="norm-three">4. ★ 一句话统一矩阵三大范数</h3>
+<div class="key">
+<div class="lab">讲义没明说，但这是全讲最值钱的记忆点</div>
+<p>设 $A$ 的奇异值向量为 $\sigma=(\sigma_1,\dots,\sigma_r)$，那么三大矩阵范数<strong>就是 $\sigma$ 的三种向量范数</strong>：</p>
+</div>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:48%">矩阵范数</th><th>等于 $\sigma$ 的什么</th></tr></thead>
+<tbody>
+<tr><td>核范数 $\;\|A\|_*=\sum_i \sigma_i$</td><td>$\sigma$ 的 <strong>$l_1$ 范数</strong></td></tr>
+<tr><td>Frobenius $\;\|A\|_F=\bigl(\sum_i\sigma_i^2\bigr)^{1/2}$</td><td>$\sigma$ 的 <strong>$l_2$ 范数</strong></td></tr>
+<tr><td>谱范数 $\;\|A\|_2=\sigma_1$</td><td>$\sigma$ 的 <strong>$l_\infty$ 范数</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p>于是对偶关系立刻记住了：$l_1\leftrightarrow l_\infty$ 对应<strong>核范数 $\leftrightarrow$ 谱范数</strong>，$l_2\leftrightarrow l_2$ 对应 <strong>F 范数自对偶</strong>。</p>
+
+<div class="box">
+<div class="lab">AI 专业该顺带知道的</div>
+<p>$l_1$ 之于向量促<strong>稀疏</strong>，核范数之于矩阵就促<strong>低秩</strong>（因为它是奇异值的 $l_1$）。推荐系统的矩阵补全、低秩正则，全建立在这句话上。</p>
+</div>
+
+<!-- ===================== 分析 ===================== -->
+<h2 id="ana">二 · 分析（P18–P20）：扫一遍即可，但注意两点</h2>
+
+<p>内点、开集、闭集、闭包、边界、$\sup/\inf$ —— 都是数分内容：</p>
+<ul>
+<li>$x$ 是 $C$ 的<strong>内点</strong>：存在 $\epsilon>0$ 使 $\{y:\|y-x\|_2\le\epsilon\}\subseteq C$。全体内点记 $\operatorname{\mathbf{int}} C$；$C$ 开 $\iff \operatorname{\mathbf{int}} C=C$。</li>
+<li>$C$ <strong>闭</strong> $\iff$ 补集开。闭包 $\operatorname{\mathbf{cl}} C=\R^n\setminus\operatorname{\mathbf{int}}(\R^n\setminus C)$，边界 $\operatorname{\mathbf{bd}} C=\operatorname{\mathbf{cl}} C\setminus\operatorname{\mathbf{int}} C$。</li>
+</ul>
+
+<div class="warn">
+<span class="lab">(1) $\sup \ne \max$</span>
+<p>$[0,1]$ 的 $\sup$ 是 $1$ 且<strong>能取到</strong>；$(0,1)$ 的 $\sup$ 也是 $1$ 但<strong>取不到</strong>。</p>
+<p>优化里这个区别是致命的：$\inf f(x)$ 是"<strong>最优值</strong>"，不保证存在"<strong>最优解</strong> $x^\star$"。比如 $\min_{x\in\R} e^x$，最优值是 $0$，最优解不存在。后面所有"解是否存在"的讨论都源于此。</p>
+<p>另记：$\inf C=-\sup(-C)$。</p>
+</div>
+
+<h4>(2) 闭函数（P23）</h4>
+<p>$f:\R^n\to\R$ 称为<strong>闭</strong>，若对每个 $\alpha\in\R$，下水平集</p>
+$$\{\,x\in\dom f \;:\; f(x)\le\alpha\,\}$$
+<p>都是闭集。等价说法：<strong>上境图（epigraph）</strong></p>
+$$\operatorname{\mathbf{epi}} f=\{\,(x,t)\in\R^{n+1} \;:\; x\in\dom f,\; f(x)\le t\,\}$$
+<p>是闭集。</p>
+
+<div class="key">
+<div class="lab">epigraph 是凸分析的核心翻译器</div>
+<p>epigraph 就是"函数图像<strong>上方</strong>的那一坨集合"。以后 "$f$ 是凸函数" $\iff$ "$\operatorname{\mathbf{epi}} f$ 是凸集"，<strong>函数的性质全部转成集合的性质来处理</strong>。这节课先混个眼熟，下一讲讲凸集时会大用。</p>
+<p>闭函数为什么重要？它保证"越往下走不会掉出定义域"，是<strong>极小值存在性</strong>的技术前提。</p>
+</div>
+
+<!-- ===================== 导数 ===================== -->
+<h2 id="der">三 · 导数（P25–P44）：★ 作业和考试的主战场</h2>
+
+<h3>1. 定义（P25）</h3>
+<p>$f:\R^n\to\R^m$ 在 $x\in\operatorname{\mathbf{int}}\dom f$ 处可微 $\iff$ 存在矩阵 $Df(x)\in\R^{m\times n}$ 使得</p>
+$$\lim_{\substack{z\in\dom f,\; z\ne x,\; z\to x}}\frac{\bigl\|f(z)-f(x)-Df(x)(z-x)\bigr\|_2}{\|z-x\|_2}=0$$
+<div class="box">
+<div class="lab">读法</div>
+<p>用仿射函数 $f(x)+Df(x)(z-x)$ 去逼近 $f$，误差是比 $\|z-x\|$ <strong>更高阶的小量</strong>。这个仿射函数就叫<strong>一阶逼近</strong>。$Df$ 叫 <strong>Jacobian</strong>：</p>
+$$[Df(x)]_{ij}=\frac{\partial f_i(x)}{\partial x_j},\quad i=1,\dots,m,\; j=1,\dots,n$$
+</div>
+
+<h3>2. 梯度是 Jacobian 的转置（P27）</h3>
+<p>当 $f:\R^n\to\R$ 时，$Df(x)$ 是 <strong>$1\times n$ 行向量</strong>，它的转置才叫梯度：</p>
+$$\nabla f(x)=Df(x)^\top\in\R^n,\qquad [\nabla f(x)]_i=\frac{\partial f(x)}{\partial x_i}$$
+<p>一阶逼近写成 $\;f(x)+\nabla f(x)^\top(z-x)$。</p>
+<div class="warn">
+<span class="lab">⚠ 行 / 列</span>
+<p>在纸上不打紧，但在推 Hessian 和链式法则时会决定你的转置放哪。养成"<strong>梯度是列向量</strong>"的习惯。</p>
+</div>
+
+<h3 id="der-five">3. 必背的五个求导结果</h3>
+
+<h4>(a) 二次函数（P28、P39），$P\in\S^n$ 对称</h4>
+$$f(x)=\tfrac12 x^\top Px+q^\top x+r
+\;\Longrightarrow\;
+\nabla f(x)=Px+q,\qquad \nabla^2 f(x)=P$$
+<p>$P$ 必须对称才有这么干净的形式。这是最优化里出现频率最高的函数。</p>
+
+<h4>(b) log-det（P28、P39），$\dom f=\S_{++}^n$</h4>
+$$f(X)=\log\det X \;\Longrightarrow\; \nabla f(X)=X^{-1}$$
+<p>一阶逼近：$\;f(Z)\approx f(X)+\tr\bigl(X^{-1}(Z-X)\bigr)$</p>
+<p>二阶逼近：</p>
+$$f(X)+\tr\bigl(X^{-1}(Z-X)\bigr)-\tfrac12\,\tr\bigl(X^{-1}(Z-X)\,X^{-1}(Z-X)\bigr)$$
+<p>注意这里"梯度"是个矩阵，内积用 $\tr$。</p>
+
+<h4>(c) 仿射复合（P30、P40）—— 最常用的一条</h4>
+$$g(x)=f(Ax+b)\;\Longrightarrow\;
+\nabla g(x)=A^\top\nabla f(Ax+b),\qquad
+\nabla^2 g(x)=A^\top\,\nabla^2 f(Ax+b)\,A$$
+<p><strong>记忆</strong>：梯度左乘 $A^\top$，Hessian 两边夹 $A^\top\cdots A$。</p>
+<p>顺带这条直接告诉你<strong>凸性在仿射变换下保持</strong>（因为 $H\succeq 0 \Rightarrow A^\top H A\succeq 0$）。</p>
+
+<h4>(d) 标量链式（P29、P40），$f:\R^n\to\R,\; g:\R\to\R,\; h=g\circ f$</h4>
+$$\nabla h(x)=g'\bigl(f(x)\bigr)\,\nabla f(x)$$
+$$\nabla^2 h(x)=g'\bigl(f(x)\bigr)\,\nabla^2 f(x)\;+\;g''\bigl(f(x)\bigr)\,\nabla f(x)\,\nabla f(x)^\top$$
+<div class="warn">
+<span class="lab">⚠ 别漏</span>
+<p>Hessian 那条<strong>多出来一个秩 1 项</strong> $\nabla f\nabla f^\top$。它是下一讲判断复合函数凸性的<strong>全部依据</strong>。</p>
+</div>
+
+<h4>(e) 一维切片技巧（P30、P41）—— 强烈建议记住</h4>
+$$g(t)=f(x+tv),\quad x,v\in\R^n$$
+$$g'(t)=v^\top\nabla f(x+tv),\qquad g''(t)=v^\top\,\nabla^2 f(x+tv)\,v$$
+<div class="key">
+<div class="lab">用途</div>
+<p>把 $n$ 维函数沿方向 $v$ 切成一条一元函数。以后 "$f$ 凸 $\iff$ 沿任意直线的限制是凸的"、判凸、线搜索、方向导数，全靠它。</p>
+</div>
+
+<h4>Hessian 的定义（P38）</h4>
+$$[\nabla^2 f(x)]_{ij}=\frac{\partial^2 f(x)}{\partial x_i\,\partial x_j}$$
+<p>二阶逼近：</p>
+$$f(x)+\nabla f(x)^\top(z-x)+\tfrac12 (z-x)^\top\nabla^2 f(x)(z-x)$$
+<p>对二阶连续可微的 $f$，Hessian <strong>对称</strong>（Clairaut 定理），所以 $\nabla^2 f(x)\in\S^n$。这就是为什么下一讲能用 "$\nabla^2 f\succeq 0\iff f$ 凸" 这个判据。</p>
+
+<h3 id="der-lse">4. ★ 例 1：log-sum-exp（P31–34, P42–44）—— AI 专业必须吃透</h3>
+$$f(x)=\log\sum_{i=1}^m \exp\bigl(a_i^\top x+b_i\bigr),\qquad a_i\in\R^n,\; b_i\in\R$$
+<p>分解成 $f(x)=g(Ax+b)$，其中 $\;g(y)=\log\sum_{i=1}^m \exp(y_i)$。</p>
+
+<h4>Step 1 — 求 $\nabla g$</h4>
+$$\nabla g(y)=\frac{1}{\sum_{i=1}^m \exp(y_i)}
+\begin{pmatrix}\exp(y_1)\\ \vdots \\ \exp(y_m)\end{pmatrix}$$
+<div class="key">
+<div class="lab">停一下</div>
+<p>这就是 <strong>softmax$(y)$</strong>。log-sum-exp 的梯度是 softmax，一个概率向量（分量非负、和为 1）。你在深度学习里写的每一行 softmax，梯度来源就在这。</p>
+</div>
+
+<h4>Step 2 — 求 $\nabla^2 g$（记 $p=\nabla g(y)=\mathrm{softmax}(y)$）</h4>
+$$\nabla^2 g(y)=\diag\bigl(\nabla g(y)\bigr)-\nabla g(y)\,\nabla g(y)^\top=\diag(p)-pp^\top$$
+<div class="key">
+<div class="lab">这条式子串起了整条链</div>
+<p>$\diag(p)-pp^\top$ 正是 <strong>softmax 的雅可比</strong>，也是<strong>多项分布的协方差矩阵</strong>。协方差矩阵必 $\succeq 0$ $\Rightarrow$ <strong>log-sum-exp 是凸函数</strong> $\Rightarrow$ 交叉熵损失（对 logits）是凸的。</p>
+</div>
+
+<h4>Step 3 — 套仿射复合，令 $z_i=\exp(a_i^\top x+b_i)$</h4>
+$$\nabla f(x)=A^\top\nabla g(Ax+b)=\frac{1}{\mathbf 1^\top z}A^\top z$$
+$$\nabla^2 f(x)=A^\top\,\nabla^2 g(Ax+b)\,A
+=A^\top\left(\frac{1}{\mathbf 1^\top z}\diag(z)-\frac{1}{(\mathbf 1^\top z)^2}\,z z^\top\right)A$$
+
+<h3 id="der-logdet">5. 例 2：log-det 的仿射复合（P35–37）</h3>
+$$f(x)=\log\det\bigl(F_0+x_1F_1+\cdots+x_nF_n\bigr),\qquad F_0,\dots,F_n\in\S^p$$
+<div class="box">
+<div class="lab">关键认知</div>
+<p>$x\mapsto F_0+\sum_i x_iF_i$ 也是一个<strong>仿射映射</strong>，只不过值域是矩阵空间 $\S^p$ 而不是 $\R^m$。讲义 P35 把两种仿射映射并排列出，就是这个意思：</p>
+$$x\in\R^n\;\mapsto\;Ax+b\in\R^m,\qquad\qquad x\in\R^n\;\mapsto\;F_0+x_1F_1+\cdots+x_nF_n\in\S^p$$
+<p>同一套链式法则照用。</p>
+</div>
+<p>记 $F=F_0+\sum_i x_iF_i$，沿 $e_i$ 方向用一维切片：</p>
+$$\frac{\partial f(x)}{\partial x_i}=\tr\bigl(F_i\,\nabla\log\det F\bigr)=\tr\bigl(F^{-1}F_i\bigr)$$
+$$\nabla f(x)=\begin{pmatrix}\tr(F^{-1}F_1)\\ \vdots \\ \tr(F^{-1}F_n)\end{pmatrix}$$
+<p><strong>为什么用 $\tr$</strong>：矩阵空间的内积是 $\langle X,Y\rangle=\tr(X^\top Y)$（P5），所以"矩阵梯度 $\cdot$ 方向"这个内积自然写成 trace。</p>
+
+<!-- ===================== 线性代数 ===================== -->
+<h2 id="la">四 · 线性代数（P46–P57）</h2>
+
+<h3>1. 值域与零空间（P46–47）</h3>
+$$\Ran(A)=\{Ax \mid x\in\R^n\}\subseteq\R^m,\qquad
+\Nul(A)=\{x \mid Ax=0\}\subseteq\R^n$$
+<p>子空间 $\mathcal V$ 的正交补：$\;\mathcal V^\perp=\{x\mid z^\top x=0,\;\forall z\in\mathcal V\}$。核心关系：</p>
+$$\Nul(A)=\Ran(A^\top)^{\perp},\qquad \Nul(A)^{\perp}=\Ran(A^\top)$$
+<p><strong>读法</strong>：$Ax=0$ 说的就是 $x$ 与 $A$ 的每一行都正交。这个式子是最小二乘法几何解释（正交投影）的基础。</p>
+
+<h3>2. 对称特征分解（P48–49）</h3>
+<p>$A\in\S^n \Rightarrow A=Q\Lambda Q^\top$，$Q$ 正交（$Q^\top Q=I$），$\Lambda=\diag(\lambda_1,\dots,\lambda_n)$，$\lambda$ 全实。</p>
+$$\det A=\prod_{i=1}^n\lambda_i,\qquad \tr A=\sum_{i=1}^n\lambda_i$$
+$$\|A\|_2=\max_{i}|\lambda_i|=\max(\lambda_1,\,-\lambda_n)\;\;(\lambda\text{ 降序}),\qquad
+\|A\|_F=\Bigl(\sum_{i=1}^n\lambda_i^2\Bigr)^{1/2}$$
+
+<h3 id="la-psd">3. 正定 / 半正定（P50–52）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:22%">记号</th><th style="width:38%">定义</th><th>等价条件</th></tr></thead>
+<tbody>
+<tr><td>$A\succ 0$ <span class="pill">正定</span></td><td>$\forall x\ne 0,\; x^\top Ax>0$</td><td>所有特征值 $>0$；集合记 $\S_{++}^n$</td></tr>
+<tr><td>$A\succeq 0$ <span class="pill">半正定</span></td><td>$\forall x,\; x^\top Ax\ge 0$</td><td>所有特征值 $\ge 0$；集合记 $\S_{+}^n$</td></tr>
+<tr><td>$A\prec 0$ / $A\preceq 0$</td><td>$-A\succ 0$ / $-A\succeq 0$</td><td>负定 / 半负定</td></tr>
+</tbody>
+</table>
+</div>
+<div class="warn">
+<span class="lab">讲义小瑕疵</span>
+<p>P51 把半正定写成 "for all $x\ne 0$, $x^\top Ax\ge 0$"，那个 $x\ne 0$ 是多余的（$x=0$ 时自动成立）。不影响结论，但别被绕进去。</p>
+</div>
+
+<h4>对称平方根</h4>
+<p>$A\succeq 0$，$A=Q\diag(\lambda_1,\dots,\lambda_n)Q^\top$，定义</p>
+$$A^{1/2}=Q\,\diag\bigl(\lambda_1^{1/2},\dots,\lambda_n^{1/2}\bigr)\,Q^\top,
+\qquad A^{1/2}\cdot A^{1/2}=A$$
+<p>前面 $P$-二次范数 $\|x\|_P=\|P^{1/2}x\|_2$ 就用到它。</p>
+<p>另外 $\succeq$ 定义了矩阵之间的<strong>偏序</strong>（Löwner 序）：$A\succeq B$ 意思是 $A-B\succeq 0$。这是<strong>半定规划（SDP）</strong>的语言。</p>
+
+<h3 id="la-svd">4. SVD（P53–54）与 ★ P55 课堂提问</h3>
+<p>任意 $A\in\R^{m\times n}$，$\rank A=r$：</p>
+$$A=U\Sigma V^\top=\sum_{i=1}^r \sigma_i\,u_i v_i^\top$$
+<p>$U\in\R^{m\times r},\,U^\top U=I$；$V\in\R^{n\times r},\,V^\top V=I$；$\Sigma=\diag(\sigma_1,\dots,\sigma_r)$，$\sigma_1\ge\cdots\ge\sigma_r>0$。</p>
+$$\|A\|_2=\sigma_1,\qquad \|A\|_F=\Bigl(\sum_i\sigma_i^2\Bigr)^{1/2},\qquad \|A\|_*=\sum_i\sigma_i$$
+
+<div class="key">
+<div class="lab">★ P55 是老师留的课堂提问，先把答案备好</div>
+<p>讲义问：$A\in\S^n$ 的对称特征分解是 $A=Q\Lambda Q^\top$，那它的 <strong>SVD 是什么？</strong></p>
+<p><strong>答案</strong>：设 $\lambda_i=s_i|\lambda_i|$，$s_i=\sign(\lambda_i)$，则</p>
+$$A=Q\Lambda Q^\top=\bigl(Q\,\diag(s)\bigr)\;\diag\bigl(|\lambda_1|,\dots,|\lambda_n|\bigr)\;Q^\top$$
+<p>所以 $\;\sigma_i=|\lambda_i|$，$\;V=Q$，$\;U=Q\,\diag(\sign\lambda)$（负特征值对应的列取反），再按 $|\lambda|$ 降序重排、丢掉为零的。</p>
+</div>
+<p><strong>推论：</strong></p>
+<ul>
+<li>对称阵的<strong>奇异值 = 特征值的绝对值</strong>。</li>
+<li>$A\succeq 0$ 时，<strong>SVD 与特征分解完全重合</strong>（因为 $\sign$ 全是 $+1$）。</li>
+<li>一般方阵的特征值可以是复数、特征向量不必正交；SVD 则对<strong>任意</strong>矩阵都存在，且两组基都正交。SVD 是"更稳"的那个。</li>
+</ul>
+
+<h4>伪逆（P56）</h4>
+$$A=U\Sigma V^\top \;\Longrightarrow\; A^{\dagger}=V\Sigma^{-1}U^\top\in\R^{n\times m},\qquad AA^{\dagger}A=A$$
+<p>用途：$A$ 不可逆（或不方）时，$A^\dagger b$ 给出最小二乘解中<strong>范数最小</strong>的那个。对照 Lecture 1 的最小二乘 $x=(A^\top A)^{-1}A^\top b$ —— 当 $A^\top A$ 奇异时那个公式失效，$A^\dagger$ 是它的推广。</p>
+
+<h3 id="la-schur">5. ★ Schur 补（P56–57）—— 第 4 个新概念</h3>
+<p>把 $X\in\S^n$ 分块：</p>
+$$X=\begin{pmatrix} A & B \\ B^\top & C\end{pmatrix},\qquad A\in\S^k$$
+<p>若 $\det A\ne 0$，称</p>
+$$S=C-B^\top A^{-1}B$$
+<p>为 $A$ 在 $X$ 中的 <strong>Schur 补</strong>。</p>
+<div class="box">
+<div class="lab">直觉</div>
+<p>这就是"对分块矩阵做高斯消元，把 $A$ 那块消掉之后，右下角剩下的东西"。它记录了"<strong>扣除 $A$ 的影响后，$C$ 还剩多少</strong>"。</p>
+</div>
+
+<h4>三条结论（P57）</h4>
+<ol>
+<li>$\det X=\det A\cdot\det S$</li>
+<li>$X\succ 0 \;\iff\; A\succ 0 \text{ 且 } S\succ 0$</li>
+<li>$A\succ 0$ 时，$X\succeq 0 \;\iff\; S\succeq 0$</li>
+</ol>
+<p>更一般的半正定版本（$A$ 可奇异，用伪逆）：</p>
+$$X\succeq 0 \iff A\succeq 0,\;\; \bigl(I-AA^{\dagger}\bigr)B=0,\;\; C-B^\top A^{\dagger}B\succeq 0$$
+
+<div class="key">
+<div class="lab">为什么要学它</div>
+<p>这是把<strong>非线性凸约束改写成线性矩阵不等式（LMI）</strong>的标准工具。例如约束</p>
+$$\frac{\|u\|_2^2}{t}\le s\qquad (t>0)$$
+<p>看起来是非线性的，但用 Schur 补它等价于</p>
+$$\begin{pmatrix} t & u^\top \\ u & sI\end{pmatrix}\succeq 0$$
+<p>—— 一个关于 $(t,u,s)$ 的<strong>线性</strong>条件。整个半定规划的建模技巧，一半靠 Schur 补。</p>
+</div>
+
+<!-- ===================== 上课听什么 ===================== -->
+<h2 id="focus">五 · 上课时重点听这几处</h2>
+<ol>
+<li><strong>P13–P16 对偶范数。</strong>如果老师推 $l_p\leftrightarrow l_q$ 或谱范数 $\leftrightarrow$ 核范数的对偶，认真跟。这是全讲唯一需要"想"的地方。</li>
+<li><strong>P55 的 Discussion。</strong>准备好上面那个答案（$\sigma_i=|\lambda_i|$）。</li>
+<li><strong>P42–P44 log-sum-exp 的 Hessian。</strong>老师大概率会现场推 $\diag(p)-pp^\top$，注意他怎么<strong>连用两条链式法则</strong>。</li>
+<li><strong>P57 Schur 补的应用。</strong>如果老师举了具体例子（比如二次约束转 LMI），记下来，这类例子考试会考。</li>
+</ol>
+
+<div class="warn">
+<span class="lab">最后一个提醒</span>
+<p>讲义里所有 $\succeq 0$、$\succ 0$ 的记号，和以后作业里的 LMI 是一回事。这套记号今天不熟，下一讲讲凸集时会寸步难行 —— 所以 PD/PSD 那两页（P50–51）虽然简单，<strong>符号一定要过关</strong>。</p>
+</div>
+
+<h2>附 · 讲义原本的 Summary（P58）</h2>
+<ul>
+<li><strong>向量范数</strong>：$l_1$、$l_2$、$l_\infty$、$l_p$、$P$-二次范数</li>
+<li><strong>矩阵范数</strong>：Frobenius、谱范数、核范数</li>
+<li><strong>常见函数的梯度</strong>：<em>The Matrix Cookbook</em>、链式法则</li>
+<li><strong>特征分解 vs SVD</strong></li>
+<li><strong>PSD 矩阵</strong></li>
+</ul>
+<p style="color:var(--ink-faint);font-size:15px">（<em>The Matrix Cookbook</em> 是老师点名的矩阵求导速查手册，网上免费，建议存一份，作业里查公式比推导快得多。）</p>
+
+<footer>
+Lecture 2 · Mathematical Background 预习笔记 ｜ 基于 <code>Lecture_2.pdf</code>（58 页）与 <code>Lecture_1.pdf</code>（43 页）整理<br>
+公式渲染：MathJax 3.2.2（staticfile / 360 / jsDelivr 三源自动降级，SRI 校验）
+</footer>
+
+</main>
+</div>
+</body>
+</html>
