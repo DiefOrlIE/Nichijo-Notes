@@ -41,6 +41,7 @@
 - `flask-comment-site-handson/` — 实战篇 Flask 评论站 · 从 0 到上线(逐行)
 
 ### 最优化方法 (Optimization)
+- `convex-dual-sample/` — 凸优化对偶范数双语样章 · 四档深度、交互图、术语表与前五讲规划
 - `optimization-lec2/` — 第 2 讲 Mathematical Background · 预习笔记(Boyd 附录 A, p1–58)
 
 ### 其他芝士
