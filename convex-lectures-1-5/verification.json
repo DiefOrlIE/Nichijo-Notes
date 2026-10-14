@@ -15,8 +15,8 @@
   "unit_text": [
     {
       "unit": "01",
-      "zh_characters": 985,
-      "en_words": 425
+      "zh_characters": 1187,
+      "en_words": 500
     },
     {
       "unit": "02",
@@ -30,8 +30,8 @@
     },
     {
       "unit": "04",
-      "zh_characters": 1014,
-      "en_words": 417
+      "zh_characters": 1398,
+      "en_words": 549
     },
     {
       "unit": "05",
@@ -55,8 +55,8 @@
     },
     {
       "unit": "09",
-      "zh_characters": 960,
-      "en_words": 382
+      "zh_characters": 1150,
+      "en_words": 446
     },
     {
       "unit": "10",
@@ -75,8 +75,8 @@
     },
     {
       "unit": "13",
-      "zh_characters": 976,
-      "en_words": 334
+      "zh_characters": 1118,
+      "en_words": 388
     },
     {
       "unit": "14",
@@ -240,8 +240,8 @@
     },
     {
       "unit": "46",
-      "zh_characters": 1156,
-      "en_words": 386
+      "zh_characters": 1336,
+      "en_words": 445
     },
     {
       "unit": "47",
@@ -250,6 +250,6 @@
     }
   ],
   "browser_errors": [],
-  "zh_total": 54142,
-  "en_words_total": 21232
+  "zh_total": 55240,
+  "en_words_total": 21616
 }
