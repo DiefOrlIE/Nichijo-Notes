@@ -1,0 +1,84 @@
+{
+  "version": "expanded v2",
+  "sections": [
+    {
+      "section": "guide",
+      "paragraphs": 3,
+      "zh_characters": 446,
+      "en_words": 231
+    },
+    {
+      "section": "prep",
+      "paragraphs": 7,
+      "zh_characters": 608,
+      "en_words": 441
+    },
+    {
+      "section": "definition",
+      "paragraphs": 15,
+      "zh_characters": 1281,
+      "en_words": 873
+    },
+    {
+      "section": "common",
+      "paragraphs": 10,
+      "zh_characters": 736,
+      "en_words": 557
+    },
+    {
+      "section": "inequality",
+      "paragraphs": 5,
+      "zh_characters": 377,
+      "en_words": 339
+    },
+    {
+      "section": "quadratic",
+      "paragraphs": 23,
+      "zh_characters": 1547,
+      "en_words": 1194
+    },
+    {
+      "section": "practice",
+      "paragraphs": 12,
+      "zh_characters": 628,
+      "en_words": 445
+    },
+    {
+      "section": "advanced",
+      "paragraphs": 20,
+      "zh_characters": 1390,
+      "en_words": 1077
+    },
+    {
+      "section": "glossary",
+      "paragraphs": 1,
+      "zh_characters": 1163,
+      "en_words": 897
+    },
+    {
+      "section": "sources",
+      "paragraphs": 3,
+      "zh_characters": 175,
+      "en_words": 137
+    }
+  ],
+  "inline_math_bilingual_mismatches": [],
+  "manual_review": [
+    {
+      "pass": "首次学习视角",
+      "found": "旧版未解释 sup/max 区别、闭有界、特征值、矩阵平方根；图像缺少操作路径。",
+      "changed": "新增开区间例子、极值定理前提说明、特征向量解释、对角换元手算、两组图像操作与参数约定。"
+    },
+    {
+      "pass": "数学与来源检查",
+      "found": "单独给上界未必能证明最大值；零向量不能使用归一化或分母公式；谱范数与 Frobenius 范数需区分。",
+      "changed": "对每组对偶分别给上界和取等构造；单独处理零向量；写出矩阵对偶的迹内积、薄 SVD 与取等验证。"
+    },
+    {
+      "pass": "双语及层级检查",
+      "found": "旧版理解层的简短概括不能支持首次自学；拓展术语跳转后可能仍被深度隐藏。",
+      "changed": "了解层改为完整数值过程；中英文逐段对应；新增前置概念解释；术语入口自动显示所需层级。"
+    }
+  ],
+  "limits": "文本结构和公式对应检查不能代替真实学习者的理解验证；完成检查后仍接受阅读反馈。"
+}
