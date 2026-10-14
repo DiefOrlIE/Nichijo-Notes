@@ -16,8 +16,8 @@
     {
       "section": "definition",
       "paragraphs": 15,
-      "zh_characters": 1281,
-      "en_words": 873
+      "zh_characters": 1325,
+      "en_words": 904
     },
     {
       "section": "common",
@@ -46,13 +46,13 @@
     {
       "section": "advanced",
       "paragraphs": 20,
-      "zh_characters": 1390,
-      "en_words": 1077
+      "zh_characters": 1414,
+      "en_words": 1104
     },
     {
       "section": "glossary",
       "paragraphs": 1,
-      "zh_characters": 1163,
+      "zh_characters": 1160,
       "en_words": 897
     },
     {
@@ -63,6 +63,7 @@
     }
   ],
   "inline_math_bilingual_mismatches": [],
+  "rendering_integrity": "已排除非预期 HTML 标签；中英文 0<x<1 及其后续数值句完整保留。",
   "manual_review": [
     {
       "pass": "首次学习视角",
