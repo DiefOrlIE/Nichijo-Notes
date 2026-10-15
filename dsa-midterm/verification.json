@@ -2,6 +2,6 @@
   "syntax": "success",
   "browser_tests": "success",
   "viewports": ["1360x900 desktop", "390x844 phone", "820x1180 tablet"],
-  "font": "Nichijo Noto Serif self-hosted regular and bold",
+  "font": "Wenjin Songti body plus Source Han Serif headings (both local WOFF2)",
   "test_script": ".github/scripts/check-dsa.mjs"
 }

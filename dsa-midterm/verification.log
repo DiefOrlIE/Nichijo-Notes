@@ -1,4 +1,1 @@
-DEBUG desktop {"layers":320,"visible":160,"pressed":["false","true","false","false"]} []
-DEBUG phone {"layers":320,"visible":160,"pressed":["false","true","false","false"]} []
-DEBUG tablet {"layers":320,"visible":160,"pressed":["false","true","false","false"]} []
-PASS desktop, 390px phone, 820px tablet, scripts, complete four-tier states, interactive quiz memory, theme, self-hosted font, no horizontal overflow.
+PASS: 95 sections, 75 new guided questions, 15 chapter exercise sections, desktop/phone/tablet layouts, four tiers, answer persistence, theme, and two separately loaded self-hosted Songti webfonts.
