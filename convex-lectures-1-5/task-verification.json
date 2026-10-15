@@ -1,0 +1,1963 @@
+{
+  "date": "2026-10-16",
+  "checks": [
+    "280 source pages: extraction, page bounds, single ownership and image files",
+    "HW1 actual two pages: 5 problems, specified methods and points",
+    "Local Boyd textbook: conjugates and matrix powers checked against text",
+    "Three scalar second derivatives",
+    "Quadratic norm gate: SPD, inverse, feasibility and attainment",
+    "Quadratic norm worked example sqrt(5)",
+    "Rectangular row-sum gate and attaining input",
+    "Transfer Hessian [[10,-4],[-4,16]]",
+    "Nonasymmetric distance comparison gate",
+    "Jensen numerical example and normalized weights",
+    "SOC exterior test vector norm and pairing",
+    "Negative-log conjugate stationary value on y<0",
+    "Quadratic conjugates retain factors",
+    "LSE gate: gradient and Hessian finite differences at 11 points, positive definite",
+    "index.html: 47 units, old anchors retained",
+    "index.html: unique IDs",
+    "index.html: all 17 evidence rows resolve",
+    "index.html: five gates with three closed help stages",
+    "index.html: erroneous support biconjugate statement removed",
+    "hw1-route.html: 47 units, old anchors retained",
+    "hw1-route.html: unique IDs",
+    "hw1-route.html: all 17 evidence rows resolve",
+    "hw1-route.html: five gates with three closed help stages",
+    "hw1-route.html: erroneous support biconjugate statement removed",
+    "HW1 marker follows SOC, induction and all five gates",
+    "HW1 sqrt and topology precede formal use"
+  ],
+  "source_pages": [
+    {
+      "lecture": 1,
+      "page": 1,
+      "unit": null,
+      "text_sha256": "53a539b604c84a1eae8f720a332a7af6db57f8659728bdb1a2a928c44f9c2d0d"
+    },
+    {
+      "lecture": 1,
+      "page": 2,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 3,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 4,
+      "unit": "01",
+      "text_sha256": "593f08e45a600238153c46969cd8b25812db9d26806474e5b2c6a8d93cf35093"
+    },
+    {
+      "lecture": 1,
+      "page": 5,
+      "unit": "01",
+      "text_sha256": "4e8690018c6fe9b9bb1e07b50fcfa08126cd03defdb5914eb88fb763974bd577"
+    },
+    {
+      "lecture": 1,
+      "page": 6,
+      "unit": "01",
+      "text_sha256": "e70b24bd50b4313d7a552284d0e2ca46dafd042145a52c38dc6ae6e57e5a2b93"
+    },
+    {
+      "lecture": 1,
+      "page": 7,
+      "unit": "01",
+      "text_sha256": "8403864bb8e6c7ce7c26f44016f5d32c28fc434f62f434e9bdeaadfb5cdca10b"
+    },
+    {
+      "lecture": 1,
+      "page": 8,
+      "unit": "01",
+      "text_sha256": "76aa8abb3245d4f7af2b25ed76a67839ef7f6a142e185a8f93ac8a6f45a9273c"
+    },
+    {
+      "lecture": 1,
+      "page": 9,
+      "unit": "01",
+      "text_sha256": "593707afeef1924ada45bdd00f95c4c6a11277eebabc4c901e15ff30731fe29b"
+    },
+    {
+      "lecture": 1,
+      "page": 10,
+      "unit": "01",
+      "text_sha256": "d03cfdda9c7b6bd23590a9703373a24d56cf02d7647b17b62e504ad924b333d7"
+    },
+    {
+      "lecture": 1,
+      "page": 11,
+      "unit": "01",
+      "text_sha256": "c28fd50581d07801c471db21e02a24f9a766153f282e3178d5c67a0f1f577c48"
+    },
+    {
+      "lecture": 1,
+      "page": 12,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 13,
+      "unit": "02",
+      "text_sha256": "a5f5729a77796d1b7f0c060b3047ab1baf4aba01a16a2d57eeebb6e523da0764"
+    },
+    {
+      "lecture": 1,
+      "page": 14,
+      "unit": "02",
+      "text_sha256": "b0b4604b0270cf7612d9e65c2d3c5d1b2f6babf2f3b117d9cb04c68880b2baa6"
+    },
+    {
+      "lecture": 1,
+      "page": 15,
+      "unit": "02",
+      "text_sha256": "d42b0d52714c3ce03daffc174ed73001cf38c61c001157a648047667942641c1"
+    },
+    {
+      "lecture": 1,
+      "page": 16,
+      "unit": "02",
+      "text_sha256": "fb6581326d724dd1f371e4e7935d55638011954e6f6fd48422344734d87228d0"
+    },
+    {
+      "lecture": 1,
+      "page": 17,
+      "unit": "02",
+      "text_sha256": "1e1bba6db414d08d74b28f97fc5932ac3b324f75a45619b32b4850457d4f2107"
+    },
+    {
+      "lecture": 1,
+      "page": 18,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 19,
+      "unit": "03",
+      "text_sha256": "79faed76e4dea0822a5607eb66e372a7a93efff270e5390585559520010fc478"
+    },
+    {
+      "lecture": 1,
+      "page": 20,
+      "unit": "03",
+      "text_sha256": "1bee1a3d9e9afa2592dbf5ed6bb987dd26463ebc40b924f10bb80ba12e041aff"
+    },
+    {
+      "lecture": 1,
+      "page": 21,
+      "unit": "03",
+      "text_sha256": "35d864f928d906281c75c52c7257ef9c117ca897979ed046c8d2c9e3c750f0ad"
+    },
+    {
+      "lecture": 1,
+      "page": 22,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 23,
+      "unit": "04",
+      "text_sha256": "0607ad8ddffbbb401a0533a96d05be87de3a8663d84d5c47d6b335cacd01e51a"
+    },
+    {
+      "lecture": 1,
+      "page": 24,
+      "unit": "04",
+      "text_sha256": "f207efd4c1622c339f8fb7d8f92c1cc7caa48e9665a2758e5badae6c79c3892a"
+    },
+    {
+      "lecture": 1,
+      "page": 25,
+      "unit": "04",
+      "text_sha256": "2617beb5a1d2f21a63e6ff0335666b1d903958c9e6f952031cab70cea6e27902"
+    },
+    {
+      "lecture": 1,
+      "page": 26,
+      "unit": "04",
+      "text_sha256": "7face1bcb3d1e06a30990f35674a168725581014d85022088f54378084bbc799"
+    },
+    {
+      "lecture": 1,
+      "page": 27,
+      "unit": "04",
+      "text_sha256": "1ac1c4c9022f2149bc3d12c9fde8fa22acb168fd5e3bb777497d3cbe139d3774"
+    },
+    {
+      "lecture": 1,
+      "page": 28,
+      "unit": "04",
+      "text_sha256": "cf4015b0bfa4c27bfaf5b1d37485bdf1dc7df7af00ccb84796ed17cae0586d8a"
+    },
+    {
+      "lecture": 1,
+      "page": 29,
+      "unit": "04",
+      "text_sha256": "a65152e7a4744e42f18794c47559ac24e99f06b1b0e66b65f049e40d58aee4e0"
+    },
+    {
+      "lecture": 1,
+      "page": 30,
+      "unit": "04",
+      "text_sha256": "98561ec4fc76b0dadf23a4392489e9d028ccc0743e885182395c8e1e28e493c8"
+    },
+    {
+      "lecture": 1,
+      "page": 31,
+      "unit": "04",
+      "text_sha256": "81259c4fc4d6a2c9f50f1c298b4158a00d8c2625c7b65177a888a81bbb2ee3cf"
+    },
+    {
+      "lecture": 1,
+      "page": 32,
+      "unit": "04",
+      "text_sha256": "40d77a706ab6cbff468b452a2de91bc63a37912bc27ce4ad13e4280800fab254"
+    },
+    {
+      "lecture": 1,
+      "page": 33,
+      "unit": "04",
+      "text_sha256": "8383779f5110bb44d033e5e4f516e169b09ce33fd21fda0e34fffdfe944a0df4"
+    },
+    {
+      "lecture": 1,
+      "page": 34,
+      "unit": "04",
+      "text_sha256": "2dc978ed3bafd1cdb5895705da3e9693efac3d2da9a3a9342462193e103b3b78"
+    },
+    {
+      "lecture": 1,
+      "page": 35,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 36,
+      "unit": "05",
+      "text_sha256": "e1f4e333b9a597068b42d274f6929cdf50169c81f14e7fba8378968bc0cc3d22"
+    },
+    {
+      "lecture": 1,
+      "page": 37,
+      "unit": "05",
+      "text_sha256": "6be166ded9dbe11559df7e04b706d01fdecd433a591d06236b4cf2969a3475c7"
+    },
+    {
+      "lecture": 1,
+      "page": 38,
+      "unit": "05",
+      "text_sha256": "0cdf655f75dc939498fd58307f32d8cab5cd497c5a583b68eff75dcb71066df0"
+    },
+    {
+      "lecture": 1,
+      "page": 39,
+      "unit": "05",
+      "text_sha256": "6c034fbabadefad0a09d81a7b78d43fca45f3b0e10656d8b3f03732bc1fabc62"
+    },
+    {
+      "lecture": 1,
+      "page": 40,
+      "unit": "05",
+      "text_sha256": "d63921337a0a6ac5cc8800b81781a758ad9ebaf9f1fed672ce0e3f6365e27995"
+    },
+    {
+      "lecture": 1,
+      "page": 41,
+      "unit": "05",
+      "text_sha256": "6f9b065f435b1099d01c49d3e4c9fa38faee1e7544d5519d7a54af3141dd5958"
+    },
+    {
+      "lecture": 1,
+      "page": 42,
+      "unit": null,
+      "text_sha256": "999f512a434c2f05121c3b6fccfd27c5de5671dcaadd10b53bb5314111799de7"
+    },
+    {
+      "lecture": 1,
+      "page": 43,
+      "unit": null,
+      "text_sha256": "15edf22725721de51bf085f74df227624a4504d96f77b99da9da515e1282089e"
+    },
+    {
+      "lecture": 2,
+      "page": 1,
+      "unit": null,
+      "text_sha256": "c6ea631b12e16f2eabd0861287c6f2dc248a6be12376198c25619e599584c510"
+    },
+    {
+      "lecture": 2,
+      "page": 2,
+      "unit": null,
+      "text_sha256": "6efa459074b2877fbb3a84eefdee0a8afb73ad242754a89c526cd0cefeaccb4a"
+    },
+    {
+      "lecture": 2,
+      "page": 3,
+      "unit": null,
+      "text_sha256": "6efa459074b2877fbb3a84eefdee0a8afb73ad242754a89c526cd0cefeaccb4a"
+    },
+    {
+      "lecture": 2,
+      "page": 4,
+      "unit": "06",
+      "text_sha256": "9331484ae86f40119a92ff1842173d1c95bb727038bf573acd4bb81ad61954b8"
+    },
+    {
+      "lecture": 2,
+      "page": 5,
+      "unit": "06",
+      "text_sha256": "d65fdc49c32ab4dc251f8f7ea4493dc2270e5142cc630fbdc9a2cbc23b011acc"
+    },
+    {
+      "lecture": 2,
+      "page": 6,
+      "unit": "07",
+      "text_sha256": "e95eb87d9cefd541dcdaf06d8a8918935d04a6f141082ea5d9acc0fc9c72fa2d"
+    },
+    {
+      "lecture": 2,
+      "page": 7,
+      "unit": "07",
+      "text_sha256": "5d9a3265996c649ee514ba7dc121145b9f324eb59f5cdd094ab7e2cde7d7170c"
+    },
+    {
+      "lecture": 2,
+      "page": 8,
+      "unit": "07",
+      "text_sha256": "4466ae79f222273ef5a509c6dba6c9b53d5d03fc7f54160cbc534ec4066a74c5"
+    },
+    {
+      "lecture": 2,
+      "page": 9,
+      "unit": "07",
+      "text_sha256": "26645034cb88eacae06f07229c5c1a1d46bd7d3fb377564c519af913b7966ea0"
+    },
+    {
+      "lecture": 2,
+      "page": 10,
+      "unit": "08",
+      "text_sha256": "212b9ccf74d86cddc1e8e426a02ff32f5b7521704c43cb4cf5a87f0dd94b89dc"
+    },
+    {
+      "lecture": 2,
+      "page": 11,
+      "unit": "09",
+      "text_sha256": "97d3a6942912d6d131393f4d6b2c964dec7c38604f88f554fffd25c0a978f006"
+    },
+    {
+      "lecture": 2,
+      "page": 12,
+      "unit": "09",
+      "text_sha256": "6a954eb7a20a91e89d0fa00706b6666275aaca80d19627d44c3f87eb1c63acc5"
+    },
+    {
+      "lecture": 2,
+      "page": 13,
+      "unit": "10",
+      "text_sha256": "9ed97157c3ea451e9c01e8501a57f62c065ab789b221b097d9dc5aac9aee22b1"
+    },
+    {
+      "lecture": 2,
+      "page": 14,
+      "unit": "10",
+      "text_sha256": "e644ac3e8b46955e5feaccffe714e70fda1a5968f0417eb957f59db2abb75543"
+    },
+    {
+      "lecture": 2,
+      "page": 15,
+      "unit": "10",
+      "text_sha256": "e733f16fe5adb06d493a314192f8d35b48d1a9745000d426298b317e0a720349"
+    },
+    {
+      "lecture": 2,
+      "page": 16,
+      "unit": "10",
+      "text_sha256": "ee3ea0d34eeb1139c1e59e78be1b7e27518a87a3664845a0a73cac3e19b58441"
+    },
+    {
+      "lecture": 2,
+      "page": 17,
+      "unit": null,
+      "text_sha256": "6efa459074b2877fbb3a84eefdee0a8afb73ad242754a89c526cd0cefeaccb4a"
+    },
+    {
+      "lecture": 2,
+      "page": 18,
+      "unit": "11",
+      "text_sha256": "be4f36e4b83a51a418d691d944c24b27f18bba53053491b3d1f1e5ff936f1b4a"
+    },
+    {
+      "lecture": 2,
+      "page": 19,
+      "unit": "11",
+      "text_sha256": "40a5393499297459eaab5d66e603f45c2fa11b4e841f11e03812b28933b58843"
+    },
+    {
+      "lecture": 2,
+      "page": 20,
+      "unit": "11",
+      "text_sha256": "c1fd662cb12dfe2e451803fd4e740f5d26ff74ef50328025cb0b9b9221825d0a"
+    },
+    {
+      "lecture": 2,
+      "page": 21,
+      "unit": null,
+      "text_sha256": "6efa459074b2877fbb3a84eefdee0a8afb73ad242754a89c526cd0cefeaccb4a"
+    },
+    {
+      "lecture": 2,
+      "page": 22,
+      "unit": "12",
+      "text_sha256": "0f752d94665e75fea81db433536ae1d127e3072c2606a3ab8a1214f3aff08cc2"
+    },
+    {
+      "lecture": 2,
+      "page": 23,
+      "unit": "12",
+      "text_sha256": "c6db246c86db17e1847928020d49d217fdef17486c3067ebb3154092d31b0761"
+    },
+    {
+      "lecture": 2,
+      "page": 24,
+      "unit": null,
+      "text_sha256": "6efa459074b2877fbb3a84eefdee0a8afb73ad242754a89c526cd0cefeaccb4a"
+    },
+    {
+      "lecture": 2,
+      "page": 25,
+      "unit": "13",
+      "text_sha256": "e03bd156f4415cfd874e0be2e7ad210aa6b5742fc87bececd4eb0f5780f1e7e9"
+    },
+    {
+      "lecture": 2,
+      "page": 26,
+      "unit": "13",
+      "text_sha256": "d242c34887af4ba6637e3b19f5a383dac71324dbb8bd0cf67a8ea43f64eec01e"
+    },
+    {
+      "lecture": 2,
+      "page": 27,
+      "unit": "13",
+      "text_sha256": "2d2caac1263ed8cd776fa190c1346a9b7f7d8d4c54223f6456f4fe27e55f4c7d"
+    },
+    {
+      "lecture": 2,
+      "page": 28,
+      "unit": "13",
+      "text_sha256": "0b3d378a7a198f0c5ae6b503033a2425af8bbb690dd35550edcb16bc8eae0851"
+    },
+    {
+      "lecture": 2,
+      "page": 29,
+      "unit": "13",
+      "text_sha256": "0b703447701bda7a86ee6f20e23d2750b67a8d876f3af1298fefb2b0403b2edc"
+    },
+    {
+      "lecture": 2,
+      "page": 30,
+      "unit": "13",
+      "text_sha256": "7443b2ee34377d74a27bc444e03c6bffbe1a37f97115567de0ad255b713440fe"
+    },
+    {
+      "lecture": 2,
+      "page": 31,
+      "unit": "13",
+      "text_sha256": "b6d9f35b197c606e17b89373961ec85c73d7e13078412e7ff02c563d2822a937"
+    },
+    {
+      "lecture": 2,
+      "page": 32,
+      "unit": "13",
+      "text_sha256": "17da63be3b6864c72330a0b273ddc54dedc18f15a40b8de6d7486a972663bfcd"
+    },
+    {
+      "lecture": 2,
+      "page": 33,
+      "unit": "13",
+      "text_sha256": "55172d505cfcfbf1b5d50c29d9d123e2c456706c1168f377fffa4249d16c17f4"
+    },
+    {
+      "lecture": 2,
+      "page": 34,
+      "unit": "13",
+      "text_sha256": "165f8f1e2675a043965150861ee9580122cb0d8de1501c054596c3cf00fe7f07"
+    },
+    {
+      "lecture": 2,
+      "page": 35,
+      "unit": "13",
+      "text_sha256": "b26e48c4e60f2eb58c1474ba8da23f58aec4b60af9bd0c1acfce8f16164a4641"
+    },
+    {
+      "lecture": 2,
+      "page": 36,
+      "unit": "13",
+      "text_sha256": "3a517051bc8202c9268df34cc9bc2296964f903037a3168b99438e9bd703b73a"
+    },
+    {
+      "lecture": 2,
+      "page": 37,
+      "unit": "13",
+      "text_sha256": "e617b73863d6f957fa95c530b98679d5cdbabd162adb196d6022a3a7af7fbb73"
+    },
+    {
+      "lecture": 2,
+      "page": 38,
+      "unit": "14",
+      "text_sha256": "895d17734fc14762469f4e2bd609d31472023e79ab2efd0888b9f9b455fac25c"
+    },
+    {
+      "lecture": 2,
+      "page": 39,
+      "unit": "14",
+      "text_sha256": "b86424838efee4ae8df0112b1fb8f141400bb472b7f87d9eb9fa58c9b5e89288"
+    },
+    {
+      "lecture": 2,
+      "page": 40,
+      "unit": "14",
+      "text_sha256": "80264b2cc7b7c1cdca10eaadf2642904ea8dc9f408b1a9a855a338deff147239"
+    },
+    {
+      "lecture": 2,
+      "page": 41,
+      "unit": "14",
+      "text_sha256": "a256bbdc2ca581f38effaf3cbea8592392b890f2e3259c24929089416335e15b"
+    },
+    {
+      "lecture": 2,
+      "page": 42,
+      "unit": "14",
+      "text_sha256": "7ec1ba60608f8193005ecf7d4a225210fdaf7eb86b069a352b7d1bde3812ba42"
+    },
+    {
+      "lecture": 2,
+      "page": 43,
+      "unit": "14",
+      "text_sha256": "d495cc0658cc93c2aadbe992fd3859b00ccd7d26d1d08cc07f7d03edb8f1d787"
+    },
+    {
+      "lecture": 2,
+      "page": 44,
+      "unit": "14",
+      "text_sha256": "0efa6c241b33cffd6413c8cb83e5798811f9314559c4c71839e7e79d358ae0fa"
+    },
+    {
+      "lecture": 2,
+      "page": 45,
+      "unit": null,
+      "text_sha256": "6efa459074b2877fbb3a84eefdee0a8afb73ad242754a89c526cd0cefeaccb4a"
+    },
+    {
+      "lecture": 2,
+      "page": 46,
+      "unit": "15",
+      "text_sha256": "8403b570f4d3c96f508b62d43706b25e5066a7b4930935342e2e85e5cc7024cf"
+    },
+    {
+      "lecture": 2,
+      "page": 47,
+      "unit": "15",
+      "text_sha256": "9d03eacb3a651fb1f9e02a9a99811bd95318a0022bd9d83575b776e61e7e7bdc"
+    },
+    {
+      "lecture": 2,
+      "page": 48,
+      "unit": "16",
+      "text_sha256": "0204325b340aaa03af624a19ab297ce9ee5401b4e1745bd4287369be95dee202"
+    },
+    {
+      "lecture": 2,
+      "page": 49,
+      "unit": "16",
+      "text_sha256": "b785f7852891c355548baf60db52dccf7fa37be75c85fdcb3d4ca74653ba6934"
+    },
+    {
+      "lecture": 2,
+      "page": 50,
+      "unit": "16",
+      "text_sha256": "d1a7532e78c0973d923d3bda480b8922d864b7e133530595df092d7021d96990"
+    },
+    {
+      "lecture": 2,
+      "page": 51,
+      "unit": "16",
+      "text_sha256": "54371f4ff2df504b20999a482681fd5b5b1ea7f28529ff1afc4e5035484e2a35"
+    },
+    {
+      "lecture": 2,
+      "page": 52,
+      "unit": "16",
+      "text_sha256": "e2778edde0b82173188ab1b1bafbff3047763be85140d73917917b48803b73a7"
+    },
+    {
+      "lecture": 2,
+      "page": 53,
+      "unit": "17",
+      "text_sha256": "777b9df1d71e346acd71358de5690993a27fbfabddff0d01b6da59c49364d898"
+    },
+    {
+      "lecture": 2,
+      "page": 54,
+      "unit": "17",
+      "text_sha256": "2ee593fe8ea4a335d1a94b81d5208548c136c42279cd8ee16b7045071daa5826"
+    },
+    {
+      "lecture": 2,
+      "page": 55,
+      "unit": "16",
+      "text_sha256": "73707314948cfa17f45725f202b5a61407eb2c3de42cbba813f4cd200c896bb2"
+    },
+    {
+      "lecture": 2,
+      "page": 56,
+      "unit": "17",
+      "text_sha256": "d4b01863b98ff9c89c6f3874bbb6ee1b32f6da43bbf312350b8fd549858acacd"
+    },
+    {
+      "lecture": 2,
+      "page": 57,
+      "unit": "18",
+      "text_sha256": "c5ce841355624b4467d97adc0a6d0118e1646ce7afc3add82d335ffcf36f584b"
+    },
+    {
+      "lecture": 2,
+      "page": 58,
+      "unit": null,
+      "text_sha256": "9733aa5a834ac19454c7b02b087e061fa9926997a3dbc9332e135c62249d9861"
+    },
+    {
+      "lecture": 3,
+      "page": 1,
+      "unit": null,
+      "text_sha256": "c82e17abdb20047c0993297ce3ea6c52265f92462f50ae365772da0ed987af07"
+    },
+    {
+      "lecture": 3,
+      "page": 2,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 3,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 4,
+      "unit": "19",
+      "text_sha256": "471230094672a48cc60e4adb91f42c6b18dc8a2e7223b686bb3f89c0284a844b"
+    },
+    {
+      "lecture": 3,
+      "page": 5,
+      "unit": "19",
+      "text_sha256": "0ed7b601dd345adfb6d394e7d731cd4d5d3b426069d5c69733a63ca5ad1c0da5"
+    },
+    {
+      "lecture": 3,
+      "page": 6,
+      "unit": "19",
+      "text_sha256": "b99d41c16e98f2b2c421b635026f0df920dcf98dd4da78b24e080cc5278757ef"
+    },
+    {
+      "lecture": 3,
+      "page": 7,
+      "unit": "19",
+      "text_sha256": "750c20ff65594d0932541aa7fa11bf5428c0680e0d4724b129afcf61b45722d7"
+    },
+    {
+      "lecture": 3,
+      "page": 8,
+      "unit": "19",
+      "text_sha256": "63cc83160b2b541e74f842d3befaac65d895932233a05ec91ff80fe23afc3a90"
+    },
+    {
+      "lecture": 3,
+      "page": 9,
+      "unit": "20",
+      "text_sha256": "4cf70015221808cb048a145807f03361093623cbd400d096b8add7a91c92546f"
+    },
+    {
+      "lecture": 3,
+      "page": 10,
+      "unit": "20",
+      "text_sha256": "382919c2051ae33764331e16b82c9b32f56b5359d70812628061bca19cdcc0c5"
+    },
+    {
+      "lecture": 3,
+      "page": 11,
+      "unit": "20",
+      "text_sha256": "2b158494f500b56296c27892de2e54d94388cc2a8ca9732ad7970372fec4fd86"
+    },
+    {
+      "lecture": 3,
+      "page": 12,
+      "unit": "20",
+      "text_sha256": "0331616dc4124c06f4cc0346eaed55f845eb47b1c3b207dc269701439b8f9049"
+    },
+    {
+      "lecture": 3,
+      "page": 13,
+      "unit": "21",
+      "text_sha256": "277dbb15e9820cea0bfcc92cdc4991a12bd7f317bd85e419a2f5bf512aea3e35"
+    },
+    {
+      "lecture": 3,
+      "page": 14,
+      "unit": "21",
+      "text_sha256": "2a8f698e0542a58a165d9ef4b7b429b6692811c9aede92716315c08519d02ed8"
+    },
+    {
+      "lecture": 3,
+      "page": 15,
+      "unit": "21",
+      "text_sha256": "abb0ec8afb4edb26293a868c814c25b139068137e6d7aff09f3f370dd33721de"
+    },
+    {
+      "lecture": 3,
+      "page": 16,
+      "unit": "21",
+      "text_sha256": "23ffe68613cc7a08190646c06851f6f0d051719e909f6934402cede904d91e9d"
+    },
+    {
+      "lecture": 3,
+      "page": 17,
+      "unit": "21",
+      "text_sha256": "5d48f5547e621b1be4bb8c25f0eb097bfc74a0633051718443379abae502926c"
+    },
+    {
+      "lecture": 3,
+      "page": 18,
+      "unit": "21",
+      "text_sha256": "54eded60e28e0f6299e15d497183d59fcefb67f2f0787772835ba62e18260350"
+    },
+    {
+      "lecture": 3,
+      "page": 19,
+      "unit": "21",
+      "text_sha256": "e3718978dd2bb0d4b2d546297e22f59eb4f64d83786fb92e26ca7831b5ec7439"
+    },
+    {
+      "lecture": 3,
+      "page": 20,
+      "unit": "21",
+      "text_sha256": "631c11a06af1eea9247bc1697bea5a7ed7096c6b2cdcca671921150c5c48a357"
+    },
+    {
+      "lecture": 3,
+      "page": 21,
+      "unit": "22",
+      "text_sha256": "6387a76de5a86599a64bf9dda334fd168e246a1952323f888509dcd799760eda"
+    },
+    {
+      "lecture": 3,
+      "page": 22,
+      "unit": "22",
+      "text_sha256": "5d3f1d6326165573cfbcb9d63002dd20323f09d0a30d03222cff810ec2ae19f7"
+    },
+    {
+      "lecture": 3,
+      "page": 23,
+      "unit": "22",
+      "text_sha256": "abd76d98989150c992de81a054b4f398a8bad0202591c0ea0d37b3fa6e7e9694"
+    },
+    {
+      "lecture": 3,
+      "page": 24,
+      "unit": "22",
+      "text_sha256": "93a78aede015733d8c20b11400c4d1676818eea3514b31af550bc3627c66b638"
+    },
+    {
+      "lecture": 3,
+      "page": 25,
+      "unit": "22",
+      "text_sha256": "05a30ccb3e5967ee68a3c18ed5db3cbd81b3bd18dfb7a3131a0a6b5dc6ef08d2"
+    },
+    {
+      "lecture": 3,
+      "page": 26,
+      "unit": "22",
+      "text_sha256": "3d8fdac6a6f6a5fe1cba63cfc9c7ff3f4f7950c71389ac07bcde38885ab4726e"
+    },
+    {
+      "lecture": 3,
+      "page": 27,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 28,
+      "unit": "23",
+      "text_sha256": "f7df044531d860b556162c830729fad1fb16a0564e49a67c11cc8d0144fcfa98"
+    },
+    {
+      "lecture": 3,
+      "page": 29,
+      "unit": "23",
+      "text_sha256": "ce3d0163bc1d8c4086672d6138f5a9747774a2110e43e9e04200a78610f7ab48"
+    },
+    {
+      "lecture": 3,
+      "page": 30,
+      "unit": "23",
+      "text_sha256": "d638c2298aedf7246f97971c28891fdb821e7c13c75b2596b7643109e365e494"
+    },
+    {
+      "lecture": 3,
+      "page": 31,
+      "unit": "23",
+      "text_sha256": "28b2ca684229f79c534de118e1db2b43b7e2b64c6da7b08289d5de6bc5be5692"
+    },
+    {
+      "lecture": 3,
+      "page": 32,
+      "unit": "23",
+      "text_sha256": "167041cbbb0cab354dd63e89af3577acb25ab236fd4ec6f34cac79b822589f7c"
+    },
+    {
+      "lecture": 3,
+      "page": 33,
+      "unit": "23",
+      "text_sha256": "af4bf4111885b186fce49cbc6bf95f4ec564bb98572a1e929c671f6cf9e21f51"
+    },
+    {
+      "lecture": 3,
+      "page": 34,
+      "unit": "23",
+      "text_sha256": "f4b82994e918b479e7796401c29b638bccbdc3651008716ae7d4d76932b72efb"
+    },
+    {
+      "lecture": 3,
+      "page": 35,
+      "unit": "23",
+      "text_sha256": "079bbdc976122348db5f9b4534b6298d4f8fbabc4227896f40cf6ab54842e30d"
+    },
+    {
+      "lecture": 3,
+      "page": 36,
+      "unit": "24",
+      "text_sha256": "671c20132dafd270f1e342f04432173987c2de5148a751ba3e57c5d0bfe7b09a"
+    },
+    {
+      "lecture": 3,
+      "page": 37,
+      "unit": "24",
+      "text_sha256": "0e36d39d9ae34b1dc699c369e257b4d4696887cd831760c05c55221548a88068"
+    },
+    {
+      "lecture": 3,
+      "page": 38,
+      "unit": "24",
+      "text_sha256": "154d546b22c2992caaf8b434eedd3ffe16eab781303f5bd97e0d29c9501e1ca4"
+    },
+    {
+      "lecture": 3,
+      "page": 39,
+      "unit": "24",
+      "text_sha256": "13367dea3009b307076ea1026345a8dd419ce074e557a10eeda8ed34bba38ecd"
+    },
+    {
+      "lecture": 3,
+      "page": 40,
+      "unit": "24",
+      "text_sha256": "55747e9c53260afbb2dcba357c4294f2e6a7583c77f6ce0c2b0baade345c9a51"
+    },
+    {
+      "lecture": 3,
+      "page": 41,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 42,
+      "unit": "25",
+      "text_sha256": "7df3ff8549d88a5b595ade6d8f58ec0e4f506f748155682a3723030cca9d9e2a"
+    },
+    {
+      "lecture": 3,
+      "page": 43,
+      "unit": "25",
+      "text_sha256": "6bfb0423b7b73701154dbef4c609510bf61d98a1dc3e0442ede2375f7b1d5c10"
+    },
+    {
+      "lecture": 3,
+      "page": 44,
+      "unit": "25",
+      "text_sha256": "cf326dc996dcf809eee4b8136a8e9794f4ac8db7058634f6c8850a50752af5ef"
+    },
+    {
+      "lecture": 3,
+      "page": 45,
+      "unit": "25",
+      "text_sha256": "b37f1c25539907fa35f70980aff571e7439111bc3288561ec2ef7025b0110e5d"
+    },
+    {
+      "lecture": 3,
+      "page": 46,
+      "unit": "25",
+      "text_sha256": "0b4c4b2480a9689a4908683745000b26b1398ef152b9fbb5013e0ac72d4ebdd3"
+    },
+    {
+      "lecture": 3,
+      "page": 47,
+      "unit": "26",
+      "text_sha256": "9f220a9fd23f5675fc29f26ec0d971b1000b52c95f47386be740c3c87b06a87c"
+    },
+    {
+      "lecture": 3,
+      "page": 48,
+      "unit": "26",
+      "text_sha256": "046586d5c5756483b957fa2971338ca3c07e60ba3fb5a5798e37e3689b069c74"
+    },
+    {
+      "lecture": 3,
+      "page": 49,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 50,
+      "unit": "27",
+      "text_sha256": "79675180af5ce8408d57872bed9b188e1a8bb82e0eae0b11e965dc71ef9a2782"
+    },
+    {
+      "lecture": 3,
+      "page": 51,
+      "unit": "27",
+      "text_sha256": "99e6f4ec4728062ff0b66d6f6ffd9c8a819cc463b4fbc126b64e4b0bb2a8f29c"
+    },
+    {
+      "lecture": 3,
+      "page": 52,
+      "unit": "27",
+      "text_sha256": "214c6564c1ecaa5c1d828bc46cc423837bd03fe8cb230927dd3dfdbc529da05e"
+    },
+    {
+      "lecture": 3,
+      "page": 53,
+      "unit": "27",
+      "text_sha256": "d941359a92295308ac5a663c84eb4d3b465ce1a84dd217354e822f56f9765d30"
+    },
+    {
+      "lecture": 3,
+      "page": 54,
+      "unit": "27",
+      "text_sha256": "50dbe109a20c6692b8ba1d117dd0d6139182bec7791cd751fb2593b24e270205"
+    },
+    {
+      "lecture": 3,
+      "page": 55,
+      "unit": "27",
+      "text_sha256": "4522e8ba3e56bccea9b877ef077a679282e64cfc51d29b56512250c961019035"
+    },
+    {
+      "lecture": 3,
+      "page": 56,
+      "unit": "28",
+      "text_sha256": "e4da54767365467f3dabfdd0ba56916159d8549e54ceaddc186de3536121e735"
+    },
+    {
+      "lecture": 3,
+      "page": 57,
+      "unit": "28",
+      "text_sha256": "745b77b502a71ac03f9b68f0dbd5f34fdd8d76fee1aff40a8d1fa3936161b79a"
+    },
+    {
+      "lecture": 3,
+      "page": 58,
+      "unit": "28",
+      "text_sha256": "38280dcbba02072ec2ff0c806bdc57654e9e699ef07b564efe7e88582c69b31b"
+    },
+    {
+      "lecture": 3,
+      "page": 59,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 60,
+      "unit": "29",
+      "text_sha256": "41818a3f925a3b10eda0289fd7b391cfe959cd079bd583927ff9c6e811427fbf"
+    },
+    {
+      "lecture": 3,
+      "page": 61,
+      "unit": "29",
+      "text_sha256": "d57ca539e34b4ff58a711c1916b5ffd113fd13428a680fd4fb7b64af528c8bbd"
+    },
+    {
+      "lecture": 3,
+      "page": 62,
+      "unit": "29",
+      "text_sha256": "0239c17464ca935a45391604689181037b385dd33b59b134f49dceb1f3e51d11"
+    },
+    {
+      "lecture": 3,
+      "page": 63,
+      "unit": "29",
+      "text_sha256": "c4a3ad10dabb260ba272f3e40f272bc844704ba1dab6b14d6035ae20dd5bd27e"
+    },
+    {
+      "lecture": 3,
+      "page": 64,
+      "unit": "29",
+      "text_sha256": "eefa5657244ab677df7dc336d4d6c32d92021bec7b1cfa19a6ae94245aaad51e"
+    },
+    {
+      "lecture": 3,
+      "page": 65,
+      "unit": "29",
+      "text_sha256": "2202433c2479f9660567ee48cc19526a71ba6e33a16e23d524400b3fe1bc4476"
+    },
+    {
+      "lecture": 3,
+      "page": 66,
+      "unit": "30",
+      "text_sha256": "c2923043083e7694223ab855e06ad50dd058d38b8f76f07227a8f882425f5a36"
+    },
+    {
+      "lecture": 3,
+      "page": 67,
+      "unit": "30",
+      "text_sha256": "85e7fbde9ed336f0f4fbe9f4ef4d20644488230123423b0d40003d6e83d14f5f"
+    },
+    {
+      "lecture": 3,
+      "page": 68,
+      "unit": "30",
+      "text_sha256": "cb1dd6167b81aa0fc2ab0ce2f1d78e673fd268a63a8f64202f1a2f671b32eed7"
+    },
+    {
+      "lecture": 3,
+      "page": 69,
+      "unit": "30",
+      "text_sha256": "553f2a5bc47ebfa0356e6ef7cb330fe559fa21077b40ffbb42f58a709e6861fa"
+    },
+    {
+      "lecture": 3,
+      "page": 70,
+      "unit": "30",
+      "text_sha256": "02695f49c929d2900bacfc6dbebace5fadbbed0ba2849c3d1af49beb53ffb216"
+    },
+    {
+      "lecture": 3,
+      "page": 71,
+      "unit": "30",
+      "text_sha256": "f56b5aaf114b3d7ab3a4464ef9b9680881383b76370921d6436c213614276978"
+    },
+    {
+      "lecture": 3,
+      "page": 72,
+      "unit": "30",
+      "text_sha256": "651c9ab4f9d535ebb9542aa9cd2cfaf3d53a22af3052c2ae955c45d4638e55be"
+    },
+    {
+      "lecture": 3,
+      "page": 73,
+      "unit": "30",
+      "text_sha256": "7fe78604c3d52cdd1b0387ad3d42bac27f177b51078338d23dfdc5228e4758db"
+    },
+    {
+      "lecture": 3,
+      "page": 74,
+      "unit": "30",
+      "text_sha256": "e0fc58de5ac4c31b384e338c5ab758997c96eac50e1378faf63b2733e338e71c"
+    },
+    {
+      "lecture": 3,
+      "page": 75,
+      "unit": null,
+      "text_sha256": "706c791c26c92a17b9e56d17d06988fa12c58234737d388dc46f1189bff62434"
+    },
+    {
+      "lecture": 3,
+      "page": 76,
+      "unit": null,
+      "text_sha256": "0b5c02a6ef48eae9097818ff0c7ca3ac770e88e71f879b3a15d07f4b64aa4bcf"
+    },
+    {
+      "lecture": 4,
+      "page": 1,
+      "unit": null,
+      "text_sha256": "9bd606e07d75e329d2c0f7158a19505c67eebcdaf1d295a81ec490882c4d3a92"
+    },
+    {
+      "lecture": 4,
+      "page": 2,
+      "unit": null,
+      "text_sha256": "860c6b7b28ec1026f5acd32b59c9b9a265263bb063ceb3fb24ff5f0fa5a9e343"
+    },
+    {
+      "lecture": 4,
+      "page": 3,
+      "unit": null,
+      "text_sha256": "860c6b7b28ec1026f5acd32b59c9b9a265263bb063ceb3fb24ff5f0fa5a9e343"
+    },
+    {
+      "lecture": 4,
+      "page": 4,
+      "unit": "31",
+      "text_sha256": "7c48e7cfea23c12c213cf92c08297d5fbe6130ddd9b84eb63bbbd4d6e90f41bb"
+    },
+    {
+      "lecture": 4,
+      "page": 5,
+      "unit": "31",
+      "text_sha256": "86ff80c2664c8ddc4ec45d045a984a983a74a3d5ed6db98172ffb957c21af957"
+    },
+    {
+      "lecture": 4,
+      "page": 6,
+      "unit": "31",
+      "text_sha256": "3a801d92538418bfdbf7b449267619d702621fdb1edb3b1f7b4b2b61ba63d552"
+    },
+    {
+      "lecture": 4,
+      "page": 7,
+      "unit": "31",
+      "text_sha256": "3486c1345cea2085ef4e4e6bbc470112ec8505654bee65180c7fc15f8f1ca133"
+    },
+    {
+      "lecture": 4,
+      "page": 8,
+      "unit": "31",
+      "text_sha256": "0d0d2fcacd1b4957b40100a4a32010b1f3a1ae5589fea2fd6cf12c478bb1f929"
+    },
+    {
+      "lecture": 4,
+      "page": 9,
+      "unit": "31",
+      "text_sha256": "6b148bb872df0eaf5921f9711e98867afac12c75a511e74124030365d38db152"
+    },
+    {
+      "lecture": 4,
+      "page": 10,
+      "unit": "32",
+      "text_sha256": "9a5b2cdcc5a805f1f92b0e42d78f6af410c1957aa89d20ca102b7a29d4fda6eb"
+    },
+    {
+      "lecture": 4,
+      "page": 11,
+      "unit": "32",
+      "text_sha256": "1e276533a42a6493dc4014970f849df0916f2b2e5f01a6aedca1aa770b758b95"
+    },
+    {
+      "lecture": 4,
+      "page": 12,
+      "unit": "32",
+      "text_sha256": "22d3255639b6b26ca947b9f0fc594b44bdfec6078a6366df6f91552ec8636cec"
+    },
+    {
+      "lecture": 4,
+      "page": 13,
+      "unit": "32",
+      "text_sha256": "ce694274f589fa9a2d06aa19ab0792b30d706c10a668d76f45d58bcf6de4da14"
+    },
+    {
+      "lecture": 4,
+      "page": 14,
+      "unit": "32",
+      "text_sha256": "a2498b2f25dc929a86ad1e08f513194fad6244449df496ba756908359a64fd06"
+    },
+    {
+      "lecture": 4,
+      "page": 15,
+      "unit": "32",
+      "text_sha256": "9ed80ef71eda7dd06ce0b2311661e772da3e4cd287aa424e3726abdff618fd48"
+    },
+    {
+      "lecture": 4,
+      "page": 16,
+      "unit": "33",
+      "text_sha256": "a419390deec34ca9142501d90be8be20ed29e75bc882c1494b12063a3f4f5bc9"
+    },
+    {
+      "lecture": 4,
+      "page": 17,
+      "unit": "33",
+      "text_sha256": "ba686f07ddd12af0e2fc768cb0ed639e7ca1a73b40f97ced23d36d312e6c20f4"
+    },
+    {
+      "lecture": 4,
+      "page": 18,
+      "unit": "33",
+      "text_sha256": "3366200caf19e4ccdbe4fd185816bebea15b607145bbcc28489edf75b6e067fe"
+    },
+    {
+      "lecture": 4,
+      "page": 19,
+      "unit": "33",
+      "text_sha256": "265f6c68b4b5df0628882fd0b26f4f496b7a3ab7f1b78f1def434ede3ba3b559"
+    },
+    {
+      "lecture": 4,
+      "page": 20,
+      "unit": "33",
+      "text_sha256": "b4778e4c93e4a86152d8723095ed51a1f5b47d1110deff896aabc2e769d71ef7"
+    },
+    {
+      "lecture": 4,
+      "page": 21,
+      "unit": "33",
+      "text_sha256": "21fc81bab5efe960588df7c582a3c5b04247acace290f3bccb98213eb9dedf0d"
+    },
+    {
+      "lecture": 4,
+      "page": 22,
+      "unit": "33",
+      "text_sha256": "eaa1486bf45e49c4d3ade77761938783ed1893e3cd32b195af44ddc7320acb69"
+    },
+    {
+      "lecture": 4,
+      "page": 23,
+      "unit": "33",
+      "text_sha256": "93aaf39be3372117e8d68dc7b6bbadec0327fbc65f423066cc7468d7359db20f"
+    },
+    {
+      "lecture": 4,
+      "page": 24,
+      "unit": "33",
+      "text_sha256": "289bcd1c292af68192c310cfed074d5e46aaa640b372a1638713a5f00523136a"
+    },
+    {
+      "lecture": 4,
+      "page": 25,
+      "unit": "34",
+      "text_sha256": "f189a06793c0f9aa7f73a031183958c42935d12da91fe44f1dd51945ff3adcaf"
+    },
+    {
+      "lecture": 4,
+      "page": 26,
+      "unit": "34",
+      "text_sha256": "20d64f06aa89438285cae9dbffe6c354a3275bc7ec8710fc2825c17f900d9e0c"
+    },
+    {
+      "lecture": 4,
+      "page": 27,
+      "unit": "34",
+      "text_sha256": "2946d0a4f8763c08d118bb1880883cf3c069d695fb495c00d55e249763ebae0f"
+    },
+    {
+      "lecture": 4,
+      "page": 28,
+      "unit": "35",
+      "text_sha256": "7bbdbefb7d63ae09b510678ed6a0603277b593f88798052cb38adea57b5dd75f"
+    },
+    {
+      "lecture": 4,
+      "page": 29,
+      "unit": "35",
+      "text_sha256": "973ad5bd4f032266a61141fbb065a05938552c2314c7613b056e01424e68b3c9"
+    },
+    {
+      "lecture": 4,
+      "page": 30,
+      "unit": "35",
+      "text_sha256": "bde3e6b29778d0975bba4254f8ec1a2f9cb6077ee48f8d5addac8149e4ff1eb2"
+    },
+    {
+      "lecture": 4,
+      "page": 31,
+      "unit": "35",
+      "text_sha256": "2967192cf452964ba3e11cfeba8403bbb334776b9733b3e4ed5c40e9a5f160e5"
+    },
+    {
+      "lecture": 4,
+      "page": 32,
+      "unit": "35",
+      "text_sha256": "8df060b9218327ae0ee7afb3e4e9afcf36c381c8df7091c037a7346690135c23"
+    },
+    {
+      "lecture": 4,
+      "page": 33,
+      "unit": "36",
+      "text_sha256": "4dda6529c0afb7055a198647f324dc09ea4e291a744a6b2e662856a0c6e860e4"
+    },
+    {
+      "lecture": 4,
+      "page": 34,
+      "unit": "36",
+      "text_sha256": "bd25a7d9cf27202d3c0c994bc70b1b6fc8c4b30c5c9d17b4946a1df5882e2ceb"
+    },
+    {
+      "lecture": 4,
+      "page": 35,
+      "unit": null,
+      "text_sha256": "860c6b7b28ec1026f5acd32b59c9b9a265263bb063ceb3fb24ff5f0fa5a9e343"
+    },
+    {
+      "lecture": 4,
+      "page": 36,
+      "unit": "37",
+      "text_sha256": "8c8547b1f753d07fc5f9f49d7666435cda59f4b2398fa6c1f9182067dc8c0b1e"
+    },
+    {
+      "lecture": 4,
+      "page": 37,
+      "unit": "37",
+      "text_sha256": "f2bf5cae352fee5dba6aa596a21ead8b889c8acd8c67a7318f847734d8a50dc2"
+    },
+    {
+      "lecture": 4,
+      "page": 38,
+      "unit": "37",
+      "text_sha256": "5c7c799e654a144b69d84fd540d11adce8b25e031d9588b2c9178e9414c7e755"
+    },
+    {
+      "lecture": 4,
+      "page": 39,
+      "unit": "38",
+      "text_sha256": "374c84daf661b56cbf6348e55ed675a350701641dbba73466b4e395c771a52f6"
+    },
+    {
+      "lecture": 4,
+      "page": 40,
+      "unit": "38",
+      "text_sha256": "63d7f84099959ad0360697f5982729541ef84c008ee967f15db88d6d7073290f"
+    },
+    {
+      "lecture": 4,
+      "page": 41,
+      "unit": "38",
+      "text_sha256": "b31be55f1bd0d089fada544b8dd2012b3f91d0b69950ee632ce460453fc31513"
+    },
+    {
+      "lecture": 4,
+      "page": 42,
+      "unit": "38",
+      "text_sha256": "25dbaf56e6da41b3da28e1a0c5fd853c262c8b83047137c580ef9904b30dc632"
+    },
+    {
+      "lecture": 4,
+      "page": 43,
+      "unit": "38",
+      "text_sha256": "24a4eb68bebf4f9806b7b77080643c5b07a89a5e18eff3bf4800eb8190fca6ea"
+    },
+    {
+      "lecture": 4,
+      "page": 44,
+      "unit": "38",
+      "text_sha256": "e81d5d936163e79e290b59ec24119023500784d483602f4e33e0d589e4edda57"
+    },
+    {
+      "lecture": 4,
+      "page": 45,
+      "unit": "39",
+      "text_sha256": "8a1f0dfb95b0766d8eecd5ae5109d1a82b248238594635ce13baf23d325f71c6"
+    },
+    {
+      "lecture": 4,
+      "page": 46,
+      "unit": "39",
+      "text_sha256": "af01092699e9def631b7d8b95903e33e8c2432ed1a6f8b69f25d9a480c87a00e"
+    },
+    {
+      "lecture": 4,
+      "page": 47,
+      "unit": "39",
+      "text_sha256": "3ecae9b1ef77c84bfa6d74c2d6c0e1273ae3510ca5ecfd60d99c0a96beba091b"
+    },
+    {
+      "lecture": 4,
+      "page": 48,
+      "unit": "39",
+      "text_sha256": "b820ff3acc5f1d60970c3a42b50a7037fabe309a036c18d47de4e5e740b1bf0e"
+    },
+    {
+      "lecture": 4,
+      "page": 49,
+      "unit": "39",
+      "text_sha256": "20d410e67aa9c60b0f0f7c050438d69ecd4b2c7a4878428f6592528bb41da510"
+    },
+    {
+      "lecture": 4,
+      "page": 50,
+      "unit": "39",
+      "text_sha256": "b837f6e0cff7bfe802c53a75bef7936e4a7dc50d0aedc3c5ba2864b38cab2776"
+    },
+    {
+      "lecture": 4,
+      "page": 51,
+      "unit": "39",
+      "text_sha256": "c6c327dcd47f750d78615556fdfc853e829f901aa1706186f3a556db1bbee97a"
+    },
+    {
+      "lecture": 4,
+      "page": 52,
+      "unit": "39",
+      "text_sha256": "3a40e754b20bc0b4b4ad39951e20fc3c5ec40a491ce87aee2d0123b18dca089d"
+    },
+    {
+      "lecture": 4,
+      "page": 53,
+      "unit": "39",
+      "text_sha256": "50af6aa6017936c6705dbe72bf9acc2ff7c54676f7cb4fcd7ee8fc495305d8e9"
+    },
+    {
+      "lecture": 4,
+      "page": 54,
+      "unit": "39",
+      "text_sha256": "773669c0a610deabdd4d08ee2e3bb1431d1663c8ef9a85c4d2506ebaaa037f41"
+    },
+    {
+      "lecture": 4,
+      "page": 55,
+      "unit": "39",
+      "text_sha256": "12d77b9d1b8e1fcd668db687f5a96691637c6ede72661f97d36737e732d66aab"
+    },
+    {
+      "lecture": 4,
+      "page": 56,
+      "unit": "40",
+      "text_sha256": "34e3a0e9a61cd84d0fca6043a2874414326255fd71ae56b2461e19a5adddf07c"
+    },
+    {
+      "lecture": 4,
+      "page": 57,
+      "unit": "40",
+      "text_sha256": "8b4c7c5b765ac94c809945e35a82a4cafac7cad871dcc8132df70b12369357f3"
+    },
+    {
+      "lecture": 4,
+      "page": 58,
+      "unit": "40",
+      "text_sha256": "81b6a20c51f2bf5ef8c7aaa725bf0bd3db50afe02836a30225a6727b382b738c"
+    },
+    {
+      "lecture": 4,
+      "page": 59,
+      "unit": "40",
+      "text_sha256": "c426407ed9e2efcb7d7498201bef262d10f531f6780795652fad0b229c357e21"
+    },
+    {
+      "lecture": 4,
+      "page": 60,
+      "unit": "40",
+      "text_sha256": "a23210ef3ddc2268086138eb0c299db36b76815fee527904562462ec06be1ecd"
+    },
+    {
+      "lecture": 4,
+      "page": 61,
+      "unit": "40",
+      "text_sha256": "50ab96b7a9ec68285269b9f34d60b5ae879d51405e41543440a03c3bfa559b42"
+    },
+    {
+      "lecture": 4,
+      "page": 62,
+      "unit": "40",
+      "text_sha256": "67bd1e4115e60e5cbe0c20b60b06097bccf467570a85d7881dbde09a366f499e"
+    },
+    {
+      "lecture": 4,
+      "page": 63,
+      "unit": "40",
+      "text_sha256": "163339272e8401eed60397fea9e6fe1c16bdb36560e1f5a8e4010cb0dfa1e920"
+    },
+    {
+      "lecture": 4,
+      "page": 64,
+      "unit": null,
+      "text_sha256": "860c6b7b28ec1026f5acd32b59c9b9a265263bb063ceb3fb24ff5f0fa5a9e343"
+    },
+    {
+      "lecture": 4,
+      "page": 65,
+      "unit": null,
+      "text_sha256": "e3ebf003506f29870ec63a3658d12a16e7a74c06fd43dc094003e5aedbf79cee"
+    },
+    {
+      "lecture": 5,
+      "page": 1,
+      "unit": null,
+      "text_sha256": "7cc2000949fe9b41a90c020d7c5e6a77c75c4690530b38fe10a62be0a36b1c74"
+    },
+    {
+      "lecture": 5,
+      "page": 2,
+      "unit": null,
+      "text_sha256": "e8f5f3287ced49120bbef54f49560e94d64f4622335439cbbacef00190ff7124"
+    },
+    {
+      "lecture": 5,
+      "page": 3,
+      "unit": null,
+      "text_sha256": "e8f5f3287ced49120bbef54f49560e94d64f4622335439cbbacef00190ff7124"
+    },
+    {
+      "lecture": 5,
+      "page": 4,
+      "unit": "41",
+      "text_sha256": "df74ca99f70c15982bc9fbab520b538876f7751b9e47d72ef880e9bb2b3e564a"
+    },
+    {
+      "lecture": 5,
+      "page": 5,
+      "unit": "41",
+      "text_sha256": "a61dea5448cf2ff56d8c93dd3c6ba5fef37275193e8648661693de3c62ca6886"
+    },
+    {
+      "lecture": 5,
+      "page": 6,
+      "unit": "42",
+      "text_sha256": "5eaaeceebbb81b310444db7fda3aeebdeec66908dc1c336dc2f28083c260703c"
+    },
+    {
+      "lecture": 5,
+      "page": 7,
+      "unit": "42",
+      "text_sha256": "0b30e09162c50fc0238b71be0caca0dc1b5a263e3cc573a88815268cef0f74d5"
+    },
+    {
+      "lecture": 5,
+      "page": 8,
+      "unit": "42",
+      "text_sha256": "67ae754d271d900ae9b508bbd243ebba0b46a870685d6ed6a640e75fb2a8204f"
+    },
+    {
+      "lecture": 5,
+      "page": 9,
+      "unit": "42",
+      "text_sha256": "d338e9cbc0f36a5a6eb019ee7762d562a3c8db83804c25b04a9602f6ad443811"
+    },
+    {
+      "lecture": 5,
+      "page": 10,
+      "unit": "42",
+      "text_sha256": "4cabcf68947b51469c367227f1c7bbcf335d6728a117057977fdb3c312e3b005"
+    },
+    {
+      "lecture": 5,
+      "page": 11,
+      "unit": "42",
+      "text_sha256": "6a6dd49f329ef5b1894ce6aa1ae482d7c0664fada121246623c26e1d1921035c"
+    },
+    {
+      "lecture": 5,
+      "page": 12,
+      "unit": "43",
+      "text_sha256": "1df2d3b45ff087a86c31eec2a51d9c58edc802345429721520fc70030190c44a"
+    },
+    {
+      "lecture": 5,
+      "page": 13,
+      "unit": "43",
+      "text_sha256": "f31b645ccd784ceb67a12a39cfc175708d41eac1ab55f65a08d8a574555a8031"
+    },
+    {
+      "lecture": 5,
+      "page": 14,
+      "unit": "43",
+      "text_sha256": "5ee4cacf2a51e50006250384c30edd7834466486ce50f47c0ce67739ae549c8e"
+    },
+    {
+      "lecture": 5,
+      "page": 15,
+      "unit": null,
+      "text_sha256": "e8f5f3287ced49120bbef54f49560e94d64f4622335439cbbacef00190ff7124"
+    },
+    {
+      "lecture": 5,
+      "page": 16,
+      "unit": "44",
+      "text_sha256": "76fcf2a76d83ffcf5d7e08de5dcf719d5c0a356618c364f524827999cc123ff0"
+    },
+    {
+      "lecture": 5,
+      "page": 17,
+      "unit": "44",
+      "text_sha256": "21ac8ba5e599d344c5ddc849a2faf559f6bd1d5b9403e9f7335f0dd7182a2938"
+    },
+    {
+      "lecture": 5,
+      "page": 18,
+      "unit": "44",
+      "text_sha256": "fe52eb595b282e7e6934455cf6ff3fb767bfba31a3c0cc6858a5cffe27d15e49"
+    },
+    {
+      "lecture": 5,
+      "page": 19,
+      "unit": "44",
+      "text_sha256": "84608e15247a730501e78100bea4e331e0cb4dc4e68980199d572ce10e6db382"
+    },
+    {
+      "lecture": 5,
+      "page": 20,
+      "unit": "44",
+      "text_sha256": "fe644fa30e76e6c903314d536c86371ce8aefa86abae892d4d750ea6a5ec8a18"
+    },
+    {
+      "lecture": 5,
+      "page": 21,
+      "unit": "44",
+      "text_sha256": "e12f08c89366160e5b3519e62644282233e12ded6b195b6d60560c69a8b9f0e8"
+    },
+    {
+      "lecture": 5,
+      "page": 22,
+      "unit": "44",
+      "text_sha256": "18e7e0fc17fd5f1a3b400bc36a010029745918e567688e9bcb280ff037020932"
+    },
+    {
+      "lecture": 5,
+      "page": 23,
+      "unit": "44",
+      "text_sha256": "0f697a5513ba1fa5264a9d088c842be83b6c88c8ecb02091c878a1a5a6c8d3aa"
+    },
+    {
+      "lecture": 5,
+      "page": 24,
+      "unit": "44",
+      "text_sha256": "8f4dfdb7c091f48554a5d041cfb6662a393b61a30f281013486f7e745fb24de8"
+    },
+    {
+      "lecture": 5,
+      "page": 25,
+      "unit": "44",
+      "text_sha256": "a7e8cfcd614f47c1924295cbe2a3791792dc32454879784dcaa9b933f25555c7"
+    },
+    {
+      "lecture": 5,
+      "page": 26,
+      "unit": null,
+      "text_sha256": "e8f5f3287ced49120bbef54f49560e94d64f4622335439cbbacef00190ff7124"
+    },
+    {
+      "lecture": 5,
+      "page": 27,
+      "unit": "45",
+      "text_sha256": "dc5bfe8bc123b9b3a2aa831730984339ad28f343d26ff24f749e93a62c6c7af0"
+    },
+    {
+      "lecture": 5,
+      "page": 28,
+      "unit": "45",
+      "text_sha256": "6e1d397b93242239bbb2b3a9b4ffd756292df905dbb6600c0832f9e39d7c3e2d"
+    },
+    {
+      "lecture": 5,
+      "page": 29,
+      "unit": "45",
+      "text_sha256": "84a6ad409048e7b1036dba0acec9e996eca040d34043811e3ae7aa13f8c0cf22"
+    },
+    {
+      "lecture": 5,
+      "page": 30,
+      "unit": null,
+      "text_sha256": "e8f5f3287ced49120bbef54f49560e94d64f4622335439cbbacef00190ff7124"
+    },
+    {
+      "lecture": 5,
+      "page": 31,
+      "unit": "46",
+      "text_sha256": "496c4c202792b6dbfd5d9e2d362a9c9030ead2037ade3f2851cfe5a09e0d1cfe"
+    },
+    {
+      "lecture": 5,
+      "page": 32,
+      "unit": "46",
+      "text_sha256": "417df87bee7658a3ca19c1fb9675dd0be165a1d70881468b3c63826dd3d83225"
+    },
+    {
+      "lecture": 5,
+      "page": 33,
+      "unit": "46",
+      "text_sha256": "52b441b80fba168b2f6b650ac75eacd169706bed019e28f18156f7c7cca5186c"
+    },
+    {
+      "lecture": 5,
+      "page": 34,
+      "unit": "46",
+      "text_sha256": "6ca3656e24c64fa0da8fc1766bd52ef85ad38038447544e8946aa4667e7ae7f4"
+    },
+    {
+      "lecture": 5,
+      "page": 35,
+      "unit": "46",
+      "text_sha256": "1a3e4fb230fdea9ebf244e54763f9c5404dd118a062897ce99e35f354db75424"
+    },
+    {
+      "lecture": 5,
+      "page": 36,
+      "unit": "46",
+      "text_sha256": "4104d8fba813f5c6339d94a7b4eaacb4180869be61c7002cfb59881efc186fa5"
+    },
+    {
+      "lecture": 5,
+      "page": 37,
+      "unit": "47",
+      "text_sha256": "8805402c1216246f3dc9513beda68a2d3f40493dbf8d7fb1f33ee5421f48d654"
+    },
+    {
+      "lecture": 5,
+      "page": 38,
+      "unit": null,
+      "text_sha256": "f143f73a9a94abc0f496118fb2b6f64d18cf8394e49e8b12db5d0b60aed9bff0"
+    }
+  ],
+  "coverage": [
+    {
+      "item": "1(a)",
+      "body": "quadratic-method",
+      "example": "quadratic-proof",
+      "practice": "gate-norm",
+      "evidence_zh": "可逆平方根换元；上界与取等；z=0 单列。",
+      "evidence_en": "Invertible square-root substitution; bound and attainment; separate z=0.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "1(b)",
+      "body": "induced-method",
+      "example": "induced-proof",
+      "practice": "gate-norm",
+      "evidence_zh": "比例归一化、逐行上界、符号输入，允许矩形和零矩阵。",
+      "evidence_en": "Ratio normalization, row bound and sign input; rectangular and zero matrices.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "1(c)",
+      "body": "induced-proof",
+      "example": "induced-proof",
+      "practice": "gate-norm",
+      "evidence_zh": "相容中间范数；零向量放大界；不除以 ‖Bx‖。",
+      "evidence_en": "Compatible middle norm; zero-vector bound; no division by ‖Bx‖.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "2(a)",
+      "body": "lse-gradient",
+      "example": "lse-gradient",
+      "practice": "gate-derivative",
+      "evidence_zh": "指数、对数与仿射链式法则；列梯度维数。",
+      "evidence_en": "Exponential, logarithmic and affine chain rules; column dimensions.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "2(b)",
+      "body": "lse-hessian",
+      "example": "lse-hessian",
+      "practice": "gate-derivative",
+      "evidence_zh": "商法则逐步求 ∇pᵢ；外积与两项中心化展开。",
+      "evidence_en": "Quotient-rule weight derivative; outer products and centered expansion.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "2(c)",
+      "body": "hessian-method",
+      "example": "lse-hessian",
+      "practice": "gate-derivative",
+      "evidence_zh": "正权重平方和；全部差向量正交约束；m=1。",
+      "evidence_en": "Positive weighted squares; all difference-vector constraints; m=1.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "3(a)",
+      "body": "u19-understand",
+      "example": "sets-method",
+      "practice": "gate-sets",
+      "evidence_zh": "任意点与 θ；线性代入；空集无需可逆性。",
+      "evidence_en": "Arbitrary points and θ; linear substitution; empty sets without invertibility.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "3(b)",
+      "body": "sets-method",
+      "example": "sets-method",
+      "practice": "gate-sets",
+      "evidence_zh": "减球心后用齐次性、三角不等式，含 r=0。",
+      "evidence_en": "Subtract the center, homogeneity and triangle inequality, including r=0.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "3(c)",
+      "body": "sets-method",
+      "example": "sets-method",
+      "practice": "gate-sets",
+      "evidence_zh": "非负距离允许平方，消去 xᵀx，不对称点核对方向。",
+      "evidence_en": "Nonnegative distances permit squaring; cancellation; asymmetric-point check.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "4(a)(i)",
+      "body": "scalar-curvature",
+      "example": "scalar-curvature",
+      "practice": "scalar-practice",
+      "evidence_zh": "固定 a∈R，逐次求导，a=0 时仍凸。",
+      "evidence_en": "Fixed real a; both derivatives; convex also at a=0.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "4(a)(ii)",
+      "body": "scalar-curvature",
+      "example": "scalar-curvature",
+      "practice": "scalar-practice",
+      "evidence_zh": "正定义域，负对数一阶和二阶导。",
+      "evidence_en": "Positive domain; both derivatives of negative logarithm.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "4(a)(iii)",
+      "body": "scalar-curvature",
+      "example": "scalar-curvature",
+      "practice": "scalar-practice",
+      "evidence_zh": "乘积法则求一阶导，1/x>0；零点延拓不混入主线。",
+      "evidence_en": "Product-rule first derivative; positive 1/x; no zero-extension distraction.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "4(b)",
+      "body": "least-squares-hessian",
+      "example": "least-squares-hessian",
+      "practice": "gate-convex",
+      "evidence_zh": "展开矩阵平方、梯度、Hessian、任意 v 平方和，无满秩假设。",
+      "evidence_en": "Expand the quadratic, gradient, Hessian and directional squares; no rank assumption.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "4(c)",
+      "body": "jensen-example",
+      "example": "jensen-proof",
+      "practice": "gate-convex",
+      "evidence_zh": "凸组合封闭性先证；完整归纳、t=1 和零权重。",
+      "evidence_en": "Finite-combination closure first; full induction, t=1 and zero weights.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "5(a)",
+      "body": "u11-understand",
+      "example": "soc-proof",
+      "practice": "gate-cone",
+      "evidence_zh": "缩放及四性质；序列估计取极限；显式开球；尖性。",
+      "evidence_en": "Scaling and four properties; sequence estimate and limit; explicit ball; pointedness.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "5(b)",
+      "body": "soc-dual-method",
+      "example": "soc-dual-method",
+      "practice": "gate-cone",
+      "evidence_zh": "两向包含；先测 (0,1)，再测反方向；覆盖 y=0、s<0。",
+      "evidence_en": "Both inclusions; test (0,1), then opposite direction; covers y=0 and s<0.",
+      "status": "editorial checks passed"
+    },
+    {
+      "item": "5(c)",
+      "body": "soc-order-method",
+      "example": "soc-order-method",
+      "practice": "gate-cone",
+      "evidence_zh": "代差向量写范数式；三点直接使用三角不等式。",
+      "evidence_en": "Substitute the difference for the norm relation; direct three-point triangle proof.",
+      "status": "editorial checks passed"
+    }
+  ],
+  "browser": [
+    {
+      "page": "index.html",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "depths": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "math_errors": 0,
+      "js_errors": [],
+      "overflow": false,
+      "slider_values": [
+        0.7071,
+        1,
+        1.4142
+      ]
+    },
+    {
+      "page": "index.html",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "depths": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "math_errors": 0,
+      "js_errors": [],
+      "overflow": false,
+      "slider_values": [
+        0.7071,
+        1,
+        1.4142
+      ]
+    },
+    {
+      "page": "hw1-route.html",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "depths": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "math_errors": 0,
+      "js_errors": [],
+      "overflow": false,
+      "slider_values": [
+        0.7071,
+        1,
+        1.4142
+      ]
+    },
+    {
+      "page": "hw1-route.html",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "depths": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "math_errors": 0,
+      "js_errors": [],
+      "overflow": false,
+      "slider_values": [
+        0.7071,
+        1,
+        1.4142
+      ]
+    }
+  ],
+  "limits": [
+    "No real iOS Safari device test.",
+    "All 280 slide texts and page assignments checked; not every slide formula visually reread.",
+    "Coverage is editorial evidence, not a guarantee of student mastery."
+  ]
+}
