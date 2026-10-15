@@ -1,7 +1,19 @@
 [
   {
     "width": 1360,
-    "W_up_D_and_S_down": true,
+    "W_up_S_down": true,
+    "D_no_vertical_scroll": true,
+    "A_D_horizontal_pane": false,
+    "close_icons_center_error_px": {
+      "term": [
+        0,
+        0
+      ],
+      "sidebar": [
+        0,
+        0
+      ]
+    },
     "uppercase_supported": true,
     "search_typing_untouched": true,
     "dialog_does_not_scroll_background": true,
@@ -13,7 +25,19 @@
   },
   {
     "width": 390,
-    "W_up_D_and_S_down": true,
+    "W_up_S_down": true,
+    "D_no_vertical_scroll": true,
+    "A_D_horizontal_pane": true,
+    "close_icons_center_error_px": {
+      "term": [
+        0,
+        0
+      ],
+      "sidebar": [
+        0,
+        0
+      ]
+    },
     "uppercase_supported": true,
     "search_typing_untouched": true,
     "dialog_does_not_scroll_background": true,
