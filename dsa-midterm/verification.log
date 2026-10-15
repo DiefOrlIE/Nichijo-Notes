@@ -1,3 +1,4 @@
+DEBUG desktop {"layers":320,"visible":320,"pressed":["false","true","false","false"]} ["desktop: $(...).forEach is not a function"]
 node:internal/modules/run_main:123
     triggerUncaughtException(
     ^
@@ -6,8 +7,8 @@ AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
 
 320 !== 160
 
-    at checkPage (file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:12:10)
-    at async file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:29:2 {
+    at checkPage (file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:13:10)
+    at async file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:30:2 {
   generatedMessage: true,
   code: 'ERR_ASSERTION',
   actual: 320,
