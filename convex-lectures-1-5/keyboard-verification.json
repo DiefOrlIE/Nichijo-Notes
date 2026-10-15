@@ -1,0 +1,26 @@
+[
+  {
+    "width": 1360,
+    "W_up_D_and_S_down": true,
+    "uppercase_supported": true,
+    "search_typing_untouched": true,
+    "dialog_does_not_scroll_background": true,
+    "slider_native_arrows": true,
+    "sidebar_close_reopen_memory": true,
+    "parent_directory_link": "../",
+    "single_fixed_back_button": true,
+    "script_errors": []
+  },
+  {
+    "width": 390,
+    "W_up_D_and_S_down": true,
+    "uppercase_supported": true,
+    "search_typing_untouched": true,
+    "dialog_does_not_scroll_background": true,
+    "slider_native_arrows": true,
+    "sidebar_close_reopen_memory": true,
+    "parent_directory_link": "../",
+    "single_fixed_back_button": true,
+    "script_errors": []
+  }
+]
