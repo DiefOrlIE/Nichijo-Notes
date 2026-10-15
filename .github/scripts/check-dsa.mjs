@@ -8,18 +8,26 @@ async function checkPage(page,kind) {
   const response=await page.goto('http://127.0.0.1:8765/dsa-midterm/',{waitUntil:'networkidle'});
   assert.equal(response.status(),200);
   assert.equal(await page.locator('#chapters > .chapter').count(),15);
-  assert.equal(await page.locator('.topic').count(),80);
-  console.log('DEBUG',kind,JSON.stringify(await page.evaluate(()=>({layers:document.querySelectorAll('.layer').length,visible:document.querySelectorAll('.layer:not([hidden])').length,pressed:[...document.querySelectorAll('[data-tier]')].map(x=>x.getAttribute('aria-pressed'))}))),JSON.stringify(allConsole));
-  assert.equal(await page.locator('.layer:not([hidden])').count(),160);
+  assert.equal(await page.locator('.topic').count(),95);
+  assert.equal(await page.locator('.layer:not([hidden])').count(),190);
   assert.equal(await page.locator('#glossary-table tbody tr').count()>50,true);
   assert.equal(await page.locator('#homework-content a[href^="#ch"]').count()>=15,true);
-  assert.equal(await page.locator('.question details').count()>=100,true);
-  const fontStatus=await page.evaluate(async()=>{
-    await document.fonts.load('17px "Nichijo Noto Serif"','数据库数据结构宋体测试');
+  assert.equal(await page.locator('.question details').count()>=175,true);
+  assert.equal(await page.locator('.topic[id$="-extra-exercises"]').count(),15);
+  const fontState=await page.evaluate(async()=>{
+    await Promise.all([
+      document.fonts.load('17px "Nichijo Wenjin Songti"','数据库结构逻辑树'),
+      document.fonts.load('700 30px "Nichijo Source Han Serif"','数据结构算法'),
+    ]);
     await document.fonts.ready;
-    return document.fonts.check('17px "Nichijo Noto Serif"');
+    const faces=[...document.fonts].map(f=>({family:f.family,status:f.status}));
+    return {faces,body:getComputedStyle(document.body).fontFamily,title:getComputedStyle(document.querySelector('main h1')).fontFamily};
   });
-  assert.equal(fontStatus,true,'local Chinese serif font not loaded');
+  assert.ok(fontState.body.includes('Nichijo Wenjin Songti'),'body not in embedded Songti');
+  assert.ok(fontState.title.includes('Nichijo Source Han Serif'),'headings not in embedded Source Han Serif');
+  for(const family of ['Nichijo Wenjin Songti','Nichijo Source Han Serif'])
+    assert.ok(fontState.faces.some(f=>f.family.includes(family)&&f.status==='loaded'),family+' missing or not loaded');
+
   const codes=await page.locator('.layer[data-level="3"] pre code').count();
   assert.ok(codes>=10,'missing code samples');
   return true;
@@ -29,9 +37,9 @@ try {
  const page=await context.newPage();
  await checkPage(page,'desktop');
  await page.locator('button[data-tier="4"]').click();
- assert.equal(await page.locator('.layer:not([hidden])').count(),320);
+ assert.equal(await page.locator('.layer:not([hidden])').count(),380);
  await page.locator('button[data-tier="3"]').click();
- assert.equal(await page.locator('.layer:not([hidden])').count(),240);
+ assert.equal(await page.locator('.layer:not([hidden])').count(),285);
  const first=page.locator('.question details').first();
  const id=await first.getAttribute('id');
  await first.locator('summary').click();
@@ -39,6 +47,13 @@ try {
  await page.reload({waitUntil:'networkidle'});
  assert.equal(await page.locator('button[data-tier="3"]').getAttribute('aria-pressed'),'true');
  assert.equal(await page.locator('#'+id).evaluate(el=>el.open),true);
+ await page.locator('button[data-tier="4"]').click();
+ const ex=page.locator('#ch14-extra-exercises details').first();
+ await ex.locator('summary').click();
+ assert.equal(await ex.evaluate(el=>el.open),true);
+ await page.reload({waitUntil:'networkidle'});
+ assert.equal(await page.locator('#ch14-extra-exercises details').first().evaluate(el=>el.open),true);
+ await page.locator('button[data-tier="3"]').click();
  await page.locator('#theme-toggle').click();
  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
  await page.screenshot({path:'dsa-desktop.png',fullPage:false});
@@ -62,7 +77,7 @@ try {
  await ipad.screenshot({path:'dsa-tablet.png',fullPage:false});
  await tablet.close();
  assert.deepEqual(allConsole,[]);
- console.log('PASS desktop, 390px phone, 820px tablet, scripts, complete four-tier states, interactive quiz memory, theme, self-hosted font, no horizontal overflow.');
+ console.log('PASS: 95 sections, 75 new guided questions, 15 chapter exercise sections, desktop/phone/tablet layouts, four tiers, answer persistence, theme, and two separately loaded self-hosted Songti webfonts.');
 } finally {
  await browser.close();
 }
