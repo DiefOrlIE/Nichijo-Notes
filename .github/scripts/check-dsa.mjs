@@ -9,6 +9,7 @@ async function checkPage(page,kind) {
   assert.equal(response.status(),200);
   assert.equal(await page.locator('#chapters > .chapter').count(),15);
   assert.equal(await page.locator('.topic').count(),80);
+  console.log('DEBUG',kind,JSON.stringify(await page.evaluate(()=>({layers:document.querySelectorAll('.layer').length,visible:document.querySelectorAll('.layer:not([hidden])').length,pressed:[...document.querySelectorAll('[data-tier]')].map(x=>x.getAttribute('aria-pressed'))}))),JSON.stringify(allConsole));
   assert.equal(await page.locator('.layer:not([hidden])').count(),160);
   assert.equal(await page.locator('#glossary-table tbody tr').count()>50,true);
   assert.equal(await page.locator('#homework-content a[href^="#ch"]').count()>=15,true);
