@@ -1,0 +1,57 @@
+name: Embed Wenjin Songti body font
+on:
+  push:
+    paths:
+      - ".github/workflows/build-dsa-songti.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  songti:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install font subset dependencies
+        run: python -m pip install "fonttools[woff]" brotli
+      - name: Fetch OFL WenJinMincho and make a compact body font
+        run: |
+          mkdir -p dsa-midterm/fonts
+          curl -fL --retry 3 -o /tmp/WenJinMinchoP0-Regular.ttf "https://raw.githubusercontent.com/takushun-wu/WenJinMincho/main/ttf/WenJinMinchoP0-Regular.ttf"
+          curl -fL --retry 3 -o dsa-midterm/fonts/WENJIN-LICENSE.txt "https://raw.githubusercontent.com/takushun-wu/WenJinMincho/main/LICENSE"
+          python - <<'PY'
+          from pathlib import Path
+          from fontTools.ttLib import TTFont
+          from fontTools import subset
+          root=Path('dsa-midterm')
+          text=''.join(p.read_text(encoding='utf-8') for p in root.glob('*.js'))
+          text+=(root/'index.html').read_text(encoding='utf-8')
+          text+=(root/'style.css').read_text(encoding='utf-8')
+          unicode_set=set(map(ord,text))|set(range(32,127))
+          font=TTFont('/tmp/WenJinMinchoP0-Regular.ttf')
+          assert len(font.getBestCmap())>2000,'unexpected font format / LFS pointer'
+          options=subset.Options()
+          options.flavor='woff2'
+          options.layout_features=['*']
+          options.name_IDs=['*']
+          s=subset.Subsetter(options=options)
+          s.populate(unicodes=unicode_set)
+          s.subset(font)
+          # Different internal family name for subset; upstream remains credited.
+          for record in font['name'].names:
+              if record.nameID in (1,4,6):
+                  text={1:'Nichijo Wenjin Songti',4:'Nichijo Wenjin Songti Regular',6:'NichijoWenjinSongti-Regular'}[record.nameID]
+                  record.string=text.encode('utf_16_be') if record.isUnicode() else text.encode('ascii')
+          font.flavor='woff2'
+          output=root/'fonts/wenjin-songti-regular.woff2'
+          font.save(output)
+          assert output.stat().st_size>10000
+          print('Wenjin body webfont:',output.stat().st_size,'bytes')
+          PY
+      - name: Save locally hosted body font
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dsa-midterm/fonts/wenjin-songti-regular.woff2 dsa-midterm/fonts/WENJIN-LICENSE.txt
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Self-host OFL Wenjin Songti body typeface"
+          git push
