@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: "22"
       - name: Check syntax of all script modules
+        id: syntax
         run: |
           for f in dsa-midterm/*.js; do node --check "$f"; done
       - name: Install headless Chromium
@@ -26,7 +27,8 @@ jobs:
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dsa-server.log 2>&1 &
           sleep 3
-          node .github/scripts/check-dsa.mjs
+          set -o pipefail
+          node .github/scripts/check-dsa.mjs 2>&1 | tee dsa-browser-test.log
       - name: Preserve browser screenshots for review
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,7 +45,7 @@ jobs:
           mkdir -p dsa-midterm
           cat > dsa-midterm/verification.json <<'JSON'
           {
-            "syntax": "${{ steps.smoke.outcome == 'skipped' && 'not_run' || 'checked' }}",
+            "syntax": "${{ steps.syntax.outcome }}",
             "browser_tests": "${{ steps.smoke.outcome }}",
             "viewports": ["1360x900 desktop", "390x844 phone", "820x1180 tablet"],
             "font": "Nichijo Noto Serif self-hosted regular and bold",
@@ -52,6 +54,7 @@ jobs:
           JSON
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dsa-midterm/verification.json
+          cp dsa-browser-test.log dsa-midterm/verification.log 2>/dev/null || true
+          git add dsa-midterm/verification.json dsa-midterm/verification.log
           git commit -m "Record DSA browser validation result" || true
           git push
