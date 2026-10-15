@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p dsa-midterm/fonts
           curl -fL --retry 3 -o /tmp/WenJinMinchoP0-Regular.ttf "https://raw.githubusercontent.com/takushun-wu/WenJinMincho/main/ttf/WenJinMinchoP0-Regular.ttf"
-          curl -fL --retry 3 -o dsa-midterm/fonts/WENJIN-LICENSE.txt "https://raw.githubusercontent.com/takushun-wu/WenJinMincho/main/LICENSE"
+          curl -fL --retry 3 -o dsa-midterm/fonts/WENJIN-LICENSE.txt "https://raw.githubusercontent.com/takushun-wu/WenJinMincho/main/LICENSE.md"
           python - <<'PY'
           from pathlib import Path
           from fontTools.ttLib import TTFont
