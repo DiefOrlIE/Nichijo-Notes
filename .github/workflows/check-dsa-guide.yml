@@ -1,0 +1,38 @@
+name: Verify DSA guide desktop mobile and tablet
+on:
+  push:
+    paths:
+      - ".github/workflows/check-dsa-guide.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check syntax of all script modules
+        run: |
+          for f in dsa-midterm/*.js; do node --check "$f"; done
+      - name: Install headless Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Test responsive reader and all interactive functions
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dsa-server.log 2>&1 &
+          sleep 3
+          node .github/scripts/check-dsa.mjs
+      - name: Preserve browser screenshots for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsa-browser-smoke-tests
+          path: |
+            dsa-desktop.png
+            dsa-phone.png
+            dsa-tablet.png
+          if-no-files-found: ignore
