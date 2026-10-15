@@ -1,5 +1,5 @@
 {
-  "syntax": "checked",
+  "syntax": "success",
   "browser_tests": "failure",
   "viewports": ["1360x900 desktop", "390x844 phone", "820x1180 tablet"],
   "font": "Nichijo Noto Serif self-hosted regular and bold",
