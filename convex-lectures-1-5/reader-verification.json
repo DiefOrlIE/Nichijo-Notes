@@ -1,0 +1,36 @@
+[
+  {
+    "width": 1360,
+    "ics_current_layer_style": {
+      "border": "rgb(29, 78, 216)",
+      "background": "linear-gradient(90deg, rgb(234, 243, 255) 0%, rgba(234, 243, 255, 0.533) 60%, rgba(0, 0, 0, 0))"
+    },
+    "sidebar_toggle_and_memory": true,
+    "theme_toggle_and_memory": true,
+    "language_labels": true,
+    "half_width_boxes": 47,
+    "reading_position_preserved": true,
+    "diagram_night_colors": {
+      "fill": "rgb(25, 29, 34)",
+      "filtered": "none"
+    },
+    "script_errors": []
+  },
+  {
+    "width": 390,
+    "ics_current_layer_style": {
+      "border": "rgb(29, 78, 216)",
+      "background": "linear-gradient(90deg, rgb(234, 243, 255) 0%, rgba(234, 243, 255, 0.533) 60%, rgba(0, 0, 0, 0))"
+    },
+    "sidebar_toggle_and_memory": true,
+    "theme_toggle_and_memory": true,
+    "language_labels": true,
+    "half_width_boxes": 47,
+    "reading_position_preserved": true,
+    "diagram_night_colors": {
+      "fill": "rgb(25, 29, 34)",
+      "filtered": "none"
+    },
+    "script_errors": []
+  }
+]

@@ -4,8 +4,8 @@
   "glossary_terms": 78,
   "diagrams": 35,
   "checks": [
-    "47 个单元均有完整中英正文，全部章节与 280 张来源图片链接有效",
-    "默认了解层全部可读，完整公式渲染无错误，嵌入字体已加载",
+    "结构检查：47 个单元含中英文字，全部章节与 280 张来源图片链接有效；此项不评价教学可读性",
+    "显示检查：默认了解层均显示，掌握层按深度隐藏，公式渲染无错误，嵌入字体已加载",
     "对偶范数单位球与椭圆交互保留，上界、取等与约束数值正确",
     "切换语言保留阅读段落，刷新恢复语言/深度/答案展开/阅读位置",
     "78 个术语窗中英释义与例子完整，正文跳转有效，搜索与空结果提示正常",
@@ -15,241 +15,241 @@
   "unit_text": [
     {
       "unit": "01",
-      "zh_characters": 1187,
-      "en_words": 500
+      "zh_characters": 1126,
+      "en_words": 463
     },
     {
       "unit": "02",
-      "zh_characters": 961,
-      "en_words": 398
+      "zh_characters": 3515,
+      "en_words": 1223
     },
     {
       "unit": "03",
-      "zh_characters": 958,
-      "en_words": 378
+      "zh_characters": 897,
+      "en_words": 341
     },
     {
       "unit": "04",
-      "zh_characters": 1398,
-      "en_words": 549
+      "zh_characters": 1337,
+      "en_words": 512
     },
     {
       "unit": "05",
-      "zh_characters": 866,
-      "en_words": 385
+      "zh_characters": 805,
+      "en_words": 348
     },
     {
       "unit": "06",
-      "zh_characters": 809,
-      "en_words": 323
+      "zh_characters": 748,
+      "en_words": 286
     },
     {
       "unit": "07",
+      "zh_characters": 802,
+      "en_words": 300
+    },
+    {
+      "unit": "08",
+      "zh_characters": 569,
+      "en_words": 221
+    },
+    {
+      "unit": "09",
+      "zh_characters": 1089,
+      "en_words": 409
+    },
+    {
+      "unit": "10",
+      "zh_characters": 11505,
+      "en_words": 4729
+    },
+    {
+      "unit": "11",
+      "zh_characters": 807,
+      "en_words": 325
+    },
+    {
+      "unit": "12",
+      "zh_characters": 586,
+      "en_words": 231
+    },
+    {
+      "unit": "13",
+      "zh_characters": 1057,
+      "en_words": 351
+    },
+    {
+      "unit": "14",
+      "zh_characters": 887,
+      "en_words": 272
+    },
+    {
+      "unit": "15",
+      "zh_characters": 602,
+      "en_words": 214
+    },
+    {
+      "unit": "16",
+      "zh_characters": 754,
+      "en_words": 293
+    },
+    {
+      "unit": "17",
+      "zh_characters": 614,
+      "en_words": 238
+    },
+    {
+      "unit": "18",
+      "zh_characters": 720,
+      "en_words": 237
+    },
+    {
+      "unit": "19",
+      "zh_characters": 766,
+      "en_words": 303
+    },
+    {
+      "unit": "20",
+      "zh_characters": 834,
+      "en_words": 360
+    },
+    {
+      "unit": "21",
+      "zh_characters": 829,
+      "en_words": 294
+    },
+    {
+      "unit": "22",
+      "zh_characters": 788,
+      "en_words": 299
+    },
+    {
+      "unit": "23",
+      "zh_characters": 922,
+      "en_words": 325
+    },
+    {
+      "unit": "24",
+      "zh_characters": 801,
+      "en_words": 281
+    },
+    {
+      "unit": "25",
+      "zh_characters": 885,
+      "en_words": 333
+    },
+    {
+      "unit": "26",
+      "zh_characters": 650,
+      "en_words": 242
+    },
+    {
+      "unit": "27",
+      "zh_characters": 912,
+      "en_words": 342
+    },
+    {
+      "unit": "28",
+      "zh_characters": 622,
+      "en_words": 259
+    },
+    {
+      "unit": "29",
+      "zh_characters": 949,
+      "en_words": 370
+    },
+    {
+      "unit": "30",
+      "zh_characters": 994,
+      "en_words": 349
+    },
+    {
+      "unit": "31",
+      "zh_characters": 783,
+      "en_words": 314
+    },
+    {
+      "unit": "32",
+      "zh_characters": 843,
+      "en_words": 314
+    },
+    {
+      "unit": "33",
+      "zh_characters": 1193,
+      "en_words": 382
+    },
+    {
+      "unit": "34",
+      "zh_characters": 730,
+      "en_words": 285
+    },
+    {
+      "unit": "35",
+      "zh_characters": 739,
+      "en_words": 263
+    },
+    {
+      "unit": "36",
       "zh_characters": 863,
       "en_words": 337
     },
     {
-      "unit": "08",
-      "zh_characters": 630,
-      "en_words": 258
-    },
-    {
-      "unit": "09",
-      "zh_characters": 1150,
-      "en_words": 446
-    },
-    {
-      "unit": "10",
-      "zh_characters": 11944,
-      "en_words": 4965
-    },
-    {
-      "unit": "11",
-      "zh_characters": 868,
-      "en_words": 362
-    },
-    {
-      "unit": "12",
-      "zh_characters": 647,
-      "en_words": 268
-    },
-    {
-      "unit": "13",
-      "zh_characters": 1118,
-      "en_words": 388
-    },
-    {
-      "unit": "14",
-      "zh_characters": 948,
-      "en_words": 309
-    },
-    {
-      "unit": "15",
-      "zh_characters": 663,
-      "en_words": 251
-    },
-    {
-      "unit": "16",
-      "zh_characters": 815,
-      "en_words": 330
-    },
-    {
-      "unit": "17",
-      "zh_characters": 675,
-      "en_words": 275
-    },
-    {
-      "unit": "18",
-      "zh_characters": 781,
-      "en_words": 274
-    },
-    {
-      "unit": "19",
-      "zh_characters": 827,
-      "en_words": 340
-    },
-    {
-      "unit": "20",
-      "zh_characters": 895,
-      "en_words": 397
-    },
-    {
-      "unit": "21",
-      "zh_characters": 890,
-      "en_words": 331
-    },
-    {
-      "unit": "22",
-      "zh_characters": 849,
-      "en_words": 336
-    },
-    {
-      "unit": "23",
-      "zh_characters": 983,
-      "en_words": 362
-    },
-    {
-      "unit": "24",
-      "zh_characters": 862,
-      "en_words": 318
-    },
-    {
-      "unit": "25",
-      "zh_characters": 946,
-      "en_words": 370
-    },
-    {
-      "unit": "26",
-      "zh_characters": 711,
-      "en_words": 279
-    },
-    {
-      "unit": "27",
-      "zh_characters": 973,
-      "en_words": 379
-    },
-    {
-      "unit": "28",
-      "zh_characters": 683,
-      "en_words": 296
-    },
-    {
-      "unit": "29",
-      "zh_characters": 1010,
-      "en_words": 407
-    },
-    {
-      "unit": "30",
-      "zh_characters": 1055,
-      "en_words": 386
-    },
-    {
-      "unit": "31",
-      "zh_characters": 844,
-      "en_words": 351
-    },
-    {
-      "unit": "32",
-      "zh_characters": 904,
-      "en_words": 351
-    },
-    {
-      "unit": "33",
-      "zh_characters": 1254,
-      "en_words": 419
-    },
-    {
-      "unit": "34",
-      "zh_characters": 791,
-      "en_words": 322
-    },
-    {
-      "unit": "35",
-      "zh_characters": 800,
-      "en_words": 300
-    },
-    {
-      "unit": "36",
-      "zh_characters": 924,
-      "en_words": 374
-    },
-    {
       "unit": "37",
-      "zh_characters": 673,
-      "en_words": 289
+      "zh_characters": 612,
+      "en_words": 252
     },
     {
       "unit": "38",
-      "zh_characters": 857,
-      "en_words": 331
+      "zh_characters": 796,
+      "en_words": 294
     },
     {
       "unit": "39",
-      "zh_characters": 962,
-      "en_words": 394
+      "zh_characters": 901,
+      "en_words": 357
     },
     {
       "unit": "40",
-      "zh_characters": 1283,
-      "en_words": 416
+      "zh_characters": 1222,
+      "en_words": 379
     },
     {
       "unit": "41",
-      "zh_characters": 936,
-      "en_words": 354
+      "zh_characters": 875,
+      "en_words": 317
     },
     {
       "unit": "42",
-      "zh_characters": 1441,
-      "en_words": 522
+      "zh_characters": 1380,
+      "en_words": 485
     },
     {
       "unit": "43",
-      "zh_characters": 872,
-      "en_words": 295
+      "zh_characters": 811,
+      "en_words": 258
     },
     {
       "unit": "44",
-      "zh_characters": 1271,
-      "en_words": 495
+      "zh_characters": 1210,
+      "en_words": 458
     },
     {
       "unit": "45",
-      "zh_characters": 1281,
-      "en_words": 437
+      "zh_characters": 1220,
+      "en_words": 400
     },
     {
       "unit": "46",
-      "zh_characters": 1336,
-      "en_words": 445
+      "zh_characters": 1275,
+      "en_words": 408
     },
     {
       "unit": "47",
-      "zh_characters": 846,
-      "en_words": 324
+      "zh_characters": 785,
+      "en_words": 287
     }
   ],
   "browser_errors": [],
-  "zh_total": 55240,
-  "en_words_total": 21616
+  "zh_total": 54610,
+  "en_words_total": 20540
 }
