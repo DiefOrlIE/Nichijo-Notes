@@ -32,7 +32,8 @@ function showTerm(s){const v=terms[s];if(!v)return;$('#term-name').textContent=s
 document.addEventListener('click',e=>{const t=e.target.closest('.term');if(t)showTerm(t.dataset.term);});
 document.addEventListener('keydown',e=>{const t=e.target.closest('.term');if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();showTerm(t.dataset.term);}});
 $('#term-close').onclick=()=>dialog.close();
-const KEY='nichijo-dsa-midterm:v1',layers=$$('.layer'),answers=$$('.question details,details[data-q]');
+$('.question details').forEach((d,i)=>{if(!d.id&&!d.dataset.q)d.dataset.q='answer-'+i;});
+const KEY='nichijo-dsa-midterm:v1',layers=$('.layer'),answers=$('.question details,details[data-q]');
 let saved=null;try{saved=JSON.parse(localStorage.getItem(KEY)||'null');}catch{}
 let tier=Number.isInteger(saved?.tier)&&saved.tier>=1&&saved.tier<=4?saved.tier:2;
 let theme=saved?.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
