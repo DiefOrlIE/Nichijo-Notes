@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - ".github/workflows/check-dsa-guide.yml"
+      - ".github/scripts/check-dsa.mjs"
   workflow_dispatch:
 permissions:
   contents: write
