@@ -16,11 +16,12 @@ chapters.forEach((ch,i)=>{
  const a=document.createElement('a');a.href='#'+ch.id;a.textContent=String(i).padStart(2,'0')+' · '+ch.title;nav.appendChild(a);
  for(const t of ch.sections){const b=document.createElement('a');b.className='subchapter';b.href='#'+ch.id+'-'+t.id;b.textContent=t.title;nav.appendChild(b);}
 });
-for(const [id,label] of [['glossary','术语与缩写'],['sources','出处与勘误'],['exam','综合练习与速查']]){const a=document.createElement('a');a.href='#'+id;a.textContent=label;nav.appendChild(a);}
+for(const [id,label] of [['glossary','术语与缩写'],['sources','出处与勘误'],['homework','两份作业覆盖'],['exam','综合练习与速查']]){const a=document.createElement('a');a.href='#'+id;a.textContent=label;nav.appendChild(a);}
 const terms=window.NICHIJO_TERMS||{},tb=$('#glossary-table tbody');
 Object.entries(terms).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([k,v])=>{let r=document.createElement('tr');r.innerHTML='<td>'+esc(k)+'</td><td>'+esc(v[0])+'</td><td>'+esc(v[1])+'</td>';tb.appendChild(r);});
 $('#errata-content').innerHTML=window.NICHIJO_ERRATA||'';
 $('#exam-content').innerHTML=window.NICHIJO_EXAM||'';
+$('#homework-content').innerHTML=window.NICHIJO_HOMEWORK||'';
 const keys=Object.keys(terms).filter(s=>s.length>1).sort((a,b)=>b.length-a.length);
 const pattern=keys.length?new RegExp('(^|[^A-Za-z0-9_])('+keys.map(s=>s.replace(/[.*+?^$()|[\]{}\\]/g,'\\$&')).join('|')+')(?=$|[^A-Za-z0-9_])','g'):null;
 if(pattern){const walker=document.createTreeWalker($('#content'),NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!n.nodeValue||!p||p.closest('pre,code,abbr,a,button,summary,script,style,svg,#glossary-table,.term'))return NodeFilter.FILTER_REJECT;pattern.lastIndex=0;return pattern.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
