@@ -1,0 +1,268 @@
+{
+  "date": "2026-10-15",
+  "scope": "47个课程单元阅读层正文与图注；不含标题、目标、术语表、来源表和原课件图片。中文计字符，英文计空格词。",
+  "authors": "正文由主助手改写；DeepSeek仅作为审稿参考；未使用humanizer。",
+  "counts": {
+    "all": {
+      "zh": {
+        "before": 53051,
+        "after": 28541,
+        "remaining_ratio": 0.538
+      },
+      "en": {
+        "before": 20077,
+        "after": 10842,
+        "remaining_ratio": 0.54
+      }
+    },
+    "default_understand": {
+      "zh": {
+        "before": 32663,
+        "after": 16298,
+        "remaining_ratio": 0.499
+      },
+      "en": {
+        "before": 12844,
+        "after": 6381,
+        "remaining_ratio": 0.4968
+      }
+    }
+  },
+  "units": [
+    {
+      "id": "u01",
+      "zh_before": 1145,
+      "zh_after": 661
+    },
+    {
+      "id": "u02",
+      "zh_before": 3608,
+      "zh_after": 1230
+    },
+    {
+      "id": "u03",
+      "zh_before": 901,
+      "zh_after": 618
+    },
+    {
+      "id": "u04",
+      "zh_before": 1336,
+      "zh_after": 654
+    },
+    {
+      "id": "u05",
+      "zh_before": 792,
+      "zh_after": 475
+    },
+    {
+      "id": "u06",
+      "zh_before": 744,
+      "zh_after": 475
+    },
+    {
+      "id": "u07",
+      "zh_before": 812,
+      "zh_after": 511
+    },
+    {
+      "id": "u08",
+      "zh_before": 502,
+      "zh_after": 356
+    },
+    {
+      "id": "u09",
+      "zh_before": 1115,
+      "zh_after": 647
+    },
+    {
+      "id": "u10",
+      "zh_before": 10807,
+      "zh_after": 5047
+    },
+    {
+      "id": "u11",
+      "zh_before": 817,
+      "zh_after": 449
+    },
+    {
+      "id": "u12",
+      "zh_before": 516,
+      "zh_after": 351
+    },
+    {
+      "id": "u13",
+      "zh_before": 1048,
+      "zh_after": 571
+    },
+    {
+      "id": "u14",
+      "zh_before": 794,
+      "zh_after": 547
+    },
+    {
+      "id": "u15",
+      "zh_before": 535,
+      "zh_after": 382
+    },
+    {
+      "id": "u16",
+      "zh_before": 760,
+      "zh_after": 492
+    },
+    {
+      "id": "u17",
+      "zh_before": 543,
+      "zh_after": 386
+    },
+    {
+      "id": "u18",
+      "zh_before": 650,
+      "zh_after": 406
+    },
+    {
+      "id": "u19",
+      "zh_before": 762,
+      "zh_after": 419
+    },
+    {
+      "id": "u20",
+      "zh_before": 842,
+      "zh_after": 481
+    },
+    {
+      "id": "u21",
+      "zh_before": 841,
+      "zh_after": 502
+    },
+    {
+      "id": "u22",
+      "zh_before": 795,
+      "zh_after": 447
+    },
+    {
+      "id": "u23",
+      "zh_before": 914,
+      "zh_after": 475
+    },
+    {
+      "id": "u24",
+      "zh_before": 829,
+      "zh_after": 474
+    },
+    {
+      "id": "u25",
+      "zh_before": 883,
+      "zh_after": 524
+    },
+    {
+      "id": "u26",
+      "zh_before": 677,
+      "zh_after": 422
+    },
+    {
+      "id": "u27",
+      "zh_before": 919,
+      "zh_after": 477
+    },
+    {
+      "id": "u28",
+      "zh_before": 630,
+      "zh_after": 378
+    },
+    {
+      "id": "u29",
+      "zh_before": 950,
+      "zh_after": 538
+    },
+    {
+      "id": "u30",
+      "zh_before": 1007,
+      "zh_after": 530
+    },
+    {
+      "id": "u31",
+      "zh_before": 774,
+      "zh_after": 450
+    },
+    {
+      "id": "u32",
+      "zh_before": 848,
+      "zh_after": 464
+    },
+    {
+      "id": "u33",
+      "zh_before": 1112,
+      "zh_after": 607
+    },
+    {
+      "id": "u34",
+      "zh_before": 716,
+      "zh_after": 421
+    },
+    {
+      "id": "u35",
+      "zh_before": 665,
+      "zh_after": 350
+    },
+    {
+      "id": "u36",
+      "zh_before": 847,
+      "zh_after": 511
+    },
+    {
+      "id": "u37",
+      "zh_before": 544,
+      "zh_after": 296
+    },
+    {
+      "id": "u38",
+      "zh_before": 772,
+      "zh_after": 458
+    },
+    {
+      "id": "u39",
+      "zh_before": 831,
+      "zh_after": 468
+    },
+    {
+      "id": "u40",
+      "zh_before": 1228,
+      "zh_after": 711
+    },
+    {
+      "id": "u41",
+      "zh_before": 886,
+      "zh_after": 500
+    },
+    {
+      "id": "u42",
+      "zh_before": 1350,
+      "zh_after": 766
+    },
+    {
+      "id": "u43",
+      "zh_before": 726,
+      "zh_after": 446
+    },
+    {
+      "id": "u44",
+      "zh_before": 1132,
+      "zh_after": 533
+    },
+    {
+      "id": "u45",
+      "zh_before": 1224,
+      "zh_after": 638
+    },
+    {
+      "id": "u46",
+      "zh_before": 1200,
+      "zh_after": 582
+    },
+    {
+      "id": "u47",
+      "zh_before": 722,
+      "zh_after": 415
+    }
+  ]
+}
