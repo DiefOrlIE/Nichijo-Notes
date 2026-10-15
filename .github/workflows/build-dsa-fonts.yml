@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - ".github/workflows/build-dsa-fonts.yml"
+      - "dsa-midterm/*.js"
+      - "dsa-midterm/index.html"
+      - "dsa-midterm/style.css"
   workflow_dispatch:
 permissions:
   contents: write
@@ -63,4 +66,9 @@ jobs:
           git add dsa-midterm/fonts
           if git diff --cached --quiet; then echo "Font subsets already up to date"; exit 0; fi
           git commit -m "Embed OFL Chinese serif font subsets for DSA"
-          git push
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push; then exit 0; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 2
+          done
