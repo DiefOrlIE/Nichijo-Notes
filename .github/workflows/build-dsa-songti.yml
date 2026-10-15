@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - ".github/workflows/build-dsa-songti.yml"
+      - "dsa-midterm/*.js"
+      - "dsa-midterm/index.html"
+      - "dsa-midterm/style.css"
   workflow_dispatch:
 permissions:
   contents: write
