@@ -5,7 +5,7 @@ on:
       - ".github/workflows/check-dsa-guide.yml"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -22,6 +22,7 @@ jobs:
           npm install --no-save playwright
           npx playwright install --with-deps chromium
       - name: Test responsive reader and all interactive functions
+        id: smoke
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dsa-server.log 2>&1 &
           sleep 3
@@ -36,3 +37,21 @@ jobs:
             dsa-phone.png
             dsa-tablet.png
           if-no-files-found: ignore
+      - name: Record verification status in repository
+        if: always()
+        run: |
+          mkdir -p dsa-midterm
+          cat > dsa-midterm/verification.json <<'JSON'
+          {
+            "syntax": "${{ steps.smoke.outcome == 'skipped' && 'not_run' || 'checked' }}",
+            "browser_tests": "${{ steps.smoke.outcome }}",
+            "viewports": ["1360x900 desktop", "390x844 phone", "820x1180 tablet"],
+            "font": "Nichijo Noto Serif self-hosted regular and bold",
+            "test_script": ".github/scripts/check-dsa.mjs"
+          }
+          JSON
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dsa-midterm/verification.json
+          git commit -m "Record DSA browser validation result" || true
+          git push
