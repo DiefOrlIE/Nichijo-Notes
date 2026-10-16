@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "Schur square completion",
+    "Gradient example exact change",
+    "Quadratic dual value and original feasibility",
+    "Diagonal quadratic example sqrt5",
+    "Rectangular row norm attainment",
+    "Pseudoinverse example",
+    "LSE gradient/Hessian finite differences at ten points",
+    "SOC exterior certificate",
+    "Distance halfspace coefficients",
+    "Perspective inverse mixture",
+    "Strict square convexity gap",
+    "Partial minimization square",
+    "Negative log conjugate",
+    "Sum of log-concave counterexample",
+    "Conjugate translated quadratic",
+    "Matrix convex outer-product gaps at ten pairs",
+    "Transfer scalar second derivatives",
+    "Rank-deficient least-squares null direction",
+    "Weighted infinity allowance near interior point",
+    "Infinity norm cone dual test signs"
+  ],
+  "limits": "Numerical samples and symbolic identities supplement, rather than establish, general proofs."
+}

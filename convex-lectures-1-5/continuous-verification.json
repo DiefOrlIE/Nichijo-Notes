@@ -1,0 +1,68 @@
+{
+  "units": 47,
+  "terms": 78,
+  "source_pages": 280,
+  "pages": [
+    {
+      "page": "index.html",
+      "html_sha256": "9ca95735f10b939d53538ec6f8f289b4ad5cb17182b04f7acb2d23006bbf320a",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "math_errors": 0,
+      "overflow": false,
+      "term_cards": 78,
+      "theme_memory": true,
+      "js_errors": []
+    },
+    {
+      "page": "index.html",
+      "html_sha256": "9ca95735f10b939d53538ec6f8f289b4ad5cb17182b04f7acb2d23006bbf320a",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "math_errors": 0,
+      "overflow": false,
+      "term_cards": 78,
+      "theme_memory": true,
+      "js_errors": []
+    },
+    {
+      "page": "hw1-route.html",
+      "html_sha256": "e3e4a4eaa05e6ae3fdae7c55e30a7f0b43f00c156f0f59aa6bb223f444818b45",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "math_errors": 0,
+      "overflow": false,
+      "term_cards": 78,
+      "theme_memory": true,
+      "js_errors": []
+    },
+    {
+      "page": "hw1-route.html",
+      "html_sha256": "e3e4a4eaa05e6ae3fdae7c55e30a7f0b43f00c156f0f59aa6bb223f444818b45",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "math_errors": 0,
+      "overflow": false,
+      "term_cards": 78,
+      "theme_memory": true,
+      "js_errors": []
+    }
+  ],
+  "limits": [
+    "Chrome at desktop and mobile viewport sizes; no real iOS Safari test.",
+    "Source page mapping and image files checked; not every original slide formula visually reread.",
+    "Third-party review and numerical checks do not establish student mastery."
+  ]
+}

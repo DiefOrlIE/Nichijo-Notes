@@ -1,0 +1,41 @@
+{
+  "chapter": 2,
+  "html_sha256": "68242d65020fade9009f166c6588cc294d7784eb5145b5690b2e1c6135bd4740",
+  "browser": [
+    {
+      "width": 1360,
+      "language": "zh",
+      "math_errors": 0,
+      "page_overflow": false,
+      "js_errors": []
+    },
+    {
+      "width": 1360,
+      "language": "en",
+      "math_errors": 0,
+      "page_overflow": false,
+      "js_errors": []
+    },
+    {
+      "width": 390,
+      "language": "zh",
+      "math_errors": 0,
+      "page_overflow": false,
+      "js_errors": []
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "math_errors": 0,
+      "page_overflow": false,
+      "js_errors": []
+    }
+  ],
+  "source_checks": [
+    "unique IDs",
+    "all internal anchors",
+    "source images exist",
+    "no depth controls",
+    "no Python-escaped math control characters"
+  ]
+}
