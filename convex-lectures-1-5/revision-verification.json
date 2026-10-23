@@ -1,0 +1,249 @@
+{
+  "date": "2026-10-23",
+  "static": [
+    {
+      "page": "index.html",
+      "units": 47,
+      "unique_ids": true,
+      "local_links": true,
+      "canonical_unit_text": true,
+      "sha256": "02de7f660d8af94acf497b061fcb9336d9c51409b4cad2869bec6a2e5b9f8443"
+    },
+    {
+      "page": "hw1-route.html",
+      "units": 47,
+      "unique_ids": true,
+      "local_links": true,
+      "canonical_unit_text": true,
+      "sha256": "81f181f383b3806d8df1373a79f79f2d2e4f901a7d9f8a142c64ec9d98aa6aed"
+    },
+    {
+      "page": "chapter-2.html",
+      "units": 13,
+      "unique_ids": true,
+      "local_links": true,
+      "canonical_unit_text": true,
+      "sha256": "f95a755af2159ca8f902bf1c0e24b37522d25f13e8829b37b74a05a6f99e2468"
+    },
+    {
+      "page": "chapter-3.html",
+      "units": 12,
+      "unique_ids": true,
+      "local_links": true,
+      "canonical_unit_text": true,
+      "sha256": "f1f1db90350f92e3a928e56dd185940b58b06cdcf9cb8b8dd609675bbb9cc8bb"
+    },
+    {
+      "page": "chapter-4.html",
+      "units": 10,
+      "unique_ids": true,
+      "local_links": true,
+      "canonical_unit_text": true,
+      "sha256": "46e1b2ee484ebd1fa9e3338d9b42cadd00cd7e4bc256fc4b4977e2a35dbad965"
+    },
+    {
+      "page": "chapter-5.html",
+      "units": 7,
+      "unique_ids": true,
+      "local_links": true,
+      "canonical_unit_text": true,
+      "sha256": "d972d379245ad5066b3a85382c0a648bcb563908e0766c58d4d1b7fa7df71867"
+    }
+  ],
+  "browser": [
+    {
+      "page": "index.html",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "index.html",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "hw1-route.html",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "hw1-route.html",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "chapter-2.html",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "chapter-2.html",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "chapter-5.html",
+      "width": 1360,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    },
+    {
+      "page": "chapter-5.html",
+      "width": 390,
+      "languages": [
+        "zh",
+        "en"
+      ],
+      "formula_errors": 0,
+      "page_overflow": false,
+      "term_cards": 78,
+      "answers_fold": true,
+      "theme_memory": true,
+      "javascript_errors": []
+    }
+  ],
+  "mathematics": {
+    "least_squares": {
+      "parameters": [
+        "1/2",
+        "5/2"
+      ],
+      "residual": [
+        "-1/2",
+        "1",
+        "-1/2"
+      ],
+      "squared_error": "3/2",
+      "normal_equation": true
+    },
+    "log_transform": {
+      "minimum_input": "1",
+      "minimum_cost": "e",
+      "product_input": "2/3",
+      "product_cost": "9e^2/4",
+      "derivatives": true
+    },
+    "coordinate_change": true,
+    "rectangular_pseudoinverse": true,
+    "schur_example": true,
+    "chain_rule": true,
+    "mixed_hessian": true,
+    "lse_hessian_at_zero": true,
+    "partial_minimization": true,
+    "perspective_weights": true,
+    "unequal_valleys": true,
+    "scope": "Exact symbolic checks of listed examples. General claims are checked in the manuscript proofs."
+  },
+  "source_pages": 280,
+  "source_archive_baseline_preserved": true,
+  "pending": [
+    "Real-reader first-pass trials across all units.",
+    "Immediate and delayed independent transfer tasks."
+  ],
+  "term_destination_update": {
+    "basis": "u12",
+    "relative": "u22",
+    "scope": "Only glossary destinations changed after the full browser run; exact page hashes refreshed by static verification.",
+    "browser": [
+      {
+        "page": "index.html",
+        "basis": "u12",
+        "relative": "u22",
+        "formula_errors": 0
+      },
+      {
+        "page": "hw1-route.html",
+        "basis": "u12",
+        "relative": "u22",
+        "formula_errors": 0
+      },
+      {
+        "page": "chapter-2.html",
+        "basis": "u12",
+        "relative": "u22",
+        "formula_errors": 0
+      },
+      {
+        "page": "chapter-3.html",
+        "basis": "u12",
+        "relative": "u22",
+        "formula_errors": 0
+      },
+      {
+        "page": "chapter-4.html",
+        "basis": "u12",
+        "relative": "u22",
+        "formula_errors": 0
+      },
+      {
+        "page": "chapter-5.html",
+        "basis": "u12",
+        "relative": "u22",
+        "formula_errors": 0
+      }
+    ],
+    "cross_chapter_click": true
+  }
+}
