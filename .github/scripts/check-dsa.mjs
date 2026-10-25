@@ -1,83 +1,63 @@
-import { chromium } from 'playwright';
+import {chromium} from 'playwright';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-let allConsole=[];
-async function checkPage(page,kind) {
-  page.on('pageerror',error=>allConsole.push(kind+': '+error.message));
-  const response=await page.goto('http://127.0.0.1:8765/dsa-midterm/',{waitUntil:'networkidle'});
-  assert.equal(response.status(),200);
-  assert.equal(await page.locator('#chapters > .chapter').count(),15);
-  assert.equal(await page.locator('.topic').count(),95);
-  assert.equal(await page.locator('.layer:not([hidden])').count(),190);
-  assert.equal(await page.locator('#glossary-table tbody tr').count()>50,true);
-  assert.equal(await page.locator('#homework-content a[href^="#ch"]').count()>=15,true);
-  assert.equal(await page.locator('.question details').count()>=175,true);
-  assert.equal(await page.locator('.topic[id$="-extra-exercises"]').count(),15);
-  const fontState=await page.evaluate(async()=>{
-    await Promise.all([
-      document.fonts.load('17px "Nichijo Wenjin Songti"','数据库结构逻辑树'),
-      document.fonts.load('700 30px "Nichijo Source Han Serif"','数据结构算法'),
-    ]);
-    await document.fonts.ready;
-    const faces=[...document.fonts].map(f=>({family:f.family,status:f.status}));
-    return {faces,body:getComputedStyle(document.body).fontFamily,title:getComputedStyle(document.querySelector('main h1')).fontFamily};
-  });
-  assert.ok(fontState.body.includes('Nichijo Wenjin Songti'),'body not in embedded Songti');
-  assert.ok(fontState.title.includes('Nichijo Source Han Serif'),'headings not in embedded Source Han Serif');
-  for(const family of ['Nichijo Wenjin Songti','Nichijo Source Han Serif'])
-    assert.ok(fontState.faces.some(f=>f.family.includes(family)&&f.status==='loaded'),family+' missing or not loaded');
-
-  const codes=await page.locator('.layer[data-level="3"] pre code').count();
-  assert.ok(codes>=10,'missing code samples');
-  return true;
+const errors=[];
+async function open(page,name){
+ page.on('pageerror',e=>errors.push(name+': '+e.message));
+ const response=await page.goto('http://127.0.0.1:8765/dsa-midterm/',{waitUntil:'networkidle'});
+ assert.equal(response.status(),200);
+ assert.equal(await page.locator('#chapters>.chapter').count(),16);
+ assert.equal(await page.locator('#chapters .topic').count(),109);
+ assert.equal(await page.locator('[data-tier]').count(),0);
+ assert.equal(await page.locator('.layer').count(),0);
+ assert.ok(await page.locator('.question details,details.question').count()>75);
+ assert.equal(await page.locator('#ch15-asl-exam').count(),1);
+ assert.equal(await page.locator('#ch02-reverse-merge').count(),1);
+ assert.ok(await page.locator('#glossary-table tbody tr').count()>60);
+ assert.ok(await page.locator('#homework-content a[href^="#ch"]').count()>=15);
+ assert.ok((await page.locator('#ch15').innerText()).includes('线性探查'));
+ const fonts=await page.evaluate(async()=>{
+   await Promise.all([
+     document.fonts.load('17px "Nichijo Wenjin Songti"','集合并查集散列'),
+     document.fonts.load('700 22px "Nichijo Source Han Serif"','数据结构算法'),
+   ]);
+   await document.fonts.ready;
+   return {body:getComputedStyle(document.body).fontFamily,
+     heading:getComputedStyle(document.querySelector('main h1')).fontFamily,
+     loaded:[...document.fonts].filter(x=>x.status==='loaded').map(x=>x.family)};
+ });
+ assert.ok(fonts.body.includes('Nichijo Wenjin Songti'),'body typeface');
+ assert.ok(fonts.heading.includes('Nichijo Source Han Serif'),'heading typeface');
+ assert.ok(fonts.loaded.some(x=>x.includes('Nichijo Wenjin Songti')),'body font WOFF2');
+ assert.ok(fonts.loaded.some(x=>x.includes('Nichijo Source Han Serif')),'heading font WOFF2');
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+ assert.ok(overflow<=2,'horizontal overflow '+name+' '+overflow);
+ console.log(name+': 16 chapters, 109 units, local fonts, glossary, homework map, no tiers, no page overflow.');
 }
-try {
- const context=await browser.newContext({viewport:{width:1360,height:900}});
- const page=await context.newPage();
- await checkPage(page,'desktop');
- await page.locator('button[data-tier="4"]').click();
- assert.equal(await page.locator('.layer:not([hidden])').count(),380);
- await page.locator('button[data-tier="3"]').click();
- assert.equal(await page.locator('.layer:not([hidden])').count(),285);
- const first=page.locator('.question details').first();
- const id=await first.getAttribute('id');
- await first.locator('summary').click();
- assert.equal(await first.evaluate(el=>el.open),true);
+try{
+ const desktop=await browser.newContext({viewport:{width:1360,height:900}});
+ const page=await desktop.newPage();await open(page,'desktop');
+ const answer=page.locator('#ch15-asl-exam details').first();
+ assert.ok(await answer.count(),'New hash unit answer');
+ await answer.locator('summary').click();assert.equal(await answer.evaluate(n=>n.open),true);
  await page.reload({waitUntil:'networkidle'});
- assert.equal(await page.locator('button[data-tier="3"]').getAttribute('aria-pressed'),'true');
- assert.equal(await page.locator('#'+id).evaluate(el=>el.open),true);
- await page.locator('button[data-tier="4"]').click();
- const ex=page.locator('#ch14-extra-exercises details').first();
- await ex.locator('summary').click();
- assert.equal(await ex.evaluate(el=>el.open),true);
- await page.reload({waitUntil:'networkidle'});
- assert.equal(await page.locator('#ch14-extra-exercises details').first().evaluate(el=>el.open),true);
- await page.locator('button[data-tier="3"]').click();
+ assert.equal(await page.locator('#ch15-asl-exam details').first().evaluate(n=>n.open),true);
  await page.locator('#theme-toggle').click();
  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
  await page.screenshot({path:'dsa-desktop.png',fullPage:false});
- await context.close();
+ await desktop.close();
  const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:3,isMobile:true,hasTouch:true});
- const phone=await mobile.newPage();
- await checkPage(phone,'phone');
+ const phone=await mobile.newPage();await open(phone,'mobile');
  await phone.locator('#menu-toggle').click();
- assert.equal(await phone.locator('#toc').evaluate(el=>el.classList.contains('show')),true);
- await phone.locator('#backdrop').click({position:{x:360,y:100}});
- assert.equal(await phone.locator('#toc').evaluate(el=>el.classList.contains('show')),false);
- const over=await phone.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
- assert.ok(over<=2,'mobile page horizontal overflow: '+over);
+ assert.equal(await phone.locator('#toc').evaluate(n=>n.classList.contains('show')),true);
+ await phone.locator('#backdrop').click({position:{x:360,y:140}});
+ assert.equal(await phone.locator('#toc').evaluate(n=>n.classList.contains('show')),false);
  await phone.screenshot({path:'dsa-phone.png',fullPage:false});
  await mobile.close();
  const tablet=await browser.newContext({viewport:{width:820,height:1180},deviceScaleFactor:2,isMobile:true,hasTouch:true});
- const ipad=await tablet.newPage();
- await checkPage(ipad,'tablet');
- const tabletOver=await ipad.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
- assert.ok(tabletOver<=2,'tablet page horizontal overflow: '+tabletOver);
+ const ipad=await tablet.newPage();await open(ipad,'tablet');
  await ipad.screenshot({path:'dsa-tablet.png',fullPage:false});
  await tablet.close();
- assert.deepEqual(allConsole,[]);
- console.log('PASS: 95 sections, 75 new guided questions, 15 chapter exercise sections, desktop/phone/tablet layouts, four tiers, answer persistence, theme, and two separately loaded self-hosted Songti webfonts.');
-} finally {
- await browser.close();
-}
+ assert.deepEqual(errors,[]);
+ console.log('PASS continuous Markdown manuscript, 16 chapters, hash exercises, old anchor, answer persistence, dark mode, local dual fonts, desktop/phone/tablet.');
+}finally{await browser.close();}
