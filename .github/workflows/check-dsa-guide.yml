@@ -4,6 +4,7 @@ on:
     paths:
       - ".github/workflows/check-dsa-guide.yml"
       - ".github/scripts/check-dsa.mjs"
+      - ".github/scripts/verify-dsa-algorithms.py"
       - "dsa-midterm/**"
   workflow_dispatch:
 permissions:
@@ -20,6 +21,8 @@ jobs:
         id: syntax
         run: |
           for f in dsa-midterm/*.js dsa-midterm/v2/*.js; do node --check "$f"; done
+      - name: Compile example code and recompute algorithm answers
+        run: python3 .github/scripts/verify-dsa-algorithms.py
       - name: Install headless Chromium
         run: |
           npm install --no-save playwright
