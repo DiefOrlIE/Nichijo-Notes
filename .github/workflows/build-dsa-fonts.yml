@@ -1,12 +1,5 @@
-name: Build self-hosted DSA serif fonts
+name: Legacy Source Han build (manual)
 on:
-  push:
-    paths:
-      - ".github/workflows/build-dsa-fonts.yml"
-      - "dsa-midterm/*.js"
-      - "dsa-midterm/index.html"
-      - "dsa-midterm/style.css"
-      - "dsa-midterm/v2/chapters/**"
   workflow_dispatch:
 permissions:
   contents: write
