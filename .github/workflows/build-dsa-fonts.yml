@@ -6,6 +6,7 @@ on:
       - "dsa-midterm/*.js"
       - "dsa-midterm/index.html"
       - "dsa-midterm/style.css"
+      - "dsa-midterm/v2/chapters/**"
   workflow_dispatch:
 permissions:
   contents: write
@@ -31,6 +32,7 @@ jobs:
           source=''.join(p.read_text(encoding='utf-8') for p in d.glob('*.js'))
           source+=(d/'index.html').read_text(encoding='utf-8')
           source+=(d/'style.css').read_text(encoding='utf-8')
+          source+=''.join(p.read_text(encoding='utf-8') for p in (d/'v2'/'chapters').glob('*.md'))
           glyphs=set(source)
           glyphs.update(map(chr,range(32,127)))
           glyphs.update("中文宋体楷书结构算法证明为什么如何写编码理解深度")
