@@ -1,12 +1,5 @@
-name: Embed Wenjin Songti body font
+name: Legacy Wenjin Songti build (manual)
 on:
-  push:
-    paths:
-      - ".github/workflows/build-dsa-songti.yml"
-      - "dsa-midterm/*.js"
-      - "dsa-midterm/index.html"
-      - "dsa-midterm/style.css"
-      - "dsa-midterm/v2/chapters/**"
   workflow_dispatch:
 permissions:
   contents: write
