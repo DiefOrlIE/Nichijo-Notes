@@ -1,7 +1,4 @@
-Source font: Noto Serif CJK SC, based on Source Han Serif.
-Licensed under SIL Open Font License 1.1.
-This file includes upstream package licensing information.
-
+Noto Serif CJK SC / Source Han Serif, SIL OFL 1.1
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: noto-cjk
 Upstream-Contact: https://github.com/notofonts/noto-cjk/issues
