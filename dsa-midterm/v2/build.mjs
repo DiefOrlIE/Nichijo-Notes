@@ -34,4 +34,6 @@ const corpus=chapters.map(c=>c.introHtml+c.sections.map(s=>s.html).join('\n')).j
 if(/data-tier|四档累计显示|当前档新增/.test(corpus))throw Error('Old tier language remains in narrative');
 const output='/* Generated from v2/chapters/*.md. Do not edit manually. */\nwindow.NICHIJO_V2='+JSON.stringify(chapters)+';\n';
 fs.writeFileSync(path.join(root,'course-data.js'),output,'utf8');
+fs.copyFileSync(path.join(root,'template.html'),path.join(root,'..','index.html'));
+
 console.log(JSON.stringify({chapters:chapters.length,units:chapters.reduce((n,c)=>n+c.sections.length,0),sourceChars:corpus.length,anchors:anchors.size,outputBytes:Buffer.byteLength(output)},null,2));
