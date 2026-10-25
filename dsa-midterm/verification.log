@@ -1,19 +1,4 @@
-node:internal/modules/run_main:123
-    triggerUncaughtException(
-    ^
-
-AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
-
-16 !== 15
-
-    at checkPage (file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:10:10)
-    at async file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:38:2 {
-  generatedMessage: true,
-  code: 'ERR_ASSERTION',
-  actual: 16,
-  expected: 15,
-  operator: 'strictEqual',
-  diff: 'simple'
-}
-
-Node.js v22.23.3
+desktop: 16 chapters, 109 units, local fonts, glossary, homework map, no tiers, no page overflow.
+mobile: 16 chapters, 109 units, local fonts, glossary, homework map, no tiers, no page overflow.
+tablet: 16 chapters, 109 units, local fonts, glossary, homework map, no tiers, no page overflow.
+PASS continuous Markdown manuscript, 16 chapters, hash exercises, old anchor, answer persistence, dark mode, local dual fonts, desktop/phone/tablet.
