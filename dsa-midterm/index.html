@@ -1,7 +1,44 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="2026 秋季数据结构与算法课程四档累积自学讲义：九份 PPT，C++、线性表、栈、队列、递归、KMP、树、堆、哈夫曼树、BST、AVL 删除，备考练习及答案。"><title>数据结构与算法 · 四档期中自学讲义 | Nichijo Notes</title><link rel="stylesheet" href="./style.css"></head>
-<body><div id="backdrop" aria-hidden="true"></div><div class="layout"><aside id="toc" aria-label="章节目录"><h1>数据结构与算法</h1><div class="sub">2026 秋 · 期中自学讲义<br>九份课件 · 速通／了解／掌握／深入</div><nav id="chapter-links"></nav></aside><div class="contentwrap">
-<div id="toolbar"><div class="toolbar-row"><button class="menutoggle" id="menu-toggle" aria-expanded="false">目录</button><span class="toolbar-name">DSA · 四档累积讲义</span><button data-tier="1" aria-pressed="false">速通</button><button data-tier="2" aria-pressed="true">了解</button><button data-tier="3" aria-pressed="false">掌握</button><button data-tier="4" aria-pressed="false">深入</button><button id="theme-toggle" class="ghost" title="切换日间／夜间模式">夜间</button><button id="reset-memory" class="ghost" title="清除阅读进度">重置</button></div><div class="progress-track"><div id="progress"></div></div></div>
-<main id="content"><header id="start"><div class="eyebrow">N I C H I J O  ·  N O T E S</div><h1>数据结构与算法<br>四档期中自学讲义</h1><p class="lead">从「变量与指针」一直走到「AVL 删除」：用图、手工推演和 C++ 代码把原理真正学会。</p><p class="byline">基于南京大学人工智能学院 2026—2027 秋季 DSA 九份课件 · 讲义编排与补充解释独立撰写</p><div class="goal"><strong>阅读方法</strong>：初学先选「了解」，每章学完切换「掌握」做题。四档累计显示，当前档新增内容用蓝色边线标记。「速通」可在考前用来回顾。答案展开、层级、主题和阅读位置会自动记忆。</div><div class="mini-grid"><div><strong>第一周</strong><p>第 00—07 章：算法复杂度、线性表、栈、递归、队列、数组、KMP。目标是能逐步画出执行状态。</p></div><div><strong>第二周</strong><p>第 08—14 章：二叉树、树与森林、堆、哈夫曼、查找、BST、AVL。每天手工推演 2—4 道综合题，最后两天速通复盘。</p></div></div><p class="quiet">课程边界：仅覆盖当前提供的九份 PPT，最末为 AVL 删除；附录中的纠错、算法实现与必要前置知识已经区别标明。代码采用现代 C++17。例题下标约定以各节说明为准。</p></header><div id="chapters"></div><section class="chapter" id="glossary"><div class="chapter-heading"><div class="chapter-num">附录 A</div><h2>可点击术语与英文缩写总表</h2><p class="quiet">正文出现的常用缩写可以点击查看英文全称、中文解释。没有通行全称的名称会如实注明。</p></div><div class="table-scroll"><table id="glossary-table"><thead><tr><th>术语</th><th>英文全称／来源</th><th>中文含义</th></tr></thead><tbody></tbody></table></div></section><section class="chapter" id="sources"><div class="chapter-heading"><div class="chapter-num">附录 B</div><h2>课件出处、版本约定与勘误</h2></div><p>每章标题下列出对应 PPT 和范围。课件中的历史代码保留其教学思路；本讲义的可编译版本使用 C++17，明确检查边界、初始化和空指针。课程理论采用课件约定时，会特别说明与常见教材的区别。</p><div id="errata-content"></div></section><section class="chapter" id="homework"><div class="chapter-heading"><div class="chapter-num">附录 C</div><h2>两份文字作业 · 逐题覆盖与核对</h2></div><div id="homework-content"></div></section><section class="chapter" id="exam"><div class="chapter-heading"><div class="chapter-num">附录 D</div><h2>期中临考速查与综合练习</h2></div><div id="exam-content"></div></section><p class="byline">Nichijo Notes · 自学与复习用 · 最后核对：2026-10-15</p><a class="backtop" href="#start">↑ 返回顶部</a></main></div></div>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="数据结构与算法完整连续中文自学讲义：指针、线性表、栈、队列、KMP、树、堆、哈夫曼、BST、AVL、集合、并查集与散列表。每章含完整推导、代码、练习与可展开答案。">
+<title>数据结构与算法 · 连续自学讲义 | Nichijo Notes</title>
+<link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./v2/reader.css">
+</head>
+<body>
+<div id="backdrop" aria-hidden="true"></div>
+<div class="layout"><aside id="toc" aria-label="目录">
+<h1>数据结构与算法</h1>
+<div class="sub">2026 秋 · 一条完整的学习路线<br>16 章 · 先学会，再做题</div>
+<nav id="chapter-links"></nav></aside>
+<div class="contentwrap"><div id="toolbar"><div class="toolbar-row">
+<button class="menutoggle" id="menu-toggle" aria-expanded="false">目录</button>
+<span class="toolbar-name">数据结构 · 完整讲义</span>
+<button id="theme-toggle" class="ghost" title="切换日间和夜间模式">夜间</button>
+<button id="reset-memory" class="ghost" title="清除阅读进度和展开答案">重置记录</button>
+</div><div class="progress-track"><div id="progress"></div></div></div>
+<main id="content"><header id="start">
+<div class="eyebrow">N I C H I J O · N O T E S</div>
+<h1>数据结构与算法<br>完整自学讲义</h1>
+<p class="lead">从第一个指针到 AVL 删除，再到集合、并查集与散列表：先认识要解决的问题，沿具体例子学会方法，随后理解复杂度、边界与适用条件。</p>
+<p class="byline">依据南京大学人工智能学院 2026—2027 秋季数据结构课件与两份作业编写；课件之外的现代 C++17、推导及自测均为本讲义补充。</p>
+<div class="goal"><strong>怎么读：</strong>直接从本页向下顺读。必学概念、算法动机、关键推导和基础算例已经全部展开；练习的提示与答案、可跳过的进一步推导可按需打开。点击目录可跨章跳转，页面自动记住阅读位置和展开状态。</div>
+<div class="mini-grid"><div><strong>基础结构</strong><p>指针、复杂度、线性表、栈、递归、队列、数组及字符串。</p></div>
+<div><strong>树与查找</strong><p>二叉树重建、线索与森林、堆、哈夫曼、查找、BST 与 AVL。</p></div><div><strong>新增一讲</strong><p>集合、位向量、并查集、散列函数、冲突处理、成功及失败 ASL。</p></div></div>
+<p class="quiet">考试范围仍以教师要求为准；新增集合与散列单独成章，供当前课程后续学习。原讲义的旧章节链接保持可用。正文宋体、标题思源宋体均通过本站字体文件加载。</p>
+</header><div id="chapters"></div>
+<section class="chapter" id="glossary"><div class="chapter-heading"><div class="chapter-num">附录 A</div><h2>可点击缩写和技术名称</h2><p>正文中的常见英文缩写可以点击查阅。术语解释并不能代替前面的教学正文。</p></div>
+<div class="table-scroll"><table id="glossary-table"><thead><tr><th>术语</th><th>英文名称</th><th>中文说明</th></tr></thead><tbody></tbody></table></div></section>
+<section class="chapter" id="sources"><div class="chapter-heading"><div class="chapter-num">附录 B</div><h2>课件来源、代码约定与勘误</h2></div><p>每章附课件名称和范围；旧版本的代码错误及新一讲的差异都在这里说明。</p><div id="errata-content"></div></section>
+<section class="chapter" id="homework"><div class="chapter-heading"><div class="chapter-num">附录 C</div><h2>两份作业与相应学习位置</h2></div><div id="homework-content"></div></section>
+<section class="chapter" id="exam"><div class="chapter-heading"><div class="chapter-num">附录 D</div><h2>综合练习及复习建议</h2></div><div id="exam-content"></div></section>
+<p class="byline">Nichijo Notes · Markdown 单一讲稿源编译 · 2026-10-25</p>
+<a class="back-home" href="../">返回 Nichijo Notes 首页</a>
+</main></div></div>
 <dialog id="term-dialog" class="dialog" aria-label="术语解释"><button class="close" id="term-close">关闭 ×</button><h3 id="term-name"></h3><p id="term-en"></p><p id="term-cn"></p></dialog>
-<script>window.NICHIJO_CHAPTERS=[];</script><script src="./ch00.js"></script><script src="./ch01.js"></script><script src="./ch02.js"></script><script src="./ch03.js"></script><script src="./ch04.js"></script><script src="./ch05.js"></script><script src="./ch06.js"></script><script src="./ch07.js"></script><script src="./ch08.js"></script><script src="./ch09.js"></script><script src="./ch10.js"></script><script src="./ch11.js"></script><script src="./ch12.js"></script><script src="./ch13.js"></script><script src="./ch14.js"></script><script src="./practice-extra-a.js"></script><script src="./practice-extra-b.js"></script><script src="./appendix.js"></script><script src="./practice.js"></script><script defer src="./app.js"></script></body></html>
+<script src="./v2/course-data.js"></script>
+<script src="./appendix.js"></script><script src="./practice.js"></script>
+<script defer src="./v2/reader.js"></script>
+</body></html>
