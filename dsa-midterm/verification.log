@@ -1,1 +1,19 @@
-PASS: 95 sections, 75 new guided questions, 15 chapter exercise sections, desktop/phone/tablet layouts, four tiers, answer persistence, theme, and two separately loaded self-hosted Songti webfonts.
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+16 !== 15
+
+    at checkPage (file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:10:10)
+    at async file:///home/runner/work/Nichijo-Notes/Nichijo-Notes/.github/scripts/check-dsa.mjs:38:2 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 16,
+  expected: 15,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
