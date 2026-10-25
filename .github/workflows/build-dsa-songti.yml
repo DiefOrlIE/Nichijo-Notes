@@ -6,6 +6,7 @@ on:
       - "dsa-midterm/*.js"
       - "dsa-midterm/index.html"
       - "dsa-midterm/style.css"
+      - "dsa-midterm/v2/chapters/**"
   workflow_dispatch:
 permissions:
   contents: write
@@ -29,6 +30,7 @@ jobs:
           text=''.join(p.read_text(encoding='utf-8') for p in root.glob('*.js'))
           text+=(root/'index.html').read_text(encoding='utf-8')
           text+=(root/'style.css').read_text(encoding='utf-8')
+          text+=''.join(p.read_text(encoding='utf-8') for p in (root/'v2'/'chapters').glob('*.md'))
           unicode_set=set(map(ord,text))|set(range(32,127))
           font=TTFont('/tmp/WenJinMinchoP0-Regular.ttf')
           assert len(font.getBestCmap())>2000,'unexpected font format / LFS pointer'
