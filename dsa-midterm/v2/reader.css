@@ -1,0 +1,38 @@
+/* 连续学习模式：第一遍应读到的定义、推导与示例全部默认展开。 */
+body{font-size:17px;line-height:1.92}
+main{max-width:940px;margin-inline:auto}
+.chapter{padding-top:58px;margin-top:32px;border-top:1px solid var(--line)}
+.chapter-heading{margin-bottom:28px}
+.chapter-heading .chapter-intro{font-size:1.08rem;line-height:1.95;margin:18px 0 12px}
+.topic{margin:46px 0 72px;padding-top:16px;scroll-margin-top:128px}
+.topic h3{font-size:1.32rem;line-height:1.55;margin:0 0 20px;letter-spacing:.015em}
+.lesson-narrative>p{margin:15px 0 18px}
+.lesson-narrative>.lesson-body p{margin:14px 0}
+.lesson-narrative strong{font-weight:700}
+.lesson-narrative .checkpoint{border-left:3px solid var(--line);padding:8px 12px;margin-top:28px;color:var(--muted);background:transparent}
+.lesson-narrative .optional{margin:26px 0 8px;padding:12px 18px;background:var(--soft);border:1px solid var(--line);border-radius:7px}
+.lesson-narrative .optional>summary{font-family:"Nichijo Source Han Serif",serif;color:var(--muted);font-weight:600}
+.lesson-narrative details.question{margin:15px 0;padding:15px 18px;border:1px solid var(--line);border-radius:6px}
+.lesson-narrative details.question summary{font-family:"Nichijo Source Han Serif",serif;font-weight:600}
+.question .answer{margin-top:13px}
+.lesson-narrative .source{font-size:.9rem;color:var(--muted)}
+.lesson-narrative code,.question code{overflow-wrap:anywhere}
+.lesson-narrative pre,.lesson-narrative .diagram{max-width:100%;overflow:auto}
+.lesson-narrative table{display:block;overflow:auto;max-width:100%;white-space:normal}
+.lesson-narrative ul,.lesson-narrative ol{padding-left:1.55em}
+.lesson-narrative li{margin:6px 0}
+.chapter-link{font-weight:700}
+.toolbar-row{justify-content:space-between}
+.toolbar-name{font-family:"Nichijo Source Han Serif",serif;font-weight:600}
+#start .lead{max-width:760px}
+.back-home{display:inline-flex;margin-top:38px;align-items:center;text-decoration:none;font-size:.9em;padding:8px 11px;color:var(--accent);border:1px solid var(--line);border-radius:6px}
+@media(max-width:760px){
+  main{padding-inline:17px}
+  .topic{margin:35px 0 55px}
+  .chapter{padding-top:40px}
+  .topic h3{font-size:1.2rem}
+  .lesson-narrative .optional{padding:10px 12px}
+  .lesson-narrative details.question{padding:12px}
+  .toolbar-name{font-size:13px}
+  .lesson-narrative pre{font-size:12px}
+}
