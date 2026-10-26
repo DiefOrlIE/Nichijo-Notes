@@ -12,7 +12,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: dsa-v4-browser
+  group: dsa-v4-browser-fast
   cancel-in-progress: true
 jobs:
   test:
