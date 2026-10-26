@@ -1,0 +1,2093 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light" data-page="course">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="南京大学数据结构与算法 V4 连续自学讲义及期中复习专题。基于课程课件和作业，文字先行。">
+<title>数据结构 V4｜完整连续自学讲义 | Nichijo Notes</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="mobile-shade" id="shade" hidden></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar" aria-label="学习目录">
+<div class="sidebar-heading">
+<p class="site">N I C H I J O · N O T E S</p>
+<h2>数据结构与算法</h2>
+<p class="sub">V4 · 先文字讲稿，后网页呈现</p>
+</div>
+<nav class="index-links" aria-label="章节导航">
+<a href="./">完整教学</a>
+<a href="./review.html">120 分钟期中复习</a>
+<a href="../dsa-readable-v3/">V3 试读版</a>
+</nav>
+<div class="contents" id="nav-contents"><details class="nav-chapter" open><summary>第 00 章　读懂内存、指针和结点</summary><a href="#ch00">本章开篇</a><a href="#v4-memory">00.1 变量和地址之间到底是什么关系</a><a href="#v4-pointer-passing">00.2 为什么函数里的指针修改可能带不出去</a><a href="#v4-nodes">00.3 把一个结点放进内存</a><a href="#v4-delete">00.4 删除和释放：为什么顺序很重要</a><a href="#v4-reverse">00.5 逆置链表：三个工作指针的角色</a><a href="#v4-lifetime">00.6 什么时候该使用引用、指针和动态分配</a><a href="#v4-pointer-exercises">00.7 课后练习与逐步解答</a></details><details class="nav-chapter" ><summary>第 01 章　数据结构是什么，复杂度又怎样计算</summary><a href="#ch01">本章开篇</a><a href="#v4-structure">01.1 一个任务为什么会有多种表示法</a><a href="#v4-adt">01.2 逻辑结构与物理实现不是一回事</a><a href="#v4-counting">01.3 数时间，先从具体循环开始</a><a href="#v4-notation">01.4 O、Ω、Θ 表示的是不同的陈述</a><a href="#v4-cases">01.5 最好、平均与最坏，需要先定义输入</a><a href="#v4-space">01.6 算空间：输入、额外数组、调用栈分别处理</a><a href="#v4-recursion-tree">01.7 用递归树分析递归算法</a><a href="#v4-tradeoffs">01.8 什么时候该把复杂度用来做选择</a><a href="#v4-complexity-exercises">01.9 课后练习</a></details><details class="nav-chapter" ><summary>第 02 章　线性表：数组存储与链式存储为什么不同</summary><a href="#ch02">本章开篇</a><a href="#v4-list-meaning">02.1 从插入一位学生开始</a><a href="#v4-seqlist">02.2 顺序表：为什么中间插入要从右往左移动</a><a href="#v4-linkedlist">02.3 单链表：顺序从地址链接中产生</a><a href="#v4-list-variants">02.4 头结点、尾指针与三种链表变化</a><a href="#v4-list-build">02.5 头插、尾插与逆序：为何输入顺序可能变化</a><a href="#v4-list-merge">02.6 作业难点：原地合并两个升序链表，结果要降序</a><a href="#v4-poly">02.7 多项式相加：链表为什么适合稀疏项</a><a href="#v4-list-exercises">02.8 练习：画指针而不是背代码</a></details><details class="nav-chapter" ><summary>第 03 章　栈：为什么最后压入的东西先被处理</summary><a href="#ch03">本章开篇</a><a href="#v4-stack-model">03.1 一个从顶端取盘子的现实限制</a><a href="#v4-stack-array">03.2 用数组实现时 top 是最后元素下标还是下一空位</a><a href="#v4-brackets">03.3 括号匹配：为什么仅计数不够</a><a href="#v4-postfix">03.4 为什么要把中缀表达式转成后缀</a><a href="#v4-conversion">03.5 中缀转换完整轨迹：符号为什么会出栈</a><a href="#v4-trains">03.6 列车调度：怎样判断目标出栈序列是否可能</a><a href="#v4-sharedstack">03.7 两个栈共享一段存储空间</a><a href="#v4-stack-exercises">03.8 练习：表达式、操作轨迹与代码</a></details><details class="nav-chapter" ><summary>第 04 章　递归：函数怎样把没做完的工作留在栈里</summary><a href="#ch04">本章开篇</a><a href="#v4-recursive-task">04.1 为什么一个函数可以调用自身</a><a href="#v4-recursion-frames">04.2 逐层展开：为什么会先算最小的任务</a><a href="#v4-recursion-proof">04.3 递归正确性：基例与归纳步怎样对应代码</a><a href="#v4-recursion-iteration">04.4 递归与循环：哪些状态必须自己保存</a><a href="#v4-hanoi">04.5 汉诺塔：同一个子任务出现两次</a><a href="#v4-ackermann">04.6 Ackermann：嵌套递归为什么必须从内往外算</a><a href="#v4-recursion-complexity">04.7 用树分析递归的时间与空间</a><a href="#v4-recursion-exercises">04.8 练习：调用轨迹与代码转换</a></details><details class="nav-chapter" ><summary>第 05 章　队列、循环数组和优先处理</summary><a href="#ch05">本章开篇</a><a href="#v4-queue-meaning">05.1 排队的限制为什么恰好与栈相反</a><a href="#v4-queue-array">05.2 数组队列的第一个陷阱：不必把所有元素向左搬</a><a href="#v4-ringqueue">05.3 循环队列：取模不是魔法，只是回到起点</a><a href="#v4-front-count">05.4 只有 front 和 count：为什么这次可以装满 m 项</a><a href="#v4-linkedqueue">05.5 链队列：队首和队尾指针要一起维护</a><a href="#v4-queue-applications">05.6 队列为什么能实现树的层序遍历</a><a href="#v4-priorityqueue">05.7 优先级队列为什么不能只按到达顺序处理</a><a href="#v4-queue-exercises">05.8 练习：两种循环队列不能混算</a></details><details class="nav-chapter" ><summary>第 06 章　多维数组、压缩矩阵与稀疏存储</summary><a href="#ch06">本章开篇</a><a href="#v4-array-layout">06.1 二维表格是怎样放进一段连续内存的</a><a href="#v4-symmetric">06.2 对称矩阵：为什么一半元素不需要再存</a><a href="#v4-tridiagonal">06.3 三对角矩阵：为什么只有 3n−2 个有效位置</a><a href="#v4-sparse">06.4 稀疏矩阵：为什么不能为每个零存一个位置</a><a href="#v4-fast-transpose">06.5 快速转置：先数每行该有多少项，再一次放到正确位置</a><a href="#v4-orthogonal">06.6 正交链表：何时要付出更多指针开销</a><a href="#v4-array-exercises">06.7 练习：每个公式都能从计数重新推出</a></details><details class="nav-chapter" ><summary>第 07 章　字符串与 KMP：为什么失配时主串不必回头</summary><a href="#ch07">本章开篇</a><a href="#v4-string-basics">07.1 字符串和子串：下标约定先讲清</a><a href="#v4-naive">07.2 最直接的匹配法：每个起点都试一遍</a><a href="#v4-border-intuition">07.3 已经匹配的前缀并非毫无价值</a><a href="#v4-lps">07.4 LPS 数组先定义，再用实例一点点填写</a><a href="#v4-lps-fallback">07.5 失配时为何 len=lps[len−1]，而不是任意减一</a><a href="#v4-kmp">07.6 在主串上匹配：为什么 i 不回退</a><a href="#v4-next">07.7 next 与 LPS 为什么经常差一个下标</a><a href="#v4-kmp-exercises">07.8 练习：每一次回退都要指出当前 i、j</a></details><details class="nav-chapter" ><summary>第 08 章　树与二叉树：从一张图走到遍历和重建</summary><a href="#ch08">本章开篇</a><a href="#v4-tree-idea">08.1 为什么“分层关系”需要树</a><a href="#v4-binary-shape">08.2 为什么二叉树中“左”和“右”不能随意交换</a><a href="#v4-tree-count">08.3 两个计数公式怎样从边数推出</a><a href="#v4-tree-traversal">08.4 前序、中序、后序到底改变了什么</a><a href="#v4-tree-rebuild">08.5 给出前序和中序，怎样逐步画出唯一的二叉树</a><a href="#v4-tree-array">08.6 用完全二叉树位置存储一般二叉树：@ 不能压缩</a><a href="#v4-tree-stack">08.7 为什么可以用显式栈代替递归遍历</a><a href="#v4-tree-exercises">08.8 练习：每道画树题都重新遍历核对</a></details><details class="nav-chapter" ><summary>第 09 章　线索二叉树、森林与结构计数</summary><a href="#ch09">本章开篇</a><a href="#v4-thread-motivation">09.1 为什么普通二叉链表里有很多空链接</a><a href="#v4-threading">09.2 线索怎么建立，标志位又表示什么</a><a href="#v4-thread-successor">09.3 如何找中序后继：分两个互斥情况</a><a href="#v4-firstchild-nextsibling">09.4 一般树为什么可以用二叉链表表示</a><a href="#v4-forest">09.5 森林是怎样接在一起的</a><a href="#v4-catalan">09.6 为什么树形计数会出现 Catalan 数</a><a href="#v4-thread-forest-exercises">09.7 练习：从静态链接恢复关系</a></details><details class="nav-chapter" ><summary>第 10 章　堆：如何维护一组元素中的最大或最小值</summary><a href="#ch10">本章开篇</a><a href="#v4-heap-motivation">10.1 为什么反复取最大值时不必每次重新排序</a><a href="#v4-heap-definition">10.2 堆必须同时满足形状和大小两个条件</a><a href="#v4-heap-insert">10.3 插入一个新最大值为什么只需要向上走</a><a href="#v4-heap-pop">10.4 删除根以后为什么需要向下筛选</a><a href="#v4-heap-build">10.5 两种建堆方法为什么会得到不同数组</a><a href="#v4-heap-build-cost">10.6 为什么底向上建堆只需要 O(n)</a><a href="#v4-topk">10.7 Top-K：为什么找前 K 大要保存一个最小堆</a><a href="#v4-heap-exercises">10.8 练习：只写最终堆不够，要写调整路径</a></details><details class="nav-chapter" ><summary>第 11 章　哈夫曼树：从编码成本推出贪心构造</summary><a href="#ch11">本章开篇</a><a href="#v4-huffman-problem">11.1 同样的字符，为什么频繁出现者值得用更短的码</a><a href="#v4-prefix-code">11.2 码字对应树的哪一个位置</a><a href="#v4-huffman-greedy">11.3 从两个最轻的结点开始合并</a><a href="#v4-huffman-trace">11.4 八权值的完整考试级合并表</a><a href="#v4-huffman-proof">11.5 为什么这种局部选择能保证整体最优</a><a href="#v4-huffman-code">11.6 用最小堆构造 Huffman 树</a><a href="#v4-huffman-exercises">11.7 练习：合并表、码长与正确性</a></details><details class="nav-chapter" ><summary>第 12 章　静态查找：成功和失败各要比较几次</summary><a href="#ch12">本章开篇</a><a href="#v4-search-mission">12.1 “找得到”与“确定找不到”是两个任务</a><a href="#v4-linear-search">12.2 顺序查找：平均比较次数是怎么算出来的</a><a href="#v4-binary-search">12.3 折半查找为何需要随机访问的有序数组</a><a href="#v4-search-decision-tree">12.4 用一棵判定树手算 ASL</a><a href="#v4-search-choice">12.5 静态查找与动态查找如何选择</a><a href="#v4-search-exercises">12.6 练习：先写概率模型再写 ASL</a></details><details class="nav-chapter" ><summary>第 13 章　二叉搜索树 BST：动态查找如何维持大小顺序</summary><a href="#ch13">本章开篇</a><a href="#v4-bst-motivation">13.1 有序数组很会查找，但为什么插入麻烦</a><a href="#v4-bst-search">13.2 查找一个关键码，为什么只需沿一条路径走</a><a href="#v4-bst-insert">13.3 插入时为什么只需修改一条空链接</a><a href="#v4-bst-delete">13.4 删除为什么分成零个、一个、两个孩子</a><a href="#v4-bst-delete-trace">13.5 完整模拟删除一个有两个孩子的结点</a><a href="#v4-bst-code">13.6 完整的 BST 删除 C++17 代码</a><a href="#v4-bst-balance-need">13.7 为什么 BST 的最坏时间仍可能是 O(n)</a><a href="#v4-bst-exercises">13.8 练习：操作前后检查中序升序</a></details><details class="nav-chapter" ><summary>第 14 章　AVL 平衡树：旋转究竟为什么能恢复高度</summary><a href="#ch14">本章开篇</a><a href="#v4-avl-motivation">14.1 普通 BST 不够快，问题出在哪里</a><a href="#v4-avl-rotations">14.2 旋转之前先画三结点链</a><a href="#v4-avl-four-cases">14.3 四种插入形态用同一套方向判断</a><a href="#v4-avl-insert">14.4 插入后为什么只要从新结点向上检查</a><a href="#v4-avl-delete-motivation">14.5 AVL 删除和插入为什么不完全对称</a><a href="#v4-avl-delete-zero">14.6 具体删除示例：失衡孩子 bf=0 的特殊情况</a><a href="#v4-avl-code">14.7 一份可以编译的完整 AVL 插删实现</a><a href="#v4-avl-complexity">14.8 如何说明 AVL 的查找性能</a><a href="#v4-avl-exercises">14.9 练习：画旋转而不是背 LL/RR 名称</a></details><details class="nav-chapter" ><summary>集合、等价类、并查集与散列：从问题出发，自己完成算法</summary><a href="#ch15">本章开篇</a><a href="#ch15-set">一、当我们只想知道“有没有”：集合是什么</a><a href="#ch15-bit-vector">二、把“在不在”变成 0 和 1：位向量</a><a href="#ch15-linked-set">三、如果只有很少成员：用有序链表表示集合</a><a href="#ch15-equivalence">四、从“两个对象有关联”到等价类</a><a href="#ch15-dsu">五、为什么一组人可以用一棵树代表：并查集的诞生</a><a href="#ch15-union-find">六、为什么 Find 会越来越慢，以及怎样让它快起来</a><a href="#ch15-dictionary">七、从集合走向字典：为什么要保存键值对</a><a href="#ch15-hash-function">八、从关键码计算位置：散列函数与冲突</a><a href="#ch15-linear-probe">九、线性探查：发生冲突以后往哪里走</a><a href="#ch15-asl-exam">十、从真实查找过程计算平均查找长度 ASL</a><a href="#ch15-other-probes">十一、减少聚集：平方探查与双重散列</a><a href="#ch15-chaining">十二、换一种解决冲突的策略：链地址法</a><a href="#ch15-method-choice">十三、见到题目该怎么选方法：从任务回到数据结构</a><a href="#ch15-exercises">十四、综合练习：先自己选择工具，再查看解答</a><a href="#ch15-errata">十五、回看课件：哪些约定和错误必须知道</a></details></div>
+</aside>
+<div class="main-wrap">
+<div class="toolbar">
+<button id="menu-toggle" class="control mobile-only" type="button" aria-controls="sidebar" aria-expanded="false">目录</button>
+<span class="toolbar-name">数据结构 · V4</span>
+<div class="toolbar-actions">
+<button id="theme-toggle" class="control" type="button">夜间</button>
+<button id="reset-progress" class="control" type="button">重置记录</button>
+</div>
+</div>
+<div class="progress-track"><div id="progress-bar"></div></div>
+<main id="reading"><header class="hero" id="start"><p class="eyebrow">N I C H I J O · N O T E S</p><h1>数据结构与算法 · 连续自学讲义 V4</h1><p class="lead">从 C++ 指针到树、BST、AVL，再到集合与散列。先理解问题，跟着完整例子，再自己选择方法完成习题。</p><p class="small">16 章 · 131 个教学单元 · 文字先验收，再生成网页 · 正文宋体、标题思源宋体均内嵌</p><div class="note"><strong>阅读方法：</strong>必学概念、推导、基础例题与代码均在正文展开；只有练习提示、答案可以折叠。读完一遍后，再进入独立的期中复习页面。</div><p><a href="./review.html">进入 120 分钟期中复习专题</a> · <a href="../dsa-readable-v3/">V3 最后一章样稿</a> · <a href="../dsa-midterm/">旧版讲义</a></p></header><section class="chapter" id="ch00"><div class="chapter-heading"><p class="kicker">第 00 章</p><h2>第 00 章　读懂内存、指针和结点</h2><div class="chapter-intro"><blockquote>
+<p><strong>学习位置</strong>：为线性表、树和搜索树建立 C++17 基础。讲义补充前置内容，不属于独立 PPT 章节。<br><strong>读者已会</strong>：变量、函数、数组和基本循环。<br><strong>学完能做</strong>：根据代码追踪指向关系；安全插入、删除和逆置链表结点；区分指针的复制与引用；解释越界与悬空。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-memory"><h3>00.1 变量和地址之间到底是什么关系</h3><div class="lesson"><p>写下 <code>int a=4;</code> 时，程序在某一块存储空间中保存整数 4。我们可以把它画成一个盒子，盒子有自己的地址。<code>&a</code> 取得这个地址，<code>int* p=&a;</code> 让 p 保存地址，而不是保存一份新的 4。之后 <code>*p</code> 就是通过这个地址访问原来的整数。</p>
+<pre><code class="language-cpp">int a=4, b=9;
+int* p=&amp;a;   // p 指向 a
+*p=6;        // a 变成 6
+p=&amp;b;        // 现在 p 指向 b；a 仍然是 6
+*p=2;        // b 变成 2</code></pre>
+
+<p>从上到下追踪得 a=6、b=2。尤其注意第三句：改变指针 <code>p</code> 中保存的地址，和通过 <code>*p</code> 改变它指向的值，是两种不同的操作。</p>
+<p>一个容易犯的错误是写 <code>int* p;</code> 后立即用 <code><em>p=5</code>。此时 p 没有被赋予有效对象的地址，解引用可能导致未定义行为。只有确认地址有效、对象仍存活，才有权使用 <code></em></code> 访问对象。</p>
+</div></section><section class="topic" id="v4-pointer-passing"><h3>00.2 为什么函数里的指针修改可能带不出去</h3><div class="lesson"><p>普通形参是实参值的一份复制品。调用 <code>reset(p)</code> 时，函数里得到的指针值与外部 p 相等，都可以指向同一个对象；但函数内部给形参重新赋值，不会改变外部指针变量。若题目要求函数能够修改调用者的头指针，就必须用“指针的引用”或二级指针。</p>
+<pre><code class="language-cpp">void changeValue(int* p) { *p=7; }      // 修改所指整数
+void wrongReset(int* p) { p=nullptr; }  // 只修改形参副本
+void reset(int*&amp; p) { p=nullptr; }      // 修改调用者的指针</code></pre>
+
+<p>假设外部 <code>int a=3; int* p=&a;</code>：调用 changeValue(p) 后 a=7；调用 wrongReset(p) 后 p 依然指向 a；调用 reset(p) 后 p 才为空。指针引用的类型写作 <code>int*&</code>，理解成“一个 int* 变量的引用”即可。</p>
+<p>这里还需要区分“把链表头指针设为空”和“释放原来全部结点”。若链表通过 <code>new</code> 创建，直接把头指针改成空而不释放结点，会丢失内存对象的地址，造成泄漏。</p>
+</div></section><section class="topic" id="v4-nodes"><h3>00.3 把一个结点放进内存</h3><div class="lesson"><p>链表结点不仅要保存数据，还要保存下一结点的位置。我们先把结点写成如下结构体：</p>
+<pre><code class="language-cpp">struct Node {
+    int value;
+    Node* next;
+};
+Node* a=new Node{10,nullptr};
+Node* b=new Node{20,nullptr};
+a-&gt;next=b;</code></pre>
+
+<p>箭头关系是 <code>a → [10|next] → [20|null]</code>。符号 <code>a->next</code> 是 <code>(*a).next</code> 的简写。注意 a、b 是指向结点的指针；真正的结点存储在动态分配的空间里。</p>
+<p>如果现在要在 10 和 20 之间插入新结点 x，先想清楚必须保留什么：在修改 10 的 next 之前，必须先保证可以继续找到 20。因此操作顺序是：</p>
+<pre><code class="language-cpp">Node* x=new Node{15,nullptr};
+x-&gt;next=a-&gt;next;    // 先把 20 的地址交给 x
+a-&gt;next=x;          // 再让 10 指向 x</code></pre>
+
+<p>得到 10→15→20。若倒过来写，旧的下一结点地址可能丢失。这就是链表所有复杂操作都反复使用的局部不变量：<strong>未处理部分始终仍然可达</strong>。</p>
+</div></section><section class="topic" id="v4-delete"><h3>00.4 删除和释放：为什么顺序很重要</h3><div class="lesson"><p>仍设 a 指向 10，a-&gt;next 指向 15，15 再指向 20。删除 a 后面的结点时，我们先用 q 保存 15 的地址；再让 a-&gt;next 跳过 15，直接接到 20；最后才释放 q。释放后不可以再通过 q 查看数据或 next。</p>
+<pre><code class="language-cpp">if (a &amp;&amp; a-&gt;next) {
+    Node* q=a-&gt;next;
+    a-&gt;next=q-&gt;next;
+    delete q;
+}</code></pre>
+
+<p>如果先执行 <code>delete q</code>，再读 <code>q->next</code>，程序就访问了已结束生命周期的对象。这称为悬空指针或“释放后使用”（use after free）。</p>
+<p>另外，数组下标越界、从数组首元素指针继续向前减，以及多次 delete 同一个结点，都可能引起未定义行为。考试读代码题应分别回答“作者意图是什么”和“根据 C++ 规则是否保证这样的行为”。</p>
+</div></section><section class="topic" id="v4-reverse"><h3>00.5 逆置链表：三个工作指针的角色</h3><div class="lesson"><p>先不要急着背代码。面对 1→2→3，逆置前应保证还能找到原链后半段。让 <code>prev</code> 表示已经逆置好的前半段，<code>cur</code> 表示当前要处理的结点，<code>next</code> 暂存剩余链表的首结点。</p>
+<p>第一轮保存 2，将 1 的 next 改成 null，得到“已逆置 1”和“待处理 2→3”；第二轮保存 3，将 2 指回 1；第三轮把 3 指回 2。结果 3→2→1。</p>
+<pre><code class="language-cpp">Node* reverse(Node* head) {
+    Node *prev=nullptr, *cur=head;
+    while(cur) {
+        Node* next=cur-&gt;next; // 先保存未处理部分
+        cur-&gt;next=prev;       // 反转当前链接
+        prev=cur;             // 已完成部分扩大一个结点
+        cur=next;             // 继续原链后半段
+    }
+    return prev;
+}</code></pre>
+
+<p>每个结点恰处理一次，时间 Θ(n)；只有常数个工作指针，辅助空间 Θ(1)。空链表时 cur 一开始就为空，直接返回 nullptr。这类算法的完整性来自三件事：未处理部分没丢，已处理部分指向正确方向，循环结束时所有结点已处理。</p>
+</div></section><section class="topic" id="v4-lifetime"><h3>00.6 什么时候该使用引用、指针和动态分配</h3><div class="lesson"><p>如果函数只需要读一个大的对象，用 <code>const T&</code> 可以避免复制并阻止修改；需要修改对象而不换对象时，用 <code>T&</code>；需要表达“可能没有对象”时，指针配合 nullptr 通常更直观。链表和树需要结点在多个函数调用后仍然存在，所以课堂示例常用 <code>new</code> 创建结点。但新建与删除必须成对考虑，实际工程常用智能指针来表达所有权。本课程先把原始指针语义学清楚，以便读懂课件的代码和考试题。</p>
+</div></section><section class="topic" id="v4-pointer-exercises"><h3>00.7 课后练习与逐步解答</h3><div class="lesson"><details class="question"><summary>基础：int a=5,b=8; int* p=&a; *p=1; p=&b; *p+=2; 最后 a、b 是多少？</summary><p>先分别记录 p 指向谁。第一次修改的是 a，变成 1；换指向后增加的是 b，变成 10，所以答案 a=1、b=10。</p></details>
+
+<details class="question"><summary>作业同级：链表 3→5→7，已知头结点地址 head，请写两条指针赋值把新结点 x=4 插入 3 和 5 之间。</summary><p>先保存旧后继：<code>x->next=head->next;</code>；再连接前驱：<code>head->next=x;</code>。画箭头检查 5、7 仍可从头到达。</p></details>
+
+<details class="question"><summary>读代码：函数 void f(Node* h){ h=h->next; } 为什么外部 head 不会前进一个结点？</summary><p>h 是外部 head 的副本。h=h->next 只改副本保存的地址。用 <code>void f(Node*& h)</code> 才能让调用者的头指针一起变化。注意头指针前进不代表自动释放旧头结点。</p></details>
+
+<details class="question"><summary>提高：只给指向非尾结点 q 的指针，能不能 O(1) “删除 q”？需要哪些附加假设？</summary><p>可将 q 的后继结点数据复制到 q，再跳过并释放原后继；但这并不是真正释放 q 指向的原对象，而且只适合非尾结点、值可复制且结点身份不重要的特殊情形。若必须删除 q 对象本身，单链表没有前驱指针，一般仍需搜索前驱，最坏 Θ(n)。</p></details>
+
+<p>**读完本章的检查方式：**不用看代码，解释为什么链表插入要先保存旧 next、删除要后 delete、逆置要保存 next；再分别模拟空链表和单结点链表。如果这些操作能独立完成，便具备学习线性表的前置能力。</p>
+</div></section></section><section class="chapter" id="ch01"><div class="chapter-heading"><p class="kicker">第 01 章</p><h2>第 01 章　数据结构是什么，复杂度又怎样计算</h2><div class="chapter-intro"><blockquote>
+<p><strong>来源</strong>：《DSA 1-Intro》（96 页）。下文的纸笔示例和现代 C++ 表述为讲义补充。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-structure"><h3>01.1 一个任务为什么会有多种表示法</h3><div class="lesson"><p>假设要管理一个班的学生名单。你可能只想按顺序打印姓名，也可能要经常在名单中间插入转专业同学，或者按学号快速找某人。表面上都是“保存一些学生”，操作的要求却完全不同。</p>
+<p>数据结构研究的重点，就是怎样组织数据以及它们之间的关系，令所需操作可以有效完成。学生名单的先后关系是一种<strong>逻辑结构</strong>；在内存中把名单放成连续数组，还是用一个个相连的结点，是<strong>存储结构</strong>。同一逻辑顺序可以有多种存储实现：数组能 O(1) 按下标访问，链表需要顺序找；链表若已持有插入位置的前驱指针，可以 O(1) 改链接，数组则可能需要移动后面的元素。</p>
+<p>研究结构之前先说清操作：查询第 i 项、按关键码查找、插入、删除、排序、遍历。操作的频率也会影响选择。假如列表只建立一次而随后查询一百万次，与每秒钟大量增删的列表，很可能不应该使用同一种实现。</p>
+</div></section><section class="topic" id="v4-adt"><h3>01.2 逻辑结构与物理实现不是一回事</h3><div class="lesson"><p>课程会遇到线性结构、树、图等。线性结构的典型关系是前后相邻；树中一个结点可能有多个孩子；图可以有环，两个点之间也未必存在唯一父子关系。</p>
+<p>抽象数据类型（ADT, Abstract Data Type）描述一类对象及其允许的操作，并不强迫使用某种内存布局。例如栈只要求提供 push、pop、top、empty，并遵守后进先出；用数组栈还是链栈，是随后才决定的实现问题。这种分离有实际用处：表达式求值的代码可以只关心“压入运算符”“弹出运算符”，不必同时管理内存分配。</p>
+<p>你可以用三句话核对一种结构：它存放哪类对象？对象之间存在什么关系？最重要的操作是什么、代价是什么？如果这三个问题没有回答，背完“定义”通常仍无法选择合适的数据结构。</p>
+</div></section><section class="topic" id="v4-counting"><h3>01.3 数时间，先从具体循环开始</h3><div class="lesson"><p>同样一个算法在不同计算机上运行所需的秒数不同。为了比较算法，我们通常把输入规模记为 n，选择基本操作并计算该操作执行了多少次。基本操作可以是一次比较、一次加法或一次数组访问。真正关心的是 n 越来越大时，操作总数增长得有多快。</p>
+<p>先看：</p>
+<pre><code class="language-cpp">long long count=0;
+for(int i=0;i&lt;n;++i)
+    for(int j=0;j&lt;i;++j)
+        ++count;</code></pre>
+
+<p>对 n=4，外层 i 依次是 0、1、2、3；内层分别执行 0、1、2、3 次，最后 count=6。对任意 n，次数是 <code>0+1+⋯+(n−1)=n(n−1)/2</code>。展开得 <code>(n²−n)/2</code>，主导增长的是 n² 项，所以记为 Θ(n²)。</p>
+<p>这一步比背“二重循环 O(n²)”可靠。若内层上界换成固定 n，次数确实为 n²；但若内层是 <code>j=j*2</code> 并从 1 开始，每轮只执行约 log₂n 次，整个算法便可能是 Θ(nlog n)。循环层数本身不能决定复杂度。</p>
+</div></section><section class="topic" id="v4-notation"><h3>01.4 O、Ω、Θ 表示的是不同的陈述</h3><div class="lesson"><p>对足够大的 n，如果某函数运行次数 T(n) 不超过常数倍的 f(n)，我们写 T(n)=O(f(n))，表示<strong>渐进上界</strong>。若 T(n) 至少是某常数倍的 f(n)，写 Ω(f(n)) 表示<strong>渐进下界</strong>。两者同时成立，才写 Θ(f(n)) 表示<strong>紧确增长阶</strong>。</p>
+<p>例如 T(n)=3n²+7n+20，最终被 n² 这一项控制，因此 Θ(n²)；说它是 O(n³) 虽然也正确，却不够精确。常用增长速度由低到高是 <code>1、log n、n、nlog n、n²、n³、2ⁿ</code>（适用于足够大的正 n）。对数底数的不同只相差一个常数倍，不影响 Θ(log n)。</p>
+<p>不要混淆“算法最坏时间复杂度 O(n²)”与“算法对任何输入都会运行 n² 次”。最坏上界只说明最不利输入也不会超过该数量级的常数倍，具体输入可能更少。</p>
+</div></section><section class="topic" id="v4-cases"><h3>01.5 最好、平均与最坏，需要先定义输入</h3><div class="lesson"><p>设顺序查找一个包含 n 个互异关键码的数组。如果要找的元素刚好在首位，只比较一次；若在最后一位，比较 n 次；若一定成功且每一位置等概率，平均比较次数为 <code>(1+2+⋯+n)/n=(n+1)/2</code>。</p>
+<p>如果题目允许查找失败，那么“平均多少次”就必须同时交代成功和失败的概率，以及失败时是否要比较全部 n 项。没有概率模型的“平均复杂度”不能从一个例子随意得出。</p>
+<p>更深入的分析还可能讨论均摊复杂度：有些操作偶尔很贵，但在一长串操作中平均到每次很便宜。第三章以后的队列扩容和并查集会用到这一思想；现在只需将“期望平均”和“均摊平均”区分开，不把两者当成同一个公式。</p>
+</div></section><section class="topic" id="v4-space"><h3>01.6 算空间：输入、额外数组、调用栈分别处理</h3><div class="lesson"><p>空间复杂度通常强调算法执行过程额外需要的存储。选择排序在原数组上交换，不需要另开与 n 同长的辅助数组，因此辅助空间 O(1)；归并排序通常需要 O(n) 辅助数组。</p>
+<p>递归调用也会占用空间。一个每次递归到 n−1 的函数，即使每层只有常数个局部变量，最多仍可能积累 n 层栈帧，因此需要 O(n) 栈空间。不要因为代码里没用 <code>new[]</code> 就认为其额外空间必定为 O(1)。</p>
+</div></section><section class="topic" id="v4-recursion-tree"><h3>01.7 用递归树分析递归算法</h3><div class="lesson"><p>假设一个算法先把规模 n 的问题分成两个规模 n/2 的子问题，再用 n 次基本操作合并结果，则时间满足 <code>T(n)=2T(n/2)+Θ(n)</code>。先按 n 是 2 的幂手算：根层工作 n；下一层两个子问题各 n/2，合计 n；再下一层四个各 n/4，合计仍为 n。到规模 1 停止，层数大约为 log₂n，每层工作 Θ(n)，于是总工作 Θ(nlog n)。你由此得到了结论，也知道每一个 n 从何而来。</p>
+<p>相反，<code>T(n)=T(n−1)+Θ(n)</code> 没有分叉，但总时间是 n+(n−1)+⋯+1=Θ(n²)。复杂度分析要把所有实际工作加总，不能只数递归调用表达式里出现几个函数名。</p>
+</div></section><section class="topic" id="v4-tradeoffs"><h3>01.8 什么时候该把复杂度用来做选择</h3><div class="lesson"><p>给定 n=10 的列表，O(n²) 算法可能足够快；给定 n=10⁶ 时，同样的平方增长会成为大问题。复杂度并不替代具体运行环境或数据规模，但它提供了规模增长时的可靠趋势。</p>
+<p>考试中涉及结构选择题时，至少回答“需要什么操作”“数据当前有无有序性”“是否提供前驱位置或随机访问”“最坏时间和空间分别是多少”。这比只写“链表快”“二分查找快”更有说服力。</p>
+</div></section><section class="topic" id="v4-complexity-exercises"><h3>01.9 课后练习</h3><div class="lesson"><details class="question"><summary>基础：循环 for(int i=1;i&lt;n;i*=2) 的时间复杂度是什么？</summary><p>i 依次为 1、2、4、8，执行 k 次后达到约 2ᵏ；解得 k≈log₂n，因此 Θ(log n)。初值必须为正，若从 0 倍增将不终止。</p></details>
+
+<details class="question"><summary>作业同级：两个长度 m、n 的有序单链表复用结点归并，算法每轮至少取出一项。求时间与辅助空间。</summary><p>所有 m+n 项至多各被取出一次，时间 Θ(m+n)；只维护两个输入游标和一个结果游标，辅助空间 Θ(1)。若创建全新结点，结果存储另需 O(m+n) 空间，必须注明是否要求原地。</p></details>
+
+<details class="question"><summary>作业同级：求 T(n)=T(n−1)+n、T(1)=1 的精确值及阶。</summary><p>展开为 n+(n−1)+⋯+1=n(n+1)/2，因此 Θ(n²)。这同时展示了精确表达式和渐进结论。</p></details>
+
+<details class="question"><summary>提高：一个程序先执行 n 次工作，再分别递归处理两个规模 n/4 的子问题。分析时间增长。</summary><p>每层总工作依次为 n、n/2、n/4、…，形成几何级数，总和受 2n 限制，故 T(n)=Θ(n)。边界是子问题不断缩小直到常数规模；分支为两个并不必然是 nlog n。</p></details>
+
+<p>**小结自测：**给任意代码，先列“规模 n、基本操作、每层或每轮次数、总和、辅助存储”五项。若离开公式仍能解释该算法为什么快或慢，就具备下一章选择存储结构的基础。</p>
+</div></section></section><section class="chapter" id="ch02"><div class="chapter-heading"><p class="kicker">第 02 章</p><h2>第 02 章　线性表：数组存储与链式存储为什么不同</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 2-LinearList》（103 页）及《Lesson 3 Practice》链表填空。<br>先修：第 00 章的指针和结点、第 01 章的计数方法。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-list-meaning"><h3>02.1 从插入一位学生开始</h3><div class="lesson"><p>班级名单原来是 [甲,乙,丙,丁]。如果新学生要排在乙之前，我们希望得到 [甲,新,乙,丙,丁]。不管放在数组还是链表中，名单的<strong>逻辑顺序</strong>都是同一个；它是一张线性表。把表记成 L=(a₀,a₁,…,aₙ₋₁)，每项最多一个直接前驱、最多一个直接后继。空表 n=0 是允许的。</p>
+<p>最关键的设计问题是：为了这次插入，计算机实际上要移动多少数据？如果学生数据按顺序放在连续的存储单元里，就需要从末项向右搬；如果学生数据被分别放在结点里，只需改动相邻结点的链接。当然，链表找到“乙之前”这一位置也可能需要从头一路搜索。比较两种结构时必须把<strong>定位位置</strong>和<strong>实际插入</strong>拆开。</p>
+</div></section><section class="topic" id="v4-seqlist"><h3>02.2 顺序表：为什么中间插入要从右往左移动</h3><div class="lesson"><p>设顺序表容量 6，当前四项 [2,4,6,8] 占下标 0–3，要在下标 1 插入 3。如果从左往右搬，先把 4 放到下标 2，会覆盖原来的 6；正确办法从最右边往左搬：</p>
+<pre class="diagram">原内容 [2,4,6,8,_,_]
+8 向右 [2,4,6,8,8,_]
+6 向右 [2,4,6,6,8,_]
+4 向右 [2,4,4,6,8,_]
+填 3   [2,3,4,6,8,_]</pre>
+
+<p>给定长度 n、0-based 插入位置 pos，只要 0≤pos≤n 且还没满，就将 j=n,n−1,…,pos+1 位置赋为旧的 j−1 位置，最后放入新项，长度加一。移动次数正好 n−pos；删除 pos 位置则让后续项左移 n−pos−1 次。定位下标 O(1)，最坏搬移 O(n)。</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+void insertAt(std::vector&lt;int&gt;&amp; a,int pos,int x) {
+    if(pos&lt;0 || pos&gt;(int)a.size()) throw std::out_of_range(&quot;pos&quot;);
+    a.insert(a.begin()+pos,x);   // vector 底层移动后缀
+}
+void eraseAt(std::vector&lt;int&gt;&amp; a,int pos) {
+    if(pos&lt;0 || pos&gt;=(int)a.size()) throw std::out_of_range(&quot;pos&quot;);
+    a.erase(a.begin()+pos);
+}</code></pre>
+
+<p>这段代码利用了标准库；手写课堂顺序表时还要维护 capacity、length 和底层数组。注意 length 是当前元素个数，capacity 是已分配容量，两者不能混用，未使用的空槽不属于逻辑线性表。</p>
+</div></section><section class="topic" id="v4-linkedlist"><h3>02.3 单链表：顺序从地址链接中产生</h3><div class="lesson"><p>单链表 2→4→6→8 的四个结点不必连续放在内存里。每个结点只记录数据和下个结点地址。要在 2 后面插入 3，先让新结点 next 指向原来 2 的后继 4，再让 2 指向新结点。只有两条链接改变，其余结点并未移动。</p>
+<pre><code class="language-cpp">struct Node{ int value; Node* next; };
+void insertAfter(Node* p,int x) {
+    if(!p) return;
+    Node* q=new Node{x,p-&gt;next};
+    p-&gt;next=q;
+}
+bool eraseAfter(Node* p) {
+    if(!p || !p-&gt;next) return false;
+    Node* q=p-&gt;next;
+    p-&gt;next=q-&gt;next;
+    delete q;
+    return true;
+}</code></pre>
+
+<p>时间是 O(1)，但前提是<strong>已经有前驱指针 p</strong>。如果只给“在第 i 项后面插入”，仍要从头走到 i，花费 O(i)。这正是“链表插入是 O(1)”这句口诀经常遗漏的条件。</p>
+</div></section><section class="topic" id="v4-list-variants"><h3>02.4 头结点、尾指针与三种链表变化</h3><div class="lesson"><p>课程常用<strong>带头结点</strong>的单链表：一个不保存有效数据的哨兵结点先于第一个数据结点，空表时头结点 next 为 null。它的好处是删除第一个数据结点也有合法的“前驱”——头结点，因而代码可以少写一次特判。但“不带头结点”的 head 通常直接指首项，删除首项就必须更新 head 自身；判断代码时先确认是哪种约定。</p>
+<p>循环链表令尾结点 next 指回头结点或首项，适合需要循环前进的问题。遍历终止条件要改成“再次遇到起点”，不能等 null。双向链表为每项增加 prev 指针，删除 q 时需连接 <code>q->prev->next=q->next</code> 和 <code>q->next->prev=q->prev</code>（边界处另行处理）。它用空间换来了沿反方向访问和已知结点局部删除的便利。</p>
+<p>静态链表则用数组下标而不是真实地址作为链接值，表示“下一个结点放在哪个数组槽”。这对不方便使用动态指针的环境有意义，指针方向依然是逻辑方向，不能把下标顺序当成链表顺序。</p>
+</div></section><section class="topic" id="v4-list-build"><h3>02.5 头插、尾插与逆序：为何输入顺序可能变化</h3><div class="lesson"><p>读到输入序列 1,2,3，每次头插都会把新结点放在原首项之前：第一次 [1]，第二次 [2,1]，第三次 [3,2,1]；尾插则得到 [1,2,3]。因此选择头插/尾插前必须看最终顺序要求。</p>
+<p>逆置已有链表时，利用三个指针 prev、cur、next，先保存未处理链，再让当前结点朝已处理部分指回。第 00 章已经手工演示这个流程；本章把它作为可复用工具，并注意带头结点的链表要只逆置数据结点，再将头结点 next 接到新首项。</p>
+</div></section><section class="topic" id="v4-list-merge"><h3>02.6 作业难点：原地合并两个升序链表，结果要降序</h3><div class="lesson"><p>两条链为 A:1→4→7，B:2→4→5。任务明确要求<strong>复用原结点、不分配新数据结点</strong>，并把所有值排成非递增顺序。普通合并会生成升序表，还要再逆置一次；更精练的办法是“反复取出当前最小值，然后头插到结果表前端”。</p>
+<p>先取 1，结果 1；再取 2，结果 2→1；两条链当前都为 4，取 A 的 4 后结果 4→2→1，B 的 4 仍保留；再取 B 的 4，结果 4→4→2→1；之后取 5、7，最终 7→5→4→4→2→1。每次新结点不小于之前取过的值，因此头插到最前端仍是非递增。</p>
+<pre><code class="language-cpp">struct Node{int value;Node* next;};
+Node* descendingMerge(Node* a,Node* b) {
+    Node* result=nullptr;
+    while(a || b) {
+        Node* q;
+        if(!b || (a &amp;&amp; a-&gt;value&lt;=b-&gt;value)) {
+            q=a;
+            a=a-&gt;next;
+        } else {
+            q=b;
+            b=b-&gt;next;
+        }
+        q-&gt;next=result;  // 与原输入断开，接在结果最前
+        result=q;
+    }
+    return result;
+}</code></pre>
+
+<p>想检验代码是否会在其中一个输入提前用尽时报错，专门检查 <code>!b || (a && …)</code> 的求值顺序：C++ 的 <code>||</code> 和 <code>&&</code> 均短路；b 为空直接取 a，否则先保证 a 存在再读 a-&gt;value。时间 Θ(m+n)，辅助指针 Θ(1)。如果题目给的是带头结点的两条链，需要从 <code>firstA->next</code>、<code>firstB->next</code> 开始，并明确最后释放多余的头结点。</p>
+<h3>再做一次“只改指针、不改值”的代码逐帧检查</h3>
+<p>归并代码里最容易看不清的是 <code>q=a; a=a->next; q->next=result</code>。取 a 的当前结点时，<code>q=a</code> 暂存当前结点本身的地址，<code>a=a->next</code> 把输入游标挪到剩余第一项；直到此时才安全改变 <code>q->next</code>，将 q 接到结果最前端。这个顺序保证两侧输入的未处理后缀不会被覆盖。</p>
+<p>把 A=1→4→7、B=2→4→5 写成如下四列，自己多模拟两轮：</p>
+<table>
+<thead>
+<tr>
+<th>本轮</th>
+<th>a 指向</th>
+<th>b 指向</th>
+<th>当前结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开始</td>
+<td>1</td>
+<td>2</td>
+<td>空</td>
+</tr>
+<tr>
+<td>取 1 后</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>取 2 后</td>
+<td>4</td>
+<td>4</td>
+<td>2→1</td>
+</tr>
+<tr>
+<td>取 A 的 4 后</td>
+<td>7</td>
+<td>4</td>
+<td>4→2→1</td>
+</tr>
+<tr>
+<td>取 B 的 4 后</td>
+<td>7</td>
+<td>5</td>
+<td>4→4→2→1</td>
+</tr>
+</tbody></table>
+<p>这时你应能够解释，虽然结果链与输入链都引用原来的数据结点，程序没有任何一刻同时把同一结点作为“还未处理”和“已经归并”的结点。每一轮只有一个结点从某条输入链移到结果链。</p>
+<p>**边界实验：**若 A 空而 B=2→4→5，代码每轮都取 B 的首项并头插，结果 5→4→2；若两条都空，循环不执行，返回 nullptr；若某一个链里本来有重复值，取出时仍会逐项保留。也就是说：这个算法没有依赖“每条输入链的元素互异”，仅依赖各自非递减。</p>
+<p>**变式识别：**若题目要求结果升序，应改成尾插并维护结果尾指针；若题目要求去重，两个当前关键码相等时须另外处理多余结点的释放与所有权。原题两者都没有要求，不应私自加去重。</p>
+</div></section><section class="topic" id="v4-poly"><h3>02.7 多项式相加：链表为什么适合稀疏项</h3><div class="lesson"><p>多项式 P(x)=3x⁵+2x²+4，可以只存非零项 (系数3,指数5)→(2,2)→(4,0)。若另一个 Q(x)=−3x⁵+7x³−2x²，按指数降序扫描两表，指数大的先输出；指数相等时相加系数。最高次 x⁵ 系数 3+(−3)=0，省略；接着输出 7x³；x² 的 2+(−2)=0，又省略；最后输出常数4，所以 P+Q=7x³+4。</p>
+<p>这与合并有序链表的指针决策完全同源，只是“相等”分支从保留两个重复结点改为合成一个新系数，且新系数可能为 0。结构操作可迁移，题目语义仍要逐条核对。</p>
+</div></section><section class="topic" id="v4-list-exercises"><h3>02.8 练习：画指针而不是背代码</h3><div class="lesson"><details class="question"><summary>基础：长度 n=9 的顺序表在 1-based 第 4 项之前插入，需要移动几项？</summary><p>第 4—9 项共 6 项向后移动，公式 n−i+1=9−4+1=6。不要把“位置从 1 编号”和 C++ 的 0-based 下标混用。</p></details>
+<details class="question"><summary>手工：对链 2→6→8 依次头插 1、3，写最终顺序。</summary><p>第一次 1→2→6→8，第二次 3→1→2→6→8。头插连续输入的一段会倒序。</p></details>
+<details class="question"><summary>补代码：带头结点的链表删除第一个数据项，补出防空判断、跨接、释放三步。</summary><p>若 <code>head==nullptr || head->next==nullptr</code> 则失败；否则保存 <code>Node* q=head->next</code>；<code>head->next=q->next</code>；最后 <code>delete q</code>。</p></details>
+<details class="question"><summary>作业同级：升序 A=1→4→7、B=2→4→5 原地归并为降序，写每次头插后结果。</summary><p>依次 1，2→1，4→2→1，4→4→2→1，5→4→4→2→1，7→5→4→4→2→1；相等元素两边都必须取出，不能丢一项。</p></details>
+<details class="question"><summary>提高：已知两个链表按关键码升序，若要去重并集，比较相等时只输出一个元素，为何必须两个游标一起前进？</summary><p>若只推进一边，下一轮还会遇到未移动一侧的相同元素，可能重复输出；同时推进才保证这次相同关键码已在两条链中处理完毕。</p></details>
+
+<p>**复盘：**对任何链表程序写出“先保存哪条旧连接、改变哪条连接、什么时候释放什么对象”，然后再分析是否需要先搜索到目标位置。</p>
+</div></section></section><section class="chapter" id="ch03"><div class="chapter-heading"><p class="kicker">第 03 章</p><h2>第 03 章　栈：为什么最后压入的东西先被处理</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 3-Stack&amp;Queue》（栈、表达式和栈应用）。<br>先修：线性表和数组。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-stack-model"><h3>03.1 一个从顶端取盘子的现实限制</h3><div class="lesson"><p>餐厅堆盘子时，只能在最上面放新盘子，也只能先拿走最上面的盘子。这个限制比“一般线性表”的任意位置插删更强：它让后进入的东西先被处理。栈（Stack）正是这种<strong>后进先出</strong>（Last In, First Out，LIFO）的线性结构。</p>
+<p>依次 <code>push(3)、push(8)、pop()、push(5)</code>：先存 [3]，再 [3,8]，弹出 8 后剩 [3]，最后 [3,5]。这里方括号从栈底到栈顶写，top=5。严格按照“只碰顶端”这条规则，便不需要记忆额外特例。</p>
+</div></section><section class="topic" id="v4-stack-array"><h3>03.2 用数组实现时 top 是最后元素下标还是下一空位</h3><div class="lesson"><p>这两种约定都可以，必须事先固定。若约定 <code>top</code> 指<strong>最后一个有效元素下标</strong>，空栈 top=−1。容量 m 的数组栈满条件 top=m−1；push 时先判断满，再执行 <code>a[++top]=x</code>；pop 先检查空，取 <code>a[top--]</code>。</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+class IntStack {
+    std::vector&lt;int&gt; a;
+    int top=-1;
+public:
+    explicit IntStack(int capacity){
+        if(capacity&lt;=0) throw std::invalid_argument(&quot;capacity&quot;);
+        a.resize(capacity);
+    }
+    bool empty() const {return top&lt;0;}
+    bool full() const {return top+1==(int)a.size();}
+    bool push(int x){
+        if(full())return false;
+        a[++top]=x;
+        return true;
+    }
+    int pop(){
+        if(empty())throw std::underflow_error(&quot;empty&quot;);
+        return a[top--];
+    }
+};</code></pre>
+
+<p>如果课件另一段代码把 top 指下一空位，则空栈 top=0，push 先放 a[top] 再 top++，pop 先 --top 再取；两者逻辑一致，任何代码题都应先写清约定再填空。</p>
+</div></section><section class="topic" id="v4-brackets"><h3>03.3 括号匹配：为什么仅计数不够</h3><div class="lesson"><p>处理 <code>{[()]}</code> 时，见到左括号就把它放进栈；遇右括号，应与栈顶左括号匹配，成功后弹出。比如 { 入栈， [ 入栈， ( 入栈；遇 ) 对上 (；遇 ] 对上 [；遇 } 对上 {，最终空栈即合法。</p>
+<p>如果只统计左括号与右括号数量，字符串 <code>(]</code> 左右数量都为 1 却不匹配。栈保存的是未闭合括号的类型和嵌套顺序，能解释为什么该算法正确。结束时若栈非空，也表示还有未配对的左括号。</p>
+</div></section><section class="topic" id="v4-postfix"><h3>03.4 为什么要把中缀表达式转成后缀</h3><div class="lesson"><p>中缀式 <code>A+B*C</code> 必须靠优先级知道先乘后加。后缀式把运算符放在操作数后面，变成 <code>A B C * +</code>；计算器从左到右扫描，遇值入栈，遇二元运算符取出两个操作数运算，将结果再压回栈。乘号弹出 B、C，结果 BC 入栈；加号再把 A 与 BC 相加。</p>
+<p>注意弹出顺序：若从运算数栈先弹出 b、后弹出 a，那么应执行 <strong>a op b</strong>，尤其减法与除法不能反过来算。</p>
+</div></section><section class="topic" id="v4-conversion"><h3>03.5 中缀转换完整轨迹：符号为什么会出栈</h3><div class="lesson"><p>为转换 <code>A+B*C-D</code>，维护一个<strong>运算符栈</strong>和直接输出的后缀串。遇操作数直接输出；遇运算符，与栈顶比较优先级，若栈顶优先级更高或相等且运算符左结合，则先弹出栈顶，最后压入当前符号。括号是额外的分组约束。</p>
+<pre class="diagram">读到        输出后缀          运算符栈（底→顶）
+A           A                 空
++           A                 +
+B           A B               +
+*           A B               + *
+C           A B C             + *
+-           A B C * +         -
+D           A B C * + D       -
+结束        A B C * + D -     空</pre>
+
+<p>当读到减号时，为什么弹出两次？* 和 + 都先于减号作用，而且当前减号不在括号里。这样后缀表达式的顺序忠实地反映运算顺序。</p>
+<p>有两个非常重要的边界：乘方若约定右结合，例如 <code>2^3^2</code> 通常解释为 <code>2^(3^2)</code>，遇相等优先级不能照左结合规则弹出；一元负号 <code>-A</code> 与二元减法 <code>A-B</code> 必须在读入时区分，在后缀式中可将前者写成 NEG。</p>
+</div></section><section class="topic" id="v4-trains"><h3>03.6 列车调度：怎样判断目标出栈序列是否可能</h3><div class="lesson"><p>假设五节车厢按 1、2、3、4、5 固定次序进入旁线栈，题目要求它们按 3、2、5、4、1 出站。为先输出 3，必须依次入栈 1、2、3，再弹 3、2；随后入栈 4、5，弹 5、4，最后弹 1，得到操作轨迹：</p>
+<pre class="diagram">I1 I2 I3 O3 O2 I4 I5 O5 O4 O1
+I：入栈，O：出栈，数字为车厢编号。</pre>
+
+<p>判断另一序列是否可行时，每一步都尝试：如果栈顶就是下一目标，立刻弹；否则按固定顺序继续入栈，直到栈顶等于目标或无车可入。若目标被某节仍在栈内的车压住、同时没有合法办法将上方车先移出，序列不可能。这套模拟胜过凭图形猜测。</p>
+<p>对于 n 个互异元素按固定次序进栈，所有合法出栈次序的数量等于第 n 个 Catalan 数 <code>Cₙ=1/(n+1)·binom(2n,n)</code>。当 n=6，C₆=132。初学时先学会判断具体出栈序列，计数公式的证明可留作深化。</p>
+</div></section><section class="topic" id="v4-sharedstack"><h3>03.7 两个栈共享一段存储空间</h3><div class="lesson"><p>如果两个栈分别固定容量 10，左栈满了而右栈只用了 1 项，右侧大量空间却无法给左栈借用。共享栈用一根数组，栈 A 从左向右增长，栈 B 从右向左增长。A 的 topA 初始 −1，B 的 topB 初始 m；只在 <code>topA+1==topB</code> 时真正满。入 A 先 ++topA；入 B 先 --topB。</p>
+<p>这里要区分“当前栈顶下标”和“两个栈之间的空闲位置”。当 topA=2、topB=6 时，槽 3、4、5 还剩 3 个空位；两个栈都可以继续增长，直到相遇。</p>
+</div></section><section class="topic" id="v4-stack-exercises"><h3>03.8 练习：表达式、操作轨迹与代码</h3><div class="lesson"><details class="question"><summary>基础：栈 push(3),push(8),pop(),push(5),pop() 两次弹出的值是什么？</summary><p>第一次弹 8；push 5 后第二次弹 5。其间 3 始终在栈底。</p></details>
+<details class="question"><summary>手工：将 (A+B)*C-D 转成后缀表达式。</summary><p>括号 A+B 得 A B +；之后乘 C，最后减 D，结果 <code>A B + C * D -</code>。括号本身不进入后缀式。</p></details>
+<details class="question"><summary>作业同级：固定顺序入栈 1,2,3,4,5，能否出栈 3,2,5,4,1？</summary><p>可以。操作轨迹 I1 I2 I3 O3 O2 I4 I5 O5 O4 O1；任何一步都只从栈顶弹出。</p></details>
+<details class="question"><summary>作业同级：转换 <code>!(A&&B)||C>D</code> 为后缀，给 ! 的元数说明。</summary><p>先处理 A B &&，再执行一元 !；关系式为 C D >；整体由 || 连接，结果 <code>A B && ! C D > ||</code>。! 仅弹一个操作数。</p></details>
+<details class="question"><summary>提高：中缀 a+b*c-d 的运算符 I/O 轨迹是什么？</summary><p>读取 +、* 时各压一次；读到 - 先弹 * 再弹 +，接着压 -；结尾弹 -。轨迹 <code>I I O O I O</code>。</p></details>
+
+<p>**复盘：**单次模拟一定分别写“尚未读取的输入”“栈的当前状态”“本次输出”。只有这三个对象分清楚，表达式、括号、列车和共享栈才不会混淆。</p>
+</div></section></section><section class="chapter" id="ch04"><div class="chapter-heading"><p class="kicker">第 04 章</p><h2>第 04 章　递归：函数怎样把没做完的工作留在栈里</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 3a-Recursion》（24 页），结合栈章节。<br>本章会细讲过程，不预设读者已理解递归调用栈。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-recursive-task"><h3>04.1 为什么一个函数可以调用自身</h3><div class="lesson"><p>求 4! = 4×3×2×1。你可以写循环，也可以利用“要求 4!，先求 3!；要求 3!，先求 2!”这一重复模式。递归（recursion）就是把规模为 n 的任务化成同类但规模更小的任务，并明确一个不再继续拆分的出口。</p>
+<pre><code class="language-cpp">#include &lt;stdexcept&gt;
+long long fact(int n){
+    if(n&lt;0) throw std::invalid_argument(&quot;negative n&quot;);
+    if(n==0) return 1;       // 出口 0! = 1
+    return n*fact(n-1);      // 规模下降 1
+}</code></pre>
+
+<p>这里既有“规模持续减小”，也有“出口在 n=0”。只有定义自身，却没有保证向出口靠近的函数，不构成可靠的递归算法。</p>
+</div></section><section class="topic" id="v4-recursion-frames"><h3>04.2 逐层展开：为什么会先算最小的任务</h3><div class="lesson"><p>调用 fact(3) 时，当前函数知道最后还需要“乘 3”，但暂时缺少 fact(2) 的返回值。计算机必须保留当前参数、局部状态与返回位置，这些信息形成一个<strong>调用栈帧</strong>。</p>
+<pre class="diagram">fact(3): 等待 3 × fact(2)
+  fact(2): 等待 2 × fact(1)
+    fact(1): 等待 1 × fact(0)
+      fact(0): 返回 1
+    fact(1): 返回 1×1=1
+  fact(2): 返回 2×1=2
+fact(3): 返回 3×2=6</pre>
+
+<p>看到这种图就应分清两条路径：调用向下深入，结果自底向上返回。复杂度的时间是所有层做的工作总和；栈空间只与同时存在的最大层数有关。fact(n) 要 n+1 次调用，因此时间 Θ(n)、栈空间 Θ(n)。</p>
+</div></section><section class="topic" id="v4-recursion-proof"><h3>04.3 递归正确性：基例与归纳步怎样对应代码</h3><div class="lesson"><p>要证明 fact(n) 计算正确，可以沿 n 归纳。基例 n=0：程序返回 1，等于 0!。归纳假设：对任意小于 n 的非负整数，fact 都返回正确的阶乘。归纳步：对 n&gt;0，程序返回 <code>n*fact(n−1)</code>；由假设 fact(n−1)=(n−1)!，得到 n×(n−1)!=n!。</p>
+<p>你会发现：代码的出口对应基例，递归调用对应归纳假设，返回时的乘法对应归纳步。对更复杂的树递归也可以沿同一思路：假设对子树处理正确，再说明如何合并得到整棵树的正确答案。</p>
+</div></section><section class="topic" id="v4-recursion-iteration"><h3>04.4 递归与循环：哪些状态必须自己保存</h3><div class="lesson"><p>求阶乘完全可以通过 for 循环积累，避免递归栈。但不是把函数中的递归调用简单替换成 while 就一定正确。观察下面输出的顺序：</p>
+<pre><code class="language-cpp">void print1ToN(int n) {
+    if(n&lt;=0) return;
+    print1ToN(n-1);
+    std::cout&lt;&lt;n&lt;&lt;&quot; &quot;;
+}</code></pre>
+
+<p>调用 print1ToN(3) 会输出 1 2 3，因为输出发生在子调用返回之后。若写成“进入函数就输出 n，再递减 n”，反而会输出 3 2 1。转换为循环时，必须识别递归<strong>返回之后还要做什么工作</strong>；必要时显式建栈保存那些尚未完成的动作。</p>
+<p>递归尾调用是另一种情形：函数最后一步直接返回递归结果，无须保存额外的返回后计算。某些尾递归更容易改成循环，但 C++ 编译器是否自动做尾调用优化不保证，应以实际栈空间需求分析为准。</p>
+</div></section><section class="topic" id="v4-hanoi"><h3>04.5 汉诺塔：同一个子任务出现两次</h3><div class="lesson"><p>假设三根柱子 A、B、C，n 个大小不同圆盘都放在 A，目标是全部移到 C；一次只能移动一个盘，且大盘不能放小盘之上。要移动最底下最大的盘，必须先把上面 n−1 个小盘移到 B，才能把最大盘 A→C，然后把 B 上的 n−1 个小盘搬到 C。</p>
+<p>由此得到“搬 n−1、搬一次最大盘、再搬 n−1”的递归结构。令 T(n) 为最少移动次数，则 T(0)=0，T(n)=2T(n−1)+1。展开有 T(1)=1、T(2)=3、T(3)=7、T(4)=15，一般为 2ⁿ−1。递归树有指数数量的动作，但最长的递归调用路径只有 n 层，因此时间 Θ(2ⁿ)、栈空间 Θ(n)。</p>
+</div></section><section class="topic" id="v4-ackermann"><h3>04.6 Ackermann：嵌套递归为什么必须从内往外算</h3><div class="lesson"><p>课件和作业中的 Ackermann 函数对非负整数定义为：</p>
+<ul>
+<li>A(0,n)=n+1；</li>
+<li>当 m&gt;0 时，A(m,0)=A(m−1,1)；</li>
+<li>当 m&gt;0 且 n&gt;0 时，A(m,n)=A(m−1,A(m,n−1))。</li>
+</ul>
+<p>第三种情形的内层 A(m,n−1) 是外层调用的<strong>第二个参数</strong>，不是可以随意交换次序的两个子问题。先固定 m=1，可推出 A(1,0)=A(0,1)=2；再由 A(1,n)=A(0,A(1,n−1))=A(1,n−1)+1，得到 A(1,n)=n+2。之后 A(2,0)=A(1,1)=3，A(2,1)=A(1,A(2,0))=A(1,3)=5，A(2,2)=A(1,5)=7。</p>
+<pre><code class="language-cpp">long long ack(int m,long long n) {
+    if(m&lt;0 || n&lt;0) throw std::invalid_argument(&quot;negative&quot;);
+    if(m==0) return n+1;
+    if(n==0) return ack(m-1,1);
+    return ack(m-1,ack(m,n-1));
+}</code></pre>
+
+<p>真实计算中该函数增长极快，递归深度、运行时间和整数溢出都会迅速成为问题。本章只要求理解定义、调用次序和低阶手算，不把大输入当作一般算法性能测试。</p>
+</div></section><section class="topic" id="v4-recursion-complexity"><h3>04.7 用树分析递归的时间与空间</h3><div class="lesson"><p>面对递归式，先画三层展开：每次产生几个子问题？子问题是否重复？每一层的规模总和怎样变？例如 T(n)=2T(n/2)+n，每层总工作均为 n，约有 log₂n 层，因此 Θ(nlog n)。但树结点计数的递归虽然调用左右两棵子树，其输入结点互不重叠，总访问仍只有 n 次，Θ(n)。朴素 Fibonacci 的重复调用则会反复求相同 F(k)，运行时间呈指数增长。</p>
+</div></section><section class="topic" id="v4-recursion-exercises"><h3>04.8 练习：调用轨迹与代码转换</h3><div class="lesson"><details class="question"><summary>基础：f(n)=n+f(n−1)，f(0)=0，求 f(4)。</summary><p>从 n=4 向 n=0 展开，返回后得到 4+3+2+1+0=10。</p></details>
+<details class="question"><summary>读代码：先调用 f(n−1)，再输出 n，传 n=3 会输出什么？</summary><p>沿栈深入到 n=0 后逐层返回时输出 1、2、3，因此顺序是 123。先输出再递归才是 321。</p></details>
+<details class="question"><summary>作业同级：计算 A(2,2)，说明为什么必须先算 A(2,1)。</summary><p>A(2,2)=A(1,A(2,1))。内层先给外层第二个参数：A(2,1)=5；因此 A(1,5)=7。</p></details>
+<details class="question"><summary>作业同级：汉诺塔 n=4 的最少移动次数与递归栈空间分别是多少？</summary><p>次数 2⁴−1=15；最大调用深度 4（常数差不影响渐进阶），栈空间 Θ(n)。</p></details>
+<details class="question"><summary>提高：为何左右子树递归计数是 Θ(n)，朴素 Fibonacci 却会重复做大量工作？</summary><p>左右子树是互不相交的输入集合，总结点只遍历一次。Fibonacci 的不同调用分支共享相同子问题 F(k)，重复求解形成指数增长；记忆化可以消除重复。</p></details>
+
+<p>**复盘：**任何递归程序都应能回答出口是什么、规模凭什么下降、调用前后各有什么状态、总共有多少工作，以及最大同时保留多少栈帧。</p>
+</div></section></section><section class="chapter" id="ch05"><div class="chapter-heading"><p class="kicker">第 05 章</p><h2>第 05 章　队列、循环数组和优先处理</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 3-Stack&amp;Queue》队列及优先级队列部分。<br>前置：顺序表、链表与栈。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-queue-meaning"><h3>05.1 排队的限制为什么恰好与栈相反</h3><div class="lesson"><p>假设食堂的三位同学 A、B、C 按顺序排队。队伍若遵守先来先处理，那么先服务 A，再服务 B，最后服务 C；即使 D 在后面到来，也必须站到队尾。这种<strong>先进先出</strong>（First In, First Out，FIFO）的结构叫队列。它提供 enqueue（入队）、dequeue（出队）、front（查看队首）与 empty（判空）。</p>
+<p>如果用栈保存订单，最近来的顾客会先被处理，明显不符合这里的规则。数据结构之所以分栈与队列，是因为操作约束对应了不同任务：函数返回需要“最近调用先结束”，服务排队需要“最早到达先处理”。</p>
+</div></section><section class="topic" id="v4-queue-array"><h3>05.2 数组队列的第一个陷阱：不必把所有元素向左搬</h3><div class="lesson"><p>设数组长度 5，元素依次入队 2、4、6，三项存下标 0、1、2。出队 2 后，如果把 4 和 6 都搬到左边，虽然正确却浪费。可以只让队首下标 front 从 0 变为 1，此时 4 仍在下标 1、6 仍在 2。队尾之后的第一个空位下标记为 rear=3。</p>
+<p>因此约定：<strong>front 指向队首元素，rear 指向下一空位</strong>。在没有回绕且无扩容时，当前有效元素位于 [front,rear) 之间。出队令 front++，入队令 a[rear++]=x。问题是 rear 到了数组末尾，即便前部早已空出来，也无法向右再放。为复用前端空槽，需要让下标回绕成环形。</p>
+</div></section><section class="topic" id="v4-ringqueue"><h3>05.3 循环队列：取模不是魔法，只是回到起点</h3><div class="lesson"><p>把五个槽画成一个圈：下标 0、1、2、3、4，再从 4 继续前进就回到 0。此时移动下标用 <code>(index+1)%5</code>。如果 front=3、rear=1，说明有效元素可能分布在 [3,4,0] 这几处。</p>
+<p>现在出现一个真正的问题：若只存 front、rear，空队列时二者相等；填满整个环形数组后，rear 也可能绕回 front。<strong>同样的下标状态不能区分空与满</strong>。常见解决方案有三种：牺牲一个空槽，或者增加 count 记录实际个数，或者再记一个满/空标记。课堂练习常问前两种，公式绝不能混用。</p>
+<p>牺牲一格的版本，空为 <code>front==rear</code>，满为 <code>(rear+1)%m==front</code>，最多放 m−1 项。假设 m=5，front=3、rear=2，沿环形方向已有下标 3、4、0、1 的四项，因此已满；rear=2 是保留的下一空位。</p>
+</div></section><section class="topic" id="v4-front-count"><h3>05.4 只有 front 和 count：为什么这次可以装满 m 项</h3><div class="lesson"><p>另一种表示只保存 front 和 count。front 仍然是队首，count 是实际元素数。沿环从 front 前进 count 个位置，就抵达<strong>下一次要入队的位置</strong>，所以 <code>rear=(front+count)%m</code> 是一个<strong>可推导出的临时位置</strong>，不需要单独存储 rear。</p>
+<p>先做具体手算：m=5、front=3、count=3。有效下标是 3、4、0，下次入队应写下标 (3+3)%5=1。入队后 count=4；再写下标 2，count=5，此时恰好填满全部五格。因为 count 已能识别满和空，所以不必像上一种实现那样故意空出一格。</p>
+<pre><code class="language-cpp">#include &lt;array&gt;
+template&lt;class T,int M&gt;
+class Queue {
+    static_assert(M&gt;0);
+    std::array&lt;T,M&gt; data{};
+    int front=0, count=0;
+public:
+    bool empty() const{return count==0;}
+    bool full() const{return count==M;}
+    bool push(const T&amp; x){
+        if(full())return false;
+        data[(front+count)%M]=x;
+        ++count;
+        return true;
+    }
+    bool pop(T&amp; x){
+        if(empty())return false;
+        x=data[front];
+        front=(front+1)%M;
+        --count;
+        return true;
+    }
+};</code></pre>
+
+<p>无论在数组哪个位置操作，入队、出队都执行常数次工作，时间 O(1)。这段实现的边界是：M 必须为正；空队列不能出队；满队列不能覆盖旧元素；它不能被多线程同时修改而不加同步。</p>
+</div></section><section class="topic" id="v4-linkedqueue"><h3>05.5 链队列：队首和队尾指针要一起维护</h3><div class="lesson"><p>如果队列大小不断变化，链队列可以不预先固定最大容量。保存 first 指向最老数据结点、last 指向最新结点。入队时把新结点接到 last 后，更新 last；出队时保存 first，令 first 指向原来的后继，再释放旧首项。</p>
+<p>特殊情况是队列只有一个结点时，出队后 first 会变成 null，此时 last 也必须置空。忘记这一步，会使 last 悬空。常规链队列（已保存首尾指针）的入队和出队均为 O(1)。</p>
+</div></section><section class="topic" id="v4-queue-applications"><h3>05.6 队列为什么能实现树的层序遍历</h3><div class="lesson"><p>遍历树的一个自然要求是先访问第一层，再访问第二层，最后访问第三层。假设根为 A，两个孩子是 B、C；B 又有孩子 D、E。访问 A 后应先处理 B、C，不能马上深入 D。所以我们让“已经发现、尚未处理”的结点排进队列：A 出队时将 B、C 入队；B 出队时把 D、E 入队；接下来轮到 C，然后才轮到 D、E。最终次序 A,B,C,D,E。</p>
+<p>这解释了广度优先搜索（Breadth-First Search，BFS）为何使用队列。相比之下，递归深度优先遍历自然使用调用栈。</p>
+</div></section><section class="topic" id="v4-priorityqueue"><h3>05.7 优先级队列为什么不能只按到达顺序处理</h3><div class="lesson"><p>急诊分诊时可能要让病情更严重的患者先处理，尽管他们后来才到。这时“最先到达先出队”的规则不再符合任务，我们需要优先级队列（priority queue）：新数据可以入队，但每次弹出当前优先级最高者。课件把它归在队列之后，后面的堆章节会具体实现。</p>
+<p>如果直接用无序数组，插入可能 O(1)，但弹出最高优先级需要扫描全部 n 项，O(n)。堆是一种常见平衡取舍：入队 O(log n)、弹出最高优先级 O(log n)、查看堆顶 O(1)。这里先建立动机，等学完完全二叉树再推堆的实现。</p>
+</div></section><section class="topic" id="v4-queue-exercises"><h3>05.8 练习：两种循环队列不能混算</h3><div class="lesson"><details class="question"><summary>基础：队列依次入 1、2、3，出队一次，再入 4。队首至队尾？</summary><p>1 先出队；剩 2、3，最后加入 4，因此为 2、3、4。</p></details>
+<details class="question"><summary>作业同级：容量 m=6、front=4、count=3。下一次入队地址以及入队后的 count？</summary><p>(4+3)%6=1；写下标 1 后 count=4。还未满，可以继续入队两次。</p></details>
+<details class="question"><summary>作业同级：m=4 的 front/count 队列，入 A、B、C、D，出两项，再入 E、F。最终 front、count 和队列顺序？</summary><p>初始 front=0,count=0；四次入队后 count=4。两次出队后 front=2,count=2；E 和 F 分别写下标 0、1。最终 front=2,count=4，队首至尾为 C,D,E,F。</p></details>
+<details class="question"><summary>代码判断：使用浪费一格的 front/rear 队列，m=8，front=6、rear=3，当前长度？</summary><p>(rear−front+m)%m=(3−6+8)%8=5，最大有效容量 7。</p></details>
+<details class="question"><summary>提高：用两个栈实现一个队列，入队和出队怎样做？</summary><p>入队压 S_in。出队时若 S_out 为空，将 S_in 全部逐项弹出压入 S_out，再从 S_out 弹。一个元素最多在两个栈各压弹一次，故一串操作均摊 O(1)，单次倒栈最坏 Θ(n)。</p></details>
+
+<p>**复盘：**任何循环队列题必须先在草稿上写明：front 表示队首还是前一格、rear 表示尾项还是下一空格、满状态怎样区分，之后才能使用取模公式。</p>
+</div></section></section><section class="chapter" id="ch06"><div class="chapter-heading"><p class="kicker">第 06 章</p><h2>第 06 章　多维数组、压缩矩阵与稀疏存储</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 4-String》中的数组与特殊矩阵部分。<br>前置：一维数组、下标、线性表。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-array-layout"><h3>06.1 二维表格是怎样放进一段连续内存的</h3><div class="lesson"><p>数学中矩阵 A 有行和列，C++ 中二维数组也有两个下标。但物理内存中连续元素仍是按一个线性顺序排列的。最重要的问题是：给出 A[i][j]，到底要在第几个存储单元找到它？</p>
+<p>假设 A 有 3 行、4 列，下标从 0 开始，按行存储：</p>
+<pre class="diagram">行 0：a00 a01 a02 a03
+行 1：a10 a11 a12 a13
+行 2：a20 a21 a22 a23
+
+内存顺序：a00,a01,a02,a03,a10,a11,a12,a13,a20,a21,a22,a23</pre>
+
+<p>位置 A[2][1] 前有两整行，每行四项，共 8 项；本行中还要跳过下标 0 的一项，故线性偏移为 2×4+1=9。一般 m 行 n 列的 0-based 行优先偏移是 <code>i<em>n+j</code>；元素长 w 字节、首地址 base 时，地址为 <code>base+(i</em>n+j)*w</code>。</p>
+<p>如果存储规则改为列优先，便先跨过 j 整列，每列 m 项，再进入第 i 行，偏移为 <code>j*m+i</code>。公式里出现的 n 和 m 不是凭记忆交换，而是“先跳过多少整行/整列”数出来的。课件中部分旧地址公式有行列参数的笔误，应以这个过程重新推导。</p>
+</div></section><section class="topic" id="v4-symmetric"><h3>06.2 对称矩阵：为什么一半元素不需要再存</h3><div class="lesson"><p>对称矩阵满足 A[i][j]=A[j][i]。例如 A[1][4] 与 A[4][1] 是同一个值；如果两处都存，就重复占空间。选择只存下三角（包括对角线），第 0 行 1 项，第 1 行 2 项，…，第 i 行 i+1 项。要定位下三角的 A[i][j]（i≥j），前 i 行有 1+2+⋯+i=i(i+1)/2 项，所以 0-based 压缩下标为：</p>
+<p><code>k=i(i+1)/2+j</code>。</p>
+<p>当 i&lt;j 时，先换成 A[j][i]，再套公式。举例：5 阶对称矩阵的 A[1][4] 对应 A[4][1]，位置 k=4×5/2+1=11。整个 n 阶矩阵只需 n(n+1)/2 个元素。题目若按上三角存储或按列压缩，需重新数已存项，不能照搬这个下三角行优先公式。</p>
+</div></section><section class="topic" id="v4-tridiagonal"><h3>06.3 三对角矩阵：为什么只有 3n−2 个有效位置</h3><div class="lesson"><p>三对角矩阵规定只有主对角线和紧贴它的上下两条对角线可能非零，其他全为零。n=5 时各行有效元素数量分别是 2、3、3、3、2，总数 13=3×5−2。一般 n≥2 的 n 阶三对角矩阵有效项为 3n−2。</p>
+<p>按行把它们存入一维数组 B，0-based 的 A[i][j] 若满足 |i−j|≤1，则压缩位置可写作 <code>k=2i+j</code>。例如 n=7、A[4][4] 对应 k=2×4+4=12。反推时 <code>i=(k+1)/3</code>（整数除法向下取整）、<code>j=k−2i</code>，必须同时保证 k 属于有效范围、映射出来的 (i,j) 位于对角带内。</p>
+<p>这个公式不能用于带外位置：A[0][4] 本来应视为零，不应该把它错误地映射到 B[4]。</p>
+</div></section><section class="topic" id="v4-sparse"><h3>06.4 稀疏矩阵：为什么不能为每个零存一个位置</h3><div class="lesson"><p>如果 1000×1000 的矩阵只有 5 个非零项，为每个位置都存一个整数会浪费绝大多数空间。可以用<strong>三元组</strong>记录 (行号、列号、值)，只记录真正非零的元素。比如非零项是 A[0][2]=5、A[2][1]=7，我们只保存 (0,2,5)、(2,1,7)。</p>
+<p>矩阵转置要求把 A 的行列互换，所以原项 (0,2,5) 变成 (2,0,5)，原项 (2,1,7) 变成 (1,2,7)。如果输出三元组还要按新行号排序，单纯交换坐标后可能需要重新排序；课件因此讨论普通转置和快速转置两种策略。</p>
+</div></section><section class="topic" id="v4-fast-transpose"><h3>06.5 快速转置：先数每行该有多少项，再一次放到正确位置</h3><div class="lesson"><p>对输出矩阵而言，它的“新第 c 行”来自输入矩阵的“原第 c 列”。因此先扫描所有非零三元组，统计原各列非零项数 count[c]。例如原矩阵有四列，统计为 [2,0,1,3]，一共六个非零项。</p>
+<p>新矩阵第 0 行有 2 项，故从输出位置 0 开始；第 1 行有 0 项，仍从 2 开始；第 2 行有 1 项，也从 2 开始；第 3 行有 3 项，从 3 开始。于是开始位置数组为 <code>start=[0,2,2,3]</code>。</p>
+<p>接着按输入三元组次序逐项扫描。对于原项 (r,c,value)，目标输出下标是 start[c]；将 (c,r,value) 放到此处之后，把 start[c]++，供该列下一项使用。每个三元组只移动一次，统计和填充合起来需要 O(cols+terms) 时间，额外 start/count 数组为 O(cols)，输出本身存 terms 项。</p>
+<pre class="diagram">count:   [2,0,1,3]
+start:   [0,2,2,3]
+若遇到原项 (r=4,c=3,value=9)
+输出三元组 (3,4,9) 放在新数组下标 3
+然后 start[3] 改为 4。</pre>
+
+<p>关键不变量是“每个新行都有预留的连续输出区间”。如果没有先计算前缀和，就不知道一个来自列 3 的项应该写在整个输出数组的什么位置。</p>
+</div></section><section class="topic" id="v4-orthogonal"><h3>06.6 正交链表：何时要付出更多指针开销</h3><div class="lesson"><p>三元组数组适合稀疏但相对静态的矩阵，访问某行某列全部非零项可能还要扫描许多记录。若矩阵不断动态增删非零项，可让每个非零结点同时有两条链接：指向同一行下一个非零项的 right，和同一列下一个非零项的 down。行头指针与列头指针分别引导两类遍历，构成<strong>正交链表</strong>。</p>
+<p>为什么每个结点需要两个方向？因为同一个非零值同时属于一行和一列；两种访问顺序不能用一条单链同时自然表达。代价是额外的指针存储和更复杂的插删维护。</p>
+</div></section><section class="topic" id="v4-array-exercises"><h3>06.7 练习：每个公式都能从计数重新推出</h3><div class="lesson"><details class="question"><summary>基础：0-based A[4][6] 行优先，A[2][3] 在连续区中的偏移？</summary><p>前 2 整行各 6 项，再跨本行 3 项，k=2×6+3=15。</p></details>
+<details class="question"><summary>概念：8×10 的 double 数组，每项 8 字节，占多少字节？</summary><p>元素总量 80，内存大小为 80×8=640 字节，不包含外层容器的额外元数据。</p></details>
+<details class="question"><summary>作业同级：n=5 的下三角行优先对称压缩矩阵，A[1][4] 的一维下标？</summary><p>交换到下三角的 A[4][1]，k=4×5/2+1=11。</p></details>
+<details class="question"><summary>作业同级：快速转置 count=[2,0,1,3]，求 start。</summary><p>排他前缀和 [0,2,2,3]；第 1 行为空，因此第 1、2 行起点可相等。</p></details>
+<details class="question"><summary>提高：三对角矩阵 n=7 的 B[12] 对应什么 A[i][j]？</summary><p>i=⌊(12+1)/3⌋=4，j=12−2×4=4，所以是 A[4][4]。</p></details>
+
+<p>**复盘：**写地址公式前先描述存储顺序、下标起点、压缩区域；若这些条件改变，必须重新计数，不能沿用旧公式。</p>
+</div></section></section><section class="chapter" id="ch07"><div class="chapter-heading"><p class="kicker">第 07 章</p><h2>第 07 章　字符串与 KMP：为什么失配时主串不必回头</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 4-String》（字符串部分）及《DSA 4a-KMP Algorithm》（24 页）。<br>KMP 是考试里需要真正理解“为什么”的算法，本章从朴素匹配逐步推导。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-string-basics"><h3>07.1 字符串和子串：下标约定先讲清</h3><div class="lesson"><p>字符串是字符组成的有限序列，可为空。空串 <code>""</code> 长度为 0，含一个空格的串 <code>" "</code> 长度为 1。<strong>子串</strong>必须是原串中一段连续字符；例如 ABCDE 中 BCD 是子串，而 BD 只是子序列，并非连续子串。</p>
+<p>课程某些函数写 <code>SubString(S,i,j)</code>，约定 i 从 1 开始编号，j 是截取长度；C++ 的 <code>std::string::substr(pos,len)</code> 用 0-based 起点。比如 S=&quot;ABCDEFG&quot; 时课程式 SubString(S,2,3) 得 &quot;BCD&quot;，C++ 要写 <code>S.substr(1,3)</code>。字符串连接 Concat(X,Y) 按顺序把 Y 放在 X 之后，不会自动去重。</p>
+</div></section><section class="topic" id="v4-naive"><h3>07.2 最直接的匹配法：每个起点都试一遍</h3><div class="lesson"><p>给主串 S=&quot;ababac&quot;、模式 P=&quot;abac&quot;，要找到 P 在 S 中第一次连续出现的位置。最直观的方法从 S[0] 开始对齐 P[0]，一个个比较，失配就换主串的下一个起点。</p>
+<p>从起点 0：a=a、b=b、a=a，但第四个主串字符是 b、P[3] 是 c，失配；接着起点 1 的 b 与 P[0] 的 a 立即失配；起点 2 开始 a=b? 具体是 S[2]=&#39;a&#39;，与 P[0]=&#39;a&#39; 相等；后续 b=b、a=a、c=c，于是首次匹配下标 2。</p>
+<pre><code class="language-cpp">#include &lt;string&gt;
+int naiveFind(const std::string&amp; s,const std::string&amp; p) {
+    if(p.empty())return 0;
+    for(int start=0;start+(int)p.size()&lt;=(int)s.size();++start) {
+        int j=0;
+        while(j&lt;(int)p.size()&amp;&amp;s[start+j]==p[j])++j;
+        if(j==(int)p.size())return start;
+    }
+    return -1;
+}</code></pre>
+
+<p>如果主串中很多窗口与模式前半段相同、接近末尾才失配，这种方法会重复比较早已比较过的主串字符，最坏 O(nm)，其中 n、m 分别是主串和模式长度。KMP 想解决的浪费就在这里。</p>
+</div></section><section class="topic" id="v4-border-intuition"><h3>07.3 已经匹配的前缀并非毫无价值</h3><div class="lesson"><p>把模式 P=&quot;ABAB&quot; 画出来。它的前两个字符 &quot;AB&quot; 与最后两个字符 &quot;AB&quot; 相同。假如主串某个窗口已经与 &quot;ABAB&quot; 完全一致，但下一个字符失配，那么这四个已确认字符的末尾 &quot;AB&quot; 已经确定与模式开头 &quot;AB&quot; 相同，我们可以让模式重新对齐到这个已知边界，而不从模式首项重头比较。</p>
+<p>这里用到两个词：<strong>前缀</strong>是从串首开始的一段，<strong>后缀</strong>是到串尾结束的一段。所谓<strong>真前缀/真后缀</strong>，要求长度比整个字符串短，不能把整串自身算进去。对 &quot;ABAB&quot;，最长相等真前后缀为 &quot;AB&quot;，长度 2；对 &quot;ABC&quot; 没有非空公共真前后缀，长度 0。</p>
+<p>KMP 的基本事实是：已匹配的这段文本既然等于模式的一个前缀，它自己的尾部自然也具有该前缀的后缀信息。重复利用相等的边界，不会丢掉可能的新匹配位置。</p>
+</div></section><section class="topic" id="v4-lps"><h3>07.4 LPS 数组先定义，再用实例一点点填写</h3><div class="lesson"><p>LPS（Longest Proper Prefix which is also Suffix，最长相等真前后缀长度数组）规定 <code>lps[i]</code> 是模式前缀 <code>P[0..i]</code> 的最长相等真前后缀长度。以 P=&quot;aabaaca&quot; 为例：</p>
+<table>
+<thead>
+<tr>
+<th align="right">i</th>
+<th>当前前缀 P[0..i]</th>
+<th>最长相等真前后缀</th>
+<th align="right">lps[i]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td>a</td>
+<td>无</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td>aa</td>
+<td>a</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>aab</td>
+<td>无</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td>aaba</td>
+<td>a</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>aabaa</td>
+<td>aa</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>aabaac</td>
+<td>无</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>aabaaca</td>
+<td>a</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+<p>因此 lps=[0,1,0,1,2,0,1]。可以先不看程序，逐位置寻找真前缀与真后缀，确保“真”的含义已经清楚。</p>
+</div></section><section class="topic" id="v4-lps-fallback"><h3>07.5 失配时为何 len=lps[len−1]，而不是任意减一</h3><div class="lesson"><p>现在从手算走向线性算法。假设已经处理到前缀 P[0..i−1]，最长相等边界长度为 len，我们打算比较新字符 P[i] 与 P[len]。若相等，可扩成 len+1；若不等，当前长度 len 不可继续扩展。</p>
+<p>接下来的候选长度并非任意的 len−1。它必须既是“此前匹配前缀”的<strong>后缀</strong>，也是整个模式开头的<strong>前缀</strong>。因此候选必然是当前已知边界字符串自己的某个边界；其中最长者的长度恰为 <code>lps[len−1]</code>。直接从这里继续，不会漏过可能成功的候选，且能一次跳过不可能的长度。</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;string&gt;
+std::vector&lt;int&gt; buildLps(const std::string&amp; p){
+    std::vector&lt;int&gt; lps(p.size(),0);
+    int len=0;
+    for(int i=1;i&lt;(int)p.size();){
+        if(p[i]==p[len]) lps[i++]=++len;
+        else if(len&gt;0) len=lps[len-1];
+        else lps[i++]=0;
+    }
+    return lps;
+}</code></pre>
+
+<p>注意失配分支回退 len 时<strong>没有增加 i</strong>：当前字符尚未与新的边界候选比较。只有成功扩展或已无非空候选时，才完成当前 i 的计算、进入下一位置。</p>
+<h3>真正跳过“看似可能、其实不可能”的长度</h3>
+<p>看模式 <code>P="ababd"</code>。处理到 i=4 前，我们已处理的前缀为 &quot;abab&quot;，它有一个长度为 2 的公共真前后缀 &quot;ab&quot;，因此 len=2。新字符是 d，我们打算检验能否把这个长度 2 的边界继续扩展：比较 P[4]=&#39;d&#39; 与 P[2]=&#39;a&#39;，发现不相等。</p>
+<p>如果直接执行 <code>len--</code>，下一个候选会是 1。然而长度 1 的前缀 &quot;a&quot; 并不是已处理字符串 &quot;abab&quot; 的后缀；该字符串最后一项是 &quot;b&quot;。这样的候选<strong>从定义上就不可能成立</strong>，无需浪费一次尝试。当前长度 2 的公共边界是 &quot;ab&quot;，而 &quot;ab&quot; 自己没有任何非空公共真前后缀，所以直接回退到 <code>lps[1]=0</code>，然后检查最短的情形。</p>
+<p>这个例子展示了跳转的两个不变量：</p>
+<ol>
+<li>len 始终是“已处理前缀一个真正存在的公共前后缀长度”，绝不把非候选值拿来比较。</li>
+<li>从 len 失败退到 <code>lps[len−1]</code>，跳过的所有中间长度都不符合第一个条件，所以不会漏掉答案。</li>
+</ol>
+<p>将这个道理放回主串匹配：假设 S[i] 与原 P[j] 失配，而 S[i−j .. i−1] 已经与 P[0 .. j−1] 相同。那段文本末尾的可重用边界是固定的，改变 j 就改变了模式对齐起点；S[i] 仍然是<strong>尚未完成比较的那个字符</strong>。因此不许让 i 随便后移。理解这一点后，构造 LPS 和 KMP 主匹配的两个“回退不增加 i”分支其实是同一套推理。</p>
+</div></section><section class="topic" id="v4-kmp"><h3>07.6 在主串上匹配：为什么 i 不回退</h3><div class="lesson"><p>匹配时 i 指当前尚未处理的主串字符位置，j 指已经连续匹配的模式前缀长度。若 S[i]==P[j]，二者共同向前走；如果失配但 j&gt;0，便令 j=lps[j−1]。<strong>主串 i 保持不变</strong>，因为 S[i] 还未与新的 P[j] 比较。如果 j=0 仍失配，才让 i++，因为不可能从当前位置以模式首字符开头。</p>
+<pre><code class="language-cpp">int kmpFind(const std::string&amp; s,const std::string&amp; p){
+    if(p.empty())return 0;
+    auto lps=buildLps(p);
+    int i=0,j=0;
+    while(i&lt;(int)s.size()){
+        if(s[i]==p[j]){++i;++j;}
+        else if(j&gt;0)j=lps[j-1];
+        else ++i;
+        if(j==(int)p.size())return i-j;
+    }
+    return -1;
+}</code></pre>
+
+<p>KMP 的总时间为 O(n+m)。直观上构造 lps 时 i 只前进、len 虽能回退但回退的总工作受此前增加次数约束；主串匹配时 i 从不后退，j 的回退同样不可能无限超过它此前上升的次数。</p>
+</div></section><section class="topic" id="v4-next"><h3>07.7 next 与 LPS 为什么经常差一个下标</h3><div class="lesson"><p>不同课件把失配信息存成不同约定的 next，题目必须看数组首值和匹配代码。有一种常见的 <strong>-1 型 next</strong> 为前 m 个位置定义 <code>next[0]=-1</code>、<code>next[j]=lps[j−1]</code>（1≤j&lt;m）；匹配失败时设置 <code>j=next[j]</code>，若 j 变成 -1，再让 i++、j++。它和直接使用 <code>j=lps[j−1]</code> 的代码语义相近，但数值位置不同。</p>
+<p>对于模式 P=&quot;aabaaca&quot;，本章的 lps 是 [0,1,0,1,2,0,1]；按上述 <em>指定的</em> -1 型约定，长度 m=7 的 next 可写成 [-1,0,1,0,1,2,0]。有些教材还定义 nextval（考虑当前模式字符重复的进一步优化）；不能只凭数组叫 next 就认定相同。</p>
+</div></section><section class="topic" id="v4-kmp-exercises"><h3>07.8 练习：每一次回退都要指出当前 i、j</h3><div class="lesson"><details class="question"><summary>基础：S="ABCDEFG"，课程函数 SubString(S,3,3) 返回什么？</summary><p>1-based 从第三个字符开始取三个，结果 CDE；C++ substr 为 S.substr(2,3)。</p></details>
+<details class="question"><summary>作业同级：求 P="aabaaca" 的 LPS。</summary><p>逐位置公共真前后缀长度是 0,1,0,1,2,0,1。尤其 i=5 新字符 c 打破此前边界，需要回退到 0。</p></details>
+<details class="question"><summary>作业同级：S="ababababca"、P="abababca"，在 i=6,j=6 失配时，下一步怎样处理？</summary><p>已匹配的六字符前缀是 "ababab"，lps[5]=4，因此 j 改为 4、i 保持 6，再让当前主串字符与新的 P[4] 比较；最终首次匹配起点为 2。</p></details>
+<details class="question"><summary>提高：P="aaaa" 在 S="aaaaaa" 中允许重叠出现几次？</summary><p>起点 0、1、2，共三次。每次完整匹配之后，若要继续查找重叠出现，令 j=lps[3]=3，而不是清零。</p></details>
+<details class="question"><summary>选择：下标首次值为 -1 的 next 与首值 0 的 lps 能否不看代码直接互换使用？</summary><p>不能。先检查失败时的赋值形式与首位含义，再根据约定做转换；混用会造成越界或错误回退。</p></details>
+
+<p>**复盘：**试着不看任何代码，解释三个为什么：为什么 lps 只数真前后缀？为什么构造时按 lps[len−1] 回退？为什么主串失配时 i 不回退？</p>
+</div></section></section><section class="chapter" id="ch08"><div class="chapter-heading"><p class="kicker">第 08 章</p><h2>第 08 章　树与二叉树：从一张图走到遍历和重建</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 5-Tree》（树、二叉树、遍历、重建）。<br>前置：递归、栈和队列。<br>目标：根据数组或遍历序列画出二叉树，逐步推导树的计数性质，写递归和非递归遍历。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-tree-idea"><h3>08.1 为什么“分层关系”需要树</h3><div class="lesson"><p>假设学校的课程目录从“数据结构”分为“线性表”“树”“查找”等章，每章又分成若干知识点。这个组织方式中，一个章节可能有多个下一级项目，而每个知识点只有一条通往最上级课程的路径。用单链表表达会很别扭，因为一个结点只能自然地表示一个“下一项”；树能表达一个对象拥有多个下属对象的关系。</p>
+<p>树由根结点和零棵或多棵互不相交的子树构成。没有结点的叫空树，只有一个结点时该结点既是根也是叶子。有直接孩子的结点是父结点，没有孩子的结点是叶子。结点的<strong>度</strong>为孩子数，树的度为所有结点度数的最大值。路径长度按边数计算，若根深度定义为 0，它的孩子深度为 1。某个结点的高度可按到最深叶子的边数定义，也可按结点层数定义；考试必须和题面保持一致。</p>
+</div></section><section class="topic" id="v4-binary-shape"><h3>08.2 为什么二叉树中“左”和“右”不能随意交换</h3><div class="lesson"><p>二叉树的每个结点有两个固定的孩子位置：左子树和右子树。一个根 A 只带左孩子 B 与只带右孩子 B，是不同的二叉树；即使结点值完全相同，也不能把它们当成一样的形状。</p>
+<pre class="diagram">只有左孩子        只有右孩子
+    A                 A
+   /                   \
+  B                     B</pre>
+
+<p>满二叉树按约定每层全满；完全二叉树从上到下、从左到右填充到最后一层，最后一层结点靠左。后面“堆”需要完全二叉树的形状，因为它保证可以用一维数组紧凑存放而不出现内部空洞。普通二叉树可以通过数组保存，但要保留缺失的位置。</p>
+</div></section><section class="topic" id="v4-tree-count"><h3>08.3 两个计数公式怎样从边数推出</h3><div class="lesson"><p>非空树有 n 个结点，恰有 n−1 条父子边，因为除根以外每个结点恰有一个父亲。对于二叉树，设 n₀、n₁、n₂ 分别为有 0、1、2 个孩子的结点数，则结点总数 n=n₀+n₁+n₂；从所有结点数出指向孩子的边共有 n₁+2n₂。所以：</p>
+<p><code>n₀+n₁+n₂−1=n₁+2n₂</code>，整理得 <code>n₀=n₂+1</code>。</p>
+<p>因此二叉树若有 7 个度为 2 的结点，叶子必有 8 个。一般树最大度可大于 2，设 nₖ 为度为 k 的结点数，同样令边数相等：</p>
+<p><code>Σ(k nₖ)=Σnₖ−1</code>，可得 <code>n₀=1+Σ_{k≥1}(k−1)nₖ</code>。这道证明只用了两次计算同一批边，记住思路就能自行推回公式。</p>
+</div></section><section class="topic" id="v4-tree-traversal"><h3>08.4 前序、中序、后序到底改变了什么</h3><div class="lesson"><p>设二叉树根 A，左孩子 B、右孩子 C；B 有左右孩子 D、E，C 有右孩子 F。三种深度优先遍历执行的仍是同样的递归：先处理左子树，再处理右子树。唯一不同的是“输出当前根”放在哪一步。</p>
+<pre class="diagram">       A
+      / \
+     B   C
+    / \   \
+   D   E   F
+前序（根左 右）：A B D E C F
+中序（左 根右）：D B E A C F
+后序（左右 根）：D E B F C A
+层序（按层）：    A B C D E F</pre>
+
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+struct Node{char val;Node* left;Node* right;};
+void preorder(Node* p){
+    if(!p)return;
+    std::cout&lt;&lt;p-&gt;val&lt;&lt;&quot; &quot;;
+    preorder(p-&gt;left);
+    preorder(p-&gt;right);
+}
+void inorder(Node* p){
+    if(!p)return;
+    inorder(p-&gt;left);
+    std::cout&lt;&lt;p-&gt;val&lt;&lt;&quot; &quot;;
+    inorder(p-&gt;right);
+}
+void postorder(Node* p){
+    if(!p)return;
+    postorder(p-&gt;left);
+    postorder(p-&gt;right);
+    std::cout&lt;&lt;p-&gt;val&lt;&lt;&quot; &quot;;
+}</code></pre>
+
+<p>它们都访问 n 个结点一次，时间 Θ(n)；递归调用栈与高度 h 成正比，为 O(h)。若树退化成链，h=Θ(n)；若近似平衡，h=Θ(log n)。层序遍历需要队列保存已发现的结点，队列最大同时存放的结点数可能达到 O(n)。</p>
+</div></section><section class="topic" id="v4-tree-rebuild"><h3>08.5 给出前序和中序，怎样逐步画出唯一的二叉树</h3><div class="lesson"><p>给前序序列 <code>A B D E C F</code>，中序序列 <code>D B E A C F</code>，假设结点值互异。前序首项是根 A；中序中 A 左边的三个值 D、B、E 一定属于左子树，右边 C、F 属于右子树。所以前序剩余序列的前 3 项 B、D、E 必然属于左子树，余下 C、F 是右子树。</p>
+<p>继续左侧：左子树前序 B D E，首项根 B；它的中序 D B E 显示 D 在 B 左边、E 在 B 右边。右侧：前序 C F，根为 C；中序 C F 说明 C 没有左孩子而有右孩子 F。由此恢复上一节的树。</p>
+<p>这个方法能成功的关键是<strong>每次都用中序中根的位置确定左右子树大小</strong>。只给前序与后序一般不够，例如根 A、结点 B：前序 AB、后序 BA 既可能是 A 的左孩子 B，也可能是右孩子 B。题目若含重复关键码，则还需要额外信息才能保证唯一性。</p>
+<h3>用区间参数代替反复切数组：完整 C++ 构造</h3>
+<p>纸笔构造时我们按中序切左右子树；写算法时不用每次生成新的子数组，只需要记录当前中序范围 [L,R] 与“下一个尚未使用的前序结点下标”。当前前序值就是根；在中序中找到它的位置 k，左区间 [L,k−1] 属于左子树，右区间 [k+1,R] 属于右子树。只有先递归构造<strong>左子树</strong>，前序游标才能与真实前序顺序一致。</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;stdexcept&gt;
+struct BuildNode{
+    char value;
+    BuildNode *left,*right;
+};
+BuildNode* buildRec(const std::vector&lt;char&gt;&amp; pre,
+                    int&amp; pos,int L,int R,
+                    const std::unordered_map&lt;char,int&gt;&amp; where){
+    if(L&gt;R)return nullptr;
+    if(pos&gt;=(int)pre.size())throw std::invalid_argument(&quot;bad traversals&quot;);
+    char rootValue=pre[pos++];
+    auto it=where.find(rootValue);
+    if(it==where.end()||it-&gt;second&lt;L||it-&gt;second&gt;R)
+        throw std::invalid_argument(&quot;inconsistent traversals&quot;);
+    int k=it-&gt;second;
+    BuildNode* root=new BuildNode{rootValue,nullptr,nullptr};
+    root-&gt;left=buildRec(pre,pos,L,k-1,where);
+    root-&gt;right=buildRec(pre,pos,k+1,R,where);
+    return root;
+}
+BuildNode* buildTree(const std::vector&lt;char&gt;&amp; pre,
+                    const std::vector&lt;char&gt;&amp; in){
+    if(pre.size()!=in.size())throw std::invalid_argument(&quot;different lengths&quot;);
+    std::unordered_map&lt;char,int&gt; where;
+    for(int i=0;i&lt;(int)in.size();++i){
+        if(!where.emplace(in[i],i).second)
+            throw std::invalid_argument(&quot;duplicate keys&quot;);
+    }
+    int pos=0;
+    BuildNode* root=buildRec(pre,pos,0,(int)in.size()-1,where);
+    if(pos!=(int)pre.size())throw std::invalid_argument(&quot;extra keys&quot;);
+    return root;
+}</code></pre>
+
+<p>这是教学用构造代码：正常合法输入且关键码互异时，每个结点只创建一次；利用哈希映射定位根在中序中的位置，平均时间 O(n)、额外映射空间 O(n) 加递归栈 O(h)。如果要求强异常安全，异常后还需要释放已构造的部分子树，工程版本宜使用智能指针管理所有权。本课程手算题重点仍是区间的划分。</p>
+<p>在每次递归构造后，应该能独立检查：该子树的前序第一个元素是否为根？在中序中的左段是否恰好只包含其左后代？如果两个检查都成立，才有资格把局部子树回接到父亲。</p>
+</div></section><section class="topic" id="v4-tree-array"><h3>08.6 用完全二叉树位置存储一般二叉树：@ 不能压缩</h3><div class="lesson"><p>对于 0-based 完全二叉树编号，某结点下标 i 的左右孩子位置分别为 2i+1、2i+2，非根结点父位置为 (i−1)/2 向下取整。即使数组里用 @ 表示缺失结点，也不能把后面的非空结点往前挪，否则父子关系会改变。</p>
+<p>例如数组 <code>[A,B,C,@,D,E,F]</code>：根 A，左右 B、C；B 的左孩子缺失、右孩子 D；C 有左右孩子 E、F。中序先处理 B→D，再 A，再 E→C→F，所以为 <code>B D A E C F</code>。</p>
+<p>对于更长的输入 <code>[A,B,C,D,E,F,G,@,@,H,@,I,J,K,L]</code>，画图时要照位置规则将下标 9 的 H 放在下标 4 的 E 左边，把下标 11、12 的 I、J 放在下标 5 的 F 下方。对应中序为 <code>D B H E A I F J C K G L</code>。</p>
+</div></section><section class="topic" id="v4-tree-stack"><h3>08.7 为什么可以用显式栈代替递归遍历</h3><div class="lesson"><p>递归中序遍历会先沿左孩子一路走到底，再返回访问父结点，然后向右走。显式栈可以模拟这件事：把尚未访问的祖先依次压栈；当左边走到底，弹出栈顶输出它，再转到其右孩子。这个循环保持的不变量是“栈内结点是其左侧已走完但自身尚未输出的祖先”。</p>
+<pre><code class="language-cpp">#include &lt;stack&gt;
+#include &lt;iostream&gt;
+void inorderIter(Node* root) {
+    std::stack&lt;Node*&gt; st;
+    Node* cur=root;
+    while(cur || !st.empty()){
+        while(cur){st.push(cur);cur=cur-&gt;left;}
+        cur=st.top();st.pop();
+        std::cout&lt;&lt;cur-&gt;val&lt;&lt;&quot; &quot;;
+        cur=cur-&gt;right;
+    }
+}</code></pre>
+
+<p>如果题目要求<strong>非递归镜像二叉树</strong>，做法类似：把根压栈，每次弹出结点 p，交换 p-&gt;left 与 p-&gt;right，再把其存在的孩子压入栈；最终返回原来的 root，而不是循环最后处理的临时 p。每结点交换一次，时间 Θ(n)。</p>
+</div></section><section class="topic" id="v4-tree-exercises"><h3>08.8 练习：每道画树题都重新遍历核对</h3><div class="lesson"><details class="question"><summary>基础：非空二叉树有 7 个度为 2 的结点，求叶子数。</summary><p>树边计数得 n₀=n₂+1，因此 n₀=8。</p></details>
+<details class="question"><summary>作业同级：数组 [A,B,C,@,D,E,F] 对应的二叉树中序是什么？</summary><p>按下标补足空位：B 仅有右孩子 D、C 有 E 与 F，所以中序 B D A E C F。</p></details>
+<details class="question"><summary>作业同级：前序 A B D E C F、中序 D B E A C F，求后序。</summary><p>树为 A(左 B，右 C)；B 的左右 D、E；C 的右孩子 F。后序 D E B F C A。</p></details>
+<details class="question"><summary>证明：一般树度为 1 的 4 个、度为 2 的 3 个、度为 3 的 2 个，其余为叶。求叶数和总结点数。</summary><p>n₀=1+(2−1)×3+(3−1)×2=8；总数为 8+4+3+2=17。度数和 4+6+6=16，正好等于边数 17−1。</p></details>
+<details class="question"><summary>读代码：非递归镜像树过程中 node 不断改指向，为什么不能随意 return node？</summary><p>node 可能是最后访问的某个叶子或内部结点，并非原树根。应保存 root，完成所有结点左右交换后 return root。</p></details>
+
+<p>**复盘：**画完树从头再做三次遍历检查；公式题从“结点数 n 和边数 n−1”重新推导，避免死记错误的度数关系。</p>
+</div></section></section><section class="chapter" id="ch09"><div class="chapter-heading"><p class="kicker">第 09 章</p><h2>第 09 章　线索二叉树、森林与结构计数</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 5-Tree》线索化、树与森林、形态计数部分。<br>已学：二叉树的三种遍历、数组表示与递归。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-thread-motivation"><h3>09.1 为什么普通二叉链表里有很多空链接</h3><div class="lesson"><p>n 个结点的二叉链表里，每个结点有 left、right 两根指针，共 2n 个指针域。树中只有 n−1 条父子边，所以实际连接孩子的指针域仅用了 n−1 个，其余 <code>2n−(n−1)=n+1</code> 个必为空。</p>
+<p>假如任务要求在<strong>不另建栈</strong>的情况下找到某结点在中序序列中的下一个结点，我们能否利用这些空域记录遍历意义上的前驱或后继？这便是<strong>线索二叉树</strong>的动机。但空域被换成前驱/后继地址以后，程序必须知道当前指针究竟是“真实孩子”还是“线索”，否则遍历时就可能沿线索误走回已经访问过的祖先。</p>
+</div></section><section class="topic" id="v4-threading"><h3>09.2 线索怎么建立，标志位又表示什么</h3><div class="lesson"><p>设二叉树中序序列为 D、B、E、A、C。原本没有右孩子的 D，可以让它的右线索指向中序后继 B；没有左孩子的 E，可以让左线索指向中序前驱 B。结点需要 <code>ltag</code>、<code>rtag</code> 两个标记，例如约定 tag=0 表示孩子、tag=1 表示线索。</p>
+<p>线索化相当于在实际遍历的同时维护“刚刚访问过的结点 prev”。当前访问 p 时，如果 p-&gt;left 原本为空，就把左线索设为 prev；如果 prev-&gt;right 原本为空，就把 prev 的右线索设为 p，然后 prev=p。请先画出两三个结点的中序次序，再把这些链接加回图中。</p>
+</div></section><section class="topic" id="v4-thread-successor"><h3>09.3 如何找中序后继：分两个互斥情况</h3><div class="lesson"><p>若结点 p 的 rtag=1，说明 right 已经保存中序后继，直接取 right 即可（若没有后继，可能为空或指向头哨兵，依具体约定）。如果 rtag=0，说明 p 有真实右子树；中序在访问 p 后会进入右子树，最先访问的是<strong>右子树最左边的结点</strong>，必须沿真实 left 链一直走到底。</p>
+<p>为什么不是直接返回 p-&gt;right？例如 A 的右孩子 C，而 C 的左孩子是 B，则中序为 A,B,C，A 的后继显然是 B，不是 C。这个反例展示了“右子树最左”条件的必要性。</p>
+<p>前驱的道理对称：若 ltag=1 直接取左线索；否则到真实左子树里沿 right 孩子一直走到最右边。</p>
+</div></section><section class="topic" id="v4-firstchild-nextsibling"><h3>09.4 一般树为什么可以用二叉链表表示</h3><div class="lesson"><p>普通树中一个结点可能有三个或更多孩子，二叉结点只有两个指针。解决思路是给这两条指针重新定义含义：<strong>left 指第一个孩子，right 指向下一个兄弟</strong>。例如 A 的直接孩子 B、C、D，且 D 有孩子 E，可写成：</p>
+<pre class="diagram">一般树：       孩子兄弟链接：
+     A          A.left  = B
+   / | \        B.right = C
+  B  C  D       C.right = D
+        |       D.left  = E
+        E       E.right = null</pre>
+
+<p>沿 A.left 找到第一个孩子 B，再沿 B.right、C.right 找到 C、D，就能枚举 A 的全部孩子。注意在转换后的二叉形式里，B.right 指兄弟 C，<strong>不是 B 在原树里的右孩子</strong>。</p>
+</div></section><section class="topic" id="v4-forest"><h3>09.5 森林是怎样接在一起的</h3><div class="lesson"><p>森林是一组互不相交的树。把这些树的根视为兄弟，用第一棵树根的 right 指第二棵树根，再依次接到后面的树根，就能将森林编码到同一种孩子兄弟二叉表示。</p>
+<p>静态表题通常列出每个结点编号、data、llink（首孩子）和 rlink（下一个兄弟）。还原时先沿起始根的 rlink 找到森林的其他根，再从每棵树的每个父结点 llink 出发沿其孩子的 rlink 找全部子女。以原作业中的 A、F、H 三棵树为例，森林根依次为 A、F、H；A 下有 B、C、D，其中 D 的孩子为 E；F 的孩子 G；H 下有 I、J，其中 I 的孩子是 K。</p>
+<p>画图过程能被完整恢复的前提是所有编号合法，某结点不会被重复用作两棵树的孩子，也不存在兄弟环。题目一般默认静态表合法。</p>
+</div></section><section class="topic" id="v4-catalan"><h3>09.6 为什么树形计数会出现 Catalan 数</h3><div class="lesson"><p>设 T(n) 表示 n 个互异编号位置所对应的<strong>二叉树形态数</strong>（只关心树形，不把不同标签排列额外计数）。根占一个结点，剩余 n−1 个结点可以分成左侧 k 个和右侧 n−1−k 个。左子树有 T(k) 种、右子树有 T(n−1−k) 种，组合数相乘；将所有 k 的可能性相加：</p>
+<p><code>T(0)=1，T(n)=Σ[k=0..n−1] T(k)T(n−1−k)</code>。</p>
+<p>由此 T(1)=1，T(2)=2，T(3)=5，T(4)=14。闭式 <code>T(n)=binom(2n,n)/(n+1)</code> 是 Catalan 数。这里的 T(0)=1 表示“空子树”作为一种合法选择，不意味着空树拥有一个结点。</p>
+<p>这与栈的合法出栈序列计数是相同数列，但两种对象的含义不同。考试写递推时必须明确数的是“树的形态”还是“赋予固定进栈次序的合法出栈序列”。</p>
+</div></section><section class="topic" id="v4-thread-forest-exercises"><h3>09.7 练习：从静态链接恢复关系</h3><div class="lesson"><details class="question"><summary>基础：n=12 的二叉链表有多少个空孩子指针域？</summary><p>共有 24 个左右域，树边数 11，空域为 24−11=13，即 n+1。</p></details>
+<details class="question"><summary>作业同级：A.firstChild=B，B.nextSibling=C，B.firstChild=D，还原原树。</summary><p>A 的两个直接孩子 B、C，B 自己还有孩子 D。C 是 B 的兄弟，不属于 B 的孩子。</p></details>
+<details class="question"><summary>作业同级：森林根链 A→F→H，A 的子女为 B、C，F 无孩子，H 有 I。森林含几棵树？</summary><p>三棵，根分别为 A、F、H。F 是一棵只有根的树，不能因为没有孩子而把它省略。</p></details>
+<details class="question"><summary>中序线索树中结点 p 有真实右孩子，怎样寻找中序后继？</summary><p>从 p.right 进入右子树，沿真实 left 孩子持续向下，直到最左结点；这才是下一次应访问的结点。</p></details>
+<details class="question"><summary>提高：n=3 个结点有多少种二叉树形态？写出递推分项。</summary><p>T(3)=T(0)T(2)+T(1)T(1)+T(2)T(0)=1×2+1×1+2×1=5。</p></details>
+
+<p>**复盘：**孩子兄弟表示中，应能针对一条 right 链回答“这指向下一个兄弟还是右孩子”；线索化则必须先读 tag 再读指针，避免混淆逻辑意义。</p>
+</div></section></section><section class="chapter" id="ch10"><div class="chapter-heading"><p class="kicker">第 10 章</p><h2>第 10 章　堆：如何维护一组元素中的最大或最小值</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 5-Tree》堆部分。<br>先修：完全二叉树及其数组下标规则、复杂度。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-heap-motivation"><h3>10.1 为什么反复取最大值时不必每次重新排序</h3><div class="lesson"><p>假设比赛成绩不断传入，系统反复要查询当前最大成绩，还会新增成绩或移除当前最大值。把所有分数始终完整排序当然可以，但插入时为了保持有序，常常要移动许多元素；若每次都遍历寻找最大，弹出又要花 Θ(n)。</p>
+<p>有没有一种折中：只让<strong>最大值随时在最前面</strong>，而不强求其他元素严格排序？如果给完全二叉树中的每一条父子边加一条规则“父结点不小于孩子”，根自然不小于任何后代，因此根就是全局最大。这种结构叫<strong>最大堆</strong>（max-heap）；将规则反向得到最小堆。</p>
+</div></section><section class="topic" id="v4-heap-definition"><h3>10.2 堆必须同时满足形状和大小两个条件</h3><div class="lesson"><p>堆有两条独立约束：第一，结构是一棵完全二叉树，可用数组紧凑存储；第二，每个父结点的关键码不小于子结点（最大堆）或不大于子结点（最小堆）。最大堆 [9,7,8,3,5,6] 合法，因为 9≥7,8；7≥3,5；8≥6，但 7 与 8、3 与 6 的相对大小并不受约束。</p>
+<p>在 0-based 数组里，下标 i 的父结点为 (i−1)/2（i&gt;0），左右孩子分别 2i+1、2i+2（如果没有超过数组最后下标）。这不是额外记忆的神秘公式，而是完全二叉树按层从左到右编号的结果。</p>
+</div></section><section class="topic" id="v4-heap-insert"><h3>10.3 插入一个新最大值为什么只需要向上走</h3><div class="lesson"><p>例如已有最大堆 [9,7,8,3,5,6]，现在插入 10。为了保证完全二叉树形状，先把 10 放在数组末尾，得到 [9,7,8,3,5,6,10]。此时除了“新结点 10 可能比父结点更大”，其他原有父子关系都没被改变。</p>
+<p>10 的父结点是下标 2 的 8，交换后变成 [9,7,10,3,5,6,8]；10 到了下标 2，再与根 9 交换，得到 [10,7,9,3,5,6,8]。现在 10 已经是根，整个堆恢复合法。</p>
+<p>因此插入法只沿新结点到根的一条路径上浮，最多 O(log n) 层，不必重新整理全部数组。</p>
+</div></section><section class="topic" id="v4-heap-pop"><h3>10.4 删除根以后为什么需要向下筛选</h3><div class="lesson"><p>要弹出最大值，先保存根；为保持完全二叉树形状，把<strong>末尾元素</strong>补到根，再将数组长度减一。新根可能比孩子小，于是选择较大的孩子交换，持续向下直到不再违反堆序。</p>
+<p>例如从 [10,7,9,3,5,6,8] 删除根 10，末尾 8 补根得到 [8,7,9,3,5,6]。8 与孩子 7、9 比，较大的 9 应上来，得到 [9,7,8,3,5,6]；下标 2 的 8 只带孩子 6，已合法，结束。</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;stdexcept&gt;
+void pushMax(std::vector&lt;int&gt;&amp; a,int x){
+    a.push_back(x);
+    int i=(int)a.size()-1;
+    while(i&gt;0){
+        int p=(i-1)/2;
+        if(a[p]&gt;=a[i])break;
+        std::swap(a[p],a[i]);
+        i=p;
+    }
+}
+int popMax(std::vector&lt;int&gt;&amp; a){
+    if(a.empty())throw std::underflow_error(&quot;empty heap&quot;);
+    int result=a.front();
+    a.front()=a.back();a.pop_back();
+    int n=(int)a.size(),i=0;
+    while(2*i+1&lt;n){
+        int c=2*i+1;
+        if(c+1&lt;n &amp;&amp; a[c+1]&gt;a[c])++c;
+        if(a[i]&gt;=a[c])break;
+        std::swap(a[i],a[c]);i=c;
+    }
+    return result;
+}</code></pre>
+
+<p>上面的 popMax 空间 O(1)，但它假定输入本身已经是合法堆；若从任意数组直接调用，结果没有保证。</p>
+</div></section><section class="topic" id="v4-heap-build"><h3>10.5 两种建堆方法为什么会得到不同数组</h3><div class="lesson"><p>给 [1,2,5,8,3,6,10,14]。<strong>逐项插入法</strong>从空堆开始，依次插入每个元素并上浮，最终可以得到 [14,10,8,5,3,2,6,1]。</p>
+<p><strong>底向上筛选法</strong>先把全部数组放入完全二叉树位置，再从最后一个非叶结点 i=⌊n/2⌋−1 开始向左处理；每次把当前结点向下筛到合法位置。对相同输入，逐步得到：</p>
+<pre class="diagram">初始 [1,2,5,8,3,6,10,14]
+i=3  [1,2,5,14,3,6,10,8]
+i=2  [1,2,10,14,3,6,5,8]
+i=1  [1,14,10,8,3,6,5,2]
+i=0  [14,8,10,2,3,6,5,1]</pre>
+
+<p>两者都满足堆序，最终形态可以不同。作业若要求“每加入一个数据后的结果”，应使用逐项插入；若要求“用筛选法调整初始数组”，应使用底向上建堆，不能把两个结果混为一个唯一堆。</p>
+<h3>用具体高度解释线性建堆的“省时间”</h3>
+<p>设有 15 个结点构成高度 4（按层数）的完全二叉树。下层 8 个叶结点完全不需筛选；上一层 4 个结点最多各下沉 1 层；再上一层 2 个结点最多下沉 2 层；根最多下沉 3 层。所以即使所有需要下沉的结点都走到最深，最多也不过 <code>4×1+2×2+1×3=11</code> 次层间移动（每层还有常数次比较）。</p>
+<p>这说明不能对全部 15 个结点都收费 log₂15≈4 层。用一般完全二叉树推广时，距叶子 h 层的结点数按约 1/2^h 缩小，所以总代价被一个收敛级数乘 n 控制，得到 O(n)。</p>
+<h3>为什么同一个输入可以有多个合法堆</h3>
+<p>堆只约束父子关系，没有规定兄弟之间谁应排左边，也没规定相等关键码时必须交换。因此即使固定“构造一个最大堆”的目标，不同算法或不同平局处理都可能得到不同数组。考试如果没有指定建堆方法，应在答案开头写出采用的合法方法，然后用“父结点≥左右孩子”检查结果。</p>
+<p>可以用这个检查法快速核对数组 <code>[14,8,10,2,3,6,5,1]</code>：14≥8、10；8≥2、3；10≥6、5；2≥1，所以它合法，虽然它与逐项插入法的最终数组不同。</p>
+</div></section><section class="topic" id="v4-heap-build-cost"><h3>10.6 为什么底向上建堆只需要 O(n)</h3><div class="lesson"><p>逐项插入的简单上界是每项上浮 O(log n)，共 n 项 O(nlog n)。底向上建堆却可以更快：数组后半部分是叶子，完全不必下沉；底部倒数第二层的结点最多下沉一层，而越靠上的结点数量越少。若按结点<strong>可下沉高度</strong>分组，总工作至多为 <code>n Σ(h/2ʰ)</code> 的常数倍，该级数收敛，因此总时间 O(n)。必须访问初始 n 个项，整体为 Θ(n)。</p>
+</div></section><section class="topic" id="v4-topk"><h3>10.7 Top-K：为什么找前 K 大要保存一个最小堆</h3><div class="lesson"><p>数据流中不断出现新成绩，目标是始终保存最大的 K 个值。若直接维护一个装有 K 个“赢家”的<strong>最小堆</strong>，堆顶就是这 K 项中最小者，也就是最容易被淘汰的一项。每来新值 x，如果赢家不足 K，直接加入；否则仅当 x 大于堆顶时，弹出最小赢家并加入 x。K=20、数据共 n=100000 项时，时间 O(nlog K)，额外空间 O(K)。</p>
+<p>求最小 K 项则应维护最大堆，理由完全对称。选择堆类型时先问“应当迅速淘汰哪一项”，而不是机械地把“求最大”与“最大堆”配对。</p>
+</div></section><section class="topic" id="v4-heap-exercises"><h3>10.8 练习：只写最终堆不够，要写调整路径</h3><div class="lesson"><details class="question"><summary>基础：数组 [9,7,8,3,5,6] 是否是合法最大堆？</summary><p>是。检查每个父结点都大于或等于直接孩子：9≥7、8；7≥3、5；8≥6。堆不要求数组整体有序。</p></details>
+<details class="question"><summary>作业同级：最大堆 [9,7,8,3,5,6] 插入 10，列每次交换后的数组。</summary><p>先附在末尾：[9,7,8,3,5,6,10]；与 8 换：[9,7,10,3,5,6,8]；与根 9 换：[10,7,9,3,5,6,8]。</p></details>
+<details class="question"><summary>作业同级：逐项插入 [2,9,4,7,6] 建最大堆，每次插入后的数组？</summary><p>[2]；[9,2]；[9,2,4]；[9,7,4,2]；[9,7,4,2,6]。在每轮末尾只调整新结点的祖先。</p></details>
+<details class="question"><summary>算法分析：为什么逐项建堆 O(nlog n)，底向上筛选 Θ(n)？</summary><p>逐项插入每项可能经过 log n 层；底向上处理时大量叶子零工作，较低层结点只能少量下沉，按高度加权求和为收敛级数乘 n。</p></details>
+<details class="question"><summary>方法选择：海量数据流保留前 20 大，为什么用最小堆？</summary><p>赢家内部最小值在堆顶成为淘汰门槛，新数据若不超过它就不需要替换；只保存 20 项即可。</p></details>
+
+<p>**复盘：**堆题先问最大/最小、插入/删除/建堆、采用上浮还是下沉，再沿被改变的那一条祖先或孩子路径逐步调整。</p>
+</div></section></section><section class="chapter" id="ch11"><div class="chapter-heading"><p class="kicker">第 11 章</p><h2>第 11 章　哈夫曼树：从编码成本推出贪心构造</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 5-Tree》Huffman 部分、《DSA 5a-HuffmanTree》（13 页）。<br>前置：树、堆与带权路径长度的基本计算。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-huffman-problem"><h3>11.1 同样的字符，为什么频繁出现者值得用更短的码</h3><div class="lesson"><p>假设一段文本使用字符 A、B、C、D，其中 A 出现 10 次，B 出现 4 次，C 出现 2 次，D 出现 1 次。若每种字符都用 2 位二进制编码，总位数是 (10+4+2+1)×2=34。能否让 A 用 1 位，其他稀少字符使用稍长的码，减少总位数？</p>
+<p>不能随便给出 A=0、B=01：连续比特流以 0 开头时，接收方无法确定读到的 0 已经是一整个 A，还是 B 的前缀。这种歧义必须通过<strong>前缀码</strong>来避免：任何一个字符的码字都不能是另一字符码字的前缀。</p>
+</div></section><section class="topic" id="v4-prefix-code"><h3>11.2 码字对应树的哪一个位置</h3><div class="lesson"><p>把二进制码字看成从一棵二叉树的根出发的路径：向左走写 0，向右走写 1。每个字符仅放在<strong>叶结点</strong>，中间结点不对应字符。例如若 A 在根的左叶，码为 0；B 在根的右子树某个较深叶，码可能是 10。由于任何叶都不可能成为另一叶的祖先，这棵树自然产生前缀码。</p>
+<p>一段码字的长度就是从根到对应叶走过的边数。若某字符出现次数为 w、深度为 d，它给总编码长度贡献 w×d 位；把所有字符的贡献相加，得到<strong>带权路径长度</strong>（Weighted Path Length，WPL）：</p>
+<p><code>WPL=Σ(叶权值×根到该叶的边数)</code>。</p>
+<p>本章的目标就变成：给定每个叶的权值，怎样构造一棵二叉树，让 WPL 最小？</p>
+</div></section><section class="topic" id="v4-huffman-greedy"><h3>11.3 从两个最轻的结点开始合并</h3><div class="lesson"><p>先试四个频数 2、3、5、8。若把最小的两个频数 2 和 3 放到最深的一对兄弟叶，直觉上比把最常出现的 8 放到最深处更省；因为深度每增加 1，8 的成本增加 8，而 2 的成本只增加 2。</p>
+<p>于是采用<strong>贪心策略</strong>：在当前所有树中取权值最小的两棵，创建一个父结点，其权值为两者之和，再把合并后的树放回候选集合，重复直到只剩一棵。</p>
+<pre class="diagram">候选权值：2,3,5,8
+第一步取 2+3=5，候选变 5(新),5(原),8
+第二步取 5+5=10，候选变 8,10
+第三步取 8+10=18，合并结束</pre>
+
+<p>两棵树合并为父结点时，里面每个叶到新根的距离都增加 1，因此 WPL 恰增加它们的总权值。所以无需画完所有叶的深度，就能直接把每次新父结点权值相加：本例 WPL=5+10+18=33。</p>
+</div></section><section class="topic" id="v4-huffman-trace"><h3>11.4 八权值的完整考试级合并表</h3><div class="lesson"><p>现在计算作业中的八个权值 {15,3,14,2,6,9,16,17}。先排序为 [2,3,6,9,14,15,16,17]；每次从包括<strong>新合并结点</strong>在内的当前候选中选最小两个：</p>
+<table>
+<thead>
+<tr>
+<th align="right">步骤</th>
+<th>本次取出的两个权值</th>
+<th align="right">产生父权值</th>
+<th align="right">累计 WPL 增量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td>2,3</td>
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>5,6</td>
+<td align="right">11</td>
+<td align="right">16</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td>9,11</td>
+<td align="right">20</td>
+<td align="right">36</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>14,15</td>
+<td align="right">29</td>
+<td align="right">65</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>16,17</td>
+<td align="right">33</td>
+<td align="right">98</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>20,29</td>
+<td align="right">49</td>
+<td align="right">147</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>33,49</td>
+<td align="right">82</td>
+<td align="right">229</td>
+</tr>
+</tbody></table>
+<p>最终根权值 82 恰是所有叶权值之和，提供了对合并是否漏项的检查。累计成本 229 是该树的 WPL。若题目要求画树，内部结点依次有 5、11、20、29、33、49、82，每次将本轮两棵树画成新结点左右孩子；左右边哪个是 0、哪个是 1 只影响具体码字，不影响 WPL。</p>
+</div></section><section class="topic" id="v4-huffman-proof"><h3>11.5 为什么这种局部选择能保证整体最优</h3><div class="lesson"><p>贪心算法不能只靠几个例题证明正确。关键观察：在一棵最优前缀码二叉树中，可以安排<strong>两个最小权值</strong>成为最深的一对兄弟叶。如果最小权值出现在较浅的位置，而较大权值处在更深处，交换它们不会增加 WPL；因此可以把小权往深处安排。</p>
+<p>把这两个最深兄弟叶合并成一个权值等于二者之和的叶，得到规模减少 1 的同类问题。如果缩小后的问题存在更优的编码树，把它展开回原两个叶就会得到更优的原问题方案，与原树最优性矛盾。由这个交换与最优子结构的论证，便知道反复合并两个最小权值可以保持存在一棵最优解。</p>
+</div></section><section class="topic" id="v4-huffman-code"><h3>11.6 用最小堆构造 Huffman 树</h3><div class="lesson"><p>如果每轮都扫描所有剩余权值找两个最小者，工作会重复。已经学过最小堆可以 O(log n) 删除最小元素、O(log n) 插入合并结点，因此用优先队列最合适。整体构建 n 个叶时需要 n−1 次合并，时间 O(nlog n)。</p>
+<pre><code class="language-cpp">#include &lt;queue&gt;
+#include &lt;vector&gt;
+#include &lt;functional&gt;
+#include &lt;stdexcept&gt;
+long long huffmanWpl(const std::vector&lt;int&gt;&amp; weights){
+    if(weights.empty())return 0;
+    std::priority_queue&lt;long long,
+        std::vector&lt;long long&gt;,
+        std::greater&lt;long long&gt;&gt; heap;
+    for(int w:weights){
+        if(w&lt;0)throw std::invalid_argument(&quot;negative weight&quot;);
+        heap.push(w);
+    }
+    long long cost=0;
+    while(heap.size()&gt;1){
+        long long a=heap.top();heap.pop();
+        long long b=heap.top();heap.pop();
+        long long combined=a+b;
+        cost+=combined;
+        heap.push(combined);
+    }
+    return cost;
+}</code></pre>
+
+<p>这个函数只算 WPL，<strong>没有保存树的左右孩子及实际字符码字</strong>。如果题目要求输出编码，需要让堆保存树根指针或结点索引，合并时记录左右链接，最后从总根沿边生成 0/1 串。不要把“会算 WPL”和“会生成码字”当成完全相同的要求。</p>
+</div></section><section class="topic" id="v4-huffman-exercises"><h3>11.7 练习：合并表、码长与正确性</h3><div class="lesson"><details class="question"><summary>基础：只有两个权值 6 与 2，最优二叉前缀码 WPL 为多少？</summary><p>两个叶都与根相邻，深度为 1，所以 WPL=6×1+2×1=8。</p></details>
+<details class="question"><summary>作业同级：权 2、3、5、8 的哈夫曼合并成本是多少？</summary><p>2+3=5，5+5=10，8+10=18；WPL=5+10+18=33。</p></details>
+<details class="question"><summary>作业同级：权 15、3、14、2、6、9、16、17 的 WPL？</summary><p>逐步合并成本 5、11、20、29、33、49、82，相加为 229。合并中途的新结点必须加入候选队列。</p></details>
+<details class="question"><summary>提高：总频数为 25、WPL 为 55，平均每字符码长是多少？</summary><p>平均码长是总编码位数除以字符出现总次数，即 55/25=2.2 bit/字符。</p></details>
+<details class="question"><summary>方法选择：哈夫曼的构造要求反复取当前两个最小，应该使用最大堆还是最小堆？</summary><p>最小堆。每轮连续弹出两个最小值，合并权和后再压入最小堆。</p></details>
+
+<p>**复盘：**手工题保留每一次候选集变化，根权与所有叶权之和一致，WPL 用各次合并成本之和复核；码字必须满足前缀条件。</p>
+</div></section></section><section class="chapter" id="ch12"><div class="chapter-heading"><p class="kicker">第 12 章</p><h2>第 12 章　静态查找：成功和失败各要比较几次</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 6-Search Tree》静态查找部分。<br>前置：顺序表、数组、时间复杂度和树。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-search-mission"><h3>12.1 “找得到”与“确定找不到”是两个任务</h3><div class="lesson"><p>在一份学生记录表中寻找学号 37，如果确实有这条记录，算法返回它的位置或对象；如果没有，程序也需要在有限时间内确定失败。静态查找指一组记录在查询过程中暂时不修改，动态查找则同时需要有效插删。查找算法必须说明“用哪个字段识别记录”，这叫<strong>关键码</strong>（key）。</p>
+<p>如果数据没有排序，最直接的顺序查找需要逐项比较；一旦遇到目标便成功，否则走完整张表失败。如果数据已经有序，可以根据与当前项的大小关系跳过不可能的一部分，得到二分查找。</p>
+</div></section><section class="topic" id="v4-linear-search"><h3>12.2 顺序查找：平均比较次数是怎么算出来的</h3><div class="lesson"><p>在数组 [5,9,14,21,37] 中从左到右查找 21，需要比较 5、9、14、21，共 4 次；查找 100 若不采用有序提前终止，需要比较全部 5 项。</p>
+<p>假设查询<strong>保证成功</strong>，并且五个位置被查到的概率均为 1/5，那么平均比较次数为 <code>(1+2+3+4+5)/5=3</code>。一般 n 项且每项等概率，成功平均查找长度（Average Search Length，ASL）为 (n+1)/2。若题目给出不同概率，要按照 <code>ASL=Σ pᵢ·cᵢ</code> 加权，而不是简单平均。</p>
+<p>还必须区分计数口径：如果顺序表带哨兵并允许额外比较，或给定不同失败区间，最终统计对象可能变化。考试先写明成功、失败时在哪里停止。</p>
+</div></section><section class="topic" id="v4-binary-search"><h3>12.3 折半查找为何需要随机访问的有序数组</h3><div class="lesson"><p>给出有序数组 [2,4,7,9,13,18,22]，要找 13。取闭区间 [0,6] 的中点 mid=3，比较 a[3]=9，发现目标更大，因此可以排除 a[0..3]。新范围 [4,6] 的中点 mid=5，a[5]=18 更大，排除右半段 [5,6]；只剩 [4,4]，a[4]=13，第三次成功。</p>
+<p>这个算法的正确性来自一个不变量：<strong>如果目标存在于表中，它始终位于当前闭区间 [low,high] 内</strong>。每次丢弃半边，都有有序性作为证据。如果数据未排序或中间位置无法 O(1) 访问，就不能直接套用 O(log n) 时间保证。</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+int binarySearch(const std::vector&lt;int&gt;&amp; a,int target){
+    int low=0,high=(int)a.size()-1;
+    while(low&lt;=high){
+        int mid=low+(high-low)/2;
+        if(a[mid]==target)return mid;
+        if(a[mid]&lt;target)low=mid+1;
+        else high=mid-1;
+    }
+    return -1;
+}</code></pre>
+
+<p>用 <code>low+(high-low)/2</code> 避免在大整数范围里计算 low+high 时可能溢出。返回 −1 是此处约定的失败标记；输入为空时 high=−1，循环不会执行，直接失败。</p>
+</div></section><section class="topic" id="v4-search-decision-tree"><h3>12.4 用一棵判定树手算 ASL</h3><div class="lesson"><p>对固定的有序数组，二分查找的每次比较可看成判定树的一个内部位置：第一次比较的中间项是根，比它小转左、大转右。要计算成功 ASL，统计每个关键码第一次被比较时所在的深度（如果根比较次数定义为 1）并按概率加权。</p>
+<p>例如七项有序表，中点下标 3 首先被比较；左右子表各有三个，第二层下标 1 和 5；第三层为 0、2、4、6。等概率成功时比较次数分布为 1 个 1 次、2 个 2 次、4 个 3 次，因此 ASL=(1+2×2+4×3)/7=17/7。</p>
+<p>失败查找发生在相邻关键码之间或两端的间隙，它们对应判定树的外部空位置。若题目说八个失败区间等概率，就分别计算查找落到空位置前比较了多少个关键码；若题目只要求最坏时间，可直接根据二分区间每轮约减半得到 Θ(log n)。</p>
+</div></section><section class="topic" id="v4-search-choice"><h3>12.5 静态查找与动态查找如何选择</h3><div class="lesson"><p>如果记录集合不更新且已排序，二分查找可以稳定使用；如果插入、删除频繁，维持有序数组可能每次移动大量元素。二叉搜索树能通过比较大小沿链接进入左右子树，把查找和动态插删放进同一个结构；但普通 BST 的形状可能退化，下一章会具体看到这一缺点。</p>
+<p>对题目中“时间”与“比较次数”，不要不加区分。比如在单链表中每轮比较的关键码数量可能不多，但找到所谓的中间结点需要沿链接前进，整体并不等于数组上的二分 O(log n)。</p>
+</div></section><section class="topic" id="v4-search-exercises"><h3>12.6 练习：先写概率模型再写 ASL</h3><div class="lesson"><details class="question"><summary>基础：无序顺序表长度 n，成功查找各位置等概率，ASL？</summary><p>第 i 个位置比较 i 次，ASL=(1+⋯+n)/n=(n+1)/2。</p></details>
+<details class="question"><summary>作业同级：数组 [2,4,7,9,13,18,22] 二分查找 13，依次比较？</summary><p>先 a[3]=9，再 a[5]=18，最后 a[4]=13，共 3 次。</p></details>
+<details class="question"><summary>作业同级：[1,3,5,7,9,11,13,15] 搜 8，按 mid 向下取整规则依次比较？</summary><p>初区间 [0,7] mid=3→7；右 [4,7] mid=5→11；左 [4,4] mid=4→9；区间空，失败。比较 7、11、9。</p></details>
+<details class="question"><summary>概率题：三种成功情况概率为 1/2、1/4、1/4，比较次数 1、2、3，ASL？</summary><p>1/2×1+1/4×2+1/4×3=1.75。</p></details>
+<details class="question"><summary>提高：为什么不能对单链表直接照搬数组二分查找的 O(log n) 时间？</summary><p>单链表没有 O(1) 按下标访问中点的能力；找中间结点还需扫描链接，因此仅比较次数少并不保证总操作少。</p></details>
+
+<p>**复盘：**写 ASL 前确认事件集合、每个事件概率、一次比较的计数口径，尤其区分成功与失败的停止条件。</p>
+</div></section></section><section class="chapter" id="ch13"><div class="chapter-heading"><p class="kicker">第 13 章</p><h2>第 13 章　二叉搜索树 BST：动态查找如何维持大小顺序</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 6-Search Tree》二叉搜索树部分。<br>前置：树的中序遍历、递归、顺序查找。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-bst-motivation"><h3>13.1 有序数组很会查找，但为什么插入麻烦</h3><div class="lesson"><p>有序数组二分查找非常快，但如果频繁插入位于中间的新关键码，仍得移动许多元素。我们能否保留“比较关键码后能排除一部分对象”的优点，同时不用把全部记录搬到新位置？</p>
+<p>二叉搜索树（Binary Search Tree，BST）给每个结点一个关键码，要求：所有左子树关键码严格小于根，所有右子树关键码严格大于根；左右子树自己也分别满足同一规则。若允许重复值，必须另定规则（例如统一放右侧或计数），本章先假设关键码互异。</p>
+</div></section><section class="topic" id="v4-bst-search"><h3>13.2 查找一个关键码，为什么只需沿一条路径走</h3><div class="lesson"><p>设根为 8，左子树根 4，右子树根 12；4 左孩子 2、右孩子 6；12 左孩子 10、右孩子 15。要找 10，先比根 8，目标更大，就直接转右而无需查看左子树；再比 12，目标更小，转左；下一次比 10，成功。只访问了根→12→10 的三结点路径。</p>
+<p>这个过程的循环不变量是：如果目标确实存在于整棵树里，它必定位于当前指针指向的子树中。每次比较后，大小关系保证被丢弃的方向没有目标。</p>
+</div></section><section class="topic" id="v4-bst-insert"><h3>13.3 插入时为什么只需修改一条空链接</h3><div class="lesson"><p>按次序 5、2、8、1、3 插入空树：5 是根；2&lt;5，放左；8&gt;5，放右；1&lt;5 且 1&lt;2，放在 2 左边；3&lt;5 但 3&gt;2，放在 2 右边。得到：</p>
+<pre class="diagram">       5
+      / \
+     2   8
+    / \
+   1   3</pre>
+
+<p>新结点只需沿比较路径走到某个空链接并在那里接入，不需要移动原来的其他结点。下面使用返回子树根的递归写法，便于后面 AVL 旋转时复用同一接口：</p>
+<pre><code class="language-cpp">struct Node{int key;Node* left;Node* right;};
+Node* insert(Node* root,int x){
+    if(!root)return new Node{x,nullptr,nullptr};
+    if(x&lt;root-&gt;key)root-&gt;left=insert(root-&gt;left,x);
+    else if(x&gt;root-&gt;key)root-&gt;right=insert(root-&gt;right,x);
+    return root; // 相等时本实现不重复插入
+}</code></pre>
+
+<p>函数调用者必须写 <code>root=insert(root,x)</code>，因为原空树插入首项时根指针会从 null 变为新结点；返回值是新树根而非某个“查找成功标志”。</p>
+</div></section><section class="topic" id="v4-bst-delete"><h3>13.4 删除为什么分成零个、一个、两个孩子</h3><div class="lesson"><p>删除 BST 中的结点，目标并不是单纯释放内存，而是让余下所有关键码仍满足大小顺序。</p>
+<p>**无孩子的叶结点：**可以直接从其父亲链接断开。**只有一个孩子：**让这个唯一孩子接替被删结点的位置，因为孩子子树中的关键码本来就在这一方向的合法范围内。</p>
+<p><strong>两个孩子：<strong>若随意让某个孩子接替根，可能让部分结点落到不该在的位置。一个标准方案是找</strong>中序后继</strong>：在被删结点右子树里，从右子树根一路向左走到最小关键码，将这个值拿来替代被删关键码，再去其原位置删除这个后继结点。</p>
+<p>为何后继最多只有一个孩子？因为它已经是右子树最左的结点，不可能还有左孩子，否则存在更小的候选。它可以有右孩子，所以原位置删除时只需处理“零个或一个孩子”的简单情形。</p>
+</div></section><section class="topic" id="v4-bst-delete-trace"><h3>13.5 完整模拟删除一个有两个孩子的结点</h3><div class="lesson"><p>沿用前面的 BST：根 5，左子树根 2（左右孩子 1、3），右孩子 8。删键 2 时，它有左右孩子 1 与 3。右子树只有结点 3，所以 3 就是后继。先用 3 替换结点 2 中的关键码，再删原位置的 3 叶。新树根仍为 5，左孩子变成键 3、其左孩子为 1，右孩子仍 8。</p>
+<p>如果题目规定使用<strong>中序前驱</strong>而非后继，也可以从左子树最右边选择关键码替代，所得具体树形可能不同。手工题要照给定策略画，不可只说“结果是合法 BST”而跳过指定过程。</p>
+</div></section><section class="topic" id="v4-bst-code"><h3>13.6 完整的 BST 删除 C++17 代码</h3><div class="lesson"><pre><code class="language-cpp">Node* minNode(Node* p){
+    while(p&amp;&amp;p-&gt;left)p=p-&gt;left;
+    return p;
+}
+Node* erase(Node* root,int key){
+    if(!root)return nullptr;
+    if(key&lt;root-&gt;key)root-&gt;left=erase(root-&gt;left,key);
+    else if(key&gt;root-&gt;key)root-&gt;right=erase(root-&gt;right,key);
+    else{
+        if(!root-&gt;left){
+            Node* next=root-&gt;right;
+            delete root;
+            return next;
+        }
+        if(!root-&gt;right){
+            Node* next=root-&gt;left;
+            delete root;
+            return next;
+        }
+        Node* successor=minNode(root-&gt;right);
+        root-&gt;key=successor-&gt;key;
+        root-&gt;right=erase(root-&gt;right,successor-&gt;key);
+    }
+    return root;
+}</code></pre>
+
+<p>这段代码<strong>没有使用 AVL 高度平衡规则</strong>，只维护 BST 有序性。注意它在删叶子和只有一个孩子时返回了可能改变的子树根，所以父调用必须把返回结果重新接回 left 或 right。</p>
+</div></section><section class="topic" id="v4-bst-balance-need"><h3>13.7 为什么 BST 的最坏时间仍可能是 O(n)</h3><div class="lesson"><p>如果按 1、2、3、4、5 的顺序插入，所有新结点都走到最右侧空链接，树变成 1→2→3→4→5 的单边链。查找 5 要比较 5 次，n 项时最坏 Θ(n)。若插入顺序较平衡，树高可能为 Θ(log n)，查找就更快。</p>
+<p>这说明 BST 解决了动态插入时无须移动数组的问题，却没有自动保证树的高度。下一章的 AVL 在大小顺序之外增加高度限制，才给查找操作提供稳定的最坏性能。</p>
+</div></section><section class="topic" id="v4-bst-exercises"><h3>13.8 练习：操作前后检查中序升序</h3><div class="lesson"><details class="question"><summary>基础：BST 的中序遍历有什么性质？</summary><p>若关键码互异，所有左值<根<所有右值，因此整树中序严格升序。</p></details>
+<details class="question"><summary>作业同级：依次插入 5,2,8,1,3，画最终树。</summary><p>根 5，左孩子 2、右孩子 8；2 的左右分别为 1 和 3。</p></details>
+<details class="question"><summary>作业同级：对上题 BST 删除 2，采用中序后继，得到什么树？</summary><p>后继为 3；用键 3 替换 2，删除原 3 叶，新左子树根 3、左孩子 1。</p></details>
+<details class="question"><summary>代码：查找 4 在升序插入的 BST 1→2→3→4 中需要几次关键码比较？</summary><p>依次比较 1、2、3、4 共四次。长度 n 的退化链最坏 Θ(n)。</p></details>
+<details class="question"><summary>提高：为什么右子树最小结点不可能有左孩子？</summary><p>若存在左孩子，其关键码必小于当前结点，便违反了“当前结点是右子树最小”的定义。</p></details>
+
+<p>**复盘：**画完每一次插入或删除，都做中序遍历检查是否严格升序；若两孩子删除要说明选前驱还是后继。</p>
+</div></section></section><section class="chapter" id="ch14"><div class="chapter-heading"><p class="kicker">第 14 章</p><h2>第 14 章　AVL 平衡树：旋转究竟为什么能恢复高度</h2><div class="chapter-intro"><blockquote>
+<p>来源：《DSA 6-Search Tree》AVL 插入、旋转及删除部分。<br>前置：BST 插删、树高、递归返回子树根。<br><strong>约定</strong>：本章使用 <code>bf = 右子树高度 − 左子树高度</code>。许多教材定义相反，题目应明确符号。</p>
+</blockquote>
+</div></div><section class="topic" id="v4-avl-motivation"><h3>14.1 普通 BST 不够快，问题出在哪里</h3><div class="lesson"><p>连续插入递增键 10、20、30，普通 BST 会形成单边向右的链，高度增长到 3。虽然满足“左小右大”，每次查找仍可能沿整条链比较。AVL（Adelson-Velsky and Landis tree）在 BST 规则之外增加约束：每个结点左右子树高度之差的绝对值不超过 1。</p>
+<p>我们用空子树高度 0、叶结点高度 1。设结点 p 的左高为 HL、右高 HR，定义 bf=HR−HL。bf=0 表示左右同高；bf=+1 表示右边多一层；bf=−1 表示左边多一层；bf=+2 或 −2 表示失衡，需要局部调整。</p>
+<p>要注意 bf 是哪个方向的差。若使用相反的教材约定，旋转的几何方向不变，但公式里正负号会颠倒。</p>
+</div></section><section class="topic" id="v4-avl-rotations"><h3>14.2 旋转之前先画三结点链</h3><div class="lesson"><p>先插入 10、20、30，根 10 的右子树连续加高，是<strong>右右 RR 情况</strong>。我们希望让中间键 20 上升为新根，10 成为其左孩子，30 成为右孩子。执行一次<strong>左旋</strong>即可：</p>
+<pre class="diagram">旋转前：   10             旋转后：    20
+              \                      /  \
+              20                    10  30
+                \
+                30</pre>
+
+<p>为什么旋转不破坏 BST？因为原来 10&lt;20&lt;30，旋转后仍满足左边小、右边大。对于实际包含子树的情形，旋转还要把中间子树接到合适位置：若 p 右孩子 q，左旋时 q 的左子树 B 变成 p 的右子树，而 q 变成局部新根，p 变成 q 的左孩子。</p>
+<p>左左 LL 的情况对称，用右旋。对于“先向左走，再向右走”的 LR，单次右旋不够；先对左孩子做左旋，再对失衡祖先做右旋。RL 则先对右孩子做右旋，再对祖先左旋。</p>
+</div></section><section class="topic" id="v4-avl-four-cases"><h3>14.3 四种插入形态用同一套方向判断</h3><div class="lesson"><p>把三个关键码的插入顺序分别试一遍：</p>
+<table>
+<thead>
+<tr>
+<th>输入次序</th>
+<th>首次失衡的根</th>
+<th>从失衡根到新项的两步方向</th>
+<th>修复</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>30,20,10</td>
+<td>30</td>
+<td>左→左（LL）</td>
+<td>右旋 30</td>
+</tr>
+<tr>
+<td>10,20,30</td>
+<td>10</td>
+<td>右→右（RR）</td>
+<td>左旋 10</td>
+</tr>
+<tr>
+<td>30,10,20</td>
+<td>30</td>
+<td>左→右（LR）</td>
+<td>左旋 10，再右旋 30</td>
+</tr>
+<tr>
+<td>10,30,20</td>
+<td>10</td>
+<td>右→左（RL）</td>
+<td>右旋 30，再左旋 10</td>
+</tr>
+</tbody></table>
+<p>四种情况最后都得到根 20、左孩子 10、右孩子 30。手工题最容易错的是 LR、RL：只记“失衡根左边太高就右旋”，忽略了孩子方向，可能产生仍失衡的结果。</p>
+</div></section><section class="topic" id="v4-avl-insert"><h3>14.4 插入后为什么只要从新结点向上检查</h3><div class="lesson"><p>新关键码按 BST 规则走到一个空位置插入，只有从插入点到根的祖先路径可能高度变化；与这条路径无关的子树完全没变。递归回溯时更新当前结点高度，若绝对差超过 1，就观察较高孩子是左重还是右重，选择相应的单旋/双旋。</p>
+<p>完整代码不仅要执行旋转，还要<strong>把旋转后新的局部根返回给上一层</strong>。若旋转发生在整棵树根，也必须更新外部 root 指针。局部指针关系正确而忘记回接新的根，整个结构仍可能断开。</p>
+</div></section><section class="topic" id="v4-avl-delete-motivation"><h3>14.5 AVL 删除和插入为什么不完全对称</h3><div class="lesson"><p>插入让某条根到叶路径变长，首次失衡旋转后通常已恢复那一带的原高度，因此不一定继续影响祖先。删除使某条路径变短，旋转后某棵子树的高度可能仍减少，变化就会继续沿父指针传上去，<strong>可能要在多个祖先处重新平衡</strong>。</p>
+<p>因此理解 AVL 删除的第一步不是立即记更多旋转组合，而是拿纸笔在每一个祖先写出“删除前左/右高度”“删除后左/右高度”“经过旋转后的新高度”。课堂使用 shorter 标记的实现尤其需要区分“子树高度是否真的少一层”。</p>
+<h3>从“某一边矮了一层”推导删除时何时停止</h3>
+<p>以本章 bf=右高−左高 为约定。设一次删除使结点 p 的<strong>左子树高度减少 1</strong>。只从 p 旧 bf 与新 bf 的变化便能判断是否继续沿祖先回溯：</p>
+<table>
+<thead>
+<tr>
+<th align="right">删除前 p 的 bf</th>
+<th align="right">删除后 bf</th>
+<th>p 的总体高度</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">−1（原来左高 1）</td>
+<td align="right">0</td>
+<td>整体降低 1</td>
+<td>继续检查父结点</td>
+</tr>
+<tr>
+<td align="right">0（原来等高）</td>
+<td align="right">+1</td>
+<td>整体高度不变</td>
+<td>可以停止传播</td>
+</tr>
+<tr>
+<td align="right">+1（原来右高 1）</td>
+<td align="right">+2</td>
+<td>暂时失衡</td>
+<td>必须旋转、再看旋转后高度</td>
+</tr>
+</tbody></table>
+<p>为什么第一行高度减少？因为旧最大高度来自左子树，左子树变矮后，左右变得一样高，最大高度也跟着下降。为什么第二行可以停止？因为原来的右子树高度仍然保持最大值，整体高度没有变化。第三行里右子树比新的左子树高两层，已经违反 AVL 条件。</p>
+<p>右子树变短时做完全对称的分析。需要旋转时，还要查看较高孩子的 bf：若与失衡方向同向，可单旋；若反向，需双旋；若较高孩子 bf=0，则是删除中可以出现的特殊单旋情形，旋转后的高度变化与平常并不完全相同。</p>
+<h3>再检查代码里的两个容易漏掉的回接</h3>
+<pre><code class="language-text">root = avlInsert(root, x);   // 整棵树的根可能因旋转改变
+root = avlDelete(root, x);   // 删除后也可能换根</code></pre>
+
+<p>在结点 p 内部，<code>p->left=avlDelete(p->left,x)</code> 与 <code>p->right=avlDelete(p->right,x)</code> 是相同道理：某棵子树的根在删除/旋转后可能改变，上层必须接住新的子树根。仅更新高度数值，却忘记把“指向子树根的那条父链接”改正确，树结构仍然错误。</p>
+</div></section><section class="topic" id="v4-avl-delete-zero"><h3>14.6 具体删除示例：失衡孩子 bf=0 的特殊情况</h3><div class="lesson"><p>考虑下面一棵 AVL：根 2，左孩子 1；右子树根 4，左右孩子分别 3、5。删除叶子 1 后，根 2 左高由 1 变 0，右高仍为 2，故 bf(2)=+2；但右孩子 4 的 bf=0。</p>
+<pre class="diagram">删除前：       删除 1 后：      在 2 左旋后：
+    2               2                4
+   / \               \              / \
+  1   4               4            2   5
+     / \             / \            \
+    3   5           3   5            3</pre>
+
+<p>注意这个分支：旋转后新子树高度和删除前一样，所以此次高度缩短没有继续向更高祖先传播。若用 shorter 布尔量维护删除传播，就必须有特别处理。若采用递归回溯逐层重新计算高度，则可以在每一层独立检查是否需要旋转，更不容易漏分支。</p>
+</div></section><section class="topic" id="v4-avl-code"><h3>14.7 一份可以编译的完整 AVL 插删实现</h3><div class="lesson"><p>下面采用结点自身记录高度的实现，空树高度 0、叶高 1。插入和删除都借助同一函数 rebalance，每次变化后更新高度；双旋时会先平衡较高的孩子。逻辑方向与本章 bf=右高−左高 保持一致：</p>
+<pre><code class="language-cpp">#include &lt;algorithm&gt;
+struct AvlNode{
+    int key,height;
+    AvlNode *left,*right;
+};
+int height(AvlNode* p){return p?p-&gt;height:0;}
+void update(AvlNode* p){
+    p-&gt;height=1+std::max(height(p-&gt;left),height(p-&gt;right));
+}
+int balance(AvlNode* p){return height(p-&gt;right)-height(p-&gt;left);}
+AvlNode* rotateLeft(AvlNode* p){
+    AvlNode* q=p-&gt;right;
+    p-&gt;right=q-&gt;left;
+    q-&gt;left=p;
+    update(p);update(q);
+    return q;
+}
+AvlNode* rotateRight(AvlNode* p){
+    AvlNode* q=p-&gt;left;
+    p-&gt;left=q-&gt;right;
+    q-&gt;right=p;
+    update(p);update(q);
+    return q;
+}
+AvlNode* rebalance(AvlNode* p){
+    update(p);
+    if(balance(p)==2){
+        if(balance(p-&gt;right)&lt;0)
+            p-&gt;right=rotateRight(p-&gt;right);
+        return rotateLeft(p);
+    }
+    if(balance(p)==-2){
+        if(balance(p-&gt;left)&gt;0)
+            p-&gt;left=rotateLeft(p-&gt;left);
+        return rotateRight(p);
+    }
+    return p;
+}
+AvlNode* avlInsert(AvlNode* p,int key){
+    if(!p)return new AvlNode{key,1,nullptr,nullptr};
+    if(key&lt;p-&gt;key)p-&gt;left=avlInsert(p-&gt;left,key);
+    else if(key&gt;p-&gt;key)p-&gt;right=avlInsert(p-&gt;right,key);
+    else return p;
+    return rebalance(p);
+}
+AvlNode* avlDelete(AvlNode* p,int key){
+    if(!p)return nullptr;
+    if(key&lt;p-&gt;key)p-&gt;left=avlDelete(p-&gt;left,key);
+    else if(key&gt;p-&gt;key)p-&gt;right=avlDelete(p-&gt;right,key);
+    else{
+        if(!p-&gt;left || !p-&gt;right){
+            AvlNode* child=p-&gt;left?p-&gt;left:p-&gt;right;
+            delete p;
+            return child;
+        }
+        AvlNode* s=p-&gt;right;
+        while(s-&gt;left)s=s-&gt;left;
+        p-&gt;key=s-&gt;key;
+        p-&gt;right=avlDelete(p-&gt;right,s-&gt;key);
+    }
+    return rebalance(p);
+}</code></pre>
+
+<p>需要用 <code>root=avlInsert(root,x)</code>、<code>root=avlDelete(root,x)</code> 接住返回的树根。平衡因子如果是 +2 且右孩子 bf=0，满足上面的单左旋条件；孩子 bf&lt;0 才走 RL 双旋。左侧对称。</p>
+</div></section><section class="topic" id="v4-avl-complexity"><h3>14.8 如何说明 AVL 的查找性能</h3><div class="lesson"><p>高度始终平衡的 AVL 树不可能像普通 BST 那样变成 n 长单边链。最少结点数满足类似 <code>N(h)=1+N(h−1)+N(h−2)</code> 的增长关系，因此高度 h=O(log n)。沿一条根到叶路径查找、插入和删除需要 O(log n) 时间；旋转本身只改常数条链接，为 O(1)。删除可能在多个祖先旋转，但祖先数也受 O(log n) 约束。</p>
+<p>这是一个性质明确的最坏上界，不等于“任何树都必须恰好达到 log₂n 层”，也不表示每次操作都发生旋转。</p>
+</div></section><section class="topic" id="v4-avl-exercises"><h3>14.9 练习：画旋转而不是背 LL/RR 名称</h3><div class="lesson"><details class="question"><summary>基础：本章 bf=右高−左高，某结点左高 3、右高 1，bf 是多少？</summary><p>bf=1−3=−2，左重失衡。要继续看左孩子的倾斜方向，才能决定 LL 还是 LR。</p></details>
+<details class="question"><summary>作业同级：插入 30,10,20，恢复 AVL 后的根是谁？</summary><p>30 首次失衡，路径左→右即 LR；先左旋 10 再右旋 30，根为 20，左右分别 10 和 30。</p></details>
+<details class="question"><summary>作业同级：删除后 p 的 bf=+2、右孩子 q 的 bf=−1，应怎样修复？</summary><p>右子树较高、右孩子向左倾，即 RL；先对 q 右旋，再对 p 左旋。</p></details>
+<details class="question"><summary>作业同级：树 2(左1,右4(左3,右5)) 删除 1 后，怎样旋转？新根？</summary><p>根 2 变为右重 +2，右孩子 4 bf=0，单左旋 2；新根 4，左子树根 2 且右孩子 3，右孩子 5。</p></details>
+<details class="question"><summary>提高：删除造成祖先 bf 从 0 变成 +1，与从 +1 变成 0，哪一种需要继续传播高度变化？</summary><p>0→+1 通常由原较矮一侧再减短造成，当前结点最大高度未变，可停止；+1→0 表示原较高一侧变短，当前结点高度下降，应继续检查更高祖先。必须结合“哪侧变短”的前提判断。</p></details>
+
+<p>**复盘：**先画三结点大小顺序，再决定旋转；对删除沿祖先路径标出每次高度变化，始终检查 BST 中序升序与 AVL 高度差两个不变量。</p>
+</div></section></section><section class="chapter" id="ch15"><div class="chapter-heading"><p class="kicker">第 15 章</p><h2>集合、等价类、并查集与散列：从问题出发，自己完成算法</h2><div class="chapter-intro"><!-- id: ch15 | source: 2026-27 秋季 HashTable.pptx，第 1–85 页。原课件的定义与算法范围；现代 C++、解释、例题与部分实现细节为本讲义补充。 -->
+
+<p>这一讲会遇到三个看起来相似、实际任务不同的问题：</p>
+<p><strong>第一种问题：<strong>给定一组学生的编号，怎样快速回答“某个编号是否在这个组里”？还要能求出两个组共有多少人、哪些人只在其中一个组。它引出</strong>集合</strong>及集合的存储。</p>
+<p><strong>第二种问题：<strong>原本分开的学生小组，随着合作关系被发现而不断合并。怎样快速判断两个学生最终是否属于同一组？它引出</strong>等价类</strong>和<strong>并查集</strong>。</p>
+<p><strong>第三种问题：<strong>给定学生的学号，怎样迅速找到姓名、成绩等对应信息？它引出</strong>字典</strong>和<strong>散列表</strong>。</p>
+<p>这三个问题都需要“存放对象、查找对象”，但每个问题真正需要回答的内容不一样。学完之后，你应当能独立做出四件事：用位向量或链表完成集合运算；根据等价对求出分组并写出并查集数组；手工插入散列表并模拟成功和失败查找；在明确计数约定后计算平均查找长度。</p>
+<p>为了把逻辑讲清，整章默认你已经会使用数组、简单的链表和基本的 C++ 循环。涉及位运算、抽象数据类型、递归和概率平均值的地方，会在本章第一次需要时补上必要解释。你可以从这里直接开始读，不需要提前打开 PPT。</p>
+</div></div><section class="topic" id="ch15-set"><h3>一、当我们只想知道“有没有”：集合是什么</h3><div class="lesson"><p>想象教务系统里有两份选课名单：</p>
+<ul>
+<li>算法课学生：1、3、5、7；</li>
+<li>离散数学课学生：3、4、7。</li>
+</ul>
+<p>这里的数字是学生编号。我们会遇到几个很自然的问题：编号 5 是否在算法课？哪些人两门课都选了？哪些人至少选了一门？哪些人只选了算法课？</p>
+<p>把算法课名单记为 <strong>A = {1, 3, 5, 7}</strong>，另一份记为 <strong>B = {3, 4, 7}</strong>，我们就得到两个<strong>集合</strong>（Set）。集合的成员互不重复，写成 {3, 3, 7} 时，作为集合仍然只有 3 和 7 两个成员。成员书写的先后顺序不影响集合：{1, 3} 和 {3, 1} 相等。</p>
+<p>现在先不用任何符号，亲手回答前面的四个问题：</p>
+<p>编号 5 在 A 中，所以成员判断给出“是”。两门课都选的学生是 3 和 7，因此结果是 {3, 7}。至少选了一门的是 1、3、4、5、7，因此结果是 {1, 3, 4, 5, 7}。只选算法的是 1、5，因此结果是 {1, 5}。</p>
+<p>数学上分别把后三项称为<strong>交集</strong>、<strong>并集</strong>和<strong>差集</strong>，写作：</p>
+<table>
+<thead>
+<tr>
+<th>我们想问的问题</th>
+<th>数学记号</th>
+<th>本例的结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同时在 A 和 B 中</td>
+<td>A ∩ B</td>
+<td>{3, 7}</td>
+</tr>
+<tr>
+<td>在 A 或 B 中，允许两边都有</td>
+<td>A ∪ B</td>
+<td>{1, 3, 4, 5, 7}</td>
+</tr>
+<tr>
+<td>在 A 中，但不在 B 中</td>
+<td>A − B</td>
+<td>{1, 5}</td>
+</tr>
+</tbody></table>
+<p>这里“或”表示至少满足一个条件，所以两门课都选的学生也包含在并集里。</p>
+<p>如果 A 的每个元素也在 B 中，就称 A 是 B 的<strong>子集</strong>，写作 A ⊆ B。例如 {3, 7} ⊆ A 成立。要证明 A ⊆ B，不能只举一个共同成员；必须保证 A 中的<strong>每个</strong>成员都属于 B。</p>
+<p>在编程题里，集合通常还要支持插入一个成员、删除一个成员、测试某个成员是否存在。这些操作构成集合的<strong>抽象数据类型</strong>（Abstract Data Type，简称 ADT）：我们先约定允许做什么，再选择实际怎样存储它。</p>
+<p>同一份集合，究竟该存成一个数组、一串链表结点，还是一组二进制位？答案取决于两个现实条件：成员的可能编号有多大，以及集合里实际上有多少成员。下面先从最直观的存储法开始。</p>
+</div></section><section class="topic" id="ch15-bit-vector"><h3>二、把“在不在”变成 0 和 1：位向量</h3><div class="lesson"><p>假设学生编号只可能是 0 至 7。对于集合 A={1,3,5,7}，我们可以准备八个格子，依次代表编号 0、1、2、3、4、5、6、7。某个编号在集合中，就在对应格子写 1；不在，就写 0：</p>
+<pre class="diagram">编号：  0 1 2 3 4 5 6 7
+A：     0 1 0 1 0 1 0 1
+B：     0 0 0 1 1 0 0 1</pre>
+
+<p>从左到右第 i 个格子代表编号 i（下标从 0 开始）。这组只含 0、1 的标记就是<strong>位向量</strong>（bit vector）。一个标记只需要一个二进制位，所以当候选编号范围固定且不大时，位向量通常很省空间。</p>
+<p>先看看它怎样回答问题：要检查编号 5 是否在 A 中，只需要查看 A 的第 5 位，发现是 1，便返回“存在”。要向 A 中加入编号 2，只需把第 2 位设为 1；要删除编号 3，把第 3 位改为 0。</p>
+<p>接着考虑两个集合的交并差。如果把两个成员标记一一对齐，就会发现：</p>
+<table>
+<thead>
+<tr>
+<th align="right">A 的某一位</th>
+<th align="right">B 的同一位</th>
+<th align="right">并集这一位</th>
+<th align="right">交集这一位</th>
+<th align="right">A−B 这一位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<p>这个表直接告诉我们每一位该怎样算。并集对应<strong>按位或</strong>（bitwise OR，C++ 记号为 <code>|</code>）：有一个 1 就得 1。交集对应<strong>按位与</strong>（bitwise AND，记号为 <code>&amp;</code>）：必须两边都是 1 才得 1。差集先把 B 的每一位取反，再与 A 按位与，写作 <code>A &amp; ~B</code>；这里 <code>~</code> 是<strong>按位非</strong>，把每一位 0、1 互换。</p>
+<p>例如上述八格位向量逐位计算：</p>
+<pre class="diagram">编号：  0 1 2 3 4 5 6 7
+A：     0 1 0 1 0 1 0 1
+B：     0 0 0 1 1 0 0 1
+A∪B：   0 1 0 1 1 1 0 1
+A∩B：   0 0 0 1 0 0 0 1
+A−B：   0 1 0 0 0 1 0 0</pre>
+
+<p>这里要特别分清 C++ 中的 <code>!</code> 与 <code>~</code>。<code>!x</code> 是<strong>逻辑非</strong>：把整个 x 当作真或假，结果只能是 0 或 1；<code>~x</code> 才会把整数内的<strong>每个二进制位</strong>翻转。课件第 14 页的子集判断写了 <code>bitVector[i] &amp; !R.bitVector[i]</code>，这无法正确逐位发现 A 中有、B 中没有的成员，应使用 <code>bitVector[i] &amp; ~R.bitVector[i]</code>。后面的勘误附录保留原位置。</p>
+<h3>从八个格子到真正的计算机内存</h3>
+<p>真实计算机不会专门为每个 0、1 分配一个完整的整数。我们可以把多个标记打包在一个无符号整数里。假设<strong>为了演示</strong>，每个整数只能装 8 位，而元素编号为 19。前两个整数各负责八个编号：第 0 个负责 0–7，第 1 个负责 8–15，因此编号 19 必须进入第 2 个整数，且是这个整数内部的第 3 位（编号范围 16–23，19−16=3）。</p>
+<p>推广后，若一个整数容纳 w 位，元素编号为 x，那么：</p>
+<ul>
+<li>在第 <code>x / w</code> 个整数中查找；</li>
+<li>操作该整数内部的第 <code>x % w</code> 位。</li>
+</ul>
+<p>这里的除法是整数除法，<code>%</code> 表示求余数。对 x=19、w=8，得到 <code>19/8=2</code>、<code>19%8=3</code>。</p>
+<p>怎样只让第 3 位变成 1？先构造一枚只有第 3 位为 1 的<strong>掩码</strong>（mask）。从最低位的 1 开始，向左移动 3 位，得到二进制 <code>00001000</code>。C++ 的左移运算符为 <code>&lt;&lt;</code>，因此这一步是 <code>1U &lt;&lt; 3</code>。将旧整数与掩码按位或，即可设位；按位与掩码则可检查该位。</p>
+<p>下面先读最小可执行操作，再看完整代码：</p>
+<pre><code class="language-cpp">unsigned int bits = 0;           // 全部成员标记为 0
+bits |= (1U &lt;&lt; 3);               // 加入编号 3：第 3 位设为 1
+bool has3 = (bits &amp; (1U &lt;&lt; 3)) != 0;  // true
+bits &amp;= ~(1U &lt;&lt; 3);              // 删除编号 3
+</code></pre>
+<p>完整位集合可以使用 <code>std::uint64_t</code>，每个整数容纳 64 位。这里的 <code>64</code> 只是存储单位的位数，与集合成员个数可以不同：</p>
+<pre><code class="language-cpp">#include &lt;cstdint&gt;
+#include &lt;stdexcept&gt;
+#include &lt;vector&gt;
+#include &lt;cstddef&gt;
+
+class BitSet {
+    int n;                            // 合法成员编号：0 到 n-1
+    std::vector&lt;std::uint64_t&gt; data;  // 每个整数放 64 个标记
+
+    void check(int x) const {
+        if (x &lt; 0 || x &gt;= n)
+            throw std::out_of_range(&quot;member out of range&quot;);
+    }
+
+public:
+    explicit BitSet(int size) : n(size) {
+        if (size &lt; 0) throw std::invalid_argument(&quot;negative size&quot;);
+        data.assign((static_cast&lt;std::size_t&gt;(size) + 63) / 64, 0);
+    }
+
+    void add(int x) {
+        check(x);
+        data[x / 64] |= (std::uint64_t{1} &lt;&lt; (x % 64));
+    }
+
+    void erase(int x) {
+        check(x);
+        data[x / 64] &amp;= ~(std::uint64_t{1} &lt;&lt; (x % 64));
+    }
+
+    bool contains(int x) const {
+        check(x);
+        return (data[x / 64] &amp; (std::uint64_t{1} &lt;&lt; (x % 64))) != 0;
+    }
+
+    bool subsetOf(const BitSet&amp; other) const {
+        if (n != other.n) throw std::invalid_argument(&quot;different universes&quot;);
+        for (std::size_t i = 0; i &lt; data.size(); ++i) {
+            // 若某位属于当前集合却不属于 other，子集关系失败
+            if ((data[i] &amp; ~other.data[i]) != 0) return false;
+        }
+        return true;
+    }
+};
+</code></pre>
+<p>不需要死记每个符号。遇到题目时先画八位的小例子，确认“哪个编号归哪个格子”，再套整数打包公式。若全集有 n 个可能编号，空间是大约 n 个位；成员存在性查询在合法范围内需要常数次计算，时间为 O(1)。逐字求交并差要检查 <code>ceil(n / w)</code> 个存储字，时间是 O(⌈n/w⌉)。</p>
+<p>这也暴露了位向量的局限：假设学号可能达到一亿，而你实际上只存五个同学，按学号直接开一亿位的集合显得不经济。下面用一种只为真实成员分配结点的结构来解决这个问题。</p>
+<details class="question"><summary>自测：全集为 0–7，A={0,3,6}，B={3,5,6}。请先独立写出两个八位向量及交、差结果。</summary>
+<p><strong>提示：</strong>从编号 0 开始逐格写 0/1，交集必须同时出现；差集先在 A 中筛选。</p>
+<p><strong>解答：</strong>A 的向量是 10010010，B 是 00010110（均按编号 0 到 7 从左到右书写）。交集为 {3,6}，即 00010010；差 A−B 为 {0}，即 10000000。</p>
+</details>
+
+</div></section><section class="topic" id="ch15-linked-set"><h3>三、如果只有很少成员：用有序链表表示集合</h3><div class="lesson"><p>考虑 A={2,6,9} 与 B={1,6,8}。假设数字可能大到十亿，但两个集合实际只有三个成员。我们可以只创建六个链表结点，并让各链表按从小到大的顺序连接：</p>
+<pre class="diagram">A: 2 → 6 → 9 → null
+B: 1 → 6 → 8 → null</pre>
+
+<p>为什么要保持有序？因为做交、并、差时，我们可以让两个指针分别指着两条链的当前结点，每次只比较它们保存的数字，就知道下一步该前进哪一边。不需要为每个成员重新扫描整个另一条链。</p>
+<p>先亲手完成并集。初始两个指针分别指向 2 和 1。由于 1 小，输出 1，B 的指针向右前进一步。接着比较 2 与 6，输出 2，A 前进一步。现在两边都遇到 6：它应该在并集中出现一次，所以输出一个 6，<strong>两个指针同时前进</strong>。最后比较 9 和 8，先输出 8，再输出剩下的 9。</p>
+<pre class="diagram">当前 A   当前 B   决定             输出结果
+  2        1      取 B 的 1        [1]
+  2        6      取 A 的 2        [1,2]
+  6        6      取一个 6        [1,2,6]
+  9        8      取 B 的 8        [1,2,6,8]
+  9       结束    收尾取 A 的 9    [1,2,6,8,9]</pre>
+
+<p>现在读者已经看到了两指针法的全部动作，才适合总结成一般规则：</p>
+<table>
+<thead>
+<tr>
+<th>比较的结果</th>
+<th>并集 A∪B</th>
+<th>交集 A∩B</th>
+<th>差集 A−B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A 当前值更小</td>
+<td>输出 A，A 前进</td>
+<td>A 前进</td>
+<td>输出 A，A 前进</td>
+</tr>
+<tr>
+<td>两者相等</td>
+<td>输出一次，两边前进</td>
+<td>输出一次，两边前进</td>
+<td>两边前进，不输出</td>
+</tr>
+<tr>
+<td>B 当前值更小</td>
+<td>输出 B，B 前进</td>
+<td>B 前进</td>
+<td>B 前进</td>
+</tr>
+</tbody></table>
+<p>三种算法在每一步都至少使某个指针向前走一次，所以 A 长度为 a、B 长度为 b 时，扫描最多经历 O(a+b) 次比较。创建结果链表需要新结点；若题目要求原地复用结点，则必须明确所有权及重复结点的处理方式。这两种实现不能混为一谈。</p>
+<p><strong>选择结构的结论：<strong>位向量适合元素编号范围小、频繁做按位集合运算；有序链表适合成员数量较少、可能编号范围很大、需要按顺序枚举成员的情况。至此我们已经能够表示一个集合。接下来问题发生变化：我们不再关心单一名单的交并差，而要管理不断合并的</strong>分组</strong>。</p>
+</div></section><section class="topic" id="ch15-equivalence"><h3>四、从“两个对象有关联”到等价类</h3><div class="lesson"><p>某门课的小组作业最初规定每位同学单独成组。后来系统不断收到消息：“0 和 4 要分到一组”“7 和 4 要分到一组”“2 和 7 要分到一组”。怎样得到最终的小组名单？</p>
+<p>先只看前两条消息：</p>
+<pre class="diagram">初始：{0}  {2}  {4}  {7}
+消息 (0,4)：{0,4}  {2}  {7}
+消息 (7,4)：{0,4,7}  {2}
+消息 (2,7)：{0,2,4,7}</pre>
+
+<p>虽然我们从未直接收到“0 与 7 同组”，但既然 0 与 4 同组、4 与 7 同组，0 与 7 就必须同组。这里的“同一组”满足一种特别的逻辑性质，称为<strong>等价关系</strong>（equivalence relation）：</p>
+<ol>
+<li>**自反性：**每个对象都与自己同组。</li>
+<li>**对称性：**若 a 与 b 同组，那么 b 与 a 同组。</li>
+<li>**传递性：**若 a 与 b 同组、b 与 c 同组，那么 a 与 c 同组。</li>
+</ol>
+<p>读完这三个条件，应该能判断一个关系能不能用我们后面的并查集表示。例如“至少共同选修一门课”通常不满足传递性：甲与乙共同选 A，乙与丙共同选 B，甲与丙可能毫无共同课程，所以它不是普遍的等价关系。只有关系确实按互不相交的组划分对象时，才可直接用并查集管理。</p>
+<p><strong>等价类</strong>就是某个对象所在的一整组成员。上面的例子中 {0,2,4,7} 是一个等价类。它与其他等价类不重叠，每个对象也恰好属于一个类。把所有等价类放在一起，得到全集的一个<strong>划分</strong>。</p>
+<p>原理讲清以后，再考虑实现。若每次新增同组消息，都把所有人的组号从头扫描并改写，虽然能做出正确答案，但反复处理大量消息会花费许多时间。我们希望合并组时只改很少几个指针，同时还能回答“x 和 y 是否在同一组”。这就引出下一节的并查集。</p>
+</div></section><section class="topic" id="ch15-dsu"><h3>五、为什么一组人可以用一棵树代表：并查集的诞生</h3><div class="lesson"><p>假设现在有六个对象 0、1、2、3、4、5。初始时每个人单独一组。我们可以为每组指定一个<strong>代表</strong>，用“指向代表的箭头”把组员组织起来。为了简单，我们把代表设计成一棵树的<strong>根结点</strong>，组里的其他结点只需要保存自己父结点的编号：</p>
+<pre class="diagram">例：0、1、2 在一组，3、4 在另一组，5 独立
+
+       0              3           5
+      / \             |
+     1   2            4
+
+组的代表：find(1)=0，find(2)=0，find(4)=3，find(5)=5。</pre>
+
+<p>树的形状只是数据结构内部的安排：组员 1 和 2 在树里未必直接互连，却仍然属于同一等价类，因为沿父指针往上走会到达同一个根。</p>
+<p>我们需要完成两个操作。</p>
+<p><strong>查找代表（Find）</strong>：给定成员 x，若它是根，返回 x；否则去找它的父结点的根。一路追到根就得到了 x 所在的集合。</p>
+<p><strong>合并组（Union）</strong>：给定 x 和 y，先分别找到它们所在组的根。如果根相同，原本已经同组，无须修改。如果根不同，只需让<strong>一个根指向另一个根</strong>，就把整棵树归入同一组。</p>
+<p>到这里，我们才正式定义<strong>并查集</strong>（Disjoint Set Union，DSU，也叫 Union-Find）：一种维护互不相交集合、支持 Find 和 Union 的数据结构。“并”指合并集合，“查”指判断成员所在的集合。</p>
+<h3>parent 数组到底存的是什么</h3>
+<p>计算机里不需要给每条树边都创建复杂的对象。因为成员恰好编号 0 到 n−1，可以使用长度为 n 的数组 <code>parent</code>，第 i 项保存结点 i 的父结点编号。根结点没有父亲，需要一个专门的标记。课件约定：</p>
+<ul>
+<li><code>parent[i] &gt;= 0</code>：这个数是 i 的父结点编号；</li>
+<li><code>parent[i] &lt; 0</code>：i 是根；负数的绝对值记录整组成员数量。</li>
+</ul>
+<p>例如数组 <code>[-3,0,0,-2,3,-1]</code>：</p>
+<pre class="diagram">下标：      0  1  2  3  4  5
+parent：   -3  0  0 -2  3 -1
+
+        0         3       5
+       / \        |
+      1   2       4
+
+parent[0]=-3：0 是根，这组有 3 人。
+parent[1]=0：1 的父结点编号为 0。
+parent[4]=3：4 的父结点编号为 3。
+parent[5]=-1：5 独自成组。</pre>
+
+<p>根数组值为 −3 的意思是“这一组有 3 个结点”，绝不是“它的父亲是下标 −3”。<strong>判断根必须先检查正负</strong>。初始化时所有组大小都是 1，所以全部数组项均为 −1。</p>
+<h3>手推一次 Union(1,4)</h3>
+<p>我们接着上面的数组 <code>[-3,0,0,-2,3,-1]</code>。题目要求合并成员 1 与 4 所在的组。</p>
+<p>第一步，查找 <code>find(1)</code>：1 的父编号是 0，而 0 的 parent 为负，所以 1 的组根是 0。</p>
+<p>第二步，查找 <code>find(4)</code>：4 的父编号是 3，而 3 是根，所以 4 的组根是 3。</p>
+<p>第三步，当前两组分别有 3 和 2 人。按<strong>较小树接到较大树</strong>的约定，让根 3 指向根 0：<code>parent[3]=0</code>。根 0 的组大小从 3+2=5，所以把 <code>parent[0]</code> 改成 −5。其余成员的父指针无需立刻修改。</p>
+<p>于是新数组变为 <code>[-5,0,0,0,3,-1]</code>。此时 4 仍然先指向 3，再经 3 指向 0；它已经属于根 0 的组。这个例子说明为什么 Union 只需要<strong>连接两个根</strong>，以及为什么非根结点的 parent 不必全部重写。</p>
+<p>下面这份伪代码只做最朴素的版本，方便先掌握核心流程：</p>
+<pre><code class="language-text">Find(x):
+    当 parent[x] &gt;= 0 时：
+        x = parent[x]          // 沿父指针往上走
+    返回 x                     // 到达根
+
+Union(x, y):
+    rx = Find(x)
+    ry = Find(y)
+    如果 rx == ry：直接结束
+    parent[rx] += parent[ry]    // 两个负数相加，得到新集合大小的相反数
+    parent[ry] = rx             // 让第二棵树的根接到第一棵根下面
+</code></pre>
+<p>这个朴素合并过程如果总将大树接到新来的小树下，树可能逐渐长成链。某个很深的结点一次 Find 就需要走很多步。下一节我们会先看具体的慢在哪里，再讨论怎样改进。</p>
+<details class="question"><summary>自测：给定 parent=[-3,0,0,-2,3,-1]，现在执行 Union(2,5)，采用第二个根挂到第一个根。求新数组。</summary>
+<p><strong>提示：</strong>成员编号 2 与 5 未必都是根。先分别执行 Find。</p>
+<p><strong>答案：</strong>Find(2)=0，Find(5)=5。把根 5 接到 0 后，parent[0]=−3+(−1)=−4，parent[5]=0，其余不变，得到 [−4,0,0,−2,3,0]。</p>
+</details>
+
+
+</div></section><section class="topic" id="ch15-union-find"><h3>六、为什么 Find 会越来越慢，以及怎样让它快起来</h3><div class="lesson"><p>前面已经完成一组小规模并查集，接下来思考效率。假设所有人最终合并成一个组。若树像一条长链：</p>
+<pre class="diagram">0 → 1 → 2 → 3 → 4 → 5（5 是根）
+
+Find(0) 必须走过 0、1、2、3、4，最后到 5。
+如果是十万人的长链，最坏就要走十万级别的链接。</pre>
+
+<p>这条链可能怎样产生？从 {0}、{1} 开始，先让 0 接到 1；再让整个 {0,1} 的根 1 接到 2；接着让根 2 接到 3。每次都把原有的大组挂到刚来的单独结点下面，树自然变得越来越高。</p>
+<p>现在出现两个不同的改进方向。</p>
+<h3>改进一：合并时尽量不增加树高</h3>
+<p>如果一个组有五人，另一个组只有两人，我们最好让<strong>两人组的根指向五人组的根</strong>。这样，大树的高度不会因为接入一棵更小的树而无谓增长。这叫<strong>按大小合并</strong>（union by size）。</p>
+<p>仍用 parent 数组时，每个根的值是该组人数的相反数。例如 −5 表示五人、−2 表示两人。要比较谁大，注意 −5 在数轴上小于 −2。写成代码，就是当 <code>parent[rx] &gt; parent[ry]</code> 时交换两个根，让 <code>rx</code> 始终代表较大的组。</p>
+<p>用表格跟踪一次合并，所有赋值的理由便清楚了：</p>
+<table>
+<thead>
+<tr>
+<th>修改动作</th>
+<th>为什么这样修改</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查找 rx、ry</td>
+<td>传入的两个成员可能是非根</td>
+</tr>
+<tr>
+<td>若 rx==ry，停止</td>
+<td>重复合并不应改变人数</td>
+</tr>
+<tr>
+<td>若 rx 组更小，交换 rx 与 ry</td>
+<td>后面统一让 ry 挂到 rx 下</td>
+</tr>
+<tr>
+<td>parent[rx] += parent[ry]</td>
+<td>两个负人数合成新的负人数</td>
+</tr>
+<tr>
+<td>parent[ry] = rx</td>
+<td>只改一个根的父指针，完成两树连接</td>
+</tr>
+</tbody></table>
+<p>另一种课件方法叫<strong>按高度合并</strong>（union by height/rank）。它的依据不是人数，而是树高；高度相同时，选一个根接到另一个根下面，新根高度增加一层。请特别注意：一个数组的负数不能同时被解释为“组大小”和“树高度”。本章的完整代码选择保存<strong>负组大小</strong>；讲按高度合并时，需要单独保存高度信息，或切换明确的数组约定。</p>
+<p>按大小合并能使树高保持在 O(log n)。直觉是：一个结点的深度增加一层时，它所在的集合至少与同样大的另一组连接，集合规模至少翻倍；从 1 开始最多翻倍约 log₂n 次，就到达总人数 n。</p>
+<h3>改进二：查找时顺便缩短以后的路径</h3>
+<p>即使树已经建成，某个成员离根仍可能隔着几个父结点。例如：</p>
+<pre class="diagram">  0（根）
+  |
+  2
+  |
+  3
+  |
+  6
+
+parent[0] = -4
+parent[2] = 0
+parent[3] = 2
+parent[6] = 3</pre>
+
+<p>第一次执行 <code>Find(6)</code> 时，程序沿 6→3→2→0 找到根 0。既然已经确认 6、3、2 都属于根 0 的集合，为什么不把它们的父指针直接改为 0？改写后变成：</p>
+<pre class="diagram">       0（根）
+     / | \
+    2  3  6
+
+parent[2]=0，parent[3]=0，parent[6]=0。</pre>
+
+<p>这叫<strong>路径压缩</strong>（path compression）。它在查找时多做了一点点改写工作，却能减少后续查找的路径长度。分组成员关系没有变化，只有内部树形被优化。</p>
+<p>这里有一种很容易读懂的递归写法：</p>
+<pre><code class="language-cpp">int find(int x) {
+    if (parent[x] &lt; 0) return x;        // x 是根
+    parent[x] = find(parent[x]);         // 父亲的根就是自己的根
+    return parent[x];                    // 顺便把路径改短
+}
+</code></pre>
+<p>例如 <code>find(6)</code> 的执行过程是：调用 find(3) → 调用 find(2) → 调用 find(0) → 得到 0，接着逐层返回时将 parent[2]、parent[3]、parent[6] 都改为 0。递归在这里恰好做了两件事：先找到根，再在返回途中压缩路径。</p>
+<p>把按大小合并与路径压缩配合使用，一系列 Find 和 Union 的均摊时间可以达到 O(α(n))，其中 α 是<strong>反阿克曼函数</strong>，增长非常缓慢。期中手工题主要要求你画清楚每次的数组变化；复杂度理论这里把结论记住即可，无须为了理解并查集的基本操作先研究反阿克曼函数的数学定义。</p>
+<h3>并查集的完整 C++17 实现</h3>
+<p>代码已经具备明确的模型：根存负组大小，非根存父编号；合并前先找根，查找同时压缩路径。把这些操作组合到类里：</p>
+<pre><code class="language-cpp">#include &lt;stdexcept&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+class DSU {
+    std::vector&lt;int&gt; parent;  // 根存 -组大小；其他位置存父下标
+
+public:
+    explicit DSU(int n) {
+        if (n &lt; 0) throw std::invalid_argument(&quot;negative size&quot;);
+        parent.assign(n, -1); // 初始每人单独一组
+    }
+
+    int find(int x) {
+        if (x &lt; 0 || x &gt;= static_cast&lt;int&gt;(parent.size()))
+            throw std::out_of_range(&quot;bad member&quot;);
+        if (parent[x] &lt; 0) return x;
+        parent[x] = find(parent[x]); // 找到根后压缩当前路径
+        return parent[x];
+    }
+
+    bool unite(int x, int y) {
+        int rx = find(x);
+        int ry = find(y);
+        if (rx == ry) return false;
+
+        // 负值的绝对值是组大小：数值较小的负数代表较大的组
+        if (parent[rx] &gt; parent[ry])
+            std::swap(rx, ry);
+
+        parent[rx] += parent[ry]; // 更新新根的负组大小
+        parent[ry] = rx;          // 小组根接到大组根下面
+        return true;
+    }
+
+    bool same(int x, int y) {
+        return find(x) == find(y);
+    }
+
+    int groupSize(int x) {
+        return -parent[find(x)];
+    }
+
+    const std::vector&lt;int&gt;&amp; state() const {
+        return parent;          // 用于打印手工模拟状态
+    }
+};
+</code></pre>
+<p>这份代码中 <code>unite</code> 返回 <code>false</code> 的含义是“这两个人原本已经同组，因此这次没有发生合并”；返回 <code>true</code> 表示确实合并了两个原本分离的类。课程题目如果直接给出 <code>Union(Root1,Root2)</code>，可能默认传入的已经是根；我们这里的 <code>unite(x,y)</code> 可以接收任意成员，接口更容易安全使用。</p>
+<h3>按步骤填出整张 parent 数组</h3>
+<p>给定成员 0 到 6，全部从单元素组开始。按大小合并，两个组大小相同时让<strong>第一个传入元素所属的根</strong>成为新根。执行：</p>
+<p><code>unite(0,1)</code> → <code>unite(2,3)</code> → <code>unite(4,5)</code> → <code>unite(1,3)</code> → <code>unite(5,6)</code> → <code>unite(0,6)</code>。</p>
+<p>请仔细看“传入成员”和“真实根”的区别：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>两边真实根</th>
+<th>修改的数组位置</th>
+<th>完成后的 parent[0..6]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始</td>
+<td>—</td>
+<td>所有成员成单点</td>
+<td>[−1,−1,−1,−1,−1,−1,−1]</td>
+</tr>
+<tr>
+<td>unite(0,1)</td>
+<td>0、1</td>
+<td>p[0]=−2，p[1]=0</td>
+<td>[−2,0,−1,−1,−1,−1,−1]</td>
+</tr>
+<tr>
+<td>unite(2,3)</td>
+<td>2、3</td>
+<td>p[2]=−2，p[3]=2</td>
+<td>[−2,0,−2,2,−1,−1,−1]</td>
+</tr>
+<tr>
+<td>unite(4,5)</td>
+<td>4、5</td>
+<td>p[4]=−2，p[5]=4</td>
+<td>[−2,0,−2,2,−2,4,−1]</td>
+</tr>
+<tr>
+<td>unite(1,3)</td>
+<td>0、2</td>
+<td>p[0]=−4，p[2]=0</td>
+<td>[−4,0,0,2,−2,4,−1]</td>
+</tr>
+<tr>
+<td>unite(5,6)</td>
+<td>4、6</td>
+<td>p[4]=−3，p[6]=4</td>
+<td>[−4,0,0,2,−3,4,4]</td>
+</tr>
+<tr>
+<td>unite(0,6)</td>
+<td>0、4</td>
+<td>p[0]=−7，p[4]=0</td>
+<td>[−7,0,0,2,0,4,4]</td>
+</tr>
+</tbody></table>
+<p>执行第六个操作时，Find(6) 沿 6→4 找到根 4，所以在这一步它无需改写 6 的 parent。最后如果<strong>额外执行一次</strong> <code>find(6)</code>，它会沿 6→4→0 找到根 0，同时将 p[6] 从 4 改为 0，得到 [−7,0,0,2,0,4,0]。这两份数组表示的成员分组完全相同，但路径压缩后的树更矮。</p>
+<details class="question"><summary>自测：最后额外执行 find(3)，哪一个数组项会改变？</summary>
+<p><strong>提示：</strong>先从 3 开始沿 parent 追踪到根，判断是否有哪一段长度超过 1。</p>
+<p><strong>解答：</strong>3→2→0，因此执行 find(3) 后 p[3] 会从 2 改为 0。p[2] 已等于 0，其余位置不变。如果先做过 find(6)，最终数组为 [−7,0,0,0,0,4,0]。</p>
+</details>
+
+<p>到这里，我们已经能够解决“不断合并的小组”问题。请记住下一节的任务会改变：现在给定一个关键码，我们要迅速查出与之配对的<strong>信息</strong>。例如学号 3021 对应的学生姓名是什么。这就需要字典和散列。</p>
+</div></section><section class="topic" id="ch15-dictionary"><h3>七、从集合走向字典：为什么要保存键值对</h3><div class="lesson"><p>假设图书馆存了一百万条图书记录，每条记录包含书号、书名和借阅状态。你拿着书号来查找，真正希望得到的是这本书对应的<strong>整条记录</strong>。只返回“这个书号是否存在”显然还不够。</p>
+<p>因此可以把一条记录表示成 <code>(key, value)</code>，其中 **key（关键码、键）**是查找依据，**value（值、属性）**是与之对应的信息。例如：</p>
+<table>
+<thead>
+<tr>
+<th>键 key（书号）</th>
+<th>值 value（书名）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>104</td>
+<td>数据结构入门</td>
+</tr>
+<tr>
+<td>225</td>
+<td>算法笔记</td>
+</tr>
+<tr>
+<td>317</td>
+<td>数学方法</td>
+</tr>
+</tbody></table>
+<p>这种管理“键对应哪个值”的抽象结构称为<strong>字典</strong>（Dictionary）。一个字典通常要求键唯一：若再次插入键 225，可以选择更新对应的值，或根据接口约定拒绝重复键。题目必须交代采用哪种策略。</p>
+<p>在学习新结构之前，先用已经会的方法试一试。把所有记录放入数组，按书号依次比较，当然可以找到目标，但最坏可能扫描一百万项，时间 O(n)。如果按书号排序，可以做二分查找，时间 O(log n)；但插入新记录时，为了保持数组有序，可能要移动很多项。二叉搜索树能够动态插删，但不平衡时仍有退化的风险。</p>
+<p>有没有可能<strong>看一眼书号，就直接算出它应该存在哪个数组位置</strong>？例如只用书号的最后一位作地址，让 104 尝试放在第 4 格，225 尝试放在第 5 格。只要地址计算简单，我们也许就不用逐项比较整个字典了。</p>
+<p>这个想法就是散列方法的起点。</p>
+</div></section><section class="topic" id="ch15-hash-function"><h3>八、从关键码计算位置：散列函数与冲突</h3><div class="lesson"><p>先准备一个有 10 个位置的数组，合法位置编号为 0 到 9。取一个简单规则：</p>
+<p><code>h(key) = key % 10</code></p>
+<p>把键除以 10 的余数当作数组下标。这样，书号 104 的余数为 4，就尝试放在下标 4；225 的余数为 5，就尝试放在下标 5。我们把这个从关键码算出地址的规则叫<strong>散列函数</strong>（hash function），得到的数组叫<strong>散列表</strong>（hash table）。</p>
+<p>但会立即出现一个问题。假设表里已存了 89，在下标 9；现在要插入 49，49 除以 10 的余数也是 9。两个不同的键算出了同一个存储位置。这个现象称为<strong>散列冲突</strong>（collision），这两个键也称为同义词。</p>
+<pre class="diagram">空表下标： 0  1  2  3  4  5  6  7  8  9
+插入 89：  ·  ·  ·  ·  ·  ·  ·  ·  · 89
+插入 49：  49 也想去下标 9 —— 发生冲突。</pre>
+
+<p>冲突并不说明散列函数写错了。若可能出现的关键码远多于数组槽位，许多关键码迟早会映射到同一个位置。因此一份完整的散列表设计总要回答两个问题：怎样把关键码分散到各槽位，以及不同关键码撞在一起时怎样安排它们。</p>
+<h3>常见散列函数应怎样选择</h3>
+<p>课件介绍了五类方法。先理解每种方法在尝试利用关键码的哪个特征，再记名称：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>想法</th>
+<th>适合的情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>直接定址法</td>
+<td>直接把键或其简单线性变换当地址，如 h(k)=k−940000</td>
+<td>关键码范围较小或已知紧凑范围</td>
+</tr>
+<tr>
+<td>数字分析法</td>
+<td>从多位关键码中选取变化较均匀的几位</td>
+<td>已知大量关键码样本及各位分布</td>
+</tr>
+<tr>
+<td>除留余数法</td>
+<td>用 h(k)=k mod p 求余数</td>
+<td>整数键，计算题最常用</td>
+</tr>
+<tr>
+<td>平方取中法</td>
+<td>将关键码平方，截取中间若干位作为地址</td>
+<td>希望让键的多位共同影响地址</td>
+</tr>
+<tr>
+<td>折叠法</td>
+<td>把长关键码分段相加，必要时再缩减地址</td>
+<td>长数字型关键码</td>
+</tr>
+</tbody></table>
+<p>例如把关键码 123 平方，得到 15129；若约定“从五位结果里取中间三位”，就得到 512。这个演示先固定了截取位数；实际设计还要使结果落入合法表地址范围。数字分析法也要先看真实数据分布，不能随便说“某三位最均匀”。</p>
+<p>期中更常见的是<strong>除留余数法</strong>。设数组有 m 个槽，选择正整数 p，常取不超过 m 的合适素数，并定义 <code>h(k)=k mod p</code>。注意两个数的角色：</p>
+<ul>
+<li><strong>m</strong> 决定表真正有多少个槽、探查时取模回绕的范围；</li>
+<li><strong>p</strong> 决定初始散列地址如何分布。</li>
+</ul>
+<p>如果表长 m=11、散列函数用 mod 10，那么初始地址只会是 0–9，但冲突探查仍可能使用下标 10。这样的题目可以正常求解，不要擅自把 mod 10 改成 mod 11。</p>
+<p>现在散列函数的作用已经清楚，接下来让 49 真的找到一个可以存放的位置。</p>
+</div></section><section class="topic" id="ch15-linear-probe"><h3>九、线性探查：发生冲突以后往哪里走</h3><div class="lesson"><p>最容易想到的解决办法是：目标槽位被占，就向后找一个空槽。走到数组末尾还没找到，就从下标 0 继续。这个规则称为<strong>线性探查</strong>（linear probing）。</p>
+<p>有 m 个槽、初始地址为 h(k) 时，第 i 次尝试的位置为：</p>
+<p><code>pos(i) = (h(k) + i) % m</code>，其中 i=0,1,…,m−1。</p>
+<p>这里 i=0 表示<strong>第一次尝试初始地址</strong>；i=1 才表示发生一次冲突后向后走一步。最多试 m 个不同槽位，如果都已占满，就需要扩容或报告失败。</p>
+<p>先做一张完整的插入表。设 m=10、h(k)=k mod 10，按给定顺序插入 89、18、49、58、69。</p>
+<table>
+<thead>
+<tr>
+<th>插入的键</th>
+<th align="right">初始地址</th>
+<th>逐格探查</th>
+<th align="right">最后存放位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>89</td>
+<td align="right">9</td>
+<td>9 空</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td>18</td>
+<td align="right">8</td>
+<td>8 空</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td>49</td>
+<td align="right">9</td>
+<td>9 已有 89；0 空</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>58</td>
+<td align="right">8</td>
+<td>8 有 18；9 有 89；0 有 49；1 空</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>69</td>
+<td align="right">9</td>
+<td>9 有 89；0 有 49；1 有 58；2 空</td>
+<td align="right">2</td>
+</tr>
+</tbody></table>
+<p>最终表是：</p>
+<pre class="diagram">槽号：  0   1   2   3  4  5  6  7   8   9
+关键码：49  58  69   ·  ·  ·  ·  ·  18  89</pre>
+
+<p>这张表与 PPT 第 73 页的同组键示例一致。注意真正决定插入位置的是<strong>输入顺序</strong>：若改变插入顺序，最终槽位可能变化。画表题必须按题面顺序一项一项来。</p>
+<h3>查找为什么必须走同一条路径</h3>
+<p>如果现在要查找 69，我们可以直接算出初始地址 9，但表的 9 号槽保存 89。继续探查 0 号槽得到 49，1 号槽得到 58，直到 2 号槽遇到 69。总共访问了四个槽。</p>
+<p>如果要查找 79，而它并未插入过，路径会是 9→0→1→2→3。前四格分别存 89、49、58、69，都不是 79；3 号槽为空。因为插入 79 时一定会在遇到第一个空槽处停下，既然 3 号槽尚未被使用，那么继续往后也不可能找到从同一起点插入的 79，查找可以报告失败。</p>
+<p>由此得到两条停止规则：</p>
+<ul>
+<li>**成功：**访问某槽，发现关键码与目标相等；</li>
+<li>**失败：**访问第一个从未使用过的空槽，或者按实现约定已经查完一圈。</li>
+</ul>
+<p>散列表可能需要删除元素。若简单删除后把某格直接改成“从未使用的空槽”，可能切断其他关键码的搜索路径。例如删除槽 0 的 49 以后，搜索原本在槽 1 的 58 会在 0 号槽提前停下，错误地认为 58 不存在。实现删除时需要特殊的“已删除”标记，或按规定重新整理这一探查簇。</p>
+<h3>一份能真正执行的线性探查代码</h3>
+<p>以下先实现一个存放<strong>整数键的集合</strong>，只支持插入与查找；先把散列冲突的主算法练清，再考虑键值对和删除。代码使用 C++17 的 <code>std::optional&lt;int&gt;</code> 表示一个槽位“尚未使用”或“已有键”，因此无需选择特殊整数作为空槽哨兵。</p>
+<pre><code class="language-cpp">#include &lt;optional&gt;
+#include &lt;stdexcept&gt;
+#include &lt;vector&gt;
+
+class LinearHashSet {
+    std::vector&lt;std::optional&lt;int&gt;&gt; table;
+
+    int home(int key) const {
+        int m = static_cast&lt;int&gt;(table.size());
+        return (key % m + m) % m;  // 负整数键也映射到合法槽
+    }
+
+public:
+    explicit LinearHashSet(int capacity) {
+        if (capacity &lt;= 0) throw std::invalid_argument(&quot;bad capacity&quot;);
+        table.resize(capacity);
+    }
+
+    bool insert(int key) {
+        int m = static_cast&lt;int&gt;(table.size());
+        int start = home(key);
+
+        for (int step = 0; step &lt; m; ++step) {
+            int pos = (start + step) % m;
+            if (!table[pos].has_value()) {
+                table[pos] = key;
+                return true;              // 新键插入成功
+            }
+            if (*table[pos] == key)
+                return false;             // 集合不能重复插入同一键
+        }
+        return false;                     // 全表已满
+    }
+
+    bool contains(int key) const {
+        int m = static_cast&lt;int&gt;(table.size());
+        int start = home(key);
+
+        for (int step = 0; step &lt; m; ++step) {
+            int pos = (start + step) % m;
+            if (!table[pos].has_value())
+                return false;             // 碰到从未使用的空槽
+            if (*table[pos] == key)
+                return true;
+        }
+        return false;
+    }
+};
+</code></pre>
+<p>这个版本刻意没有实现删除。如果题目要求动态插删，你需要进一步定义“从未使用”“曾经使用但已删除”“当前有键”三种状态，或者采用再散列策略。这样就不会误把一个演示插入和查找的短程序当成完整的工程散列表。</p>
+<p>到这里我们已能真正执行散列表操作。下一节再讨论如何衡量效率，避免直接看到一个 ASL 公式却不知道其中的比较次数来自哪里。</p>
+</div></section><section class="topic" id="ch15-asl-exam"><h3>十、从真实查找过程计算平均查找长度 ASL</h3><div class="lesson"><p>假如刚才的散列表已经建好。查找 89 只访问一次，查找 69 却需要访问四次。不同关键码查找代价不同，所以分析查找效率时，我们通常使用<strong>平均查找长度</strong>（Average Search Length，简称 ASL）。</p>
+<p>这个名称只表示一件事：<strong>把所有可能的查找情况按发生概率加权，计算平均需要多少次比较或探查</strong>。要算出具体数值，必须说明“有哪些情况”“各情况发生的概率是多少”“一次比较怎样计数”。</p>
+<h3>成功查找：每个已存关键码等概率</h3>
+<p>假设我们以后查找的目标一定在刚才的表里，而且五个键 89、18、49、58、69 被查到的机会相等，都是 1/5。我们可以重走每个键自己的探查路径：</p>
+<table>
+<thead>
+<tr>
+<th>目标键</th>
+<th>实际访问的槽</th>
+<th align="right">探查次数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>89</td>
+<td>9</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>18</td>
+<td>8</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>49</td>
+<td>9→0</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>58</td>
+<td>8→9→0→1</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>69</td>
+<td>9→0→1→2</td>
+<td align="right">4</td>
+</tr>
+</tbody></table>
+<p>因此成功时平均需要：</p>
+<p><code>ASL成功 = (1+1+2+4+4)/5 = 12/5 = 2.4</code>。</p>
+<p>如果五个键被查询的概率不同，就把每个键的探查次数乘以自己的概率再求和，不能继续做简单算术平均。</p>
+<h3>失败查找：为什么需要另一张表</h3>
+<p>失败意味着目标键不在散列表中。若它的初始散列地址为 9，程序会沿 9→0→1→2→3 找到第一个空槽；若初始地址为 4，就只需看 4 号槽，立刻发现为空。</p>
+<p>先固定本例的统计约定：</p>
+<ol>
+<li>查询目标一定不存在。</li>
+<li>它的初始散列地址在 0–9 的十个位置上等概率出现。</li>
+<li><strong>访问到第一个空槽也算一次探查。</strong></li>
+</ol>
+<p>在这三个条件下，可从每个初始地址走到第一次遇到空槽，得到：</p>
+<table>
+<thead>
+<tr>
+<th align="right">失败查找的初始槽</th>
+<th>实际探查路径</th>
+<th align="right">次数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td>0→1→2→3</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td>1→2→3</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>2→3</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">3、4、5、6、7</td>
+<td>各自当场遇到空槽</td>
+<td align="right">各 1</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td>8→9→0→1→2→3</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td>9→0→1→2→3</td>
+<td align="right">5</td>
+</tr>
+</tbody></table>
+<p>总和是 4+3+2+1+1+1+1+1+6+5=25，于是：</p>
+<p><code>ASL失败 = 25/10 = 2.5</code>。</p>
+<p><strong>这是在“将第一个空槽也计为一次探查”的前提下得到的答案。</strong> 如果老师只统计与实际存储的关键码比较的次数，访问空槽那一步不计，十个失败情况的次数会分别减少 1，得到 1.5。两种口径表达的是不同的计数量，必须跟随题目的明确约定。仅在纸上写一个 ASL 数字而不交代停止条件，很容易在考试中造成争议。</p>
+<p>请再观察为什么平均值会变大：线性探查使 8、9、0、1、2 形成了一段相邻的已占槽位。即使一个未插入的键初始地址恰好在这一段开头，也要经过很多个已经占用的槽。这种连续聚集称为<strong>堆积/聚集</strong>（clustering），课件第 73 页也专门指出了这一问题。</p>
+<details class="question"><summary>作业同级练习：m=7，h(k)=k mod 7，依次插入 10、17、24、5。画表并计算成功/失败 ASL。</summary>
+<p><strong>思路提示：</strong>先完成表，再分别根据每个成功键、每个可能的初始地址追踪搜索。失败查找把第一个空槽算作一次探查。</p>
+<p><strong>完整解答：</strong>10 到 3；17 从 3 冲突后到 4；24 继续到 5；5 初始为 5，冲突后到 6。最终槽 0、1、2 为空，槽 3、4、5、6 依次是 10、17、24、5。成功次数为 1、2、3、2，ASL成功=(1+2+3+2)/4=2。失败从初始槽 0、1、2、3、4、5、6 出发，探查次数为 1、1、1、5、4、3、2，因此 ASL失败=17/7。</p>
+<p><strong>易错点：</strong>键 5 的初始地址等于 5，实际插入地址为 6。失败初始槽 3 的搜索必须经过 3、4、5、6 并回绕到空槽 0，合计五次。</p>
+</details>
+
+</div></section><section class="topic" id="ch15-other-probes"><h3>十一、减少聚集：平方探查与双重散列</h3><div class="lesson"><p>既然线性探查容易形成长长的连续已占段，有没有办法在冲突时跳远一些？</p>
+<p>有两种常见的改法。它们都沿用“计算候选位置，遇到占用就换下一个候选”的过程，只改变<strong>下一个候选怎么产生</strong>。</p>
+<h3>平方探查</h3>
+<p><strong>平方探查</strong>（quadratic probing）把偏移量依次设为 0、1、4、9、16、……，也就是 i²。课件给出的是 <code>pos(i)=(h(k)+i²)%m</code>。不同教材也可能采用正负平方交替等变体，手工题以题目明确给出的探查公式为准。</p>
+<p>例如表长 m=11，函数 h(k)=k mod 11，依次插入键 10、21、32。它们的初始地址都是 10：</p>
+<ul>
+<li>10：第一次尝试 10，空，放入 10；</li>
+<li>21：尝试 10 被占；i=1，尝试 (10+1²)%11=0，空，放入 0；</li>
+<li>32：尝试 10 被占、0 也被占；i=2，尝试 (10+2²)%11=3，空，放入 3。</li>
+</ul>
+<p>于是三个键位于 10、0、3，不再挤成三个相邻的槽位。不过<strong>平方探查并不保证每种表长、每种负载状态都能遍历全部槽位</strong>。写算法和手工模拟时需要按题设限定探查次数；实际实现还需配合合适表长与扩容策略。</p>
+<h3>双重散列</h3>
+<p><strong>双重散列</strong>（double hashing）使用第二个散列函数为每个键算出它自己的跳步 <code>step=h₂(k)</code>，候选位置按 <code>(h₁(k)+i·step)%m</code> 产生。</p>
+<p>例如 m=11，第一散列函数是 h₁(k)=k mod 11；取 R=7，第二函数设为 <code>h₂(k)=7−(k mod 7)</code>。假设 10 已占住槽 10，要插入 21：</p>
+<ul>
+<li>21 的 h₁=10；</li>
+<li>21 的 h₂=7−(21 mod 7)=7；</li>
+<li>初始槽 10 被占时，下一个尝试 <code>(10+7)%11=6</code>。</li>
+</ul>
+<p>换了另一个键，第二步长可能不同。为避免循环只访问少数位置，需要保证步长与表长互素；当 m 取素数、步长在 1 到 m−1 之间时，任何正步长都与 m 互素。</p>
+<p>三种开放定址探查方法可按一条线记忆：<strong>线性探查每次走一格，平方探查按平方偏移，双重散列让每个键有自己的固定步长</strong>。公式的差别源自解决聚集问题的想法，先理解想法再记形式。</p>
+</div></section><section class="topic" id="ch15-chaining"><h3>十二、换一种解决冲突的策略：链地址法</h3><div class="lesson"><p>此前几种方法都有一个共同约束：所有记录必须安放在散列表数组的某一个槽里。但如果一个地址可以对应<strong>一条链表</strong>，冲突时就无须继续试下一个数组槽了。</p>
+<p>例如有 5 个桶，<code>h(k)=k mod 5</code>，依次输入 1、6、11、3。如果规定每个桶的链表采用尾插法，结果是：</p>
+<pre class="diagram">桶号 0：空
+桶号 1：1 → 6 → 11 → null
+桶号 2：空
+桶号 3：3 → null
+桶号 4：空</pre>
+
+<p>这种方法叫<strong>链地址法</strong>（separate chaining），也叫拉链法。数组里的每个位置只负责找到一条链表的开头，具有相同散列地址的记录放在同一条链里。</p>
+<p>怎样搜索 11？先算 11 mod 5=1，进入桶 1，再依次比较结点 1、6、11，第三次命中。怎样确认 16 不存在？同样进入桶 1，先比较 1、6、11，走到链尾仍没有 16，就失败。若采用头插而非尾插，链内排列次序和成功次数会不同，题目必须说明。</p>
+<h3>为什么负载因子很重要</h3>
+<p>把实际保存的记录数记作 n，桶数或槽数记作 m。<strong>负载因子</strong>（load factor）定义为 <code>α=n/m</code>，它表示平均每个桶承载多少记录；开放定址法中它表示表的占用比例（在只计当前有效记录时），通常要求 α≤1。</p>
+<p>刚才链地址例子有 4 个记录和 5 个桶，α=4/5=0.8，但第 1 个桶却有 3 项。α 只是所有桶的平均值，<strong>不会保证每个桶恰好有 0.8 个元素</strong>。若散列函数将许多键集中到某个桶，那里仍可能退化成长链。</p>
+<p>当键大致均匀落到桶里时，链地址法的平均查找代价常写为 O(1+α)，其中常数部分来自先算散列地址，α 相关部分来自扫描桶里的链表。若全部键都落入同一个桶，最坏仍可能是 O(n)。</p>
+<p>在考题中，链地址法与线性探查法经常使用<strong>同一个关键码序列</strong>，目的是比较冲突后怎样存储。记住先辨识：“每个数组槽里只放一个记录，冲突时寻找别处”，还是“每个槽指向一条装若干记录的链表”。只有确定存储形态，才能知道成功或失败搜索应该在哪里结束。</p>
+</div></section><section class="topic" id="ch15-method-choice"><h3>十三、见到题目该怎么选方法：从任务回到数据结构</h3><div class="lesson"><p>我们已经接触三组数据结构，现在回到最开始的问题。</p>
+<p>如果要求频繁计算两个小整数编号集合的交并差，且编号范围已知、内存能够容纳，优先想到<strong>位向量</strong>：每一位都直接表示成员存在性。</p>
+<p>如果集合很稀疏、编号范围巨大，而且需要按升序枚举成员，<strong>有序链表</strong>能够只存真实成员；进行交并差时用两个游标扫描。</p>
+<p>如果不断收到“这两个人应合为同一组”的消息，并且之后反复询问两人是否同组，选<strong>并查集</strong>：Find 找代表、Union 合并代表，常配合按大小合并和路径压缩。</p>
+<p>如果每个关键码都带有姓名、成绩或其他属性，需要按关键码快速找记录，选<strong>字典</strong>的某种实现；在键分布合适且允许碰撞处理时，可采用<strong>散列表</strong>。</p>
+<p>考试中遇到具体散列表题，不妨固定如下作答顺序：</p>
+<ol>
+<li>写明表长 m、散列函数 h，以及处理冲突的具体规则；</li>
+<li>按输入顺序插入，每步记录尝试过的槽位；</li>
+<li>查找时使用相同探查规则，确认成功和失败的停止条件；</li>
+<li>计算 ASL 之前声明等概率对象及探查计数口径；</li>
+<li>如需写代码，再将纸上的状态更新转成循环与条件判断。</li>
+</ol>
+<p>这样每一步都有对应的理由。你最终要会的是面对新题能够判断该存什么、该维护什么、该比较什么，而不只是背出几个数据结构名称。</p>
+</div></section><section class="topic" id="ch15-exercises"><h3>十四、综合练习：先自己选择工具，再查看解答</h3><div class="lesson"><p>这一组题刻意改变了例子的数据与提问方式。建议先独立完成，卡住时再打开提示。</p>
+<details class="question"><summary>练习 A（基础）：全集 U={0,…,7}，A={1,4,7}、B={1,3,7}。写出位向量，计算 A∪B、A∩B 和 A−B。</summary>
+<p><strong>思路：</strong>按编号 0 到 7 依次写 0/1，再对照成员判断表按位计算。</p>
+<p><strong>答案：</strong>A 对应 01001001，B 对应 01010001；并集 {1,3,4,7}，向量 01011001；交集 {1,7}，向量 01000001；差集 {4}，向量 00001000。</p>
+</details>
+
+<details class="question"><summary>练习 B（作业同级）：并查集 parent=[−2,0,−3,2,2,−1]，采用按大小合并与路径压缩。执行 unite(1,4)、find(3)，求最终数组。</summary>
+<p><strong>思路：</strong>先 Find(1)=0、Find(4)=2，比较负组大小；合并之后还要单独执行 find(3)。</p>
+<p><strong>答案：</strong>大小 2 与 3，较小的根 0 挂到较大的根 2：p[2]=−5，p[0]=2，原 p[1]=0、p[3]=2、p[4]=2、p[5]=−1。数组为 [2,0,−5,2,2,−1]。执行 find(3) 时，它已直接指向根 2，数组不变。这里别擅自把所有成员的父指针都重写成 2。</p>
+</details>
+
+<details class="question"><summary>练习 C（作业同级）：表长 m=7，h(k)=k mod 7，线性探查依次插入 8、15、22、10、17。画出表，算成功 ASL。</summary>
+<p><strong>思路：</strong>8、15、22 的初始地址都是 1；10、17 的初始地址都是 3。按顺序逐个安排，再从各键自己的初始位置走到存储位置。</p>
+<p><strong>答案：</strong>8→1；15→2；22→3；10 初始为 3，但 3 被 22 占用，放到 4；17 初始为 3，发现 3、4 已占，放到 5。最终槽 1、2、3、4、5 依次是 8、15、22、10、17。成功探查次数 1、2、3、2、3，ASL=11/5=2.2。</p>
+</details>
+
+<details class="question"><summary>练习 D（提高）：对练习 C 的表，从初始地址 0–6 等概率进行失败查找，把首次空槽计为一次探查。失败 ASL 是多少？</summary>
+<p><strong>提示：</strong>空槽为 0 和 6。逐个起点沿线性探查前进：若从槽 1 开始，要走完整个已占段 1–5 才到 6。</p>
+<p><strong>答案：</strong>初始槽 0、1、2、3、4、5、6 的失败探查次数分别为 1、6、5、4、3、2、1，总和 22，ASL失败=22/7。最常见错误是忽略初始地址 1 的路径包括五个有数据的槽以及一个空槽。</p>
+</details>
+
+<details class="question"><summary>练习 E（方法选择）：需要处理十万条“x 与 y 合为一组”消息，并在消息之间询问两人是否同组。应选位向量、按键散列还是并查集？说明依据。</summary>
+<p><strong>提示：</strong>思考每条消息改变的是某个成员的存在性、某个键的属性，还是两个分组间的关系。</p>
+<p><strong>答案：</strong>选并查集。它直接维护不断合并的等价类，合并先查两个根，然后把一个根连到另一个根；查询判断两个元素代表是否相等。按大小合并与路径压缩能使一系列操作非常高效。</p>
+</details>
+
+</div></section><section class="topic" id="ch15-errata"><h3>十五、回看课件：哪些约定和错误必须知道</h3><div class="lesson"><p>本章教学范围以《2026-27 秋季 HashTable.pptx》第 1–85 页为依据。为了让代码能用现代 C++17 编译，以及让数值例题可复核，以下地方作了明确区分：</p>
+<table>
+<thead>
+<tr>
+<th>课件位置</th>
+<th>课件原文情况</th>
+<th>本讲义的处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第 5 页</td>
+<td><code>virtual Set()</code> 等声明混合了旧式、无返回类型接口</td>
+<td>说明操作含义，不直接当作可编译 C++</td>
+</tr>
+<tr>
+<td>第 8–10 页</td>
+<td><code>bitSet</code> / <code>bitSet&lt;T&gt;</code> 及 <code>vecterSize</code> / <code>vectorSize</code> 不一致</td>
+<td>独立给出位集合的 C++17 版本</td>
+</tr>
+<tr>
+<td>第 14 页</td>
+<td>子集检测使用 <code>bitVector[i] &amp; !R.bitVector[i]</code></td>
+<td>改成按位取反 <code>~R.bitVector[i]</code>，并逐位解释原因</td>
+</tr>
+<tr>
+<td>第 54 页</td>
+<td>关键码出现 07251 / 07250 两种写法</td>
+<td>取 07251 时，12361、7251、3309、30976 对 73 取余均为 24；07250 则不同</td>
+</tr>
+<tr>
+<td>第 62、83 页</td>
+<td>散列函数的取模参数可能小于表长</td>
+<td>分清 m 是表长、p 是初始散列模数，不私自统一</td>
+</tr>
+<tr>
+<td>第 72–75、83–84 页</td>
+<td>有成功、失败 ASL 的计算任务</td>
+<td>每题声明等概率对象、何时停止和是否统计空槽</td>
+</tr>
+</tbody></table>
+<p>补充说明：本章讲到的 <code>std::optional</code>、负整数键规范化、已删除标记及严格意义的摊还复杂度，是为了使现代实现和算法边界更清楚而增加的解释。期中考试若采用课件模板与计数口径，请优先核对教师给出的明确约定。</p>
+<p>你已经沿着完整链条走过了这讲：从一个成员的 0/1 标记，到动态分组的父指针，再到字典的散列地址和真实查找次数。回到前面的三个问题，试着用自己的话解释为什么分别选这三类结构。如果能独立完成最后两道变式题，本章的基本操作与方法选择就有了可靠的自测证据。</p>
+</div></section></section></main>
+<footer class="footer">
+<p>本文教学正文从独立的 Markdown 文字稿编译生成。已经验收的文字稿与生成网页的文件是两类独立成果。</p>
+<p><a href="../">返回 Nichijo Notes 首页</a> · <a href="../dsa-midterm/">历史版本</a> · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/tree/main/dsa-readable-v4">查看源文件及验收记录</a></p>
+</footer>
+</div>
+</div>
+<script defer src="./reader.js"></script>
+</body>
+</html>
