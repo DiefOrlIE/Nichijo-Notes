@@ -40,11 +40,14 @@ try{
  const desktop=await browser.newContext({viewport:{width:1440,height:900}});
  const page=await desktop.newPage();
  await verify(page,'desktop');
+ console.log('JS_ERRORS_AFTER_LOAD',JSON.stringify(scriptErrors));
+ assert.deepEqual(scriptErrors,[],'Reader crashed before wiring persistence');
  const test=page.locator('#ch15-exercises details.question').first();
  await test.locator('summary').click();
  assert.equal(await test.evaluate(n=>n.open),true);
  await page.waitForTimeout(420);
  const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('nichijo-dsa-v3-ch15')||'{}'));
+ console.log('AFTER_SUMMARY_CLICK_STORAGE',JSON.stringify(stored));
  assert.ok(stored.open?.length>0,'answer expansion was not persisted in browser storage');
  await page.reload({waitUntil:'networkidle'});
  assert.equal(await page.locator('#ch15-exercises details.question').first().evaluate(n=>n.open),true);
