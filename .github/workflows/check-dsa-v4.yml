@@ -1,0 +1,48 @@
+name: Verify DSA V4 course and closed-book exam UI
+on:
+  push:
+    paths:
+      - "dsa-readable-v4/index.html"
+      - "dsa-readable-v4/review.html"
+      - "dsa-readable-v4/style.css"
+      - "dsa-readable-v4/reader.js"
+      - "dsa-readable-v4/quality/browser_check.mjs"
+      - ".github/workflows/check-dsa-v4.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: dsa-v4-browser
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify browser script syntax and independent C++ algorithm tests
+        run: |
+          node --check dsa-readable-v4/reader.js
+          node --check dsa-readable-v4/quality/browser_check.mjs
+          python3 dsa-readable-v4/quality/stage_a_check.py
+      - name: Install Chromium and Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run desktop, phone and tablet end-to-end tests
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/v4-http.log 2>&1 &
+          sleep 3
+          node dsa-readable-v4/quality/browser_check.mjs
+      - name: Keep browser verification screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v4-dsa-responsive-verification
+          path: |
+            v4-desktop.png
+            v4-mobile-review.png
+            v4-tablet.png
+          if-no-files-found: ignore
