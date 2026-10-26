@@ -1,0 +1,50 @@
+/* V3 isolated teaching prototype, reuses OFL self-hosted Wenjin Songti and Source Han Serif from the original site's CSS. */
+main{max-width:850px;margin:0 auto;padding-bottom:64px}
+body{line-height:1.98}
+#start{padding-bottom:26px}
+#start .lead{font-size:1.15rem;line-height:1.9}
+#chapter-intro{font-size:1.05rem;margin:22px 0 52px;line-height:2}
+#chapter-intro p{margin:15px 0}
+.topic{padding:21px 0 45px;border-top:1px solid var(--line);margin:33px 0 56px;scroll-margin-top:128px}
+.topic h2{font:700 1.38rem/1.65 "Nichijo Source Han Serif",serif;margin:0 0 24px;letter-spacing:.01em}
+.topic h3{font:700 1.12rem/1.8 "Nichijo Source Han Serif",serif;margin:37px 0 16px}
+.topic h4{font:700 1.04rem/1.75 "Nichijo Source Han Serif",serif;margin:31px 0 12px}
+.lesson-narrative{font-size:1.01rem}
+.lesson-narrative p{margin:18px 0;line-height:2}
+.lesson-narrative ol,.lesson-narrative ul{padding-left:1.7em}
+.lesson-narrative li{margin:9px 0}
+.lesson-narrative table{display:table;width:100%;font-size:.88rem;line-height:1.65;white-space:normal}
+.lesson-narrative .table-scroll{max-width:100%;overflow-x:auto}
+.lesson-narrative table th{font-family:"Nichijo Source Han Serif",serif}
+.lesson-narrative pre{font-family:ui-monospace,Consolas,Menlo,monospace;max-width:100%;overflow-x:auto;line-height:1.75;font-size:13px;padding:16px}
+.lesson-narrative pre.diagram{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;white-space:pre;overflow-x:auto}
+.lesson-narrative pre code{color:inherit}
+.lesson-narrative code:not(pre code){word-break:break-word}
+.lesson-narrative details.question{border:1px solid var(--line);background:var(--paper);border-radius:7px;margin:19px 0;padding:13px 16px}
+.lesson-narrative details.question summary{font-family:"Nichijo Source Han Serif",serif;font-weight:600;line-height:1.7;cursor:pointer}
+.lesson-narrative details.question[open]{padding-bottom:19px}
+.lesson-narrative details.question p{line-height:1.84;margin:13px 0}
+.lesson-narrative details.question p:first-of-type{margin-top:18px}
+.lesson-narrative details.question strong{font-family:"Nichijo Source Han Serif",serif}
+.lesson-narrative .source{font-size:.91rem;color:var(--muted)}
+.lesson-narrative blockquote{border-left:2px solid var(--line);padding-left:15px;margin:24px 0}
+#toc h1,.toolbar-name{font-family:"Nichijo Source Han Serif",serif}
+#toc .toc-bottom{border-top:1px solid var(--line);padding-top:13px;font-size:.85rem}
+#toc a.subchapter{font-size:12.5px;line-height:1.6}
+.glossary{margin-top:85px;padding-top:35px}
+#glossary h2{font:700 1.25rem/1.5 "Nichijo Source Han Serif",serif}
+footer{padding-top:32px;border-top:1px solid var(--line)}
+footer .back-home{margin-right:12px}
+@media(max-width:900px){main{padding-inline:22px}}
+@media(max-width:760px){
+ main{padding-inline:17px}
+ .lesson-narrative{font-size:1rem}
+ .lesson-narrative p{line-height:1.92}
+ .topic{margin:24px 0 44px}
+ .topic h2{font-size:1.25rem}
+ .lesson-narrative table{min-width:450px}
+ .lesson-narrative pre{font-size:12px}
+ .lesson-narrative details.question{padding:12px}
+ .toolbar-name{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
