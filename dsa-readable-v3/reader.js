@@ -91,7 +91,7 @@ function save(){
  try{localStorage.setItem(KEY,JSON.stringify({theme,pos:current(),open:details.filter(d=>d.open).map(d=>d.dataset.answer)}));}catch{}
 }
 function debounce(){clearTimeout(timeout);timeout=setTimeout(save,250);}
-details.forEach(d=>d.addEventListener('toggle',debounce));
+details.forEach(d=>d.addEventListener('toggle',()=>{if(ready)save();}));
 $('#theme-toggle').onclick=()=>{theme=theme==='dark'?'light':'dark';applyTheme();debounce();};
 $('#reset-memory').onclick=()=>{
  if(!confirm('清除本页阅读位置、夜间模式和答案展开记录？'))return;
