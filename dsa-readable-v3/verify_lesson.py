@@ -4,7 +4,7 @@ import re
 import subprocess
 import tempfile
 
-root=Path(__file__).resolve().parents[1]
+root=Path(__file__).resolve().parent
 s=(root/'manuscripts/ch15.md').read_text(encoding='utf8')
 assert len(re.findall(r'^## ',s,flags=re.M))==15
 blocks=re.findall(r'```cpp\n(.*?)\n```',s,flags=re.S)
