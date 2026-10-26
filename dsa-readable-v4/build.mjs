@@ -7,6 +7,14 @@ import {marked} from "marked";
 const root=path.dirname(fileURLToPath(import.meta.url));
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"quality/stage-a-manifest.json"),"utf8"));
 marked.setOptions({gfm:true,breaks:false});
+function renderMd(input){
+  // Raw HTML <details> blocks are not necessarily Markdown parsed; convert
+  // code fences to explicit escaped HTML so examples remain visible there.
+  const result=input.replace(/(^|\n)~~~([a-z0-9-]*)\n([\s\S]*?)\n~~~(?=\n|$)/g,
+    (_full,prefix,lang,code)=>prefix+'<pre><code class="language-'+(lang||"text")+'">'+esc(code)+'</code></pre>');
+  return marked.parse(result);
+}
+
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const sha=s=>createHash("sha256").update(s,"utf8").digest("hex");
 const read=p=>fs.readFileSync(path.join(root,p),"utf8");
@@ -21,9 +29,9 @@ for(let i=0;i<16;i++){
   const intro=raw.slice(title.index+title[0].length,entries[0].index);
   const units=entries.map((m,k)=>{
     const stop=k+1<entries.length?entries[k+1].index:raw.length;
-    return{id:m[2],title:m[1],html:marked.parse(raw.slice(m.index+m[0].length,stop))};
+    return{id:m[2],title:m[1],html:renderMd(raw.slice(m.index+m[0].length,stop))};
   });
-  chapters.push({id:"ch"+String(i).padStart(2,"0"),title:title[1],intro:marked.parse(intro),units});
+  chapters.push({id:"ch"+String(i).padStart(2,"0"),title:title[1],intro:renderMd(intro),units});
 }
 const reviewFiles=["00-plan.md","01-question-bank-a.md","02-question-bank-b.md","03-question-bank-c.md","04-mock-a.md","05-mock-b.md"];
 const review=reviewFiles.map((name,i)=>{
@@ -32,7 +40,7 @@ const review=reviewFiles.map((name,i)=>{
   if(!checked||sha(raw)!==checked.sha256)throw Error("Review source is not frozen: "+name);
   const t=/^# (.+)$/m.exec(raw);
   if(!t)throw Error("Review title missing: "+name);
-  return{id:"review-"+String(i).padStart(2,"0"),title:t[1],html:marked.parse(raw.slice(t.index+t[0].length))};
+  return{id:"review-"+String(i).padStart(2,"0"),title:t[1],html:renderMd(raw.slice(t.index+t[0].length))};
 });
 const unitTotal=chapters.reduce((sum,c)=>sum+c.units.length,0);
 if(unitTotal!==131)throw Error("Unexpected unit count: "+unitTotal);
