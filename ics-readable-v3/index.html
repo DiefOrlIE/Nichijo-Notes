@@ -302,7 +302,7 @@
 </thead>
 <tbody>
 <tr>
-<td>1 · (x*x)≥0</td>
+<td><code>1 · (x*x)≥0</code></td>
 <td>假；x=46341，数学平方2147488281，低32位解读为−2147479015。</td>
 </tr>
 <tr>
@@ -338,7 +338,7 @@
 <td>真；清低两位得4·floor(x/4)，不大于x；负数也向下取整。</td>
 </tr>
 <tr>
-<td>10 · x<em>4+y</em>8 == (x&lt;&lt;2)+(y&lt;&lt;3)</td>
+<td><code>10 · x*4+y*8 == (x&lt;&lt;2)+(y&lt;&lt;3)</code></td>
 <td>真；两边是相同的模2³²乘加运算。</td>
 </tr>
 <tr>
@@ -346,7 +346,7 @@
 <td>假；x=−1、y=0，除法向零得0，算术右移得−1。</td>
 </tr>
 <tr>
-<td>12 · x<em>y == ux</em>uy</td>
+<td><code>12 · x*y == ux*uy</code></td>
 <td>真；位串乘积低32位相同，比较时左边转换为unsigned。</td>
 </tr>
 <tr>
@@ -354,7 +354,7 @@
 <td>真；低32位相同，比较时左边转换为unsigned。</td>
 </tr>
 <tr>
-<td>14 · x*~y+ux*uy == −x</td>
+<td><code>14 · x*~y+ux*uy == −x</code></td>
 <td>真；统一到模2³²，~y+y≡−1，提取x得−x。</td>
 </tr>
 </tbody>
@@ -429,7 +429,7 @@
 </thead>
 <tbody>
 <tr>
-<td>dx*dx ≥ 0</td>
+<td><code>dx*dx ≥ 0</code></td>
 <td>真；有限范围，不会平方上溢</td>
 </tr>
 <tr>
@@ -445,7 +445,7 @@
 <td>真；最多三个 32 位整数的和，精确可表示</td>
 </tr>
 <tr>
-<td>dx<em>dy</em>dz == dz<em>dy</em>dx</td>
+<td><code>dx*dy*dz == dz*dy*dx</code></td>
 <td>假；乘积可能超出 53 位有效精度</td>
 </tr>
 <tr>
@@ -1046,4 +1046,4 @@ int calc(void) {
 <p>题四：程序一次系统调用后仍回到原进程，算进程切换吗？</p>
 <p>解答：仅发生用户态与内核态之间的控制转移，未据此证明切换到另一进程。应检查调度前后执行实体是否改变及上下文是否实际替换。</p>
 </article>
-</section><footer>稿源版本 5e9c7f7336321197 · <a href="all-manuscripts.md">下载完整Markdown</a> · <a href="audit/content-verification.md">内容核验及适用边界</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>
+</section><footer>稿源版本 81dceca0e55c0189 · <a href="all-manuscripts.md">下载完整Markdown</a> · <a href="audit/content-verification.md">内容核验及适用边界</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>
