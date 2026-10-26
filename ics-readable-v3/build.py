@@ -2,23 +2,36 @@ from pathlib import Path
 from markdown_it import MarkdownIt
 import re,json,hashlib,html
 P=Path(__file__).resolve().parent
-order=['01-bits-draft','02-memory','03-integers','09-integer-practice','04-float','05-machine','06-programs','07-execution','08-processes','10-workshop','11-homework']
-md=MarkdownIt('commonmark',{'html':False}).enable('table')
-parts=[];nav=[];hashes={}
-for i,name in enumerate(order):
- f=P/'manuscripts'/f'{name}.md';s=f.read_text();hashes[str(f.relative_to(P))]=hashlib.sha256(f.read_bytes()).hexdigest()
- title=s.splitlines()[0][2:];aid='unit-'+name[:2]
- # Main headings are visible and every source unit remains independently readable.
- body=md.render(s);n=0
- def heading(m):
-  global n
-  n+=1;hid=f'{aid}-s{n}';nav.append((hid,m[1],False));return f'<h2 id="{hid}" data-anchor>{m[1]}</h2>'
- nav.append((aid,title,True));body=re.sub(r'<h2>(.*?)</h2>',heading,body)
- parts.append(f'<article id="{aid}" data-anchor>'+body+'</article>')
-assert hashes==json.loads((P/'audit/manuscript-hashes.json').read_text()),'Source changed after A review'
-(P/'all-manuscripts.md').write_text('\n\n---\n\n'.join((P/'manuscripts'/f'{x}.md').read_text() for x in order))
-navhtml=''.join(f'<a href="#{a}" class="{"major" if major else "minor"}">{t}</a>' for a,t,major in nav)
-template=(P/'template.html').read_text()
-result=template.replace('{{NAV}}',navhtml).replace('{{BODY}}','\n'.join(parts)).replace('{{HASH}}',hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest()[:16])
+course=json.loads((P/'course.json').read_text());md=MarkdownIt('commonmark',{'html':False}).enable('table')
+hashes={};parts=[];toc=[];combined=[];sections=0;units=0
+for ch in course:
+ num=ch['number'];chaptertitle=f'第{num}章 {ch["title"]}';cid=f'chapter-{num}'
+ parts.append(f'<section class="course-chapter" id="{cid}" data-anchor><h1>{chaptertitle}</h1><p class="chapter-source">课程PPT第{num}章 · {html.escape(ch["book"])}</p>')
+ toc.append(f'<details class="nav-chapter" open><summary><a href="#{cid}">{chaptertitle}</a></summary>')
+ combined.append(f'# {chaptertitle}\n\n对应{ch["book"]}。\n')
+ for unitnum,name in enumerate(ch['files'],1):
+  f=P/'manuscripts'/f'{name}.md';src=f.read_text();hashes[str(f.relative_to(P))]=hashlib.sha256(f.read_bytes()).hexdigest();aid='unit-'+name[:2];rendered=md.render(src)
+  title=src.splitlines()[0][2:];plain=re.sub(r'<h1>.*?</h1>\n?','',rendered,count=1)
+  if ch.get('sections_as_units'):
+   parts.append(f'<article id="{aid}" data-anchor class="chapter-body">');combined.append(re.sub(r'^# .+\n','',src,count=1));i=0
+   def head(m):
+    global i,sections,units
+    i+=1;sections+=1;units+=1;hid=f'{aid}-s{i}';label=f'{num}.{i} {m[1]}';toc.append(f'<a class="major" href="#{hid}">{label}</a>');return f'<h2 id="{hid}" data-anchor>{label}</h2>'
+   plain=re.sub(r'<h2>(.*?)</h2>',head,plain);parts.append(plain+'</article>')
+  else:
+   prefix=f'{num}.{unitnum}';label=f'{prefix} {title}';units+=1;toc.append(f'<details class="nav-unit"><summary><a class="major" href="#{aid}">{label}</a></summary>');i=0
+   # Existing h3 exercise labels become h4; original topic h2 becomes numbered h3.
+   plain=plain.replace('<h3>','<h4>').replace('</h3>','</h4>')
+   def head(m):
+    global i,sections
+    i+=1;sections+=1;hid=f'{aid}-s{i}';label=f'{prefix}.{i} {m[1]}';toc.append(f'<a class="minor" href="#{hid}">{label}</a>');return f'<h3 id="{hid}" data-anchor>{label}</h3>'
+   plain=re.sub(r'<h2>(.*?)</h2>',head,plain)
+   alias='<span id="unit-11" class="legacy-anchor"></span>' if name=='05-machine' else ''
+   parts.append(f'<article id="{aid}" data-anchor>{alias}<h2>{label}</h2>'+plain+'</article>');toc.append('</details>');combined.append(re.sub(r'^# .+',f'## {label}',src,count=1))
+ toc.append('</details>');parts.append('</section>')
+assert hashes==json.loads((P/'audit/manuscript-hashes.json').read_text()),'A-stage source hash differs'
+(P/'all-manuscripts.md').write_text('\n\n'.join(combined))
+result=(P/'template.html').read_text().replace('{{NAV}}','\n'.join(toc)).replace('{{BODY}}','\n'.join(parts)).replace('{{HASH}}',hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest()[:16])
 (P/'index.html').write_text(result)
-print(json.dumps({'units':len(parts),'headings':len(nav),'characters':sum(len((P/'manuscripts'/f'{x}.md').read_text()) for x in order)},ensure_ascii=False))
+(P/'verification/build-result.json').write_text(json.dumps({'chapters':[c['number'] for c in course],'source_files':len(hashes),'units':units,'subsections':sections},indent=2))
+print({'chapters':[c['number'] for c in course],'source_files':len(hashes),'units':units,'subsections':sections})

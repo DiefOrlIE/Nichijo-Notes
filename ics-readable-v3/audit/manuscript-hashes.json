@@ -1,13 +1,13 @@
 {
-  "manuscripts/01-bits-draft.md": "30e6ff34926935920688029596156b79ef3e86ea208fb60acf7c92e6f48beeff",
-  "manuscripts/02-memory.md": "94be659bc2e7d899f6250525cd17867748a54484bc9ff504c9dd22027b820a40",
-  "manuscripts/03-integers.md": "f817f4d9b4402ad68a1c65621d737440abbf1e429d9f906694e3f7a005006d0d",
-  "manuscripts/04-float.md": "399e803954426038eae58d3a64fc91d1190c3506e6640f64227d72f65ff8240e",
-  "manuscripts/05-machine.md": "d69f41cd72ed7793837e15a658779637652ea53cdb4b8e078b63e3902491522e",
-  "manuscripts/06-programs.md": "f2731f83564c904ad1207b98425f33bec896f639b6665f3af63f24040827f1b2",
-  "manuscripts/07-execution.md": "c11c06c37a6d8c64a90df4d52f9867875fad294b74418de7c53a6dfb820c2897",
-  "manuscripts/08-processes.md": "04c2715e5ed5bcbb95f9186741bb0194d1a40e3488271f2b8023494b6b63dafb",
-  "manuscripts/09-integer-practice.md": "068d25caaa54af68a0ed1cf05969828af0202d628947c5ff59f45bff2e455c35",
-  "manuscripts/10-workshop.md": "1f585b9e82c21b9d9981461852a6ffa5e4580f4551f0afb6fe32c320c9b0ce9d",
-  "manuscripts/11-homework.md": "cfe2f4df69dce7da54d7b400d6acea601986b74f3ae86445efab23b8b412a38d"
+  "manuscripts/01-bits-draft.md": "372710c4ac64561a0933cdfe33f4b860ecaedfe0ef72d15597b91c83618acd04",
+  "manuscripts/02-memory.md": "ef3a746df7c5d665b7b667a880e67f9fa4bf5767ab555435dd8773b70fb0f7c2",
+  "manuscripts/03-integers.md": "ae4650eee51d1dadc1aefdaf9b3ddf74834835f8bebbf596c8757022b56de155",
+  "manuscripts/09-integer-practice.md": "4b716a086033ea0ce933fb74e91c42363433028309592a354bfaac6a1bd295d5",
+  "manuscripts/04-float.md": "2e1f58baccbf7f70525030fc96a734b51daa50b2314ccefc70104b01faa6c00c",
+  "manuscripts/10-workshop.md": "d3e31d213bba856115b18814b9b09c5c161f93de1003d36144bc9eba0d5c0ca9",
+  "manuscripts/05-machine.md": "bef7422d3b1fcf03fe531ebb0dc080ff49dc64631a9b6b5e3b4772e9c0a941b3",
+  "manuscripts/06-programs.md": "8978fdf9f00315abedcb8642e5ab5e9733f53090fc7dea36204eb39b48cf79b4",
+  "manuscripts/12-linking.md": "2f9d4c1b944e4516d6940c4e93a10a15f3882a97c1cc1c37a6d684ee7fbbb095",
+  "manuscripts/07-execution.md": "4a6e02635d4998ccdafb3099cf9caf690abffc369d99dc7f6851498ca7fe0cf0",
+  "manuscripts/08-processes.md": "6eaf3d09c55a0760373773945925d991dc918956a98320efd6780d0caa19e28e"
 }

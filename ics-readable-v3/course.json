@@ -1,0 +1,42 @@
+[
+  {
+    "number": 2,
+    "title": "数据的机器级表示与处理",
+    "book": "教材第二章2.1–2.6",
+    "files": [
+      "01-bits-draft",
+      "02-memory",
+      "03-integers",
+      "09-integer-practice",
+      "04-float",
+      "10-workshop"
+    ]
+  },
+  {
+    "number": 3,
+    "title": "程序的转换与机器级表示",
+    "book": "教材第三章3.1–3.3及第四章4.1–4.4",
+    "files": [
+      "05-machine",
+      "06-programs"
+    ]
+  },
+  {
+    "number": 4,
+    "title": "程序的链接",
+    "book": "教材第五章5.1–5.5；5.6为补充",
+    "files": [
+      "12-linking"
+    ],
+    "sections_as_units": true
+  },
+  {
+    "number": 5,
+    "title": "程序的执行",
+    "book": "教材第五章5.7与课程第五章简化版课件",
+    "files": [
+      "07-execution",
+      "08-processes"
+    ]
+  }
+]

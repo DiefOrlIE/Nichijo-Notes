@@ -1,17 +1,15 @@
-# ICS 第二、三、五章 · 连续自学讲义
+# ICS 第二至第五章 · 连续自学讲义
 
-[在线阅读](https://dieforlie.github.io/Nichijo-Notes/ics-readable-v3/) · [独立文字合订稿](all-manuscripts.md)
+[在线阅读](https://dieforlie.github.io/Nichijo-Notes/ics-readable-v3/) · [完整文字稿](all-manuscripts.md)
 
-按先文字后网页的流程重写。默认读者具备基础程序设计知识，未看过教材或课件。正文11个单元，按依赖顺序展示83个章节目次，包含课程第五章指令执行、进程与线程。主线完全展开；明确标记的练习解答可折叠。
+课程章号统一采用PPT：第二章数据的机器级表示与处理，第三章程序的转换与机器级表示，第四章程序的链接，第五章程序的执行。页面采用课程章、小节、知识主题三级目录，内部文件编号不再展示。课程与教材章号的对应关系在各章开头说明。
 
-唯一教学稿源在manuscripts/，页面从它构建，没有另一套手写HTML正文。
+以manuscripts/为教学单一稿源，course.json仅规定范围、顺序、标题。先修改和审查文字稿，更新audit/manuscript-hashes.json，再运行`python build.py`构建页面与合订稿；Python需markdown-it-py。
 
-构建：安装Python依赖markdown-it-py，然后运行 `python build.py`。构建脚本核对A阶段哈希再生成页面与Markdown合订稿。字体为本地Noto Serif CJK SC裁剪常规与粗体，许可见fonts/LICENSE.txt。
+[本轮文字审查](audit/revision-round2.md) · [教材练习索引](audit/textbook-exercises.md) · [课件来源索引](audit/source-map.md) · [页面检查记录](verification/browser-report.md)
 
-核验：`python verification/check_numbers.py`；C示例使用C11编译；两组汇编分别用GNU as --32和--64。浏览器检查见verification/browser-report.md。
+新增第四章的编译与重定位核验：`python verification/check_linking.py`。原数据表示核验：`python verification/check_numbers.py`。页面内容比对：`python verification/content-integrity.py`，需beautifulsoup4。DOM模拟需安装jsdom并配置dom-test.cjs依赖路径。
 
-[文字内容审查](audit/content-verification.md) · [原稿诊断](audit/revision-audit.md) · [PPT来源定位](audit/source-map.md)
+字体为合法本地Noto Serif CJK SC常规与粗体，许可见fonts/LICENSE.txt。生成脚本verification/subset_fonts.py需要fonttools与brotli，并接收官方原字体路径。
 
-没有真实初学者试读、延迟迁移测试和iOS真机测试。计算与自动检查支持的是指定测试结论，不保证所有读者无需反馈便能掌握。
-
-旧版ics-ch2-ch3保留原内容和原阅读记忆，新版独立使用本地状态键。
+旧四档版本仍在ics-ch2-ch3，旧连续版锚点保留，新练习答案采用文本标识保存状态，避免新增题目让旧答案状态错位。尚无真实初学者试读和iOS真机测试，指定示例与自动检查不等于所有人均已学会。
