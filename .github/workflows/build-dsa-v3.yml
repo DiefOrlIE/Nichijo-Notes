@@ -1,0 +1,57 @@
+name: Build readable DSA V3 independent chapter
+on:
+  push:
+    paths:
+      - "dsa-readable-v3/manuscripts/**"
+      - "dsa-readable-v3/template.html"
+      - "dsa-readable-v3/build.mjs"
+      - "dsa-readable-v3/reader.js"
+      - "dsa-readable-v3/style.css"
+      - ".github/workflows/build-dsa-v3.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: dsa-v3-build
+  cancel-in-progress: true
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Markdown renderer
+        run: npm install --no-save marked@15.0.12
+      - name: Generate isolated V3 site from reviewed Markdown
+        run: node dsa-readable-v3/build.mjs
+      - name: Syntax and generated HTML checks
+        run: |
+          node --check dsa-readable-v3/chapter-data.js
+          node --check dsa-readable-v3/reader.js
+          python3 - <<'PY'
+          import pathlib, json
+          d=pathlib.Path('dsa-readable-v3')
+          s=(d/'chapter-data.js').read_text(encoding='utf8')
+          obj=json.loads(s.split('window.NICHIJO_V3=',1)[1].rsplit(';',1)[0])
+          assert len(obj['sections'])==15
+          assert len(set(x['id'] for x in obj['sections']))==15
+          assert '四档' not in (d/'template.html').read_text(encoding='utf8')
+          assert 'dsa-midterm/' in (d/'template.html').read_text(encoding='utf8')
+          assert 'ch15-linear-probe' in s and 'ch15-union-find' in s
+          print('V3 manuscript-first content and 15 sections: PASS')
+          PY
+      - name: Commit only new V3 generated assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dsa-readable-v3/index.html dsa-readable-v3/chapter-data.js
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Publish standalone V3 guided hash chapter from source manuscript"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push; then exit 0; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 2
+          done
