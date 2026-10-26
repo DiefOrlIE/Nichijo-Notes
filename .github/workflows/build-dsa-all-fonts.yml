@@ -6,6 +6,8 @@ on:
       - "dsa-midterm/v2/chapters/**"
       - "dsa-midterm/v2/reader.js"
       - "dsa-midterm/appendix.js"
+      - "dsa-readable-v3/manuscripts/**"
+      - "dsa-readable-v3/style.css"
   workflow_dispatch:
 permissions:
   contents: write
@@ -38,6 +40,8 @@ jobs:
           corpus+=''.join(p.read_text(encoding='utf-8') for p in root.glob('*.js'))
           corpus+=''.join(p.read_text(encoding='utf-8') for p in (root/'v2').glob('*.js'))
           corpus+=(root/'index.html').read_text(encoding='utf-8')
+          corpus+=''.join(p.read_text(encoding='utf-8') for p in Path('dsa-readable-v3/manuscripts').glob('*.md'))
+          corpus+=Path('dsa-readable-v3/template.html').read_text(encoding='utf-8')
           glyphs={ord(c) for c in corpus}|set(range(32,127))
           glyphs.update(map(ord,'中文宋体算法算法数据结构字符串数组集合散列并查集排序练习答案'))
           out=root/'fonts'
