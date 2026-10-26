@@ -17,7 +17,7 @@ for(const [i,sec] of data.sections.entries()){
  const a=document.createElement('a');a.href='#'+sec.id;a.textContent=sec.title;
  a.className='subchapter';nav.appendChild(a);
 }
-for(const table of $('.lesson-narrative table')){
+for(const table of $$('.lesson-narrative table')){
  const wrap=document.createElement('div');wrap.className='table-scroll';
  table.parentNode.insertBefore(wrap,table);wrap.appendChild(table);
 }
