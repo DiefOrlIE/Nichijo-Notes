@@ -1,0 +1,41 @@
+name: Verify DSA V3 writing and browser
+on:
+  push:
+    paths:
+      - "dsa-readable-v3/**"
+      - ".github/workflows/check-dsa-v3.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check scripts and independently compile teaching code
+        run: |
+          node --check dsa-readable-v3/reader.js
+          node --check dsa-readable-v3/chapter-data.js
+          python3 dsa-readable-v3/verify_lesson.py
+      - name: Install headless browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Simulate desktop phone and tablet reading
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dsa-v3-server.log 2>&1 &
+          sleep 3
+          node dsa-readable-v3/check_browser.mjs
+      - name: Save viewport screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsa-v3-responsive-checks
+          path: |
+            v3-desktop.png
+            v3-phone.png
+            v3-tablet.png
+          if-no-files-found: ignore
