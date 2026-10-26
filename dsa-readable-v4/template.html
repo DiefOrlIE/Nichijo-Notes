@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light" data-page="{{PAGE_TYPE}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="南京大学数据结构与算法 V4 连续自学讲义及期中复习专题。基于课程课件和作业，文字先行。">
+<title>{{TITLE}} | Nichijo Notes</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="mobile-shade" id="shade" hidden></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar" aria-label="学习目录">
+<div class="sidebar-heading">
+<p class="site">N I C H I J O · N O T E S</p>
+<h2>数据结构与算法</h2>
+<p class="sub">V4 · 先文字讲稿，后网页呈现</p>
+</div>
+<nav class="index-links" aria-label="章节导航">
+<a href="./">完整教学</a>
+<a href="./review.html">120 分钟期中复习</a>
+<a href="../dsa-readable-v3/">V3 试读版</a>
+</nav>
+<div class="contents" id="nav-contents">{{NAV}}</div>
+</aside>
+<div class="main-wrap">
+<div class="toolbar">
+<button id="menu-toggle" class="control mobile-only" type="button" aria-controls="sidebar" aria-expanded="false">目录</button>
+<span class="toolbar-name">数据结构 · V4</span>
+<div class="toolbar-actions">
+<button id="theme-toggle" class="control" type="button">夜间</button>
+<button id="reset-progress" class="control" type="button">重置记录</button>
+</div>
+</div>
+<div class="progress-track"><div id="progress-bar"></div></div>
+<main id="reading">{{CONTENT}}</main>
+<footer class="footer">
+<p>本文教学正文从独立的 Markdown 文字稿编译生成。已经验收的文字稿与生成网页的文件是两类独立成果。</p>
+<p><a href="../">返回 Nichijo Notes 首页</a> · <a href="../dsa-midterm/">历史版本</a> · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/tree/main/dsa-readable-v4">查看源文件及验收记录</a></p>
+</footer>
+</div>
+</div>
+<script defer src="./reader.js"></script>
+</body>
+</html>
