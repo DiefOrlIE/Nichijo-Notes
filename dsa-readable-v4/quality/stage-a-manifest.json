@@ -1,0 +1,160 @@
+{
+  "chapters": [
+    {
+      "name": "ch00.md",
+      "chars": 4270,
+      "sections": 7,
+      "questions": 4,
+      "sha256": "d1fb675a082faa94356622363b2e281c9ab9e97852118f6416bbdafb2718e55d"
+    },
+    {
+      "name": "ch01.md",
+      "chars": 3762,
+      "sections": 9,
+      "questions": 4,
+      "sha256": "b19571ef2594a0df6b6033ade6a23b0ae13518ffe2be9332817bdf1fc08f13ed"
+    },
+    {
+      "name": "ch02.md",
+      "chars": 5553,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "e5f97fab861a19df9153be1846dfbf157805af3847a5f801418e07a76b4320a9"
+    },
+    {
+      "name": "ch03.md",
+      "chars": 4100,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "26a4bcc17d682a520aa7b3e7dad2332c5329a758d03b9473454b5f82fc87be1e"
+    },
+    {
+      "name": "ch04.md",
+      "chars": 3694,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "dd5220eda89cb7d68e92c305c4ea4cc4d6a4e83ce5a960ddae305236c3a6667d"
+    },
+    {
+      "name": "ch05.md",
+      "chars": 3929,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "809df904ee8a3c8da3fd83454602e32be0500c081a4c2abf2697fa4ce6173aee"
+    },
+    {
+      "name": "ch06.md",
+      "chars": 3428,
+      "sections": 7,
+      "questions": 5,
+      "sha256": "634e018d31cc6ba60ff9a1f688da424bdf7b9b05723006e9de0ce2bcd0cef829"
+    },
+    {
+      "name": "ch07.md",
+      "chars": 5418,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "d46a923532b19fde80a6e0d01db6442e081456ebb239e5a82a20176f057a9f17"
+    },
+    {
+      "name": "ch08.md",
+      "chars": 6133,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "eda6b2c5e3c2b33a352c56f29e72d1e46681f282969cb9910dbc956bc8778b60"
+    },
+    {
+      "name": "ch09.md",
+      "chars": 3168,
+      "sections": 7,
+      "questions": 5,
+      "sha256": "56b54076657b482c3a63df58fc009062c4c6fc4b270077249374b994ac7e77e9"
+    },
+    {
+      "name": "ch10.md",
+      "chars": 4216,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "4641cd1aae1fb1ac25e7539944eebac42ab4f31fac7057329483fad63cd43f81"
+    },
+    {
+      "name": "ch11.md",
+      "chars": 3634,
+      "sections": 7,
+      "questions": 5,
+      "sha256": "23b26e5cecda165312ddbf74ff485709c0b08285d3d3332146da3f29c5e24ccd"
+    },
+    {
+      "name": "ch12.md",
+      "chars": 2910,
+      "sections": 6,
+      "questions": 5,
+      "sha256": "6326539d2e8c031419daa337456e7b22643550968ff5dadc56c2e42b4d5c9ebb"
+    },
+    {
+      "name": "ch13.md",
+      "chars": 3645,
+      "sections": 8,
+      "questions": 5,
+      "sha256": "4bea38715e5152548e3c61800a57bfcce178583f72bd9f6f4c9e5dd38c372b73"
+    },
+    {
+      "name": "ch14.md",
+      "chars": 6326,
+      "sections": 9,
+      "questions": 5,
+      "sha256": "bbb398c0a53bc1c22d5dea638e1f75b3772f8d11d987088d3ea52934aa953ea1"
+    },
+    {
+      "name": "ch15.md",
+      "chars": 25819,
+      "sections": 15,
+      "questions": 9,
+      "sha256": "3d7960e3433341cab8b256667ba794e094ffb98eddc7b42363fd0d366d58e59a"
+    }
+  ],
+  "review": [
+    {
+      "name": "00-plan.md",
+      "chars": 2628,
+      "questions": 0,
+      "sha256": "680ae3938363d594f2755b3e833f819a5f4bbca998045d47e242e28cab168176"
+    },
+    {
+      "name": "01-question-bank-a.md",
+      "chars": 6639,
+      "questions": 24,
+      "sha256": "e28e016f41b7a1a527e5823fced1a9a0f480971c344387d5c9d32d66366943fd"
+    },
+    {
+      "name": "02-question-bank-b.md",
+      "chars": 6354,
+      "questions": 24,
+      "sha256": "7c137dd60866716252304cc7c860947d4157e6b85f254fb0ec99ca21c0289245"
+    },
+    {
+      "name": "03-question-bank-c.md",
+      "chars": 5297,
+      "questions": 20,
+      "sha256": "35ffa5f1b7c7919dfeeb1bbb8d527d4c18d9e07facda15d067f10f271d720bc0"
+    },
+    {
+      "name": "04-mock-a.md",
+      "chars": 3719,
+      "questions": 12,
+      "sha256": "4a26217a523c9bb6254cd476eb3a8efb1d138f250779c9af196613bfbb763a01"
+    },
+    {
+      "name": "05-mock-b.md",
+      "chars": 4401,
+      "questions": 12,
+      "sha256": "c2379436b07993e7b372bbcf4886241b1a0617657f58fb2361ccdb4fb1cb5922"
+    }
+  ],
+  "counts": {
+    "chapters": 16,
+    "chapter_questions": 82,
+    "review_questions": 68,
+    "mock_questions": 24
+  }
+}
