@@ -1,0 +1,65 @@
+name: Build DSA V4 after manuscript approval
+on:
+  push:
+    paths:
+      - "dsa-readable-v4/chapters/**"
+      - "dsa-readable-v4/review/**"
+      - "dsa-readable-v4/quality/stage-a-manifest.json"
+      - "dsa-readable-v4/template.html"
+      - "dsa-readable-v4/build.mjs"
+      - ".github/workflows/build-dsa-v4.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: dsa-v4-markdown-to-html
+  cancel-in-progress: true
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install static Markdown parser
+        run: npm install --no-save marked@15.0.12
+      - name: Compile only after checksums match approved independent Markdown
+        run: |
+          node --check dsa-readable-v4/build.mjs
+          node --check dsa-readable-v4/reader.js
+          node dsa-readable-v4/build.mjs
+      - name: Confirm two distinct generated pages
+        run: |
+          python3 - <<'PY'
+          import pathlib, json
+          root=pathlib.Path('dsa-readable-v4')
+          a=(root/'index.html').read_text(encoding='utf8')
+          b=(root/'review.html').read_text(encoding='utf8')
+          info=json.loads((root/'quality/stage-b-build.json').read_text(encoding='utf8'))
+          assert info['chapters']==16 and info['units']==131
+          assert a.count('class="topic"')==131 and a.count('class="chapter"')==16
+          assert a.count('<details class="question">')==82
+          assert b.count('<details class="question">')==92
+          assert 'dsa-readable-v3' in a and 'dsa-readable-v3' not in b or 'dsa-readable-v3' in b
+          assert 'Node* mirror' in b
+          assert '{{' not in a and '{{' not in b
+          assert a != b
+          print('PASS two unique source-locked V4 pages')
+          PY
+      - name: Commit HTML compiled from frozen text
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dsa-readable-v4/index.html dsa-readable-v4/review.html dsa-readable-v4/quality/stage-b-build.json
+          if git diff --cached --quiet; then
+            echo "Generated HTML is already up to date"
+            exit 0
+          fi
+          git commit -m "Publish V4 continuous DSA teaching and separate 120-min exam pages"
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push; then exit 0; fi
+            if [ "$attempt" -eq 4 ]; then exit 1; fi
+            sleep 2
+          done
