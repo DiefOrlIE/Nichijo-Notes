@@ -20,7 +20,10 @@ async function open(page,type,label){
   assert.equal(await page.locator("#reading details.question").count(),92);
   assert.equal(await page.locator("#review-04").count(),1);
   assert.equal(await page.locator("#review-05").count(),1);
-  const examCode=await page.locator("#review-05 details pre code").first().innerText();
+  const codeAnswer=page.locator("#review-05 details.question:has(pre code)").first();
+  await codeAnswer.locator("summary").click();
+  assert.equal(await codeAnswer.evaluate(n=>n.open),true,"Exam answer did not expand");
+  const examCode=await codeAnswer.locator("pre code").first().innerText();
   assert.ok(examCode.includes("Node* mirror"),"C++ inside expanded answer did not render");
  }
  const face=await page.evaluate(async()=>{
