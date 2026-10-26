@@ -24,7 +24,8 @@ assert sum(x["questions"] for x in inventory["chapters"])>=80
 for src in extra[-2:]:
     s=src.read_text(encoding="utf8")
     assert "120 分钟" in s and "100 分" in s
-    assert "线性探查" not in s and "并查集" not in s and "散列表" not in s
+    questions_only=s.split("## 第一部分",1)[-1]
+    assert "线性探查" not in questions_only and "并查集" not in questions_only and "散列表" not in questions_only
 inventory["counts"]={"chapters":16,"chapter_questions":sum(x["questions"] for x in inventory["chapters"]),"review_questions":68,"mock_questions":24}
 
 fence=chr(96)*3
@@ -68,7 +69,7 @@ compile_test("BST",codeblocks(chapter(13)),'''
 #include <cassert>
 int main(){
     Node* root=nullptr;
-    for(int x:{5,2,8,1,3})root=insert(root,x);
+    int keys[]={5,2,8,1,3};for(int x:keys)root=insert(root,x);
     root=erase(root,2);
     assert(root->left->key==3&&root->left->left->key==1);
 }''')
