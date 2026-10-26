@@ -43,6 +43,9 @@ try{
  const test=page.locator('#ch15-exercises details.question').first();
  await test.locator('summary').click();
  assert.equal(await test.evaluate(n=>n.open),true);
+ await page.waitForTimeout(420);
+ const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('nichijo-dsa-v3-ch15')||'{}'));
+ assert.ok(stored.open?.length>0,'answer expansion was not persisted in browser storage');
  await page.reload({waitUntil:'networkidle'});
  assert.equal(await page.locator('#ch15-exercises details.question').first().evaluate(n=>n.open),true);
  await page.locator('#theme-toggle').click();
