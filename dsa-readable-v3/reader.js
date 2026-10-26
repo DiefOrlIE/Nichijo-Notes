@@ -91,7 +91,19 @@ function save(){
  try{localStorage.setItem(KEY,JSON.stringify({theme,pos:current(),open:details.filter(d=>d.open).map(d=>d.dataset.answer)}));}catch{}
 }
 function debounce(){clearTimeout(timeout);timeout=setTimeout(save,250);}
-details.forEach(d=>d.addEventListener('toggle',()=>{if(ready)save();}));
+// Persist a user's deliberate summary activation even before load/scroll restoration completes.
+details.forEach(d=>{
+ const summary=d.querySelector('summary');
+ if(summary)summary.addEventListener('click',()=>{
+  try{
+   const before=JSON.parse(localStorage.getItem(KEY)||'null')||state||{};
+   const open=details.filter(x=>x!==d&&x.open).map(x=>x.dataset.answer);
+   if(!d.open)open.push(d.dataset.answer); // the native summary click will toggle this detail
+   localStorage.setItem(KEY,JSON.stringify({...before,theme,open}));
+  }catch{}
+ });
+ d.addEventListener('toggle',()=>{if(ready)save();});
+});
 $('#theme-toggle').onclick=()=>{theme=theme==='dark'?'light':'dark';applyTheme();debounce();};
 $('#reset-memory').onclick=()=>{
  if(!confirm('清除本页阅读位置、夜间模式和答案展开记录？'))return;
