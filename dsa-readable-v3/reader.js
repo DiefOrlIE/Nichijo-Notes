@@ -17,6 +17,10 @@ for(const [i,sec] of data.sections.entries()){
  const a=document.createElement('a');a.href='#'+sec.id;a.textContent=sec.title;
  a.className='subchapter';nav.appendChild(a);
 }
+for(const table of $('.lesson-narrative table')){
+ const wrap=document.createElement('div');wrap.className='table-scroll';
+ table.parentNode.insertBefore(wrap,table);wrap.appendChild(table);
+}
 const terms={
  ADT:['Abstract Data Type','抽象数据类型：先定义允许的操作与行为，再选择具体存储方式。'],
  DSU:['Disjoint Set Union','并查集：用于维护互不相交的集合，支持 Find 与 Union。'],
