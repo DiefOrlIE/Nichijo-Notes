@@ -4,5 +4,6 @@
   "exerciseFolds": 128,
   "terms": 1008,
   "themeSaved": true,
-  "termSearch": true
+  "termSearch": true,
+  "uniqueRuntimeIds": true
 }
