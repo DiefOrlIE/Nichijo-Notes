@@ -1,0 +1,35 @@
+{
+  "c_blocks_compiled": 11,
+  "assembly_blocks_assembled": 8,
+  "hardware_and_c": "float/layout and 131072 x86 flag cases passed",
+  "booth_cases": 256,
+  "division_cases": 240,
+  "booth_3_times_minus5": [
+    [
+      -2,
+      13,
+      1
+    ],
+    [
+      -1,
+      6,
+      1
+    ],
+    [
+      1,
+      3,
+      0
+    ],
+    [
+      -1,
+      1,
+      1
+    ]
+  ],
+  "encoding_checks": [
+    "binary32",
+    "UTF-8",
+    "GB2312"
+  ],
+  "rr_cases": 2
+}

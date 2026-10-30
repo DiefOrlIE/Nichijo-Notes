@@ -1,0 +1,15 @@
+{
+  "stage": "A frozen before HTML creation",
+  "date_utc": "2026-10-30T07:48:03.974132+00:00",
+  "chapters": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_files": 18,
+  "characters": 71517,
+  "exercise_solutions": 64,
+  "real_beginner_trial": false,
+  "html_discovery_recheck": "Found two unquoted *p fragments forming emphasis; fixed in Markdown, reran content tests and refroze before rebuilding."
+}

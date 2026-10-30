@@ -1,0 +1,31 @@
+{
+  "manuscripts_compared": [
+    "02-representation.md",
+    "02-integers.md",
+    "02-arithmetic.md",
+    "02-floating.md",
+    "02-text.md",
+    "02-circuits.md",
+    "03-instructions.md",
+    "03-operations.md",
+    "03-function-call.md",
+    "03-control-flow.md",
+    "03-objects.md",
+    "03-platforms.md",
+    "04-symbols.md",
+    "04-archives.md",
+    "04-relocation.md",
+    "04-dynamic.md",
+    "05-execution.md",
+    "05-processes.md"
+  ],
+  "unique_anchors": 139,
+  "paragraph_code_table_list_match": true,
+  "chapter_numbers": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "accidental_emphasis": false
+}

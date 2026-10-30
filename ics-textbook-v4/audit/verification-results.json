@@ -1,0 +1,12 @@
+{
+  "c_example": "compiled and output 8",
+  "loop_cases": [
+    0,
+    3,
+    4,
+    65536
+  ],
+  "ia32_assembly": "execution unavailable: [Errno 8] Exec format error: '/tmp/tmpmis2lby3/call'",
+  "paper_stack": "checked",
+  "learning_test": "not performed"
+}
