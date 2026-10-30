@@ -1,5 +1,5 @@
 {
-  "c_blocks_compiled": 11,
+  "c_blocks_compiled": 12,
   "assembly_blocks_assembled": 8,
   "hardware_and_c": "float/layout and 131072 x86 flag cases passed",
   "booth_cases": 256,

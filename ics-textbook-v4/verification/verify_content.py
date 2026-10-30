@@ -62,7 +62,7 @@ int main(void){
 # Function-level behavior, not compilation-only evidence.
 with tempfile.TemporaryDirectory(prefix='ics-functions-') as td:
  t=Path(td)
- units=[('03-function-call','factorial','assert(factorial(0)==1);assert(factorial(3)==6);assert(factorial(12)==479001600);'),('03-control-flow','choose_value','assert(choose_value(2)==10);assert(choose_value(3)==20);assert(choose_value(4)==30);assert(choose_value(1)==-1);assert(choose_value(5)==-1);assert(choose_value((-2147483647-1))==-1);'),('03-objects','sum_array','int a[]={10,20,-3};assert(sum_array(0,0)==0);assert(sum_array(a,1)==10);assert(sum_array(a,3)==27);'),('03-instructions','increase','int x=5;increase(&x);assert(x==8);x=-3;increase(&x);assert(x==0);')]
+ units=[('02-arithmetic','xor_swap','int a=5,b=3;xor_swap(&a,&b);assert(a==3 && b==5);a=7;xor_swap(&a,&a);assert(a==0);'),('03-function-call','factorial','assert(factorial(0)==1);assert(factorial(3)==6);assert(factorial(12)==479001600);'),('03-control-flow','choose_value','assert(choose_value(2)==10);assert(choose_value(3)==20);assert(choose_value(4)==30);assert(choose_value(1)==-1);assert(choose_value(5)==-1);assert(choose_value((-2147483647-1))==-1);'),('03-objects','sum_array','int a[]={10,20,-3};assert(sum_array(0,0)==0);assert(sum_array(a,1)==10);assert(sum_array(a,3)==27);'),('03-instructions','increase','int x=5;increase(&x);assert(x==8);x=-3;increase(&x);assert(x==0);')]
  for unit,fn,checks in units:
   blocks=re.findall(r'```c\n(.*?)```',(P/'manuscripts'/f'{unit}.md').read_text(),re.S)
   code=next(b for b in blocks if re.search(r'\b'+fn+r'\(',b))

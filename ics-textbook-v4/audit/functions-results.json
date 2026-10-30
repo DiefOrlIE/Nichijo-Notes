@@ -1,5 +1,6 @@
 {
   "functions": [
+    "xor_swap",
     "factorial",
     "choose_value",
     "sum_array",

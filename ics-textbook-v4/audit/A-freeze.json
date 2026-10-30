@@ -1,6 +1,6 @@
 {
   "stage": "A frozen before HTML creation",
-  "date_utc": "2026-10-30T07:56:18.405052+00:00",
+  "date_utc": "2026-10-30T11:07:24.724120+00:00",
   "chapters": [
     2,
     3,
@@ -8,9 +8,10 @@
     5
   ],
   "source_files": 18,
-  "characters": 71522,
+  "characters": 72918,
   "exercise_solutions": 64,
   "real_beginner_trial": false,
   "html_discovery_recheck": "Found two unquoted *p fragments forming emphasis; fixed in Markdown, reran content tests and refroze before rebuilding.",
-  "pages_recheck": "First Pages build interpreted adjacent braces in matrix initializer as Liquid. Added harmless C whitespace in Markdown and combined text, reran content checks and froze again."
+  "pages_recheck": "First Pages build interpreted adjacent braces in matrix initializer as Liquid. Added harmless C whitespace in Markdown and combined text, reran content checks and froze again.",
+  "final_dependency_review": "Before first pointer use in 2.3, added explicit address/value/dereference primer and full xor_swap with alias runtime check; clarified casts, rank and constants before mixed C expressions; signed/unsigned jump conditions derived in prose."
 }
