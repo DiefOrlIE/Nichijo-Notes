@@ -1,0 +1,71 @@
+{
+  "verified_at_utc": "2026-10-30T11:14:58.355434+00:00",
+  "url": "https://dieforlie.github.io/Nichijo-Notes/ics-textbook-v4/",
+  "content_commit": "6fd9c4f69bf05b8f222aaf104bc4af2e57ccf75b",
+  "reader_commit": "d385394a237f7d86b15a24a4a8e23638d3b31572",
+  "pages_run": 41046214889,
+  "pages_conclusion": "success",
+  "source_version": "d8c61bbc5e4a3f2c",
+  "chapters": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_files": 18,
+  "source_characters": 72918,
+  "exercise_groups": 64,
+  "browser": "Chrome",
+  "native_desktop_viewport": [
+    1363,
+    936
+  ],
+  "responsive_iframe_viewports": [
+    {
+      "viewport": 390,
+      "document_width": 375,
+      "scroll_width": 375,
+      "articles": 18,
+      "runtime_ids": 267,
+      "unique_runtime_ids": 267,
+      "terms": 1008,
+      "font_loaded": true
+    },
+    {
+      "viewport": 820,
+      "document_width": 805,
+      "scroll_width": 805,
+      "articles": 18,
+      "runtime_ids": 267,
+      "unique_runtime_ids": 267,
+      "terms": 1008,
+      "font_loaded": true
+    },
+    {
+      "viewport": 1440,
+      "document_width": 1425,
+      "scroll_width": 1425,
+      "articles": 18,
+      "runtime_ids": 267,
+      "unique_runtime_ids": 267,
+      "terms": 1008,
+      "font_loaded": true
+    }
+  ],
+  "menu_auto_close": true,
+  "anchor_tops": [
+    79.71875,
+    79.859375
+  ],
+  "same_text_hints_saved_independently": true,
+  "theme_after_reload": "light",
+  "no_hash_progress_before_after": [
+    41920,
+    41920
+  ],
+  "explicit_hash_top": 80.296875,
+  "page_origin_console_errors": [],
+  "extension_errors_excluded": true,
+  "safari_real_device": false,
+  "real_beginner_trial": false
+}

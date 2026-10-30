@@ -1,0 +1,26 @@
+[
+  {
+    "file": "index.html",
+    "matches": true,
+    "bytes": 196929,
+    "sha256": "186ede7126b9ea30022f31013e8f043127784f05d9e8ec766c1ca7ed0731cdd3"
+  },
+  {
+    "file": "reader.js",
+    "matches": true,
+    "bytes": 4822,
+    "sha256": "b36898047690932d5691c029c484a0cbbbd563ff4719694e14026a934e1d5500"
+  },
+  {
+    "file": "fonts/regular.woff2",
+    "matches": true,
+    "bytes": 414360,
+    "sha256": "fc6735750a40a2300c9ef35d49eb54dc5d55ad3574fa6a6554b6eeaec08b1f02"
+  },
+  {
+    "file": "fonts/bold.woff2",
+    "matches": true,
+    "bytes": 430160,
+    "sha256": "bca86ca2ba2261f0b5ca2c1bdf558d2cae4010a9dac4ec26a4123df43b2af48a"
+  }
+]
