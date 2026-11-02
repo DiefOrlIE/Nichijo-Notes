@@ -9,10 +9,10 @@
     },
     {
       "name": "ch01.md",
-      "chars": 3762,
+      "chars": 7249,
       "sections": 9,
-      "questions": 4,
-      "sha256": "b19571ef2594a0df6b6033ade6a23b0ae13518ffe2be9332817bdf1fc08f13ed"
+      "questions": 5,
+      "sha256": "d2b883362d19fd9ffe77692f941f6570fe3b65ee7786d4f4accba7cfef7a9271"
     },
     {
       "name": "ch02.md",
@@ -153,7 +153,7 @@
   ],
   "counts": {
     "chapters": 16,
-    "chapter_questions": 85,
+    "chapter_questions": 86,
     "review_questions": 68,
     "mock_questions": 24
   }
