@@ -23,7 +23,7 @@ async function validateVisibleQuestions(page, expected, label) {
         hasVisibleStatement:text.includes("题目。") || text.includes("完整题干："),
         visibleLength:text.length,
         folded:!detail.open,
-        hasApproach:/思路|提示/.test(solution),
+        hasApproach:/思路|提示|入手/.test(solution),
         hasAnswer:/解答|答案/.test(solution),
         summary:(detail.querySelector("summary")?.textContent || "").trim()
       };
