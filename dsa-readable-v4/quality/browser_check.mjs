@@ -25,7 +25,9 @@ async function validateVisibleQuestions(page, expected, label) {
         folded:!detail.open,
         hasApproach:/思路|提示|入手/.test(solution),
         hasAnswer:/解答|答案/.test(solution),
-        summary:(detail.querySelector("summary")?.textContent || "").trim()
+        summary:(detail.querySelector("summary")?.textContent || "").trim(),
+        prior:detail.previousElementSibling?.outerHTML.slice(0,220) || "NONE",
+        parent:detail.parentElement?.tagName+"."+(detail.parentElement?.className || "")
       };
     })
   );
@@ -50,6 +52,7 @@ async function validateVisibleQuestions(page, expected, label) {
     );
     console.log("EXERCISE DOM DIAGNOSTIC",JSON.stringify(debug));
   }
+  if (problems.length) console.log('VISIBILITY-DIAGNOSTIC',JSON.stringify(problems.slice(0,15)));
   assert.deepEqual(problems, [], label + ": hidden/incomplete statements or solutions");
 }
 
