@@ -35,6 +35,21 @@ async function validateVisibleQuestions(page, expected, label) {
     !q.folded || !q.hasApproach || !q.hasAnswer ||
     !q.summary.includes("查看")
   );
+  if (problems.length) {
+    const debug = await page.locator("#reading details.question").evaluateAll(items =>
+      [5,10,21].map(n => {
+        const item=items[n];
+        return {
+          number:n+1,
+          parent:item.parentElement?.tagName,
+          previous:item.previousElementSibling?.outerHTML.slice(0,600) ?? null,
+          parentPrevious:item.parentElement?.previousElementSibling?.outerHTML.slice(0,600) ?? null,
+          ancestor:item.parentElement?.outerHTML.slice(0,1000) ?? null
+        };
+      })
+    );
+    console.log("EXERCISE DOM DIAGNOSTIC",JSON.stringify(debug));
+  }
   assert.deepEqual(problems, [], label + ": hidden/incomplete statements or solutions");
 }
 
