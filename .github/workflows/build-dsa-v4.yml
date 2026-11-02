@@ -31,10 +31,11 @@ jobs:
           info=json.loads((root/'quality/stage-b-build.json').read_text(encoding='utf8'))
           assert info['chapters']==16 and info['units']==131
           assert a.count('class="topic"')==131 and a.count('class="chapter"')==16
-          assert a.count('<details class="question">')==82
+          assert a.count('<details class="question">')==86
           assert b.count('<details class="question">')==92
           assert 'dsa-readable-v3' in a and 'dsa-readable-v3' not in b or 'dsa-readable-v3' in b
           assert 'Node* mirror' in b
+          assert '**题目。**' not in a, 'Nested Markdown exercises were not rendered'
           assert '{{' not in a and '{{' not in b
           assert a != b
           print('PASS two unique source-locked V4 pages')
