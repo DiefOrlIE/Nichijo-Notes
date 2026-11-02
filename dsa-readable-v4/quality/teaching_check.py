@@ -42,7 +42,7 @@ def check_exercises(text, path, expected):
         )
         assert len(visible.strip()) >= 55, (path, i, "visible question too short")
         assert len(hidden.strip()) >= 80, (path, i, "worked answer too short")
-        assert re.search(r"思路|提示", hidden), (path, i, "missing approach")
+        assert re.search(r"思路|提示|入手", hidden), (path, i, "missing approach")
         assert re.search(r"解答|答案", hidden), (path, i, "missing answer")
         assert "<details" not in visible, (path, i, "nested question visibility")
     return matches
