@@ -1,5 +1,13 @@
 name: Build DSA V4 after manuscript approval
 on:
+  push:
+    paths:
+      - "dsa-readable-v4/chapters/**"
+      - "dsa-readable-v4/review/**"
+      - "dsa-readable-v4/quality/stage_a_check.py"
+      - "dsa-readable-v4/quality/teaching_check.py"
+      - "dsa-readable-v4/build.mjs"
+      - ".github/workflows/build-dsa-v4.yml"
   workflow_dispatch:
 permissions:
   contents: write
@@ -16,6 +24,10 @@ jobs:
           node-version: "22"
       - name: Install static Markdown parser
         run: npm install --no-save marked@15.0.12
+      - name: Phase A — verify full text and refresh the frozen source inventory
+        run: |
+          python3 dsa-readable-v4/quality/teaching_check.py
+          python3 dsa-readable-v4/quality/stage_a_check.py
       - name: Compile only after checksums match approved independent Markdown
         run: |
           node --check dsa-readable-v4/build.mjs
@@ -44,7 +56,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dsa-readable-v4/index.html dsa-readable-v4/review.html dsa-readable-v4/quality/stage-b-build.json
+          git add dsa-readable-v4/quality/stage-a-manifest.json dsa-readable-v4/index.html dsa-readable-v4/review.html dsa-readable-v4/quality/stage-b-build.json
           if git diff --cached --quiet; then
             echo "Generated HTML is already up to date"
             exit 0

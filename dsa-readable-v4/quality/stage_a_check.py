@@ -97,7 +97,7 @@ int main(){
 compile_test("circular queue wraparound",codeblocks(chapter(5))[:1],'''
 #include <cassert>
 int main() {
-    CircularQueue q(5); int x;
+    OneSlotQueue q(5); int x;
     assert(q.empty() && !q.pop(x));
     for (int v : {10,20,30,40}) assert(q.push(v));
     assert(q.full() && !q.push(99));
