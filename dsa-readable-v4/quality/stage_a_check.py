@@ -91,6 +91,80 @@ int main(){
  root=avlDelete(root,1);check(root,-10000,10000);
  assert(root->key==4&&root->left->key==2);
 }''')
+
+# Targeted, executable regression cases for explanations introduced during
+# the November textbook-style editorial pass.
+compile_test("circular queue wraparound",codeblocks(chapter(5))[:1],'''
+#include <cassert>
+int main() {
+    CircularQueue q(5); int x;
+    assert(q.empty() && !q.pop(x));
+    for (int v : {10,20,30,40}) assert(q.push(v));
+    assert(q.full() && !q.push(99));
+    assert(q.pop(x) && x == 10);
+    assert(q.pop(x) && x == 20);
+    assert(q.push(50) && q.push(60) && q.full());
+    for (int v : {30,40,50,60}) {
+        assert(q.pop(x) && x == v);
+    }
+    assert(q.empty());
+}''')
+assert len(codeblocks(chapter(6)))==2
+compile_test("fast sparse transpose",codeblocks(chapter(6))[:1],'''
+#include <cassert>
+int main() {
+    std::vector<Triple> a={{0,0,4},{0,3,8},{1,3,9},
+                           {2,2,6},{3,0,7},{4,3,5}};
+    auto b=fastTranspose(5,4,a);
+    assert(b.rows==4 && b.cols==5 && b.terms.size()==6);
+    const int rr[]={0,0,2,3,3,3};
+    const int cc[]={0,3,2,0,1,4};
+    const int vv[]={4,7,6,8,9,5};
+    for (int k=0;k<6;++k) {
+        assert(b.terms[k].row==rr[k]);
+        assert(b.terms[k].col==cc[k]);
+        assert(b.terms[k].value==vv[k]);
+    }
+    assert(fastTranspose(0,0,{}).terms.empty());
+}''')
+compile_test("orthogonal sparse insertion",codeblocks(chapter(6))[1:2],'''
+#include <cassert>
+int main() {
+    OrthSparseMatrix a(3,4);
+    a.put(2,3,9); a.put(2,1,7); a.put(0,2,5);
+    a.put(2,1,8);
+    assert((a.rowValues(2)==std::vector<int>{8,9}));
+    assert((a.rowValues(0)==std::vector<int>{5}));
+}''')
+compile_test("inorder threaded tree",codeblocks(chapter(9)),'''
+#include <cassert>
+int main() {
+    ThreadNode a{'A'}, b{'B'}, c{'C'}, d{'D'}, e{'E'};
+    a.left=&b; a.right=&c; b.right=&d; c.left=&e;
+    threadInorder(&a);
+    assert(nextInorder(&b)==&d);
+    assert(nextInorder(&d)==&a);
+    assert(nextInorder(&a)==&e);
+    assert(nextInorder(&e)==&c);
+    assert(nextInorder(&c)==nullptr);
+    assert(d.ltag==1 && d.left==&b);
+    assert(e.ltag==1 && e.left==&a);
+}''')
+assert len(codeblocks(chapter(11)))==2
+compile_test("Huffman tree and decode",codeblocks(chapter(11))[1:2],'''
+#include <cassert>
+int main() {
+    auto tree=makeHuffman({{'A',5},{'B',2},{'C',9},{'D',6},{'E',3}});
+    auto codes=makeCodes(tree.root);
+    assert(codes.at('A')=="00" && codes.at('B')=="010");
+    assert(codes.at('C')=="11" && codes.at('D')=="10");
+    assert(codes.at('E')=="011");
+    assert(decodeCodes(tree.root,"0101100")=="BCA");
+    auto one=makeHuffman({{'Z',4}});
+    assert(makeCodes(one.root).at('Z')=="0");
+    assert(decodeCodes(one.root,"000")=="ZZZ");
+}''')
+
 # The V3 hash class implementations were independently compiled in their own release CI.
 h=[15,3,14,2,6,9,16,17];heapq.heapify(h);wpl=0
 while len(h)>1:
