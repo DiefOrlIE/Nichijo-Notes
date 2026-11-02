@@ -1,13 +1,5 @@
 name: Build DSA V4 after manuscript approval
 on:
-  push:
-    paths:
-      - "dsa-readable-v4/chapters/**"
-      - "dsa-readable-v4/review/**"
-      - "dsa-readable-v4/quality/stage-a-manifest.json"
-      - "dsa-readable-v4/template.html"
-      - "dsa-readable-v4/build.mjs"
-      - ".github/workflows/build-dsa-v4.yml"
   workflow_dispatch:
 permissions:
   contents: write
