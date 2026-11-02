@@ -5,6 +5,7 @@ on:
       - "dsa-readable-v4/chapters/**"
       - "dsa-readable-v4/review/**"
       - "dsa-readable-v4/quality/stage_a_check.py"
+      - "dsa-readable-v4/quality/teaching_check.py"
       - ".github/workflows/verify-dsa-v4-text.yml"
   workflow_dispatch:
 permissions:
@@ -22,7 +23,9 @@ jobs:
           python3 --version
           g++ --version | head -1
       - name: Independent manuscript inventory and algorithm checks
-        run: python3 dsa-readable-v4/quality/stage_a_check.py
+        run: |
+          python3 dsa-readable-v4/quality/teaching_check.py
+          python3 dsa-readable-v4/quality/stage_a_check.py
       - name: Commit immutable source inventory for stage B
         run: |
           git config user.name "github-actions[bot]"
