@@ -52,6 +52,15 @@ jobs:
           assert a != b
           print('PASS two unique source-locked V4 pages')
           PY
+      - name: Install Chromium and Playwright before publication
+        run: |
+          npm install --no-save playwright
+          npx playwright install chromium
+      - name: Verify the newly generated course and review in desktop and mobile browsers
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/v4-http.log 2>&1 &
+          sleep 3
+          node dsa-readable-v4/quality/browser_check.mjs
       - name: Commit HTML compiled from frozen text
         run: |
           git config user.name "github-actions[bot]"
