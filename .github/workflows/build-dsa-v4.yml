@@ -84,6 +84,10 @@ jobs:
             exit 0
           fi
           git commit -m "Publish V4 continuous DSA teaching and separate 120-min exam pages"
+          if [ "$GITHUB_REF_NAME" != "main" ]; then
+            git push origin HEAD:"$GITHUB_REF_NAME"
+            exit 0
+          fi
           for attempt in 1 2 3 4; do
             git pull --rebase origin main
             if git push; then exit 0; fi

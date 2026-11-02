@@ -26,8 +26,6 @@ async function validateVisibleQuestions(page, expected, label) {
         hasApproach:/思路|提示|入手/.test(solution),
         hasAnswer:/解答|答案/.test(solution),
         summary:(detail.querySelector("summary")?.textContent || "").trim(),
-        prior:detail.previousElementSibling?.outerHTML.slice(0,220) || "NONE",
-        parent:detail.parentElement?.tagName+"."+(detail.parentElement?.className || ""),
         ancestorSample:detail.parentElement?.outerHTML.slice(0,280),
         headingCount:detail.closest(".topic")?.querySelectorAll("h4.exercise-title").length || 0
       };
@@ -39,22 +37,6 @@ async function validateVisibleQuestions(page, expected, label) {
     !q.folded || !q.hasApproach || !q.hasAnswer ||
     !q.summary.includes("查看")
   );
-  if (problems.length) {
-    const debug = await page.locator("#reading details.question").evaluateAll(items =>
-      [5,10,21].map(n => {
-        const item=items[n];
-        return {
-          number:n+1,
-          parent:item.parentElement?.tagName,
-          previous:item.previousElementSibling?.outerHTML.slice(0,600) ?? null,
-          parentPrevious:item.parentElement?.previousElementSibling?.outerHTML.slice(0,600) ?? null,
-          ancestor:item.parentElement?.outerHTML.slice(0,1000) ?? null
-        };
-      })
-    );
-    console.log("EXERCISE DOM DIAGNOSTIC",JSON.stringify(debug));
-  }
-  if (problems.length) console.log('VISIBILITY-DIAGNOSTIC',JSON.stringify(problems.slice(0,15)));
   assert.deepEqual(problems, [], label + ": hidden/incomplete statements or solutions");
 }
 
