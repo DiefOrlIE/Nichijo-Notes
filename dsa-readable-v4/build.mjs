@@ -7,12 +7,18 @@ import {marked} from "marked";
 const root=path.dirname(fileURLToPath(import.meta.url));
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"quality/stage-a-manifest.json"),"utf8"));
 marked.setOptions({gfm:true,breaks:false});
-function renderMd(input){
-  // Raw HTML <details> blocks are not necessarily Markdown parsed; convert
-  // code fences to explicit escaped HTML so examples remain visible there.
-  const result=input.replace(/(^|\n)~~~([a-z0-9-]*)\n([\s\S]*?)\n~~~(?=\n|$)/g,
-    (_full,prefix,lang,code)=>prefix+'<pre><code class="language-'+(lang||"text")+'">'+esc(code)+'</code></pre>');
-  return marked.parse(result);
+function renderMd(input) {
+  // Compile Markdown in each <details> answer separately before rendering the page.
+  // Marked treats raw HTML <details> as opaque; without this pass, educational
+  // problem statements such as **题目** and fenced C++ appear as literal source.
+  const withAnswers = input.replace(
+    /<details class="question">\s*<summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g,
+    (_whole,summary,body) =>
+      '<details class="question"><summary>'+summary+'</summary>\n'+
+      marked.parse(body.trim())+'\n</details>'
+  );
+  // Keep legacy triple-tilde code fences outside raw HTML working as Markdown.
+  return marked.parse(withAnswers);
 }
 
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
