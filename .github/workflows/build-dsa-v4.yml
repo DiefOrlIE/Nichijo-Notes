@@ -1,7 +1,7 @@
 name: Build DSA V4 after manuscript approval
 on:
   push:
-    branches: [main]
+    branches: [main, v4-question-display-review-rewrite-20261102]
     paths:
       - "dsa-readable-v4/chapters/**"
       - "dsa-readable-v4/review/**"
@@ -62,6 +62,17 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/v4-http.log 2>&1 &
           sleep 3
           node dsa-readable-v4/quality/browser_check.mjs
+      - name: Preserve section-by-section visual regression screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v4-complete-question-visual-audit
+          path: |
+            v4-qa/*.png
+            v4-desktop.png
+            v4-mobile-review.png
+            v4-tablet.png
+          if-no-files-found: ignore
       - name: Commit HTML compiled from frozen text
         run: |
           git config user.name "github-actions[bot]"
