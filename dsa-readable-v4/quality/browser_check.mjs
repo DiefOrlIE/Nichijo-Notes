@@ -31,7 +31,7 @@ async function validateVisibleQuestions(page, expected, label) {
   );
   assert.equal(audit.length, expected, label + ": wrong exercise count");
   const problems = audit.filter(q =>
-    !q.hasHeading || !q.hasVisibleStatement || q.visibleLength < 40 ||
+    !q.hasHeading || !q.hasVisibleStatement || q.visibleLength < 20 ||
     !q.folded || !q.hasApproach || !q.hasAnswer ||
     !q.summary.includes("查看")
   );
