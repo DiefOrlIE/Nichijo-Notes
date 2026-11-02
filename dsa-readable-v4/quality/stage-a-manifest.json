@@ -2,153 +2,153 @@
   "chapters": [
     {
       "name": "ch00.md",
-      "chars": 8923,
+      "chars": 9003,
       "sections": 7,
       "questions": 5,
-      "sha256": "c6920671a9a4368dde9f59ea16e8501c1c848f461ada0a73ad8b6e3524484763"
+      "sha256": "c200c7c0511f18b6a2fcb7d1915ac716e2de571813ed0d0bf66f613d6ab5920c"
     },
     {
       "name": "ch01.md",
-      "chars": 7249,
+      "chars": 7329,
       "sections": 9,
       "questions": 5,
-      "sha256": "d2b883362d19fd9ffe77692f941f6570fe3b65ee7786d4f4accba7cfef7a9271"
+      "sha256": "b32a50ec10243eb0e89d5b90b298cc7bd24974725d56453824d1160d77f7978d"
     },
     {
       "name": "ch02.md",
-      "chars": 8249,
+      "chars": 8329,
       "sections": 8,
       "questions": 5,
-      "sha256": "4cbcb668174f8fc43acd4c260dab56fe34633f185fd39ad245c52c9b0a4fedea"
+      "sha256": "a6c8e0a9d4a05854442b3218d2e3a30be9739767cb66cac10ec970d0a7189de8"
     },
     {
       "name": "ch03.md",
-      "chars": 12119,
+      "chars": 12215,
       "sections": 8,
       "questions": 6,
-      "sha256": "5b7912f5d338736cf407657d0508db9f79b53535d33fd14ba76c2307ce6ad4b7"
+      "sha256": "e0013fefef74369f0652238ee907f793a6dc0441c8893f726fe79763eb29a978"
     },
     {
       "name": "ch04.md",
-      "chars": 11007,
+      "chars": 11103,
       "sections": 8,
       "questions": 6,
-      "sha256": "1b0d25cea71727fd596d3b2895fbe998d381370e113a60cfb7662febee435e89"
+      "sha256": "ca337a7c1a8be11d6bf6b444ba8fa74030d1156d3b9f801b2eec7eb6ceb04d0a"
     },
     {
       "name": "ch05.md",
-      "chars": 8024,
+      "chars": 8104,
       "sections": 8,
       "questions": 5,
-      "sha256": "36777ab747ca4199787b9fa18bece18d1bcf8dc55b5e46e34a3e58cc9cec33b6"
+      "sha256": "8f8106f1e075069a1acb054dfa17b141bfa6f729954b37dbdc6f985f9494485e"
     },
     {
       "name": "ch06.md",
-      "chars": 9821,
+      "chars": 9901,
       "sections": 7,
       "questions": 5,
-      "sha256": "771d3d099ecb9890bfc11cc3f7a48212b09e8ff64b4e16efebb24be767d4d0a5"
+      "sha256": "fbddafc18a9c8aeefdaddc5ebb342ee3fa87e1c7757b2ba47b99c7c5edaf535f"
     },
     {
       "name": "ch07.md",
-      "chars": 8534,
+      "chars": 8614,
       "sections": 8,
       "questions": 5,
-      "sha256": "8a85c8853488bf78828f629c6a215762e338495fa2729b442803640ff881a12a"
+      "sha256": "9352b8227bb325618fdad9fa9dad03a2149c799fd616710cb9a305fe025ef14d"
     },
     {
       "name": "ch08.md",
-      "chars": 8764,
+      "chars": 8844,
       "sections": 8,
       "questions": 5,
-      "sha256": "77b039fcf5dad13c96f0ca485fc7ca8d300f89daf1ed9aa8649acf6f476e5748"
+      "sha256": "56ac8ceacb22c6077e3ec9f7c12e3bbcddeba99a8a2acb2e3c86331316b305f4"
     },
     {
       "name": "ch09.md",
-      "chars": 7411,
+      "chars": 7491,
       "sections": 7,
       "questions": 5,
-      "sha256": "a8ab58d87712ad99bb280fc246312335648287935d7998deff84a04d51d74a55"
+      "sha256": "e8a1908153b26b97f1dfd4688a1e8a3d5a022690574e36ed481f2dd3c90b11a4"
     },
     {
       "name": "ch10.md",
-      "chars": 6401,
+      "chars": 6481,
       "sections": 8,
       "questions": 5,
-      "sha256": "fcc06881f5c057aa43a21b7befd4d778a384d0df2af62cd45704a09412f0e897"
+      "sha256": "7383475e73c4e9a79c2fe140e4307692bda988895092b23ee0f0131e5b8b73a6"
     },
     {
       "name": "ch11.md",
-      "chars": 9384,
+      "chars": 9464,
       "sections": 7,
       "questions": 5,
-      "sha256": "7c82c6f6fcd7d8a4ad922e1cffd40de8500973b94f428cdb32d2824abda194b0"
+      "sha256": "0a83b4ed25aede3a48fa3bb971f6c41d4e751979933828b470f096585980df1b"
     },
     {
       "name": "ch12.md",
-      "chars": 5773,
+      "chars": 5853,
       "sections": 6,
       "questions": 5,
-      "sha256": "0432cf32bf052b48d71ef85491b0458c31782365e082fed3307d33bb8cbe1f42"
+      "sha256": "0563de21dd42480b01bd94ffc6996616778ce9321d09823ba2c7b73925497c3b"
     },
     {
       "name": "ch13.md",
-      "chars": 6389,
+      "chars": 6469,
       "sections": 8,
       "questions": 5,
-      "sha256": "8257b8ff1a0e2cedd8c4b0cb44ed160ec9464ff2572ba67a3626e1ced52392fe"
+      "sha256": "3f1b798b994134ae35f713ff386a5004ad6f4b785d40fda53fde4e0a52443e65"
     },
     {
       "name": "ch14.md",
-      "chars": 8959,
+      "chars": 9039,
       "sections": 9,
       "questions": 5,
-      "sha256": "cd0e9ae10824af8fd061616c4ae1a87d75c3262c030b70ffe3b6870139fe1c5c"
+      "sha256": "8bf344483fb6b2078b22b6535d1eb0f1b5ef97e3138369b21cf489e2ca0e67e8"
     },
     {
       "name": "ch15.md",
-      "chars": 28397,
+      "chars": 28674,
       "sections": 15,
       "questions": 9,
-      "sha256": "b9fda411bd7a4317b9f25960c27fd5419d1e854575ee4497679aebd3aa96570b"
+      "sha256": "08f070e6ea4f909da0383996cd2fdc8728a61c7a45f2443e5aa235ac90102963"
     }
   ],
   "review": [
     {
       "name": "00-plan.md",
-      "chars": 2628,
+      "chars": 3218,
       "questions": 0,
-      "sha256": "680ae3938363d594f2755b3e833f819a5f4bbca998045d47e242e28cab168176"
+      "sha256": "816606839b1493a3332920bca031565b943534947873d475176cb9e143e5913c"
     },
     {
       "name": "01-question-bank-a.md",
-      "chars": 6639,
+      "chars": 11249,
       "questions": 24,
-      "sha256": "e28e016f41b7a1a527e5823fced1a9a0f480971c344387d5c9d32d66366943fd"
+      "sha256": "29e1c7968a9248d7e1416cea1ab97c3bbbc2aed60e7f327c09453eedc269e074"
     },
     {
       "name": "02-question-bank-b.md",
-      "chars": 6354,
+      "chars": 10940,
       "questions": 24,
-      "sha256": "7c137dd60866716252304cc7c860947d4157e6b85f254fb0ec99ca21c0289245"
+      "sha256": "2456842cbfce65070e946f00bb8a7d384e5475db497fb13faa9047688bd73211"
     },
     {
       "name": "03-question-bank-c.md",
-      "chars": 5297,
+      "chars": 9135,
       "questions": 20,
-      "sha256": "35ffa5f1b7c7919dfeeb1bbb8d527d4c18d9e07facda15d067f10f271d720bc0"
+      "sha256": "2d69cf73cf961c4bb1943eb11bd26de042c5c6d961b7a1f6fd25460c64aeaef5"
     },
     {
       "name": "04-mock-a.md",
-      "chars": 3719,
+      "chars": 6610,
       "questions": 12,
-      "sha256": "4a26217a523c9bb6254cd476eb3a8efb1d138f250779c9af196613bfbb763a01"
+      "sha256": "af9035fddd776616c0bb54a6d032eaa033125aa18d01bfe6843eaa20b34966e8"
     },
     {
       "name": "05-mock-b.md",
-      "chars": 4401,
+      "chars": 7201,
       "questions": 12,
-      "sha256": "c2379436b07993e7b372bbcf4886241b1a0617657f58fb2361ccdb4fb1cb5922"
+      "sha256": "32b573b413355ea59e05717470d0c3d87e560321e2c7eb8de4e6f05f30f5b05b"
     }
   ],
   "counts": {
