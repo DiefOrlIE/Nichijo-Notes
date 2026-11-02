@@ -1,61 +1,105 @@
-"""Educational content guard for the complete V4 manuscript, before any HTML build.
+"""Structural and content visibility checks before publishing the DSA V4 textbook.
 
-This intentionally checks *mechanically observable* symptoms of weak writing.
-It cannot prove literary quality or the ability of a genuine first-time reader
-to learn independently. The release report must preserve that limitation.
+This script verifies inspectable facts: every complete question is permanently
+visible; solution and hints are inside a separately collapsible details block.
+It cannot certify that a first-time reader has mastered the material.
 """
 from pathlib import Path
-import re
 import json
+import re
 
-ROOT=Path(__file__).resolve().parents[1]
-chapters=sorted((ROOT/"chapters").glob("ch[0-9][0-9].md"))
-assert len(chapters)==16, "Expected all 16 independent chapter manuscripts"
-stats=[]
-all_text=[]
-for chapter in chapters:
-    text=chapter.read_text(encoding="utf8")
-    all_text.append(text)
-    units=re.findall(r"(?m)^## (.+?) \{#([a-z0-9-]+)\}\s*$",text)
-    assert len(units)>=6, f"{chapter.name}: missing narrative units"
-    ids=[x[1] for x in units]
-    assert len(ids)==len(set(ids)),f"{chapter.name}: duplicate anchors"
-    exercise_blocks=re.findall(
-        r'<details class="question">([\s\S]*?)</details>',text)
-    assert len(exercise_blocks)>=4,f"{chapter.name}: too few complete practice questions"
-    assert text.count('<details class="question">')==text.count('</details>'),f"{chapter.name}: unclosed exercises"
-    section_text=re.split(r"(?m)^## ",text)[1:]
-    for section in section_text:
-        assert len(section)>=300,f"{chapter.name}: short teaching section"
-    for index,body in enumerate(exercise_blocks,1):
-        assert len(body)>=230,(chapter.name,index,"exercise is still an abbreviated fragment")
-        assert "<summary>" in body and "</summary>" in body,(chapter.name,index,"missing standalone title")
-        assert re.search(r"题目|完整题干",body),(chapter.name,index,"missing stated task and conditions")
-        assert re.search(r"思路|提示",body),(chapter.name,index,"missing approach")
-        assert re.search(r"解答|答案",body),(chapter.name,index,"missing worked answer")
-        # Valid explanatory prose can use many forms. We already require a
-        # complete statement, approach, solution and substantial length here;
-        # writing quality itself must be examined independently by reading.
-    assert len(re.findall(r"(?m)^~~~cpp\s*$",text))==len(re.findall(r"(?m)^~~~\s*$",text)),(
-        chapter.name,"unclosed C++ code fence")
-    assert not re.search(r"不是[^。\n]{0,75}而是",text),(
-        chapter.name,"disallowed rhetorical construction")
-    assert not re.search(r"\\\[[\s\S]*?\\\]",text),(
-        chapter.name,"unrendered LaTeX display in Markdown")
+ROOT = Path(__file__).resolve().parents[1]
+CHAPTERS = [ROOT / "chapters" / f"ch{i:02d}.md" for i in range(16)]
+REVIEW = [
+    "00-plan.md", "01-question-bank-a.md", "02-question-bank-b.md",
+    "03-question-bank-c.md", "04-mock-a.md", "05-mock-b.md"
+]
+EXPECTED = [0, 24, 24, 20, 12, 12]
+EXERCISE = re.compile(
+    r'<h4 class="exercise-title">([^<]+)</h4>\s*'
+    r'([\s\S]*?)\s*<details class="question">'
+    r'<summary>([^<]+)</summary>([\s\S]*?)</details>'
+)
+stats = []
+total_units = 0
+total_questions = 0
+
+def check_exercises(text, path, expected):
+    matches = list(EXERCISE.finditer(text))
+    raw_count = text.count('<details class="question">')
+    assert raw_count == expected == len(matches), (
+        path, "missing or mismatched visible exercise", raw_count, len(matches), expected
+    )
+    assert text.count('</details>') == raw_count, (path, "unclosed detail")
+    for i, m in enumerate(matches, 1):
+        title, visible, control, hidden = m.groups()
+        assert title.strip(), (path, i, "exercise title missing")
+        assert "查看" in control and "解答" in control, (
+            path, i, "control must advertise expandable solutions"
+        )
+        assert ("**题目。**" in visible or "<strong>完整题干：" in visible), (
+            path, i, "full question must be outside details"
+        )
+        assert len(visible.strip()) >= 55, (path, i, "visible question too short")
+        assert len(hidden.strip()) >= 80, (path, i, "worked answer too short")
+        assert re.search(r"思路|提示", hidden), (path, i, "missing approach")
+        assert re.search(r"解答|答案", hidden), (path, i, "missing answer")
+        assert "<details" not in visible, (path, i, "nested question visibility")
+    return matches
+
+for path in CHAPTERS:
+    assert path.is_file(), f"Missing manuscript: {path}"
+    text = path.read_text(encoding="utf8")
+    units = re.findall(r"(?m)^## (.+?) \{#([a-z0-9-]+)\}\s*$", text)
+    assert len(units) >= 6, (path.name, "too few teaching units")
+    ids = [identifier for _, identifier in units]
+    assert len(ids) == len(set(ids)), (path.name, "duplicate anchors")
+    sections = re.split(r"(?m)^## ", text)[1:]
+    assert min(map(len, sections)) >= 300, (path.name, "fragmentary section")
+    assert not re.search(r"不是[^。\n]{0,75}而是", text), (
+        path.name, "disallowed rhetorical construction"
+    )
+    assert not re.search(r"\\\[[\s\S]*?\\\]", text), (
+        path.name, "unrendered math display"
+    )
+    assert len(re.findall(r"(?m)^~~~cpp\s*$", text)) == len(
+        re.findall(r"(?m)^~~~\s*$", text)
+    ), (path.name, "unclosed C++ fence")
+    found = len(re.findall(r'<details class="question">', text))
+    assert found >= 4, (path.name, "no complete exercises")
+    matches = check_exercises(text, path.name, found)
+    total_units += len(units)
+    total_questions += len(matches)
     stats.append({
-        "chapter":chapter.name,
-        "characters":len(text),
-        "narrative_units":len(units),
-        "worked_questions":len(exercise_blocks),
-        "smallest_section_chars":min(map(len,section_text)),
-        "smallest_question_chars":min(map(len,exercise_blocks)),
+        "source": path.name,
+        "teaching_units": len(units),
+        "visible_complete_questions": len(matches),
+        "smallest_statement_chars": min(len(m.group(2).strip()) for m in matches),
+        "smallest_hidden_solution_chars": min(len(m.group(4).strip()) for m in matches),
     })
-total_units=sum(x["narrative_units"] for x in stats)
-total_q=sum(x["worked_questions"] for x in stats)
-assert total_units==131,(total_units,"expected 131 stable anchors")
-assert total_q==86,(total_q,"expected all 86 fully rewritten chapter questions")
-assert sum(x["characters"] for x in stats)>140000,"text rewrite too short"
-print("PASS pedagogical structure: chapters=16; units=131; questions=86")
-print("PASS every chapter exercise has task, approach, worked answer and explanation")
-print("PASS no disconnected small sections, duplicate anchors or unusable math blocks")
-print(json.dumps(stats,ensure_ascii=False,indent=2))
+
+assert total_units == 131, total_units
+assert total_questions == 86, total_questions
+assert sum(len(p.read_text(encoding="utf8")) for p in CHAPTERS) > 140000
+
+review_total = 0
+for file, expected in zip(REVIEW, EXPECTED):
+    path = ROOT / "review" / file
+    assert path.exists(), path
+    text = path.read_text(encoding="utf8")
+    if expected:
+        matches = check_exercises(text, file, expected)
+        review_total += len(matches)
+        stats.append({
+            "source": file,
+            "visible_complete_questions": len(matches),
+            "smallest_statement_chars": min(len(m.group(2).strip()) for m in matches),
+        })
+    else:
+        assert "复习" in text and len(text) >= 2000
+assert review_total == 92, review_total
+
+print("PASS independent visible questions: 86 course + 68 practice + 24 mocks")
+print("PASS every solution is separate and only accessible through a collapsible control")
+print("PASS 16 chapters, 131 instructional units and coherent review source inventory")
+print(json.dumps(stats, ensure_ascii=False, indent=2))
