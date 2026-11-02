@@ -27,7 +27,9 @@ async function validateVisibleQuestions(page, expected, label) {
         hasAnswer:/解答|答案/.test(solution),
         summary:(detail.querySelector("summary")?.textContent || "").trim(),
         prior:detail.previousElementSibling?.outerHTML.slice(0,220) || "NONE",
-        parent:detail.parentElement?.tagName+"."+(detail.parentElement?.className || "")
+        parent:detail.parentElement?.tagName+"."+(detail.parentElement?.className || ""),
+        ancestorSample:detail.parentElement?.outerHTML.slice(0,280),
+        headingCount:detail.closest(".topic")?.querySelectorAll("h4.exercise-title").length || 0
       };
     })
   );
