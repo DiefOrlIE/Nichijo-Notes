@@ -30,10 +30,10 @@
     },
     {
       "name": "ch04.md",
-      "chars": 10957,
+      "chars": 11007,
       "sections": 8,
       "questions": 6,
-      "sha256": "64506ac651a5fdeeeeea27b85b23cb58662dff05439431c5eb35bb9debf62c78"
+      "sha256": "1b0d25cea71727fd596d3b2895fbe998d381370e113a60cfb7662febee435e89"
     },
     {
       "name": "ch05.md",
@@ -51,10 +51,10 @@
     },
     {
       "name": "ch07.md",
-      "chars": 8551,
+      "chars": 8534,
       "sections": 8,
       "questions": 5,
-      "sha256": "e2bc0f4107d3f781bc01739ffe4f5a517f1219cba8457e3c9427d873b953946a"
+      "sha256": "8a85c8853488bf78828f629c6a215762e338495fa2729b442803640ff881a12a"
     },
     {
       "name": "ch08.md",
@@ -107,10 +107,10 @@
     },
     {
       "name": "ch15.md",
-      "chars": 28379,
+      "chars": 28376,
       "sections": 15,
       "questions": 9,
-      "sha256": "db8ccdb7cd5be10990c8784bf9f491d021c677f68854d67e02a8faeec9377f4d"
+      "sha256": "b22eac34428d135976aa57b0b532a9f6c269b8c54b7d2fb3d10db865a1e77def"
     }
   ],
   "review": [
