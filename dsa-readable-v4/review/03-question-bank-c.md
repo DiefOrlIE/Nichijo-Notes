@@ -1,129 +1,291 @@
 # 期中专项题库（第 3 组）：堆、哈夫曼、查找与平衡树
 
-> 与前两组相同：面向已经学习过一遍的读者。重点检查方法选择、逐步状态以及边界，而不是重新教授定义。
+这一组从堆的局部父子约束开始，过渡到哈夫曼树的贪心合并，再进入查找树和 AVL 的旋转修复。遇到堆、哈夫曼或平衡树手算题时，务必写出每一轮选中的对象、修改后的结构，以及是否仍满足原数据结构的不变量。
+
+这里的题目默认已学习相应教学章节；不过每道题都给出独立条件，方便脱离前文复习。先自己模拟，再展开解答检查路径、分支和数值。
 
 ## 堆、Top-K 与建堆
 
-<details class="question"><summary>第 49 题 · 合法性｜数组 [10,8,9,4,7,6] 是最大堆吗？</summary>
+
+
+<h4 class="exercise-title">第 49 题 · 合法性</h4>
+
+**题目。** 完全二叉树采用 0-based 数组存储，给定 [10,8,9,4,7,6]。判断它是否为最大堆；请逐一核验所有存在的父子关系，并解释为何不要求数组整体降序。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>逐个比较父与孩子，不要求整表单调。</p>
 <p><strong>推导与答案：</strong>合法：10≥8,9；8≥4,7；9≥6。</p>
 <p><strong>典型错误：</strong>把兄弟大小关系当成堆要求。</p>
+
+<p><strong>过程复核：</strong>检查非叶下标 0、1、2：10 分别大于 8、9，8 分别大于 4、7，9 大于 6。因此满足最大堆的全部父子条件，兄弟之间没有规定谁大谁小。</p>
 </details>
 
-<details class="question"><summary>第 50 题 · 插入模拟｜最大堆 [9,7,8,3,5,6] 插入 10，写每次交换后的数组。</summary>
+
+
+<h4 class="exercise-title">第 50 题 · 插入模拟</h4>
+
+**题目。** 给定最大堆的 0-based 数组 [9,7,8,3,5,6]，现在插入关键码 10。将新项放到数组末尾后使用上浮法维护最大堆，写出**每次交换后的完整数组**。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>先追加末尾，再沿父链接上浮。</p>
 <p><strong>推导与答案：</strong>[9,7,8,3,5,6,10]→[9,7,10,3,5,6,8]→[10,7,9,3,5,6,8]。</p>
 <p><strong>典型错误：</strong>一次上浮不够就提前停。</p>
+
+<p><strong>过程复核：</strong>插入前 a 的长度为 6，新项下标为 6，父结点下标 2；第一次与 8 交换，之后位于下标 2，父结点下标 0，再与 9 交换。两次上浮结束后根变为 10。</p>
 </details>
 
-<details class="question"><summary>第 51 题 · 逐项建堆｜用逐项插入法将 [2,9,4,7,6] 构成最大堆。</summary>
+
+
+<h4 class="exercise-title">第 51 题 · 逐项建堆</h4>
+
+**题目。** 从空最大堆出发，按输入顺序 2、9、4、7、6 逐项插入（每次新项上浮）。请记录每次插入完成后的数组，并给出最终最大堆。不要使用底向上筛选法。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>每加入一项保存一次状态。</p>
 <p><strong>推导与答案：</strong>[2]、[9,2]、[9,2,4]、[9,7,4,2]、[9,7,4,2,6]。</p>
 <p><strong>典型错误：</strong>把底向上筛选的结果当逐项状态。</p>
+
+<p><strong>过程复核：</strong>每一步都是对当前已有堆的扩充，按次序得到 [2]、[9,2]、[9,2,4]、[9,7,4,2]、[9,7,4,2,6]。不同合法建堆策略可能产生不同结果，必须以题目指定方法为准。</p>
 </details>
 
-<details class="question"><summary>第 52 题 · 筛选建堆｜将 [1,2,5,8,3,6,10,14] 底向上筛成最大堆，最后状态？</summary>
+
+
+<h4 class="exercise-title">第 52 题 · 筛选建堆</h4>
+
+**题目。** 给定原始数组 [1,2,5,8,3,6,10,14]，下标从 0 开始。使用**自底向上的筛选法**建立最大堆，依次处理非叶结点 i=3、2、1、0，记录每个 i 的调整结束状态，最终给出堆数组。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>非叶 i=3,2,1,0 依次下沉。</p>
 <p><strong>推导与答案：</strong>i=3→[1,2,5,14,3,6,10,8]；i=2→[1,2,10,14,3,6,5,8]；i=1→[1,14,10,8,3,6,5,2]；i=0→[14,8,10,2,3,6,5,1]。</p>
 <p><strong>典型错误：</strong>下沉时没继续沿交换后的孩子位置比较。</p>
+
+<p><strong>过程复核：</strong>按最后一个非叶结点向根处理，每次只修正该结点的子树。经过四轮后结果为 [14,8,10,2,3,6,5,1]。对任意父下标 i，核验 a[i]≥a[2i+1] 和存在时的 a[2i+2]。</p>
 </details>
 
-<details class="question"><summary>第 53 题 · Top-K｜从 10 万项中维护最大的 20 项，选哪种堆？</summary>
+
+
+<h4 class="exercise-title">第 53 题 · Top-K</h4>
+
+**题目。** 有 n=100000 个整数成绩陆续到来，只需要始终保留到目前为止最大的 k=20 个值，不要求这 20 项内部排好序。请选择一个维护空间为 O(k) 的堆方案，说明新值到来时的动作和总时间复杂度。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>候选中最小者应最快被淘汰。</p>
 <p><strong>推导与答案：</strong>容量 20 的最小堆；新项大于堆顶才替换。时间 O(nlog20)，额外空间 O(20)。</p>
 <p><strong>典型错误：</strong>想取最大 k 项就误选最大堆。</p>
+
+<p><strong>过程复核：</strong>维护 20 项最小堆，堆顶就是当前入选集合中的最小者。新值不大于堆顶则舍弃，否则替换堆顶并下沉；时间 O(nlog20)，额外 O(20)。</p>
 </details>
 
-<details class="question"><summary>第 54 题 · 复杂度｜为什么底向上建堆是 Θ(n) 而非 Θ(nlog n)？</summary>
+
+
+<h4 class="exercise-title">第 54 题 · 复杂度</h4>
+
+**题目。** 给定 n 项数组，采用自底向上 `siftDown` 建立最大堆。为什么虽然单个结点最多需要 O(log n) 次下沉，整个建堆仍可达到 Θ(n)？从各高度结点数量与下沉步数的关系解释。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>叶子没有下沉工作，低层结点多但可下沉短。</p>
 <p><strong>推导与答案：</strong>按高度 h 的结点数约 n/2^{h+1}，每项最多下沉 h，总代价 nΣh/2^h=Θ(n)。</p>
 <p><strong>典型错误：</strong>对所有结点都按 log n 的最坏高度收费。</p>
+
+<p><strong>过程复核：</strong>高度为 h 的结点大致只有 n/2^(h+1) 个，其下沉工作不超过 O(h)，汇总为 O(n·Σh/2^h)=O(n)。绝大多数结点靠近叶层，几乎不需要下沉。</p>
 </details>
 
 ## Huffman 树与带权路径长度
 
-<details class="question"><summary>第 55 题 · 构造｜权 2,3,5,8，哈夫曼 WPL 是多少？</summary>
+
+
+<h4 class="exercise-title">第 55 题 · 构造</h4>
+
+**题目。** 四个字符的正权值分别为 2、3、5、8。用哈夫曼算法每轮取出最小两项、建立一个新结点并放回候选。列出全部合并权值，计算最终 WPL，并区分 WPL 与根权值。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>每步合并两最小，合并成本求和。</p>
 <p><strong>推导与答案：</strong>2+3=5；5+5=10；8+10=18，WPL=5+10+18=33。</p>
 <p><strong>典型错误：</strong>生成的新 5 忘记加入候选集合。</p>
+
+<p><strong>过程复核：</strong>先合并 2+3=5，再合并原来的 5 与新生成的 5 得 10，最后 8+10=18。所有合并权值之和 5+10+18=33，即 WPL；18 是根权值。</p>
 </details>
 
-<details class="question"><summary>第 56 题 · WPL｜权 15,3,14,2,6,9,16,17，哈夫曼 WPL？</summary>
+
+
+<h4 class="exercise-title">第 56 题 · WPL</h4>
+
+**题目。** 八个叶子的正权值为 15、3、14、2、6、9、16、17。使用哈夫曼算法构造一棵最优树，列出七轮合并产生的权值，并计算 WPL；最后用原始叶权总和核对根权。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>七次合并，列完整成本。</p>
 <p><strong>推导与答案：</strong>合并权 5、11、20、29、33、49、82，总和 229。</p>
 <p><strong>典型错误：</strong>只把叶权相加得到 82，误当 WPL。</p>
+
+<p><strong>过程复核：</strong>完整合并权值为 5、11、20、29、33、49、82；各权值相加得到 229。根权是八个叶权之和 82，和加权路径成本的含义不同。</p>
 </details>
 
-<details class="question"><summary>第 57 题 · 平均码长｜总频数 25，WPL 55，平均每字符的二进制位数？</summary>
+
+
+<h4 class="exercise-title">第 57 题 · 平均码长</h4>
+
+**题目。** 某前缀编码的全部符号出现次数合计为 25，按出现次数加权的总编码长度 WPL=55 位。求平均每次出现一个符号的编码位数，并说明分母应采用什么数量。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>总位数除出现次数。</p>
 <p><strong>推导与答案：</strong>55/25=2.2 bit/字符。</p>
 <p><strong>典型错误：</strong>除以字符种类数而非总频数。</p>
+
+<p><strong>过程复核：</strong>一个长度为 ℓ 的码字如果对应出现 w 次，在 WPL 中贡献 w·ℓ 位；所以平均码长是总位数 55 除以总出现次数 25，等于 2.2 位/次。</p>
 </details>
 
-<details class="question"><summary>第 58 题 · 前缀码｜为什么 A=0、B=01 不能作为两个字符的无歧义前缀码？</summary>
+
+
+<h4 class="exercise-title">第 58 题 · 前缀码</h4>
+
+**题目。** 设计二进制前缀码时，把字符 A 编为 `0`、B 编为 `01`。判定这两个码字能否构成前缀无歧义编码，说明从左到右读比特时产生的歧义，并给出如何判断一般码字集合。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>A 的码字是 B 的前缀。</p>
 <p><strong>推导与答案：</strong>读到比特 0 时，不知道这是 A 的完整码字，还是 B 的开头，所以不满足前缀码条件。</p>
 <p><strong>典型错误：</strong>只检查码字不同，忽略前缀关系。</p>
+
+<p><strong>过程复核：</strong>码字 0 是码字 01 的前缀，因此读取到 0 时既可能已经得到 A，也可能正在读取 B。合法前缀码要求任意两个不同符号的码字均无前缀包含关系。</p>
 </details>
 
-<details class="question"><summary>第 59 题 · 证明｜为什么两个最小权值可以安排在哈夫曼树最深兄弟叶？</summary>
+
+
+<h4 class="exercise-title">第 59 题 · 证明</h4>
+
+**题目。** 对一组正权值构造最优前缀二叉树。请解释为什么能够选择一棵最优树，使最小的两个权值放在最深的一对兄弟叶上；指出权值交换为什么不会增加加权路径长度。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>将低权与深处高权交换，不增加 WPL。</p>
 <p><strong>推导与答案：</strong>更深位置的路径乘数更大，小权占更深位置不比大权贵；可通过交换构造一棵同样不劣的最优树，再把该兄弟对合并成缩小的最优子问题。</p>
 <p><strong>典型错误：</strong>用一次实验结果代替贪心正确性证明。</p>
+
+<p><strong>过程复核：</strong>把深处的大权与较浅的小权交换，WPL 变化由两项权值差与深度差决定：更小权值去更深处不会使成本变大。通过这种交换可把两最小权安放在一对最深兄弟叶上。</p>
 </details>
 
-<details class="question"><summary>第 60 题 · 算法实现｜用什么数据结构维护哈夫曼过程的下一对最小权值？复杂度？</summary>
+
+
+<h4 class="exercise-title">第 60 题 · 算法实现</h4>
+
+**题目。** 给定 n 个符号的正权值，哈夫曼构造每轮需要取出两个最小权值并插入它们的和。选择合适的数据结构实现重复操作，给出建树的时间复杂度，并说明需要合并多少轮。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>必须反复提取两最小并回插合并权。</p>
 <p><strong>推导与答案：</strong>用最小堆，n 叶进行 n−1 次合并，每次两弹一压，时间 O(nlog n)。</p>
 <p><strong>典型错误：</strong>误选最大堆。</p>
+
+<p><strong>过程复核：</strong>最小堆允许 O(log n) 提取最小项及插入，每轮要取两项、插一项；每轮让候选棵数减少 1，故共 n−1 次合并，总时间 O(nlog n)。</p>
 </details>
 
 ## 查找、BST 和 AVL
 
-<details class="question"><summary>第 61 题 · ASL｜n=7 的互异无序表等概率成功顺序查找 ASL？</summary>
+
+
+<h4 class="exercise-title">第 61 题 · ASL</h4>
+
+**题目。** 一个无序顺序表有 n=7 个互异关键码，顺序查找从第一项开始逐个比较，保证查找成功且每个关键码被查找的概率都为 1/7。求成功 ASL，并说明比较次数序列。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>逐项比较次数是 1..7。</p>
 <p><strong>推导与答案：</strong>(1+7)/2=4。</p>
 <p><strong>典型错误：</strong>遗漏概率模型。</p>
+
+<p><strong>过程复核：</strong>成功时比较次数为 1、2、3、4、5、6、7；因为每个目标等概率，所以 ASL=(1+2+⋯+7)/7=4。若目标概率不同需使用加权平均。</p>
 </details>
 
-<details class="question"><summary>第 62 题 · 二分轨迹｜有序表 [2,4,7,9,13,18,22] 搜 13，依次比较？</summary>
+
+
+<h4 class="exercise-title">第 62 题 · 二分轨迹</h4>
+
+**题目。** 在 0-based 升序数组 [2,4,7,9,13,18,22] 中二分查找关键码 13，使用闭区间 `[low,high]` 与 `mid=floor((low+high)/2)`。写出每轮比较到的数组值及最终比较次数。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>闭区间每步取 floor((low+high)/2)。</p>
 <p><strong>推导与答案：</strong>9→18→13，共三次。</p>
 <p><strong>典型错误：</strong>把 mid 向上取整规则混入。</p>
+
+<p><strong>过程复核：</strong>先用 mid=3 与 9 比较；目标较大，转到区间 [4,6]，mid=5 与 18 比较；目标较小，转到 [4,4] 比较 13，第三次命中。</p>
 </details>
 
-<details class="question"><summary>第 63 题 · BST插入｜向空 BST 依次插入 5,2,8,1,3，根和左右孩子？</summary>
+
+
+<h4 class="exercise-title">第 63 题 · BST插入</h4>
+
+**题目。** 从空 BST 开始，依次插入互不相等的关键码 5、2、8、1、3。写出最终树的根、左右子树结构，并用中序遍历检查它满足 BST 性质。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>逐项按大小走到空连接。</p>
 <p><strong>推导与答案：</strong>根 5；左根 2，孩子 1 和 3；右孩子 8。</p>
 <p><strong>典型错误：</strong>未保持整棵子树的大小不变量。</p>
+
+<p><strong>过程复核：</strong>插入 5 为根，2、8 分别进入左右；1、3 分别成为 2 的左右孩子。中序输出 1、2、3、5、8，严格递增。</p>
 </details>
 
-<details class="question"><summary>第 64 题 · BST删除｜删除上题中的 2，规定用中序后继替换。</summary>
+
+
+<h4 class="exercise-title">第 64 题 · BST删除</h4>
+
+**题目。** 继续使用从空 BST 依次插入 5、2、8、1、3 得到的树，现删除结点 2，规定用它的**中序后继**替换。请指出后继是谁、哪些链接会变化，以及删除后的树结构。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>右子树最左结点是后继。</p>
 <p><strong>推导与答案：</strong>后继 3 替换 2，删原 3；得到根 5、左孩子 3 且其左孩子 1、右孩子 8。</p>
 <p><strong>典型错误：</strong>重复保留原后继。</p>
+
+<p><strong>过程复核：</strong>结点 2 的右子树里最小者为 3，先用 3 替换原键，再删除原来叶结点 3。树根仍为 5，左子树根 3 且左孩子 1，右孩子 8。</p>
 </details>
 
-<details class="question"><summary>第 65 题 · AVL旋转｜依次插入 30,10,20，失衡类型与结果？</summary>
+
+
+<h4 class="exercise-title">第 65 题 · AVL旋转</h4>
+
+**题目。** 从空 AVL 树依次插入 30、10、20，关键码互异，平衡因子规定为右高减左高。指出首次失衡结点、属于 LL/RR/LR/RL 哪类，并写出两次旋转与最终树。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>从首次失衡根往新结点方向左→右。</p>
 <p><strong>推导与答案：</strong>LR：左旋 10，再右旋 30，得到根 20、左 10、右 30。</p>
 <p><strong>典型错误：</strong>只做一次右旋。</p>
+
+<p><strong>过程复核：</strong>插入 20 后，30 的左孩子 10 向右倾，类型 LR；先对 10 左旋使 20 升起，再对 30 右旋。结果根 20，左 10，右 30，平衡与 BST 顺序均保留。</p>
 </details>
 
-<details class="question"><summary>第 66 题 · AVL删除｜删除造成 p 的 bf=+2，右孩子 bf=−1，如何旋转？</summary>
+
+
+<h4 class="exercise-title">第 66 题 · AVL删除</h4>
+
+**题目。** 某 AVL 树删除一个关键码后，祖先结点 p 的平衡因子变为 +2（右子树较高），其右孩子平衡因子为 −1。按右高减左高的约定，给出修复时旋转的先后次序，以及旋转后为何要更新高度。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>按右重+右孩子左倾识别 RL。</p>
 <p><strong>推导与答案：</strong>先右旋 p 的右孩子，再左旋 p，更新所有受影响的高度并回接新根。</p>
 <p><strong>典型错误：</strong>按 p 正号直接只左旋。</p>
+
+<p><strong>过程复核：</strong>p 右侧过高但右孩子向左倾，属于 RL 型。先右旋 p 的右孩子，再左旋 p；旋转会改变局部父子关系，必须按旋后结构重新计算高度。</p>
 </details>
 
-<details class="question"><summary>第 67 题 · AVL特殊｜根 2、左1、右4，4 的左右 3、5；删 1 后怎样保持 AVL？</summary>
+
+
+<h4 class="exercise-title">第 67 题 · AVL特殊</h4>
+
+**题目。** 初始 AVL 具有根 2、左孩子 1、右孩子 4，且结点 4 的左右孩子依次为 3、5。删除结点 1 后，按照平衡因子=右高−左高，写出失衡点、右孩子平衡因子和具体旋转，画出最终树。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>根右高 2、左高 0，右孩子平衡因子 0。</p>
 <p><strong>推导与答案：</strong>对根 2 单左旋，得到根4、左2（右孩子3）、右5。新子树高度与删除前相同。</p>
 <p><strong>典型错误：</strong>把孩子 bf=0 强行判为 RL。</p>
+
+<p><strong>过程复核：</strong>删除 1 后，2 左高 0、右高 2，bf=+2；右孩子 4 左右高度相等，bf=0，因此对 2 执行一次左旋。最终根 4，左子树根 2 且右孩子 3，右孩子 5。</p>
 </details>
 
-<details class="question"><summary>第 68 题 · 复杂度｜普通 BST 与 AVL 查找的最坏时间为何不同？</summary>
+
+
+<h4 class="exercise-title">第 68 题 · 复杂度</h4>
+
+**题目。** 比较普通 BST 与 AVL 的最坏查找时间。请分别给出造成普通 BST 退化的典型插入顺序，以及 AVL 通过哪项局部结构限制保证 O(log n) 的树高。
+
+<details class="question"><summary>查看思路与解答</summary>
 <p><strong>如何入手：</strong>是否限制树高。</p>
 <p><strong>推导与答案：</strong>普通 BST 有序插入可能成 n 长链，最坏 Θ(n)；AVL 保持左右高度差≤1，树高 O(log n)，查找 O(log n)。</p>
 <p><strong>典型错误：</strong>把 BST 的平均表现当作最坏上界。</p>
+
+<p><strong>过程复核：</strong>普通 BST 若按 1、2、3、… 的顺序插入就可能形成单链，最坏查找 Θ(n)；AVL 对每个结点限制左右子树高度差绝对值≤1，避免出现高度为 n 的链。</p>
 </details>
