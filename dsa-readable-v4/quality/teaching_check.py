@@ -16,7 +16,7 @@ REVIEW = [
 ]
 EXPECTED = [0, 24, 24, 20, 12, 12]
 EXERCISE = re.compile(
-    r'<h4 class="exercise-title">([^<]+)</h4>\s*'
+    r'(?m)^#### ([^\n]+)\n\s*'
     r'([\s\S]*?)\s*<details class="question">'
     r'<summary>([^<]+)</summary>([\s\S]*?)</details>'
 )

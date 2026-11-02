@@ -21,7 +21,13 @@ function renderMd(input) {
   // Tables keep their native layout; the outer scroll region handles
   // oversized formulas and columns without breaking cell alignment.
   const html=marked.parse(withAnswers);
-  return html.replace(/<table>([\s\S]*?)<\/table>/g,
+  // Turn native Markdown exercise headings into semantic, styled headings.
+  const withTitles=html.replace(/<h4>([^<]+)<\/h4>/g, (whole,title) =>
+    /^(练习|自测|第\s*\d+\s*题)/.test(title.trim())
+      ? '<h4 class="exercise-title">'+title+'</h4>'
+      : whole
+  );
+  return withTitles.replace(/<table>([\s\S]*?)<\/table>/g,
     (_whole,inside)=>'<div class="table-scroll" role="region" tabindex="0" aria-label="可横向滚动的数据表格"><table>'+inside+'</table></div>');
 
 }
