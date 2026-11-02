@@ -18,7 +18,12 @@ function renderMd(input) {
       marked.parse(body.trim())+'\n</details>'
   );
   // Keep legacy triple-tilde code fences outside raw HTML working as Markdown.
-  return marked.parse(withAnswers);
+  // Tables keep their native layout; the outer scroll region handles
+  // oversized formulas and columns without breaking cell alignment.
+  const html=marked.parse(withAnswers);
+  return html.replace(/<table>([\\s\\S]*?)<\\/table>/g,
+    (_whole,inside)=>'<div class="table-scroll" role="region" tabindex="0" aria-label="可横向滚动的数据表格"><table>'+inside+'</table></div>');
+
 }
 
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
@@ -63,7 +68,7 @@ const courseNav=chapters.map((c,i)=>{
 }).join("");
 const courseBody=chapters.map((c,i)=>{
  const topics=c.units.map(u=>'<section class="topic" id="'+esc(u.id)+'"><h3>'+esc(u.title)+'</h3><div class="lesson">'+u.html+'</div></section>').join("");
- return '<section class="chapter" id="'+c.id+'"><div class="chapter-heading"><p class="kicker">第 '+String(i).padStart(2,"0")+' 章</p><h2>'+esc(c.title)+'</h2><div class="chapter-intro">'+c.intro+'</div></div>'+topics+'</section>';
+ return '<section class="chapter" id="'+c.id+'"><div class="chapter-heading"><p class="kicker">第 '+String(i).padStart(2,"0")+' 章</p><h2>'+esc(c.title.replace(/^第\\s*\\d{1,2}\\s*章[\\s　]*/,''))+'</h2><div class="chapter-intro">'+c.intro+'</div></div>'+topics+'</section>';
 }).join("");
 const reviewNav=review.map(r=>'<a href="#'+r.id+'">'+esc(r.title)+'</a>').join("");
 const reviewBody=review.map(r=>'<section class="chapter review-section" id="'+r.id+'"><h2>'+esc(r.title)+'</h2><div class="lesson">'+r.html+'</div></section>').join("");
