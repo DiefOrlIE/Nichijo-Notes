@@ -66,6 +66,8 @@ async function open(page, type, label) {
   assert.equal(response.status(), 200);
   assert.equal(await page.locator(".sidebar").count(), 1);
   assert.equal(await page.locator("[data-tier]").count(), 0);
+  const brokenNesting = await page.locator("#reading code details.question, #reading pre details.question, #reading code .topic, #reading code .chapter").count();
+  assert.equal(brokenNesting,0,label + ": HTML has invalid nested code elements (unescaped comparison operator)");
   if (type === "course") {
     assert.equal(await page.locator("#reading > .chapter").count(), 16);
     assert.equal(await page.locator("#reading .topic").count(), 131);

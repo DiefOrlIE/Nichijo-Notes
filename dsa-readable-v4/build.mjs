@@ -7,11 +7,30 @@ import {marked} from "marked";
 const root=path.dirname(fileURLToPath(import.meta.url));
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"quality/stage-a-manifest.json"),"utf8"));
 marked.setOptions({gfm:true,breaks:false});
+
+function escapeRawCodeText(content) {
+  return content.replace(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[\da-f]+);)/gi,"&amp;")
+    .replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function sanitizeRawHtml(input) {
+  const codes=input
+    .replace(/(<code\b[^>]*>)([\s\S]*?)(<\/code>)/gi,
+      (_all,open,body,close)=>open+escapeRawCodeText(body)+close)
+    .replace(/(<pre\b[^>]*>)([\s\S]*?)(<\/pre>)/gi,
+      (_all,open,body,close)=>open+escapeRawCodeText(body)+close);
+  // Some older answers use raw <p> blocks with plain comparisons (i<n).
+  // Preserve their inline formatting tags but escape unknown '<' sequences.
+  return codes.replace(/(<p\b[^>]*>)([\s\S]*?)(<\/p>)/gi,
+    (_all,open,body,close)=>open+body
+      .replace(/<(?!\/?(?:strong|code|em|span|sub|sup|a|br|kbd|small|b|i)\b)/gi,"&lt;")
+      .replace(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[\da-f]+);)/gi,"&amp;")+close);
+}
+
 function renderMd(input) {
   // Compile Markdown in each <details> answer separately before rendering the page.
   // Marked treats raw HTML <details> as opaque; without this pass, educational
   // problem statements such as **题目** and fenced C++ appear as literal source.
-  const withAnswers = input.replace(
+  const withAnswers = sanitizeRawHtml(input).replace(
     /<details class="question">\s*<summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g,
     (_whole,summary,body) =>
       '<details class="question"><summary>'+summary+'</summary>\n'+
