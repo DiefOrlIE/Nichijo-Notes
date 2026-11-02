@@ -1,6 +1,7 @@
 name: Rebuild both embedded DSA serif fonts
 on:
   push:
+    branches: [main]
     paths:
       - ".github/workflows/build-dsa-all-fonts.yml"
       - "dsa-midterm/v2/chapters/**"

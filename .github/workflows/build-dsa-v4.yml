@@ -1,6 +1,7 @@
 name: Build DSA V4 after manuscript approval
 on:
   push:
+    branches: [main]
     paths:
       - "dsa-readable-v4/chapters/**"
       - "dsa-readable-v4/review/**"
