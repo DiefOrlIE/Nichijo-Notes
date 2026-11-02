@@ -645,42 +645,66 @@
 </blockquote>
 <h2>第一部分　概念、判断与简答（5 题，每题 4 分，共 20 分）</h2>
 <p>**1．【4 分】**解释抽象数据类型（ADT）与物理存储结构的区别，并举出一种 ADT 的两种实现。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>ADT 指对象及允许操作与行为的抽象规范，例如栈的 push/pop/top 与后进先出（2 分）；物理实现规定数据怎样放入内存及怎样执行操作，例如数组栈与链栈都可实现同一种栈（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>ADT 指对象及允许操作与行为的抽象规范，例如栈的 push/pop/top 与后进先出（2 分）；物理实现规定数据怎样放入内存及怎样执行操作，例如数组栈与链栈都可实现同一种栈（2 分）。</p>
+</details>
 
 <p>**2．【4 分】**判断并说明：双重循环一定是 Θ(n²)；任何递归算法的栈空间一定是 Θ(n)。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>两条都错（2 分）。内循环若按倍增执行 log n 次，双层可为 Θ(nlog n)；递归栈空间取决于最长同时活动的调用链，分治按 n/2 递归可为 Θ(log n)（各 1 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>两条都错（2 分）。内循环若按倍增执行 log n 次，双层可为 Θ(nlog n)；递归栈空间取决于最长同时活动的调用链，分治按 n/2 递归可为 Θ(log n)（各 1 分）。</p>
+</details>
 
 <p>**3．【4 分】**一个循环队列使用容量 m 的数组和 front、count 两个成员：给出判空、判满、下一入队下标公式。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>空 count=0（1 分）、满 count=m（1 分）、下一空位 (front+count)%m（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>空 count=0（1 分）、满 count=m（1 分）、下一空位 (front+count)%m（2 分）。</p>
+</details>
 
 <p>**4．【4 分】**在 KMP 中 lps[j−1] 表示什么？首次失配时为什么不能同时后移主串下标？</p>
-<details class="question"><summary>参考答案与评分点</summary><p>它给出已匹配前缀 P[0..j−1] 的最长公共真前后缀长度（2 分）；当前主串字符尚未与回退后新的模式字符比较，故只回退 j，i 保持不动（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>它给出已匹配前缀 P[0..j−1] 的最长公共真前后缀长度（2 分）；当前主串字符尚未与回退后新的模式字符比较，故只回退 j，i 保持不动（2 分）。</p>
+</details>
 
 <p>**5．【4 分】**设关键码互异，解释 BST 的中序性质及普通 BST 与 AVL 最坏查找性能的区别。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>BST 中序严格升序（1 分），但有序插入可退化成链，最坏 Θ(n)（1 分）；AVL 每个结点左右高度差不超过 1，树高 O(log n)，最坏查找 O(log n)（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>BST 中序严格升序（1 分），但有序插入可退化成链，最坏 Θ(n)（1 分）；AVL 每个结点左右高度差不超过 1，树高 O(log n)，最坏查找 O(log n)（2 分）。</p>
+</details>
 
 <h2>第二部分　手工模拟与计算（5 题，每题 10 分，共 50 分）</h2>
 <p>**6．【10 分】**有两条互不重叠、已按非递减顺序排列的单链表 A:1→4→7，B:2→4→5。要求不创建新数据结点，将它们合成非递增单链表。写出每次取出结点后的结果链，分析时间和额外空间。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>思路是每次选最小剩余结点、直接头插到结果。状态依次为 [1]、[2,1]、[4,2,1]、[4,4,2,1]、[5,4,4,2,1]、[7,5,4,4,2,1]（完整次序 6 分）；两个 4 都保留（2 分）；时间 Θ(m+n)、额外指针空间 Θ(1)（各 1 分）。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>思路是每次选最小剩余结点、直接头插到结果。状态依次为 [1]、[2,1]、[4,2,1]、[4,4,2,1]、[5,4,4,2,1]、[7,5,4,4,2,1]（完整次序 6 分）；两个 4 都保留（2 分）；时间 Θ(m+n)、额外指针空间 Θ(1)（各 1 分）。</p>
+</details>
 
 <p><strong>7．【10 分】</strong>(a) 将中缀表达式 <code>(A+B)*C-D/E</code> 转成后缀式（5 分）；(b) 六节车厢按 1,2,3,4,5,6 固定顺序进栈，判断出栈序列 3,2,5,4,1,6 是否可行，并给出操作轨迹（5 分）。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>(a) A B + C * D E / -；先括号加，再乘 C，同时 D/E，最后减（5 分）。(b) 可行。操作为 I1 I2 I3 O3 O2 I4 I5 O5 O4 O1 I6 O6（5 分）。要求每个 O 对应当时栈顶。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>(a) A B + C * D E / -；先括号加，再乘 C，同时 D/E，最后减（5 分）。(b) 可行。操作为 I1 I2 I3 O3 O2 I4 I5 O5 O4 O1 I6 O6（5 分）。要求每个 O 对应当时栈顶。</p>
+</details>
 
 <p><strong>8．【10 分】</strong>(a) 对 5 阶对称矩阵按下三角行优先压缩，求 A[1][4] 对应的 0-based 一维下标（4 分）；(b) 模式 <code>P="aabaaca"</code> 的 LPS 数组，说明第 5 位为何回退为 0（6 分）。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>(a) A[1][4] 用对称项 A[4][1]，下标 4×5/2+1=11（4 分）。(b) [0,1,0,1,2,0,1]（4 分）；P[0..5]="aabaac" 的任何非空真前缀都不等于其同长度真后缀，故 lps[5]=0（2 分）。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>(a) A[1][4] 用对称项 A[4][1]，下标 4×5/2+1=11（4 分）。(b) [0,1,0,1,2,0,1]（4 分）；P[0..5]="aabaac" 的任何非空真前缀都不等于其同长度真后缀，故 lps[5]=0（2 分）。</p>
+</details>
 
 <p>**9．【10 分】**二叉树前序为 <code>A B D E C F</code>，中序为 <code>D B E A C F</code>。重建树（6 分），写后序（2 分）与层序（2 分）。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>前序首项 A 为根，中序中 A 左边 D B E 属于左子树，右边 C F 属于右子树；左根 B，左右 D、E；右根 C、右孩子 F（6 分）。后序 D E B F C A（2 分）；层序 A B C D E F（2 分）。用两份原序列重新遍历核对。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>前序首项 A 为根，中序中 A 左边 D B E 属于左子树，右边 C F 属于右子树；左根 B，左右 D、E；右根 C、右孩子 F（6 分）。后序 D E B F C A（2 分）；层序 A B C D E F（2 分）。用两份原序列重新遍历核对。</p>
+</details>
 
 <p><strong>10．【10 分】</strong>(a) 按逐项插入法将 2,9,4,7,6 建成最大堆，写每次状态（5 分）；(b) 权值 2,3,5,8 构造哈夫曼树，计算 WPL（5 分）。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>(a) [2]，[9,2]，[9,2,4]，[9,7,4,2]，[9,7,4,2,6]（5 分）。(b) 2+3=5，5+5=10，8+10=18；WPL=5+10+18=33（5 分）。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>(a) [2]，[9,2]，[9,2,4]，[9,7,4,2]，[9,7,4,2,6]（5 分）。(b) 2+3=5，5+5=10，8+10=18；WPL=5+10+18=33（5 分）。</p>
+</details>
 
 <h2>第三部分　读代码、写算法与正确性（2 题，每题 15 分，共 30 分）</h2>
 <p>**11．【15 分】**从空 AVL 按顺序插入 <code>30,10,20,40,50</code>，每次出现失衡时写出类型与旋转，最后画出树。采用 bf=右高−左高。说明此结构为何可保证最坏 O(log n) 查找。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>前三项使结点 30 出现 LR：先左旋 10，再右旋 30，得根20、左10、右30（6 分）。插入40为30的右孩子；插入50使结点30出现 RR，对30左旋（4 分）。最后根20，左10，右子树根40、左右30和50（3 分）；AVL 维护每结点左右高度差绝对值≤1，树高 O(log n)（2 分）。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>前三项使结点 30 出现 LR：先左旋 10，再右旋 30，得根20、左10、右30（6 分）。插入40为30的右孩子；插入50使结点30出现 RR，对30左旋（4 分）。最后根20，左10，右子树根40、左右30和50（3 分）；AVL 维护每结点左右高度差绝对值≤1，树高 O(log n)（2 分）。</p>
+</details>
 
 <p>**12．【15 分】**写出只维护 <code>front</code>、<code>count</code> 的容量为 m 的循环队列入队与出队算法（伪代码或 C++ 均可），要求返回是否成功，并解释满容量为何是 m 而非 m−1。</p>
-<details class="question"><summary>逐步解答与评分点</summary><p>入队：若 count==m 失败；否则 a[(front+count)%m]=x，count++，成功（6 分）。出队：若 count==0 失败；否则读出 a[front]、front=(front+1)%m、count--，成功（6 分）。count 显式区分满与空，即使下一空位的表达式与 front 相等，也可以靠 count=m 表示满，因此全部 m 格可用（3 分）。单次 O(1)。</p></details>
+<details class="question"><summary>逐步解答与评分点</summary>
+<p>入队：若 count==m 失败；否则 a[(front+count)%m]=x，count++，成功（6 分）。出队：若 count==0 失败；否则读出 a[front]、front=(front+1)%m、count--，成功（6 分）。count 显式区分满与空，即使下一空位的表达式与 front 相等，也可以靠 count=m 表示满，因此全部 m 格可用（3 分）。单次 O(1)。</p>
+</details>
 
 <hr>
 <h2>交卷后如何复盘</h2>
@@ -690,19 +714,29 @@
 </blockquote>
 <h2>第一部分　概念判断及理由（每题 4 分，共 20 分）</h2>
 <p>**1．【4 分】**一个二叉树的前序与后序分别为 AB、BA。是否能唯一重建？给出两个不同的合法树。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>不能（2 分）。A 根、B 为左孩子，与 A 根、B 为右孩子，两者前序都是 AB，后序都是 BA（2 分）。缺少中序时不能凭序列区分左右单孩子。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>不能（2 分）。A 根、B 为左孩子，与 A 根、B 为右孩子，两者前序都是 AB，后序都是 BA（2 分）。缺少中序时不能凭序列区分左右单孩子。</p>
+</details>
 
 <p>**2．【4 分】**为什么数组二分查找的 O(log n) 总时间不能直接推广到普通单链表？</p>
-<details class="question"><summary>参考答案与评分点</summary><p>二分需要按下标 O(1) 定位中间元素（2 分）。单链表从头沿 next 才能找到中间结点，定位本身代价不再是 O(1)，因此仅关键码比较次数少不能推出总时间 O(log n)（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>二分需要按下标 O(1) 定位中间元素（2 分）。单链表从头沿 next 才能找到中间结点，定位本身代价不再是 O(1)，因此仅关键码比较次数少不能推出总时间 O(log n)（2 分）。</p>
+</details>
 
 <p>**3．【4 分】**判断：容量为 5 的 front/count 循环队列，front=3,count=5 时下一入队下标为 3，所以它应当是空队列。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>错误（2 分）。(3+5)%5=3 虽与 front 相同，但 count=5 明确表示满，不允许再入队；count=0 才表示空（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>错误（2 分）。(3+5)%5=3 虽与 front 相同，但 count=5 明确表示满，不允许再入队；count=0 才表示空（2 分）。</p>
+</details>
 
 <p>**4．【4 分】**在 Huffman 编码里，将某个内部结点的左右子树整体互换，是否改变 WPL？</p>
-<details class="question"><summary>参考答案与评分点</summary><p>不会改变（2 分）。所有叶子到根的边数不变，权也不变，故 Σ权×深度不变；可能会改变对应的具体 0/1 码字（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>不会改变（2 分）。所有叶子到根的边数不变，权也不变，故 Σ权×深度不变；可能会改变对应的具体 0/1 码字（2 分）。</p>
+</details>
 
 <p>**5．【4 分】**AVL 删除时能否在第一次旋转后必定停止高度检查？请解释。</p>
-<details class="question"><summary>参考答案与评分点</summary><p>不能（2 分）。删除可能使旋转后子树高度仍下降，需继续向更高祖先传播，沿路径可能发生多次调整；应检查旋转后的高度或重新平衡每层（2 分）。</p></details>
+<details class="question"><summary>参考答案与评分点</summary>
+<p>不能（2 分）。删除可能使旋转后子树高度仍下降，需继续向更高祖先传播，沿路径可能发生多次调整；应检查旋转后的高度或重新平衡每层（2 分）。</p>
+</details>
 
 <h2>第二部分　算法模拟及推导（每题 10 分，共 50 分）</h2>
 <p>**6．【10 分】**考虑代码：</p>
@@ -711,22 +745,32 @@
     int ans=0;
     for(int i=0;i&lt;n;++i)++ans;
     return ans+f(n/2);
-}</code></pre>
-
+}
+</code></pre>
 <p>写出 f(8) 的返回值、调用规模序列、时间复杂度与额外栈空间复杂度。说明计算过程。</p>
-<details class="question"><summary>完整解答与评分点</summary><p>调用 n 为 8→4→2→1→0（2 分）；各层非递归工作量为 8、4、2、1，返回值为 15（3 分）。总工作 n+n/2+n/4+⋯=Θ(n)（3 分）；递归层数 Θ(log n)，每层常数局部变量，栈空间 Θ(log n)（2 分）。</p></details>
+<details class="question"><summary>完整解答与评分点</summary>
+<p>调用 n 为 8→4→2→1→0（2 分）；各层非递归工作量为 8、4、2、1，返回值为 15（3 分）。总工作 n+n/2+n/4+⋯=Θ(n)（3 分）；递归层数 Θ(log n)，每层常数局部变量，栈空间 Θ(log n)（2 分）。</p>
+</details>
 
 <p><strong>7．【10 分】</strong>(a) 从 6 个车厢 1–6 固定入栈，判断目标出栈 <code>3,2,5,6,4,1</code> 是否可行，写完整 I/O 轨迹（5 分）；(b) 在中缀式 <code>a*x-b/x^2</code> 中，只记录<strong>运算符栈</strong>的 I（入）与 O（出）事件次序（5 分），设幂运算优先于乘除，乘除优先于加减。</p>
-<details class="question"><summary>完整解答与评分点</summary><p>(a) 可行：I1 I2 I3 O3 O2 I4 I5 O5 I6 O6 O4 O1（5 分）。(b) 读 *：I；读 −：O(*) 后 I(−)；读 /：I(/)；读 ^：I(^)；结束后 O(^),O(/),O(−)。所以按时间次序为 <code>I O I I I O O O</code>（5 分）。只统计运算符事件，操作数直接输出。</p></details>
+<details class="question"><summary>完整解答与评分点</summary>
+<p>(a) 可行：I1 I2 I3 O3 O2 I4 I5 O5 I6 O6 O4 O1（5 分）。(b) 读 *：I；读 −：O(*) 后 I(−)；读 /：I(/)；读 ^：I(^)；结束后 O(^),O(/),O(−)。所以按时间次序为 <code>I O I I I O O O</code>（5 分）。只统计运算符事件，操作数直接输出。</p>
+</details>
 
 <p><strong>8．【10 分】</strong>(a) 三对角矩阵 n=7、行压缩 0-based 时，B[12] 对应 A 哪个位置（4 分）；(b) P=&quot;abababca&quot; 的 LPS 数组与主串匹配失配时回退 <code>j=6</code> 的新值（6 分）。</p>
-<details class="question"><summary>完整解答与评分点</summary><p>(a) i=⌊(12+1)/3⌋=4，j=12−2×4=4，故 A[4][4]（4 分）。(b) P 下标 0..7 的 LPS 为 [0,0,1,2,3,4,0,1]（4 分）；此前已匹配六字符时失配，使用 lps[5]=4，故 j 从 6 回退至 4，主串下标暂不变（2 分）。</p></details>
+<details class="question"><summary>完整解答与评分点</summary>
+<p>(a) i=⌊(12+1)/3⌋=4，j=12−2×4=4，故 A[4][4]（4 分）。(b) P 下标 0..7 的 LPS 为 [0,0,1,2,3,4,0,1]（4 分）；此前已匹配六字符时失配，使用 lps[5]=4，故 j 从 6 回退至 4，主串下标暂不变（2 分）。</p>
+</details>
 
 <p>**9．【10 分】**某一般树用“首孩子 firstChild、下一个兄弟 nextSibling”保存：A.firstChild=B；B.nextSibling=C；C.nextSibling=D；D.firstChild=E；A.nextSibling=F；F.firstChild=G。请画出原森林，说明有多少棵树，并写 A 这一棵树的前序（按孩子从左到右）（10 分）。</p>
-<details class="question"><summary>完整解答与评分点</summary><p>森林有两棵根树 A、F（2 分）。A 的直接孩子 B、C、D（3 分），D 的直接孩子 E（1 分）；F 的孩子 G（1 分）。A 树从根出发、按孩子从左到右的前序是 A B C D E（3 分）。特别注意 A.nextSibling=F 表示另一棵树的根，而不是 A 的孩子。</p></details>
+<details class="question"><summary>完整解答与评分点</summary>
+<p>森林有两棵根树 A、F（2 分）。A 的直接孩子 B、C、D（3 分），D 的直接孩子 E（1 分）；F 的孩子 G（1 分）。A 树从根出发、按孩子从左到右的前序是 A B C D E（3 分）。特别注意 A.nextSibling=F 表示另一棵树的根，而不是 A 的孩子。</p>
+</details>
 
 <p><strong>10．【10 分】</strong>(a) 最大堆初始化为数组 [3,8,5,1,6]，采用<strong>底向上筛选</strong>，写最终数组并核对堆性质（5 分）；(b) 权 3、5、6、8 求 Huffman WPL，写合并顺序（5 分）。</p>
-<details class="question"><summary>完整解答与评分点</summary><p>(a) i=1 时父 8 已大于 1、6，无需变化；i=0 时 3 与较大孩子 8 交换得 [8,3,5,1,6]，下标1的 3 与较大孩子 6 交换得 [8,6,5,1,3]（5 分）。(b) 3+5=8；6+8=14；8+14=22；WPL=8+14+22=44（5 分）。</p></details>
+<details class="question"><summary>完整解答与评分点</summary>
+<p>(a) i=1 时父 8 已大于 1、6，无需变化；i=0 时 3 与较大孩子 8 交换得 [8,3,5,1,6]，下标1的 3 与较大孩子 6 交换得 [8,6,5,1,3]（5 分）。(b) 3+5=8；6+8=14；8+14=22；WPL=8+14+22=44（5 分）。</p>
+</details>
 
 <h2>第三部分　算法设计与代码解释（每题 15 分，共 30 分）</h2>
 <p><strong>11．【15 分】<strong>一棵二叉树存为指针结点 <code>Node{key,left,right}</code>。要求</strong>不用递归</strong>，对所有结点交换左右子树，返回原树的新根地址。给出完整 C++ 核心函数及时间和辅助空间复杂度。</p>
@@ -747,13 +791,15 @@ Node* mirror(Node* root){
         if(p-&gt;right)st.push(p-&gt;right);
     }
     return root;
-}</code></pre>
-
+}
+</code></pre>
 <p>若函数末尾直接 return p，p 是最后弹出的某结点，未必是根。使用上面的深度优先栈，未处理结点数量受每条路径上的未访问分支数约束，最坏 O(h)。</p>
 </details>
 
 <p>**12．【15 分】**假设 BST 使用互异关键码且删除时采用中序后继。给出删除一个拥有两个孩子的结点的步骤（5 分）；再解释如果要求维护 AVL，递归返回时还需要做哪些事情（5 分）；最后说明算法的时间复杂度（5 分）。</p>
-<details class="question"><summary>参考步骤与评分点</summary><p>步骤一：在待删结点右子树沿 left 走到最小关键码，即中序后继；把后继键值复制到待删位置；随后在原右子树里删除后继，并回接右子树根（5 分）。步骤二：如果是 AVL，返回每一层时更新当前结点的左右子树高度，按 bf=右高−左高判断是否失衡，针对 LL/LR/RR/RL 旋转，并把新子树根回接上一层（5 分）。普通 BST 删除最坏 O(h)，其中 h 可能 Θ(n)；AVL 的高度 O(log n)，删除及沿祖先路径再平衡最坏 O(log n)（5 分）。</p></details>
+<details class="question"><summary>参考步骤与评分点</summary>
+<p>步骤一：在待删结点右子树沿 left 走到最小关键码，即中序后继；把后继键值复制到待删位置；随后在原右子树里删除后继，并回接右子树根（5 分）。步骤二：如果是 AVL，返回每一层时更新当前结点的左右子树高度，按 bf=右高−左高判断是否失衡，针对 LL/LR/RR/RL 旋转，并把新子树根回接上一层（5 分）。普通 BST 删除最坏 O(h)，其中 h 可能 Θ(n)；AVL 的高度 O(log n)，删除及沿祖先路径再平衡最坏 O(log n)（5 分）。</p>
+</details>
 
 <hr>
 <h2>B 卷纠错规则</h2>
