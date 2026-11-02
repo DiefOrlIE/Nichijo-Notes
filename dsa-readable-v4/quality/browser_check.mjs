@@ -10,11 +10,16 @@ async function open(page,type,label){
  assert.equal(await page.locator("[data-tier]").count(),0);
  if(type==="course"){
   assert.equal(await page.locator("#reading > .chapter").count(),16);
+  assert.ok((await page.locator("#v4-stack-exercises details.question").first().innerText()).includes("练习 1"));
   assert.equal(await page.locator("#reading .topic").count(),131);
-  assert.equal(await page.locator("#reading details.question").count(),82);
+  assert.equal(await page.locator("#reading details.question").count(),86);
   assert.equal(await page.locator("#v4-lps-fallback").count(),1);
   assert.equal(await page.locator("#ch15-dsu").count(),1);
   assert.ok((await page.locator("#ch15").innerText()).includes("散列"));
+  const stackExercise=page.locator("#v4-stack-exercises details.question").first();
+  await stackExercise.locator("summary").click();
+  assert.ok((await stackExercise.innerText()).includes("完整题意") || (await stackExercise.innerText()).includes("题目。"));
+  assert.ok((await stackExercise.locator("strong").count())>=3,"Exercise Markdown not rendered into paragraphs");
  }else{
   assert.equal(await page.locator("#reading > .chapter").count(),6);
   assert.equal(await page.locator("#reading details.question").count(),92);
