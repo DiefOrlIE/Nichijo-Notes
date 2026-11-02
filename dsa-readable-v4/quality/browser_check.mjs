@@ -63,6 +63,32 @@ async function open(page, type, label) {
     await validateVisibleQuestions(page, 92, label);
   }
 
+
+  // Inspect the *entire* rendered manuscript, not only exercise controls.
+  // Malformed legacy inline HTML such as <code>i<n</code> previously swallowed
+  // subsequent paragraphs and question blocks into a single CODE element.
+  const bodyProblems = await page.locator("#reading").evaluate(root => {
+    const failures = [];
+    for (const [i, code] of [...root.querySelectorAll(".lesson code")].entries()) {
+      if (code.querySelector("p,details,section,h1,h2,h3,h4,table,pre,ol,ul,div")) {
+        failures.push({kind:"code-swallowed-body",index:i,snippet:code.textContent.slice(0,120)});
+      }
+    }
+    for (const [i, paragraph] of [...root.querySelectorAll(".lesson p, .lesson li")].entries()) {
+      const t=(paragraph.textContent||"").trim();
+      if (/^(?:~~~(?:cpp)?|#{1,5}\s|\*\*[^*]{2,32}\*\*)/.test(t)) {
+        failures.push({kind:"raw-markdown",index:i,snippet:t.slice(0,120)});
+      }
+    }
+    for (const [i, h] of [...root.querySelectorAll(".lesson h4")].entries()) {
+      if ((h.textContent||"").trim().startsWith("####")) {
+        failures.push({kind:"markdown-heading-literal",index:i});
+      }
+    }
+    return failures.slice(0,25);
+  });
+  assert.deepEqual(bodyProblems, [], label + ": full manuscript body has broken HTML or Markdown");
+
   const tableInfo = await page.locator(".lesson .table-scroll > table").evaluateAll(tables =>
     tables.map(table => ({
       computed:getComputedStyle(table).display,
