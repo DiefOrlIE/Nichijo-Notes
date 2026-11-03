@@ -105,6 +105,21 @@ async function open(page, type, label) {
     assert.ok(titles.every((title,i)=>/^\d{2}\.\d+\s+\S/.test(title) && title.length<=38),label+": long or unnumbered knowledge title");
   }
 
+
+  const codeColor=await page.locator("#reading pre.code-block .hljs-keyword, #reading pre.code-block .hljs-type, #reading pre.code-block .hljs-number").first()
+    .evaluate(token=>({
+      highlighted:getComputedStyle(token).color,
+      base:getComputedStyle(token.closest("pre")).color
+    }));
+  assert.notEqual(codeColor.highlighted,codeColor.base,label+": syntax tokens have no distinct computed color");
+  if(type==="course"){
+    const sizes=await page.locator("#reading .topic").first().evaluate(topic=>({
+      heading:parseFloat(getComputedStyle(topic.querySelector("h3")).fontSize),
+      epigraph:parseFloat(getComputedStyle(topic.querySelector(".section-epigraph")).fontSize)
+    }));
+    assert.ok(sizes.epigraph < sizes.heading,label+": teaching epigraph is not visually subordinate");
+  }
+
   const tableInfo = await page.locator(".lesson .table-scroll > table").evaluateAll(tables =>
     tables.map(table => ({
       computed:getComputedStyle(table).display,
@@ -149,8 +164,11 @@ try {
   await page.reload({waitUntil:"networkidle"});
   assert.equal(await page.locator("#v4-list-exercises details.question").first()
     .evaluate(n => n.open), true);
+  const lightSyntax=await page.locator("pre.code-block .hljs-keyword").first().evaluate(el=>getComputedStyle(el).color);
   await page.locator("#theme-toggle").click();
   assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+  const darkSyntax=await page.locator("pre.code-block .hljs-keyword").first().evaluate(el=>getComputedStyle(el).color);
+  assert.notEqual(lightSyntax,darkSyntax,"C++ syntax palette must change with dark mode");
   await page.screenshot({path:"v4-desktop.png",fullPage:false});
   await desktop.close();
 
