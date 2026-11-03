@@ -12,7 +12,7 @@
 <div class="layout">
 <aside class="sidebar" id="sidebar" aria-label="学习目录">
 <div class="sidebar-heading">
-<p class="site">N I C H I J O · N O T E S</p>
+<a class="site home-link" href="../" aria-label="返回 Nichijo Notes 首页" title="返回 Nichijo Notes 首页">N I C H I J O · N O T E S</a>
 <h2>数据结构与算法</h2>
 <p class="sub">V4 · 先文字讲稿，后网页呈现</p>
 </div>
@@ -1203,13 +1203,12 @@
 <h2>第二部分　算法模拟及推导（每题 10 分，共 50 分）</h2>
 <h4 class="exercise-title">第 6 题 · 10 分</h4>
 <p><strong>题目。</strong> 考虑代码：</p>
-<pre><code class="language-cpp">int f(int n){
-    if(n&lt;=0)return 0;
-    int ans=0;
-    for(int i=0;i&lt;n;++i)++ans;
-    return ans+f(n/2);
-}
-</code></pre>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span>{
+    <span class="hljs-keyword">if</span>(n&lt;=<span class="hljs-number">0</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)++ans;
+    <span class="hljs-keyword">return</span> ans+<span class="hljs-built_in">f</span>(n/<span class="hljs-number">2</span>);
+}</code></pre>
 <p>写出 f(8) 的返回值、调用规模序列、时间复杂度与额外栈空间复杂度。说明计算过程。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
 <p><strong>解题思路：</strong>逐层写出调用规模 n=8、4、2、1、0，以及每层自己的循环次数。计算返回值时先从最深层回传。</p>
@@ -1264,22 +1263,21 @@
 <p><strong>解题思路：</strong>使用一个显式栈保存待处理结点，每次弹出后交换左右孩子，并将新的两个真实孩子压栈。</p>
 <p><strong>参考解答与评分：</strong>关键是用栈保存待处理结点，每次弹出后交换左右孩子（10 分），维护 root 并最终返回原 root（2 分）；每结点入出栈一次，时间 Θ(n)、栈空间 O(h)，其中 h 是二叉树高度（3 分）。</p>
 
-<pre><code class="language-cpp">#include &lt;stack&gt;
-#include &lt;utility&gt;
-struct Node{int key;Node* left;Node* right;};
-Node* mirror(Node* root){
-    if(!root)return nullptr;
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stack&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;utility&gt;</span></span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span>{<span class="hljs-type">int</span> key;Node* left;Node* right;};
+<span class="hljs-function">Node* <span class="hljs-title">mirror</span><span class="hljs-params">(Node* root)</span></span>{
+    <span class="hljs-keyword">if</span>(!root)<span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
     std::stack&lt;Node*&gt; st;
-    st.push(root);
-    while(!st.empty()){
-        Node* p=st.top();st.pop();
-        std::swap(p-&gt;left,p-&gt;right);
-        if(p-&gt;left)st.push(p-&gt;left);
-        if(p-&gt;right)st.push(p-&gt;right);
+    st.<span class="hljs-built_in">push</span>(root);
+    <span class="hljs-keyword">while</span>(!st.<span class="hljs-built_in">empty</span>()){
+        Node* p=st.<span class="hljs-built_in">top</span>();st.<span class="hljs-built_in">pop</span>();
+        std::<span class="hljs-built_in">swap</span>(p-&gt;left,p-&gt;right);
+        <span class="hljs-keyword">if</span>(p-&gt;left)st.<span class="hljs-built_in">push</span>(p-&gt;left);
+        <span class="hljs-keyword">if</span>(p-&gt;right)st.<span class="hljs-built_in">push</span>(p-&gt;right);
     }
-    return root;
-}
-</code></pre>
+    <span class="hljs-keyword">return</span> root;
+}</code></pre>
 <p>若函数末尾直接 return p，p 是最后弹出的某结点，未必是根。使用上面的深度优先栈，未处理结点数量受每条路径上的未访问分支数约束，最坏 O(h)。</p>
 <p><strong>过程复核：</strong>循环中应把交换后存在的左、右孩子压入栈；它们的左右相对位置已交换，因此用新的指针即可。始终保存最初的 root 并返回它，不要返回最后一次弹出的临时结点。</p>
 </details>

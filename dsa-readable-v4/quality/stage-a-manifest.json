@@ -2,115 +2,115 @@
   "chapters": [
     {
       "name": "ch00.md",
-      "chars": 9003,
+      "chars": 9328,
       "sections": 7,
       "questions": 5,
-      "sha256": "c200c7c0511f18b6a2fcb7d1915ac716e2de571813ed0d0bf66f613d6ab5920c"
+      "sha256": "2e11566bc469663daaa91d790be2849957afec5b0fd9fa86950235a7b4a9a3fb"
     },
     {
       "name": "ch01.md",
-      "chars": 7329,
+      "chars": 7742,
       "sections": 9,
       "questions": 5,
-      "sha256": "b32a50ec10243eb0e89d5b90b298cc7bd24974725d56453824d1160d77f7978d"
+      "sha256": "b8696f2a15647ade18ca23bdc04566a7de5d72d481acea3500f5b92544e89375"
     },
     {
       "name": "ch02.md",
-      "chars": 8329,
+      "chars": 8696,
       "sections": 8,
       "questions": 5,
-      "sha256": "a6c8e0a9d4a05854442b3218d2e3a30be9739767cb66cac10ec970d0a7189de8"
+      "sha256": "8034e1bd5b195a762c5db1012b589c5fac91d5045688d01cd9fb410d84e4e897"
     },
     {
       "name": "ch03.md",
-      "chars": 12215,
+      "chars": 12575,
       "sections": 8,
       "questions": 6,
-      "sha256": "e0013fefef74369f0652238ee907f793a6dc0441c8893f726fe79763eb29a978"
+      "sha256": "5fcb28630a6b719c88665a9dacb96bbef99c0ef11beb1ace4023ce636ca3f46b"
     },
     {
       "name": "ch04.md",
-      "chars": 11103,
+      "chars": 11466,
       "sections": 8,
       "questions": 6,
-      "sha256": "ca337a7c1a8be11d6bf6b444ba8fa74030d1156d3b9f801b2eec7eb6ceb04d0a"
+      "sha256": "b550521e948d99cf2a8c7ba7adeede69e0a6b175b8b12b1e7312044bc8c4e4e9"
     },
     {
       "name": "ch05.md",
-      "chars": 8104,
+      "chars": 8472,
       "sections": 8,
       "questions": 5,
-      "sha256": "8f8106f1e075069a1acb054dfa17b141bfa6f729954b37dbdc6f985f9494485e"
+      "sha256": "ee47011b1149a94053211ab78cfde817556d722a00c0ec4c8779d0df4cab327d"
     },
     {
       "name": "ch06.md",
-      "chars": 9901,
+      "chars": 10215,
       "sections": 7,
       "questions": 5,
-      "sha256": "fbddafc18a9c8aeefdaddc5ebb342ee3fa87e1c7757b2ba47b99c7c5edaf535f"
+      "sha256": "ad30009331d0058302a8e412ef7f3fe2cdf372d312f9ee0a3dd05cfe75affaec"
     },
     {
       "name": "ch07.md",
-      "chars": 8614,
+      "chars": 8985,
       "sections": 8,
       "questions": 5,
-      "sha256": "9352b8227bb325618fdad9fa9dad03a2149c799fd616710cb9a305fe025ef14d"
+      "sha256": "62f4fda4cb9f8187c000786fe55d22daba64f7908c106622f7e29805ee3a974f"
     },
     {
       "name": "ch08.md",
-      "chars": 8844,
+      "chars": 9212,
       "sections": 8,
       "questions": 5,
-      "sha256": "56ac8ceacb22c6077e3ec9f7c12e3bbcddeba99a8a2acb2e3c86331316b305f4"
+      "sha256": "187c8d4ad90cdcbed27728a5a93a27f0fec65d53fda844f3335176685d514252"
     },
     {
       "name": "ch09.md",
-      "chars": 7491,
+      "chars": 7805,
       "sections": 7,
       "questions": 5,
-      "sha256": "e8a1908153b26b97f1dfd4688a1e8a3d5a022690574e36ed481f2dd3c90b11a4"
+      "sha256": "0c25811ee4d501a739da082c82162cc9ceaf2f9d78eb009969e6e9a45811f6c2"
     },
     {
       "name": "ch10.md",
-      "chars": 6481,
+      "chars": 6852,
       "sections": 8,
       "questions": 5,
-      "sha256": "7383475e73c4e9a79c2fe140e4307692bda988895092b23ee0f0131e5b8b73a6"
+      "sha256": "b37098af43c14a20e7aa1454beb7a74791d00d7bdace512698b0e1cd341f64c1"
     },
     {
       "name": "ch11.md",
-      "chars": 9464,
+      "chars": 9794,
       "sections": 7,
       "questions": 5,
-      "sha256": "0a83b4ed25aede3a48fa3bb971f6c41d4e751979933828b470f096585980df1b"
+      "sha256": "d4b7fbfc18ed5a3a33dcb494e9f68f2ab2bc664d0196fd61a5cacd42ad157763"
     },
     {
       "name": "ch12.md",
-      "chars": 5853,
+      "chars": 6138,
       "sections": 6,
       "questions": 5,
-      "sha256": "0563de21dd42480b01bd94ffc6996616778ce9321d09823ba2c7b73925497c3b"
+      "sha256": "4e7e68f1805012ceb0db93533259451ac7d5666d8e01d738605b4a6a50e9b63d"
     },
     {
       "name": "ch13.md",
-      "chars": 6469,
+      "chars": 6842,
       "sections": 8,
       "questions": 5,
-      "sha256": "3f1b798b994134ae35f713ff386a5004ad6f4b785d40fda53fde4e0a52443e65"
+      "sha256": "dd513c6b2c1a92758cf72b1c1ac01b94ec6ea24392ddf3b4c2e1dbe406144fad"
     },
     {
       "name": "ch14.md",
-      "chars": 9039,
+      "chars": 9464,
       "sections": 9,
       "questions": 5,
-      "sha256": "8bf344483fb6b2078b22b6535d1eb0f1b5ef97e3138369b21cf489e2ca0e67e8"
+      "sha256": "5b6c86c6c77bf859c0fe789930df07729f8944dc248adf05294c2d813e0a4d2d"
     },
     {
       "name": "ch15.md",
-      "chars": 28674,
+      "chars": 29376,
       "sections": 15,
       "questions": 9,
-      "sha256": "08f070e6ea4f909da0383996cd2fdc8728a61c7a45f2443e5aa235ac90102963"
+      "sha256": "08004d030ba2529df7a6a7ef91a9ac277627f5a7171c2c83d23bddab88ca24f8"
     }
   ],
   "review": [
