@@ -167,6 +167,12 @@ try {
   }));
   await page.waitForTimeout(160);
   const sideLink=page.locator('#sidebar .contents a[href="#'+laterId+'"]');
+  console.log("SCROLLSPY TRACE",await page.evaluate(id=>({
+    scrollY,scrollHeight:document.documentElement.scrollHeight,
+    targetTop:document.getElementById(id).getBoundingClientRect().top,
+    active:[...document.querySelectorAll("#sidebar a.active")].map(x=>x.hash),
+    expected:id,navWidth:document.getElementById("sidebar").clientWidth
+  }),laterId));
   assert.equal(await sideLink.getAttribute("aria-current"),"location");
   assert.ok(await sideLink.evaluate(node=>node.closest("details.nav-chapter")?.open));
   const sideBounds=await sideLink.evaluate(node=>{
