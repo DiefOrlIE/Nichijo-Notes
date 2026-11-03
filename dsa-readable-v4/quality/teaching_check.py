@@ -53,7 +53,7 @@ for path in CHAPTERS:
     units = re.findall(r"(?m)^## (.+?) \{#([a-z0-9-]+)\}\s*$", text)
     assert len(units) >= 6, (path.name, "too few teaching units")
     number = int(path.stem[2:])
-    title = re.search(r"(?m)^# 第 (\\d{2}) 章　(.+)$", text)
+    title = re.search(r"(?m)^# 第 (\d{2}) 章　(.+)$", text)
     assert title and int(title.group(1)) == number and len(title.group(2)) <= 30, (
         path.name, "chapter title must be a concise numbered knowledge area"
     )
@@ -67,7 +67,7 @@ for path in CHAPTERS:
     assert text.count('<p class="section-epigraph">') == len(units), (
         path.name, "every former narrative heading must be preserved as a small epigraph"
     )
-    assert not re.search(r'</p>\\n(?=\\S)', text), (
+    assert not re.search(r'<p class="(?:chapter|section)-epigraph">[^\n]*</p>\n(?=\S)', text), (
         path.name, "raw HTML paragraph must be separated from Markdown by an empty line"
     )
     ids = [identifier for _, identifier in units]
