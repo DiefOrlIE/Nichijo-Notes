@@ -63,9 +63,9 @@ function setMenu(open){
 }
 menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
 shade.addEventListener('click',()=>setMenu(false));
-$('#sidebar a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{temporarilyPauseFollowing();setMenu(false);}));
+$$('#sidebar a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{temporarilyPauseFollowing();setMenu(false);}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
-const links=$('#sidebar a[href^="#"]');
+const links=$$('#sidebar a[href^="#"]');
 const linkById=new Map(links.map(a=>[decodeURIComponent(a.hash.slice(1)),a]));
 let activeId='';
 let manualNavUntil=0;
