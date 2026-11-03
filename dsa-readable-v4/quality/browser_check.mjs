@@ -243,6 +243,19 @@ try {
     .evaluate(n => n.classList.contains("open")), true);
 
   const mobileActive=phone.locator('#sidebar .contents a[href="#'+mobileId+'"]');
+  console.log("MOBILE SCROLLSPY TRACE",await phone.evaluate(id=>{
+    let current="start";
+    for(const e of document.querySelectorAll(".topic,.chapter")){
+      if(e.getBoundingClientRect().top<=115)current=e.id;
+      else if(current!=="start")break;
+    }
+    return {
+      expected:id,current,actual:[...document.querySelectorAll("#sidebar a.active")].map(a=>a.hash),
+      targetTop:document.getElementById(id)?.getBoundingClientRect().top,
+      scrollY:window.scrollY,
+      sidebarOpen:document.getElementById("sidebar").classList.contains("open")
+    };
+  },mobileId),"PAGE ERRORS",errors);
   assert.equal(await mobileActive.getAttribute("aria-current"),"location");
   const mobileVisible=await mobileActive.evaluate(node=>{
     const a=node.getBoundingClientRect(),s=node.closest("#sidebar").getBoundingClientRect();
