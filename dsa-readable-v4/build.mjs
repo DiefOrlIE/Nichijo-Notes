@@ -41,19 +41,27 @@ function sanitizeRawHtml(input) {
 }
 
 function renderMd(input) {
-  // Compile Markdown in each <details> answer separately before rendering the page.
-  // Marked treats raw HTML <details> as opaque; without this pass, educational
-  // problem statements such as **题目** and fenced C++ appear as literal source.
-  const withAnswers = sanitizeRawHtml(input).replace(
+  // Protect the already-rendered answer bodies from a second Markdown pass.
+  // Re-parsing an HTML <details> that contains blank lines inside a code fence
+  // can unexpectedly nest <pre><code> around the next questions.
+  const answers=[];
+  const withAnswers=sanitizeRawHtml(input).replace(
     /<details class="question">\s*<summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g,
-    (_whole,summary,body) =>
-      '<details class="question"><summary>'+summary+'</summary>\n'+
-      marked.parse(body.trim())+'\n</details>'
+    (_whole,summary,body)=>{
+      const i=answers.length;
+      answers.push('<details class="question"><summary>'+summary+'</summary>\n'+
+        marked.parse(body.trim())+'\n</details>');
+      return '\n\nNICHJOANSWERBLOCK'+i+'END\n\n';
+    }
   );
-  // Keep legacy triple-tilde code fences outside raw HTML working as Markdown.
-  // Tables keep their native layout; the outer scroll region handles
-  // oversized formulas and columns without breaking cell alignment.
-  const html=marked.parse(withAnswers);
+  const pageHtml=marked.parse(withAnswers);
+  let restored=0;
+  const html=pageHtml.replace(/<p>NICHJOANSWERBLOCK(\d+)END<\/p>/g,
+    (_token,i)=>{
+      ++restored;
+      return answers[Number(i)];
+    });
+  if(restored!==answers.length)throw Error('Unrestored exercise answers');
   // Turn native Markdown exercise headings into semantic, styled headings.
   const withTitles=html.replace(/<h4>([^<]+)<\/h4>/g, (whole,title) =>
     /^(练习|自测|第\s*\d+\s*题)/.test(title.trim())
