@@ -52,6 +52,24 @@ for path in CHAPTERS:
     text = path.read_text(encoding="utf8")
     units = re.findall(r"(?m)^## (.+?) \{#([a-z0-9-]+)\}\s*$", text)
     assert len(units) >= 6, (path.name, "too few teaching units")
+    number = int(path.stem[2:])
+    title = re.search(r"(?m)^# 第 (\\d{2}) 章　(.+)$", text)
+    assert title and int(title.group(1)) == number and len(title.group(2)) <= 30, (
+        path.name, "chapter title must be a concise numbered knowledge area"
+    )
+    for index, (heading, _) in enumerate(units, 1):
+        assert heading.startswith(f"{number:02d}.{index} ") and len(heading) <= 38, (
+            path.name, index, "section must use sequential numbering and a concise topic"
+        )
+    assert text.count('<p class="chapter-epigraph">') == 1, (
+        path.name, "missing relocated chapter epigraph"
+    )
+    assert text.count('<p class="section-epigraph">') == len(units), (
+        path.name, "every former narrative heading must be preserved as a small epigraph"
+    )
+    assert not re.search(r'</p>\\n(?=\\S)', text), (
+        path.name, "raw HTML paragraph must be separated from Markdown by an empty line"
+    )
     ids = [identifier for _, identifier in units]
     assert len(ids) == len(set(ids)), (path.name, "duplicate anchors")
     sections = re.split(r"(?m)^## ", text)[1:]
@@ -102,4 +120,5 @@ assert review_total == 92, review_total
 print("PASS independent visible questions: 86 course + 68 practice + 24 mocks")
 print("PASS every solution is separate and only accessible through a collapsible control")
 print("PASS 16 chapters, 131 instructional units and coherent review source inventory")
+print("PASS 16 numbered chapter headings, 131 concise topic titles and preserved epigraphs")
 print(json.dumps(stats, ensure_ascii=False, indent=2))
