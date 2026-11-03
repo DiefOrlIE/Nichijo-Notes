@@ -89,6 +89,22 @@ async function open(page, type, label) {
   });
   assert.deepEqual(bodyProblems, [], label + ": full manuscript body has broken HTML or Markdown");
 
+
+  const home=page.locator(".sidebar-heading .home-link");
+  assert.equal(await home.count(),1,label+": home navigation missing");
+  assert.equal(await home.getAttribute("href"),"../",label+": home must point to the actual site root");
+  const cppBlocks=page.locator("#reading pre.code-block code.hljs.language-cpp");
+  assert.ok(await cppBlocks.count()>0,label+": C++ syntax highlighted blocks missing");
+  const highlightCount=await page.locator("#reading pre.code-block .hljs-keyword, #reading pre.code-block .hljs-type, #reading pre.code-block .hljs-string, #reading pre.code-block .hljs-number").count();
+  assert.ok(highlightCount>10,label+": token spans not produced by the highlighter");
+  if(type==="course"){
+    assert.equal(await page.locator("#reading .topic > h3").count(),131);
+    assert.equal(await page.locator("#reading .lesson > .section-epigraph").count(),131);
+    assert.equal(await page.locator("#reading .chapter-epigraph").count(),16);
+    const titles=await page.locator("#reading .topic > h3").allTextContents();
+    assert.ok(titles.every((title,i)=>/^\d{2}\.\d+\s+\S/.test(title) && title.length<=38),label+": long or unnumbered knowledge title");
+  }
+
   const tableInfo = await page.locator(".lesson .table-scroll > table").evaluateAll(tables =>
     tables.map(table => ({
       computed:getComputedStyle(table).display,

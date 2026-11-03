@@ -39,6 +39,9 @@ button{font:inherit;cursor:pointer}
 .sidebar{height:100vh;position:sticky;top:0;overflow:auto;border-right:1px solid var(--line);background:var(--soft);padding:28px 22px 42px}
 .sidebar-heading h2{font-size:1.08rem;margin:3px 0 5px}
 .sidebar-heading .site,.eyebrow{font:600 10px/1.4 system-ui,sans-serif;letter-spacing:.19em;color:var(--accent)}
+.sidebar-heading .home-link{display:inline-block;max-width:100%;text-decoration:none;border-bottom:1px solid transparent;padding:0 0 3px;transition:border-color .15s ease,color .15s ease}
+.sidebar-heading .home-link:hover,.sidebar-heading .home-link:focus-visible{border-bottom-color:currentColor}
+.sidebar-heading .home-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 .sidebar-heading .sub{font-size:.8rem;color:var(--muted);line-height:1.65;margin:3px 0 22px}
 .index-links{display:flex;flex-direction:column;gap:6px;padding:0 0 18px;border-bottom:1px solid var(--line);margin-bottom:16px;font-size:.86rem}
 .index-links a{text-decoration:none}
@@ -81,6 +84,8 @@ button{font:inherit;cursor:pointer}
 .lesson code:not(pre code){font-family:ui-monospace,Consolas,Menlo,monospace;font-size:.84em;background:var(--soft);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
 pre{max-width:100%;overflow:auto;background:var(--soft);border:1px solid var(--line);border-radius:7px;padding:16px 19px;margin:21px 0;color:var(--ink);font:13px/1.8 ui-monospace,Consolas,Menlo,monospace;tab-size:4}
 pre code{color:inherit;font:inherit}
+pre.code-block code.hljs{display:block;white-space:pre;font:inherit;background:transparent;color:var(--ink);padding:0;overflow-wrap:normal}
+pre.code-block{position:relative}
 pre.diagram{white-space:pre;overflow:auto}
 .lesson .table-scroll{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;margin:22px 0;border-radius:7px;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}.lesson table{display:table;border-collapse:collapse;line-height:1.6;font-size:.88rem;margin:0;width:max-content;min-width:100%;white-space:normal}
 .lesson th,.lesson td{border:1px solid var(--line);padding:10px 13px;vertical-align:top}
@@ -199,3 +204,63 @@ pre.diagram{white-space:pre;overflow:auto}
   .lesson details.question pre{margin:12px}
   .lesson details.question .table-scroll{margin:12px;max-width:calc(100% - 24px)}
 }
+
+
+/* Knowledge-point titles stay short; the former narrative headings remain
+   as light-weight reading prompts at the start of each manuscript section. */
+.chapter-intro > .chapter-epigraph,
+.lesson > .section-epigraph {
+  font-family:"Nichijo Source Han Serif","Source Han Serif SC",serif;
+  font-size:.8rem;
+  line-height:1.8;
+  letter-spacing:.025em;
+  color:var(--muted);
+  margin:0 0 18px;
+  font-weight:400;
+}
+.chapter-intro > .chapter-epigraph{margin:0 0 18px;font-size:.84rem;font-style:italic}
+.topic > h3{margin-bottom:9px}
+.lesson > .section-epigraph{margin-top:0;margin-bottom:20px;padding-left:12px;border-left:2px solid var(--line)}
+@media(max-width:550px){
+ .lesson > .section-epigraph{font-size:.77rem;line-height:1.75;padding-left:10px}
+}
+/* Palette follows the page's own light/dark mode, with enough contrast on
+   the existing paper-like code-block background. */
+:root{
+ --syntax-keyword:#7546a5;
+ --syntax-type:#096a89;
+ --syntax-string:#246d42;
+ --syntax-number:#a35117;
+ --syntax-comment:#777168;
+ --syntax-function:#245a93;
+ --syntax-meta:#9b365e;
+}
+html[data-theme="dark"]{
+ --syntax-keyword:#c7a4ff;
+ --syntax-type:#86d5e4;
+ --syntax-string:#addda7;
+ --syntax-number:#f0c082;
+ --syntax-comment:#a8a198;
+ --syntax-function:#a4c6ff;
+ --syntax-meta:#efadc7;
+}
+pre.code-block .hljs-keyword,
+pre.code-block .hljs-selector-tag,
+pre.code-block .hljs-literal,
+pre.code-block .hljs-operator{color:var(--syntax-keyword)}
+pre.code-block .hljs-type,
+pre.code-block .hljs-built_in,
+pre.code-block .hljs-title.class_,
+pre.code-block .hljs-title.class{color:var(--syntax-type)}
+pre.code-block .hljs-string,
+pre.code-block .hljs-char.escape_,
+pre.code-block .hljs-attr{color:var(--syntax-string)}
+pre.code-block .hljs-number,
+pre.code-block .hljs-symbol{color:var(--syntax-number)}
+pre.code-block .hljs-comment,
+pre.code-block .hljs-quote{color:var(--syntax-comment);font-style:italic}
+pre.code-block .hljs-title.function_,
+pre.code-block .hljs-title.function,
+pre.code-block .hljs-function{color:var(--syntax-function)}
+pre.code-block .hljs-meta,
+pre.code-block .hljs-meta .hljs-string{color:var(--syntax-meta)}

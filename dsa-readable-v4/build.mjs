@@ -3,10 +3,24 @@ import path from "node:path";
 import {createHash} from "node:crypto";
 import {fileURLToPath} from "node:url";
 import {marked} from "marked";
+import hljs from "highlight.js/lib/core";
+import cpp from "highlight.js/lib/languages/cpp";
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"quality/stage-a-manifest.json"),"utf8"));
 marked.setOptions({gfm:true,breaks:false});
+hljs.registerLanguage("cpp",cpp);
+// Syntax highlighting is performed at build time; no runtime scripts or CDN
+// are required for the generated teaching and review pages.
+marked.use({renderer:{
+  code({text,lang}) {
+    const language=String(lang||"").trim().split(/\s+/)[0].toLowerCase();
+    const isCpp=language==="cpp"||language==="c++"||language==="cxx";
+    const escaped=String(text).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    const html=isCpp ? hljs.highlight(text,{language:"cpp",ignoreIllegals:true}).value : escaped;
+    return '<pre class="code-block"><code class="hljs language-'+(isCpp?"cpp":"text")+'">'+html+'</code></pre>\n';
+  }
+}});
 
 function escapeRawCodeText(content) {
   return content.replace(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[\da-f]+);)/gi,"&amp;")
