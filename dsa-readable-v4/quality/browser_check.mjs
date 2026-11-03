@@ -49,14 +49,6 @@ async function open(page, type, label) {
   assert.equal(await page.locator(".sidebar").count(), 1);
   assert.equal(await page.locator("[data-tier]").count(), 0);
   const brokenNesting = await page.locator("#reading code details.question, #reading pre details.question, #reading code .topic, #reading code .chapter").count();
-  if(brokenNesting&&type==="review"){
-    const source=fs.readFileSync("dsa-readable-v4/review.html","utf8");
-    const index=source.indexOf('<section class="chapter review-section" id="review-07"');
-    console.log("REVIEW HTML BOUNDARY",source.slice(index-1800,index+1900));
-    const near=source.indexOf('第 1 题 · 2 分',index);
-    console.log("REVIEW FIRST CODE",source.slice(near-100,near+1350));
-  }
-  if(brokenNesting)console.log("BROKEN NESTING TRACE",label,await page.locator("#reading code:has(details.question), #reading pre:has(details.question), #reading code:has(.topic), #reading code:has(.chapter)").evaluateAll(nodes=>nodes.slice(0,5).map(x=>({tag:x.tagName,markup:x.outerHTML.slice(0,650)}))));
   assert.equal(brokenNesting,0,label + ": HTML has invalid nested code elements (unescaped comparison operator)");
   if (type === "course") {
     assert.equal(await page.locator("#reading > .chapter").count(), 16);
