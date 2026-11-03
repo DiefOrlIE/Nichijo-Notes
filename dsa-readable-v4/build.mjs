@@ -83,7 +83,7 @@ for(let i=0;i<16;i++){
   });
   chapters.push({id:"ch"+String(i).padStart(2,"0"),title:title[1],intro:renderMd(intro),units});
 }
-const reviewFiles=["00-plan.md","01-question-bank-a.md","02-question-bank-b.md","03-question-bank-c.md","04-mock-a.md","05-mock-b.md"];
+const reviewFiles=["00-plan.md","01-question-bank-a.md","02-question-bank-b.md","03-question-bank-c.md","04-mock-a.md","05-mock-b.md","06-new-mock-c.md","07-new-mock-d.md"];
 const review=reviewFiles.map((name,i)=>{
   const raw=read("review/"+name);
   const checked=manifest.review.find(x=>x.name===name);
@@ -112,9 +112,9 @@ const courseBody=chapters.map((c,i)=>{
 const reviewNav=review.map(r=>'<a href="#'+r.id+'">'+esc(r.title)+'</a>').join("");
 const reviewBody=review.map(r=>'<section class="chapter review-section" id="'+r.id+'"><h2>'+esc(r.title)+'</h2><div class="lesson">'+r.html+'</div></section>').join("");
 const courseHeader='<header class="hero" id="start"><p class="eyebrow">N I C H I J O · N O T E S</p><h1>数据结构与算法 · 连续自学讲义 V4</h1><p class="lead">从 C++ 指针到树、BST、AVL，再到集合与散列。先理解问题，跟着完整例子，再自己选择方法完成习题。</p><p class="small">16 章 · 131 个教学单元 · 文字先验收，再生成网页 · 正文宋体、标题思源宋体均内嵌</p><div class="note"><strong>阅读方法：</strong>必学概念、推导、基础例题与代码均在正文展开；只有练习提示、答案可以折叠。读完一遍后，再进入独立的期中复习页面。</div><p><a href="./review.html">进入 120 分钟期中复习专题</a> · <a href="../dsa-readable-v3/">V3 最后一章样稿</a> · <a href="../dsa-midterm/">旧版讲义</a></p></header>';
-const reviewHeader='<header class="hero" id="start"><p class="eyebrow">E X A M · P R A C T I C E</p><h1>期中闭卷复习 · 120 分钟</h1><p class="lead">面向已经学过一遍的读者。复习目标是独立选方法、模拟算法、识别边界与控制考试时间。</p><p class="small">68 道专项题 · 2 套 120 分钟、100 分模拟卷 · 散列不入模拟卷</p><div class="note"><strong>使用方法：</strong>先不看提示独立作答，再展开解题思路、答案与评分点。若仍无法说明一个步骤为什么合法，返回对应的教学正文。</div><p><a href="./">返回完整教学讲义</a></p></header>';
+const reviewHeader='<header class="hero" id="start"><p class="eyebrow">E X A M · P R A C T I C E</p><h1>期中闭卷复习 · 120 分钟</h1><p class="lead">面向已经学过一遍的读者。复习目标是独立选方法、模拟算法、识别边界与控制考试时间。</p><p class="small">68 道专项题 · 4 套 120 分钟、100 分模拟卷 · 散列不入模拟卷</p><div class="note"><strong>使用方法：</strong>先不看提示独立作答，再展开解题思路、答案与评分点。若仍无法说明一个步骤为什么合法，返回对应的教学正文。</div><p><a href="./">返回完整教学讲义</a></p></header>';
 fs.writeFileSync(path.join(root,"index.html"),render({TITLE:"数据结构 V4｜完整连续自学讲义",PAGE_TYPE:"course",NAV:courseNav,CONTENT:courseHeader+courseBody}),"utf8");
 fs.writeFileSync(path.join(root,"review.html"),render({TITLE:"数据结构 V4｜120 分钟闭卷期中复习",PAGE_TYPE:"review",NAV:reviewNav,CONTENT:reviewHeader+reviewBody}),"utf8");
-const result={chapters:16,units:unitTotal,chapter_questions:manifest.counts.chapter_questions,practice_questions:68,mock_questions:24,source_manifest_sha256:sha(read("quality/stage-a-manifest.json"))};
+const result={chapters:16,units:unitTotal,chapter_questions:manifest.counts.chapter_questions,practice_questions:68,mock_questions:82,source_manifest_sha256:sha(read("quality/stage-a-manifest.json"))};
 fs.writeFileSync(path.join(root,"quality/stage-b-build.json"),JSON.stringify(result,null,2)+"\n","utf8");
 console.log(JSON.stringify(result));

@@ -57,10 +57,12 @@ async function open(page, type, label) {
     assert.equal(await page.locator("#ch15-dsu").count(), 1);
     await validateVisibleQuestions(page, 86, label);
   } else {
-    assert.equal(await page.locator("#reading > .chapter").count(), 6);
+    assert.equal(await page.locator("#reading > .chapter").count(), 8);
     assert.equal(await page.locator("#review-04").count(), 1);
     assert.equal(await page.locator("#review-05").count(), 1);
-    await validateVisibleQuestions(page, 92, label);
+    assert.equal(await page.locator("#review-06").count(), 1);
+    assert.equal(await page.locator("#review-07").count(), 1);
+    await validateVisibleQuestions(page, 150, label);
   }
 
 
@@ -276,7 +278,7 @@ try {
     });
   }
   await open(phone, "review", "mobile-review");
-  for (let i=0;i<6;i++) {
+  for (let i=0;i<8;i++) {
     const selector = "#review-" + String(i).padStart(2,"0");
     const anchor = i ? selector + " h4.exercise-title" : selector + " h2";
     await phone.locator(anchor).first().scrollIntoViewIfNeeded();
@@ -299,7 +301,7 @@ try {
   await ipad.screenshot({path:"v4-tablet.png",fullPage:false});
   await tablet.close();
   assert.deepEqual(errors, [], "client-side JavaScript errors");
-  console.log("PASS complete V4: 178 questions stay visible, solutions fold, tables render and responsive layouts work");
+  console.log("PASS complete V4: 236 questions stay visible, solutions fold, tables render and responsive layouts work");
 } finally {
   await browser.close();
 }

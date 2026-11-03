@@ -46,10 +46,10 @@ jobs:
           a=(root/'index.html').read_text(encoding='utf8')
           b=(root/'review.html').read_text(encoding='utf8')
           info=json.loads((root/'quality/stage-b-build.json').read_text(encoding='utf8'))
-          assert info['chapters']==16 and info['units']==131
+          assert info['chapters']==16 and info['units']==131 and info['mock_questions']==82
           assert a.count('class="topic"')==131 and a.count('class="chapter"')==16
           assert a.count('<details class="question">')==86
-          assert b.count('<details class="question">')==92
+          assert b.count('<details class="question">')==150
           assert 'dsa-readable-v3' in a and 'dsa-readable-v3' not in b or 'dsa-readable-v3' in b
           assert 'language-cpp' in b and 'hljs-' in b and 'mirror' in b
           assert a.count('class="section-epigraph"')==131

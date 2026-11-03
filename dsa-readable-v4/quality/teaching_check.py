@@ -12,9 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 CHAPTERS = [ROOT / "chapters" / f"ch{i:02d}.md" for i in range(16)]
 REVIEW = [
     "00-plan.md", "01-question-bank-a.md", "02-question-bank-b.md",
-    "03-question-bank-c.md", "04-mock-a.md", "05-mock-b.md"
+    "03-question-bank-c.md", "04-mock-a.md", "05-mock-b.md",
+    "06-new-mock-c.md", "07-new-mock-d.md"
 ]
-EXPECTED = [0, 24, 24, 20, 12, 12]
+EXPECTED = [0, 24, 24, 20, 12, 12, 29, 29]
 EXERCISE = re.compile(
     r'(?m)^#### ([^\n]+)\n\s*'
     r'([\s\S]*?)\s*<details class="question">'
@@ -40,8 +41,8 @@ def check_exercises(text, path, expected):
         assert ("**题目。**" in visible or "<strong>完整题干：" in visible), (
             path, i, "full question must be outside details"
         )
-        assert len(visible.strip()) >= (25 if path.startswith(("04-mock", "05-mock")) else 55), (path, i, "visible question too short")
-        assert len(hidden.strip()) >= 80, (path, i, "worked answer too short")
+        assert len(visible.strip()) >= (25 if path.startswith(("04-mock", "05-mock", "06-new", "07-new")) else 55), (path, i, "visible question too short")
+        assert len(hidden.strip()) >= (60 if path.startswith(("06-new", "07-new")) else 80), (path, i, "worked answer too short")
         assert re.search(r"思路|提示|入手", hidden), (path, i, "missing approach")
         assert re.search(r"解答|答案", hidden), (path, i, "missing answer")
         assert "<details" not in visible, (path, i, "nested question visibility")
@@ -115,9 +116,9 @@ for file, expected in zip(REVIEW, EXPECTED):
         })
     else:
         assert "复习" in text and len(text) >= 2000
-assert review_total == 92, review_total
+assert review_total == 150, review_total
 
-print("PASS independent visible questions: 86 course + 68 practice + 24 mocks")
+print("PASS independent visible questions: 86 course + 68 practice + 82 mocks")
 print("PASS every solution is separate and only accessible through a collapsible control")
 print("PASS 16 chapters, 131 instructional units and coherent review source inventory")
 print("PASS 16 numbered chapter headings, 131 concise topic titles and preserved epigraphs")

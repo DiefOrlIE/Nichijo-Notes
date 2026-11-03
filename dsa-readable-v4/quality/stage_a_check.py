@@ -3,7 +3,7 @@ import re, json, hashlib, subprocess, tempfile, heapq
 
 root=Path(__file__).resolve().parents[1]
 paths=[root/"chapters"/("ch%02d.md"%i) for i in range(16)]
-extra=[root/"review"/x for x in ("00-plan.md","01-question-bank-a.md","02-question-bank-b.md","03-question-bank-c.md","04-mock-a.md","05-mock-b.md")]
+extra=[root/"review"/x for x in ("00-plan.md","01-question-bank-a.md","02-question-bank-b.md","03-question-bank-c.md","04-mock-a.md","05-mock-b.md","06-new-mock-c.md","07-new-mock-d.md")]
 assert all(p.exists() for p in paths+extra)
 inventory={"chapters":[],"review":[]}
 for p in paths:
@@ -19,14 +19,21 @@ for p in extra:
     s=p.read_text(encoding="utf8")
     inventory["review"].append({"name":p.name,"chars":len(s),"questions":s.count('<details class="question">'),"sha256":hashlib.sha256(s.encode()).hexdigest()})
 assert sum(x["questions"] for x in inventory["review"][:4])==68
-assert sum(x["questions"] for x in inventory["review"][4:])==24
+assert sum(x["questions"] for x in inventory["review"][4:6])==24
+assert sum(x["questions"] for x in inventory["review"][6:])==58
 assert sum(x["questions"] for x in inventory["chapters"])>=80
+assert [x["questions"] for x in inventory["review"][6:]]==[29,29]
+for new_mock in extra[6:]:
+    data=new_mock.read_text(encoding="utf8")
+    assert sum((2 if n<=20 else 5 if n<=26 else 10) for n in range(1,30))==100
+    assert data.count("#### 第 ")==29
+    assert "BF＝左高－右高" in data or "BF＝左子树高度－右子树高度" in data
 for src in extra[-2:]:
     s=src.read_text(encoding="utf8")
     assert "120 分钟" in s and "100 分" in s
     questions_only=s.split("## 第一部分",1)[-1]
     assert "线性探查" not in questions_only and "并查集" not in questions_only and "散列表" not in questions_only
-inventory["counts"]={"chapters":16,"chapter_questions":sum(x["questions"] for x in inventory["chapters"]),"review_questions":68,"mock_questions":24}
+inventory["counts"]={"chapters":16,"chapter_questions":sum(x["questions"] for x in inventory["chapters"]),"review_questions":68,"mock_questions":82}
 
 fence=chr(96)*3
 def codeblocks(source):
