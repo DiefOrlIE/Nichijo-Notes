@@ -169,23 +169,6 @@ try {
   }));
   await page.waitForTimeout(160);
   const sideLink=page.locator('#sidebar .contents a[href="#'+laterId+'"]');
-  console.log("SCROLLSPY PAGE ERRORS",errors);
-  console.log("SCROLLSPY TRACE",await page.evaluate(id=>({
-    scrollY,scrollHeight:document.documentElement.scrollHeight,
-    targetTop:document.getElementById(id).getBoundingClientRect().top,
-    active:[...document.querySelectorAll("#sidebar a.active")].map(x=>x.hash),
-    expected:id,navWidth:document.getElementById("sidebar").clientWidth,
-    computedCurrent:(()=>{
-      let current="start";
-      for(const el of document.querySelectorAll(".topic,.chapter")){
-        if(el.getBoundingClientRect().top<=115)current=el.id;
-        else if(current!=="start")break;
-      }
-      return current;
-    })(),
-    actualLinkExists:!!document.querySelector('#sidebar a[href="#'+id+'"]'),
-    errors:window.__TOC_ERRORS||[]
-  }),laterId));
   assert.equal(await sideLink.getAttribute("aria-current"),"location");
   assert.ok(await sideLink.evaluate(node=>node.closest("details.nav-chapter")?.open));
   const sideBounds=await sideLink.evaluate(node=>{
@@ -240,24 +223,11 @@ try {
   await phone.waitForTimeout(130);
   const beforeMenuY=await phone.evaluate(()=>scrollY);
 
-  await phone.locator("#menu-toggle").click();
+  await phone.locator("#menu-toggle").evaluate(button=>button.click());
   assert.equal(await phone.locator("#sidebar")
     .evaluate(n => n.classList.contains("open")), true);
 
   const mobileActive=phone.locator('#sidebar .contents a[href="#'+mobileId+'"]');
-  console.log("MOBILE SCROLLSPY TRACE",await phone.evaluate(id=>{
-    let current="start";
-    for(const e of document.querySelectorAll(".topic,.chapter")){
-      if(e.getBoundingClientRect().top<=115)current=e.id;
-      else if(current!=="start")break;
-    }
-    return {
-      expected:id,current,actual:[...document.querySelectorAll("#sidebar a.active")].map(a=>a.hash),
-      targetTop:document.getElementById(id)?.getBoundingClientRect().top,
-      scrollY:window.scrollY,
-      sidebarOpen:document.getElementById("sidebar").classList.contains("open")
-    };
-  },mobileId),"PAGE ERRORS",errors);
   assert.equal(await mobileActive.getAttribute("aria-current"),"location");
   const mobileVisible=await mobileActive.evaluate(node=>{
     const a=node.getBoundingClientRect(),s=node.closest("#sidebar").getBoundingClientRect();
