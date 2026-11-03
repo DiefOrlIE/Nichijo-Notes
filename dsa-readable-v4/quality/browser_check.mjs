@@ -157,6 +157,40 @@ try {
   const desktop = await browser.newContext({viewport:{width:1380,height:900}});
   const page = await desktop.newPage();
   await open(page, "course", "desktop-course");
+
+  // Scrollspy follows the reading surface and keeps the active sidebar entry
+  // visible without changing the main document's own scroll position.
+  const later=page.locator("#reading .topic").nth(93);
+  const laterId=await later.getAttribute("id");
+  await later.evaluate(node=>window.scrollTo({
+    top:window.scrollY+node.getBoundingClientRect().top-95,behavior:"instant"
+  }));
+  await page.waitForTimeout(160);
+  const sideLink=page.locator('#sidebar .contents a[href="#'+laterId+'"]');
+  assert.equal(await sideLink.getAttribute("aria-current"),"location");
+  assert.ok(await sideLink.evaluate(node=>node.closest("details.nav-chapter")?.open));
+  const sideBounds=await sideLink.evaluate(node=>{
+    const link=node.getBoundingClientRect(),parent=node.closest("#sidebar").getBoundingClientRect();
+    return {top:link.top,bottom:link.bottom,parentTop:parent.top,parentBottom:parent.bottom};
+  });
+  assert.ok(sideBounds.top>=sideBounds.parentTop &&
+    sideBounds.bottom<=sideBounds.parentBottom,"scrollspy left current entry offscreen");
+
+  // Manually navigating the sidebar temporarily suspends its auto scroll.
+  await page.locator("#sidebar").evaluate(node=>{
+    node.dispatchEvent(new WheelEvent("wheel",{bubbles:true,deltaY:240}));
+    node.scrollTop=0;
+  });
+  const farther=page.locator("#reading .topic").nth(120);
+  const fartherId=await farther.getAttribute("id");
+  await farther.evaluate(node=>window.scrollTo({
+    top:window.scrollY+node.getBoundingClientRect().top-95,behavior:"instant"
+  }));
+  await page.waitForTimeout(160);
+  assert.equal(await page.locator('#sidebar .contents a[href="#'+fartherId+'"]').getAttribute("aria-current"),"location");
+  assert.equal(await page.locator("#sidebar").evaluate(node=>node.scrollTop),0,
+    "manual TOC browsing should not be overridden immediately");
+
   const question = page.locator("#v4-list-exercises details.question").first();
   await question.locator("summary").click();
   assert.equal(await question.evaluate(n => n.open), true);
@@ -177,9 +211,29 @@ try {
   });
   const phone = await mobile.newPage();
   await open(phone, "course", "mobile-course");
+
+  // The off-canvas TOC opens directly at the currently read subsection.
+  const mobileTarget=phone.locator("#reading .topic").nth(88);
+  const mobileId=await mobileTarget.getAttribute("id");
+  await mobileTarget.evaluate(node=>window.scrollTo({
+    top:window.scrollY+node.getBoundingClientRect().top-95,behavior:"instant"
+  }));
+  await phone.waitForTimeout(130);
+  const beforeMenuY=await phone.evaluate(()=>scrollY);
+
   await phone.locator("#menu-toggle").click();
   assert.equal(await phone.locator("#sidebar")
     .evaluate(n => n.classList.contains("open")), true);
+
+  const mobileActive=phone.locator('#sidebar .contents a[href="#'+mobileId+'"]');
+  assert.equal(await mobileActive.getAttribute("aria-current"),"location");
+  const mobileVisible=await mobileActive.evaluate(node=>{
+    const a=node.getBoundingClientRect(),s=node.closest("#sidebar").getBoundingClientRect();
+    return a.top>=s.top && a.bottom<=s.bottom;
+  });
+  assert.ok(mobileVisible,"mobile TOC did not scroll to active topic on opening");
+  assert.equal(await phone.evaluate(()=>scrollY),beforeMenuY,
+    "opening sidebar unexpectedly moved the reading document");
   await phone.locator("#shade").click({position:{x:370,y:150}});
   assert.equal(await phone.locator("#sidebar")
     .evaluate(n => n.classList.contains("open")), false);
