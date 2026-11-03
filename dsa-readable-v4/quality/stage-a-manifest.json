@@ -116,45 +116,57 @@
   "review": [
     {
       "name": "00-plan.md",
-      "chars": 3218,
+      "chars": 3539,
       "questions": 0,
-      "sha256": "816606839b1493a3332920bca031565b943534947873d475176cb9e143e5913c"
+      "sha256": "510a615aa68cc8f354a81c12561d49d492b765c91a64f8c21eb61cd8cc79090f"
     },
     {
       "name": "01-question-bank-a.md",
-      "chars": 11249,
+      "chars": 11201,
       "questions": 24,
-      "sha256": "29e1c7968a9248d7e1416cea1ab97c3bbbc2aed60e7f327c09453eedc269e074"
+      "sha256": "8db67549cf1ef28abbf1ad556eb2e86a76bf3744351d1a6fc9e7c119fc3e85ff"
     },
     {
       "name": "02-question-bank-b.md",
-      "chars": 10940,
+      "chars": 10896,
       "questions": 24,
-      "sha256": "2456842cbfce65070e946f00bb8a7d384e5475db497fb13faa9047688bd73211"
+      "sha256": "6bfe8d98cecdc897f841aa34ba51d8441c2cf26e3b6d661dfe59a3f0db79c202"
     },
     {
       "name": "03-question-bank-c.md",
-      "chars": 9135,
+      "chars": 9111,
       "questions": 20,
-      "sha256": "2d69cf73cf961c4bb1943eb11bd26de042c5c6d961b7a1f6fd25460c64aeaef5"
+      "sha256": "fcfa8268b9dcac3dd93d5ec6dc6b3125e29062695730e3182ee5a695ffaea90c"
     },
     {
       "name": "04-mock-a.md",
-      "chars": 6610,
+      "chars": 6638,
       "questions": 12,
-      "sha256": "af9035fddd776616c0bb54a6d032eaa033125aa18d01bfe6843eaa20b34966e8"
+      "sha256": "6c637dae318df5bf9be2c772c384111700fbc9ea6c523c393957a3f7e915ddb1"
     },
     {
       "name": "05-mock-b.md",
-      "chars": 7201,
+      "chars": 7252,
       "questions": 12,
-      "sha256": "32b573b413355ea59e05717470d0c3d87e560321e2c7eb8de4e6f05f30f5b05b"
+      "sha256": "b3ee2cc4d04a4bf67bac460a42a5657ed94aa672cc1f4cc1e94892d24d0ba52c"
+    },
+    {
+      "name": "06-new-mock-c.md",
+      "chars": 13663,
+      "questions": 29,
+      "sha256": "cb11426cbaa8dd332e9e67b274ce07a221396d905d52fdb5a3d221ad0ce588ba"
+    },
+    {
+      "name": "07-new-mock-d.md",
+      "chars": 15294,
+      "questions": 29,
+      "sha256": "a123c3cdcfeeba1e7c63c96c1210d5d495e3079b3f9475518a32705cc5468f02"
     }
   ],
   "counts": {
     "chapters": 16,
     "chapter_questions": 86,
     "review_questions": 68,
-    "mock_questions": 24
+    "mock_questions": 82
   }
 }

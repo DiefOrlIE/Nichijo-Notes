@@ -21,7 +21,7 @@
 <a href="./review.html">120 分钟期中复习</a>
 <a href="../dsa-readable-v3/">V3 试读版</a>
 </nav>
-<div class="contents" id="nav-contents"><a href="#review-00">期中复习路线：把学过的知识真正用到陌生题里</a><a href="#review-01">期中专项题库（第 1 组）：结构、复杂度、栈递归、队列</a><a href="#review-02">期中专项题库（第 2 组）：数组、KMP 与树</a><a href="#review-03">期中专项题库（第 3 组）：堆、哈夫曼、查找与平衡树</a><a href="#review-04">120 分钟闭卷模拟卷 A：课堂与作业同级</a><a href="#review-05">120 分钟闭卷模拟卷 B：综合与变式提高</a></div>
+<div class="contents" id="nav-contents"><a href="#review-00">期中复习路线：把学过的知识真正用到陌生题里</a><a href="#review-01">期中专项题库（第 1 组）：结构、复杂度、栈递归、队列</a><a href="#review-02">期中专项题库（第 2 组）：数组、KMP 与树</a><a href="#review-03">期中专项题库（第 3 组）：堆、哈夫曼、查找与平衡树</a><a href="#review-04">120 分钟闭卷模拟卷 A：课堂与作业同级</a><a href="#review-05">120 分钟闭卷模拟卷 B：综合与变式提高</a><a href="#review-06">新增 120 分钟闭卷模拟卷 C：基础巩固（上传试卷 A）</a><a href="#review-07">新增 120 分钟闭卷模拟卷 D：综合提高（上传试卷 B）</a></div>
 </aside>
 <div class="main-wrap">
 <div class="toolbar">
@@ -33,7 +33,7 @@
 </div>
 </div>
 <div class="progress-track"><div id="progress-bar"></div></div>
-<main id="reading"><header class="hero" id="start"><p class="eyebrow">E X A M · P R A C T I C E</p><h1>期中闭卷复习 · 120 分钟</h1><p class="lead">面向已经学过一遍的读者。复习目标是独立选方法、模拟算法、识别边界与控制考试时间。</p><p class="small">68 道专项题 · 2 套 120 分钟、100 分模拟卷 · 散列不入模拟卷</p><div class="note"><strong>使用方法：</strong>先不看提示独立作答，再展开解题思路、答案与评分点。若仍无法说明一个步骤为什么合法，返回对应的教学正文。</div><p><a href="./">返回完整教学讲义</a></p></header><section class="chapter review-section" id="review-00"><h2>期中复习路线：把学过的知识真正用到陌生题里</h2><div class="lesson"><blockquote>
+<main id="reading"><header class="hero" id="start"><p class="eyebrow">E X A M · P R A C T I C E</p><h1>期中闭卷复习 · 120 分钟</h1><p class="lead">面向已经学过一遍的读者。复习目标是独立选方法、模拟算法、识别边界与控制考试时间。</p><p class="small">68 道专项题 · 4 套 120 分钟、100 分模拟卷 · 散列不入模拟卷</p><div class="note"><strong>使用方法：</strong>先不看提示独立作答，再展开解题思路、答案与评分点。若仍无法说明一个步骤为什么合法，返回对应的教学正文。</div><p><a href="./">返回完整教学讲义</a></p></header><section class="chapter review-section" id="review-00"><h2>期中复习路线：把学过的知识真正用到陌生题里</h2><div class="lesson"><blockquote>
 <p><strong>适用对象</strong>：已经阅读过相应正文章节，正在准备闭卷期中考试的同学。这里帮助你回忆方法、辨认题型、在有限时间里推演算法，并依据错题回到正文补足薄弱环节。<br><strong>模拟考试设置</strong>：每套 120 分钟，总分 100 分。此为复习资料的训练安排，最终以教师公布的正式考试信息为准。<br><strong>范围说明</strong>：本版沿用项目此前采用的“散列之前的课程内容”范围：绪论、线性表、栈和递归、队列、数组和串、KMP、树、堆、哈夫曼、静态查找、BST 与 AVL。集合、并查集和散列不进入模拟卷。如果教师最终要求考试只到普通二叉树，应跳过后续相关专题，并相应调整模拟卷的使用方式。这是资料沿用的范围假设，尚不能当作教师已经确认的公告。</p>
 </blockquote>
 <h2>一、复习时究竟要练什么</h2>
@@ -111,12 +111,12 @@
 <td>分别统计每个成功键或失败间隙</td>
 </tr>
 </tbody></table></div>
-<p>举一个常见的误区：同样是 front=rear，采用牺牲一个槽位的循环队列通常表示空；采用 front/count 的实现还要看 count 的数值。答案与讲义相差一个下标时，先核对约定，再判断是否算错。</p>
+<p>举一个常见的误区：同样是 front=rear，采用牺牲一个槽位的循环队列通常表示空；采用 front/count 的实现还要看 count 的数值。答案与讲义相差一个下标时，先核对约定，再判断是否算错。还有一个容易被忽视的差别：<strong>新增 C、D 卷明确采用 BF＝左高－右高</strong>，而教学版的一些 AVL 例子采用右高－左高。判断 LL、RR、LR、RL 时须先画实际树形和高低关系，避免单凭平衡因子的正负号套另一套代码。</p>
 <h2>三、专项题与模拟卷怎样配合</h2>
 <p>先从三组专项题中选择自己的薄弱题型，每题的<strong>完整题干始终显示</strong>。请先在纸上写出结果、关键步骤和条件，再点击展开“思路与解答”。展开后的第一段提示适合真正卡住时使用；第二段推导和后续复核用于检查自己的过程。</p>
 <p>对于手工模拟题，得分经常落在中间状态。例如堆的两种建堆方法可能得到不同的合法最终数组；如果题目指定逐项插入，就必须按次序记录上浮结果。写出一个满足堆性质的最终数组，并不能自动替代题目要求的构造过程。</p>
 <p>对于代码题，先写清指针、数组和返回值的语义，再测试空结构、单元素、正常输入和容易失败的边界。对于 BST 或 AVL 删除等会改变子树根的操作，尤其要确认递归结果是否回接给父结点。</p>
-<p>完成专题训练后，使用模拟卷 A 检验常规题型；复盘后再做综合变式较多的 B 卷。建议按 120 分钟训练时间闭卷完成，交卷后才打开答案。</p>
+<p>完成专题训练后，建议按难度与题型依次使用四套模拟卷。原有 A、B 卷每套有 12 道综合题，适合练习解释、推导和长步骤演算；新增 C、D 卷来自你提供的完整模拟试卷，每套均有 10 道选择、10 道填空、6 道问答和 3 道代码题，能够检验换题型以后是否依然会独立解题。先做 A 卷，再做 C 卷基础巩固；检查错题后做 B、D 两套提高训练。每套建议严格计时 120 分钟，交卷后才打开答案。</p>
 <h2>四、120 分钟训练的参考安排</h2>
 <div class="table-scroll" role="region" tabindex="0" aria-label="可横向滚动的数据表格"><table>
 <thead>
@@ -209,824 +209,645 @@
 </tr>
 <tr>
 <td>第 7 天</td>
-<td>错题变式；模拟卷 B</td>
-<td>无提示做出曾经卡住的同类题</td>
+<td>错题变式；新增模拟卷 C</td>
+<td>用完整选择、填空、问答、代码结构检验知识迁移</td>
 </tr>
 </tbody></table></div>
-<p>若有十四天，可用前七天补基础，第 8—10 天复做第一次卡住的变式，第 11 天做模拟卷 A，第 12 天纠错，第 13 天做 B，第 14 天核查边界。时间有限时，优先保证亲手写出几道题的完整解题过程；只读答案容易高估自己在考场独立启动算法的能力。</p>
+<p>若有十四天，可用前七天补基础，第 8—9 天复做第一次卡住的变式，第 10 天做 A 卷，第 11 天做 C 卷并复盘，第 12 天做 B 卷，第 13 天做新增 D 卷，第 14 天集中复盘四卷中重复出现的失误。四套卷均为 120 分钟训练，若时间不够，应优先完整做完其中一套，并认真核对解题过程。时间有限时，优先保证亲手写出几道题的完整解题过程；只读答案容易高估自己在考场独立启动算法的能力。</p>
 <p>本专题与教学版互相支持：遇到陌生概念时回到教学版学习具体操作；已懂概念但做题慢时，继续在这里练方法选择与状态追踪。</p>
-</div></section><section class="chapter review-section" id="review-01"><h2>期中专项题库（第 1 组）：结构、复杂度、栈递归、队列</h2><div class="lesson"><p>这一组练习依次训练指针与链表的操作状态、基本复杂度推导、栈与递归的调用顺序，以及循环队列的边界。读题时先确认对象和约定：<code>p</code> 究竟指向哪个结点？<code>top</code> 指向已用位置还是下一空格？<code>front</code> 表示队首还是队首之前？这些明确以后，算法过程就可以按实际赋值与操作一步步追踪。</p>
-<p>建议每个专题先在纸上独立解答，再展开讲评。参考答案给出结果之后，还会解释怎样复核、什么条件下同一方法会失效。</p>
+</div></section><section class="chapter review-section" id="review-01"><h2>期中专项题库（第 1 组）：结构、复杂度、栈递归、队列</h2><div class="lesson"><p>这一组从最常见的指针和链表操作开始。看到 <code>p-&gt;next</code>，先明确 <code>p</code> 指向哪个结点；要改变一条链，先保存原后继，再改链接。复杂度题同样需要具体地数：一个循环执行几次、递归调用会同时压住几层栈。最后再练栈、表达式与循环队列，学会用一张状态表记录每次操作。</p>
+<p>这些题目可以分专题做，也可以当作一组小型闭卷训练。建议先在纸上写出动作和中间状态，再展开答案；发现差异时，从第一处不同的指针、下标或计数开始检查，而不要直接把标准答案抄一遍。</p>
 <h2>指针与链表改接</h2>
 <h4 class="exercise-title">第 1 题 · 读代码</h4>
 <p><strong>题目。</strong> 在同一个 C++ 函数中依次执行 <code>int a=4,b=6; int* p=&amp;a; int*&amp; r=p; r=&amp;b; *p=9;</code>。所有变量在执行期间均有效。请指出最后 <code>a</code>、<code>b</code> 的值以及 <code>p</code> 指向的对象，并解释 <code>r=&amp;b</code> 修改了什么。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>r 是指针变量 p 的引用。</p>
-<p><strong>推导与答案：</strong>r=&amp;b 将 p 改为指向 b，*p=9 修改 b。a=4，b=9。</p>
-<p><strong>典型错误：</strong>把引用指针误解成复制了整数。</p>
+<p><strong>提示：</strong>r 是指针变量 p 的引用。</p>
+<p><strong>解答与推导：</strong>r=&amp;b 将 p 改为指向 b，*p=9 修改 b。a=4，b=9。</p>
+<p><strong>易错处：</strong>把引用指针误解成复制了整数。</p>
 
 <p><strong>进一步理解：</strong>把对象与指针分开追踪：`r` 是 `p` 的别名，所以赋值后 `p` 指向 b；只有执行 `*p=9` 时才改变 b。可在纸上画两个整数方框和一根 `p` 箭头验证。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 2 题 · 程序填空</h4>
 <p><strong>题目。</strong> 在带有 <code>next</code> 指针的单链表中，指针 <code>p</code> 指向一个已存在的结点，<code>x</code> 指向一个尚未接入链表的新结点。请写出把 <code>x</code> 插到 <code>p</code> 与原后继之间的两条赋值语句，并解释赋值顺序为何重要。允许 <code>p-&gt;next</code> 原本为空。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>先存原后继，再改 p 的边。</p>
-<p><strong>推导与答案：</strong>x->next=p->next; p->next=x;。画图可验证原后继仍通过 x 可达。</p>
-<p><strong>典型错误：</strong>先修改 p->next 导致旧后继地址丢失。</p>
+<p><strong>提示：</strong>先存原后继，再改 p 的边。</p>
+<p><strong>解答与推导：</strong>x->next=p->next; p->next=x;。画图可验证原后继仍通过 x 可达。</p>
+<p><strong>易错处：</strong>先修改 p->next 导致旧后继地址丢失。</p>
 
 <p><strong>进一步理解：</strong>执行 `x-&gt;next=p-&gt;next` 时旧后继仍可通过 x 找到，第二句才把 p 与 x 接上。若顺序反过来，旧后继地址可能被覆盖。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 3 题 · 手工模拟</h4>
 <p><strong>题目。</strong> 有两条互不共享结点的升序单链表 A：1→3→8，B：2→3→6。只允许重接已有结点的 <code>next</code> 指针，不创建数据结点；请将两条链合并为非递增顺序，写出取结点的顺序和最终链表，分析时间与额外空间。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>每次取当前最小结点头插。</p>
-<p><strong>推导与答案：</strong>取出顺序 1,2,3,3,6,8；结果 8→6→3→3→2→1。时间 Θ(m+n)，额外空间 Θ(1)。</p>
-<p><strong>典型错误：</strong>相等时跳过一条链的 3。</p>
+<p><strong>提示：</strong>每次取当前最小结点头插。</p>
+<p><strong>解答与推导：</strong>取出顺序 1,2,3,3,6,8；结果 8→6→3→3→2→1。时间 Θ(m+n)，额外空间 Θ(1)。</p>
+<p><strong>易错处：</strong>相等时跳过一条链的 3。</p>
 
 <p><strong>进一步理解：</strong>先由两个表头中选较小结点，依次摘取 1、2、3、3、6、8 并头插，因此输出顺序反过来成为 8→6→3→3→2→1。两个值为 3 的结点都要保留。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 4 题 · 边界分析</h4>
 <p><strong>题目。</strong> 单链表只保存指向后继的 <code>next</code>，现持有待删除尾结点的指针，手中没有头指针和前驱指针。解释为什么通常无法仅凭这个指针在 O(1) 时间内把尾结点安全地从链表中摘除；补充需要什么信息。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>尾结点没有后继可复制，也没有指回前驱的链接。</p>
-<p><strong>推导与答案：</strong>需要从头找到其前驱，更新前驱 next，再 delete 尾项；通常 Θ(n)，除非同时保存前驱或使用双向链表。</p>
-<p><strong>典型错误：</strong>把非尾结点的复制后继技巧错误推广到尾结点。</p>
+<p><strong>提示：</strong>尾结点没有后继可复制，也没有指回前驱的链接。</p>
+<p><strong>解答与推导：</strong>需要从头找到其前驱，更新前驱 next，再 delete 尾项；通常 Θ(n)，除非同时保存前驱或使用双向链表。</p>
+<p><strong>易错处：</strong>把非尾结点的复制后继技巧错误推广到尾结点。</p>
 
 <p><strong>进一步理解：</strong>由于尾结点没有可复制的后继，它无法沿 `next` 找到自己的前驱。没有头指针、双向前驱或外部索引时，缺失用于修改前驱链接的信息。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 5 题 · 写算法</h4>
 <p><strong>题目。</strong> 结点类型为 <code>struct Node {int value; Node* next;};</code>。写出 <code>Node* reverse(Node* head)</code> 的循环核心，要求原地逆置单链表（允许空链表），最后返回新的表头。说明 <code>prev</code>、<code>cur</code>、<code>next</code> 初值与每次操作顺序。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>保存未处理后半段。</p>
-<p><strong>推导与答案：</strong>next=cur->next; cur->next=prev; prev=cur; cur=next;，初始 prev=nullptr,cur=head，最后返回 prev；时间 Θ(n)，额外空间 Θ(1)。</p>
-<p><strong>典型错误：</strong>交换了指向但没有保存 next。</p>
+<p><strong>提示：</strong>保存未处理后半段。</p>
+<p><strong>解答与推导：</strong>next=cur->next; cur->next=prev; prev=cur; cur=next;，初始 prev=nullptr,cur=head，最后返回 prev；时间 Θ(n)，额外空间 Θ(1)。</p>
+<p><strong>易错处：</strong>交换了指向但没有保存 next。</p>
 
 <p><strong>进一步理解：</strong>关键不变量：`prev` 指向已逆置部分，`cur` 指向尚未处理部分第一个结点。每轮必须先保存原后继，最后再令 `cur=next`，否则尚未处理链表可能丢失。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 6 题 · 结构选择</h4>
 <p><strong>题目。</strong> 某学生档案需要频繁按下标读取第 i 条记录，仅偶尔在末尾追加，且预留或动态扩容的存储空间充足。应优先选择顺序表还是单链表？请用两种操作的时间代价解释。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>比较主要操作而不是只看插入复杂度。</p>
-<p><strong>推导与答案：</strong>顺序表；按索引 O(1)，有容量或动态扩容时尾追加通常均摊 O(1)。单链按第 i 项读取要沿链 O(i)。</p>
-<p><strong>典型错误：</strong>笼统认为链表插入快所以任何时候都更好。</p>
+<p><strong>提示：</strong>比较主要操作而不是只看插入复杂度。</p>
+<p><strong>解答与推导：</strong>顺序表；按索引 O(1)，有容量或动态扩容时尾追加通常均摊 O(1)。单链按第 i 项读取要沿链 O(i)。</p>
+<p><strong>易错处：</strong>笼统认为链表插入快所以任何时候都更好。</p>
 
 <p><strong>进一步理解：</strong>比较主要操作：顺序表按下标取元素 O(1)，单链表要从头向后走到第 i 项，代价 O(i)。若偶尔尾追加且可扩容，顺序表具备合适的均摊性能。</p>
 </details>
-
 <h2>复杂度、证明与代码阅读</h2>
 <h4 class="exercise-title">第 7 题 · 精确次数</h4>
 <p><strong>题目。</strong> 设 n 为非负整数，<code>cnt</code> 初值为 0。运行 <code>for(int i=0;i&lt;n;i++) for(int j=0;j&lt;=i;j++) cnt++;</code>，请给出 <code>cnt</code> 的精确值及其关于 n 的渐进时间阶，并说明内层循环为何执行 i+1 次。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>第 i 轮内循环执行 i+1 次。</p>
-<p><strong>推导与答案：</strong>Σ(i+1) 从 i=0 到 n−1 为 n(n+1)/2，故 Θ(n²)。</p>
-<p><strong>典型错误：</strong>把 &lt;= 误看成 &lt;，少算一整行。</p>
+<p><strong>提示：</strong>第 i 轮内循环执行 i+1 次。</p>
+<p><strong>解答与推导：</strong>Σ(i+1) 从 i=0 到 n−1 为 n(n+1)/2，故 Θ(n²)。</p>
+<p><strong>易错处：</strong>把 &lt;= 误看成 &lt;，少算一整行。</p>
 
 <p><strong>进一步理解：</strong>第 i 次外循环的 j 值依次为 0…i，共 i+1 项，因此总数为 1+2+…+n=n(n+1)/2。n=0 时循环不执行，公式也得到 0。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 8 题 · 渐进阶</h4>
 <p><strong>题目。</strong> 设 n 为 2 的正整数次幂，递推式 <code>T(n)=2T(n/2)+n</code>，且 <code>T(1)=Θ(1)</code>。求总时间复杂度和递归调用栈的最大深度，并通过分层工作量解释结论。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>按层累计工作量。</p>
-<p><strong>推导与答案：</strong>每层总工作 n，共 log₂n 层，加叶子成本，时间 Θ(nlog n)；单条调用深度 Θ(log n)。</p>
-<p><strong>典型错误：</strong>把总递归调用数当成栈空间。</p>
+<p><strong>提示：</strong>按层累计工作量。</p>
+<p><strong>解答与推导：</strong>每层总工作 n，共 log₂n 层，加叶子成本，时间 Θ(nlog n)；单条调用深度 Θ(log n)。</p>
+<p><strong>易错处：</strong>把总递归调用数当成栈空间。</p>
 
 <p><strong>进一步理解：</strong>在第 k 层有 2^k 个规模 n/2^k 的子问题，总工作量 2^k·(n/2^k)=n；非叶层数为 log₂n，叶层总工作仍 Θ(n)。空间只计单条活动调用路径。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 9 题 · 渐进阶</h4>
 <p><strong>题目。</strong> 设 n≥2，程序执行 <code>for(int i=1;i&lt;n;i*=3) for(int j=0;j&lt;n;++j) work();</code>，其中 <code>work()</code> 代价为 Θ(1)。求整个程序的时间复杂度，并说明外层执行次数。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>外层约 log₃n 轮，内层每轮 n 次。</p>
-<p><strong>推导与答案：</strong>Θ(nlog n)，对数底不同不影响阶。</p>
-<p><strong>典型错误：</strong>看见两层就直接写 n²。</p>
+<p><strong>提示：</strong>外层约 log₃n 轮，内层每轮 n 次。</p>
+<p><strong>解答与推导：</strong>Θ(nlog n)，对数底不同不影响阶。</p>
+<p><strong>易错处：</strong>看见两层就直接写 n²。</p>
 
 <p><strong>进一步理解：</strong>外层的 i 依次为 1、3、9…，达到 n 即结束，因此执行 Θ(log₃n) 轮；每轮内层又做 n 次常数工作，乘起来得到 Θ(nlog n)。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 10 题 · 比较对象</h4>
 <p><strong>题目。</strong> 递归程序在规模为 n 的一层先扫描 n 个元素，再调用一次规模 n−1 的子问题，<code>T(n)=T(n−1)+n</code>，且 <code>T(1)=Θ(1)</code>。求时间复杂度与最大递归深度。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>写等差和。</p>
-<p><strong>推导与答案：</strong>T(n)=Σ k=Θ(n²)，递归深度 Θ(n)。</p>
-<p><strong>典型错误：</strong>一处递归调用并不保证线性时间。</p>
+<p><strong>提示：</strong>写等差和。</p>
+<p><strong>解答与推导：</strong>T(n)=Σ k=Θ(n²)，递归深度 Θ(n)。</p>
+<p><strong>易错处：</strong>一处递归调用并不保证线性时间。</p>
 
 <p><strong>进一步理解：</strong>展开递推得到 n+(n−1)+…+1，总成本是等差数列的和；同时，每次只打开一层规模减少 1 的调用，最大活动深度为 Θ(n)。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 11 题 · 空间</h4>
 <p><strong>题目。</strong> 一棵非空二叉树含 n 个结点，高度为 h（以根到最深叶的结点数计）。递归前序遍历依次访问全部结点，求时间复杂度与递归栈最大占用，并分别讨论链状树和高度平衡的情形。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>所有结点访问一次，同时活动帧数受高度约束。</p>
-<p><strong>推导与答案：</strong>时间 Θ(n)，递归栈空间 O(h)；链状树 h=Θ(n)，近似平衡树 h=Θ(log n)。</p>
-<p><strong>典型错误：</strong>按树的总结点数直接写 O(n) 栈空间紧确界。</p>
+<p><strong>提示：</strong>所有结点访问一次，同时活动帧数受高度约束。</p>
+<p><strong>解答与推导：</strong>时间 Θ(n)，递归栈空间 O(h)；链状树 h=Θ(n)，近似平衡树 h=Θ(log n)。</p>
+<p><strong>易错处：</strong>按树的总结点数直接写 O(n) 栈空间紧确界。</p>
 
 <p><strong>进一步理解：</strong>每个结点被访问一次，时间 Θ(n)。栈同时保存的是当前根到正在访问位置的一条路径，空间随高度 h 增长，而不需要同时存储所有 n 个调用。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 12 题 · 证明</h4>
 <p><strong>题目。</strong> 证明：任意非空二叉树中，度为 0 的结点数 n₀ 与度为 2 的结点数 n₂ 满足 n₀=n₂+1。请从父子边数的两个计数角度完成推导。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>从父子边总数计算两次。</p>
-<p><strong>推导与答案：</strong>n=n0+n1+n2，边数 n−1；各结点提供的边数为 n1+2n2；令相等解出 n0=n2+1。</p>
-<p><strong>典型错误：</strong>只引用结论不给推导。</p>
+<p><strong>提示：</strong>从父子边总数计算两次。</p>
+<p><strong>解答与推导：</strong>n=n0+n1+n2，边数 n−1；各结点提供的边数为 n1+2n2；令相等解出 n0=n2+1。</p>
+<p><strong>易错处：</strong>只引用结论不给推导。</p>
 
 <p><strong>进一步理解：</strong>把每条父子边按父结点的孩子数计得到 n₁+2n₂，再按每个非根结点恰有一个父亲计得到 n₀+n₁+n₂−1。两式相等后消掉 n₁ 即可。</p>
 </details>
-
 <h2>栈、表达式和递归</h2>
 <h4 class="exercise-title">第 13 题 · 手工模拟</h4>
 <p><strong>题目。</strong> 车厢只能按 1、2、3、4、5 的顺序进入一个容量足够的栈式旁线，每次可压入下一节或弹出当前栈顶。判断 3、2、5、4、1 能否作为完整出栈序列，并给出逐步入栈/出栈轨迹。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>写入/出操作事件。</p>
-<p><strong>推导与答案：</strong>I1 I2 I3 O3 O2 I4 I5 O5 O4 O1，可行。</p>
-<p><strong>典型错误：</strong>只写一个“可”不给证明轨迹。</p>
+<p><strong>提示：</strong>写入/出操作事件。</p>
+<p><strong>解答与推导：</strong>I1 I2 I3 O3 O2 I4 I5 O5 O4 O1，可行。</p>
+<p><strong>易错处：</strong>只写一个“可”不给证明轨迹。</p>
 
 <p><strong>进一步理解：</strong>验证可行性时，模拟操作必须始终保持输入顺序固定，并保证每个 O 操作都弹出当时的栈顶。最后栈应为空且五节车厢全部输出。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 14 题 · 后缀表达式</h4>
 <p><strong>题目。</strong> 表达式 <code>(A+B)*C−D/E</code> 只有二元加减乘除与括号，乘除优先于加减。把它转换为后缀表达式，保留所有操作数与运算符的先后次序。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>括号优先，乘与除先于减。</p>
-<p><strong>推导与答案：</strong>A B + C * D E / -。</p>
-<p><strong>典型错误：</strong>A+B 的加号必须在乘号之前输出。</p>
+<p><strong>提示：</strong>括号优先，乘与除先于减。</p>
+<p><strong>解答与推导：</strong>A B + C * D E / -。</p>
+<p><strong>易错处：</strong>A+B 的加号必须在乘号之前输出。</p>
 
 <p><strong>进一步理解：</strong>先将 `(A+B)` 转成 `A B +`，与 C 相乘得到 `A B + C *`，另将 `D/E` 写成 `D E /`，最后输出减号。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 15 题 · 求值</h4>
 <p><strong>题目。</strong> 按从左到右扫描并使用操作数栈，计算后缀表达式 <code>8 2 / 3 4 * + 5 -</code> 的值。说明除法和减法弹出操作数时谁在左、谁在右。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>扫描操作数入栈，弹出时后弹为左操作数。</p>
-<p><strong>推导与答案：</strong>8/2=4，3*4=12，4+12−5=11。</p>
-<p><strong>典型错误：</strong>8/2 写成 2/8。</p>
+<p><strong>提示：</strong>扫描操作数入栈，弹出时后弹为左操作数。</p>
+<p><strong>解答与推导：</strong>8/2=4，3*4=12，4+12−5=11。</p>
+<p><strong>易错处：</strong>8/2 写成 2/8。</p>
 
 <p><strong>进一步理解：</strong>遇到二元运算符，先弹出的是右操作数，后弹出的是左操作数。计算过程为 8/2=4、3×4=12、4+12=16、16−5=11。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 16 题 · 一元运算</h4>
 <p><strong>题目。</strong> 表达式 <code>!(A&amp;&amp;B)||C</code> 中，<code>!</code> 为一元逻辑非，<code>&amp;&amp;</code> 优先于 <code>||</code>，变量均为单字符操作数。写出保持相同计算语义的后缀表达式。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>把逻辑非作为只取一个操作数的一元运算。</p>
-<p><strong>推导与答案：</strong>A B &amp;&amp; ! C ||。</p>
-<p><strong>典型错误：</strong>把 ! 与减法混成二元操作。</p>
+<p><strong>提示：</strong>把逻辑非作为只取一个操作数的一元运算。</p>
+<p><strong>解答与推导：</strong>A B &amp;&amp; ! C ||。</p>
+<p><strong>易错处：</strong>把 ! 与减法混成二元操作。</p>
 
 <p><strong>进一步理解：</strong>先对 A、B 执行 `&amp;&amp;`，再对这一布尔结果执行单目 `!`，最后才与 C 执行 `||`。后缀式的运算符位置体现真实求值顺序。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 17 题 · 递归手算</h4>
 <p><strong>题目。</strong> 函数 A 对非负整数按下式定义：A(0,n)=n+1；m&gt;0 时 A(m,0)=A(m−1,1)；m&gt;0、n&gt;0 时 A(m,n)=A(m−1,A(m,n−1))。请逐层求出 A(2,2)，展示必要的嵌套调用。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>先得到 A(1,n)=n+2。</p>
-<p><strong>推导与答案：</strong>A(2,0)=3，A(2,1)=A(1,3)=5，A(2,2)=A(1,5)=7。</p>
-<p><strong>典型错误：</strong>先外层计算，遗漏嵌套参数。</p>
+<p><strong>提示：</strong>先得到 A(1,n)=n+2。</p>
+<p><strong>解答与推导：</strong>A(2,0)=3，A(2,1)=A(1,3)=5，A(2,2)=A(1,5)=7。</p>
+<p><strong>易错处：</strong>先外层计算，遗漏嵌套参数。</p>
 
 <p><strong>进一步理解：</strong>先由 A(0,n)=n+1 推出 A(1,n)=n+2，再推得 A(2,0)=3、A(2,1)=5、A(2,2)=7。嵌套式的内层返回值必须先计算。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 18 题 · 递归证明</h4>
 <p><strong>题目。</strong> 函数 <code>f(0)=1</code>，当 n&gt;0 时返回 <code>n*f(n−1)</code>。请用数学归纳法解释它对所有非负整数 n 返回 n!，明确基例、归纳假设、归纳步骤和终止依据。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>数学归纳法对应函数结构。</p>
-<p><strong>推导与答案：</strong>基例 0!=1；归纳假设 f(n−1)=(n−1)!；归纳步 n*f(n−1)=n!，且 n 向 0 下降终止。</p>
-<p><strong>典型错误：</strong>只写终止，不解释返回值怎样正确组合。</p>
+<p><strong>提示：</strong>数学归纳法对应函数结构。</p>
+<p><strong>解答与推导：</strong>基例 0!=1；归纳假设 f(n−1)=(n−1)!；归纳步 n*f(n−1)=n!，且 n 向 0 下降终止。</p>
+<p><strong>易错处：</strong>只写终止，不解释返回值怎样正确组合。</p>
 
 <p><strong>进一步理解：</strong>基例验证 `f(0)=0!`；归纳假设成立时 `f(n)=n·(n−1)!=n!`。每次递归使 n 下降，最终到达 0。</p>
 </details>
-
 <h2>队列与应用</h2>
 <h4 class="exercise-title">第 19 题 · 循环队列</h4>
 <p><strong>题目。</strong> 一个长度 m=8 的循环队列只保存 <code>front</code> 和 <code>rear</code>，采用牺牲一格方案；<code>front</code> 指队首、<code>rear</code> 指下一空位，当前二者分别为 6、3。求有效元素个数和队列最大容量。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>(rear−front+m)%m。</p>
-<p><strong>推导与答案：</strong>队长 5，最大可存 m−1=7。</p>
-<p><strong>典型错误：</strong>误用 front/count 方案的满容量公式。</p>
+<p><strong>提示：</strong>(rear−front+m)%m。</p>
+<p><strong>解答与推导：</strong>队长 5，最大可存 m−1=7。</p>
+<p><strong>易错处：</strong>误用 front/count 方案的满容量公式。</p>
 
 <p><strong>进一步理解：</strong>由于 `rear` 指向下一空位且保留一个槽位，实际长度为 `(rear-front+m)%m=(3-6+8)%8=5`，最大容量为 m−1=7。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 20 题 · 循环队列</h4>
 <p><strong>题目。</strong> 一个长度 m=6 的循环队列采用 <code>front</code>、<code>count</code> 表示，允许使用全部六格；现 <code>front=5</code>、<code>count=4</code>。求下次成功入队将写入的数组下标、入队后 count 的值以及是否已满。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>(front+count)%m。</p>
-<p><strong>推导与答案：</strong>(5+4)%6=3；入队后 count=5，仍未满。</p>
-<p><strong>典型错误：</strong>把 rear 当实体已存的索引。</p>
+<p><strong>提示：</strong>(front+count)%m。</p>
+<p><strong>解答与推导：</strong>(5+4)%6=3；入队后 count=5，仍未满。</p>
+<p><strong>易错处：</strong>把 rear 当实体已存的索引。</p>
 
 <p><strong>进一步理解：</strong>本方案的写入下标就是 `(front+count)%m=(5+4)%6=3`；写入后 count=5，尚余一格。`rear` 无需作为独立状态存储。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 21 题 · 手工模拟</h4>
 <p><strong>题目。</strong> 长度 m=4 的 <code>front/count</code> 循环队列初始为空、front=0。依次入队 A、B、C、D，出队两次，再入队 E、F。要求写出最终 <code>front</code>、<code>count</code> 及从队首到队尾的元素顺序。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>front 在出队时回绕，count 减后再增。</p>
-<p><strong>推导与答案：</strong>front=2,count=4，按队首至队尾为 C,D,E,F。</p>
-<p><strong>典型错误：</strong>入 E 时写下标 4 而不取模回绕到 0。</p>
+<p><strong>提示：</strong>front 在出队时回绕，count 减后再增。</p>
+<p><strong>解答与推导：</strong>front=2,count=4，按队首至队尾为 C,D,E,F。</p>
+<p><strong>易错处：</strong>入 E 时写下标 4 而不取模回绕到 0。</p>
 
 <p><strong>进一步理解：</strong>前三步填满数组，出队两次后 front=2、count=2，随后 E、F 写到下标 0、1。最终有效顺序 C、D、E、F，与物理下标的大小顺序无关。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 22 题 · 代码填空</h4>
 <p><strong>题目。</strong> 长度为 m 的循环队列以 <code>front</code> 指队首、<code>count</code> 指元素数，入队前已确认 <code>count&lt;m</code>。请填写新元素 x 应写入 <code>data</code> 的哪个下标，以及写入后如何更新 <code>count</code>。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>下一空位离 front 恰 count 步。</p>
-<p><strong>推导与答案：</strong>data[(front+count)%m]=x; ++count;，前提是 count&lt;m。</p>
-<p><strong>典型错误：</strong>先增加 count 再定位导致跳过一格。</p>
+<p><strong>提示：</strong>下一空位离 front 恰 count 步。</p>
+<p><strong>解答与推导：</strong>data[(front+count)%m]=x; ++count;，前提是 count&lt;m。</p>
+<p><strong>易错处：</strong>先增加 count 再定位导致跳过一格。</p>
 
 <p><strong>进一步理解：</strong>当 count&lt;m 时，新元素应放到队首之后的第 count 个环形位置，故 `data[(front+count)%m]=x`，之后 `++count`。若先加 count，会错开一格。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 23 题 · 应用</h4>
 <p><strong>题目。</strong> 采用树的层序遍历（根先访问、各层从左到右），应把尚未访问的结点保存在队列还是栈中？用根 A、孩子 B/C、B 的孩子 D/E 的例子解释处理顺序。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>下一步应处理谁：最早发现的还是最近发现的？</p>
-<p><strong>推导与答案：</strong>先访问父层结点，再访问后面发现的子层结点，队列 FIFO 保证按层；栈更适合 DFS。</p>
-<p><strong>典型错误：</strong>把栈操作顺序当作层序。</p>
+<p><strong>提示：</strong>下一步应处理谁：最早发现的还是最近发现的？</p>
+<p><strong>解答与推导：</strong>先访问父层结点，再访问后面发现的子层结点，队列 FIFO 保证按层；栈更适合 DFS。</p>
+<p><strong>易错处：</strong>把栈操作顺序当作层序。</p>
 
 <p><strong>进一步理解：</strong>访问 A 后先把 B、C 入队。弹出 B 后队列变成 C、D、E，因此先访问 C 再访问 D/E，恰好形成按层展开的顺序。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 24 题 · 均摊</h4>
 <p><strong>题目。</strong> 用两个栈 <code>in</code>、<code>out</code> 实现 FIFO 队列：入队压入 <code>in</code>；出队时若 <code>out</code> 为空，就将 <code>in</code> 的元素依次搬过去。分析一次出队的最坏时间及一长串入队、出队操作的均摊时间，说明为何两者不同。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>每个元素被倒栈次数有限。</p>
-<p><strong>推导与答案：</strong>当输出栈空时一次搬移 n 项可能 Θ(n)，但每元素只被压入/弹出各栈常数次，整串 m 次操作总 O(m)，均摊 O(1)。</p>
-<p><strong>典型错误：</strong>均摊与单次最坏写成同义。</p>
+<p><strong>提示：</strong>每个元素被倒栈次数有限。</p>
+<p><strong>解答与推导：</strong>当输出栈空时一次搬移 n 项可能 Θ(n)，但每元素只被压入/弹出各栈常数次，整串 m 次操作总 O(m)，均摊 O(1)。</p>
+<p><strong>易错处：</strong>均摊与单次最坏写成同义。</p>
 
 <p><strong>进一步理解：</strong>单次搬移一整栈时可能需要 Θ(n)，但每个元素进入 `in`、转入 `out`、弹出 `out` 的次数都是常数，整段操作可摊销到每个元素上。</p>
 </details>
-</div></section><section class="chapter review-section" id="review-02"><h2>期中专项题库（第 2 组）：数组、KMP 与树</h2><div class="lesson"><p>这一组题要求你在不同的表示方法之间切换：同一个矩阵位置换成行优先、列优先、压缩表示时，下标计算会改变；同一段模式串在 LPS 和不同 next 约定中，数组数值也可能不同。后半部分转向树，重点是从孩子关系、遍历规则和线索标志恢复出真实结构。</p>
-<p>请先写出题目采用的坐标、下标与空指针约定，再展开运算。参考解答保留推算过程，便于核对自己从哪一步开始偏离正确状态。</p>
+</div></section><section class="chapter review-section" id="review-02"><h2>期中专项题库（第 2 组）：数组、KMP 与树</h2><div class="lesson"><p>这一组重点是把抽象的记号还原成具体结构。矩阵压缩题从存储顺序推下标，KMP 题从实际前后缀推 LPS，二叉树题从已知遍历重建父子关系。每个问题看似都有熟悉的公式，但公式所依赖的下标起点、树形约束或 next 定义，必须由题面先确定。</p>
+<p>遇到树形手算题，建议在纸上画出每条真实孩子边，随后重新做一遍前序、中序或后序作为反向检查。线索树尤其要分清“孩子链接”和“线索链接”；它们指向的对象可能相同，但遍历含义完全不同。</p>
 <h2>数组与压缩矩阵</h2>
 <h4 class="exercise-title">第 25 题 · 地址计算</h4>
 <p><strong>题目。</strong> 二维数组 A 有 4 行、6 列，下标均从 0 开始，采用行优先连续存储。求 A[2][3] 相对于 A[0][0] 的元素偏移；若每项占 8 字节，再求字节偏移。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>先跨过两整行。</p>
-<p><strong>推导与答案：</strong>2×6+3=15；若每元素 8 字节，地址与首地址差 120 字节。</p>
-<p><strong>典型错误：</strong>将行数 4 误用作行优先跨行步长。</p>
+<p><strong>提示：</strong>先跨过两整行。</p>
+<p><strong>解答与推导：</strong>2×6+3=15；若每元素 8 字节，地址与首地址差 120 字节。</p>
+<p><strong>易错处：</strong>将行数 4 误用作行优先跨行步长。</p>
 
-<p><strong>过程复核：</strong>行优先时已完整越过 2 行，每行 6 个元素，随后在本行跨过 3 个位置，偏移是 2×6+3=15；地址差再乘每项 8 字节得到 120。</p>
+<p><strong>核对方法：</strong>行优先时已完整越过 2 行，每行 6 个元素，随后在本行跨过 3 个位置，偏移是 2×6+3=15；地址差再乘每项 8 字节得到 120。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 26 题 · 地址计算</h4>
 <p><strong>题目。</strong> 二维数组 A 有 4 行、6 列，行列下标从 0 开始，采用<strong>列优先</strong>存储。求 A[2][3] 相对于 A[0][0] 的一维元素偏移，并解释为何此处与行优先答案不同。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>跨过 3 整列，每列 4 项。</p>
-<p><strong>推导与答案：</strong>3×4+2=14。</p>
-<p><strong>典型错误：</strong>将行优先公式原样照搬。</p>
+<p><strong>提示：</strong>跨过 3 整列，每列 4 项。</p>
+<p><strong>解答与推导：</strong>3×4+2=14。</p>
+<p><strong>易错处：</strong>将行优先公式原样照搬。</p>
 
-<p><strong>过程复核：</strong>列优先先越过 3 整列，每列有 4 个元素，随后在当前列跨过两行，偏移 3×4+2=14。关键是用实际连续存储顺序推公式。</p>
+<p><strong>核对方法：</strong>列优先先越过 3 整列，每列有 4 个元素，随后在当前列跨过两行，偏移 3×4+2=14。关键是用实际连续存储顺序推公式。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 27 题 · 对称矩阵</h4>
 <p><strong>题目。</strong> 一个 5 阶对称矩阵按行优先只保存下三角（含主对角线），一维数组 B 从下标 0 开始。求 A[1][4] 对应 B 的下标，并说明为何需要转换到下三角。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>先交换到实际存储的下三角。</p>
-<p><strong>推导与答案：</strong>A[4][1]，k=4×5/2+1=11（0-based）。</p>
-<p><strong>典型错误：</strong>未先判定 i&lt;j。</p>
+<p><strong>提示：</strong>先交换到实际存储的下三角。</p>
+<p><strong>解答与推导：</strong>A[4][1]，k=4×5/2+1=11（0-based）。</p>
+<p><strong>易错处：</strong>未先判定 i&lt;j。</p>
 
-<p><strong>过程复核：</strong>上三角的 A[1][4] 与下三角 A[4][1] 相等。压缩数组中第 4 行之前已有 1+2+3+4=10 项，再加该行列号 1，所以 k=11。</p>
+<p><strong>核对方法：</strong>上三角的 A[1][4] 与下三角 A[4][1] 相等。压缩数组中第 4 行之前已有 1+2+3+4=10 项，再加该行列号 1，所以 k=11。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 28 题 · 三对角矩阵</h4>
 <p><strong>题目。</strong> 7 阶三对角矩阵满足只有 |i−j|≤1 的位置可能非零，按行优先压入从 0 编号的一维数组 B。已知 B[12] 对应一个有效元素，求它原来的行列下标 (i,j)，写出反向推算。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>使用 i=floor((k+1)/3)、j=k−2i。</p>
-<p><strong>推导与答案：</strong>i=4、j=4，对应 A[4][4]。</p>
-<p><strong>典型错误：</strong>带外坐标不能被强行压缩。</p>
+<p><strong>提示：</strong>使用 i=floor((k+1)/3)、j=k−2i。</p>
+<p><strong>解答与推导：</strong>i=4、j=4，对应 A[4][4]。</p>
+<p><strong>易错处：</strong>带外坐标不能被强行压缩。</p>
 
-<p><strong>过程复核：</strong>按行排列时，前三对角线形成长度 2、3、3、3、3、3、2 的区段；B 的下标 12 落在第 4 行对应区段中，原坐标为 (4,4)。不要把带外零当成已存储项。</p>
+<p><strong>核对方法：</strong>按行排列时，前三对角线形成长度 2、3、3、3、3、3、2 的区段；B 的下标 12 落在第 4 行对应区段中，原坐标为 (4,4)。不要把带外零当成已存储项。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 29 题 · 快速转置</h4>
 <p><strong>题目。</strong> 稀疏矩阵转置前的原矩阵有 4 列，按列号 0、1、2、3 统计非零项数得到 count=[2,0,1,3]，转置后的三元组按新行号从小到大连续存放。求每个新行的<strong>初始写入位置</strong> start（0-based），说明空行如何处理。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>排他前缀和。</p>
-<p><strong>推导与答案：</strong>start=[0,2,2,3]。第 1 行为空，下一行的首位置没有变化。</p>
-<p><strong>典型错误：</strong>把 start 当成该行最后位置。</p>
+<p><strong>提示：</strong>排他前缀和。</p>
+<p><strong>解答与推导：</strong>start=[0,2,2,3]。第 1 行为空，下一行的首位置没有变化。</p>
+<p><strong>易错处：</strong>把 start 当成该行最后位置。</p>
 
-<p><strong>过程复核：</strong>第一行起点为 0；第二行起点加上前一行 2 得 2；第三行仍为 2；第四行加上第三行的 1 得 3。完整起点为 [0,2,2,3]，它是排他前缀和。</p>
+<p><strong>核对方法：</strong>第一行起点为 0；第二行起点加上前一行 2 得 2；第三行仍为 2；第四行加上第三行的 1 得 3。完整起点为 [0,2,2,3]，它是排他前缀和。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 30 题 · 结构选择</h4>
 <p><strong>题目。</strong> 一个 1000×1000 矩阵只有 5 个非零元素，其他位置全为 0。若主要执行保存、顺序扫描非零项和偶尔转置，应采用完整二维数组还是三元组表？若还需频繁插删与同时按行、列遍历，应考虑何种表示？</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>主要约束是空间占用与是否频繁动态插删。</p>
-<p><strong>推导与答案：</strong>静态稀疏数据宜用三元组，仅记录 (行,列,值)；频繁按行列修改时可考虑正交链表。</p>
-<p><strong>典型错误：</strong>为每个零申请一整项。</p>
+<p><strong>提示：</strong>主要约束是空间占用与是否频繁动态插删。</p>
+<p><strong>解答与推导：</strong>静态稀疏数据宜用三元组，仅记录 (行,列,值)；频繁按行列修改时可考虑正交链表。</p>
+<p><strong>易错处：</strong>为每个零申请一整项。</p>
 
-<p><strong>过程复核：</strong>三元组只记录非零项的行、列、值，避免为大量零值分配独立单元。正交链表适合维护同一结点的行向和列向邻接，但增加指针维护成本。</p>
+<p><strong>核对方法：</strong>三元组只记录非零项的行、列、值，避免为大量零值分配独立单元。正交链表适合维护同一结点的行向和列向邻接，但增加指针维护成本。</p>
 </details>
-
 <h2>KMP 与字符串</h2>
 <h4 class="exercise-title">第 31 题 · 基础</h4>
 <p><strong>题目。</strong> 字符串 S=<code>ABCDEFG</code>，课程函数 <code>SubString(S,start,len)</code> 采用 1-based 起点、len 表示连续字符个数。求 <code>SubString(S,2,4)</code> 的结果，并写出 C++ <code>std::string::substr</code> 的等价调用（其位置为 0-based）。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>从第二项开始连续四字符。</p>
-<p><strong>推导与答案：</strong>BCDE；在 C++ 写 S.substr(1,4)。</p>
-<p><strong>典型错误：</strong>混用 0-based。</p>
+<p><strong>提示：</strong>从第二项开始连续四字符。</p>
+<p><strong>解答与推导：</strong>BCDE；在 C++ 写 S.substr(1,4)。</p>
+<p><strong>易错处：</strong>混用 0-based。</p>
 
-<p><strong>过程复核：</strong>从第 2 个字符 B 开始，连续取 4 个字符，结果 BCDE；C++ 的 `substr` 从 0 开始，所以用 `S.substr(1,4)`。</p>
+<p><strong>核对方法：</strong>从第 2 个字符 B 开始，连续取 4 个字符，结果 BCDE；C++ 的 `substr` 从 0 开始，所以用 `S.substr(1,4)`。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 32 题 · LPS</h4>
 <p><strong>题目。</strong> 给定模式串 P=<code>aabaaca</code>，下标从 0 起。求每个前缀 P[0..i] 的最长相等<strong>真前缀和真后缀</strong>长度，写出完整 LPS 数组，并特别解释 i=5 的值。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>每个前缀分别求最长公共真前后缀。</p>
-<p><strong>推导与答案：</strong>[0,1,0,1,2,0,1]；最后一项长度为 1。</p>
-<p><strong>典型错误：</strong>把整个串本身当作真前缀。</p>
+<p><strong>提示：</strong>每个前缀分别求最长公共真前后缀。</p>
+<p><strong>解答与推导：</strong>[0,1,0,1,2,0,1]；最后一项长度为 1。</p>
+<p><strong>易错处：</strong>把整个串本身当作真前缀。</p>
 
-<p><strong>过程复核：</strong>逐项验证前后缀时，要排除整个片段自己。i=5 时处理到 `aabaac`，新末尾 c 无法延长原有边界，较短合法候选也不存在，因此该项为 0。</p>
+<p><strong>核对方法：</strong>逐项验证前后缀时，要排除整个片段自己。i=5 时处理到 `aabaac`，新末尾 c 无法延长原有边界，较短合法候选也不存在，因此该项为 0。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 33 题 · next约定</h4>
 <p><strong>题目。</strong> 已知模式 P 的 LPS 为 [0,1,0,1,2,0,1]，现在改用长度与 P 相同的 −1 型 next：<code>next[0]=-1</code>，对 1≤j&lt;|P| 定义 <code>next[j]=lps[j−1]</code>。求 next 的七个数，并说明对应关系。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>数组从前一项 lps 搬移。</p>
-<p><strong>推导与答案：</strong>[-1,0,1,0,1,2,0]。</p>
-<p><strong>典型错误：</strong>直接把 lps 当 next。</p>
+<p><strong>提示：</strong>数组从前一项 lps 搬移。</p>
+<p><strong>解答与推导：</strong>[-1,0,1,0,1,2,0]。</p>
+<p><strong>易错处：</strong>直接把 lps 当 next。</p>
 
-<p><strong>过程复核：</strong>按定义把 LPS 的前六项向右移动一格，再在首项写 −1，得到 [−1,0,1,0,1,2,0]。其他教材的 next 数组定义可能不同，考试先看明确约定。</p>
+<p><strong>核对方法：</strong>按定义把 LPS 的前六项向右移动一格，再在首项写 −1，得到 [−1,0,1,0,1,2,0]。其他教材的 next 数组定义可能不同，考试先看明确约定。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 34 题 · 失配跟踪</h4>
 <p><strong>题目。</strong> 主串 S=<code>ababababca</code>、模式 P=<code>abababca</code>，下标从 0 开始。KMP 已匹配 j=6 个模式字符，当前 i=6 处字符发生失配。已知 <code>lps[5]=4</code>，求回退后 i、j 的值，并写出下一次比较对象。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>查看已经匹配的 P[0..5] 的边界。</p>
-<p><strong>推导与答案：</strong>lps[5]=4，j→4 而 i 仍为 6；必须继续比较 S[6] 与 P[4]。</p>
-<p><strong>典型错误：</strong>同时让 i++ 可能跳过匹配。</p>
+<p><strong>提示：</strong>查看已经匹配的 P[0..5] 的边界。</p>
+<p><strong>解答与推导：</strong>lps[5]=4，j→4 而 i 仍为 6；必须继续比较 S[6] 与 P[4]。</p>
+<p><strong>易错处：</strong>同时让 i++ 可能跳过匹配。</p>
 
-<p><strong>过程复核：</strong>在已匹配的六字符片段中最长可复用边界长 4，所以 j 回退到 4，i 保留 6。下一轮仍要拿 S[6] 与 P[4] 比较；改变 i 可能漏掉合法起点。</p>
+<p><strong>核对方法：</strong>在已匹配的六字符片段中最长可复用边界长 4，所以 j 回退到 4，i 保留 6。下一轮仍要拿 S[6] 与 P[4] 比较；改变 i 可能漏掉合法起点。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 35 题 · 证明解释</h4>
 <p><strong>题目。</strong> 在构造 KMP 的 LPS 数组时，已处理前缀存在长度为 len 的最长公共真前后缀，但新字符无法延长它。解释为什么将 <code>len</code> 更新为 <code>lps[len−1]</code> 可以跳过无效候选，而简单执行 <code>len--</code> 可能浪费比较。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>下一候选必须仍是已匹配部分的真前后缀。</p>
-<p><strong>推导与答案：</strong>lps[len−1] 恰给出此前长度 len 的公共边界中最长仍可行者，直接跳到它不会漏合法候选。</p>
-<p><strong>典型错误：</strong>仅记代码却说不出候选为什么合法。</p>
+<p><strong>提示：</strong>下一候选必须仍是已匹配部分的真前后缀。</p>
+<p><strong>解答与推导：</strong>lps[len−1] 恰给出此前长度 len 的公共边界中最长仍可行者，直接跳到它不会漏合法候选。</p>
+<p><strong>易错处：</strong>仅记代码却说不出候选为什么合法。</p>
 
-<p><strong>过程复核：</strong>较短候选必须同时等于旧匹配段的后缀和模式前缀。`lps[len−1]` 是下一个仍满足这项必要条件的最大长度，其间的其他长度都已排除。</p>
+<p><strong>核对方法：</strong>较短候选必须同时等于旧匹配段的后缀和模式前缀。`lps[len−1]` 是下一个仍满足这项必要条件的最大长度，其间的其他长度都已排除。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 36 题 · 重叠匹配</h4>
 <p><strong>题目。</strong> 在主串 S=<code>aaaaaa</code> 中查找模式 P=<code>aaaa</code> 的<strong>所有允许重叠</strong>的出现位置。请给出 0-based 起点，说明一次成功匹配后如何更新 KMP 的 j 才不会漏掉重叠匹配。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>成功后复用最后的公共边界。</p>
-<p><strong>推导与答案：</strong>起点为 0、1、2，共三处；j=lps[3]=3 继续，而不是清 0。</p>
-<p><strong>典型错误：</strong>只搜索非重叠答案。</p>
+<p><strong>提示：</strong>成功后复用最后的公共边界。</p>
+<p><strong>解答与推导：</strong>起点为 0、1、2，共三处；j=lps[3]=3 继续，而不是清 0。</p>
+<p><strong>易错处：</strong>只搜索非重叠答案。</p>
 
-<p><strong>过程复核：</strong>长度为 4 的模式在长度为 6 的主串中可以从 0、1、2 开始。第一次完成匹配后让 j 变成 `lps[3]=3`，保留已经确认的三个字符重叠边界。</p>
+<p><strong>核对方法：</strong>长度为 4 的模式在长度为 6 的主串中可以从 0、1、2 开始。第一次完成匹配后让 j 变成 `lps[3]=3`，保留已经确认的三个字符重叠边界。</p>
 </details>
-
 <h2>普通二叉树与遍历重建</h2>
 <h4 class="exercise-title">第 37 题 · 遍历</h4>
 <p><strong>题目。</strong> 一棵二叉树根为 A，A 的左、右孩子分别是 B、C；B 的左、右孩子是 D、E；C 只有右孩子 F。求这棵树的后序遍历序列。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>左右根。</p>
-<p><strong>推导与答案：</strong>D E B F C A。</p>
-<p><strong>典型错误：</strong>只凭层次而非递归规则输出。</p>
+<p><strong>提示：</strong>左右根。</p>
+<p><strong>解答与推导：</strong>D E B F C A。</p>
+<p><strong>易错处：</strong>只凭层次而非递归规则输出。</p>
 
-<p><strong>过程复核：</strong>后序始终按照左子树、右子树、根的次序。B 子树输出 D、E、B；C 子树输出 F、C；最后输出 A。</p>
+<p><strong>核对方法：</strong>后序始终按照左子树、右子树、根的次序。B 子树输出 D、E、B；C 子树输出 F、C；最后输出 A。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 38 题 · 数组树</h4>
 <p><strong>题目。</strong> 用数组 [A,B,C,@,D,E,F] 按 0-based 完全二叉树位置规则保存一棵普通二叉树，其中 @ 表示该位置没有结点，其他位置不得左移。画出实际父子关系，求中序遍历序列。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>@ 保留位置，不建立结点。</p>
-<p><strong>推导与答案：</strong>B D A E C F。B 只有右孩子 D；C 有 E、F。</p>
-<p><strong>典型错误：</strong>把 @ 删去后重新紧凑编号。</p>
+<p><strong>提示：</strong>@ 保留位置，不建立结点。</p>
+<p><strong>解答与推导：</strong>B D A E C F。B 只有右孩子 D；C 有 E、F。</p>
+<p><strong>易错处：</strong>把 @ 删去后重新紧凑编号。</p>
 
-<p><strong>过程复核：</strong>保留 @ 对应的缺失位置，B 的右孩子才会是 D；如果删除占位，D 会被错误移动到 B 的左孩子位置。</p>
+<p><strong>核对方法：</strong>保留 @ 对应的缺失位置，B 的右孩子才会是 D；如果删除占位，D 会被错误移动到 B 的左孩子位置。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 39 题 · 重建</h4>
 <p><strong>题目。</strong> 一棵二叉树结点标签互异，已知前序序列 A B D E C F，中序序列 D B E A C F。请逐步重建二叉树并给出后序遍历，解释右子树中 F 的位置。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>前序首项为根，按中序左右区间切分。</p>
-<p><strong>推导与答案：</strong>A 为根；B 左右 D、E；C 的右孩子 F。后序 D E B F C A。</p>
-<p><strong>典型错误：</strong>把 C 的右孩子错误画成左孩子。</p>
+<p><strong>提示：</strong>前序首项为根，按中序左右区间切分。</p>
+<p><strong>解答与推导：</strong>A 为根；B 左右 D、E；C 的右孩子 F。后序 D E B F C A。</p>
+<p><strong>易错处：</strong>把 C 的右孩子错误画成左孩子。</p>
 
-<p><strong>过程复核：</strong>前序首元素 A 是根，中序把它的左子树分为 D B E、右子树分为 C F；C 在其右子树中序的最左边，因此只有右孩子 F。</p>
+<p><strong>核对方法：</strong>前序首元素 A 是根，中序把它的左子树分为 D B E、右子树分为 C F；C 在其右子树中序的最左边，因此只有右孩子 F。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 40 题 · 度数公式</h4>
 <p><strong>题目。</strong> 某非空二叉树有 10 个度为 2 的结点，度为 1 的结点数量未知。请根据父子边数关系求其叶结点的<strong>准确个数</strong>，而仅仅给出下界。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>n0=n2+1 是等式。</p>
-<p><strong>推导与答案：</strong>恰有 11 个叶；度为 1 的结点数无关。</p>
-<p><strong>典型错误：</strong>将其当作近似不等式。</p>
+<p><strong>提示：</strong>n0=n2+1 是等式。</p>
+<p><strong>解答与推导：</strong>恰有 11 个叶；度为 1 的结点数无关。</p>
+<p><strong>易错处：</strong>将其当作近似不等式。</p>
 
-<p><strong>过程复核：</strong>任何非空二叉树满足 n₀=n₂+1，因此 n₂=10 时叶数恰好是 11。度为 1 的结点数会在边数方程中抵消，不影响这个等式。</p>
+<p><strong>核对方法：</strong>任何非空二叉树满足 n₀=n₂+1，因此 n₂=10 时叶数恰好是 11。度为 1 的结点数会在边数方程中抵消，不影响这个等式。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 41 题 · 一般树证明</h4>
 <p><strong>题目。</strong> 一棵非空一般树除叶结点外，度为 1、2、3 的结点数分别为 4、3、2，且没有度数大于 3 的结点。求叶结点数，并用父子边数验证结果。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>对总边数 n−1 两次计数。</p>
-<p><strong>推导与答案：</strong>n0=1+n2+2n3=1+3+4=8，结点总数 17，边数 16。</p>
-<p><strong>典型错误：</strong>把只适合二叉树的公式 n0=n2+1 用于三叉结点。</p>
+<p><strong>提示：</strong>对总边数 n−1 两次计数。</p>
+<p><strong>解答与推导：</strong>n0=1+n2+2n3=1+3+4=8，结点总数 17，边数 16。</p>
+<p><strong>易错处：</strong>把只适合二叉树的公式 n0=n2+1 用于三叉结点。</p>
 
-<p><strong>过程复核：</strong>一棵 n 结点非空树有 n−1 条边。按孩子数计边得 n₁+2n₂+3n₃；与 n₀+n₁+n₂+n₃−1 相等后得 n₀=1+n₂+2n₃=8。</p>
+<p><strong>核对方法：</strong>一棵 n 结点非空树有 n−1 条边。按孩子数计边得 n₁+2n₂+3n₃；与 n₀+n₁+n₂+n₃−1 相等后得 n₀=1+n₂+2n₃=8。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 42 题 · 非递归算法</h4>
 <p><strong>题目。</strong> 用显式栈遍历一棵普通二叉树，把访问到的每个结点的左右孩子指针交换，实现原地镜像。解释函数为什么应当保存并返回原始 <code>root</code> 指针，以及需要在什么时候把孩子加入栈。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>最后弹出的不必是根。</p>
-<p><strong>推导与答案：</strong>初始化保存 root，逐个弹出 p、swap(p->left,p->right)、压入存在的孩子，最后 return root；时间 Θ(n)。</p>
-<p><strong>典型错误：</strong>丢失原根指针。</p>
+<p><strong>提示：</strong>最后弹出的不必是根。</p>
+<p><strong>解答与推导：</strong>初始化保存 root，逐个弹出 p、swap(p->left,p->right)、压入存在的孩子，最后 return root；时间 Θ(n)。</p>
+<p><strong>易错处：</strong>丢失原根指针。</p>
 
-<p><strong>过程复核：</strong>每次弹栈后交换当前结点的 left/right，再将交换后仍存在的真实孩子压栈，两侧均只会访问一次。原根不必等于最后弹出的结点，应在开始时保存。</p>
+<p><strong>核对方法：</strong>每次弹栈后交换当前结点的 left/right，再将交换后仍存在的真实孩子压栈，两侧均只会访问一次。原根不必等于最后弹出的结点，应在开始时保存。</p>
 </details>
-
 <h2>线索树、森林与树形计数</h2>
 <h4 class="exercise-title">第 43 题 · 空指针</h4>
 <p><strong>题目。</strong> 一个普通非空二叉链表有 n=18 个结点，每个结点都有 <code>left</code> 与 <code>right</code> 两个指针域，缺失孩子时域为 null。求空指针域总数，并从真实父子边数量推导。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>总指针域 2n，真实边 n−1。</p>
-<p><strong>推导与答案：</strong>2n−(n−1)=n+1=19。</p>
-<p><strong>典型错误：</strong>把非空孩子域算成 n 而非 n−1。</p>
+<p><strong>提示：</strong>总指针域 2n，真实边 n−1。</p>
+<p><strong>解答与推导：</strong>2n−(n−1)=n+1=19。</p>
+<p><strong>易错处：</strong>把非空孩子域算成 n 而非 n−1。</p>
 
-<p><strong>过程复核：</strong>总共有 2n 条孩子指针槽位，恰有 n−1 条指向真实孩子的边，因此空槽位为 2n−(n−1)=n+1=19。</p>
+<p><strong>核对方法：</strong>总共有 2n 条孩子指针槽位，恰有 n−1 条指向真实孩子的边，因此空槽位为 2n−(n−1)=n+1=19。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 44 题 · 中序后继</h4>
 <p><strong>题目。</strong> 在没有头结点的中序线索二叉树中，结点 p 的 <code>right</code> 指向一个<strong>真实右子树</strong>。求 p 的中序后继，应沿哪条路径寻找？如果右子树左侧还有真实孩子，为什么不能直接返回右孩子？</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>右子树最先输出的结点是谁？</p>
-<p><strong>推导与答案：</strong>进入 p.right，再沿真实 left 指针走到最左结点。</p>
-<p><strong>典型错误：</strong>直接取右孩子，忽略其左分支。</p>
+<p><strong>提示：</strong>右子树最先输出的结点是谁？</p>
+<p><strong>解答与推导：</strong>进入 p.right，再沿真实 left 指针走到最左结点。</p>
+<p><strong>易错处：</strong>直接取右孩子，忽略其左分支。</p>
 
-<p><strong>过程复核：</strong>后继是右子树中按中序最先访问的结点，所以需要从 p.right 开始沿真实左孩子走到底。若直接取右孩子，可能跳过其左子树结点。</p>
+<p><strong>核对方法：</strong>后继是右子树中按中序最先访问的结点，所以需要从 p.right 开始沿真实左孩子走到底。若直接取右孩子，可能跳过其左子树结点。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 45 题 · 线索标志</h4>
 <p><strong>题目。</strong> 一棵中序线索树约定 <code>rtag=0</code> 表示真实右孩子，<code>rtag=1</code> 表示中序后继线索。现结点 p 的 rtag=1，请解释 p.right 所表达的关系，并说明无后继时的可能约定。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>tag=1 是本题规定的线索状态。</p>
-<p><strong>推导与答案：</strong>right 指中序后继，而不是真实右孩子；若无后继可能为空或指向专设的头结点。</p>
-<p><strong>典型错误：</strong>沿着线索继续递归当成子树。</p>
+<p><strong>提示：</strong>tag=1 是本题规定的线索状态。</p>
+<p><strong>解答与推导：</strong>right 指中序后继，而不是真实右孩子；若无后继可能为空或指向专设的头结点。</p>
+<p><strong>易错处：</strong>沿着线索继续递归当成子树。</p>
 
-<p><strong>过程复核：</strong>rtag=1 说明 `right` 存储中序后继，不能沿它进入真实右子树。尾结点可能以 null 表示无后继，也有带头结点的循环线索版本，需服从题目。</p>
+<p><strong>核对方法：</strong>rtag=1 说明 `right` 存储中序后继，不能沿它进入真实右子树。尾结点可能以 null 表示无后继，也有带头结点的循环线索版本，需服从题目。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 46 题 · 森林还原</h4>
 <p><strong>题目。</strong> 孩子—兄弟法采用 <code>left=firstChild</code>、<code>right=nextSibling</code>。给定 A.left=B、B.right=C、A.right=F、F.left=G，且其余相关指针为空。请还原对应森林的根及直接孩子，求森林共有几棵树。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>left=首孩子，right=下一个兄弟。</p>
-<p><strong>推导与答案：</strong>两棵：根 A 的孩子 B、C；根 F 的孩子 G。</p>
-<p><strong>典型错误：</strong>把 F 当作 A 的右孩子。</p>
+<p><strong>提示：</strong>left=首孩子，right=下一个兄弟。</p>
+<p><strong>解答与推导：</strong>两棵：根 A 的孩子 B、C；根 F 的孩子 G。</p>
+<p><strong>易错处：</strong>把 F 当作 A 的右孩子。</p>
 
-<p><strong>过程复核：</strong>A.right=F 表示 A、F 是森林的两个根；A.left=B 表示 B 为 A 的第一个孩子，而 B.right=C 表示 C 与 B 为兄弟。F.left=G 则表示 G 为 F 的第一个孩子。</p>
+<p><strong>核对方法：</strong>A.right=F 表示 A、F 是森林的两个根；A.left=B 表示 B 为 A 的第一个孩子，而 B.right=C 表示 C 与 B 为兄弟。F.left=G 则表示 G 为 F 的第一个孩子。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 47 题 · Catalan数</h4>
 <p><strong>题目。</strong> 只区分二叉树左右形状、不区分结点标签，设 T₀=1、T₁=1、T₂=2，且 <code>Tₙ=Σ(TₖTₙ₋₁₋ₖ)</code>（k 从 0 到 n−1）。求 T₃，并写出根的左子树有 0、1、2 个结点时各贡献多少种形状。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>根左侧结点数可为 0、1、2。</p>
-<p><strong>推导与答案：</strong>T3=T0T2+T1T1+T2T0=2+1+2=5。</p>
-<p><strong>典型错误：</strong>遗漏空子树 T0=1。</p>
+<p><strong>提示：</strong>根左侧结点数可为 0、1、2。</p>
+<p><strong>解答与推导：</strong>T3=T0T2+T1T1+T2T0=2+1+2=5。</p>
+<p><strong>易错处：</strong>遗漏空子树 T0=1。</p>
 
-<p><strong>过程复核：</strong>左子树含 0 个结点贡献 T₀T₂=2；含 1 个贡献 T₁T₁=1；含 2 个贡献 T₂T₀=2，合计 5。空子树 T₀=1 必须计入。</p>
+<p><strong>核对方法：</strong>左子树含 0 个结点贡献 T₀T₂=2；含 1 个贡献 T₁T₁=1；含 2 个贡献 T₂T₀=2，合计 5。空子树 T₀=1 必须计入。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 48 题 · 方法选择</h4>
 <p><strong>题目。</strong> 一般树采用 <code>firstChild/nextSibling</code> 组织结点。给定根 A，请描述遍历 A 的<strong>所有直接孩子</strong>的循环过程，要求说明起始指针、每轮输出内容与移动指针的规则，避免误入孙结点。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>第一步找 A.firstChild，以后走 nextSibling。</p>
-<p><strong>推导与答案：</strong>for(c=A.firstChild;c;c=c.nextSibling) 即可逐个访问直接孩子；不能递归进入 c.firstChild 并误当成同一层。</p>
-<p><strong>典型错误：</strong>沿着孩子的孩子一直走，漏掉兄弟。</p>
+<p><strong>提示：</strong>第一步找 A.firstChild，以后走 nextSibling。</p>
+<p><strong>解答与推导：</strong>for(c=A.firstChild;c;c=c.nextSibling) 即可逐个访问直接孩子；不能递归进入 c.firstChild 并误当成同一层。</p>
+<p><strong>易错处：</strong>沿着孩子的孩子一直走，漏掉兄弟。</p>
 
-<p><strong>过程复核：</strong>从 `c=A.firstChild` 开始；每轮访问 c，随后令 `c=c.nextSibling`，直到 null。若沿 c.firstChild 继续走，便转到 c 的孩子，层次发生变化。</p>
+<p><strong>核对方法：</strong>从 `c=A.firstChild` 开始；每轮访问 c，随后令 `c=c.nextSibling`，直到 null。若沿 c.firstChild 继续走，便转到 c 的孩子，层次发生变化。</p>
 </details>
-</div></section><section class="chapter review-section" id="review-03"><h2>期中专项题库（第 3 组）：堆、哈夫曼、查找与平衡树</h2><div class="lesson"><p>这一组从堆的局部父子约束开始，过渡到哈夫曼树的贪心合并，再进入查找树和 AVL 的旋转修复。遇到堆、哈夫曼或平衡树手算题时，务必写出每一轮选中的对象、修改后的结构，以及是否仍满足原数据结构的不变量。</p>
-<p>这里的题目默认已学习相应教学章节；不过每道题都给出独立条件，方便脱离前文复习。先自己模拟，再展开解答检查路径、分支和数值。</p>
+</div></section><section class="chapter review-section" id="review-03"><h2>期中专项题库（第 3 组）：堆、哈夫曼、查找与平衡树</h2><div class="lesson"><p>这一组训练的是“每一步操作后，原结构的不变量还成立吗”。建堆应记录逐项插入还是自底向上筛选；哈夫曼应写出每轮最小权值的选择和新树权值；BST 删除应追踪原后继位置；AVL 旋转应写出新的子树根与高度。</p>
+<p>考试中的一张最终树图往往无法证明步骤正确。建议每改变一次堆、树或搜索区间就写下关键状态，再利用父子大小关系、中序序列或高度差核对。对平均查找长度 ASL，还应先确认成功键或失败间隙的概率模型。</p>
 <h2>堆、Top-K 与建堆</h2>
 <h4 class="exercise-title">第 49 题 · 合法性</h4>
 <p><strong>题目。</strong> 完全二叉树采用 0-based 数组存储，给定 [10,8,9,4,7,6]。判断它是否为最大堆；请逐一核验所有存在的父子关系，并解释为何不要求数组整体降序。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>逐个比较父与孩子，不要求整表单调。</p>
-<p><strong>推导与答案：</strong>合法：10≥8,9；8≥4,7；9≥6。</p>
-<p><strong>典型错误：</strong>把兄弟大小关系当成堆要求。</p>
+<p><strong>提示：</strong>逐个比较父与孩子，不要求整表单调。</p>
+<p><strong>解答与推导：</strong>合法：10≥8,9；8≥4,7；9≥6。</p>
+<p><strong>易错处：</strong>把兄弟大小关系当成堆要求。</p>
 
-<p><strong>过程复核：</strong>检查非叶下标 0、1、2：10 分别大于 8、9，8 分别大于 4、7，9 大于 6。因此满足最大堆的全部父子条件，兄弟之间没有规定谁大谁小。</p>
+<p><strong>核对方法：</strong>检查非叶下标 0、1、2：10 分别大于 8、9，8 分别大于 4、7，9 大于 6。因此满足最大堆的全部父子条件，兄弟之间没有规定谁大谁小。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 50 题 · 插入模拟</h4>
 <p><strong>题目。</strong> 给定最大堆的 0-based 数组 [9,7,8,3,5,6]，现在插入关键码 10。将新项放到数组末尾后使用上浮法维护最大堆，写出<strong>每次交换后的完整数组</strong>。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>先追加末尾，再沿父链接上浮。</p>
-<p><strong>推导与答案：</strong>[9,7,8,3,5,6,10]→[9,7,10,3,5,6,8]→[10,7,9,3,5,6,8]。</p>
-<p><strong>典型错误：</strong>一次上浮不够就提前停。</p>
+<p><strong>提示：</strong>先追加末尾，再沿父链接上浮。</p>
+<p><strong>解答与推导：</strong>[9,7,8,3,5,6,10]→[9,7,10,3,5,6,8]→[10,7,9,3,5,6,8]。</p>
+<p><strong>易错处：</strong>一次上浮不够就提前停。</p>
 
-<p><strong>过程复核：</strong>插入前 a 的长度为 6，新项下标为 6，父结点下标 2；第一次与 8 交换，之后位于下标 2，父结点下标 0，再与 9 交换。两次上浮结束后根变为 10。</p>
+<p><strong>核对方法：</strong>插入前 a 的长度为 6，新项下标为 6，父结点下标 2；第一次与 8 交换，之后位于下标 2，父结点下标 0，再与 9 交换。两次上浮结束后根变为 10。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 51 题 · 逐项建堆</h4>
 <p><strong>题目。</strong> 从空最大堆出发，按输入顺序 2、9、4、7、6 逐项插入（每次新项上浮）。请记录每次插入完成后的数组，并给出最终最大堆。不要使用底向上筛选法。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>每加入一项保存一次状态。</p>
-<p><strong>推导与答案：</strong>[2]、[9,2]、[9,2,4]、[9,7,4,2]、[9,7,4,2,6]。</p>
-<p><strong>典型错误：</strong>把底向上筛选的结果当逐项状态。</p>
+<p><strong>提示：</strong>每加入一项保存一次状态。</p>
+<p><strong>解答与推导：</strong>[2]、[9,2]、[9,2,4]、[9,7,4,2]、[9,7,4,2,6]。</p>
+<p><strong>易错处：</strong>把底向上筛选的结果当逐项状态。</p>
 
-<p><strong>过程复核：</strong>每一步都是对当前已有堆的扩充，按次序得到 [2]、[9,2]、[9,2,4]、[9,7,4,2]、[9,7,4,2,6]。不同合法建堆策略可能产生不同结果，必须以题目指定方法为准。</p>
+<p><strong>核对方法：</strong>每一步都是对当前已有堆的扩充，按次序得到 [2]、[9,2]、[9,2,4]、[9,7,4,2]、[9,7,4,2,6]。不同合法建堆策略可能产生不同结果，必须以题目指定方法为准。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 52 题 · 筛选建堆</h4>
 <p><strong>题目。</strong> 给定原始数组 [1,2,5,8,3,6,10,14]，下标从 0 开始。使用<strong>自底向上的筛选法</strong>建立最大堆，依次处理非叶结点 i=3、2、1、0，记录每个 i 的调整结束状态，最终给出堆数组。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>非叶 i=3,2,1,0 依次下沉。</p>
-<p><strong>推导与答案：</strong>i=3→[1,2,5,14,3,6,10,8]；i=2→[1,2,10,14,3,6,5,8]；i=1→[1,14,10,8,3,6,5,2]；i=0→[14,8,10,2,3,6,5,1]。</p>
-<p><strong>典型错误：</strong>下沉时没继续沿交换后的孩子位置比较。</p>
+<p><strong>提示：</strong>非叶 i=3,2,1,0 依次下沉。</p>
+<p><strong>解答与推导：</strong>i=3→[1,2,5,14,3,6,10,8]；i=2→[1,2,10,14,3,6,5,8]；i=1→[1,14,10,8,3,6,5,2]；i=0→[14,8,10,2,3,6,5,1]。</p>
+<p><strong>易错处：</strong>下沉时没继续沿交换后的孩子位置比较。</p>
 
-<p><strong>过程复核：</strong>按最后一个非叶结点向根处理，每次只修正该结点的子树。经过四轮后结果为 [14,8,10,2,3,6,5,1]。对任意父下标 i，核验 a[i]≥a[2i+1] 和存在时的 a[2i+2]。</p>
+<p><strong>核对方法：</strong>按最后一个非叶结点向根处理，每次只修正该结点的子树。经过四轮后结果为 [14,8,10,2,3,6,5,1]。对任意父下标 i，核验 a[i]≥a[2i+1] 和存在时的 a[2i+2]。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 53 题 · Top-K</h4>
 <p><strong>题目。</strong> 有 n=100000 个整数成绩陆续到来，只需要始终保留到目前为止最大的 k=20 个值，不要求这 20 项内部排好序。请选择一个维护空间为 O(k) 的堆方案，说明新值到来时的动作和总时间复杂度。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>候选中最小者应最快被淘汰。</p>
-<p><strong>推导与答案：</strong>容量 20 的最小堆；新项大于堆顶才替换。时间 O(nlog20)，额外空间 O(20)。</p>
-<p><strong>典型错误：</strong>想取最大 k 项就误选最大堆。</p>
+<p><strong>提示：</strong>候选中最小者应最快被淘汰。</p>
+<p><strong>解答与推导：</strong>容量 20 的最小堆；新项大于堆顶才替换。时间 O(nlog20)，额外空间 O(20)。</p>
+<p><strong>易错处：</strong>想取最大 k 项就误选最大堆。</p>
 
-<p><strong>过程复核：</strong>维护 20 项最小堆，堆顶就是当前入选集合中的最小者。新值不大于堆顶则舍弃，否则替换堆顶并下沉；时间 O(nlog20)，额外 O(20)。</p>
+<p><strong>核对方法：</strong>维护 20 项最小堆，堆顶就是当前入选集合中的最小者。新值不大于堆顶则舍弃，否则替换堆顶并下沉；时间 O(nlog20)，额外 O(20)。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 54 题 · 复杂度</h4>
 <p><strong>题目。</strong> 给定 n 项数组，采用自底向上 <code>siftDown</code> 建立最大堆。为什么虽然单个结点最多需要 O(log n) 次下沉，整个建堆仍可达到 Θ(n)？从各高度结点数量与下沉步数的关系解释。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>叶子没有下沉工作，低层结点多但可下沉短。</p>
-<p><strong>推导与答案：</strong>按高度 h 的结点数约 n/2^{h+1}，每项最多下沉 h，总代价 nΣh/2^h=Θ(n)。</p>
-<p><strong>典型错误：</strong>对所有结点都按 log n 的最坏高度收费。</p>
+<p><strong>提示：</strong>叶子没有下沉工作，低层结点多但可下沉短。</p>
+<p><strong>解答与推导：</strong>按高度 h 的结点数约 n/2^{h+1}，每项最多下沉 h，总代价 nΣh/2^h=Θ(n)。</p>
+<p><strong>易错处：</strong>对所有结点都按 log n 的最坏高度收费。</p>
 
-<p><strong>过程复核：</strong>高度为 h 的结点大致只有 n/2^(h+1) 个，其下沉工作不超过 O(h)，汇总为 O(n·Σh/2^h)=O(n)。绝大多数结点靠近叶层，几乎不需要下沉。</p>
+<p><strong>核对方法：</strong>高度为 h 的结点大致只有 n/2^(h+1) 个，其下沉工作不超过 O(h)，汇总为 O(n·Σh/2^h)=O(n)。绝大多数结点靠近叶层，几乎不需要下沉。</p>
 </details>
-
 <h2>Huffman 树与带权路径长度</h2>
 <h4 class="exercise-title">第 55 题 · 构造</h4>
 <p><strong>题目。</strong> 四个字符的正权值分别为 2、3、5、8。用哈夫曼算法每轮取出最小两项、建立一个新结点并放回候选。列出全部合并权值，计算最终 WPL，并区分 WPL 与根权值。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>每步合并两最小，合并成本求和。</p>
-<p><strong>推导与答案：</strong>2+3=5；5+5=10；8+10=18，WPL=5+10+18=33。</p>
-<p><strong>典型错误：</strong>生成的新 5 忘记加入候选集合。</p>
+<p><strong>提示：</strong>每步合并两最小，合并成本求和。</p>
+<p><strong>解答与推导：</strong>2+3=5；5+5=10；8+10=18，WPL=5+10+18=33。</p>
+<p><strong>易错处：</strong>生成的新 5 忘记加入候选集合。</p>
 
-<p><strong>过程复核：</strong>先合并 2+3=5，再合并原来的 5 与新生成的 5 得 10，最后 8+10=18。所有合并权值之和 5+10+18=33，即 WPL；18 是根权值。</p>
+<p><strong>核对方法：</strong>先合并 2+3=5，再合并原来的 5 与新生成的 5 得 10，最后 8+10=18。所有合并权值之和 5+10+18=33，即 WPL；18 是根权值。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 56 题 · WPL</h4>
 <p><strong>题目。</strong> 八个叶子的正权值为 15、3、14、2、6、9、16、17。使用哈夫曼算法构造一棵最优树，列出七轮合并产生的权值，并计算 WPL；最后用原始叶权总和核对根权。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>七次合并，列完整成本。</p>
-<p><strong>推导与答案：</strong>合并权 5、11、20、29、33、49、82，总和 229。</p>
-<p><strong>典型错误：</strong>只把叶权相加得到 82，误当 WPL。</p>
+<p><strong>提示：</strong>七次合并，列完整成本。</p>
+<p><strong>解答与推导：</strong>合并权 5、11、20、29、33、49、82，总和 229。</p>
+<p><strong>易错处：</strong>只把叶权相加得到 82，误当 WPL。</p>
 
-<p><strong>过程复核：</strong>完整合并权值为 5、11、20、29、33、49、82；各权值相加得到 229。根权是八个叶权之和 82，和加权路径成本的含义不同。</p>
+<p><strong>核对方法：</strong>完整合并权值为 5、11、20、29、33、49、82；各权值相加得到 229。根权是八个叶权之和 82，和加权路径成本的含义不同。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 57 题 · 平均码长</h4>
 <p><strong>题目。</strong> 某前缀编码的全部符号出现次数合计为 25，按出现次数加权的总编码长度 WPL=55 位。求平均每次出现一个符号的编码位数，并说明分母应采用什么数量。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>总位数除出现次数。</p>
-<p><strong>推导与答案：</strong>55/25=2.2 bit/字符。</p>
-<p><strong>典型错误：</strong>除以字符种类数而非总频数。</p>
+<p><strong>提示：</strong>总位数除出现次数。</p>
+<p><strong>解答与推导：</strong>55/25=2.2 bit/字符。</p>
+<p><strong>易错处：</strong>除以字符种类数而非总频数。</p>
 
-<p><strong>过程复核：</strong>一个长度为 ℓ 的码字如果对应出现 w 次，在 WPL 中贡献 w·ℓ 位；所以平均码长是总位数 55 除以总出现次数 25，等于 2.2 位/次。</p>
+<p><strong>核对方法：</strong>一个长度为 ℓ 的码字如果对应出现 w 次，在 WPL 中贡献 w·ℓ 位；所以平均码长是总位数 55 除以总出现次数 25，等于 2.2 位/次。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 58 题 · 前缀码</h4>
 <p><strong>题目。</strong> 设计二进制前缀码时，把字符 A 编为 <code>0</code>、B 编为 <code>01</code>。判定这两个码字能否构成前缀无歧义编码，说明从左到右读比特时产生的歧义，并给出如何判断一般码字集合。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>A 的码字是 B 的前缀。</p>
-<p><strong>推导与答案：</strong>读到比特 0 时，不知道这是 A 的完整码字，还是 B 的开头，所以不满足前缀码条件。</p>
-<p><strong>典型错误：</strong>只检查码字不同，忽略前缀关系。</p>
+<p><strong>提示：</strong>A 的码字是 B 的前缀。</p>
+<p><strong>解答与推导：</strong>读到比特 0 时，不知道这是 A 的完整码字，还是 B 的开头，所以不满足前缀码条件。</p>
+<p><strong>易错处：</strong>只检查码字不同，忽略前缀关系。</p>
 
-<p><strong>过程复核：</strong>码字 0 是码字 01 的前缀，因此读取到 0 时既可能已经得到 A，也可能正在读取 B。合法前缀码要求任意两个不同符号的码字均无前缀包含关系。</p>
+<p><strong>核对方法：</strong>码字 0 是码字 01 的前缀，因此读取到 0 时既可能已经得到 A，也可能正在读取 B。合法前缀码要求任意两个不同符号的码字均无前缀包含关系。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 59 题 · 证明</h4>
 <p><strong>题目。</strong> 对一组正权值构造最优前缀二叉树。请解释为什么能够选择一棵最优树，使最小的两个权值放在最深的一对兄弟叶上；指出权值交换为什么不会增加加权路径长度。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>将低权与深处高权交换，不增加 WPL。</p>
-<p><strong>推导与答案：</strong>更深位置的路径乘数更大，小权占更深位置不比大权贵；可通过交换构造一棵同样不劣的最优树，再把该兄弟对合并成缩小的最优子问题。</p>
-<p><strong>典型错误：</strong>用一次实验结果代替贪心正确性证明。</p>
+<p><strong>提示：</strong>将低权与深处高权交换，不增加 WPL。</p>
+<p><strong>解答与推导：</strong>更深位置的路径乘数更大，小权占更深位置不比大权贵；可通过交换构造一棵同样不劣的最优树，再把该兄弟对合并成缩小的最优子问题。</p>
+<p><strong>易错处：</strong>用一次实验结果代替贪心正确性证明。</p>
 
-<p><strong>过程复核：</strong>把深处的大权与较浅的小权交换，WPL 变化由两项权值差与深度差决定：更小权值去更深处不会使成本变大。通过这种交换可把两最小权安放在一对最深兄弟叶上。</p>
+<p><strong>核对方法：</strong>把深处的大权与较浅的小权交换，WPL 变化由两项权值差与深度差决定：更小权值去更深处不会使成本变大。通过这种交换可把两最小权安放在一对最深兄弟叶上。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 60 题 · 算法实现</h4>
 <p><strong>题目。</strong> 给定 n 个符号的正权值，哈夫曼构造每轮需要取出两个最小权值并插入它们的和。选择合适的数据结构实现重复操作，给出建树的时间复杂度，并说明需要合并多少轮。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>必须反复提取两最小并回插合并权。</p>
-<p><strong>推导与答案：</strong>用最小堆，n 叶进行 n−1 次合并，每次两弹一压，时间 O(nlog n)。</p>
-<p><strong>典型错误：</strong>误选最大堆。</p>
+<p><strong>提示：</strong>必须反复提取两最小并回插合并权。</p>
+<p><strong>解答与推导：</strong>用最小堆，n 叶进行 n−1 次合并，每次两弹一压，时间 O(nlog n)。</p>
+<p><strong>易错处：</strong>误选最大堆。</p>
 
-<p><strong>过程复核：</strong>最小堆允许 O(log n) 提取最小项及插入，每轮要取两项、插一项；每轮让候选棵数减少 1，故共 n−1 次合并，总时间 O(nlog n)。</p>
+<p><strong>核对方法：</strong>最小堆允许 O(log n) 提取最小项及插入，每轮要取两项、插一项；每轮让候选棵数减少 1，故共 n−1 次合并，总时间 O(nlog n)。</p>
 </details>
-
 <h2>查找、BST 和 AVL</h2>
 <h4 class="exercise-title">第 61 题 · ASL</h4>
 <p><strong>题目。</strong> 一个无序顺序表有 n=7 个互异关键码，顺序查找从第一项开始逐个比较，保证查找成功且每个关键码被查找的概率都为 1/7。求成功 ASL，并说明比较次数序列。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>逐项比较次数是 1..7。</p>
-<p><strong>推导与答案：</strong>(1+7)/2=4。</p>
-<p><strong>典型错误：</strong>遗漏概率模型。</p>
+<p><strong>提示：</strong>逐项比较次数是 1..7。</p>
+<p><strong>解答与推导：</strong>(1+7)/2=4。</p>
+<p><strong>易错处：</strong>遗漏概率模型。</p>
 
-<p><strong>过程复核：</strong>成功时比较次数为 1、2、3、4、5、6、7；因为每个目标等概率，所以 ASL=(1+2+⋯+7)/7=4。若目标概率不同需使用加权平均。</p>
+<p><strong>核对方法：</strong>成功时比较次数为 1、2、3、4、5、6、7；因为每个目标等概率，所以 ASL=(1+2+⋯+7)/7=4。若目标概率不同需使用加权平均。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 62 题 · 二分轨迹</h4>
 <p><strong>题目。</strong> 在 0-based 升序数组 [2,4,7,9,13,18,22] 中二分查找关键码 13，使用闭区间 <code>[low,high]</code> 与 <code>mid=floor((low+high)/2)</code>。写出每轮比较到的数组值及最终比较次数。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>闭区间每步取 floor((low+high)/2)。</p>
-<p><strong>推导与答案：</strong>9→18→13，共三次。</p>
-<p><strong>典型错误：</strong>把 mid 向上取整规则混入。</p>
+<p><strong>提示：</strong>闭区间每步取 floor((low+high)/2)。</p>
+<p><strong>解答与推导：</strong>9→18→13，共三次。</p>
+<p><strong>易错处：</strong>把 mid 向上取整规则混入。</p>
 
-<p><strong>过程复核：</strong>先用 mid=3 与 9 比较；目标较大，转到区间 [4,6]，mid=5 与 18 比较；目标较小，转到 [4,4] 比较 13，第三次命中。</p>
+<p><strong>核对方法：</strong>先用 mid=3 与 9 比较；目标较大，转到区间 [4,6]，mid=5 与 18 比较；目标较小，转到 [4,4] 比较 13，第三次命中。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 63 题 · BST插入</h4>
 <p><strong>题目。</strong> 从空 BST 开始，依次插入互不相等的关键码 5、2、8、1、3。写出最终树的根、左右子树结构，并用中序遍历检查它满足 BST 性质。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>逐项按大小走到空连接。</p>
-<p><strong>推导与答案：</strong>根 5；左根 2，孩子 1 和 3；右孩子 8。</p>
-<p><strong>典型错误：</strong>未保持整棵子树的大小不变量。</p>
+<p><strong>提示：</strong>逐项按大小走到空连接。</p>
+<p><strong>解答与推导：</strong>根 5；左根 2，孩子 1 和 3；右孩子 8。</p>
+<p><strong>易错处：</strong>未保持整棵子树的大小不变量。</p>
 
-<p><strong>过程复核：</strong>插入 5 为根，2、8 分别进入左右；1、3 分别成为 2 的左右孩子。中序输出 1、2、3、5、8，严格递增。</p>
+<p><strong>核对方法：</strong>插入 5 为根，2、8 分别进入左右；1、3 分别成为 2 的左右孩子。中序输出 1、2、3、5、8，严格递增。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 64 题 · BST删除</h4>
 <p><strong>题目。</strong> 继续使用从空 BST 依次插入 5、2、8、1、3 得到的树，现删除结点 2，规定用它的<strong>中序后继</strong>替换。请指出后继是谁、哪些链接会变化，以及删除后的树结构。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>右子树最左结点是后继。</p>
-<p><strong>推导与答案：</strong>后继 3 替换 2，删原 3；得到根 5、左孩子 3 且其左孩子 1、右孩子 8。</p>
-<p><strong>典型错误：</strong>重复保留原后继。</p>
+<p><strong>提示：</strong>右子树最左结点是后继。</p>
+<p><strong>解答与推导：</strong>后继 3 替换 2，删原 3；得到根 5、左孩子 3 且其左孩子 1、右孩子 8。</p>
+<p><strong>易错处：</strong>重复保留原后继。</p>
 
-<p><strong>过程复核：</strong>结点 2 的右子树里最小者为 3，先用 3 替换原键，再删除原来叶结点 3。树根仍为 5，左子树根 3 且左孩子 1，右孩子 8。</p>
+<p><strong>核对方法：</strong>结点 2 的右子树里最小者为 3，先用 3 替换原键，再删除原来叶结点 3。树根仍为 5，左子树根 3 且左孩子 1，右孩子 8。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 65 题 · AVL旋转</h4>
 <p><strong>题目。</strong> 从空 AVL 树依次插入 30、10、20，关键码互异，平衡因子规定为右高减左高。指出首次失衡结点、属于 LL/RR/LR/RL 哪类，并写出两次旋转与最终树。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>从首次失衡根往新结点方向左→右。</p>
-<p><strong>推导与答案：</strong>LR：左旋 10，再右旋 30，得到根 20、左 10、右 30。</p>
-<p><strong>典型错误：</strong>只做一次右旋。</p>
+<p><strong>提示：</strong>从首次失衡根往新结点方向左→右。</p>
+<p><strong>解答与推导：</strong>LR：左旋 10，再右旋 30，得到根 20、左 10、右 30。</p>
+<p><strong>易错处：</strong>只做一次右旋。</p>
 
-<p><strong>过程复核：</strong>插入 20 后，30 的左孩子 10 向右倾，类型 LR；先对 10 左旋使 20 升起，再对 30 右旋。结果根 20，左 10，右 30，平衡与 BST 顺序均保留。</p>
+<p><strong>核对方法：</strong>插入 20 后，30 的左孩子 10 向右倾，类型 LR；先对 10 左旋使 20 升起，再对 30 右旋。结果根 20，左 10，右 30，平衡与 BST 顺序均保留。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 66 题 · AVL删除</h4>
 <p><strong>题目。</strong> 某 AVL 树删除一个关键码后，祖先结点 p 的平衡因子变为 +2（右子树较高），其右孩子平衡因子为 −1。按右高减左高的约定，给出修复时旋转的先后次序，以及旋转后为何要更新高度。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>按右重+右孩子左倾识别 RL。</p>
-<p><strong>推导与答案：</strong>先右旋 p 的右孩子，再左旋 p，更新所有受影响的高度并回接新根。</p>
-<p><strong>典型错误：</strong>按 p 正号直接只左旋。</p>
+<p><strong>提示：</strong>按右重+右孩子左倾识别 RL。</p>
+<p><strong>解答与推导：</strong>先右旋 p 的右孩子，再左旋 p，更新所有受影响的高度并回接新根。</p>
+<p><strong>易错处：</strong>按 p 正号直接只左旋。</p>
 
-<p><strong>过程复核：</strong>p 右侧过高但右孩子向左倾，属于 RL 型。先右旋 p 的右孩子，再左旋 p；旋转会改变局部父子关系，必须按旋后结构重新计算高度。</p>
+<p><strong>核对方法：</strong>p 右侧过高但右孩子向左倾，属于 RL 型。先右旋 p 的右孩子，再左旋 p；旋转会改变局部父子关系，必须按旋后结构重新计算高度。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 67 题 · AVL特殊</h4>
 <p><strong>题目。</strong> 初始 AVL 具有根 2、左孩子 1、右孩子 4，且结点 4 的左右孩子依次为 3、5。删除结点 1 后，按照平衡因子=右高−左高，写出失衡点、右孩子平衡因子和具体旋转，画出最终树。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>根右高 2、左高 0，右孩子平衡因子 0。</p>
-<p><strong>推导与答案：</strong>对根 2 单左旋，得到根4、左2（右孩子3）、右5。新子树高度与删除前相同。</p>
-<p><strong>典型错误：</strong>把孩子 bf=0 强行判为 RL。</p>
+<p><strong>提示：</strong>根右高 2、左高 0，右孩子平衡因子 0。</p>
+<p><strong>解答与推导：</strong>对根 2 单左旋，得到根4、左2（右孩子3）、右5。新子树高度与删除前相同。</p>
+<p><strong>易错处：</strong>把孩子 bf=0 强行判为 RL。</p>
 
-<p><strong>过程复核：</strong>删除 1 后，2 左高 0、右高 2，bf=+2；右孩子 4 左右高度相等，bf=0，因此对 2 执行一次左旋。最终根 4，左子树根 2 且右孩子 3，右孩子 5。</p>
+<p><strong>核对方法：</strong>删除 1 后，2 左高 0、右高 2，bf=+2；右孩子 4 左右高度相等，bf=0，因此对 2 执行一次左旋。最终根 4，左子树根 2 且右孩子 3，右孩子 5。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 68 题 · 复杂度</h4>
 <p><strong>题目。</strong> 比较普通 BST 与 AVL 的最坏查找时间。请分别给出造成普通 BST 退化的典型插入顺序，以及 AVL 通过哪项局部结构限制保证 O(log n) 的树高。</p>
 <details class="question"><summary>查看思路与解答</summary>
-<p><strong>如何入手：</strong>是否限制树高。</p>
-<p><strong>推导与答案：</strong>普通 BST 有序插入可能成 n 长链，最坏 Θ(n)；AVL 保持左右高度差≤1，树高 O(log n)，查找 O(log n)。</p>
-<p><strong>典型错误：</strong>把 BST 的平均表现当作最坏上界。</p>
+<p><strong>提示：</strong>是否限制树高。</p>
+<p><strong>解答与推导：</strong>普通 BST 有序插入可能成 n 长链，最坏 Θ(n)；AVL 保持左右高度差≤1，树高 O(log n)，查找 O(log n)。</p>
+<p><strong>易错处：</strong>把 BST 的平均表现当作最坏上界。</p>
 
-<p><strong>过程复核：</strong>普通 BST 若按 1、2、3、… 的顺序插入就可能形成单链，最坏查找 Θ(n)；AVL 对每个结点限制左右子树高度差绝对值≤1，避免出现高度为 n 的链。</p>
+<p><strong>核对方法：</strong>普通 BST 若按 1、2、3、… 的顺序插入就可能形成单链，最坏查找 Θ(n)；AVL 对每个结点限制左右子树高度差绝对值≤1，避免出现高度为 n 的链。</p>
 </details>
 </div></section><section class="chapter review-section" id="review-04"><h2>120 分钟闭卷模拟卷 A：课堂与作业同级</h2><div class="lesson"><blockquote>
 <p><strong>时间：120 分钟；总分：100 分。</strong>本卷按“散列前所有课程内容”设计，含树、堆、哈夫曼、BST 与 AVL；不涉及集合、并查集和散列表。请在没有讲义、没有答案的情况下完成，再打开每题的评分标准。<br><strong>答题顺序建议</strong>：先浏览题目，随后完成概念判断和手工模拟，把较大块的时间留给代码与分析；最后检查下标和边界。具体分钟数可以按个人速度调整。</p>
 </blockquote>
-<p>这份模拟卷重点检验你能否把已学方法真正执行出来。解答中的评分点提示哪些过程需要写在答卷上；只有最终数值而缺少必要中间状态时，仍可能失去步骤分。</p>
+<p>这份试卷偏重常规题型。先在草稿上写出每个结点或数组的操作过程，再核对最后结果；推导题还应说明用到的前提。展开答案后，可以直接按题中给出的评分点为自己的步骤估分，找到只会背结论、还无法独立推演的地方。</p>
 <h2>第一部分　概念、判断与简答（5 题，每题 4 分，共 20 分）</h2>
 <h4 class="exercise-title">第 1 题 · 4 分</h4>
 <p><strong>题目。</strong> 解释抽象数据类型（ADT）与物理存储结构的区别，并举出一种 ADT 的两种实现。</p>
@@ -1035,9 +856,6 @@
 <p><strong>参考解答与评分：</strong>ADT 指对象及允许操作与行为的抽象规范，例如栈的 push/pop/top 与后进先出（2 分）；物理实现规定数据怎样放入内存及怎样执行操作，例如数组栈与链栈都可实现同一种栈（2 分）。</p>
 <p><strong>交卷前复核：</strong>至少写出“抽象操作与语义”和“具体数组或链接实现”两个方面。一个栈 ADT 可以有不同物理实现，但只要 push/pop/top 的外部语义一致，对使用者就是相同接口。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 2 题 · 4 分</h4>
 <p><strong>题目。</strong> 判断并说明：双重循环一定是 Θ(n²)；任何递归算法的栈空间一定是 Θ(n)。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1045,9 +863,6 @@
 <p><strong>参考解答与评分：</strong>两条都错（2 分）。内循环若按倍增执行 log n 次，双层可为 Θ(nlog n)；递归栈空间取决于最长同时活动的调用链，分治按 n/2 递归可为 Θ(log n)（各 1 分）。</p>
 <p><strong>交卷前复核：</strong>双重循环可以有 n·log n 次工作，也可以只有常数次；递归空间看同时活动的调用帧数，而非总函数调用次数。给出具体反例比分别背结论更有说服力。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 3 题 · 4 分</h4>
 <p><strong>题目。</strong> 一个循环队列使用容量 m 的数组和 front、count 两个成员：给出判空、判满、下一入队下标公式。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1055,9 +870,6 @@
 <p><strong>参考解答与评分：</strong>空 count=0（1 分）、满 count=m（1 分）、下一空位 (front+count)%m（2 分）。</p>
 <p><strong>交卷前复核：</strong>在本题定义中 count=0 表示空、count=m 表示满，rear=(front+count)%m。无需浪费一个数组位置，因为 count 是额外的状态信息。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 4 题 · 4 分</h4>
 <p><strong>题目。</strong> 在 KMP 中 lps[j−1] 表示什么？首次失配时为什么不能同时后移主串下标？</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1065,9 +877,6 @@
 <p><strong>参考解答与评分：</strong>它给出已匹配前缀 P[0..j−1] 的最长公共真前后缀长度（2 分）；当前主串字符尚未与回退后新的模式字符比较，故只回退 j，i 保持不动（2 分）。</p>
 <p><strong>交卷前复核：</strong>前六个字符已经确认相等，回退 j 后可以沿同一个主串字符 S[i] 继续比较新模式位置。若同时让 i 前移，可能跳过本来合法的候选。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 5 题 · 4 分</h4>
 <p><strong>题目。</strong> 设关键码互异，解释 BST 的中序性质及普通 BST 与 AVL 最坏查找性能的区别。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1075,7 +884,6 @@
 <p><strong>参考解答与评分：</strong>BST 中序严格升序（1 分），但有序插入可退化成链，最坏 Θ(n)（1 分）；AVL 每个结点左右高度差不超过 1，树高 O(log n)，最坏查找 O(log n)（2 分）。</p>
 <p><strong>交卷前复核：</strong>BST 若依次插入 1、2、3…，树可能退化为单链；AVL 强制每一结点的左右高度差绝对值≤1，因而高度为 O(log n)。</p>
 </details>
-
 <h2>第二部分　手工模拟与计算（5 题，每题 10 分，共 50 分）</h2>
 <h4 class="exercise-title">第 6 题 · 10 分</h4>
 <p><strong>题目。</strong> 有两条互不重叠、已按非递减顺序排列的单链表 A:1→4→7，B:2→4→5。要求不创建新数据结点，将它们合成非递增单链表。写出每次取出结点后的结果链，分析时间和额外空间。</p>
@@ -1084,9 +892,6 @@
 <p><strong>参考解答与评分：</strong>思路是每次选最小剩余结点、直接头插到结果。状态依次为 [1]、[2,1]、[4,2,1]、[4,4,2,1]、[5,4,4,2,1]、[7,5,4,4,2,1]（完整次序 6 分）；两个 4 都保留（2 分）；时间 Θ(m+n)、额外指针空间 Θ(1)（各 1 分）。</p>
 <p><strong>交卷前复核：</strong>两个值为 4 的结点分别属于不同链表，都必须保留。六轮头插后的结果为 7→5→4→4→2→1；每次取最小、头插的方向与题目要求一致。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 7 题 · 10 分</h4>
 <p><strong>题目。</strong> (a) 将中缀表达式 <code>(A+B)*C-D/E</code> 转成后缀式（5 分）；(b) 六节车厢按 1,2,3,4,5,6 固定顺序进栈，判断出栈序列 3,2,5,4,1,6 是否可行，并给出操作轨迹（5 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1094,9 +899,6 @@
 <p><strong>参考解答与评分：</strong>(a) A B + C * D E / -；先括号加，再乘 C，同时 D/E，最后减（5 分）。(b) 可行。操作为 I1 I2 I3 O3 O2 I4 I5 O5 O4 O1 I6 O6（5 分）。要求每个 O 对应当时栈顶。</p>
 <p><strong>交卷前复核：</strong>列车模拟的 I 和 O 事件必须和栈顶一致，最后输入 6 和输出 6 也应写全。后缀式的减号最后输出，因为需要先分别得到两侧乘除表达式。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 8 题 · 10 分</h4>
 <p><strong>题目。</strong> (a) 对 5 阶对称矩阵按下三角行优先压缩，求 A[1][4] 对应的 0-based 一维下标（4 分）；(b) 模式 <code>P="aabaaca"</code> 的 LPS 数组，说明第 5 位为何回退为 0（6 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1104,9 +906,6 @@
 <p><strong>参考解答与评分：</strong>(a) A[1][4] 用对称项 A[4][1]，下标 4×5/2+1=11（4 分）。(b) [0,1,0,1,2,0,1]（4 分）；P[0..5]="aabaac" 的任何非空真前缀都不等于其同长度真后缀，故 lps[5]=0（2 分）。</p>
 <p><strong>交卷前复核：</strong>压缩 A[1][4] 应先映射到 A[4][1]，下标 11。LPS 在 i=5 时处理到 aabaac，候选边界都无法延长，因此得到 0。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 9 题 · 10 分</h4>
 <p><strong>题目。</strong> 二叉树前序为 <code>A B D E C F</code>，中序为 <code>D B E A C F</code>。重建树（6 分），写后序（2 分）与层序（2 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1114,9 +913,6 @@
 <p><strong>参考解答与评分：</strong>前序首项 A 为根，中序中 A 左边 D B E 属于左子树，右边 C F 属于右子树；左根 B，左右 D、E；右根 C、右孩子 F（6 分）。后序 D E B F C A（2 分）；层序 A B C D E F（2 分）。用两份原序列重新遍历核对。</p>
 <p><strong>交卷前复核：</strong>重建后请自行重新列前序和中序；应分别还原出 A 的左子树 B(D,E) 与右子树 C(空,F)。后序为 D E B F C A，层序为 A B C D E F。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 10 题 · 10 分</h4>
 <p><strong>题目。</strong> (a) 按逐项插入法将 2,9,4,7,6 建成最大堆，写每次状态（5 分）；(b) 权值 2,3,5,8 构造哈夫曼树，计算 WPL（5 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1124,7 +920,6 @@
 <p><strong>参考解答与评分：</strong>(a) [2]，[9,2]，[9,2,4]，[9,7,4,2]，[9,7,4,2,6]（5 分）。(b) 2+3=5，5+5=10，8+10=18；WPL=5+10+18=33（5 分）。</p>
 <p><strong>交卷前复核：</strong>堆的每次状态取决于指定的“逐项插入”方法；哈夫曼的根权为 18，而 WPL 为各次合并值之和 33，不能混为一个量。</p>
 </details>
-
 <h2>第三部分　读代码、写算法与正确性（2 题，每题 15 分，共 30 分）</h2>
 <h4 class="exercise-title">第 11 题 · 15 分</h4>
 <p><strong>题目。</strong> 从空 AVL 按顺序插入 <code>30,10,20,40,50</code>，每次出现失衡时写出类型与旋转，最后画出树。采用 bf=右高−左高。说明此结构为何可保证最坏 O(log n) 查找。</p>
@@ -1133,9 +928,6 @@
 <p><strong>参考解答与评分：</strong>前三项使结点 30 出现 LR：先左旋 10，再右旋 30，得根20、左10、右30（6 分）。插入40为30的右孩子；插入50使结点30出现 RR，对30左旋（4 分）。最后根20，左10，右子树根40、左右30和50（3 分）；AVL 维护每结点左右高度差绝对值≤1，树高 O(log n)（2 分）。</p>
 <p><strong>交卷前复核：</strong>在插入 20 后，原根 30 发生 LR 失衡，调整得到根 20；继续插入 40、50 时，右子树局部发生 RR，旋转后的根为 40。最终根仍是 20。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 12 题 · 15 分</h4>
 <p><strong>题目。</strong> 写出只维护 <code>front</code>、<code>count</code> 的容量为 m 的循环队列入队与出队算法（伪代码或 C++ 均可），要求返回是否成功，并解释满容量为何是 m 而非 m−1。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1143,14 +935,13 @@
 <p><strong>参考解答与评分：</strong>入队：若 count==m 失败；否则 a[(front+count)%m]=x，count++，成功（6 分）。出队：若 count==0 失败；否则读出 a[front]、front=(front+1)%m、count--，成功（6 分）。count 显式区分满与空，即使下一空位的表达式与 front 相等，也可以靠 count=m 表示满，因此全部 m 格可用（3 分）。单次 O(1)。</p>
 <p><strong>交卷前复核：</strong>出队前保存队首值，令 front=(front+1)%m、count--；入队把值写到 (front+count)%m，随后 count++。两种操作都要先判断是否允许执行。</p>
 </details>
-
 <hr>
 <h2>交卷后如何复盘</h2>
 <p>先按评分点标记每一步是否独立完成，再将错误归到五类：下标/约定、状态追踪、方法选择、边界条件、代码回接。不要只记录“第 11 题 AVL 错”，应该具体写“把 LR 当作 LL，忘了先旋孩子”。24 小时后换数字重做同类题，检验能否在没有提醒时选对方法。</p>
 </div></section><section class="chapter review-section" id="review-05"><h2>120 分钟闭卷模拟卷 B：综合与变式提高</h2><div class="lesson"><blockquote>
 <p><strong>时间：120 分钟；总分：100 分。</strong>本卷沿用 A 卷的训练范围，仍不考集合、并查集和散列。相比 A 卷，部分题目会把多种操作连在一起，或要求说明一段推理为什么成立。请先独立完成整套卷，再展开思路、答案与评分点。</p>
 </blockquote>
-<p>遇到长题时，请先明确表示方法、下标和终止条件，再写操作轨迹。尤其要区分“最终结果正确”和“中间过程已按题意完整说明”这两种不同的得分要求。</p>
+<p>这一卷把若干熟悉操作放进同一道题。例如 AVL 删除后的高度传播、BST 双孩子结点的回接、链表逆序合并，都需要控制多个中间状态。碰到长题，先确定输入、表示方式和终止条件，再写完整轨迹；检查时既要核对最终结果，也要核对每一步所维持的不变量。</p>
 <h2>第一部分　概念判断及理由（每题 4 分，共 20 分）</h2>
 <h4 class="exercise-title">第 1 题 · 4 分</h4>
 <p><strong>题目。</strong> 一个二叉树的前序与后序分别为 AB、BA。是否能唯一重建？给出两个不同的合法树。</p>
@@ -1159,9 +950,6 @@
 <p><strong>参考解答与评分：</strong>不能（2 分）。A 根、B 为左孩子，与 A 根、B 为右孩子，两者前序都是 AB，后序都是 BA（2 分）。缺少中序时不能凭序列区分左右单孩子。</p>
 <p><strong>过程复核：</strong>两个合法树分别是 A 只有左孩子 B，和 A 只有右孩子 B。它们前序都是 AB、后序都是 BA，因此不能唯一确定左右位置。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 2 题 · 4 分</h4>
 <p><strong>题目。</strong> 为什么数组二分查找的 O(log n) 总时间不能直接推广到普通单链表？</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1169,9 +957,6 @@
 <p><strong>参考解答与评分：</strong>二分需要按下标 O(1) 定位中间元素（2 分）。单链表从头沿 next 才能找到中间结点，定位本身代价不再是 O(1)，因此仅关键码比较次数少不能推出总时间 O(log n)（2 分）。</p>
 <p><strong>过程复核：</strong>比较次数减少只说明决策树深度较小；普通单链表沿 next 寻找某个中点本身可能需要线性时间，算法总体代价不能简单照搬数组结论。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 3 题 · 4 分</h4>
 <p><strong>题目。</strong> 判断：容量为 5 的 front/count 循环队列，front=3,count=5 时下一入队下标为 3，所以它应当是空队列。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1179,9 +964,6 @@
 <p><strong>参考解答与评分：</strong>错误（2 分）。(3+5)%5=3 虽与 front 相同，但 count=5 明确表示满，不允许再入队；count=0 才表示空（2 分）。</p>
 <p><strong>过程复核：</strong>当 count=5=m 时队列已经满了，即使 (front+count)%m 等于 front，也不表示空。空的唯一条件为 count=0。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 4 题 · 4 分</h4>
 <p><strong>题目。</strong> 在 Huffman 编码里，将某个内部结点的左右子树整体互换，是否改变 WPL？</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1189,9 +971,6 @@
 <p><strong>参考解答与评分：</strong>不会改变（2 分）。所有叶子到根的边数不变，权也不变，故 Σ权×深度不变；可能会改变对应的具体 0/1 码字（2 分）。</p>
 <p><strong>过程复核：</strong>每个叶子仍占原来的深度，所有权值也未改变，所以 Σ(weight×depth) 不变；具体编码字符串可能交换了某一位。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 5 题 · 4 分</h4>
 <p><strong>题目。</strong> AVL 删除时能否在第一次旋转后必定停止高度检查？请解释。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1199,7 +978,6 @@
 <p><strong>参考解答与评分：</strong>不能（2 分）。删除可能使旋转后子树高度仍下降，需继续向更高祖先传播，沿路径可能发生多次调整；应检查旋转后的高度或重新平衡每层（2 分）。</p>
 <p><strong>过程复核：</strong>AVL 插入时首次失衡旋转通常能恢复之前的子树高度；删除后的旋转未必如此，仍需继续检查更高祖先。可以用每层回传的子树根和高度来判断。</p>
 </details>
-
 <h2>第二部分　算法模拟及推导（每题 10 分，共 50 分）</h2>
 <h4 class="exercise-title">第 6 题 · 10 分</h4>
 <p><strong>题目。</strong> 考虑代码：</p>
@@ -1215,9 +993,6 @@
 <p><strong>参考解答与评分：</strong>调用 n 为 8→4→2→1→0（2 分）；各层非递归工作量为 8、4、2、1，返回值为 15（3 分）。总工作 n+n/2+n/4+⋯=Θ(n)（3 分）；递归层数 Θ(log n)，每层常数局部变量，栈空间 Θ(log n)（2 分）。</p>
 <p><strong>过程复核：</strong>调用展开时 f(8)=8+f(4)=8+4+f(2)=8+4+2+f(1)=15。循环总成本形成几何级数，栈深度只与依次减半的递归层数有关。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 7 题 · 10 分</h4>
 <p><strong>题目。</strong> (a) 从 6 个车厢 1–6 固定入栈，判断目标出栈 <code>3,2,5,6,4,1</code> 是否可行，写完整 I/O 轨迹（5 分）；(b) 在中缀式 <code>a*x-b/x^2</code> 中，只记录<strong>运算符栈</strong>的 I（入）与 O（出）事件次序（5 分），设幂运算优先于乘除，乘除优先于加减。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1225,9 +1000,6 @@
 <p><strong>参考解答与评分：</strong>(a) 可行：I1 I2 I3 O3 O2 I4 I5 O5 I6 O6 O4 O1（5 分）。(b) 读 *：I；读 −：O(*) 后 I(−)；读 /：I(/)；读 ^：I(^)；结束后 O(^),O(/),O(−)。所以按时间次序为 <code>I O I I I O O O</code>（5 分）。只统计运算符事件，操作数直接输出。</p>
 <p><strong>过程复核：</strong>车厢操作轨迹中每次 O 后被取出的值都应是当前栈顶。运算符栈事件最后是 I O I I I O O O；不要把变量输出事件混进运算符序列。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 8 题 · 10 分</h4>
 <p><strong>题目。</strong> (a) 三对角矩阵 n=7、行压缩 0-based 时，B[12] 对应 A 哪个位置（4 分）；(b) P=&quot;abababca&quot; 的 LPS 数组与主串匹配失配时回退 <code>j=6</code> 的新值（6 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1235,9 +1007,6 @@
 <p><strong>参考解答与评分：</strong>(a) i=⌊(12+1)/3⌋=4，j=12−2×4=4，故 A[4][4]（4 分）。(b) P 下标 0..7 的 LPS 为 [0,0,1,2,3,4,0,1]（4 分）；此前已匹配六字符时失配，使用 lps[5]=4，故 j 从 6 回退至 4，主串下标暂不变（2 分）。</p>
 <p><strong>过程复核：</strong>反向压缩 k=12 对应 (4,4)。P=abababca 的 LPS 是 [0,0,1,2,3,4,0,1]，j=6 失配时回退到 4，当前主串下标不改变。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 9 题 · 10 分</h4>
 <p><strong>题目。</strong> 某一般树用“首孩子 firstChild、下一个兄弟 nextSibling”保存：A.firstChild=B；B.nextSibling=C；C.nextSibling=D；D.firstChild=E；A.nextSibling=F；F.firstChild=G。请画出原森林，说明有多少棵树，并写 A 这一棵树的前序（按孩子从左到右）（10 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1245,9 +1014,6 @@
 <p><strong>参考解答与评分：</strong>森林有两棵根树 A、F（2 分）。A 的直接孩子 B、C、D（3 分），D 的直接孩子 E（1 分）；F 的孩子 G（1 分）。A 树从根出发、按孩子从左到右的前序是 A B C D E（3 分）。特别注意 A.nextSibling=F 表示另一棵树的根，而不是 A 的孩子。</p>
 <p><strong>过程复核：</strong>A、F 是顶层的两棵树。A 的三个直接孩子 B、C、D 中，只有 D 又有孩子 E，因此 A 树前序按根、孩子从左到右得到 A B C D E。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 10 题 · 10 分</h4>
 <p><strong>题目。</strong> (a) 最大堆初始化为数组 [3,8,5,1,6]，采用<strong>底向上筛选</strong>，写最终数组并核对堆性质（5 分）；(b) 权 3、5、6、8 求 Huffman WPL，写合并顺序（5 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1255,7 +1021,6 @@
 <p><strong>参考解答与评分：</strong>(a) i=1 时父 8 已大于 1、6，无需变化；i=0 时 3 与较大孩子 8 交换得 [8,3,5,1,6]，下标1的 3 与较大孩子 6 交换得 [8,6,5,1,3]（5 分）。(b) 3+5=8；6+8=14；8+14=22；WPL=8+14+22=44（5 分）。</p>
 <p><strong>过程复核：</strong>最大堆最终为 [8,6,5,1,3]，可逐项核对所有父≥孩子。哈夫曼合并成本为 8、14、22，总 WPL 为 44，根权 22。</p>
 </details>
-
 <h2>第三部分　算法设计与代码解释（每题 15 分，共 30 分）</h2>
 <h4 class="exercise-title">第 11 题 · 15 分</h4>
 <p><strong>题目。</strong> 一棵二叉树存为指针结点 <code>Node{key,left,right}</code>。要求<strong>不用递归</strong>，对所有结点交换左右子树，返回原树的新根地址。给出完整 C++ 核心函数及时间和辅助空间复杂度。</p>
@@ -1281,9 +1046,6 @@
 <p>若函数末尾直接 return p，p 是最后弹出的某结点，未必是根。使用上面的深度优先栈，未处理结点数量受每条路径上的未访问分支数约束，最坏 O(h)。</p>
 <p><strong>过程复核：</strong>循环中应把交换后存在的左、右孩子压入栈；它们的左右相对位置已交换，因此用新的指针即可。始终保存最初的 root 并返回它，不要返回最后一次弹出的临时结点。</p>
 </details>
-
-
-
 <h4 class="exercise-title">第 12 题 · 15 分</h4>
 <p><strong>题目。</strong> 假设 BST 使用互异关键码且删除时采用中序后继。给出删除一个拥有两个孩子的结点的步骤（5 分）；再解释如果要求维护 AVL，递归返回时还需要做哪些事情（5 分）；最后说明算法的时间复杂度（5 分）。</p>
 <details class="question"><summary>查看思路、解答与评分点</summary>
@@ -1291,10 +1053,1090 @@
 <p><strong>参考解答与评分：</strong>步骤一：在待删结点右子树沿 left 走到最小关键码，即中序后继；把后继键值复制到待删位置；随后在原右子树里删除后继，并回接右子树根（5 分）。步骤二：如果是 AVL，返回每一层时更新当前结点的左右子树高度，按 bf=右高−左高判断是否失衡，针对 LL/LR/RR/RL 旋转，并把新子树根回接上一层（5 分）。普通 BST 删除最坏 O(h)，其中 h 可能 Θ(n)；AVL 的高度 O(log n)，删除及沿祖先路径再平衡最坏 O(log n)（5 分）。</p>
 <p><strong>过程复核：</strong>后继从待删结点的右子树中沿 left 到最小项；复制后继键以后必须在原位置删除后继。AVL 还需要在所有受影响祖先处更新高度并进行必要旋转，最坏时间受 O(log n) 高度限制。</p>
 </details>
-
 <hr>
 <h2>B 卷纠错规则</h2>
 <p>如果在某道题只因为误读了表示约定而失分，单独记“题面约定检查”错误；如果算法选择正确而数组中途断链、漏旋转或算错回退，记“状态维护”错误。试卷的价值是逼迫你在<strong>题目没有提示具体方法</strong>的情况下仍能选对步骤，并且在 120 分钟内留出核对空间。</p>
+</div></section><section class="chapter review-section" id="review-06"><h2>新增 120 分钟闭卷模拟卷 C：基础巩固（上传试卷 A）</h2><div class="lesson"><blockquote>
+<p><strong>来源</strong>：按用户提供的《数据结构期中模拟卷_完整资料.zip》中的试题 Markdown 与答案评分 Markdown 整理，保留原题型、题号、分值、条件及参考答案。
+<strong>建议</strong>：本卷 120 分钟、满分 100 分。请先闭卷独立作答，再逐题展开提示、答案和评分依据。
+<strong>记法提醒</strong>：新增上传卷的 AVL 平衡因子采用 <strong>BF＝左高－右高</strong>。V4 教学部分某些示例采用右高－左高；做此卷时以本卷约定为准。</p>
+</blockquote>
+<h2>范围、题型与作答约定</h2>
+<p>算法分析、线性表、栈与队列、递归、串与数组、树与堆、查找；不含哈希。</p>
+<p>作答说明：选择题均为单选。数组下标默认从 0 开始；二叉树根为第 1 层，空树高度为 0，叶结点高度为 1；平衡因子 BF＝左子树高度－右子树高度。对数默认以 2 为底。代码补全沿用作业中的 C/C++ 风格；整体实现可用 C 或 Python，正确的 C++ 写法同样接受。不要求 main 或输入输出程序。代码题中的空白按编号作答。</p>
+<p>时间建议：选择 15 分钟，填空 15 分钟，问答 40 分钟，代码 40 分钟，检查 10 分钟。</p>
+<p>本卷由 <strong>10 道单项选择（20 分）、10 道填空（20 分）、6 道问答（30 分）、3 道代码题（30 分）</strong> 组成。每题原题干直接显示，点击后才能查看原卷答案、评分及补充提示。</p>
+<h2>一、单项选择题（10 题，每题 2 分，共 20 分）</h2>
+<h4 class="exercise-title">第 1 题 · 2 分</h4>
+<p><strong>题目。</strong> 顺序表在等概率的 n＋1 个合法位置中插入一个元素，平均需要移动原有元素多少个？</p>
+<ul>
+<li><p><strong>A.</strong> (n－1)/2　　</p>
+</li>
+<li><p><strong>B.</strong> n/2　　</p>
+</li>
+<li><p><strong>C.</strong> (n＋1)/2　　</p>
+</li>
+<li><p><strong>D.</strong> n</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 从头部、尾部依次列出 n＋1 个插入位置，统计原有元素的移动量后求平均。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。合法插入位置有 n＋1 个，移动数分别为 n、n－1、…、0，平均为 n/2。</p>
+
+</details>
+<h4 class="exercise-title">第 2 题 · 2 分</h4>
+<p><strong>题目。</strong> 在单链表中设置头结点，主要目的是：</p>
+<ul>
+<li><p><strong>A.</strong> 保证至少有一个数据元素　　</p>
+</li>
+<li><p><strong>B.</strong> 使随机访问达到 O(1)</p>
+</li>
+<li><p><strong>C.</strong> 统一首元结点与其他结点的操作　　</p>
+</li>
+<li><p><strong>D.</strong> 消除所有空指针</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 想想头结点是否参与数据元素计数，以及首元结点与内部结点操作原本有哪些差别。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。头结点统一首部与其他位置的插入删除处理。</p>
+
+</details>
+<h4 class="exercise-title">第 3 题 · 2 分</h4>
+<p><strong>题目。</strong> 依次将 1、2、3、4 入栈，允许在入栈过程中出栈。下列哪个出栈序列不可能出现？</p>
+<ul>
+<li><p><strong>A.</strong> 2,1,4,3　　</p>
+</li>
+<li><p><strong>B.</strong> 3,2,1,4　　</p>
+</li>
+<li><p><strong>C.</strong> 3,1,2,4　　</p>
+</li>
+<li><p><strong>D.</strong> 1,4,3,2</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 按给定输入顺序模拟入栈、出栈，尝试找到某个目标序列无法越过的栈顶元素。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。若首先输出 3，则 1、2 已在栈中，2 压在 1 上，不能先弹出 1。</p>
+
+</details>
+<h4 class="exercise-title">第 4 题 · 2 分</h4>
+<p><strong>题目。</strong> 循环队列使用长度为 m 的数组，front 指向队首，rear 指向下一次入队位置，预留一个空单元。队满条件是：</p>
+<ul>
+<li><p><strong>A.</strong> front＝rear　　</p>
+</li>
+<li><p><strong>B.</strong> (rear＋1)%m＝front</p>
+</li>
+<li><p><strong>C.</strong> (front＋1)%m＝rear　　</p>
+</li>
+<li><p><strong>D.</strong> rear＝m－1</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先说明 front、rear 的准确含义，再判断怎样避免空队列和满队列混淆。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。rear 下一格是 front 时，若继续入队会破坏预留空单元约定。</p>
+
+</details>
+<h4 class="exercise-title">第 5 题 · 2 分</h4>
+<p><strong>题目。</strong> 以下关于串的说法，正确的是：</p>
+<ul>
+<li><p><strong>A.</strong> 空串长度为 1　　</p>
+</li>
+<li><p><strong>B.</strong> 空格串一定是空串</p>
+</li>
+<li><p><strong>C.</strong> 两串长度相等即可判定相等　　</p>
+</li>
+<li><p><strong>D.</strong> 空串的长度为 0</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 分别验证“空串”“含空格的串”“等长串”所代表的内容。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>D。空串无字符；含一个空格的串长度为 1。</p>
+
+</details>
+<h4 class="exercise-title">第 6 题 · 2 分</h4>
+<p><strong>题目。</strong> 模式串长 m、主串长 n。标准 KMP 算法包含预处理的最坏时间复杂度是：</p>
+<ul>
+<li><p><strong>A.</strong> O(nm)　　</p>
+</li>
+<li><p><strong>B.</strong> O(n＋m)　　</p>
+</li>
+<li><p><strong>C.</strong> O(log n)　　</p>
+</li>
+<li><p><strong>D.</strong> O(m²)</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 把模式预处理与主串匹配两部分的时间分别列出来再合并。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。模式预处理 O(m)，主串匹配 O(n)。</p>
+
+</details>
+<h4 class="exercise-title">第 7 题 · 2 分</h4>
+<p><strong>题目。</strong> 一棵非空二叉树有 8 个度为 2 的结点，则叶结点数为：</p>
+<ul>
+<li><p><strong>A.</strong> 7　　</p>
+</li>
+<li><p><strong>B.</strong> 8　　</p>
+</li>
+<li><p><strong>C.</strong> 9　　</p>
+</li>
+<li><p><strong>D.</strong> 无法确定</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 把父子边数按所有非根结点、按结点的孩子数量各计算一次。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。非空二叉树中叶数 n0＝n2＋1＝9。</p>
+
+</details>
+<h4 class="exercise-title">第 8 题 · 2 分</h4>
+<p><strong>题目。</strong> 关键字互不相同时，二叉搜索树的中序遍历序列一定：</p>
+<ul>
+<li><p><strong>A.</strong> 严格递增　　</p>
+</li>
+<li><p><strong>B.</strong> 严格递减　　</p>
+</li>
+<li><p><strong>C.</strong> 等于插入序列　　</p>
+</li>
+<li><p><strong>D.</strong> 按深度递增</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 使用严格 BST 的左右大小约束，判断中序遍历如何排列所有关键码。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>A。严格 BST 的左子树关键字小于根，右子树关键字大于根，中序严格递增。</p>
+
+</details>
+<h4 class="exercise-title">第 9 题 · 2 分</h4>
+<p><strong>题目。</strong> 大根堆使用从 0 开始的数组存储。下标 i 结点的左孩子下标是：</p>
+<ul>
+<li><p><strong>A.</strong> 2i　　</p>
+</li>
+<li><p><strong>B.</strong> 2i＋1　　</p>
+</li>
+<li><p><strong>C.</strong> 2i＋2　　</p>
+</li>
+<li><p><strong>D.</strong> (i－1)/2</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 根据零起始数组中父子结点的层次关系，把下标公式写出来。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。0 起始下标，左孩子为 2i＋1，右孩子为 2i＋2。</p>
+
+</details>
+<h4 class="exercise-title">第 10 题 · 2 分</h4>
+<p><strong>题目。</strong> AVL 树中，结点 z 因在其左孩子的左子树插入而首先失衡，应对 z 执行：</p>
+<ul>
+<li><p><strong>A.</strong> 单左旋　　</p>
+</li>
+<li><p><strong>B.</strong> 单右旋　　</p>
+</li>
+<li><p><strong>C.</strong> 先左旋再右旋　　</p>
+</li>
+<li><p><strong>D.</strong> 先右旋再左旋</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先识别最低失衡结点及新增结点位于它的哪一侧，再选择旋转方向。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。LL 型失衡，在最低失衡结点处单右旋。</p>
+<h2>二、填空（每题 2 分）</h2>
+
+</details>
+<h2>二、填空题（10 题，每题 2 分，共 20 分）</h2>
+<h4 class="exercise-title">第 11 题 · 2 分</h4>
+<p><strong>题目。</strong> n≥1，以下程序中 <code>s++</code> 的执行次数为________________。</p>
+<pre class="code-block"><code class="hljs language-text">for (int i = 1; i &lt;= n; ++i)
+    for (int j = 1; j &lt;= i; ++j)
+        s++;</code></pre>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 第 i 次外循环的内层迭代次数与 i 的关系是多少？把各轮相加。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>n(n＋1)/2。求和 1＋2＋…＋n。</p>
+
+</details>
+<h4 class="exercise-title">第 12 题 · 2 分</h4>
+<p><strong>题目。</strong> 有 15 个元素的顺序表，在第 4 个元素之前插入新元素，需移动________个原有元素。（本题位置序号从 1 开始。）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 位置编号为 1 的第 4 个元素之前插入时，哪些已有元素必须向后移动？</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>12。原第 4 至第 15 个元素均需后移。</p>
+
+</details>
+<h4 class="exercise-title">第 13 题 · 2 分</h4>
+<p><strong>题目。</strong> 已知单链表中 p 指向待删除结点的直接前驱，且 p-&gt;next 非空。忽略释放空间，删除该结点的指针语句是________________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先找到被删结点的后继，修改前驱结点的 next 链接，注意原结点尚未释放。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p><code>p-&gt;next = p-&gt;next-&gt;next;</code>。题目已说明忽略释放空间。</p>
+
+</details>
+<h4 class="exercise-title">第 14 题 · 2 分</h4>
+<p><strong>题目。</strong> 循环队列数组长度为 8，采用预留一个空单元的方案，front＝6，rear＝2，当前元素个数为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 结合队首与下一入队位置的含义，用环形距离计算队列长度。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>4。元素数为 (rear－front＋8)%8＝4。</p>
+
+</details>
+<h4 class="exercise-title">第 15 题 · 2 分</h4>
+<p><strong>题目。</strong> 后缀表达式 <code>6 2 3 + * 4 -</code> 的值为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 后缀式需要先弹出右操作数，再弹出左操作数；逐个计算四则运算。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>26。先算 2＋3＝5，再算 6×5－4＝26。</p>
+
+</details>
+<h4 class="exercise-title">第 16 题 · 2 分</h4>
+<p><strong>题目。</strong> 串 S＝&quot;ABCDEFG&quot;，从第 2 个字符起取长度为 4 的子串，得到________。（本题字符位置从 1 开始。）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 子串起点采用 1-based 编号，先写出起始字符，再连续取指定个数。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>BCDE。</p>
+
+</details>
+<h4 class="exercise-title">第 17 题 · 2 分</h4>
+<p><strong>题目。</strong> 二维数组 A[4][5] 按行优先连续存储，每个元素占 4 字节，A[0][0] 地址为 1000，则 A[2][3] 地址为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先算元素偏移，再乘每项字节数，最后加到首元素的地址上。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>1052。偏移元素数为 2×5＋3＝13，地址 1000＋13×4。</p>
+
+</details>
+<h4 class="exercise-title">第 18 题 · 2 分</h4>
+<p><strong>题目。</strong> 一棵完全二叉树有 10 个结点，其高度为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 完全二叉树按照层次依次填充，求最深一个结点所在层数。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>4。高度为 floor(log2(10))＋1。</p>
+
+</details>
+<h4 class="exercise-title">第 19 题 · 2 分</h4>
+<p><strong>题目。</strong> 有序表为 [2,5,8,12,16,23,38]。折半查找 23，初始 low＝0、high＝6，mid＝向下取整的 (low＋high)/2，比较的下标依次为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 每轮写出 low、high、mid，按比较结果缩小闭区间。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>3,5。先比较 12，再比较 23。</p>
+
+</details>
+<h4 class="exercise-title">第 20 题 · 2 分</h4>
+<p><strong>题目。</strong> 哈夫曼树的叶权为 2、3、5、7，其带权路径长度 WPL 为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 哈夫曼每轮取最小的两棵树合并，累加每轮生成的内部结点权值。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>32。依次合并 2＋3＝5，5＋5＝10，7＋10＝17，WPL＝5＋10＋17。</p>
+
+</details>
+<h2>三、问答题（6 题，每题 5 分，共 30 分）</h2>
+<h4 class="exercise-title">第 21 题 · 5 分 · 算法效率比较</h4>
+<p><strong>题目。</strong> 以下两个算法均计算 1!＋2!＋…＋n!。假定乘法与加法均为常数时间，不考虑整数溢出。</p>
+<pre class="code-block"><code class="hljs language-text">Algorithm I:
+    p = 1; s = 0
+    for i = 1..n:
+        p = p * i
+        s = s + p
+
+Algorithm II:
+    s = 0
+    for i = 1..n:
+        p = 1
+        for j = 1..i:
+            p = p * j
+        s = s + p</code></pre>
+<p>（1）分别写出乘法的执行次数与时间复杂度。（3 分）
+（2）说明算法 I 避免了哪类重复计算。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 两段算法都算阶乘；对比它们重复计算了哪些乘积，以及每个内循环的总次数。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>算法 I：乘法执行 n 次，时间 Θ(n)。（1 分）
+算法 II：乘法执行 n(n＋1)/2 次，时间 Θ(n²)。（2 分，次数和阶各 1 分）
+算法 I 保留上一轮的 (i－1)!，只乘 i 即得到 i!，避免每轮从 1 开始重复计算阶乘的前缀乘积。（2 分）
+按题目采用单位代价模型，不讨论大整数位数增长。</p>
+
+</details>
+<h4 class="exercise-title">第 22 题 · 5 分 · 栈与表达式</h4>
+<p><strong>题目。</strong> （1）将中缀表达式 <code>A * (B + C) - D / E</code> 转为后缀表达式。（2 分）
+（2）操作数直接输出，运算符栈初始为空。按从左到右扫描顺序，列出每次扫描运算符或括号后“栈中内容（栈底到栈顶）”与“当前输出”；最后列出清空栈后的输出。左括号只入栈，右括号触发弹出且不输出括号。（3 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 用运算符栈处理乘除优先级与括号，记录每次出栈后输出序列。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>后缀表达式：<code>A B C + * D E / -</code>。（2 分）
+以下每行在处理完该运算符或括号时记录状态，栈底在左；空栈用空表示。</p>
+<pre class="code-block"><code class="hljs language-text">Token    Stack       Output
+*        *           A
+(        * (         A
++        * ( +       A B
+)        *           A B C +
+-        -           A B C + *
+/        - /         A B C + * D
+end      empty       A B C + * D E / -</code></pre>
+<p>过程共 3 分：括号处理 1 分，扫描减号时弹出乘号 1 分，其余状态和最终清栈 1 分。表格、逐步文字或等价栈图均可。</p>
+
+</details>
+<h4 class="exercise-title">第 23 题 · 5 分 · KMP 前缀函数</h4>
+<p><strong>题目。</strong> 模式串 P＝&quot;ababaca&quot;。定义 pi[i] 为 P[0..i] 的最长相等真前缀与真后缀的长度，pi[0]＝0，真前后缀不包含整个子串自身。
+（1）写出整个 pi 数组。（3 分）
+（2）计算 pi[5] 时，已匹配前缀长度 j＝3。写出失配回退的 j 值序列，并说明字符 c 为何不能扩展任何非空匹配。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 逐个前缀寻找相等的真前缀与真后缀，遇到失配时尝试更短的边界。</p>
+<p><strong>参考答案与评分。</strong></p>
+<pre class="code-block"><code class="hljs language-text">index    0 1 2 3 4 5 6
+P        a b a b a c a
+pi       0 0 1 2 3 0 1</code></pre>
+<p>pi 数组正确 3 分；仅个别位置错误但定义使用正确，给 1～2 分。
+计算 pi[5]，当前字符 c，与 P[3]＝b 不同：j 从 3 回退至 pi[2]＝1；与 P[1]＝b 仍不同，回退至 pi[0]＝0；P[0]＝a 仍不等于 c，因此 pi[5]＝0。（2 分：回退序列 3→1→0 为 1 分，最终比较与解释为 1 分。）</p>
+
+</details>
+<h4 class="exercise-title">第 24 题 · 5 分 · 二叉树遍历与线索</h4>
+<p><strong>题目。</strong> 某二叉树的先序序列为 <code>A B D E C F</code>，中序序列为 <code>D B E A C F</code>，所有结点标识互异。
+（1）画出二叉树。（2 分）
+（2）写出后序遍历。（1 分）
+（3）进行中序线索化，无头结点，空指针改为前驱或后继线索。写出 E 的前驱与后继，并写出 F 的右线索指向。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先用遍历序列还原结点相对位置，再根据真实空孩子标注线索的前驱或后继。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>先序首元素 A 是根，中序在 A 处分割左右子树。对应树如下：（2 分）</p>
+<pre class="code-block"><code class="hljs language-text">        A
+       / \
+      B   C
+     / \   \
+    D   E   F</code></pre>
+<p>后序：D E B F C A。（1 分）
+中序 D B E A C F 中，E 的前驱为 B，后继为 A。F 为中序最后结点，右线索为 NULL。（2 分：E 前后继各 0.5 分，F 右线索 1 分。）</p>
+
+</details>
+<h4 class="exercise-title">第 25 题 · 5 分 · 哈夫曼树</h4>
+<p><strong>题目。</strong> 给定叶权 A:2、B:3、C:7、D:9，每次合并当前最小的两个权值。
+（1）列出每次合并的两个权值与新权值，并求 WPL。（3 分）
+（2）画出一棵对应的哈夫曼树，给出一套合法的二进制前缀编码。左边记 0、右边记 1。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 每次合并权最小的两棵树，记录生成的新结点和累计带权路径长度。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>依次合并：2＋3＝5；5＋7＝12；9＋12＝21。（合并过程 2 分）
+WPL＝5＋12＋21＝38。（1 分）
+一种合法的树与编码如下，内部结点括号中是权值和：</p>
+<pre class="code-block"><code class="hljs language-text">          (21)
+         /    \
+       D:9    (12)
+             /    \
+           (5)    C:7
+          /   \
+        A:2   B:3
+
+D: 0    C: 11    A: 100    B: 101</code></pre>
+<p>树形与合并过程一致 1 分；编码与树一致且满足前缀性质 1 分。交换任意内部结点的左右孩子产生的等价编码均接受。按叶深计算得到 2×3＋3×3＋7×2＋9×1＝38。</p>
+
+</details>
+<h4 class="exercise-title">第 26 题 · 5 分 · AVL 插入与调整</h4>
+<p><strong>题目。</strong> 向空 AVL 树依次插入 30、20、10、25、40、50。
+（1）指出每次发生调整时新插入的关键字、最低失衡结点、失衡类型与旋转方向。（2 分）
+（2）画出插入 10 后调整完成的树，以及全部插入后的树。（2 分）
+（3）标注最终树所有非叶结点的 BF。（1 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 明确这份试卷采用 BF＝左高－右高，逐次插入后寻找最低失衡祖先。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>插入 10：最低失衡结点 30，LL 型，对 30 右旋。（1 分）
+插入 50：最低失衡结点 20，RR 型，对 20 左旋。（1 分）
+其余插入均不触发旋转。</p>
+<pre class="code-block"><code class="hljs language-text">After 10:              Final:
+     20                    30
+    /  \                  /  \
+   10  30                20   40
+                        / \    \
+                       10 25    50</code></pre>
+<p>两棵树各 1 分。最终 BF：30 为 0，20 为 0，40 为－1。（共 1 分）</p>
+
+</details>
+<h2>四、代码题（3 题，每题 10 分，共 30 分）</h2>
+<h4 class="exercise-title">第 27 题 · 10 分 · 单链表就地逆置：代码补全</h4>
+<p><strong>题目。</strong> head 指向不存放有效数据的头结点。链表可能为空。仅调整指针，不创建或释放结点。补全五处，每处 2 分。</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> {
+    <span class="hljs-type">int</span> data;
+    Node *next;
+};
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(Node *head)</span> </span>{
+    Node *p = head-&gt;next;
+    head-&gt;next = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">while</span> ( <span class="hljs-comment">/* (1) */</span> ) {
+        Node *q = <span class="hljs-comment">/* (2) */</span>;
+        p-&gt;next = <span class="hljs-comment">/* (3) */</span>;
+        <span class="hljs-comment">/* (4) */</span> = p;
+        p = <span class="hljs-comment">/* (5) */</span>;
+    }
+}</code></pre>
+<p>（1）____________________________</p>
+<p>（2）____________________________</p>
+<p>（3）____________________________</p>
+<p>（4）____________________________</p>
+<p>（5）____________________________</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 逐行追踪逆置时的 prev、cur、next，确保改指针之前保存旧后继。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>（1）<code>p != NULL</code>
+（2）<code>p-&gt;next</code>
+（3）<code>head-&gt;next</code>
+（4）<code>head-&gt;next</code>
+（5）<code>q</code></p>
+<p>每空 2 分。完整代码：</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(Node *head)</span> </span>{
+    Node *p = head-&gt;next;
+    head-&gt;next = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">while</span> (p != <span class="hljs-literal">NULL</span>) {
+        Node *q = p-&gt;next;
+        p-&gt;next = head-&gt;next;
+        head-&gt;next = p;
+        p = q;
+    }
+}</code></pre>
+<p>循环不变式：head 后面是已经逆置的前缀，p 指向尚未处理的后缀。必须先保存后继再改 p-&gt;next。空链表不会进入循环，单结点链表也正确。时间 O(n)，额外空间 O(1)。这些说明用于复盘，不另计分。</p>
+
+</details>
+<h4 class="exercise-title">第 28 题 · 10 分 · 带计数器的循环队列：代码补全</h4>
+<p><strong>题目。</strong> 队列用 front 指向队首，用 count 记录元素数，全部 M 个数组单元均可使用。初始 front＝count＝0，M 为正整数常量。补全五处，每处 2 分。</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Queue</span> {
+    <span class="hljs-type">int</span> a[M];
+    <span class="hljs-type">int</span> front, count;
+};
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">enqueue</span><span class="hljs-params">(Queue &amp;q, <span class="hljs-type">int</span> x)</span> </span>{
+    <span class="hljs-keyword">if</span> ( <span class="hljs-comment">/* (1) */</span> ) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    <span class="hljs-type">int</span> rear = <span class="hljs-comment">/* (2) */</span>;
+    q.a[rear] = x;
+    ++q.count;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">dequeue</span><span class="hljs-params">(Queue &amp;q, <span class="hljs-type">int</span> &amp;x)</span> </span>{
+    <span class="hljs-keyword">if</span> ( <span class="hljs-comment">/* (3) */</span> ) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    x = q.a[q.front];
+    q.front = <span class="hljs-comment">/* (4) */</span>;
+    <span class="hljs-comment">/* (5) */</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}</code></pre>
+<p>（1）____________________________</p>
+<p>（2）____________________________</p>
+<p>（3）____________________________</p>
+<p>（4）____________________________</p>
+<p>（5）____________________________</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 以 front 和 count 为状态，先写空、满条件，再推出下一写入位置。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>（1）<code>q.count == M</code>
+（2）<code>(q.front + q.count) % M</code>
+（3）<code>q.count == 0</code>
+（4）<code>(q.front + 1) % M</code>
+（5）<code>--q.count</code>（或 <code>q.count--</code>、<code>q.count -= 1</code>）</p>
+<p>每空 2 分。完整代码：</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">enqueue</span><span class="hljs-params">(Queue &amp;q, <span class="hljs-type">int</span> x)</span> </span>{
+    <span class="hljs-keyword">if</span> (q.count == M) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    <span class="hljs-type">int</span> rear = (q.front + q.count) % M;
+    q.a[rear] = x;
+    ++q.count;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">dequeue</span><span class="hljs-params">(Queue &amp;q, <span class="hljs-type">int</span> &amp;x)</span> </span>{
+    <span class="hljs-keyword">if</span> (q.count == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    x = q.a[q.front];
+    q.front = (q.front + <span class="hljs-number">1</span>) % M;
+    --q.count;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}</code></pre>
+<p>这里使用 count 区分空与满，可容纳 M 个元素。与预留一个单元的队列区别在于容量与判满规则。</p>
+
+</details>
+<h4 class="exercise-title">第 29 题 · 10 分 · 二叉树高度与平衡性：整体实现</h4>
+<p><strong>题目。</strong> 使用二叉链式存储，编写 isBalanced(root)，判断每个结点的左右子树高度差是否均不超过 1。空树返回 true。本题只检查高度平衡性，无须检查二叉搜索树性质。
+要求总时间复杂度 O(n)，并写出辅助空间复杂度。可自定义辅助函数，不得对每个结点重复计算整棵子树的高度。</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-comment">// C/C++ node fields:</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> {
+    <span class="hljs-type">int</span> data;
+    Node *left, *right;
+};
+<span class="hljs-comment">// Python: node.data, node.left, node.right</span>
+<span class="hljs-comment">// Empty child: NULL in C/C++, None in Python.</span></code></pre>
+<p>评分：递归边界与高度计算 3 分；失衡识别与向上传递 4 分；总时间及空间分析 3 分。允许任何满足要求的等价算法。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 让一次递归同时回传高度与平衡状态，避免为每个结点重复扫描子树。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>使用后序遍历，在计算高度时同时检查平衡性。以－1 作为失衡信号；正常高度均非负。</p>
+<pre class="code-block"><code class="hljs language-text">def isBalanced(root):
+    def height(node):
+        if node is None:
+            return 0
+        lh = height(node.left)
+        if lh == -1:
+            return -1
+        rh = height(node.right)
+        if rh == -1 or abs(lh - rh) &gt; 1:
+            return -1
+        return max(lh, rh) + 1
+
+    return height(root) != -1</code></pre>
+<p>递归边界 1 分，子树高度获取与父结点高度 2 分；当前结点高度差判定 2 分，子树失衡向上传递并形成正确返回值 2 分；每个结点最多处理一次、时间 O(n) 为 2 分，递归栈 O(h) 为 1 分。最坏链状树的 h＝n。</p>
+<p>C 语言可用返回整数的辅助函数，外层将结果与－1 比较；没有 bool 类型时使用 0/1 同样接受。显式后序栈方案如满足要求也接受。</p>
+<p>易错点：只检查根；用“结点总数差”代替高度差；每个结点重算整棵子树高度导致最坏 O(n²)；把空树判断为不平衡。</p>
+
+</details>
+<h2>考点对应与错题复盘</h2>
+<p>选择、填空：顺序表与链表基本操作、栈序列、循环队列、串、数组地址、二叉树性质、BST、KMP、堆与哈夫曼。
+21：书面 L2 的阶乘和与复杂度比较变式。
+22：书面 L3 的中缀转后缀与运算符栈过程变式。
+23：OJ Week3 的模式匹配与最长前后缀基础。
+24：书面 L4、OJ Week4～5 的遍历、构建及线索基础。
+25：书面 L4 与 OJ Week5 的哈夫曼树。
+26：书面 L5 的 AVL 连续插入变式，列为重点问答。
+27～28：书面 L2～L3 的链表逆置和计数器循环队列变式。
+29：OJ Week6 的高度平衡判定基础版。</p>
+<p>复盘建议：先区分概念错误、过程错误和边界错误，再将做错的算法不看答案重写一遍。B 卷安排了双旋、全局 BST 约束与二分边界，可在复盘 A 卷后限时完成。</p>
+</div></section><section class="chapter review-section" id="review-07"><h2>新增 120 分钟闭卷模拟卷 D：综合提高（上传试卷 B）</h2><div class="lesson"><blockquote>
+<p><strong>来源</strong>：按用户提供的《数据结构期中模拟卷_完整资料.zip》中的试题 Markdown 与答案评分 Markdown 整理，保留原题型、题号、分值、条件及参考答案。
+<strong>建议</strong>：本卷 120 分钟、满分 100 分。请先闭卷独立作答，再逐题展开提示、答案和评分依据。
+<strong>记法提醒</strong>：新增上传卷的 AVL 平衡因子采用 <strong>BF＝左高－右高</strong>。V4 教学部分某些示例采用右高－左高；做此卷时以本卷约定为准。</p>
+</blockquote>
+<h2>范围、题型与作答约定</h2>
+<p>算法分析、线性表、栈与队列、递归、串与数组、树与堆、查找；不含哈希。</p>
+<p>作答说明：选择题均为单选。数组下标默认从 0 开始；二叉树根为第 1 层，空树高度为 0，叶结点高度为 1；BF＝左子树高度－右子树高度。对数默认以 2 为底。代码补全沿用作业中的 C/C++ 风格；整体实现可用 C 或 Python，正确的 C++ 写法同样接受。不要求 main 或输入输出程序。关键字无重复时按严格二叉搜索树处理。</p>
+<p>时间建议：选择 15 分钟，填空 15 分钟，问答 40 分钟，代码 40 分钟，检查 10 分钟。</p>
+<p>本卷由 <strong>10 道单项选择（20 分）、10 道填空（20 分）、6 道问答（30 分）、3 道代码题（30 分）</strong> 组成。每题原题干直接显示，点击后才能查看原卷答案、评分及补充提示。</p>
+<h2>一、单项选择题（10 题，每题 2 分，共 20 分）</h2>
+<h4 class="exercise-title">第 1 题 · 2 分</h4>
+<p><strong>题目。</strong> 以下循环中，内层语句执行总次数的紧确渐近阶为多少？n≥2。</p>
+<pre class="code-block"><code class="hljs language-text">for (int i = 1; i &lt; n; i *= 2)
+    for (int j = 0; j &lt; i; ++j)
+        ++s;</code></pre>
+<ul>
+<li><p><strong>A.</strong> Θ(log n)　　</p>
+</li>
+<li><p><strong>B.</strong> Θ(n)　　</p>
+</li>
+<li><p><strong>C.</strong> Θ(n log n)　　</p>
+</li>
+<li><p><strong>D.</strong> Θ(n²)</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 外层 i 倍增，每轮内循环执行 i 次；把这组几何级数求和。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。内层执行次数为 1＋2＋4＋…＋2^k，其中 2^k＜n≤2^(k＋1)，总和为 Θ(n)。</p>
+
+</details>
+<h4 class="exercise-title">第 2 题 · 2 分</h4>
+<p><strong>题目。</strong> 带头结点单链表中，仅已知非尾数据结点 p，要求 O(1) 时间删除 p 当前所表示的值，允许改变 p 的数据域，可采用：</p>
+<ul>
+<li><p><strong>A.</strong> 从头查找前驱　　</p>
+</li>
+<li><p><strong>B.</strong> 仅执行 p＝p-&gt;next</p>
+</li>
+<li><p><strong>C.</strong> 将后继数据复制到 p，再删除后继　　</p>
+</li>
+<li><p><strong>D.</strong> 仅令 p-&gt;next＝NULL</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 题目允许改数据域并保证 p 后面有结点，考虑复制后继数据再摘下后继。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。复制后继数据并跨过、释放后继，可 O(1) 删除 p 原先表示的值；题目已允许改变数据域。</p>
+
+</details>
+<h4 class="exercise-title">第 3 题 · 2 分</h4>
+<p><strong>题目。</strong> 依次入栈 1、2、3、4、5，出栈过程可与入栈交错。合法出栈序列总数为：</p>
+<ul>
+<li><p><strong>A.</strong> 25　　</p>
+</li>
+<li><p><strong>B.</strong> 32　　</p>
+</li>
+<li><p><strong>C.</strong> 42　　</p>
+</li>
+<li><p><strong>D.</strong> 120</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 把允许的入栈、出栈交错顺序看作合法括号序列，使用 Catalan 计数。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。合法出栈序列数为第 5 个 Catalan 数 C(10,5)/6＝42。</p>
+
+</details>
+<h4 class="exercise-title">第 4 题 · 2 分</h4>
+<p><strong>题目。</strong> 长度 m 的循环数组队列用 front 和 count 表示，允许装满数组。下一次入队的数组位置为：</p>
+<ul>
+<li><p><strong>A.</strong> (front＋count)%m　　</p>
+</li>
+<li><p><strong>B.</strong> (front＋count＋1)%m</p>
+</li>
+<li><p><strong>C.</strong> (front－count＋m)%m　　</p>
+</li>
+<li><p><strong>D.</strong> count%m</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 队首开始经过 count 个有效位置，就到下一次可以写入的下标。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>A。队首加当前元素数即下一次写入位置，再对 m 取模。</p>
+
+</details>
+<h4 class="exercise-title">第 5 题 · 2 分</h4>
+<p><strong>题目。</strong> 已成功匹配模式串的前 j 个字符后失配，前缀函数写法 KMP 的正确回退是：</p>
+<ul>
+<li><p><strong>A.</strong> j＝j－1　　</p>
+</li>
+<li><p><strong>B.</strong> j＝pi[j－1]　　</p>
+</li>
+<li><p><strong>C.</strong> 主串指针退回 0　　</p>
+</li>
+<li><p><strong>D.</strong> j＝pi[j]＋1</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 区分主串 i 与已匹配长度 j；失配时能保留的最长边界由哪个 pi 项给出？</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。pi[j－1] 是已匹配长度 j 的前缀的最长可复用边界长度。</p>
+
+</details>
+<h4 class="exercise-title">第 6 题 · 2 分</h4>
+<p><strong>题目。</strong> n 个结点的非空二叉树采用二叉链表存储，每个结点有两个孩子指针。空孩子指针总数为：</p>
+<ul>
+<li><p><strong>A.</strong> n－1　　</p>
+</li>
+<li><p><strong>B.</strong> n　　</p>
+</li>
+<li><p><strong>C.</strong> n＋1　　</p>
+</li>
+<li><p><strong>D.</strong> 2n</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 把二叉链表的指针域总数减去非空孩子边的数量。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。2n 个孩子指针中，n－1 个指向树边，其余 n＋1 个为空。</p>
+
+</details>
+<h4 class="exercise-title">第 7 题 · 2 分</h4>
+<p><strong>题目。</strong> 将森林转换为左孩子－右兄弟二叉树后，二叉树根的右孩子表示：</p>
+<ul>
+<li><p><strong>A.</strong> 第一棵树根的第一个孩子　　</p>
+</li>
+<li><p><strong>B.</strong> 第二棵树的根（若存在）</p>
+</li>
+<li><p><strong>C.</strong> 第一棵树根的父结点　　</p>
+</li>
+<li><p><strong>D.</strong> 第一棵树最右叶结点</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 在左孩子—右兄弟表示法里，顶层森林各根也通过兄弟指针串起来。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。森林各根通过右兄弟链相连。</p>
+
+</details>
+<h4 class="exercise-title">第 8 题 · 2 分</h4>
+<p><strong>题目。</strong> 任意无序数组通过从最后一个非叶结点开始向下筛选建立堆，其最坏时间复杂度为：</p>
+<ul>
+<li><p><strong>A.</strong> O(log n)　　</p>
+</li>
+<li><p><strong>B.</strong> O(n)　　</p>
+</li>
+<li><p><strong>C.</strong> O(n log n)　　</p>
+</li>
+<li><p><strong>D.</strong> O(n²)</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 自底向上筛选的总代价应按各高度结点数量加权，不能直接把最坏单结点代价乘 n。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>B。大多数结点接近叶层，下筛成本较低，求和为 O(n)。</p>
+
+</details>
+<h4 class="exercise-title">第 9 题 · 2 分</h4>
+<p><strong>题目。</strong> 在含 n 个关键字的二叉搜索树中，查找的最坏时间复杂度可达：</p>
+<ul>
+<li><p><strong>A.</strong> O(1)　　</p>
+</li>
+<li><p><strong>B.</strong> O(log n)　　</p>
+</li>
+<li><p><strong>C.</strong> O(n)　　</p>
+</li>
+<li><p><strong>D.</strong> O(n log n)</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 最坏输入可以使普通 BST 逐步形成单链；沿着链查找要走多少结点？</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>C。BST 可退化为长度 n 的单链。</p>
+
+</details>
+<h4 class="exercise-title">第 10 题 · 2 分</h4>
+<p><strong>题目。</strong> 某 AVL 最低失衡结点 z 的 BF＝－2，其右孩子 BF＝＋1，插入调整应执行：</p>
+<ul>
+<li><p><strong>A.</strong> 对 z 单左旋　　</p>
+</li>
+<li><p><strong>B.</strong> 对 z 单右旋</p>
+</li>
+<li><p><strong>C.</strong> 先对 z 的左孩子左旋，再对 z 右旋</p>
+</li>
+<li><p><strong>D.</strong> 先对 z 的右孩子右旋，再对 z 左旋</p>
+</li>
+</ul>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 题目采用 BF＝左高－右高。按左右方向先判断失衡型，再选转子树的先后顺序。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>D。RL 型：先右旋右孩子，再左旋 z。</p>
+<h2>二、填空（每题 2 分）</h2>
+
+</details>
+<h2>二、填空题（10 题，每题 2 分，共 20 分）</h2>
+<h4 class="exercise-title">第 11 题 · 2 分</h4>
+<p><strong>题目。</strong> 递归式 T(n)＝2T(n/2)＋n，T(1)＝1，n 为 2 的幂，其紧确渐近阶为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 对递归树分层计算：每层有多少子问题、每层总工作量是多少？</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>Θ(n log n)。每层总工作量 n，共 log n 层。</p>
+
+</details>
+<h4 class="exercise-title">第 12 题 · 2 分</h4>
+<p><strong>题目。</strong> 中缀表达式 <code>A - B - C * D</code> 的后缀形式为________________。减法左结合。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 减法左结合；先构造前两个操作数之差，再减去后面的乘积。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p><code>A B - C D * -</code>。</p>
+
+</details>
+<h4 class="exercise-title">第 13 题 · 2 分</h4>
+<p><strong>题目。</strong> 长度 7 的循环队列预留一个空单元，front＝5、rear＝2，依次出队两次、入队三次后，front＝<strong><strong><strong><strong>，rear＝</strong></strong></strong></strong>。（每空 1 分。）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 按照题目规定的操作次序，先分别更新 front，再更新 rear，并做模 7 运算。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>front＝0，rear＝5。（每空 1 分。）初始 4 个元素，最终 5 个元素，所有操作均合法。</p>
+
+</details>
+<h4 class="exercise-title">第 14 题 · 2 分</h4>
+<p><strong>题目。</strong> 模式串 &quot;aaaaab&quot; 的前缀函数 pi 数组为________________。pi[i] 是截至下标 i 的子串的最长相等真前后缀长度。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 每个前缀的最大公共真前后缀长度可从前一位置继承并尝试延长。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>[0,1,2,3,4,0]。</p>
+
+</details>
+<h4 class="exercise-title">第 15 题 · 2 分</h4>
+<p><strong>题目。</strong> 对称矩阵 A 的下三角（含对角线）按行优先存入 B，A 的行列下标均为 0..5，B 下标从 0 开始。A[1][4] 对应 B 的下标为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 利用矩阵的对称性把上三角坐标映射到已存储的下三角。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>11。对称性 A[1][4]＝A[4][1]，下标 4×5/2＋1＝11。</p>
+
+</details>
+<h4 class="exercise-title">第 16 题 · 2 分</h4>
+<p><strong>题目。</strong> 非空树中，度为 1、2、3 的结点分别有 4、3、2 个，无更高度结点，则叶结点数为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 一般树的边数是结点数减 1，结合不同度数结点贡献的孩子数列方程。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>8。叶数＝1＋3＋2×2＝8；度为 1 的结点不改变叶数公式。</p>
+
+</details>
+<h4 class="exercise-title">第 17 题 · 2 分</h4>
+<p><strong>题目。</strong> 完全二叉树有 100 个结点，按层次从 1 编号，最后一个非叶结点编号为________。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 在按层 1-based 编号的完全二叉树中，哪些结点至少有一个孩子？</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>50。1 起始编号的最后非叶结点为 floor(n/2)。</p>
+
+</details>
+<h4 class="exercise-title">第 18 题 · 2 分</h4>
+<p><strong>题目。</strong> 哈夫曼树有 6 个叶结点，则内部结点数为________；若以二叉链表存储且无额外头结点，总结点数为________。（每空 1 分。）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 每轮哈夫曼合并减少一棵待处理树；最后一棵树共有多少内部结点？</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>5；11。（每空 1 分。）哈夫曼树每个内部结点恰有两个孩子。</p>
+
+</details>
+<h4 class="exercise-title">第 19 题 · 2 分</h4>
+<p><strong>题目。</strong> 严格递增有序表有 15 个元素，在各元素等概率且查找成功时，标准折半查找的平均查找长度为________。每访问一个 mid 计一次比较。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 列出二分判定树各层实际结点数，再做等概率成功查找的加权平均。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>49/15。比较次数分别为 1、2、3、4 的关键字数为 1、2、4、8，故 ASL＝(1＋4＋12＋32)/15。</p>
+
+</details>
+<h4 class="exercise-title">第 20 题 · 2 分</h4>
+<p><strong>题目。</strong> Ackermann 函数定义如下，则 Ack(2,1)＝________。</p>
+<pre class="code-block"><code class="hljs language-text">Ack(0,n) = n+1
+Ack(m,0) = Ack(m-1,1)                  (m&gt;0)
+Ack(m,n) = Ack(m-1,Ack(m,n-1))         (m&gt;0,n&gt;0)</code></pre>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先由 Ackermann 定义推导第一层的一般式，再代入第二层的小值。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>5。Ack(1,n)＝n＋2，Ack(2,0)＝3，Ack(2,1)＝Ack(1,3)＝5。</p>
+
+</details>
+<h2>三、问答题（6 题，每题 5 分，共 30 分）</h2>
+<h4 class="exercise-title">第 21 题 · 5 分 · KMP 匹配过程</h4>
+<p><strong>题目。</strong> 主串 T＝&quot;abababac&quot;，模式串 P＝&quot;ababac&quot;。定义 pi 为最长相等真前后缀长度数组。采用以下流程：</p>
+<pre class="code-block"><code class="hljs language-text">j = 0
+for each character T[i]:
+    while j &gt; 0 and T[i] != P[j]:
+        j = pi[j-1]
+    if T[i] == P[j]:
+        j += 1
+    if j == len(P):
+        report i-len(P)+1
+        j = pi[j-1]</code></pre>
+<p>（1）写出 P 的 pi 数组。（2 分）
+（2）写出处理 T[5] 时 j 的回退及重新匹配过程，并给出唯一匹配的起始下标。（2 分）
+（3）解释该过程中主串下标为何不必回退。（1 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 把匹配到的前缀与主串当前字符逐位对齐，回退 j 后保持主串当前位置。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>P＝ababac 的 pi 为 [0,0,1,2,3,0]。（2 分）
+处理 T[5] 前，已匹配 ababa，j＝5。T[5]＝b 与 P[5]＝c 失配，令 j＝pi[4]＝3；随后 T[5] 与 P[3]＝b 匹配，j 增为 4。继续处理 T[6]＝a、T[7]＝c，达到 j＝6，匹配起点 7－6＋1＝2。（回退与重配 1 分，起点 1 分。）
+已匹配前缀的后缀可由 pi 找到与模式前缀相等的部分；回退只改变模式位置，主串当前位置仍可用于比较，已经扫描过的主串字符无需重新读取。（1 分）</p>
+
+</details>
+<h4 class="exercise-title">第 22 题 · 5 分 · 森林与左孩子－右兄弟表示</h4>
+<p><strong>题目。</strong> 森林有两棵树，根依次为 A、H。A 的孩子从左到右为 B、C、D；B 的孩子为 E、F；D 的孩子为 G；H 的孩子为 I。其他结点均为叶结点。
+（1）列出转换后每个结点的 (左孩子，右兄弟)，空指针记 NULL。（3 分）
+（2）写出转换所得二叉树的先序和中序遍历。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先画出森林根链和每棵树的孩子链，再转换为 left/right 二叉链表示。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>左指针表示第一个孩子，右指针表示下一个兄弟；森林根之间也连右兄弟指针。</p>
+<pre class="code-block"><code class="hljs language-text">Node    Left    Right
+A       B       H
+B       E       C
+C       NULL    D
+D       G       NULL
+E       NULL    F
+F       NULL    NULL
+G       NULL    NULL
+H       I       NULL
+I       NULL    NULL</code></pre>
+<p>指针关系共 3 分：A 与 H 的根链 1 分，B/C/D 与 E/F 兄弟链 1 分，其他孩子与空指针 1 分。
+转换后二叉树先序：A B E F C D G H I。（1 分）
+转换后二叉树中序：E F B C G D A I H。（1 分）</p>
+
+</details>
+<h4 class="exercise-title">第 23 题 · 5 分 · 堆的建立与删除</h4>
+<p><strong>题目。</strong> 初始数组为 [4,10,3,5,1,2]。使用大根堆，下标从 0 开始，从最后一个非叶结点到根依次执行向下筛选；两孩子中选择较大的孩子。
+（1）分别写出对下标 2、1、0 筛选后的完整数组。（3 分）
+（2）删除堆顶，以末元素补根并筛选，写出结果数组。（1 分）
+（3）说明自底向上建堆时间为 O(n) 的原因。（1 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 建堆时从最后一个非叶结点向根筛选；删除堆顶时用末尾值下沉。</p>
+<p><strong>参考答案与评分。</strong></p>
+<pre class="code-block"><code class="hljs language-text">Initial:    [4,10,3,5,1,2]
+sift i=2:   [4,10,3,5,1,2]
+sift i=1:   [4,10,3,5,1,2]
+sift i=0:   [10,5,3,4,1,2]
+delete max: [5,4,3,2,1]</code></pre>
+<p>三次建堆结果各 1 分；删除后结果 1 分。
+高度约 k 的结点数量至多为 O(n/2^k)，下筛成本 O(k)。总成本由 n×sum(k/2^k) 控制，该级数收敛，因此为 O(n)。（1 分；“叶子多且不下筛，按高度分层累计为线性”的清楚解释同样接受。）</p>
+
+</details>
+<h4 class="exercise-title">第 24 题 · 5 分 · BST 删除与平均查找长度</h4>
+<p><strong>题目。</strong> 将 40、20、60、10、30、50、70、25 依次插入空二叉搜索树。
+（1）画出插入完成后的树。（1 分）
+（2）删除关键字 20，规定用其中序后继替代，再删除该后继的原结点。画出结果。（2 分）
+（3）求删除前、删除后等概率成功查找的 ASL，每访问一个结点计一次比较。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 删除有两个孩子的 BST 结点时追踪中序后继，ASL 则统计各查找路径的关键码比较次数。</p>
+<p><strong>参考答案与评分。</strong></p>
+<pre class="code-block"><code class="hljs language-text">Before:                    After:
+        40                         40
+       /  \                       /  \
+      20   60                    25   60
+     / \   / \                  / \   / \
+    10 30 50 70                10 30 50 70
+       /
+      25</code></pre>
+<p>原树正确 1 分。20 的后继为 25，用 25 替代 20，再删除 30 左孩子处原来的 25，结果树正确 2 分。
+删除前比较次数之和：1＋2×2＋4×3＋1×4＝21，ASL＝21/8。（1 分）
+删除后比较次数之和：1＋2×2＋4×3＝17，ASL＝17/7。（1 分）</p>
+
+</details>
+<h4 class="exercise-title">第 25 题 · 5 分 · AVL 综合插入</h4>
+<p><strong>题目。</strong> 向空 AVL 树依次插入 30、10、20、50、60、40。
+（1）列出每次调整对应的新插入关键字、最低失衡结点、失衡类型及旋转顺序。（3 分）
+（2）画出最终 AVL 树，并标注所有非叶结点的 BF。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 按试卷的 BF 符号约定逐次插入，分清 LR、RR、RL 的支点与旋转顺序。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>插入 20：最低失衡结点 30，LR 型；先对 10 左旋，再对 30 右旋。（1 分）
+插入 60：最低失衡结点 30，RR 型；对 30 左旋。（1 分）
+插入 40：最低失衡结点 20，RL 型；先对 50 右旋，再对 20 左旋。（1 分）</p>
+<pre class="code-block"><code class="hljs language-text">Final:
+          30
+         /  \
+        20   50
+       /    /  \
+      10   40   60</code></pre>
+<p>最终树正确 1 分。非叶结点 BF：30 为 0，20 为＋1，50 为 0。（1 分）
+判断类型时应看“新结点相对最低失衡结点的路径”，不要仅用最终树形反推。</p>
+
+</details>
+<h4 class="exercise-title">第 26 题 · 5 分 · 二分答案与单调性</h4>
+<p><strong>题目。</strong> 有正整数数组 [2,3,5,7,11]，给定 T＝11。寻找最小正整数 d，使所有元素除以 d 后向上取整之和不超过 T。
+（1）分别计算 d＝2、3、4 时的和，给出最小可行 d。（2 分）
+（2）说明可行性随 d 如何变化，以及为何可以二分。（1 分）
+（3）用闭区间 [1,max(a)] 找到最小可行值：mid 可行和不可行时，应分别如何更新边界？给出总时间复杂度，数组长度记 n、最大值记 U。（2 分）</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 先证明“答案不超过 x”或类似判定具有单调性，再设计二分区间的不变量。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>d＝2：1＋2＋3＋4＋6＝16；d＝3：1＋1＋2＋3＋4＝11；d＝4：1＋1＋2＋2＋3＝9。最小可行 d 为 3。（三个和共 1 分，最小值及理由 1 分。）
+随着 d 增大，每一项 ceil(a[i]/d) 单调不增，和也单调不增，因此可行性为先假后真，可查找第一个真值。（1 分）
+采用 <code>while low &lt; high</code>，mid＝low＋(high－low)//2；若 mid 可行，<code>high = mid</code>，否则 <code>low = mid + 1</code>；结束返回 low。（1 分）
+每次检查 O(n)，二分区间至多 O(log U) 轮，时间 O(n log U)，更严谨地含 U＝1 可写 O(n log(U＋1))。（1 分）本题 T＝11≥n＝5，d＝U 一定可行。</p>
+
+</details>
+<h2>四、代码题（3 题，每题 10 分，共 30 分）</h2>
+<h4 class="exercise-title">第 27 题 · 10 分 · 有序链表逆序合并：代码补全</h4>
+<p><strong>题目。</strong> A、B 是互不共享结点的带头结点单链表，数据非递减，可有重复值。把两表数据结点合并成非递增链表，结果放在 A 中，B 仅保留其头结点。仅调整指针，不创建或释放结点。A、B 均可能为空。
+五处空白每处 2 分。</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> {
+    <span class="hljs-type">int</span> data;
+    Node *next;
+};
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mergeReverse</span><span class="hljs-params">(Node *A, Node *B)</span> </span>{
+    Node *pa = A-&gt;next, *pb = B-&gt;next;
+    A-&gt;next = B-&gt;next = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">while</span> (pa != <span class="hljs-literal">NULL</span> || pb != <span class="hljs-literal">NULL</span>) {
+        Node *q;
+        <span class="hljs-keyword">if</span> ( <span class="hljs-comment">/* (1) */</span> ) {
+            q = pa;
+            pa = <span class="hljs-comment">/* (2) */</span>;
+        } <span class="hljs-keyword">else</span> {
+            q = pb;
+            pb = <span class="hljs-comment">/* (3) */</span>;
+        }
+        q-&gt;next = <span class="hljs-comment">/* (4) */</span>;
+        <span class="hljs-comment">/* (5) */</span> = q;
+    }
+}</code></pre>
+<p>（1）____________________________________________________</p>
+<p>（2）________________　（3）________________</p>
+<p>（4）________________　（5）________________</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 分别保留两个原链表的剩余表头，每轮取较小值并头插到新链表。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>（1）<code>pb == NULL || (pa != NULL &amp;&amp; pa-&gt;data &lt;= pb-&gt;data)</code>
+（2）<code>pa-&gt;next</code>
+（3）<code>pb-&gt;next</code>
+（4）<code>A-&gt;next</code>
+（5）<code>A-&gt;next</code></p>
+<p>每空 2 分。第（1）空必须在比较数据前处理空指针，正确利用短路逻辑。</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mergeReverse</span><span class="hljs-params">(Node *A, Node *B)</span> </span>{
+    Node *pa = A-&gt;next, *pb = B-&gt;next;
+    A-&gt;next = B-&gt;next = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">while</span> (pa != <span class="hljs-literal">NULL</span> || pb != <span class="hljs-literal">NULL</span>) {
+        Node *q;
+        <span class="hljs-keyword">if</span> (pb == <span class="hljs-literal">NULL</span> ||
+            (pa != <span class="hljs-literal">NULL</span> &amp;&amp; pa-&gt;data &lt;= pb-&gt;data)) {
+            q = pa;
+            pa = pa-&gt;next;
+        } <span class="hljs-keyword">else</span> {
+            q = pb;
+            pb = pb-&gt;next;
+        }
+        q-&gt;next = A-&gt;next;
+        A-&gt;next = q;
+    }
+}</code></pre>
+<p>每轮从剩余结点中取当前最小值并头插，得到非递增结果。循环覆盖一表先空、两表均空与重复值；B 的头结点保留且 next 为空。时间 O(m＋n)，额外空间 O(1)。</p>
+
+</details>
+<h4 class="exercise-title">第 28 题 · 10 分 · 重复值边界查找：整体实现</h4>
+<p><strong>题目。</strong> 给定非递减整数数组 a，长度 n≥0，编写 findRange(a,n,x)（Python 可省略参数 n），返回 x 的第一次和最后一次出现下标；不存在则返回 (-1,-1)。
+要求最坏时间复杂度 O(log n)，额外空间 O(1)。不能调用现成二分查找函数，不能找到任意一个 x 后向两侧线性扫描。写出代码与复杂度。
+例：[1,2,2,2,5]，x＝2，返回 (1,3)；空数组返回 (-1,-1)。C 可使用输出参数或自定义二元组结构。</p>
+<p>评分：左边界查找 3 分；右边界查找 3 分；空数组和不存在情况 2 分；复杂度与边界收敛正确 2 分。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 找第一个等于目标的下标时，命中也可能继续向左查；处理空数组与不存在的目标。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>采用左闭右开区间 [lo,hi)，分别查找首个大于等于 x 与首个大于 x 的位置。</p>
+<pre class="code-block"><code class="hljs language-text">def findRange(a, x):
+    n = len(a)
+    lo, hi = 0, n
+    while lo &lt; hi:
+        mid = lo + (hi - lo) // 2
+        if a[mid] &lt; x:
+            lo = mid + 1
+        else:
+            hi = mid
+    first = lo
+    if first == n or a[first] != x:
+        return (-1, -1)
+
+    lo, hi = first, n
+    while lo &lt; hi:
+        mid = lo + (hi - lo) // 2
+        if a[mid] &lt;= x:
+            lo = mid + 1
+        else:
+            hi = mid
+    return (first, lo - 1)</code></pre>
+<p>左边界循环 3 分；右边界循环及转换为最后下标 3 分；空数组和不存在判断共 2 分；每轮严格缩小区间 1 分，时间 O(log n)、额外空间 O(1) 共 1 分。n＝0 时直接常数时间返回。
+使用两个闭区间二分或保存答案的写法同样接受。避免以 x＋1 求右边界而在有限整数类型中溢出。</p>
+
+</details>
+<h4 class="exercise-title">第 29 题 · 10 分 · 严格 AVL 树判定：整体实现</h4>
+<p><strong>题目。</strong> 给定二叉链式存储的任意二叉树，编写 isAVL(root)，判断它是否同时满足：
+（a）任意结点的左子树所有关键字严格小于该结点，右子树所有关键字严格大于该结点；
+（b）每个结点左右子树的高度差不超过 1。
+空树返回 true。结点值可重复，存在重复值时不满足严格 BST 要求；值域可覆盖有符号整数的全部范围。
+要求时间 O(n)，辅助空间 O(h)，h 为树高。可用上下界、子树最大最小值或中序序列的递归状态；不得只比较直接孩子，不得把所有中序结果存入长度 n 的数组。不得用“关键字±1”构造界限而引入溢出。</p>
+<pre class="code-block"><code class="hljs language-cpp"><span class="hljs-comment">// C/C++ node fields:</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> {
+    <span class="hljs-type">int</span> data;
+    Node *left, *right;
+};
+<span class="hljs-comment">// Python: node.data, node.left, node.right</span>
+<span class="hljs-comment">// Empty child: NULL in C/C++, None in Python.</span></code></pre>
+<p>评分：全局 BST 条件 4 分；高度与平衡判定 3 分；边界、空树、重复值处理 1 分；时间与空间分析 2 分。</p>
+<details class="question"><summary>查看思路与解答</summary>
+<p><strong>解题思路。</strong> 同时证明全局 BST 约束与逐结点高度平衡，避免只比较相邻父子键值。</p>
+<p><strong>参考答案与评分。</strong></p>
+<p>一次后序遍历同时携带祖先给出的严格上下界并计算高度。None 表示没有相应界限，避免用整数极值充当界限而误拒绝合法极值。</p>
+<pre class="code-block"><code class="hljs language-text">def isAVL(root):
+    def visit(node, lower, upper):
+        if node is None:
+            return 0
+        x = node.data
+        if lower is not None and x &lt;= lower:
+            return -1
+        if upper is not None and x &gt;= upper:
+            return -1
+
+        lh = visit(node.left, lower, x)
+        if lh == -1:
+            return -1
+        rh = visit(node.right, x, upper)
+        if rh == -1 or abs(lh - rh) &gt; 1:
+            return -1
+        return max(lh, rh) + 1
+
+    return visit(root, None, None) != -1</code></pre>
+<p>全局 BST 条件共 4 分：正确传递上下界 2 分，严格比较与继承祖先约束 2 分。后序求高并检查每个结点 2 分，异常状态向上传递 1 分。空树、重复值、完整整数值域处理共 1 分。每个结点访问至多一次、时间 O(n) 为 1 分；递归栈 O(h) 为 1 分。</p>
+<p>C 语言可用“是否存在界限”的标志加 int 值表示上下界；也可递归返回合法性、高度、是否为空及最小最大值。若使用更宽的整数类型，必须确保界限严格覆盖 int 全域，且不发生加减溢出。中序遍历携带前驱状态，同时求高的 O(h) 解法也接受。</p>
+<p>典型反例：根 10，左孩子 5，5 的右孩子 12，右孩子 15。各直接父子比较看似合理，但 12 位于 10 的左子树且大于 10，因此不满足 BST。检查平衡性正确也无法弥补这一错误。</p>
+
+</details>
+<h2>考点对应与错题复盘</h2>
+<p>选择、填空：几何级数复杂度、链表删除、Catalan 数、循环队列、KMP、二叉链表空指针、森林转换、堆、BST 退化、AVL、递归、压缩存储、树度数关系、ASL 与 Ackermann。
+21：OJ Week3 的 KMP，重点检验实际回退而非背数组。
+22：书面 L4 的左孩子－右兄弟表示变式。
+23：书面 L4 的大根堆调整，明确采用自底向上建堆。
+24：书面 L5 的 BST 插入删除与 ASL。
+25：书面 L5 的 AVL 连续插入，包含 LR、RR、RL。
+26：OJ Week7 的二分答案，侧重单调性与边界。
+27：书面 L3 的复用结点逆序合并，增加空表边界。
+28：OJ Week8 的有序数组边界查找，属于查找内容，不涉及哈希。
+29：OJ Week6 的 AVL 判定，综合全局有序性与高度平衡性。</p>
+<p>该卷的提高来自过程推理与约束组合，全部内容处于约定范围内。错题复盘时优先检查 AVL 旋转支点、BST 的祖先约束、二分区间与 KMP 的 pi 定义。</p>
 </div></section></main>
 <footer class="footer">
 <p>本文教学正文从独立的 Markdown 文字稿编译生成。已经验收的文字稿与生成网页的文件是两类独立成果。</p>
