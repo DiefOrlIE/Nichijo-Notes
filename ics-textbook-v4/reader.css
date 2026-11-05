@@ -93,3 +93,5 @@ html[data-theme=dark] pre .tok-c,html[data-theme=dark] pre .tok-c1,html[data-the
 html[data-theme=dark] pre .tok-o,html[data-theme=dark] pre .tok-ow{color:#d2b7a5}
 pre .tok-no{color:#975016}pre .tok-nl,pre .tok-nc{color:#754197}pre .tok-cpf{color:#34633e}
 html[data-theme=dark] pre .tok-no{color:#efbb88}html[data-theme=dark] pre .tok-nl,html[data-theme=dark] pre .tok-nc{color:#d4ade8}html[data-theme=dark] pre .tok-cpf{color:#b2d1a4}
+
+.heading-source{font:400 .72em/1.7 system-ui,sans-serif;color:var(--muted);margin-left:.35em}nav .heading-source{display:block;font-size:11px;margin-left:0}

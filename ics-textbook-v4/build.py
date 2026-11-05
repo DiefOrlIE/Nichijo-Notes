@@ -27,11 +27,23 @@ for c in course:
   src=(P/'manuscripts'/f'{name}.md').read_text();title=src.splitlines()[0][2:];uid='unit-'+name
   rendered=color_blocks(md.render(src)).replace('<p>教材对照：','<p class="textbook-ref">教材对照：');rendered=re.sub(r'<h1>.*?</h1>\n?','',rendered,count=1)
   rendered=rendered.replace('<h3>','<h4>').replace('</h3>','</h4>');i=[0];section_nav=[];prefix=title.split(' ',1)[0]
+  def source_label(m):
+   following=rendered[m.end():]
+   ref=re.match(r'\s*<p class="textbook-ref">教材对照：§([^，；<]+)',following)
+   if ref:book='教材 '+ref[1]
+   elif n==2:book='教材第2章'
+   elif name in ['03-instructions','03-operations']:book='教材第3章'
+   elif n==4:book='教材第5章'
+   elif name=='05-execution':book='教材 5.7'
+   elif name=='05-processes':book='教材对应见本章说明'
+   else:book='教材第3、4章（综合）'
+   return f'<span class="heading-source">（{html.escape(book)}；PPT 第{n}章）</span>'
   def sub(m):
    i[0]+=1;sid=f'{uid}-s{i[0]}'
-   section_nav.append(f'<a class="minor" href="#{sid}">{prefix}.{i[0]} {m[1]}</a>')
-   return f'<h3 id="{sid}" data-anchor>{prefix}.{i[0]} {m[1]}</h3>'
+   section_nav.append(f'<a class="minor" href="#{sid}">{prefix}.{i[0]} {m[1]}{source_label(m)}</a>')
+   return f'<h3 id="{sid}" data-anchor>{prefix}.{i[0]} {m[1]}{source_label(m)}</h3>'
   rendered=re.sub(r'<h2>(.*?)</h2>',sub,rendered);subsections+=i[0]
+  rendered=re.sub(r'<h4>(.*?)</h4>',lambda m:f'<h4>{m[1]}{source_label(m)}</h4>',rendered)
   article_html=f'<article id="{uid}" data-source="manuscripts/{name}.md" data-anchor><h2>{html.escape(title)}</h2>{rendered}</article>'
   parts.append(article_html)
   if name in ['03-function-call','03-control-flow','03-objects']:
