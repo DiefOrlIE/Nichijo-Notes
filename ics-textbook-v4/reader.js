@@ -49,6 +49,10 @@ $$('main table').forEach(t=>{let w=document.createElement('div');w.className='ta
 const foldInstances=new Map();
 $$('article p').filter(p=>/^(解答|提示)：/.test(p.textContent)).forEach((p,i)=>{let d=document.createElement('details'),s=document.createElement('summary');s.textContent=p.textContent.startsWith('提示：')?'展开提示':'展开本题解答与核对';let hash=2166136261;for(const c of p.textContent)hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;const stem='answer-'+p.closest('article').id+'-'+hash.toString(36),instance=(foldInstances.get(stem)||0)+1;foldInstances.set(stem,instance);d.id=stem+'-'+instance;const legacy='answer-text-'+hash.toString(36);if(state.answers[d.id]===undefined&&state.answers[legacy]!==undefined)state.answers[d.id]=state.answers[legacy];p.replaceWith(d);d.append(s,p);d.open=!!state.answers?.[d.id];d.addEventListener('toggle',()=>{state.answers??={};state.answers[d.id]=d.open;store()})});
 let restoring=true;const anchors=$$('[data-anchor]');
+const pageKey=location.pathname.replace(/index\.html$/,'');
+state.positions??={};
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+
 const nav=$('#nav');
 const navEntries=$$('nav a').filter(a=>a.getAttribute('href').startsWith('#')).map(link=>({link,target:document.getElementById(decodeURIComponent(link.hash.slice(1)))})).filter(e=>e.target);
 let currentLink=null;
@@ -65,9 +69,19 @@ function followDirectory(){
  else if(r.bottom>n.bottom-20)nav.scrollTop+=r.bottom-n.bottom+24;
  }
 }
-function savePosition(){if(restoring)return;let a=anchors[0];for(const el of anchors){if(el.getBoundingClientRect().top<=140)a=el;else break}if(a)state.position={id:a.id,offset:scrollY-(a.getBoundingClientRect().top+scrollY)};store();followDirectory()}
-let framePending=false,timer;addEventListener('scroll',()=>{if(!framePending){framePending=true;requestAnimationFrame(()=>{framePending=false;followDirectory()})}clearTimeout(timer);timer=setTimeout(savePosition,160)},{passive:true});addEventListener('pagehide',savePosition);addEventListener('resize',()=>{currentLink=null;followDirectory()});
-async function restore(){await document.fonts.ready;await new Promise(requestAnimationFrame);if(location.hash){const el=document.getElementById(decodeURIComponent(location.hash.slice(1)));el?.scrollIntoView()}else if(state.position){let el=document.getElementById(state.position.id);if(el)scrollTo(0,el.getBoundingClientRect().top+scrollY+state.position.offset)}restoring=false;followDirectory();window.ICS_READY=true}
+function savePosition(){if(restoring)return;let a=anchors[0];for(const el of anchors){if(el.getBoundingClientRect().top<=140)a=el;else break}if(a)state.positions[pageKey]={id:a.id,offset:-a.getBoundingClientRect().top,urlHash:location.hash};store();followDirectory()}
+let framePending=false,timer;addEventListener('scroll',()=>{if(!framePending){framePending=true;requestAnimationFrame(()=>{framePending=false;followDirectory()})}clearTimeout(timer);timer=setTimeout(savePosition,160)},{passive:true});addEventListener('pagehide',savePosition);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePosition()});addEventListener('resize',()=>{currentLink=null;followDirectory()});
+async function restore(){
+ await document.fonts.ready;await new Promise(requestAnimationFrame);
+ const saved=state.positions[pageKey]||state.position;
+ const resume=saved&&document.getElementById(saved.id);
+ const explicitHash=location.hash&&location.hash!=='#start'&&location.hash!==saved?.urlHash;
+ let target=null;try{if(location.hash)target=document.getElementById(decodeURIComponent(location.hash.slice(1)))}catch{}
+ if(explicitHash&&target)target.scrollIntoView();
+ else if(resume)scrollTo(0,resume.getBoundingClientRect().top+scrollY+(Number(saved.offset)||0));
+ else target?.scrollIntoView();
+ restoring=false;followDirectory();window.ICS_READY=true;
+}
 const dialog=$('#terms');let defs={};
 function show(filter=''){const f=filter.toLowerCase();$('#term-list').replaceChildren();for(const [k,v]of Object.entries(defs)){if(!`${k} ${v.en} ${v.zh}`.toLowerCase().includes(f))continue;let p=document.createElement('p'),b=document.createElement('b');b.textContent=k+' · '+v.en;p.append(b,document.createElement('br'),v.zh);if(v.note)p.append(document.createElement('br'),v.note);$('#term-list').append(p)}}
 $('#term-open').onclick=()=>{show();dialog.showModal();$('#term-search').focus()};$('#term-search').oninput=e=>show(e.target.value);
