@@ -12,7 +12,7 @@ body[data-design=c]{--bg:#f2f5f7;--surface:#fff;--ink:#22333e;--muted:#677e89;--
 <div class="reader-top"><div class="crumb"><span>教材第四章</span><span>/</span><strong>4.1 过程调用</strong></div><label class="size-control">字号<input id="size" type="range" min="16" max="21" value="18" aria-label="正文字号"><span id="size-value">18</span></label></div>
 <details class="mobile-toc"><summary>本节目录</summary><a href="#push">一次压栈</a><a href="#frame">建立栈帧</a><a href="#practice">即时练习</a></details>
 <div class="reader-layout"><nav class="toc" aria-label="阅读目录"><div class="toc-label">第四章 · 程序的机器级表示</div><a href="#push">4.1.1 过程调用约定</a><a class="sub active" href="#frame">栈与栈帧</a><a href="#practice">本节即时练习</a><a href="#next">4.1.2 作用域与生存期</a><div class="toc-footer">教材页码放在节标题下。<br>先读解释，再对照代码与状态。</div></nav>
-<main class="article"><p class="eyebrow">4.1.1 / 过程调用约定</p><h1>一次调用，怎样保存现场并返回</h1><p class="deck">用真实的地址变化，理解栈与栈帧。</p><div class="reference"><span>教材 <strong>122–124 页</strong></span><span>PDF 647–649 页</span><span>PPT 已涉及 · 需掌握</span></div>
+<main class="article"><p class="eyebrow">4.1.1 / 过程调用约定</p><h1>4.1.1 过程调用与栈帧</h1><p class="deck">一次调用，怎样保存现场并返回。</p><div class="reference"><span>教材 <strong>122–124 页</strong></span><span>PDF 647–649 页</span><span>PPT 已涉及 · 需掌握</span></div>
 <p>函数计算完，还需要回到调用者继续执行。因此，处理器必须保存返回位置，也要为参数和局部变量安排空间。我们从一个具体状态开始：<code>ESP = 1000</code>，<code>EBP = 1200</code>。</p>
 <aside class="point"><b>本节重点</b><p><strong>把地址和内容分别跟踪。</strong><code>ESP</code> 保存栈顶的地址；沿着这个地址读取，才会得到栈中保存的值。</p></aside>
 <h2 id="push"><span class="section-no">01</span>从一次压栈开始</h2><p>在这里采用的 32 位约定中，压入一个四字节值，先让 <code>ESP</code> 减去 <code>4</code>，再把值写到新地址。压入 <code>5</code> 后，<code>ESP = 996</code>，地址 <code>996</code> 起的四字节保存 <code>5</code>。</p>
