@@ -27,7 +27,7 @@ function syncSteppers(){
 }
 $$('[data-step-target]').forEach(button=>button.addEventListener('click',()=>{
  const input=document.getElementById(button.dataset.stepTarget);
- input.stepUp(Number(button.dataset.step));input.dispatchEvent(new Event('input',{bubbles:true}));syncSteppers();
+ if(Number(button.dataset.step)>0)input.stepUp();else input.stepDown();input.dispatchEvent(new Event('input',{bubbles:true}));syncSteppers();
 }));
 $$('header input[type="number"]').forEach(input=>{input.addEventListener('input',syncSteppers);input.addEventListener('change',syncSteppers)});syncSteppers();
 // Technical tokens in prose need code markup as well as a monospace stylesheet.
