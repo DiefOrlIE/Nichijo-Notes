@@ -16,16 +16,17 @@ for c in course:
  for name in c['files']:
   src=(P/'manuscripts'/f'{name}.md').read_text();title=src.splitlines()[0][2:];uid='unit-'+name
   rendered=md.render(src).replace('<p>教材对照：','<p class="textbook-ref">教材对照：');rendered=re.sub(r'<h1>.*?</h1>\n?','',rendered,count=1)
-  rendered=rendered.replace('<h3>','<h4>').replace('</h3>','</h4>');i=[0];prefix=title.split(' ',1)[0]
+  rendered=rendered.replace('<h3>','<h4>').replace('</h3>','</h4>');i=[0];section_nav=[];prefix=title.split(' ',1)[0]
   def sub(m):
    i[0]+=1;sid=f'{uid}-s{i[0]}'
+   section_nav.append(f'<a class="minor" href="#{sid}">{prefix}.{i[0]} {m[1]}</a>')
    return f'<h3 id="{sid}" data-anchor>{prefix}.{i[0]} {m[1]}</h3>'
   rendered=re.sub(r'<h2>(.*?)</h2>',sub,rendered);subsections+=i[0]
   article_html=f'<article id="{uid}" data-source="manuscripts/{name}.md" data-anchor><h2>{html.escape(title)}</h2>{rendered}</article>'
   parts.append(article_html)
   if name in ['03-function-call','03-control-flow','03-objects']:
    book4_articles.append(article_html);book4_nav.append(f'<a class="major" href="#{uid}">{html.escape(title)}</a>')
-  nav.append(f'<a class="major" href="#{uid}">{html.escape(title)}</a>')
+  nav.append(f'<a class="major" href="#{uid}">{html.escape(title)}</a>');nav.extend(section_nav)
  nav.append('</details>');parts.append('</section>')
 version=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest()[:16]
 result=(P/'template.html').read_text().replace('{{NAV}}','\n'.join(nav)).replace('{{BODY}}','\n'.join(parts)).replace('{{HASH}}',version)

@@ -3,6 +3,15 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],key
 let state={};try{state=JSON.parse(localStorage.getItem(key)||'{}')}catch{}
 const store=()=>{try{localStorage.setItem(key,JSON.stringify(state))}catch{}};
 state.answers??={};
+const sizeInput=$('#font-size'),sizeOutput=$('#font-size-value');
+function setFontSize(value){state.fontSize=Math.max(16,Math.min(24,Number(value)||19));document.documentElement.style.setProperty('--read-size',state.fontSize+'px');sizeInput.value=state.fontSize;sizeOutput.value=state.fontSize+'px'}
+setFontSize(state.fontSize);sizeInput.addEventListener('input',()=>{setFontSize(sizeInput.value);store()});
+// Technical tokens in prose need code markup as well as a monospace stylesheet.
+const codePattern=/(?<![A-Za-z0-9_])(?:%?(?:[er]?(?:ax|bx|cx|dx|si|di|bp|sp|ip)|[abcd][lh]|r(?:[89]|1[0-5])(?:[dwb])?)|(?:EAX|EBX|ECX|EDX|ESI|EDI|EBP|ESP|EIP|RAX|RBX|RCX|RDX|RBP|RSP|RIP|AX|BX|CX|DX|AL|AH|BL|BH|CL|CH|DL|DH|CF|ZF|SF|OF)|(?:mov[zs]?[bwlq]?|lea[lq]?|push[lq]?|pop[lq]?|call[q]?|ret[q]?|leave|cmp[lq]?|test[lq]?|add[lq]?|sub[lq]?|jmp|je|jne|jle|jge|jl|jg|and[lq]?|xor[lq]?|shl[lq]?|shr[lq]?|sar[lq]?))(?![A-Za-z0-9_])/g;
+const proseWalk=document.createTreeWalker($('#main'),NodeFilter.SHOW_TEXT);let proseNode;const proseNodes=[];
+while(proseNode=proseWalk.nextNode())if(!proseNode.parentElement.closest('code,pre,script,style'))proseNodes.push(proseNode);
+for(const node of proseNodes){const text=node.nodeValue;let match,last=0;const frag=document.createDocumentFragment();codePattern.lastIndex=0;while(match=codePattern.exec(text)){frag.append(text.slice(last,match.index));const code=document.createElement('code');code.textContent=match[0];frag.append(code);last=codePattern.lastIndex}if(last){frag.append(text.slice(last));node.replaceWith(frag)}}
+
 document.documentElement.dataset.theme=state.theme||'light';
 $('#theme').textContent=state.theme==='dark'?'日间':'夜间';
 $('#theme').onclick=()=>{state.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=state.theme;$('#theme').textContent=state.theme==='dark'?'日间':'夜间';store()};
@@ -13,9 +22,25 @@ $$('main table').forEach(t=>{let w=document.createElement('div');w.className='ta
 const foldInstances=new Map();
 $$('article p').filter(p=>/^(解答|提示)：/.test(p.textContent)).forEach((p,i)=>{let d=document.createElement('details'),s=document.createElement('summary');s.textContent=p.textContent.startsWith('提示：')?'展开提示':'展开本题解答与核对';let hash=2166136261;for(const c of p.textContent)hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;const stem='answer-'+p.closest('article').id+'-'+hash.toString(36),instance=(foldInstances.get(stem)||0)+1;foldInstances.set(stem,instance);d.id=stem+'-'+instance;const legacy='answer-text-'+hash.toString(36);if(state.answers[d.id]===undefined&&state.answers[legacy]!==undefined)state.answers[d.id]=state.answers[legacy];p.replaceWith(d);d.append(s,p);d.open=!!state.answers?.[d.id];d.addEventListener('toggle',()=>{state.answers??={};state.answers[d.id]=d.open;store()})});
 let restoring=true;const anchors=$$('[data-anchor]');
-function savePosition(){if(restoring)return;let a=anchors[0];for(const el of anchors){if(el.getBoundingClientRect().top<=95)a=el;else break}state.position={id:a.id,offset:scrollY-(a.getBoundingClientRect().top+scrollY)};store();$$('nav a').forEach(n=>n.classList.toggle('active',n.hash==='#'+a.id))}
-let timer;addEventListener('scroll',()=>{clearTimeout(timer);timer=setTimeout(savePosition,160)},{passive:true});addEventListener('pagehide',savePosition);
-async function restore(){await document.fonts.ready;await new Promise(requestAnimationFrame);if(location.hash){const el=document.getElementById(decodeURIComponent(location.hash.slice(1)));el?.scrollIntoView()}else if(state.position){let el=document.getElementById(state.position.id);if(el)scrollTo(0,el.getBoundingClientRect().top+scrollY+state.position.offset)}restoring=false;window.ICS_READY=true}
+const nav=$('#nav');
+const navEntries=$$('nav a').filter(a=>a.getAttribute('href').startsWith('#')).map(link=>({link,target:document.getElementById(decodeURIComponent(link.hash.slice(1)))})).filter(e=>e.target);
+let currentLink=null;
+function followDirectory(){
+ let current=navEntries[0];let best=-Infinity;
+ for(const entry of navEntries){const top=entry.target.getBoundingClientRect().top;if(top<=140&&top>=best){current=entry;best=top}}
+ if(!current||current.link===currentLink)return;
+ currentLink=current.link;
+ for(const {link}of navEntries){const active=link===currentLink;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')}
+ for(let parent=currentLink.parentElement;parent&&parent!==nav;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+ if(getComputedStyle(nav).display!=='none'){
+ const r=currentLink.getBoundingClientRect(),n=nav.getBoundingClientRect();
+ if(r.top<n.top+20)nav.scrollTop+=r.top-n.top-24;
+ else if(r.bottom>n.bottom-20)nav.scrollTop+=r.bottom-n.bottom+24;
+ }
+}
+function savePosition(){if(restoring)return;let a=anchors[0];for(const el of anchors){if(el.getBoundingClientRect().top<=140)a=el;else break}if(a)state.position={id:a.id,offset:scrollY-(a.getBoundingClientRect().top+scrollY)};store();followDirectory()}
+let framePending=false,timer;addEventListener('scroll',()=>{if(!framePending){framePending=true;requestAnimationFrame(()=>{framePending=false;followDirectory()})}clearTimeout(timer);timer=setTimeout(savePosition,160)},{passive:true});addEventListener('pagehide',savePosition);addEventListener('resize',()=>{currentLink=null;followDirectory()});
+async function restore(){await document.fonts.ready;await new Promise(requestAnimationFrame);if(location.hash){const el=document.getElementById(decodeURIComponent(location.hash.slice(1)));el?.scrollIntoView()}else if(state.position){let el=document.getElementById(state.position.id);if(el)scrollTo(0,el.getBoundingClientRect().top+scrollY+state.position.offset)}restoring=false;followDirectory();window.ICS_READY=true}
 const dialog=$('#terms');let defs={};
 function show(filter=''){const f=filter.toLowerCase();$('#term-list').replaceChildren();for(const [k,v]of Object.entries(defs)){if(!`${k} ${v.en} ${v.zh}`.toLowerCase().includes(f))continue;let p=document.createElement('p'),b=document.createElement('b');b.textContent=k+' · '+v.en;p.append(b,document.createElement('br'),v.zh);if(v.note)p.append(document.createElement('br'),v.note);$('#term-list').append(p)}}
 $('#term-open').onclick=()=>{show();dialog.showModal();$('#term-search').focus()};$('#term-search').oninput=e=>show(e.target.value);
