@@ -40,6 +40,7 @@ if (P/'book4-guide.md').exists():
  template=re.sub(r'<section id="start" data-anchor>.*?</section>', '<section id="start" data-anchor>'+guide+'</section>', template, count=1,flags=re.S)
  template=template.replace('<title>ICS 教材式自学讲义 V4 · 第二至第五章</title>','<title>教材第四章 · ICS 跟读讲义</title>')
  template=template.replace('ics-textbook-v4/all-manuscripts.md','ics-textbook-v4/book4-manuscript.md')
+ template=template.replace('ics-textbook-v4/audit/text-review.md','ics-textbook-v4/audit/book4-followalong-review.md').replace('ics-textbook-v4/audit/exercise-reverse-map.md','ics-textbook-v4/book4-guide.md')
  booklinks=re.findall(r'\|\[(4\.\d\.\d+ [^\]]+)\]\((#[^)]+)\)\|([^|]+)\|',(P/'book4-guide.md').read_text())
  bnav='<a href="#start">教材第四章跟读目录与作业</a>'+''.join(f'<a href="{href}">{html.escape(label)} · 纸书{html.escape(pages)}页</a>' for label,href,pages in booklinks)+'<a href="index.html#chapter-3">完整讲义与先修回查</a>'
  result=template.replace('{{NAV}}',bnav).replace('{{BODY}}',''.join(book4_articles)).replace('{{HASH}}',version)

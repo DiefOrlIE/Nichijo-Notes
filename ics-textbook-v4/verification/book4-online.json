@@ -1,0 +1,44 @@
+{
+  "verified_at_utc": "2026-11-05T11:42:15.913712+00:00",
+  "url": "https://dieforlie.github.io/Nichijo-Notes/ics-textbook-v4/book4.html#start",
+  "content_commit": "0c9f462e04fa2cf9648dc8f675d9df3b4c34306d",
+  "pages_run": 42020559662,
+  "pages_conclusion": "success",
+  "source_version": "a1cb985b5c9d102d",
+  "book_section_links": 16,
+  "annotated_book4_headings": 42,
+  "articles_reused": 3,
+  "exercise_folds": 24,
+  "jump_tops": [
+    79.953125,
+    80.234375
+  ],
+  "page_origin_console_errors": [],
+  "font_loaded": true,
+  "theme_and_solution_restore": true,
+  "printed_page_provenance": "publisher ISBN 9787111738824 table of contents; subsection spans, not independently verified paragraph-level print pagination",
+  "full_course_viewports": [
+    {
+      "width": 390,
+      "client": 375,
+      "scroll": 375,
+      "references": 44
+    },
+    {
+      "width": 820,
+      "client": 805,
+      "scroll": 805,
+      "references": 44
+    },
+    {
+      "width": 1440,
+      "client": 1425,
+      "scroll": 1425,
+      "references": 44
+    }
+  ],
+  "book4_guide_viewport": "desktop actual browser",
+  "mobile_book4_guide_tables": "not separately tested; full-course body tested at three widths",
+  "real_beginner_trial": false,
+  "safari_real_device": false
+}
