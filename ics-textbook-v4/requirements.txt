@@ -2,3 +2,4 @@ markdown-it-py>=3,<5
 beautifulsoup4>=4,<5
 fonttools>=4,<5
 brotli>=1,<2
+Pygments>=2.18,<3

@@ -75,3 +75,21 @@ License: bitstream-vera
  org.
 
  */
+
+/* Restrained syntax colors for warm paper and night reading. */
+pre .tok-k,pre .tok-kt,pre .tok-kd,pre .tok-kn,pre .tok-kp,pre .tok-kr{color:#754197;font-weight:700}
+pre .tok-nf,pre .tok-nb,pre .tok-bp{color:#245e91}
+pre .tok-na,pre .tok-nv,pre .tok-vc,pre .tok-vg,pre .tok-vi{color:#915523}
+pre .tok-m,pre .tok-mb,pre .tok-mf,pre .tok-mh,pre .tok-mi,pre .tok-mo,pre .tok-il{color:#975016}
+pre .tok-s,pre .tok-s1,pre .tok-s2,pre .tok-sc,pre .tok-se,pre .tok-sh{color:#34633e}
+pre .tok-c,pre .tok-c1,pre .tok-cm,pre .tok-cs,pre .tok-cp,pre .tok-ch{color:#687465}
+pre .tok-o,pre .tok-ow{color:#78513f}
+html[data-theme=dark] pre .tok-k,html[data-theme=dark] pre .tok-kt,html[data-theme=dark] pre .tok-kd,html[data-theme=dark] pre .tok-kn,html[data-theme=dark] pre .tok-kp,html[data-theme=dark] pre .tok-kr{color:#d4ade8}
+html[data-theme=dark] pre .tok-nf,html[data-theme=dark] pre .tok-nb,html[data-theme=dark] pre .tok-bp{color:#9ecbee}
+html[data-theme=dark] pre .tok-na,html[data-theme=dark] pre .tok-nv,html[data-theme=dark] pre .tok-vc,html[data-theme=dark] pre .tok-vg,html[data-theme=dark] pre .tok-vi{color:#e1bc8a}
+html[data-theme=dark] pre .tok-m,html[data-theme=dark] pre .tok-mb,html[data-theme=dark] pre .tok-mf,html[data-theme=dark] pre .tok-mh,html[data-theme=dark] pre .tok-mi,html[data-theme=dark] pre .tok-mo,html[data-theme=dark] pre .tok-il{color:#efbb88}
+html[data-theme=dark] pre .tok-s,html[data-theme=dark] pre .tok-s1,html[data-theme=dark] pre .tok-s2,html[data-theme=dark] pre .tok-sc,html[data-theme=dark] pre .tok-se,html[data-theme=dark] pre .tok-sh{color:#b2d1a4}
+html[data-theme=dark] pre .tok-c,html[data-theme=dark] pre .tok-c1,html[data-theme=dark] pre .tok-cm,html[data-theme=dark] pre .tok-cs,html[data-theme=dark] pre .tok-cp,html[data-theme=dark] pre .tok-ch{color:#afb8a5}
+html[data-theme=dark] pre .tok-o,html[data-theme=dark] pre .tok-ow{color:#d2b7a5}
+pre .tok-no{color:#975016}pre .tok-nl,pre .tok-nc{color:#754197}pre .tok-cpf{color:#34633e}
+html[data-theme=dark] pre .tok-no{color:#efbb88}html[data-theme=dark] pre .tok-nl,html[data-theme=dark] pre .tok-nc{color:#d4ade8}html[data-theme=dark] pre .tok-cpf{color:#b2d1a4}

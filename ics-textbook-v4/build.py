@@ -2,12 +2,22 @@
 from pathlib import Path
 from markdown_it import MarkdownIt
 import re,json,hashlib,html
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 P=Path(__file__).resolve().parent
 course=json.loads((P/'course.json').read_text());md=MarkdownIt('commonmark',{'html':False}).enable('table')
 hashes={str(f.relative_to(P)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (P/'manuscripts').glob('*.md')}
 if (P/'book4-guide.md').exists():hashes['book4-guide.md']=hashlib.sha256((P/'book4-guide.md').read_bytes()).hexdigest()
 assert hashes==json.loads((P/'audit/manuscript-hashes.json').read_text()),'A-stage source has changed; review and freeze it first'
 assert (P/'all-manuscripts.md').exists() and (P/'audit/A-freeze.json').exists()
+def color_code(match):
+ lang=match[1];text=html.unescape(match[2])
+ lexer=get_lexer_by_name({'asm':'gas','asm64':'gas','c':'c','sh':'bash'}[lang],stripnl=False,ensurenl=False)
+ colored=highlight(text,lexer,HtmlFormatter(nowrap=True,classprefix='tok-'))
+ return f'<pre><code class="language-{lang}">{colored}</code></pre>'
+def color_blocks(rendered):
+ return re.sub(r'<pre><code class="language-(c|asm|asm64|sh)">(.*?)</code></pre>',color_code,rendered,flags=re.S)
 parts=[];nav=[];subsections=0;book4_articles=[];book4_nav=[]
 for c in course:
  n=c['number'];chapter=f'第{n}章 {c["title"]}——{c["subtitle"]}';cid=f'chapter-{n}'
@@ -15,7 +25,7 @@ for c in course:
  nav.append(f'<details class="nav-chapter" open><summary><a href="#{cid}">第{n}章 {html.escape(c["title"])}</a></summary>')
  for name in c['files']:
   src=(P/'manuscripts'/f'{name}.md').read_text();title=src.splitlines()[0][2:];uid='unit-'+name
-  rendered=md.render(src).replace('<p>教材对照：','<p class="textbook-ref">教材对照：');rendered=re.sub(r'<h1>.*?</h1>\n?','',rendered,count=1)
+  rendered=color_blocks(md.render(src)).replace('<p>教材对照：','<p class="textbook-ref">教材对照：');rendered=re.sub(r'<h1>.*?</h1>\n?','',rendered,count=1)
   rendered=rendered.replace('<h3>','<h4>').replace('</h3>','</h4>');i=[0];section_nav=[];prefix=title.split(' ',1)[0]
   def sub(m):
    i[0]+=1;sid=f'{uid}-s{i[0]}'
@@ -36,7 +46,7 @@ print('Built',sum(len(c['files']) for c in course),'frozen manuscripts and',len(
 
 # The textbook route reuses exactly the same rendered article bodies.
 if (P/'book4-guide.md').exists():
- guide=md.render((P/'book4-guide.md').read_text())
+ guide=color_blocks(md.render((P/'book4-guide.md').read_text()))
  template=(P/'template.html').read_text()
  template=re.sub(r'<section id="start" data-anchor>.*?</section>', '<section id="start" data-anchor>'+guide+'</section>', template, count=1,flags=re.S)
  template=template.replace('<title>ICS 教材式自学讲义 V4 · 第二至第五章</title>','<title>教材第四章 · ICS 跟读讲义</title>')

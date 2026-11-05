@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="ICS教材式自学讲义：数据表示、机器级程序、链接与执行。先完整文字教学，再构建网页。"><title>ICS 教材式自学讲义 V4 · 第二至第五章</title><link rel="icon" href="data:,"><link rel="stylesheet" href="reader.css?v=width-1"><script defer src="reader.js?v=width-1"></script></head><body><header><button id="menu" aria-expanded="false" aria-controls="nav">目录</button><a href="../">Nichijo Notes</a><label class="width-control" for="reading-width">正文宽度<input id="reading-width" type="range" min="720" max="1440" step="20" value="960" aria-label="正文宽度"><output id="reading-width-value" for="reading-width">960px</output></label><label class="size-control" for="font-size">字号<input id="font-size" type="range" min="16" max="24" step="1" value="19" aria-label="正文字号"><output id="font-size-value" for="font-size">19px</output></label><button id="theme">夜间</button><button id="term-open">术语</button></header><nav id="nav" aria-label="章节目录"><a href="#start">阅读起点</a><a href="book4.html#start">教材第四章 · 按页跟读与作业</a><details class="nav-chapter" open><summary><a href="#chapter-2">第2章 数据的机器级表示与处理</a></summary>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="ICS教材式自学讲义：数据表示、机器级程序、链接与执行。先完整文字教学，再构建网页。"><title>ICS 教材式自学讲义 V4 · 第二至第五章</title><link rel="icon" href="data:,"><link rel="stylesheet" href="reader.css?v=width-color-1"><script defer src="reader.js?v=width-color-1"></script></head><body><header><button id="menu" aria-expanded="false" aria-controls="nav">目录</button><a href="../">Nichijo Notes</a><label class="width-control" for="reading-width">正文宽度<input id="reading-width" type="range" min="720" max="1440" step="20" value="960" aria-label="正文宽度"><output id="reading-width-value" for="reading-width">960px</output></label><label class="size-control" for="font-size">字号<input id="font-size" type="range" min="16" max="24" step="1" value="19" aria-label="正文字号"><output id="font-size-value" for="font-size">19px</output></label><button id="theme">夜间</button><button id="term-open">术语</button></header><nav id="nav" aria-label="章节目录"><a href="#start">阅读起点</a><a href="book4.html#start">教材第四章 · 按页跟读与作业</a><details class="nav-chapter" open><summary><a href="#chapter-2">第2章 数据的机器级表示与处理</a></summary>
 <a class="major" href="#unit-02-representation">2.1 数制、字节与内存——先弄清机器保存了什么</a>
 <a class="minor" href="#unit-02-representation-s1">2.1.1 二进制与位权——从十三个物件开始记数</a>
 <a class="minor" href="#unit-02-representation-s2">2.1.2 十进制与二进制转换——每次先取走一位</a>
@@ -234,11 +234,11 @@
 <p>因此下面每句赋值都应读成“先沿x、y保存的地址读取当前对象值，算出异或，再沿左侧指针写回”。后面第三章会继续把指针落实到实际指令，此处已足够让你逐句跟踪这个例子。</p>
 <p>异或满足a XOR a=0、a XOR 0=a。教材交换函数依次执行<code>*y=*x ^ *y; *x=*x ^ *y; *y=*x ^ *y;</code>。先假定x与y指向两个不同对象，初值5和3。第一句把y改为5 XOR 3=6，x仍5；第二句用当前值5 XOR 6=3改x，y仍6；第三句用当前值3 XOR 6=5改y，完成交换。</p>
 <p>把这三句放在一个完整函数中，得到可用于分析的教材实现。前提是x、y都指向有效int对象；下面先检查不同对象，再故意让它们指向同一对象观察失败。</p>
-<pre><code class="language-c">void xor_swap(int *x, int *y) {
-    *y = *x ^ *y;
-    *x = *x ^ *y;
-    *y = *x ^ *y;
-}
+<pre><code class="language-c"><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-nf">xor_swap</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-o">*</span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>它只执行固定数量操作，时间和辅助空间均为O(1)。这段实现的限制不在规模，而在两个地址是否重合。每步能恢复原信息，是因为另一个对象仍保留了所需值。若x、y指向同一对象，第一句实际上用该对象与自己异或，立即变0。第二、三句只能继续用0算，原值已无处保存。这叫别名情形：不同指针名称可以访问同一块存储。</p>
 <p>因此，用这种交换倒置奇数长度数组时，若左右索引最终相等仍调用交换，会把中间元素清零。正确边界应在left&lt;right时继续，达到中点便停。教材题13、14真正要求跟踪的是每次赋值后的存储状态，不能同时把三句右侧都当作初始a、b。</p>
@@ -399,16 +399,16 @@
 <h3 id="unit-03-instructions-s4" data-anchor>3.1.4 指针是可保存的地址值</h3>
 <p>C中的<code>int *p</code>声明p用来保存指向int对象的地址；<code>&amp;x</code>取得x的地址，<code>*p</code>访问p指向的对象。先设x在地址1004，x值5，p保存1004。表达式p给出1004，表达式*p给出5；执行<code>*p=8</code>改的是地址1004起的对象，p保存的地址仍为1004。指针变量自己也有存放位置，但解引用时使用的是它保存的地址。</p>
 <p>下面的函数把这个操作与算术结合。它本身是一份完整可编译的函数定义，调用它时必须传入指向有效int对象的指针。</p>
-<pre><code class="language-c">void increase(int *p) {
-    int x = *p;
-    x = x + 3;
-    *p = x;
-}
+<pre><code class="language-c"><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-nf">increase</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">p</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">p</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-o">*</span><span class="tok-n">p</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>如果本节先约定p已在EAX中，核心效果可由下面三条指令完成。参数到底怎样到达EAX，要等3.3学习调用约定后再补全过程。</p>
-<pre><code class="language-asm">movl (%eax), %edx
-addl $3, %edx
-movl %edx, (%eax)
+<pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-nv">%eax</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
+<span class="tok-nf">addl</span><span class="tok-w"> </span><span class="tok-no">$3</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-nv">%eax</span><span class="tok-p">)</span>
 </code></pre>
 <p>当p=1004、M32[1004]=5，第一步EDX=5，第二步8，第三步M32[1004]=8。输入地址无效时，读或写可能出错；在C中，空指针解引用和越界解引用都没有有效行为保证。这个函数需要常量次数的操作，时间和额外空间均为O(1)。它的目的很小，却建立了读懂数组、结构体和栈访问所需的完整位置观念。</p>
 <h3 id="unit-03-instructions-s5" data-anchor>3.1.5 指令的地址也需要计算</h3>
@@ -453,18 +453,18 @@ movl %edx, (%eax)
 <p>为什么偏置是3？除数4会把余数分到0、1、2、3。向负无穷取整把非整除的负商多减了1，先加最大余数3即可把相应区间推回朝零的边界；对整除的−8，先加3为−5，向下除4仍是−2，不改变整除商。推广到2的k次幂，偏置取<code>2^k−1</code>。代码生成还须确保中间计算与边界安全，不能把这个数学说明无条件替换成任意有符号左移表达式。</p>
 <h3 id="unit-03-operations-s6" data-anchor>3.2.6 用一个完整程序观察表示和数值</h3>
 <p>下面程序只采用已解释的地址、整数宽度和字节复制。stdint.h提供uint32_t这类精确宽度无符号类型，string.h声明memcpy，负责从源地址复制指定字节数到目的地址。复制不会把13.625做数学类型转换；它把同一组字节放到另一个对象中观察。此例明确要求float为IEEE binary32、uint32_t存在，且二者同为四字节。</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-#include &lt;stdint.h&gt;
-#include &lt;string.h&gt;
-#include &lt;inttypes.h&gt;
-int main(void) {
-    float x = 13.625f;
-    uint32_t bits = 0;
-    if (sizeof x != sizeof bits) return 1;
-    memcpy(&amp;bits, &amp;x, sizeof bits);
-    printf(&quot;%08&quot; PRIX32 &quot; %d\n&quot;, bits, (int)x);
-    return 0;
-}
+<pre><code class="language-c"><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stdio.h&gt;</span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stdint.h&gt;</span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;string.h&gt;</span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;inttypes.h&gt;</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">float</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mf">13.625f</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-kt">uint32_t</span><span class="tok-w"> </span><span class="tok-n">bits</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-k">sizeof</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">!=</span><span class="tok-w"> </span><span class="tok-k">sizeof</span><span class="tok-w"> </span><span class="tok-n">bits</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-n">memcpy</span><span class="tok-p">(</span><span class="tok-o">&amp;</span><span class="tok-n">bits</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-o">&amp;</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-k">sizeof</span><span class="tok-w"> </span><span class="tok-n">bits</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">"%08"</span><span class="tok-w"> </span><span class="tok-n">PRIX32</span><span class="tok-w"> </span><span class="tok-s">" %d</span><span class="tok-se">\n</span><span class="tok-s">"</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">bits</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-p">)</span><span class="tok-n">x</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>PRIX32选择与uint32_t匹配的十六进制输出格式，前面的08要求至少八位、不足补零。预期输出<code>415A0000 13</code>：左边印证第二章的手算编码，右边印证数值转换的截断。这个程序既能检查推导，也提醒我们“按另一种方式读字节”必须用语言允许的访问方式。</p>
 <h3 id="unit-03-operations-s7" data-anchor>3.2.7 练习：沿数据路径追踪</h3>
@@ -497,16 +497,16 @@ int main(void) {
 <h3 id="unit-03-function-call-s1" data-anchor>3.3.1 先让调用者提出需求</h3>
 <p class="textbook-ref">教材对照：§4.1.1，纸书第122–124页；附件PDF第647–649页（首次完整出现处）。课程第三章PPT第64–79、88–103页。要求：需掌握（PPT已涉及）。</p>
 <p>考虑下面的程序：</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-int add(int a, int b) {
-    int result = a + b;
-    return result;
-}
-int main(void) {
-    int answer = add(3, 5);
-    printf(&quot;%d\n&quot;, answer);
-    return 0;
-}
+<pre><code class="language-c"><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stdio.h&gt;</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">add</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">result</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">result</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">answer</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-mi">3</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">5</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">"%d</span><span class="tok-se">\n</span><span class="tok-s">"</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">answer</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>在C这一层，我们已经知道answer应当得到8。但处理器不会因为看到函数名便自动理解“算完回来”。它实际执行的是存放在不同地址的指令。main中的一条指令必须让执行位置转到add入口，add中的某条指令又必须让它回到main中尚未完成的位置。</p>
 <p>我们先只解决“去哪里、回哪里”。把main的一段执行位置想成三个连续任务：准备3和5，执行add，接收结果。进入add前，main还没有完成接收结果，所以必须有某处记住“回来后接着做哪一步”。这个位置就是返回地址。它指向调用指令后面的指令，和被调用函数的入口地址分别承担去程与回程的作用。</p>
@@ -526,10 +526,10 @@ int main(void) {
 <p class="textbook-ref">教材对照：§4.1.1，纸书第122–124页；附件PDF第647–649页（首次完整出现处）。课程第三章PPT第64–79、88–103页。要求：需掌握（PPT已涉及）。</p>
 <p>我们采用常见cdecl中的一种未优化教学序列：调用者从右到左压参数，add返回int时把结果放EAX，参数由调用者清理。cdecl是C declaration的习惯缩写，指一类C调用约定；完整ABI和编译器选项仍会规定更多细节。真实编译器可以加入对齐空间或省略帧指针，本文先用固定序列观察原理。</p>
 <p>main准备add(3,5)，所以先压第二个参数5，再压第一个参数3。我们人为指定call位于地址2000，它长5字节，因此main接收返回结果的下一条指令位于2005。假设进入这段序列前ESP=1000、EBP=1200。</p>
-<pre><code class="language-asm">pushl $5
-pushl $3
-call add
-addl $8, %esp
+<pre><code class="language-asm"><span class="tok-nf">pushl</span><span class="tok-w"> </span><span class="tok-no">$5</span>
+<span class="tok-nf">pushl</span><span class="tok-w"> </span><span class="tok-no">$3</span>
+<span class="tok-nf">call</span><span class="tok-w"> </span><span class="tok-no">add</span>
+<span class="tok-nf">addl</span><span class="tok-w"> </span><span class="tok-no">$8</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%esp</span>
 </code></pre>
 <p>前两条执行后，我们已经得到ESP=992，并在992、996起分别存放3、5。执行call时，处理器还需要把2005保存起来，因此它再压入四字节返回地址：ESP变988，988处保存2005；随后指令指针转到add入口。EIP是Extended Instruction Pointer，扩展指令指针，负责在IA-32中记录控制流位置；去执行add由它改变完成。</p>
 <p>注意call没有为我们自动压入3与5。那两条push由调用者代码执行。call额外保存的是返回地址。如果把参数准备指令删除，call仍然能跳入add，但add将无法按预期位置取得正确参数。</p>
@@ -538,9 +538,9 @@ addl $8, %esp
 <p class="textbook-ref">教材对照：§4.1.1，纸书第122–124页；附件PDF第647–649页（首次完整出现处）。课程第三章PPT第64–79、88–103页。要求：需掌握（PPT已涉及）。</p>
 <p>add可能要为result腾空间，也可能还要压入别的值。若所有参数都用“当前ESP再加多少”定位，每次ESP移动后偏移都需要跟着改。保留一个不随这些临时动作变化的参照，会让寻址更直接。</p>
 <p>add先保存调用者的EBP，再令EBP等于此刻ESP：</p>
-<pre><code class="language-asm">pushl %ebp
-movl %esp, %ebp
-subl $4, %esp
+<pre><code class="language-asm"><span class="tok-nf">pushl</span><span class="tok-w"> </span><span class="tok-nv">%ebp</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%esp</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%ebp</span>
+<span class="tok-nf">subl</span><span class="tok-w"> </span><span class="tok-no">$4</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%esp</span>
 </code></pre>
 <p>第一条把旧EBP值1200压到984，ESP变984。第二条把984复制到EBP，ESP仍984。movl按“源、目的”顺序写，movl %esp,%ebp不会把ESP改成1200。第三条从ESP减4，ESP到980，为局部result预留四字节。预留空间尚未初始化，不能在赋值前把其中内容当成已知的0。</p>
 <p>三条都执行后，EBP保持984。于是参数位置可以由刚才的实际摆放推出：第一个参数3从992开始，992−984=8；第二个参数5从996开始，996−984=12。返回地址在988，即EBP+4；旧EBP在984，即EBP+0；局部result在980，即EBP−4。这里的8和12来自已经走过的四次压栈与建立参照，读者无需凭空背一张偏移表。</p>
@@ -584,10 +584,10 @@ subl $4, %esp
 <h3 id="unit-03-function-call-s6" data-anchor>3.3.6 真正执行加法，而不把地址当成数值</h3>
 <p class="textbook-ref">教材对照：§4.1.1，纸书第122–124页；附件PDF第647–649页（首次完整出现处）。课程第三章PPT第64–79、88–103页。要求：需掌握（PPT已涉及）。</p>
 <p>add的函数体可以按如下序列执行：</p>
-<pre><code class="language-asm">movl 8(%ebp), %eax
-addl 12(%ebp), %eax
-movl %eax, -4(%ebp)
-movl -4(%ebp), %eax
+<pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">8</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nf">addl</span><span class="tok-w"> </span><span class="tok-mi">12</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%eax</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">-4</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">)</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">-4</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
 </code></pre>
 <p>第一条的括号要求访问内存。先取EBP=984，加位移8得992，再读992起的四字节，得到3，复制到EAX。执行后EAX=3；EBP、ESP以及内存中的参数都保持刚才状态。指令读到了参数值3，绝不能把EAX写成参数地址992。</p>
 <p>第二条先算984+12=996，再读值5；把EAX旧值3加5，得到8写回EAX。它同时会按32位加法更新条件标志，但这里没有依赖它们的条件分支。996处的5没有因此被改成8，目的操作数EAX才是写入位置。</p>
@@ -596,9 +596,9 @@ movl -4(%ebp), %eax
 <h3 id="unit-03-function-call-s7" data-anchor>3.3.7 返回需要两次恢复，随后才能ret</h3>
 <p class="textbook-ref">教材对照：§4.1.1，纸书第122–124页；附件PDF第647–649页（首次完整出现处）。课程第三章PPT第64–79、88–103页。要求：需掌握（PPT已涉及）。</p>
 <p>add已经算完，但ESP仍980，栈顶是局部result。此刻直接ret会把980处的8误当成返回地址。因此返回前必须先把栈顶移回真正的返回地址位置。</p>
-<pre><code class="language-asm">movl %ebp, %esp
-popl %ebp
-ret
+<pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%ebp</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%esp</span>
+<span class="tok-nf">popl</span><span class="tok-w"> </span><span class="tok-nv">%ebp</span>
+<span class="tok-nf">ret</span>
 </code></pre>
 <p>第一条复制EBP=984到ESP，跳过局部result区域。它没有复制984处的内存值1200；复制的是寄存器本身的数984。第二条从ESP=984读四字节，恰好得到保存的旧EBP值1200，写回EBP；ESP再加4变988。最后ret从988读到2005，令EIP转到2005，ESP再加4变992。EAX没有被这些操作覆盖，仍为8。</p>
 <p>两条序言恢复常可用leave表达。这里先把动作拆开，是为了让读者能判断leave到底恢复什么，以及为什么在它之后ret才会读到正确字节。</p>
@@ -709,10 +709,10 @@ ret
 <p>每次调用都有自己的参数槽和必要工作区。f(3)的帧先留下3并调用f(2)；f(2)的帧留下2并调用f(1)；f(1)留下1并调用f(0)。f(0)命中出口，返回1。f(1)取回自己帧里的1与返回值1相乘，得到1；f(2)用自己的2乘1得2；f(3)再用3乘2得6。返回地址也各有一份，所以每次都能回到正确的外层乘法位置。</p>
 <p>这一过程有两个方向：向下调用时保存尚未完成的任务，向上返回时逐层完成任务。只画调用箭头而不写返回值组合，会漏掉递归求值的一半。本例n逐次减少并有0出口，故非负输入会终止；若用无符号n但先计算n−1而忘记检查0，便可能回绕到巨大数，失去原本的终止依据。</p>
 <p>可以把已经走过的调用与返回直接落实为下面的C函数。约定输入n在0至12内，int为32位；负数与过大输入应由调用者拒绝，本函数仅处理已满足前提的请求。</p>
-<pre><code class="language-c">int factorial(int n) {
-    if (n == 0) return 1;
-    return n * factorial(n - 1);
-}
+<pre><code class="language-c"><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">factorial</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">n</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">n</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">factorial</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">);</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>先检查0才能决定是否继续调用，因此0不会再进入n−1的路径。递归返回值只是内层的结果，外层仍需乘自己的n。以3为输入，乘法在返回方向依次完成1乘1、2乘1、3乘2。若错误把return改成单纯factorial(n−1)，所有非负输入都会返回1，说明调用层数正确还不足以实现原计算。</p>
 <p>朴素实现对输入n产生n+1层调用，总计算次数与n成正比，辅助栈空间也与n成正比。这里复杂度的规模参数是n，不是整数的位数。固定宽度返回类型还限制结果：例如32位有符号int的12!可表示，13!已超过其上界。递归能终止不代表结果在目标类型中一定可表示。</p>
@@ -728,9 +728,9 @@ ret
 <p class="textbook-ref">教材对照：§4.1.6，纸书第136–141页；附件PDF第662–669页（首次完整出现处）。课程第三章PPT第164–174、176–180页。要求：需掌握（PPT已涉及）。</p>
 <p>x86-64把通用寄存器扩为64位，并增加R8至R15等。以下采用Linux常见System V AMD64 ABI，即平台的二进制调用约定。前六个适用的整数或指针参数通常依次用RDI、RSI、RDX、RCX、R8、R9；浮点参数使用XMM寄存器类别，具体分类还需遵循ABI。Windows x64规则不同，不能只凭“64位”互相套用。</p>
 <p>考虑<code>long add(long a,long b){return a+b;}</code>，在这里long为64位。进入函数时RDI保存a、RSI保存b，可用下面核心代码返回：</p>
-<pre><code class="language-asm64">movq %rdi, %rax
-addq %rsi, %rax
-ret
+<pre><code class="language-asm64"><span class="tok-nf">movq</span><span class="tok-w"> </span><span class="tok-nv">%rdi</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%rax</span>
+<span class="tok-nf">addq</span><span class="tok-w"> </span><span class="tok-nv">%rsi</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%rax</span>
+<span class="tok-nf">ret</span>
 </code></pre>
 <p>a=3、b=5时，先RAX=3，再8，ret返回调用者。参数无需像3.3的32位教学约定那样全部预先压栈。函数没有局部空间需求，也可能不建传统RBP栈帧；call仍会把返回地址放入栈，ret从栈恢复它。追踪方法保持一致，只需按此接口重新填写初始位置。</p>
 <p>调用者还必须满足栈对齐要求。按该ABI常见要求，call执行前RSP为16的倍数；call压入8字节返回地址后，函数入口RSP相对16余8。若被调用函数还要调用其他函数，需要通过分配局部空间等方式安排下一次调用前的对齐。叶函数在规定条件下还可使用RSP以下128字节的red zone区域，课程基础追踪不依赖这项优化。</p>
@@ -775,12 +775,12 @@ ret
 <h3 id="unit-03-control-flow-s3" data-anchor>3.4.3 把两条互斥路径真正接起来</h3>
 <p class="textbook-ref">教材对照：§4.2.1，纸书第143–146页；附件PDF第831–835页（首次完整出现处）。课程第三章PPT第40–48、106–108页。要求：需掌握（PPT已涉及）。</p>
 <p>下面是smaller的一个教学函数体，省略已讲过的建帧与退帧指令：</p>
-<pre><code class="language-asm">movl 8(%ebp), %eax
-movl 12(%ebp), %edx
-cmpl %edx, %eax
-jl .keep_x
-movl %edx, %eax
-.keep_x:
+<pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">8</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">12</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
+<span class="tok-nf">cmpl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nf">jl</span><span class="tok-w"> </span><span class="tok-no">.keep_x</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nl">.keep_x:</span>
 </code></pre>
 <p><code>.keep_x</code>是汇编标号，给某个指令位置起名字；它本身不读取内存，也不存一个需要加法的数。jl选择是否把后继位置改到这个标号。若跳过去，<code>movl %edx,%eax</code>被绕开，EAX保留x；若不跳，复制y到EAX。两条路径最终都在.keep_x汇合，随后由公共退帧和ret返回。</p>
 <p>逐条跑x=3、y=5：第一条后EAX=3；第二条后EDX=5；比较只生成标志；jl成立，绕开复制y；到.keep_x时EAX仍3。再跑x=8、y=5：比较8−5=3，SF=0、OF=0，jl不成立；下一条将5写EAX，最后返回5。相等时差0，jl也不成立，但复制的y与原x相同，依然满足函数要求。</p>
@@ -793,14 +793,14 @@ movl %edx, %eax
 <h3 id="unit-03-control-flow-s5" data-anchor>3.4.5 跳转表也必须先保证索引合法</h3>
 <p class="textbook-ref">教材对照：§4.2.1，纸书第143–146页；附件PDF第831–835页（首次完整出现处）。课程第三章PPT第40–48、106–108页。要求：需掌握（PPT已涉及）。</p>
 <p>把刚才的case任务写完整：输入2返回10，输入3返回20，输入4返回30，其余返回−1。C可以写成下面的函数，所有int输入都有定义。</p>
-<pre><code class="language-c">int choose_value(int x) {
-    switch (x) {
-        case 2: return 10;
-        case 3: return 20;
-        case 4: return 30;
-        default: return -1;
-    }
-}
+<pre><code class="language-c"><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">choose_value</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-k">switch</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-k">case</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">10</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-k">case</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">20</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-k">case</span><span class="tok-w"> </span><span class="tok-mi">4</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">30</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-k">default</span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">-1</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>一种教学实现先在32位无符号模型里计算index=(unsigned)x−2u，再检查index&gt;2u。这里先转换为无符号再减，避免在C中对INT_MIN直接执行有符号减2。跳转表三项依次保存L2、L3、L4的代码地址；检查通过后才按index读取表项并间接跳转，每个标号写入自己的返回值，再汇入公共返回路径。</p>
 <p>逐个走边界：x=2得到index=0，读第一项L2，结果10；x=4得到2，读第三项L4，结果30；x=5得到3，超范围走default；x=1得到FFFFFFFFH，无符号大于2，也走default；x为INT_MIN时减法依无符号规则保存7FFFFFFEH，同样超范围。这样上下两端都被同一检查排除，任何非法索引都没有机会先读取跳转表。</p>
@@ -809,28 +809,28 @@ movl %edx, %eax
 <p class="textbook-ref">教材对照：§4.2.2，纸书第147–149页；附件PDF第835–838页（首次完整出现处）。课程第三章PPT第109–112页。要求：需掌握（PPT已涉及）。</p>
 <p>现在希望函数计算0到n−1的和。先用n=3手工执行：初始sum=0、i=0。检查0&lt;3成立，加0，sum仍0，i变1；检查1&lt;3成立，加1，sum变1，i变2；检查2&lt;3成立，加2，sum变3，i变3；检查3&lt;3不成立，退出并返回3。条件检查发生了四次，循环体只做三次，最后一次失败检查也属于完整轨迹。</p>
 <p>把这个过程写成C：</p>
-<pre><code class="language-c">int sum_prefix(int n) {
-    int sum = 0;
-    int i = 0;
-    while (i &lt; n) {
-        sum += i;
-        ++i;
-    }
-    return sum;
-}
+<pre><code class="language-c"><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">sum_prefix</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">n</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">sum</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">while</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">n</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">sum</span><span class="tok-w"> </span><span class="tok-o">+=</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-o">++</span><span class="tok-n">i</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">sum</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>本篇用非负且不超过65536的n，保证这个版本的32位int求和不溢出。n为0时第一次检查就失败，返回0；n为65536时和为2147450880，仍在32位int范围内。声明边界是为了区分控制流程正确与数值类型够不够大。</p>
 <p>取ECX保存n，EDX保存i，EAX保存sum。函数体可写成：</p>
-<pre><code class="language-asm">movl 8(%ebp), %ecx
-movl $0, %edx
-movl $0, %eax
-.check:
-cmpl %ecx, %edx
-jge .done
-addl %edx, %eax
-addl $1, %edx
-jmp .check
-.done:
+<pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">8</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-no">$0</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
+<span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-no">$0</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nl">.check:</span>
+<span class="tok-nf">cmpl</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
+<span class="tok-nf">jge</span><span class="tok-w"> </span><span class="tok-no">.done</span>
+<span class="tok-nf">addl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
+<span class="tok-nf">addl</span><span class="tok-w"> </span><span class="tok-no">$1</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
+<span class="tok-nf">jmp</span><span class="tok-w"> </span><span class="tok-no">.check</span>
+<span class="tok-nl">.done:</span>
 </code></pre>
 <p>check处比较EDX−ECX，也就是i−n。<code>jge</code>在有符号大于等于时跳，条件为SF与OF相同。代码用“退出条件i≥n”表达C中“继续条件i&lt;n”的相反面，这并没有改变算法。只要退出条件不成立，就执行加i、i加1，最后无条件跳回.check。</p>
 <p>在n=3的轨迹中，跳回.check的那条jmp共执行三次。jge第一次、第二次、第三次都不跳，第四次才跳到.done。若把更新i的指令遗漏，i将一直为0，条件永远成立；若把jmp目标写成循环体开头而绕开.check，则更新后的i再也没有被检查。这两种错误都能由逐条路径追踪发现。</p>
@@ -884,24 +884,24 @@ jmp .check
 <h3 id="unit-03-objects-s4" data-anchor>3.5.4 数组遍历的边界——在读取之前检查下标</h3>
 <p class="textbook-ref">教材对照：§4.3.1，纸书第150–154页；附件PDF第855–860页（首次完整出现处）。课程第三章PPT第116–123页。要求：需掌握（PPT已涉及）。</p>
 <p>下面的函数计算数组和。size_t是用于对象大小和下标的无符号整数类型，stddef.h提供声明。调用者传入至少包含n个有效int的数组；n=0时不访问p，可允许p为空。为简化本例，进一步要求数学总和及中间和都能由long long表示。</p>
-<pre><code class="language-c">#include &lt;stddef.h&gt;
-long long sum_array(const int *p, size_t n) {
-    long long sum = 0;
-    for (size_t i = 0; i &lt; n; ++i) {
-        sum += p[i];
-    }
-    return sum;
-}
+<pre><code class="language-c"><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stddef.h&gt;</span>
+<span class="tok-kt">long</span><span class="tok-w"> </span><span class="tok-kt">long</span><span class="tok-w"> </span><span class="tok-nf">sum_array</span><span class="tok-p">(</span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">p</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">size_t</span><span class="tok-w"> </span><span class="tok-n">n</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">long</span><span class="tok-w"> </span><span class="tok-kt">long</span><span class="tok-w"> </span><span class="tok-n">sum</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">size_t</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">n</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-n">i</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">sum</span><span class="tok-w"> </span><span class="tok-o">+=</span><span class="tok-w"> </span><span class="tok-n">p</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">];</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">sum</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>const表示本函数不通过p修改元素。循环在读取前验证i&lt;n，因此最后合法下标为n−1；当n=0时条件第一次即为假，返回0。每次循环后，sum等于已读前i个元素之和。这个不变量既说明结果，也指出若条件错成i&lt;=n会多读尾后一个位置。操作次数与n成正比，时间O(n)，额外只保存固定数量变量，辅助空间O(1)。</p>
 <h3 id="unit-03-objects-s5" data-anchor>3.5.5 结构体偏移来自大小、对齐和顺序</h3>
 <p class="textbook-ref">教材对照：§4.3.2，纸书第155–157页；附件PDF第860–862页（首次完整出现处）。课程第三章PPT第124–128页。要求：需掌握（PPT已涉及）。</p>
 <p>数组各项同类型，结构体允许把不同类型的成员放入一个对象。成员不能任意挤在一起，因为平台ABI还规定对齐。对齐为4意为对象起始地址通常应是4的倍数。先按成员的声明顺序区分每个对象，再读取对应成员。结构体为不同成员保留各自的位置；联合体将让它们共享位置。精确的填充和偏移稍后在教材4.3.4一起推导。下面用到的示例按char、int、short的常见32位大小讨论。</p>
-<pre><code class="language-c">struct Record {
-    char tag;
-    int value;
-    short code;
-};
+<pre><code class="language-c"><span class="tok-k">struct</span><span class="tok-w"> </span><span class="tok-nc">Record</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-kt">char</span><span class="tok-w"> </span><span class="tok-n">tag</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">value</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-kt">short</span><span class="tok-w"> </span><span class="tok-n">code</span><span class="tok-p">;</span>
+<span class="tok-p">};</span>
 </code></pre>
 <h3 id="unit-03-objects-s6" data-anchor>3.5.6 联合体的共享存储——先看成员是否同时需要</h3>
 <p class="textbook-ref">教材对照：§4.3.3，纸书第158–159页；附件PDF第862–865页（首次完整出现处）。课程第三章PPT第129–134页。要求：需掌握（PPT已涉及）。</p>
@@ -986,17 +986,17 @@ long long sum_array(const int *p, size_t n) {
 <article id="unit-04-symbols" data-source="manuscripts/04-symbols.md" data-anchor><h2>4.1 目标文件与符号解析——让分开的模块找到彼此</h2><h3 id="unit-04-symbols-s1" data-anchor>4.1.1 一份源文件为什么不能确定所有地址</h3>
 <p>假设main.c想打印一个由sum.c计算出的和。main.c知道函数sum接收两个int并返回int，却不知道sum最终会被放在哪个地址。sum.c则负责定义这个函数。分开编译可以让两个人独立修改各自文件，但最终机器指令调用sum时仍须找到真正入口。</p>
 <p>先写一个完整的小程序。main.c内容如下：</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-int sum(int a, int b);
-int main(void) {
-    printf(&quot;%d\n&quot;, sum(3, 5));
-    return 0;
-}
+<pre><code class="language-c"><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stdio.h&gt;</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">sum</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">);</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">"%d</span><span class="tok-se">\n</span><span class="tok-s">"</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">sum</span><span class="tok-p">(</span><span class="tok-mi">3</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">5</span><span class="tok-p">));</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>sum.c内容如下：</p>
-<pre><code class="language-c">int sum(int a, int b) {
-    return a + b;
-}
+<pre><code class="language-c"><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">sum</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>这些命令在装有C编译工具链的Linux终端执行；先用文本编辑器把两个代码块分别保存为main.c与sum.c，并把终端当前目录切到这两个文件所在目录。cc是编译驱动程序，-o后面给输出文件名，.o是本例目标文件名。<code>./demo</code>表示运行当前目录中的demo。</p>
 <p>先分别执行<code>cc -c main.c -o main.o</code>和<code>cc -c sum.c -o sum.o</code>。-c表示生成目标文件后停止。main.o已有main的机器代码，但对sum的引用还没有找到外部定义；sum.o已有sum的定义。再执行<code>cc main.o sum.o -o demo</code>，链接器把引用与定义关联，安排代码和数据的位置，修补受位置影响的字段，生成demo。运行<code>./demo</code>输出8。</p>
@@ -1023,15 +1023,15 @@ int main(void) {
 <p>解答：函数的机器代码通常在.text；只读字符串通常在.rodata；文件级<code>int n=7;</code>通常在.data；文件级<code>int n;</code>在现代-fno-common编译下通常在.bss。加载时主要依据程序头表处理可装入段。对象实际归属可受优化、COMMON和链接脚本影响，例子必须注明常见工具链条件。</p>
 <h3 id="unit-04-symbols-s4" data-anchor>4.1.4 给每个符号一张身份卡</h3>
 <p>考虑模块a.c：</p>
-<pre><code class="language-c">int shared = 7;
-static int local = 2;
-extern int other;
-int calc(void) {
-    static int times;
-    int temp = shared + other;
-    ++times;
-    return temp + local + times;
-}
+<pre><code class="language-c"><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">shared</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">7</span><span class="tok-p">;</span>
+<span class="tok-k">static</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">local</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">;</span>
+<span class="tok-k">extern</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">other</span><span class="tok-p">;</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">calc</span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-k">static</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">times</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">temp</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">shared</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">other</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-o">++</span><span class="tok-n">times</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">temp</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">local</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">times</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
 </code></pre>
 <p>从链接器视角逐项读。shared具有外部链接，a.o提供其定义；local具有内部链接，别的模块不能用同名外部引用直接找到它；other只有外部声明，本模块使用它，因此需要另一模块提供定义；calc提供函数定义；times具有静态存储期，通常也需要一个内部符号定位；temp是本次调用的自动局部对象，通常由栈偏移或寄存器描述，不作为跨模块解析的普通链接符号。调试信息可以包含局部变量名，不能由此说它必定属于普通链接符号集合。</p>
 <p>符号表的记录通常给出名字、绑定属性、所属节和节内值等。若在a.o中查看，shared的“位置”可能只是相对于.data的偏移；链接合并后才得到输出布局中的地址。一个符号是“本模块定义”还是“本模块引用”，要以当前目标模块为参照。同一名字在a.o里未定义，在b.o里可以有定义。</p>
@@ -1103,8 +1103,8 @@ int calc(void) {
 <article id="unit-04-dynamic" data-source="manuscripts/04-dynamic.md" data-anchor><h2>4.4 动态链接与共享库——在运行时完成连接</h2><h3 id="unit-04-dynamic-s1" data-anchor>4.4.1 动态链接：同一段库代码如何复用</h3>
 <p>若每个可执行文件都复制一份同样的库函数代码，磁盘和内存可能重复存储。共享库把可复用机器代码放在独立目标中，可执行文件记录依赖与必要动态信息。加载时动态链接器寻找库、建立映射、解析所需符号并完成必要修补；也可以在程序运行后显式打开某个库。</p>
 <p>可以直接复用4.1的main.c与sum.c做一次共享库构建。采用Linux常见GNU工具链，先执行下列命令；三个命令各占一行。</p>
-<pre><code class="language-sh">cc -fPIC -shared sum.c -o libsum.so
-cc main.c -L. -lsum -Wl,-rpath,'$ORIGIN' -o demo-shared
+<pre><code class="language-sh">cc<span class="tok-w"> </span>-fPIC<span class="tok-w"> </span>-shared<span class="tok-w"> </span>sum.c<span class="tok-w"> </span>-o<span class="tok-w"> </span>libsum.so
+cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="tok-w"> </span>-lsum<span class="tok-w"> </span>-Wl,-rpath,<span class="tok-s1">'$ORIGIN'</span><span class="tok-w"> </span>-o<span class="tok-w"> </span>demo-shared
 ./demo-shared
 </code></pre>
 <p>第一行把sum做成共享目标，-fPIC请求位置无关代码，-shared请求共享库输出。第二行-L.让链接时到当前目录找库，-lsum按命名约定查找libsum.so或对应库；-Wl把后续选项交给链接器。这里把运行搜索路径设为$ORIGIN，表示可执行文件所在目录，单引号使终端不把它提前当环境变量展开。第三行运行输出8。链接时找到库与运行时找到库是两次搜索，只写-L.并不能保证搬动文件后的运行搜索成功。</p>
