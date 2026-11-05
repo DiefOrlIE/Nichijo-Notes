@@ -7,6 +7,10 @@ assert(w.ICS_READY);
 assert.equal(d.querySelectorAll('input[type=range]').length,0);for(const id of ['font-size','reading-width','page-tone'])assert.equal(d.getElementById(id).type,'number');
 const tone=d.querySelector('#page-tone');tone.value='90';tone.dispatchEvent(new w.Event('input'));assert.equal(d.documentElement.style.getPropertyValue('--paper-shade'),'10%');assert.equal(JSON.parse(w.localStorage.getItem('nichijo-ics-textbook-v4')).pageTone,90);
 assert([...d.querySelectorAll('.width-handle')].every(e=>e.textContent===''));
+assert.equal(d.querySelectorAll('.stepper-buttons button').length,6);
+const toneUp=d.querySelector('[data-step-target="page-tone"][data-step="1"]');toneUp.click();assert.equal(tone.value,'91');tone.value='100';tone.dispatchEvent(new w.Event('input'));assert(toneUp.disabled);d.querySelector('[data-step-target="page-tone"][data-step="-1"]').click();assert.equal(tone.value,'99');
+const sizeUp=d.querySelector('[data-step-target="font-size"][data-step="1"]');const previousSize=Number(d.querySelector('#font-size').value);sizeUp.click();assert.equal(Number(d.querySelector('#font-size').value),previousSize+1);d.querySelector('[data-step-target="font-size"][data-step="-1"]').click();
+
 
 const width=d.querySelector('#reading-width');assert.equal(width.value,'960');width.value='1200';width.dispatchEvent(new w.Event('input'));assert.equal(d.documentElement.style.getPropertyValue('--read-width'),'1200px');assert.equal(JSON.parse(w.localStorage.getItem('nichijo-ics-textbook-v4')).readWidth,1200);assert(d.body.classList.contains('toc-drawer'));d.querySelector('#width-right').dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowLeft'}));assert.equal(width.value,'1180');
 assert.equal(d.documentElement.style.getPropertyValue('--read-size'),'22px');

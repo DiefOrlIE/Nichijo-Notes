@@ -21,6 +21,15 @@ for(const [selector,direction]of [['#width-left',-1],['#width-right',1]]){
  const stop=()=>{if(!drag)return;drag=null;document.body.classList.remove('resizing');store()};handle.addEventListener('pointerup',stop);handle.addEventListener('pointercancel',stop);handle.addEventListener('lostpointercapture',stop);
  handle.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();setReadingWidth(e.key==='Home'?720:e.key==='End'?1440:state.readWidth+(e.key==='ArrowRight'?20:-20));store()});
 }
+// Custom steppers replace browser-owned white arrow panels in every theme.
+function syncSteppers(){
+ $$('[data-step-target]').forEach(button=>{const input=document.getElementById(button.dataset.stepTarget);const value=input.valueAsNumber;button.disabled=Number.isFinite(value)&&(Number(button.dataset.step)>0?value>=Number(input.max):value<=Number(input.min))});
+}
+$$('[data-step-target]').forEach(button=>button.addEventListener('click',()=>{
+ const input=document.getElementById(button.dataset.stepTarget);
+ input.stepUp(Number(button.dataset.step));input.dispatchEvent(new Event('input',{bubbles:true}));syncSteppers();
+}));
+$$('header input[type="number"]').forEach(input=>{input.addEventListener('input',syncSteppers);input.addEventListener('change',syncSteppers)});syncSteppers();
 // Technical tokens in prose need code markup as well as a monospace stylesheet.
 const codePattern=/(?<![A-Za-z0-9_])(?:%?(?:[er]?(?:ax|bx|cx|dx|si|di|bp|sp|ip)|[abcd][lh]|r(?:[89]|1[0-5])(?:[dwb])?)|(?:EAX|EBX|ECX|EDX|ESI|EDI|EBP|ESP|EIP|RAX|RBX|RCX|RDX|RBP|RSP|RIP|AX|BX|CX|DX|AL|AH|BL|BH|CL|CH|DL|DH|CF|ZF|SF|OF)|(?:mov[zs]?[bwlq]?|lea[lq]?|push[lq]?|pop[lq]?|call[q]?|ret[q]?|leave|cmp[lq]?|test[lq]?|add[lq]?|sub[lq]?|jmp|je|jne|jle|jge|jl|jg|and[lq]?|xor[lq]?|shl[lq]?|shr[lq]?|sar[lq]?))(?![A-Za-z0-9_])/g;
 const proseWalk=document.createTreeWalker($('#main'),NodeFilter.SHOW_TEXT);let proseNode;const proseNodes=[];

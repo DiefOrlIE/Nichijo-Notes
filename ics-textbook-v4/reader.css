@@ -108,3 +108,22 @@ header .size-control input,header .width-control input{width:74px;height:31px;pa
 :root:not([data-theme=dark]){--bg:color-mix(in srgb,#e5e0d5 calc(100% - var(--paper-shade,5%)),#8b806d);--paper:color-mix(in srgb,#f3efe5 calc(100% - var(--paper-shade,5%)),#8b806d);--subtle:color-mix(in srgb,#e9e2d4 calc(100% - var(--paper-shade,5%)),#8b806d)}
 .tone-control{display:flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap}.tone-control input{width:61px;height:31px;padding:3px 5px 3px 8px;border:1px solid var(--line);border-radius:4px;background:var(--paper);font-variant-numeric:tabular-nums}
 @media(max-width:850px){.tone-control{order:6;margin-left:auto}header .size-control{margin-left:0}}
+
+/* Quiet glossary affordance: reveal only on hover or keyboard focus. */
+abbr[title]{text-decoration:none!important;border-bottom:0;color:inherit;background:transparent;cursor:pointer;border-radius:2px}
+abbr[title]:hover,abbr[title]:focus-visible{color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent)}
+abbr[title]:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
+/* Themed steppers, drawn here instead of platform-native white controls. */
+.number-stepper{display:inline-flex;align-items:stretch;height:31px;overflow:hidden;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+header .number-stepper input[type=number]{appearance:textfield;-moz-appearance:textfield;width:48px;height:29px;min-width:0;border:0;border-radius:0;padding:3px 4px 3px 8px;background:transparent;outline-offset:-2px}
+header .width-control .number-stepper input{width:58px}
+.number-stepper input::-webkit-inner-spin-button,.number-stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.stepper-buttons{display:grid;grid-template-rows:1fr 1fr;width:21px;border-left:1px solid var(--line);background:var(--subtle)}
+header .stepper-buttons button{display:flex;justify-content:center;align-items:center;width:20px;min-height:0;padding:0;border:0;border-radius:0;background:var(--subtle);color:var(--accent);cursor:pointer}
+header .stepper-buttons button+button{border-top:1px solid var(--line)}
+header .stepper-buttons button:hover:enabled{background:color-mix(in srgb,var(--accent) 16%,var(--subtle))}
+header .stepper-buttons button:active:enabled{background:color-mix(in srgb,var(--accent) 25%,var(--subtle))}
+header .stepper-buttons button:focus-visible{outline:1px solid var(--accent);outline-offset:-2px}
+header .stepper-buttons button:disabled{opacity:.35;cursor:default}
+.stepper-buttons svg{width:10px;height:7px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+@media(max-width:850px){header .number-stepper input[type=number]{width:41px}header .width-control .number-stepper input{width:52px}.tone-control,.size-control,.width-control{gap:5px}}
