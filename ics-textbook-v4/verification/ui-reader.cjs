@@ -4,6 +4,8 @@ const dom=new JSDOM(fs.readFileSync(path.join(root,page),'utf8'),{url:'https://e
 w.document.fonts={ready:Promise.resolve()};w.fetch=async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(root+'/terms.json'))});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=function(){};w.localStorage.setItem('nichijo-ics-textbook-v4',JSON.stringify({fontSize:22}));
 const before=d.querySelector('main').textContent;w.eval(fs.readFileSync(root+'/reader.js','utf8'));await new Promise(r=>setTimeout(r,80));
 assert(w.ICS_READY);
+const marker=d.querySelector('#term-style');assert.equal(marker.value,'b');assert.equal(d.documentElement.dataset.termStyle,'b');for(const style of ['a','c','b']){marker.value=style;marker.dispatchEvent(new w.Event('change'));assert.equal(d.documentElement.dataset.termStyle,style);assert.equal(JSON.parse(w.localStorage.getItem('nichijo-ics-textbook-v4')).termStyle,style)}
+
 assert.equal(d.querySelectorAll('input[type=range]').length,0);for(const id of ['font-size','reading-width','page-tone'])assert.equal(d.getElementById(id).type,'number');
 const tone=d.querySelector('#page-tone');tone.value='90';tone.dispatchEvent(new w.Event('input'));assert.equal(d.documentElement.style.getPropertyValue('--paper-shade'),'10%');assert.equal(JSON.parse(w.localStorage.getItem('nichijo-ics-textbook-v4')).pageTone,90);
 assert([...d.querySelectorAll('.width-handle')].every(e=>e.textContent===''));

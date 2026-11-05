@@ -3,6 +3,9 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],key
 let state={};try{state=JSON.parse(localStorage.getItem(key)||'{}')}catch{}
 const store=()=>{try{localStorage.setItem(key,JSON.stringify(state))}catch{}};
 state.answers??={};
+const termStyleInput=$('#term-style');
+function setTermStyle(value){state.termStyle=['a','b','c'].includes(value)?value:'b';document.documentElement.dataset.termStyle=state.termStyle;termStyleInput.value=state.termStyle}
+setTermStyle(state.termStyle);termStyleInput.addEventListener('change',()=>{setTermStyle(termStyleInput.value);store()});
 const sizeInput=$('#font-size'),sizeOutput=$('#font-size-value');
 function setFontSize(value){state.fontSize=Math.max(16,Math.min(24,Number(value)||19));document.documentElement.style.setProperty('--read-size',state.fontSize+'px');sizeInput.value=state.fontSize;sizeOutput.value=state.fontSize+'px'}
 setFontSize(state.fontSize);sizeInput.addEventListener('input',()=>{if(sizeInput.value!==''&&sizeInput.validity.valid){setFontSize(sizeInput.value);store()}});sizeInput.addEventListener('change',()=>{setFontSize(sizeInput.value);store()});
