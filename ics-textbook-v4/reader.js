@@ -5,12 +5,15 @@ const store=()=>{try{localStorage.setItem(key,JSON.stringify(state))}catch{}};
 state.answers??={};
 const sizeInput=$('#font-size'),sizeOutput=$('#font-size-value');
 function setFontSize(value){state.fontSize=Math.max(16,Math.min(24,Number(value)||19));document.documentElement.style.setProperty('--read-size',state.fontSize+'px');sizeInput.value=state.fontSize;sizeOutput.value=state.fontSize+'px'}
-setFontSize(state.fontSize);sizeInput.addEventListener('input',()=>{setFontSize(sizeInput.value);store()});
+setFontSize(state.fontSize);sizeInput.addEventListener('input',()=>{if(sizeInput.value!==''&&sizeInput.validity.valid){setFontSize(sizeInput.value);store()}});sizeInput.addEventListener('change',()=>{setFontSize(sizeInput.value);store()});
+const toneInput=$('#page-tone');
+function setTone(value){state.pageTone=Math.max(80,Math.min(100,Math.round(Number(value)||95)));document.documentElement.style.setProperty('--paper-shade',(100-state.pageTone)+'%');toneInput.value=state.pageTone}
+setTone(state.pageTone);toneInput.addEventListener('input',()=>{if(toneInput.value!==''&&toneInput.validity.valid){setTone(toneInput.value);store()}});toneInput.addEventListener('change',()=>{setTone(toneInput.value);store()});
 // Keep the page centered in the viewport; fold the TOC when its gutter is too small.
 const widthInput=$('#reading-width'),widthOutput=$('#reading-width-value');
 function fitDirectory(){document.body.classList.toggle('toc-drawer',innerWidth<state.readWidth+352)}
 function setReadingWidth(value){state.readWidth=Math.round(Math.max(720,Math.min(1440,Number(value)||960))/20)*20;document.documentElement.style.setProperty('--read-width',state.readWidth+'px');widthInput.value=state.readWidth;widthOutput.value=state.readWidth+'px';fitDirectory()}
-setReadingWidth(state.readWidth);widthInput.addEventListener('input',()=>{setReadingWidth(widthInput.value);store()});addEventListener('resize',fitDirectory);
+setReadingWidth(state.readWidth);widthInput.addEventListener('input',()=>{if(widthInput.value!==''&&widthInput.validity.valid){setReadingWidth(widthInput.value);store()}});widthInput.addEventListener('change',()=>{setReadingWidth(widthInput.value);store()});addEventListener('resize',fitDirectory);
 for(const [selector,direction]of [['#width-left',-1],['#width-right',1]]){
  const handle=$(selector);let drag=null;
  handle.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={x:e.clientX,width:$('#main').getBoundingClientRect().width};handle.setPointerCapture(e.pointerId);document.body.classList.add('resizing');e.preventDefault()});

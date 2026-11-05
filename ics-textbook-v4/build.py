@@ -6,6 +6,7 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 P=Path(__file__).resolve().parent
+title_map=json.loads((P/'section-titles.json').read_text())
 course=json.loads((P/'course.json').read_text());md=MarkdownIt('commonmark',{'html':False}).enable('table')
 hashes={str(f.relative_to(P)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (P/'manuscripts').glob('*.md')}
 if (P/'book4-guide.md').exists():hashes['book4-guide.md']=hashlib.sha256((P/'book4-guide.md').read_bytes()).hexdigest()
@@ -20,35 +21,59 @@ def color_blocks(rendered):
  return re.sub(r'<pre><code class="language-(c|asm|asm64|sh)">(.*?)</code></pre>',color_code,rendered,flags=re.S)
 parts=[];nav=[];subsections=0;book4_articles=[];book4_nav=[]
 for c in course:
- n=c['number'];chapter=f'第{n}章 {c["title"]}——{c["subtitle"]}';cid=f'chapter-{n}'
- parts.append(f'<section class="course-chapter" id="{cid}" data-anchor><h1>{html.escape(chapter)}</h1><p class="chapter-source">课程PPT第{n}章 · {html.escape(c["book"])}</p>')
+ n=c['number'];chapter=f'第{n}章 {c["title"]}';cid=f'chapter-{n}'
+ parts.append(f'<section class="course-chapter" id="{cid}" data-anchor><h1>{html.escape(chapter)}</h1><p class="chapter-lead">{html.escape(c["subtitle"])}</p><p class="chapter-source">课程PPT第{n}章 · {html.escape(c["book"])}</p>')
  nav.append(f'<details class="nav-chapter" open><summary><a href="#{cid}">第{n}章 {html.escape(c["title"])}</a></summary>')
  for name in c['files']:
   src=(P/'manuscripts'/f'{name}.md').read_text();title=src.splitlines()[0][2:];uid='unit-'+name
   rendered=color_blocks(md.render(src)).replace('<p>教材对照：','<p class="textbook-ref">教材对照：');rendered=re.sub(r'<h1>.*?</h1>\n?','',rendered,count=1)
   rendered=rendered.replace('<h3>','<h4>').replace('</h3>','</h4>');i=[0];section_nav=[];prefix=title.split(' ',1)[0]
-  def source_label(m):
-   following=rendered[m.end():]
-   ref=re.match(r'\s*<p class="textbook-ref">教材对照：§([^，；<]+)',following)
-   if ref:book='教材 '+ref[1]
-   elif n==2:book='教材第2章'
-   elif name in ['03-instructions','03-operations']:book='教材第3章'
-   elif n==4:book='教材第5章'
-   elif name=='05-execution':book='教材 5.7'
-   elif name=='05-processes':book='教材对应见本章说明'
-   else:book='教材第3、4章（综合）'
-   return f'<span class="heading-source">（{html.escape(book)}；PPT 第{n}章）</span>'
+  previous=[None]
   def sub(m):
    i[0]+=1;sid=f'{uid}-s{i[0]}'
-   section_nav.append(f'<a class="minor" href="#{sid}">{prefix}.{i[0]} {m[1]}{source_label(m)}</a>')
-   return f'<h3 id="{sid}" data-anchor>{prefix}.{i[0]} {m[1]}{source_label(m)}</h3>'
+   following=rendered[m.end():]
+   ref=re.match(r'\s*<p class="textbook-ref">教材对照：§([^，；<]+)',following)
+   if ref:
+    code=ref[1]
+    official=title_map['textbook_titles'].get(code)
+    if not official:official='综合练习' if '练习' in m[1] else '本节小结'
+    if '练习' in m[1]:official+=' · 综合练习'
+   else:
+    code=title_map['section_order'][name][i[0]-1]
+    official=title_map['textbook_titles'].get(code) or title_map['ppt_titles'][code]
+   book_number=code if re.fullmatch(r'\d+\.\d+(?:\.\d+)?',code) else None
+   formal=(book_number+' ' if book_number else '')+official
+   source=f'（教材 {code}；PPT 第{n}章）' if book_number else f'（PPT 第{n}章）'
+   label=f'<span class="heading-source">{source}</span>'
+   # Consecutive explanations of one textbook section share one formal heading.
+   if code==previous[0]:return f'<p id="{sid}" data-anchor class="section-lead">{m[1]}</p>'
+   previous[0]=code
+   section_nav.append(f'<a class="minor" href="#{sid}">{html.escape(formal)}</a>')
+   return f'<h3 id="{sid}" data-anchor>{html.escape(formal)}{label}</h3><p class="section-lead">{m[1]}</p>'
   rendered=re.sub(r'<h2>(.*?)</h2>',sub,rendered);subsections+=i[0]
-  rendered=re.sub(r'<h4>(.*?)</h4>',lambda m:f'<h4>{m[1]}{source_label(m)}</h4>',rendered)
-  article_html=f'<article id="{uid}" data-source="manuscripts/{name}.md" data-anchor><h2>{html.escape(title)}</h2>{rendered}</article>'
+  def short_ref(m):
+   text=html.unescape(re.sub(r'<[^>]+>','',m[1]))
+   paper=re.search(r'纸书第([^；。]+?)页',text)
+   ppt=re.search(r'课程第[一二三四五六七八九十]+章PPT第([^。]+?)页',text)
+   requirement=re.search(r'要求：(.+)',text)
+   status=requirement[1].rstrip('。') if requirement else '需掌握'
+   # Keep exceptions to coverage, omit repeated explanations of the same status.
+   status=re.sub(r'（PPT已涉及）','',status)
+   if '例4.6' in status:status='传参需掌握；例4.6完整 AVX 展开无需掌握'
+   fields=[]
+   if paper:fields.append('纸书 '+paper[1]+' 页')
+   if ppt:fields.append('PPT 第'+str(n)+'章 '+ppt[1]+' 页')
+   fields.append(status)
+   return '<p class="textbook-ref">'+html.escape(' · '.join(fields))+'</p>'
+  rendered=re.sub(r'<p class="textbook-ref">(.*?)</p>',short_ref,rendered,flags=re.S)
+  formal_title=title_map['unit_titles'][name]
+  unit_number=title.split(' ',1)[0]
+  lead=title.split('——',1)[1] if '——' in title else ''
+  article_html=f'<article id="{uid}" data-source="manuscripts/{name}.md" data-anchor><h2>{unit_number} {html.escape(formal_title)}</h2><p class="unit-lead">{html.escape(lead)}</p>{rendered}</article>'
   parts.append(article_html)
   if name in ['03-function-call','03-control-flow','03-objects']:
-   book4_articles.append(article_html);book4_nav.append(f'<a class="major" href="#{uid}">{html.escape(title)}</a>')
-  nav.append(f'<a class="major" href="#{uid}">{html.escape(title)}</a>');nav.extend(section_nav)
+   book4_articles.append(article_html);book4_nav.append(f'<a class="major" href="#{uid}">{unit_number} {html.escape(formal_title)}</a>')
+  nav.append(f'<a class="major" href="#{uid}">{unit_number} {html.escape(formal_title)}</a>');nav.extend(section_nav)
  nav.append('</details>');parts.append('</section>')
 version=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest()[:16]
 result=(P/'template.html').read_text().replace('{{NAV}}','\n'.join(nav)).replace('{{BODY}}','\n'.join(parts)).replace('{{HASH}}',version)
@@ -59,6 +84,7 @@ print('Built',sum(len(c['files']) for c in course),'frozen manuscripts and',len(
 # The textbook route reuses exactly the same rendered article bodies.
 if (P/'book4-guide.md').exists():
  guide=color_blocks(md.render((P/'book4-guide.md').read_text()))
+ guide=re.sub(r'<h1>(.*?)——(.*?)</h1>',r'<h1>\1</h1><p class="chapter-lead">\2</p>',guide)
  template=(P/'template.html').read_text()
  template=re.sub(r'<section id="start" data-anchor>.*?</section>', '<section id="start" data-anchor>'+guide+'</section>', template, count=1,flags=re.S)
  template=template.replace('<title>ICS 教材式自学讲义 V4 · 第二至第五章</title>','<title>教材第四章 · ICS 跟读讲义</title>')
