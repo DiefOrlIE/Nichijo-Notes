@@ -6,6 +6,18 @@ state.answers??={};
 const sizeInput=$('#font-size'),sizeOutput=$('#font-size-value');
 function setFontSize(value){state.fontSize=Math.max(16,Math.min(24,Number(value)||19));document.documentElement.style.setProperty('--read-size',state.fontSize+'px');sizeInput.value=state.fontSize;sizeOutput.value=state.fontSize+'px'}
 setFontSize(state.fontSize);sizeInput.addEventListener('input',()=>{setFontSize(sizeInput.value);store()});
+// Keep the page centered in the viewport; fold the TOC when its gutter is too small.
+const widthInput=$('#reading-width'),widthOutput=$('#reading-width-value');
+function fitDirectory(){document.body.classList.toggle('toc-drawer',innerWidth<state.readWidth+352)}
+function setReadingWidth(value){state.readWidth=Math.round(Math.max(720,Math.min(1440,Number(value)||960))/20)*20;document.documentElement.style.setProperty('--read-width',state.readWidth+'px');widthInput.value=state.readWidth;widthOutput.value=state.readWidth+'px';fitDirectory()}
+setReadingWidth(state.readWidth);widthInput.addEventListener('input',()=>{setReadingWidth(widthInput.value);store()});addEventListener('resize',fitDirectory);
+for(const [selector,direction]of [['#width-left',-1],['#width-right',1]]){
+ const handle=$(selector);let drag=null;
+ handle.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={x:e.clientX,width:$('#main').getBoundingClientRect().width};handle.setPointerCapture(e.pointerId);document.body.classList.add('resizing');e.preventDefault()});
+ handle.addEventListener('pointermove',e=>{if(drag)setReadingWidth(Math.min(innerWidth-32,drag.width+2*direction*(e.clientX-drag.x)))});
+ const stop=()=>{if(!drag)return;drag=null;document.body.classList.remove('resizing');store()};handle.addEventListener('pointerup',stop);handle.addEventListener('pointercancel',stop);handle.addEventListener('lostpointercapture',stop);
+ handle.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();setReadingWidth(e.key==='Home'?720:e.key==='End'?1440:state.readWidth+(e.key==='ArrowRight'?20:-20));store()});
+}
 // Technical tokens in prose need code markup as well as a monospace stylesheet.
 const codePattern=/(?<![A-Za-z0-9_])(?:%?(?:[er]?(?:ax|bx|cx|dx|si|di|bp|sp|ip)|[abcd][lh]|r(?:[89]|1[0-5])(?:[dwb])?)|(?:EAX|EBX|ECX|EDX|ESI|EDI|EBP|ESP|EIP|RAX|RBX|RCX|RDX|RBP|RSP|RIP|AX|BX|CX|DX|AL|AH|BL|BH|CL|CH|DL|DH|CF|ZF|SF|OF)|(?:mov[zs]?[bwlq]?|lea[lq]?|push[lq]?|pop[lq]?|call[q]?|ret[q]?|leave|cmp[lq]?|test[lq]?|add[lq]?|sub[lq]?|jmp|je|jne|jle|jge|jl|jg|and[lq]?|xor[lq]?|shl[lq]?|shr[lq]?|sar[lq]?))(?![A-Za-z0-9_])/g;
 const proseWalk=document.createTreeWalker($('#main'),NodeFilter.SHOW_TEXT);let proseNode;const proseNodes=[];

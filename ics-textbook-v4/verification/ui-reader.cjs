@@ -3,7 +3,9 @@ const {JSDOM}=require('jsdom'),fs=require('fs'),path=require('path'),assert=requ
 const dom=new JSDOM(fs.readFileSync(path.join(root,page),'utf8'),{url:'https://example.test/'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
 w.document.fonts={ready:Promise.resolve()};w.fetch=async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(root+'/terms.json'))});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=function(){};w.localStorage.setItem('nichijo-ics-textbook-v4',JSON.stringify({fontSize:22}));
 const before=d.querySelector('main').textContent;w.eval(fs.readFileSync(root+'/reader.js','utf8'));await new Promise(r=>setTimeout(r,80));
-assert(w.ICS_READY);assert.equal(d.documentElement.style.getPropertyValue('--read-size'),'22px');
+assert(w.ICS_READY);
+const width=d.querySelector('#reading-width');assert.equal(width.value,'960');width.value='1200';width.dispatchEvent(new w.Event('input'));assert.equal(d.documentElement.style.getPropertyValue('--read-width'),'1200px');assert.equal(JSON.parse(w.localStorage.getItem('nichijo-ics-textbook-v4')).readWidth,1200);assert(d.body.classList.contains('toc-drawer'));d.querySelector('#width-right').dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowLeft'}));assert.equal(width.value,'1180');
+assert.equal(d.documentElement.style.getPropertyValue('--read-size'),'22px');
 const slider=d.querySelector('#font-size');slider.value='24';slider.dispatchEvent(new w.Event('input'));assert.equal(d.querySelector('#font-size-value').value,'24px');assert.equal(JSON.parse(w.localStorage.getItem('nichijo-ics-textbook-v4')).fontSize,24);
 const nav=d.querySelector('nav'),entries=[...nav.querySelectorAll('a')].filter(a=>a.getAttribute('href').startsWith('#')&&d.getElementById(a.hash.slice(1))),target=entries.at(-3),id=target.hash.slice(1);
 for(const a of entries)d.getElementById(a.hash.slice(1)).getBoundingClientRect=()=>({top:a===target?100:500});
