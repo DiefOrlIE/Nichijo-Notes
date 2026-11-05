@@ -21,9 +21,9 @@ with tempfile.TemporaryDirectory(prefix='ics-v4-') as t:
     out=command([str(base)])
     expected={'03-function-call':'8\n','03-operations':'415A0000 13\n','04-symbols':'8\n'}
     if f.stem in expected: assert out==expected[f.stem],(f,out)
-  for i,c in enumerate(re.findall(r'```asm\n(.*?)```',src,re.S)):
+  for i,(language,c) in enumerate(re.findall(r'```(asm|asm64)\n(.*?)```',src,re.S)):
    a=t/(f.stem+str(i)+'.s');a.write_text('.text\n'+c+'\n')
-   command(['as','--64' if f.stem=='03-platforms' else '--32',str(a),'-o',str(a.with_suffix('.o'))]);counts['assembly_blocks_assembled']+=1
+   command(['as','--64' if language=='asm64' or f.stem=='03-platforms' else '--32',str(a),'-o',str(a.with_suffix('.o'))]);counts['assembly_blocks_assembled']+=1
  # Executable independent checks; host Linux x86-64, C11 ordinary IEEE environment.
  c=r'''
 #include <assert.h>

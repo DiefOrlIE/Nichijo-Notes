@@ -1,0 +1,16 @@
+{
+  "book_sections": 16,
+  "annotated_teaching_headings": 42,
+  "same_article_bodies_as_main": true,
+  "printed_page_source": "https://www.cmpedu.com/books/book/5607911.htm",
+  "assignments": [
+    2,
+    4,
+    5,
+    7,
+    11
+  ],
+  "guide_tables": 2,
+  "font_coverage": true,
+  "md_first_review": "audit/book4-followalong-review.md"
+}

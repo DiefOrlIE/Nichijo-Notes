@@ -10,3 +10,6 @@
 
 
 核验环境：Linux x86-64，cc与GNU binutils，C11。Python依赖通过`python3 -m pip install -r requirements.txt`安装。网页脚本模拟依赖通过本目录的`npm install`安装，运行`npm run test:reader`；模拟结果不代替真实浏览器。源码中的32位汇编可汇编链接，但本次宿主不能执行对应ELF。
+
+
+2026-11-05新增教材第四章跟读入口：book4.html；独立文字稿book4-manuscript.md。纸书页码使用出版社同ISBN目录，PDF页序单列；第四章作业2、4、5、7、11的阅读位置与范围见book4-guide.md。正文按教材顺序集中到3.3、3.4、3.5，PPT未涉及的完整AVX展开单独标无需掌握，保留PPT自学内容。审查见audit/book4-followalong-review.md。

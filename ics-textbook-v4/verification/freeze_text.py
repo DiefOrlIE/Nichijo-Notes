@@ -17,6 +17,13 @@ for c in course:
 (p/'all-manuscripts.md').write_text('\n\n'.join(combined))
 
 assert (a/'text-review.md').exists(), 'A prose review record is required'
+guide=p/'book4-guide.md'
+if guide.exists():
+ book=[guide.read_text()]
+ for stem in ['03-function-call','03-control-flow','03-objects']:
+  book.append((p/'manuscripts'/(stem+'.md')).read_text())
+ (p/'book4-manuscript.md').write_text('\n\n'.join(book))
 hashes={str(f.relative_to(p)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (p/'manuscripts').glob('*.md')}
+if guide.exists():hashes['book4-guide.md']=hashlib.sha256(guide.read_bytes()).hexdigest()
 (a/'manuscript-hashes.json').write_text(json.dumps(hashes,indent=2))
 print('Combined Markdown and source hashes saved; this is not a student learning test.')

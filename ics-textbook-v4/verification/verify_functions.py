@@ -7,7 +7,7 @@ with tempfile.TemporaryDirectory() as t:
  (p/'main.c').write_text(src)
  subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',str(p/'main.c'),'-o',str(p/'main')],check=True)
  assert subprocess.check_output([str(p/'main')],text=True)=='8\n'
- src=re.search(r'```c\n(.*?)```',(root/'manuscripts/03-control-flow.md').read_text(),re.S)[1]
+ src=next(c for c in re.findall(r'```c\n(.*?)```',(root/'manuscripts/03-control-flow.md').read_text(),re.S) if 'int sum_prefix(' in c)
  (p/'loop.c').write_text('#include <assert.h>\n'+src+'\nint main(void){assert(sum_prefix(0)==0);assert(sum_prefix(3)==3);assert(sum_prefix(4)==6);assert(sum_prefix(65536)==2147450880);return 0;}')
  subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',str(p/'loop.c'),'-o',str(p/'loop')],check=True)
  subprocess.run([str(p/'loop')],check=True)

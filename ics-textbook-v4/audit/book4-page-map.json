@@ -1,0 +1,468 @@
+{
+  "isbn": "9787111738824",
+  "page_source": "https://www.cmpedu.com/books/book/5607911.htm",
+  "printed_range_rule": "Official section start through next section start minus one; locate section, not exact paragraph.",
+  "pdf_kind": "1-based file pages; duplicate parent sections occur in ebook, use first complete copy.",
+  "sections": {
+    "4.1.1": [
+      "122–124",
+      "647–649",
+      "64–79、88–103"
+    ],
+    "4.1.2": [
+      "125–126",
+      "649–652",
+      "82、86–87、91"
+    ],
+    "4.1.3": [
+      "127–131",
+      "652–656",
+      "74–79、93–103"
+    ],
+    "4.1.4": [
+      "132",
+      "656–659",
+      "78–79、91、111"
+    ],
+    "4.1.5": [
+      "133–135",
+      "659–662",
+      "83–87"
+    ],
+    "4.1.6": [
+      "136–141",
+      "662–669",
+      "164–174、176–180"
+    ],
+    "4.1.7": [
+      "142",
+      "669",
+      "105、175、178–179"
+    ],
+    "4.2.1": [
+      "143–146",
+      "831–835",
+      "40–48、106–108"
+    ],
+    "4.2.2": [
+      "147–149",
+      "835–838",
+      "109–112"
+    ],
+    "4.3.1": [
+      "150–154",
+      "855–860",
+      "116–123"
+    ],
+    "4.3.2": [
+      "155–157",
+      "860–862",
+      "124–128"
+    ],
+    "4.3.3": [
+      "158–159",
+      "862–865",
+      "129–134"
+    ],
+    "4.3.4": [
+      "160–162",
+      "865–868",
+      "135–149"
+    ],
+    "4.4.1": [
+      "163–164",
+      "925–926",
+      "80–81、151–155"
+    ],
+    "4.4.2": [
+      "165–166",
+      "926–929",
+      "156–159"
+    ],
+    "4.4.3": [
+      "167–169",
+      "929–932",
+      "160–163（自学）"
+    ]
+  },
+  "lecture_sections": [
+    {
+      "file": "03-function-call",
+      "heading": "先让调用者提出需求",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "给处理器安排几个能看见的位置",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "为什么需要一块能后进先出的工作区",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "从第一条准备指令走到add入口",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "为局部工作选择一个稳定参照",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "真正执行加法，而不把地址当成数值",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "返回需要两次恢复，随后才能ret",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "从一轮调用理解寄存器保护",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "变量的作用域与生存期——名字可见与对象存在分别检查",
+      "textbook": "4.1.2",
+      "printed_pages": "125–126",
+      "pdf_pages": "649–652",
+      "ppt": "82、86–87、91",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "按地址传参，多了一次沿地址访问",
+      "textbook": "4.1.3",
+      "printed_pages": "127–131",
+      "pdf_pages": "652–656",
+      "ppt": "74–79、93–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "递归何以不覆盖外层尚未用完的值",
+      "textbook": "4.1.4",
+      "printed_pages": "132",
+      "pdf_pages": "656–659",
+      "ppt": "78–79、91、111",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "非静态局部变量的分配——由实际偏移恢复布局",
+      "textbook": "4.1.5",
+      "printed_pages": "133–135",
+      "pdf_pages": "659–662",
+      "ppt": "83–87",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "把约定迁移到64位时，先改交接位置",
+      "textbook": "4.1.6",
+      "printed_pages": "136–141",
+      "pdf_pages": "662–669",
+      "ppt": "164–174、176–180",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "64位函数调用先改参数位置",
+      "textbook": "4.1.6",
+      "printed_pages": "136–141",
+      "pdf_pages": "662–669",
+      "ppt": "164–174、176–180",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "浮点参数的交接——按类型分配两组寄存器",
+      "textbook": "4.1.7",
+      "printed_pages": "142",
+      "pdf_pages": "669",
+      "ppt": "105、175、178–179",
+      "status": "传参规则需掌握；例4.6完整AVX展开：PPT未涉及，本课程无需掌握"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "独立练习",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-function-call",
+      "heading": "离开本篇前，自己讲回一次",
+      "textbook": "4.1.1",
+      "printed_pages": "122–124",
+      "pdf_pages": "647–649",
+      "ppt": "64–79、88–103",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "程序在哪一步需要选择",
+      "textbook": "4.2.1",
+      "printed_pages": "143–146",
+      "pdf_pages": "831–835",
+      "ppt": "40–48、106–108",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "比较为何写成一次不存结果的减法",
+      "textbook": "4.2.1",
+      "printed_pages": "143–146",
+      "pdf_pages": "831–835",
+      "ppt": "40–48、106–108",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "把两条互斥路径真正接起来",
+      "textbook": "4.2.1",
+      "printed_pages": "143–146",
+      "pdf_pages": "831–835",
+      "ppt": "40–48、106–108",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "短路求值决定哪些内存访问根本不能发生",
+      "textbook": "4.2.1",
+      "printed_pages": "143–146",
+      "pdf_pages": "831–835",
+      "ppt": "40–48、106–108",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "跳转表也必须先保证索引合法",
+      "textbook": "4.2.1",
+      "printed_pages": "143–146",
+      "pdf_pages": "831–835",
+      "ppt": "40–48、106–108",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "循环增加了回到旧位置的边",
+      "textbook": "4.2.2",
+      "printed_pages": "147–149",
+      "pdf_pages": "835–838",
+      "ppt": "109–112",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "从一轮轨迹提炼“每次回到检查点都成立的事实”",
+      "textbook": "4.2.2",
+      "printed_pages": "147–149",
+      "pdf_pages": "835–838",
+      "ppt": "109–112",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "反过来看一段陌生汇编",
+      "textbook": "4.2.2",
+      "printed_pages": "147–149",
+      "pdf_pages": "835–838",
+      "ppt": "109–112",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "独立练习",
+      "textbook": "4.2.2",
+      "printed_pages": "147–149",
+      "pdf_pages": "835–838",
+      "ppt": "109–112",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-control-flow",
+      "heading": "本篇解决了什么",
+      "textbook": "4.2.2",
+      "printed_pages": "147–149",
+      "pdf_pages": "835–838",
+      "ppt": "109–112",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "数组名怎样成为第一个元素的地址",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "连续二维数组的每一行有自己的跨度",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "指针数组需要多一次读地址",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "数组遍历的边界——在读取之前检查下标",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "结构体偏移来自大小、对齐和顺序",
+      "textbook": "4.3.2",
+      "printed_pages": "155–157",
+      "pdf_pages": "860–862",
+      "ppt": "124–128",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "联合体的共享存储——先看成员是否同时需要",
+      "textbook": "4.3.3",
+      "printed_pages": "158–159",
+      "pdf_pages": "862–865",
+      "ppt": "129–134",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "数据对齐与填充——逐成员计算真实偏移",
+      "textbook": "4.3.4",
+      "printed_pages": "160–162",
+      "pdf_pages": "865–868",
+      "ppt": "135–149",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "数组越界与对象生存期——地址存在还不够",
+      "textbook": "4.4.1",
+      "printed_pages": "163–164",
+      "pdf_pages": "925–926",
+      "ppt": "80–81、151–155",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "缓冲区溢出与调用现场——越界写会影响谁",
+      "textbook": "4.4.2",
+      "printed_pages": "165–166",
+      "pdf_pages": "926–929",
+      "ppt": "156–159",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "缓冲区溢出防范——先修访问，再理解三类保护",
+      "textbook": "4.4.3",
+      "printed_pages": "167–169",
+      "pdf_pages": "929–932",
+      "ppt": "160–163（自学）",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "练习：从新布局推地址",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "练习一：矩阵位置（教材第四章数组访问题同级改编）",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "练习二：指针数组的访问次数",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "练习三：布局变式（教材第四章结构体题同级改编）",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    },
+    {
+      "file": "03-objects",
+      "heading": "练习四：未提示方法的诊断",
+      "textbook": "4.3.1",
+      "printed_pages": "150–154",
+      "pdf_pages": "855–860",
+      "ppt": "116–123",
+      "status": "需掌握（PPT已涉及）"
+    }
+  ]
+}
