@@ -1,6 +1,16 @@
 # 读到这里你就可以去做教材第四章第5题了！
 
-题意：`void product(num_type *d, unsigned x, num_type y) { *d=x*y; }`采用下面IA-32函数体。逐条注释并判断`num_type`。参数沿用题设的带`EBP`栈帧布局。
+> 教材原题 · 第四章习题 · 附件PDF第959–960页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。
+
+5. 假设函数`product()`的C语言代码如下，其中`num_type`是用`typedef`声明的数据类型。
+
+```c-template
+1  void product(num_type *d, unsigned x, num_type y) {
+2      *d = x*y;
+3  }
+```
+
+函数`product()`的过程体对应的IA-32汇编代码如下：
 
 ```asm
 movl 12(%ebp), %eax
@@ -12,6 +22,8 @@ movl 8(%ebp), %ecx
 movl %eax, (%ecx)
 movl %edx, 4(%ecx)
 ```
+
+给出上述每条汇编指令的注释，并说明`num_type`是什么类型。
 
 ## 提示1：先确定分析对象
 

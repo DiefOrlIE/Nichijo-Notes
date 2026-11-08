@@ -7,7 +7,7 @@ chapters=[(2,'数据的机器级表示与处理','让每一种位串都有解释
 course=[dict(number=n,title=t,subtitle=sub,book=b,files=fs) for n,t,sub,b,fs in chapters]
 (p/'course.json').write_text(json.dumps(course,ensure_ascii=False,indent=2))
 def include_homework(text):
- return re.sub(r'\[[^\]\n]+\]\(\.\./homework/([^/)]+)\.md\)',lambda m:(p/'homework'/(m[1]+'.md')).read_text(),text)
+ return re.sub(r'\[[^\]\n]+\]\(\.\./homework/([^/)]+)\.md\)',lambda m:(p/'homework'/(m[1]+'.md')).read_text().replace('../assets/homework/','assets/homework/'),text)
 combined=['# ICS教材式自学讲义 V4\n\n范围：课程PPT第二至第五章，保留原课程编号，所以从2开始，第三章之后含第四章与第五章。先修只要求C变量、数组、条件、循环和简单函数；指针、汇编和系统概念在正文建立。按顺序初学，先独立完成习题，再看提示和答案。\n\n本稿以各章文字审读与指定核验记录为依据；教材第五章跟读修订于2026-11-08冻结；未经真实初学者试读。\n\n## 总目录\n']
 for c in course:
  combined.append(f'第{c["number"]}章 {c["title"]}——{c["subtitle"]}\n')
@@ -31,6 +31,7 @@ if guide5.exists():
  book=[guide5.read_text()]+[(p/'manuscripts'/(stem+'.md')).read_text() for stem in ['04-symbols','04-archives','04-relocation','04-dynamic','05-execution']]
  (p/'book5-manuscript.md').write_text('\n\n'.join(book))
 hashes={str(f.relative_to(p)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (p/'manuscripts').glob('*.md')}
+for f in (p/'assets/homework').glob('*.png'):hashes[str(f.relative_to(p))]=hashlib.sha256(f.read_bytes()).hexdigest()
 for f in (p/'homework').glob('*.md'):hashes[str(f.relative_to(p))]=hashlib.sha256(f.read_bytes()).hexdigest()
 if guide.exists():hashes['book4-guide.md']=hashlib.sha256(guide.read_bytes()).hexdigest()
 if guide5.exists():hashes['book5-guide.md']=hashlib.sha256(guide5.read_bytes()).hexdigest()

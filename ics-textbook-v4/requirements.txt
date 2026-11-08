@@ -6,3 +6,6 @@ Pygments>=2.18,<3
 
 # Optional independent IA-32 homework verifier
 unicorn>=2.1,<3
+
+# Original textbook figure verification
+PyMuPDF>=1.24,<2

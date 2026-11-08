@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="ICS教材式自学讲义：数据表示、机器级程序、链接与执行。先完整文字教学，再构建网页。"><title>教材第四章 · ICS 跟读讲义</title><link rel="icon" href="data:,"><link rel="stylesheet" href="reader.css?v=homework-1"><script defer src="reader.js?v=homework-1"></script></head><body><header><button id="menu" aria-expanded="false" aria-controls="nav">目录</button><a href="../">Nichijo Notes</a><label class="width-control" for="reading-width">正文宽度<span class="number-stepper"><input id="reading-width" type="number" min="720" max="1440" step="20" value="960" aria-label="正文宽度"><span class="stepper-buttons"><button type="button" data-step-target="reading-width" data-step="1" aria-label="增大正文宽度" title="增大正文宽度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 6 4-4 4 4"/></svg></button><button type="button" data-step-target="reading-width" data-step="-1" aria-label="减小正文宽度" title="减小正文宽度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 2 4 4 4-4"/></svg></button></span></span><span class="control-unit">px</span><output hidden id="reading-width-value" for="reading-width">960px</output></label><label class="size-control" for="font-size">字号<span class="number-stepper"><input id="font-size" type="number" min="16" max="24" step="1" value="19" aria-label="正文字号"><span class="stepper-buttons"><button type="button" data-step-target="font-size" data-step="1" aria-label="增大字号" title="增大字号"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 6 4-4 4 4"/></svg></button><button type="button" data-step-target="font-size" data-step="-1" aria-label="减小字号" title="减小字号"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 2 4 4 4-4"/></svg></button></span></span><span class="control-unit">px</span><output hidden id="font-size-value" for="font-size">19px</output></label><label class="tone-control" for="page-tone">亮度<span class="number-stepper"><input id="page-tone" type="number" min="80" max="100" step="1" value="95" aria-label="亮色页面亮度"><span class="stepper-buttons"><button type="button" data-step-target="page-tone" data-step="1" aria-label="增大亮度" title="增大亮度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 6 4-4 4 4"/></svg></button><button type="button" data-step-target="page-tone" data-step="-1" aria-label="减小亮度" title="减小亮度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 2 4 4 4-4"/></svg></button></span></span><span class="control-unit">%</span></label><label class="term-style-control" for="term-style">术语标识<span class="term-select"><select id="term-style" aria-label="术语标识方案"><option value="a">A · 悬停</option><option value="b" selected>B · 淡点线</option><option value="c">C · 淡底色</option></select></span></label><button id="theme">夜间</button><button id="term-open">术语</button></header><nav id="nav" aria-label="章节目录"><a href="#start">阅读起点</a><a href="book4.html#start">教材第四章 · 按页跟读与作业</a><a href="book5.html#start">教材第五章 · 按页跟读与习题</a><a href="#start">教材第四章跟读目录与作业</a><a href="#unit-03-function-call-s1">4.1.1 IA-32的过程调用约定</a><a href="#unit-03-function-call-s9">4.1.2 变量的作用域和生存期</a><a href="#unit-03-function-call-s10">4.1.3 按值传递参数和按地址传递参数</a><a href="#unit-03-function-call-s11">4.1.4 递归过程调用</a><a href="#unit-03-function-call-s12">4.1.5 非静态局部变量的存储分配</a><a href="#unit-03-function-call-s13">4.1.6 x86-64的过程调用</a><a href="#unit-03-function-call-s15">4.1.7 x86-64过程的浮点参数传递</a><a href="#unit-03-control-flow-s1">4.2.1 选择语句的机器级表示</a><a href="#unit-03-control-flow-s6">4.2.2 循环语句的机器级表示</a><a href="#unit-03-objects-s1">4.3.1 数组的分配和访问</a><a href="#unit-03-objects-s5">4.3.2 结构体数据的分配和访问</a><a href="#unit-03-objects-s6">4.3.3 联合体数据的分配和访问</a><a href="#unit-03-objects-s7">4.3.4 数据的对齐</a><a href="#unit-03-objects-s8">4.4.1 数组的越界访问</a><a href="#unit-03-objects-s9">4.4.2 缓冲区溢出攻击</a><a href="#unit-03-objects-s10">4.4.3 对缓冲区溢出攻击的防范</a><a href="index.html#chapter-3">完整讲义与先修回查</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-manuscript.md">完整文字稿</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/audit/book4-followalong-review.md">文字审读记录</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-guide.md">教材习题与正文对照</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/STYLE-GUIDE.md">固定网页样式规范</a><a href="../ics-readable-v3/">旧连续版</a></nav><button class="width-handle left" id="width-left" type="button" aria-label="拖动左边缘调整正文宽度" title="拖动调整宽度；方向键微调"></button><button class="width-handle right" id="width-right" type="button" aria-label="拖动右边缘调整正文宽度" title="拖动调整宽度；方向键微调"></button><main id="main"><section id="start" data-anchor><h1>教材第4章 程序的机器级表示</h1><p class="chapter-lead">对着课本逐节学习</p>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="ICS教材式自学讲义：数据表示、机器级程序、链接与执行。先完整文字教学，再构建网页。"><title>教材第四章 · ICS 跟读讲义</title><link rel="icon" href="data:,"><link rel="stylesheet" href="reader.css?v=original-questions-1"><script defer src="reader.js?v=homework-1"></script></head><body><header><button id="menu" aria-expanded="false" aria-controls="nav">目录</button><a href="../">Nichijo Notes</a><label class="width-control" for="reading-width">正文宽度<span class="number-stepper"><input id="reading-width" type="number" min="720" max="1440" step="20" value="960" aria-label="正文宽度"><span class="stepper-buttons"><button type="button" data-step-target="reading-width" data-step="1" aria-label="增大正文宽度" title="增大正文宽度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 6 4-4 4 4"/></svg></button><button type="button" data-step-target="reading-width" data-step="-1" aria-label="减小正文宽度" title="减小正文宽度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 2 4 4 4-4"/></svg></button></span></span><span class="control-unit">px</span><output hidden id="reading-width-value" for="reading-width">960px</output></label><label class="size-control" for="font-size">字号<span class="number-stepper"><input id="font-size" type="number" min="16" max="24" step="1" value="19" aria-label="正文字号"><span class="stepper-buttons"><button type="button" data-step-target="font-size" data-step="1" aria-label="增大字号" title="增大字号"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 6 4-4 4 4"/></svg></button><button type="button" data-step-target="font-size" data-step="-1" aria-label="减小字号" title="减小字号"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 2 4 4 4-4"/></svg></button></span></span><span class="control-unit">px</span><output hidden id="font-size-value" for="font-size">19px</output></label><label class="tone-control" for="page-tone">亮度<span class="number-stepper"><input id="page-tone" type="number" min="80" max="100" step="1" value="95" aria-label="亮色页面亮度"><span class="stepper-buttons"><button type="button" data-step-target="page-tone" data-step="1" aria-label="增大亮度" title="增大亮度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 6 4-4 4 4"/></svg></button><button type="button" data-step-target="page-tone" data-step="-1" aria-label="减小亮度" title="减小亮度"><svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="m2 2 4 4 4-4"/></svg></button></span></span><span class="control-unit">%</span></label><label class="term-style-control" for="term-style">术语标识<span class="term-select"><select id="term-style" aria-label="术语标识方案"><option value="a">A · 悬停</option><option value="b" selected>B · 淡点线</option><option value="c">C · 淡底色</option></select></span></label><button id="theme">夜间</button><button id="term-open">术语</button></header><nav id="nav" aria-label="章节目录"><a href="#start">阅读起点</a><a href="book4.html#start">教材第四章 · 按页跟读与作业</a><a href="book5.html#start">教材第五章 · 按页跟读与习题</a><a href="#start">教材第四章跟读目录与作业</a><a href="#unit-03-function-call-s1">4.1.1 IA-32的过程调用约定</a><a href="#unit-03-function-call-s9">4.1.2 变量的作用域和生存期</a><a href="#unit-03-function-call-s10">4.1.3 按值传递参数和按地址传递参数</a><a href="#unit-03-function-call-s11">4.1.4 递归过程调用</a><a href="#unit-03-function-call-s12">4.1.5 非静态局部变量的存储分配</a><a href="#unit-03-function-call-s13">4.1.6 x86-64的过程调用</a><a href="#unit-03-function-call-s15">4.1.7 x86-64过程的浮点参数传递</a><a href="#unit-03-control-flow-s1">4.2.1 选择语句的机器级表示</a><a href="#unit-03-control-flow-s6">4.2.2 循环语句的机器级表示</a><a href="#unit-03-objects-s1">4.3.1 数组的分配和访问</a><a href="#unit-03-objects-s5">4.3.2 结构体数据的分配和访问</a><a href="#unit-03-objects-s6">4.3.3 联合体数据的分配和访问</a><a href="#unit-03-objects-s7">4.3.4 数据的对齐</a><a href="#unit-03-objects-s8">4.4.1 数组的越界访问</a><a href="#unit-03-objects-s9">4.4.2 缓冲区溢出攻击</a><a href="#unit-03-objects-s10">4.4.3 对缓冲区溢出攻击的防范</a><a href="index.html#chapter-3">完整讲义与先修回查</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-manuscript.md">完整文字稿</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/audit/book4-followalong-review.md">文字审读记录</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-guide.md">教材习题与正文对照</a><a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/STYLE-GUIDE.md">固定网页样式规范</a><a href="../ics-readable-v3/">旧连续版</a></nav><button class="width-handle left" id="width-left" type="button" aria-label="拖动左边缘调整正文宽度" title="拖动调整宽度；方向键微调"></button><button class="width-handle right" id="width-right" type="button" aria-label="拖动右边缘调整正文宽度" title="拖动调整宽度；方向键微调"></button><main id="main"><section id="start" data-anchor><h1>教材第4章 程序的机器级表示</h1><p class="chapter-lead">对着课本逐节学习</p>
 <p>本页对应教材第四章，纸书第122–183页；它在课程PPT中属于第三章。课程第四章《程序的链接》对应教材第五章，请按这个对应关系区分章号。先前讲义的指令与寻址基础仍可在<a href="index.html#chapter-3">完整讲义第三章</a>回查。</p>
 <p>推荐从下表第4.1.1节开始往下读，再完成章末作业。下面的完整讲解沿用唯一Markdown稿源，按过程调用、选择与循环、复杂对象、越界访问的教材次序排列。具体算例仍保留必要的教学展开；同一教材小节分成多个讲解小节时，各小节重复标出同一对照范围，方便随时翻书。</p>
 <p>纸书页码来源：<a href="https://www.cmpedu.com/books/book/5607911.htm">机械工业出版社同ISBN正式目录</a>。附件PDF是重新分页的电子书，且部分父节重复出现；表内PDF页为首次完整内容所在的1基文件页序。纸书范围依据相邻小节的起始页划定，表示小节定位范围，未把电子书分页反推为未经核实的纸书精确段落页。</p>
@@ -112,7 +112,7 @@
 </tbody>
 </table>
 <h2>本次作业：教材第四章习题2、4、5、7、11</h2>
-<p>纸书章末习题整体位于第171–183页。下面给出题号与附件PDF位置，不把PDF图像换页位置误当作纸书题号的精确页码。请先尝试原题；相应知识讲完后，正文会出现“读到这里你就可以去做……”入口，依次展开入手提示、关键推导，最后才显示完整解答与核对。</p>
+<p>纸书章末习题整体位于第171–183页。下面给出题号与附件PDF位置，不把PDF图像换页位置误当作纸书题号的精确页码。正文已附教材原文题目、原题代码和图4.29，请先尝试原题；相应知识讲完后，正文会出现“读到这里你就可以去做……”入口，依次展开入手提示、关键推导，最后才显示完整解答与核对。</p>
 <table>
 <thead>
 <tr>
@@ -402,7 +402,13 @@
 <p>已经知道参数放在栈中的什么位置，就能解释指针参数。考虑<code>void set_to_nine(int *p){*p=9;}</code>。main有一个int变量x，假设x位于地址3000，当前值7。main将地址3000作为参数值传入。在set_to_nine的栈帧里，EBP+8处存放的是3000，而x的7仍在原来的3000处。</p>
 <p>先用<code>movl 8(%ebp),%eax</code>读参数，EAX得到3000。再用<code>movl $9,(%eax)</code>，沿EAX给出的地址找到x，写四字节9。这里有两次不同的内存操作：第一次读“保存地址的参数槽”，第二次写“该地址指向的对象”。若把第二条误写成<code>movl $9,%eax</code>，只会令寄存器改为9，x仍为7。</p>
 <p>从C语义看，函数收到的指针参数本身也是一个副本。执行<code>p=别的地址</code>只修改副本；执行<code>*p=9</code>则修改副本地址所指的原对象。教材把后者称为按地址传递。这个说法方便描述效果，不能据此认为C会把指针形参变量与调用者某个变量自动绑定为同一个对象。</p>
-<section class="homework-ladder" id="homework-book4-q2-1" data-homework="book4-q2-1" data-source="homework/book4-q2-1.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(1)题了！</h4><p>题意：比较按值传递与按地址传递。先尝试用一个调用者变量说明，两种方式各复制什么、函数内的修改影响谁。</p>
+<section class="homework-ladder" id="homework-book4-q2-1" data-homework="book4-q2-1" data-source="homework/book4-q2-1.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(1)题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第958页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="2">
+<li>简单回答下列问题。</li>
+</ol>
+<p>（1）按值传递参数和按地址传递参数两种方式有哪些不同点？</p>
 <details id="homework-book4-q2-1-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>分别画出调用者的对象、被调用者的形参。不要先把“地址传参”理解成两个变量自动变成同一个对象。</p>
 <details id="homework-book4-q2-1-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>设调用者的<code>x=7</code>，地址为3000。普通<code>int v</code>形参得到7；<code>int *p</code>形参得到地址3000。分别判断<code>v=9</code>、<code>p=另一个有效地址</code>、<code>*p=9</code>三种操作的写入目标。</p>
 <details id="homework-book4-q2-1-step3" data-homework-step><summary>完整解答与核对</summary><p>按值传入普通整数时，被调用者获得实参值的副本。修改形参<code>v</code>只改变副本，调用者的<code>x</code>仍为7。</p>
@@ -414,7 +420,17 @@
 <p>IA-32一个通用寄存器通常只能容纳32位，但一个64位整数可用高低两半表示。以下公式采用数学幂记号，<code>2^32</code>表示2的32次方；C中的<code>^</code>仍表示按位异或。设低半<code>yL</code>、高半<code>yH</code>，则其无符号真值为<code>yL+2^32*yH</code>。用32位无符号<code>x</code>乘它，展开得到<code>x*yL+2^32*(x*yH)</code>；只保留结果低64位时，第二项只需要<code>x*yH</code>的低32位贡献。</p>
 <p><code>mull</code>的单个显式操作数与隐含的<code>EAX</code>相乘，把完整64位积放入<code>EDX:EAX</code>，前者是高半、后者是低半。双操作数<code>imull</code>只把低32位写回目的寄存器；乘法低半的位串不随有符号、无符号解释改变，因此需要的宽度决定采用哪种形式。<code>leal (%ecx,%edx),%edx</code>只计算两个寄存器之和，不沿这个和读取内存。</p>
 <p>例如<code>x=3,yL=5,yH=2</code>，先算<code>x*yL=15</code>，得到高半0、低半15；再把<code>x*yH=6</code>并入高半，结果高半6、低半15。通过一个指针保存它时，起始地址写低四字节，地址加4写高四字节。先跟这份分解算一遍，再去读题5的寄存器安排，就能知道每次覆盖了哪个中间量。</p>
-<section class="homework-ladder" id="homework-book4-q5" data-homework="book4-q5" data-source="homework/book4-q5.md" data-anchor><h4>读到这里你就可以去做教材第四章第5题了！</h4><p>题意：<code>void product(num_type *d, unsigned x, num_type y) { *d=x*y; }</code>采用下面IA-32函数体。逐条注释并判断<code>num_type</code>。参数沿用题设的带<code>EBP</code>栈帧布局。</p>
+<section class="homework-ladder" id="homework-book4-q5" data-homework="book4-q5" data-source="homework/book4-q5.md" data-anchor><h4>读到这里你就可以去做教材第四章第5题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第959–960页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="5">
+<li>假设函数<code>product()</code>的C语言代码如下，其中<code>num_type</code>是用<code>typedef</code>声明的数据类型。</li>
+</ol>
+<pre><code class="language-c-template"><span class="tok-mi">1</span><span class="tok-w">  </span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-n">product</span><span class="tok-p">(</span><span class="tok-n">num_type</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">d</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">unsigned</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">num_type</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-mi">2</span><span class="tok-w">      </span><span class="tok-o">*</span><span class="tok-n">d</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-o">*</span><span class="tok-n">y</span><span class="tok-p">;</span>
+<span class="tok-mi">3</span><span class="tok-w">  </span><span class="tok-p">}</span>
+</code></pre>
+<p>函数<code>product()</code>的过程体对应的IA-32汇编代码如下：</p>
 <pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">12</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
 <span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">20</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
 <span class="tok-nf">imull</span><span class="tok-w"> </span><span class="tok-nv">%eax</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
@@ -424,6 +440,7 @@
 <span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%eax</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-nv">%ecx</span><span class="tok-p">)</span>
 <span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">4</span><span class="tok-p">(</span><span class="tok-nv">%ecx</span><span class="tok-p">)</span>
 </code></pre>
+<p>给出上述每条汇编指令的注释，并说明<code>num_type</code>是什么类型。</p>
 <details id="homework-book4-q5-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p><code>d</code>与<code>x</code>各占一个四字节参数槽。请检查<code>y</code>占了几个槽，以及通过<code>d</code>一共写了几字节。<code>mull</code>隐含的输入和输出寄存器必须一起记录。</p>
 <details id="homework-book4-q5-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>先采用数学幂记号，<code>2^32</code>表示2的32次方；这里没有执行C的<code>^</code>运算符。写<code>y=yL+2^32*yH</code>。<code>x*yL</code>产生64位高低半，<code>x*yH</code>只取能贡献到最终低64位的部分。第3条的<code>ECX</code>临时积不会被第4条覆盖，但<code>EDX:EAX</code>会被第4条重新产生。</p>
 <details id="homework-book4-q5-step3" data-homework-step><summary>完整解答与核对</summary><p>先按无符号64位解释建立一份完整且对所有输入有定义的答案：<code>typedef unsigned long long num_type;</code>，在题设IA-32模型中它占8字节。<code>d</code>在<code>EBP+8</code>，<code>x</code>在<code>+12</code>，<code>y</code>低32位在<code>+16</code>、高32位在<code>+20</code>；末尾两次四字节写入共同保存一个64位对象。</p>
@@ -486,7 +503,13 @@
 </code></pre>
 <p>先检查0才能决定是否继续调用，因此0不会再进入n−1的路径。递归返回值只是内层的结果，外层仍需乘自己的n。以3为输入，乘法在返回方向依次完成1乘1、2乘1、3乘2。若错误把return改成单纯factorial(n−1)，所有非负输入都会返回1，说明调用层数正确还不足以实现原计算。</p>
 <p>朴素实现对输入n产生n+1层调用，总计算次数与n成正比，辅助栈空间也与n成正比。这里复杂度的规模参数是n，不是整数的位数。固定宽度返回类型还限制结果：例如32位有符号int的12!可表示，13!已超过其上界。递归能终止不代表结果在目标类型中一定可表示。</p>
-<section class="homework-ladder" id="homework-book4-q2-2" data-homework="book4-q2-2" data-source="homework/book4-q2-2.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(2)题了！</h4><p>题意：为什么递归深度较大时，时间和空间开销都会较大？请结合刚才的逐层调用与返回过程作答。</p>
+<section class="homework-ladder" id="homework-book4-q2-2" data-homework="book4-q2-2" data-source="homework/book4-q2-2.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(2)题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第958页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="2">
+<li>简单回答下列问题。</li>
+</ol>
+<p>（2）为什么在递归深度较深时递归调用的时间开销和空间开销都会较大？</p>
 <details id="homework-book4-q2-2-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>分开计算调用次数与同一时刻尚未返回的调用层数。每一层究竟还需要保留什么？</p>
 <details id="homework-book4-q2-2-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>用<code>factorial(3)</code>列出3、2、1、0四层。向下有四次进入，向上有三次乘法；在最深处，外层返回位置和待用参数还不能全部丢弃。</p>
 <details id="homework-book4-q2-2-step3" data-homework-step><summary>完整解答与核对</summary><p>普通、未消除递归的实现中，每次调用都要完成参数交接、保存返回位置及必要现场，返回时还要恢复现场并继续外层工作。这些动作带来相对于直接在当前层计算的调用管理开销。</p>
@@ -498,7 +521,13 @@
 <p class="textbook-ref">纸书 133–135 页 · PPT 第3章 83–87 页 · 需掌握</p>
 <p>前面add为result留了EBP−4这个位置，这只是本例选定的布局。C没有要求多个独立局部对象按声明顺序、连续或按地址大小排队；优化也可以让只需暂存数值的变量留在寄存器。查看一份汇编时，应逐条记录每个被访问偏移及宽度，再推断对象，不能先按源码顺序画好栈图并要求编译器服从。</p>
 <p>例如某函数只访问−4(%ebp)和−12(%ebp)两个四字节槽，已知它们的起点相差8字节，并不能据此把中间−8的位置称为某个已声明变量，它可能是对齐空间或其他临时用途。独立局部对象的地址一般也不能用&lt;或&gt;建立可移植的声明顺序；同一数组内的元素关系才有专门保证。这正是作业题2(3)要求分清的层次。</p>
-<section class="homework-ladder" id="homework-book4-q2-3" data-homework="book4-q2-3" data-source="homework/book4-q2-3.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(3)题了！</h4><p>题意：<code>auto</code>变量怎样分配、通常在哪个存储区，以及对它们的地址作大小比较是否有意义。</p>
+<section class="homework-ladder" id="homework-book4-q2-3" data-homework="book4-q2-3" data-source="homework/book4-q2-3.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(3)题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第958页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="2">
+<li>简单回答下列问题。</li>
+</ol>
+<p>（3）对于<code>auto</code>型变量，编译器如何分配其空间？通常被分配在什么存储区？对于<code>auto</code>型变量地址进行大小比较，是否有意义？为什么？</p>
 <details id="homework-book4-q2-3-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>区分语言规定的生存期与编译器选择的具体位置；两个局部变量的声明顺序并未给出栈偏移。</p>
 <details id="homework-book4-q2-3-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>一个变量可能在寄存器，也可能位于栈槽，未使用时还可能被消除。再分别考虑“两个独立局部对象”和“同一数组的两个元素”。</p>
 <details id="homework-book4-q2-3-step3" data-homework-step><summary>完整解答与核对</summary><p>这里的<code>auto</code>指C中块作用域普通局部对象的自动存储期。对象在相应执行期间建立，离开其生存期后不能继续通过旧地址访问它。常见实现按函数所需空间安排栈帧，进入时一次调整栈指针预留若干槽；优化也可把值保存在寄存器、复用生存期不重叠的槽，或消除不必要的对象。因此“通常在运行时栈”是实现层面的常见安排，不是每个变量都必有独立栈槽的语言保证。</p>
@@ -521,7 +550,18 @@
 <p>a=3、b=5时，先RAX=3，再8，ret返回调用者。参数无需像3.3的32位教学约定那样全部预先压栈。函数没有局部空间需求，也可能不建传统RBP栈帧；call仍会把返回地址放入栈，ret从栈恢复它。追踪方法保持一致，只需按此接口重新填写初始位置。</p>
 <p>调用者还必须满足栈对齐要求。按该ABI常见要求，call执行前RSP为16的倍数；call压入8字节返回地址后，函数入口RSP相对16余8。若被调用函数还要调用其他函数，需要通过分配局部空间等方式安排下一次调用前的对齐。叶函数在规定条件下还可使用RSP以下128字节的red zone区域，课程基础追踪不依赖这项优化。</p>
 <p>类型大小也不能自动统一成64位。该Linux ABI通常int仍4字节，long和指针8字节；Windows常见模型long仍4字节。读结构体或数组时要重新使用平台给出的大小和对齐，第二章与3.5建立的推导步骤仍适用。64位地址空间与某台处理器实际支持的虚拟地址位数也不是同一句话，不能从寄存器64位推断所有64位地址都可直接访问。</p>
-<section class="homework-ladder" id="homework-book4-q4" data-homework="book4-q4" data-source="homework/book4-q4.md" data-anchor><h4>读到这里你就可以去做教材第四章第4题了！</h4><p>题意：恢复<code>operate(int x, int y, int z, int k)</code>中<code>v</code>的表达式；逐条注释以下IA-32函数体，并给出Linux System V AMD64版本及性能比较。建帧、退帧代码在原题中省略。</p>
+<section class="homework-ladder" id="homework-book4-q4" data-homework="book4-q4" data-source="homework/book4-q4.md" data-anchor><h4>读到这里你就可以去做教材第四章第4题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第959页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="4">
+<li>假设函数<code>operate()</code>的部分C语言代码如下：</li>
+</ol>
+<pre><code class="language-c-template"><span class="tok-mi">1</span><span class="tok-w">  </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">operate</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">z</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">k</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-mi">2</span><span class="tok-w">      </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">v</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">________________</span><span class="tok-p">;</span>
+<span class="tok-mi">3</span><span class="tok-w">      </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">v</span><span class="tok-p">;</span>
+<span class="tok-mi">4</span><span class="tok-w">  </span><span class="tok-p">}</span>
+</code></pre>
+<p>以下IA-32汇编代码用来实现第2行语句的功能：</p>
 <pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">12</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
 <span class="tok-nf">sall</span><span class="tok-w"> </span><span class="tok-no">$8</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
 <span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">8</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
@@ -532,6 +572,9 @@
 <span class="tok-nf">addl</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
 <span class="tok-nf">subl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
 </code></pre>
+<p>回答下列问题或完成下列任务。</p>
+<p>（1）写出每条汇编指令的注释，并填写<code>operate()</code>函数中缺失的部分。</p>
+<p>（2）给出函数<code>operate()</code>对应的x86-64汇编代码，并和IA-32汇编代码进行性能比较。</p>
 <details id="homework-book4-q4-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>先抄参数槽：<code>x</code>在<code>EBP+8</code>，<code>y</code>在<code>+12</code>，<code>z</code>在<code>+16</code>，<code>k</code>在<code>+20</code>。AT&amp;T的双操作数顺序为源、目的，最后一条尤其要按目的减源读。</p>
 <details id="homework-book4-q4-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>第5条之后<code>EAX</code>保存<code>x*k</code>的低32位。第8条之后<code>EDX</code>保存<code>(z&amp;65520)+(y&lt;&lt;8)</code>的低32位。最后的被减数仍在<code>EAX</code>，不能把两个表达式颠倒。</p>
 <details id="homework-book4-q4-step3" data-homework-step><summary>完整解答与核对</summary><p>逐条结果如下；机器层面的32位算术保留低32位。</p>
@@ -600,7 +643,16 @@
 </details></details></details></section>
 <h4>作业准备：把参数位置与访问宽度分开迁移</h4>
 <p>反推类型时分别记录读宽度、扩展方式和写宽度。<code>movsbw</code>从8位符号扩展到16位，<code>movzwl</code>从16位零扩展到32位；经过<code>movw</code>沿指针写回的对象仍是两字节。把平台换成64位只改变指针宽度与交接位置，不会让这个短整数对象自动变成八字节。若返回表达式乘两个<code>unsigned short</code>，本课程32位<code>int</code>模型下它们先提升为<code>int</code>，需要继续检查乘法可表示范围。题11会把这几种宽度放在一起检验。</p>
-<section class="homework-ladder" id="homework-book4-q11" data-homework="book4-q11" data-source="homework/book4-q11.md" data-anchor><h4>读到这里你就可以去做教材第四章第11题了！</h4><p>题意：函数有参数<code>a,b,c,p</code>，C函数体为<code>*p=a; return b*c;</code>。根据下面IA-32代码推断参数类型、次序、返回信息，再给出Linux System V AMD64版本。原题没有给调用点或完整类型声明。</p>
+<section class="homework-ladder" id="homework-book4-q11" data-homework="book4-q11" data-source="homework/book4-q11.md" data-anchor><h4>读到这里你就可以去做教材第四章第11题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第962–963页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="11">
+<li>已知C语言函数<code>test()</code>的入口参数有<code>a</code>、<code>b</code>、<code>c</code>和<code>p</code>，过程体代码如下：</li>
+</ol>
+<pre><code class="language-c-template"><span class="tok-o">*</span><span class="tok-n">p</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">;</span>
+<span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-o">*</span><span class="tok-n">c</span><span class="tok-p">;</span>
+</code></pre>
+<p>函数<code>test()</code>过程体对应的IA-32汇编代码如下：</p>
 <pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">20</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
 <span class="tok-nf">movsbw</span><span class="tok-w"> </span><span class="tok-mi">8</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%ax</span>
 <span class="tok-nf">movw</span><span class="tok-w"> </span><span class="tok-nv">%ax</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-nv">%edx</span><span class="tok-p">)</span>
@@ -608,6 +660,9 @@
 <span class="tok-nf">movzwl</span><span class="tok-w"> </span><span class="tok-mi">16</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
 <span class="tok-nf">mull</span><span class="tok-w"> </span><span class="tok-nv">%ecx</span>
 </code></pre>
+<p>完成下列任务。</p>
+<p>（1）写出函数<code>test()</code>的原型，以给出返回参数的类型以及入口参数<code>a</code>、<code>b</code>、<code>c</code>和<code>p</code>的类型和顺序。</p>
+<p>（2）写出对应的x86-64汇编代码。</p>
 <details id="homework-book4-q11-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>把读宽度、扩展方式、写宽度分别标出来：<code>movsbw</code>把1字节按符号扩展到2字节，<code>movzwl</code>把2字节补零到4字节。第一个<code>movl</code>读出的是指针值，随后<code>movw</code>写入的对象只有2字节。</p>
 <details id="homework-book4-q11-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>按<code>EBP+8,+12,+16,+20</code>先确定<code>a,b,c,p</code>顺序。再考虑窄整数的C整数提升：32位<code>int</code>可以表示<code>unsigned short</code>的全部值，故<code>b*c</code>先按<code>int</code>运算。乘法指令的名字不能单独还原整个函数的返回声明。</p>
 <details id="homework-book4-q11-step3" data-homework-step><summary>完整解答与核对</summary><p>按题目给出的访问方式，最直接的一组参数解释是：<code>a</code>为<code>signed char</code>，<code>b,c</code>为<code>unsigned short</code>，<code>p</code>为<code>short *</code>，顺序为<code>a,b,c,p</code>。在本课程Linux默认有符号<code>char</code>模型中，<code>char a</code>也能表达同一行为；显式写<code>signed char</code>可消除默认符号性差异。</p>
@@ -730,7 +785,16 @@
 <p>一种教学实现先在32位无符号模型里计算index=(unsigned)x−2u，再检查index&gt;2u。这里先转换为无符号再减，避免在C中对INT_MIN直接执行有符号减2。跳转表三项依次保存L2、L3、L4的代码地址；检查通过后才按index读取表项并间接跳转，每个标号写入自己的返回值，再汇入公共返回路径。</p>
 <p>逐个走边界：x=2得到index=0，读第一项L2，结果10；x=4得到2，读第三项L4，结果30；x=5得到3，超范围走default；x=1得到FFFFFFFFH，无符号大于2，也走default；x为INT_MIN时减法依无符号规则保存7FFFFFFEH，同样超范围。这样上下两端都被同一检查排除，任何非法索引都没有机会先读取跳转表。</p>
 <p>编译器也可以选比较链，甚至把返回值放入数据表，而不使用代码地址跳转表。选择取决于case稠密程度、目标与优化；switch的源语义并未规定必须生成哪一种。反汇编时必须从实际加载的是什么、间接跳到哪里以及范围检查，重建对应行为。</p>
-<section class="homework-ladder" id="homework-book4-q7" data-homework="book4-q7" data-source="homework/book4-q7.md" data-anchor><h4>读到这里你就可以去做教材第四章第7题了！</h4><p>题意：根据图4.29填写<code>func(int x,int y)</code>的C框架：先初始化<code>z</code>，再有一个含内层<code>if/else</code>的分支，以及一个<code>else if</code>，最后返回<code>z</code>。原题函数体如下。</p>
+<section class="homework-ladder" id="homework-book4-q7" data-homework="book4-q7" data-source="homework/book4-q7.md" data-anchor><h4>读到这里你就可以去做教材第四章第7题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第960–961页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="7">
+<li>已知函数<code>func()</code>的C语言代码框架及其过程体对应的IA-32汇编代码如图4.29所示，根据对应的汇编代码填写C语言代码中缺失的表达式。</li>
+</ol>
+<p><a href="assets/homework/book4-figure-4-29.png"><img src="assets/homework/book4-figure-4-29.png" width="890" height="634" alt="图4.29 题7图：教材原图，左侧C语言填空框架，右侧19行IA-32汇编代码" ></a></p>
+<blockquote>
+<p>图中汇编文字转录，供复制与逐行跟踪；上方原图保留完整填空框架。</p>
+</blockquote>
 <pre><code class="language-asm"><span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">8</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
 <span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-mi">12</span><span class="tok-p">(</span><span class="tok-nv">%ebp</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-nv">%edx</span>
 <span class="tok-nf">cmpl</span><span class="tok-w"> </span><span class="tok-no">$-100</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-nv">%eax</span>
@@ -880,7 +944,13 @@
 <p>从偏移0开始放tag，占一个字节，下一空位偏移1。value要求4字节对齐，所以偏移1、2、3留作填充，value从4开始占到7。code要求2字节对齐，偏移8已满足，放8、9。成员结束到偏移10，但若数组中下一条记录紧接其后，下一条的value也应对齐，因此结构体总大小向4的倍数补齐为12，末尾10、11也是填充。若对象起点6000，value地址6004、code地址6008；Record数组相邻对象起点差12。</p>
 <p>因此读<code>movl 4(%eax),%edx</code>，在已知EAX指向此Record的前提下才可解释为读value。缺少类型与布局信息时，同样指令也可能访问数组第二项或别的数据。反汇编恢复类型通常只能提出受约束的候选，需要继续结合其他访问宽度、步长和源接口判断。</p>
 <p>若调整为int value、short code、char tag，在上述约定中依次占0至3、4至5、6，末尾补到8。减少填充可能节省空间，但改变布局会影响文件格式、二进制接口及已有代码，不能随意改动跨模块共享的数据约定。现代64位ABI的long、指针及double对齐可能不同，应按题目给定的大小和对齐重算。</p>
-<section class="homework-ladder" id="homework-book4-q2-4" data-homework="book4-q2-4" data-source="homework/book4-q2-4.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(4)题了！</h4><p>题意：为什么数据最好按对齐方式存放？请用跨边界访问解释，不只背“提高效率”。</p>
+<section class="homework-ladder" id="homework-book4-q2-4" data-homework="book4-q2-4" data-source="homework/book4-q2-4.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(4)题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第958页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="2">
+<li>简单回答下列问题。</li>
+</ol>
+<p>（4）为什么数据在存储器中最好按对齐方式存放？</p>
 <details id="homework-book4-q2-4-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>设硬件一次按8字节边界取得一个传送块。四字节对象从1004开始和从1006开始，分别覆盖哪些块？</p>
 <details id="homework-book4-q2-4-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>1000–1007是一个块，1008–1015是下一个块。再想一想：C结构体中加入填充，如何保证数组里下一对象的成员仍满足相应对齐？</p>
 <details id="homework-book4-q2-4-step3" data-homework-step><summary>完整解答与核对</summary><p>四字节对象从1004开始，占1004–1007，完整落入一个8字节块；从1006开始则占1006–1009，跨越两个块。跨边界时，系统可能需要更多内部访问与组合工作，对齐有助于避免这类额外开销，并简化地址和数据通路处理。</p>
@@ -900,7 +970,13 @@
 <p>程序层面首先检查输入长度、对象容量与结束符，使用能够明确表达容量的接口，避免把未受限输入写入固定大小数组。保护机制不能让错误的越界访问获得有效语义，应先修复写入范围。作业题2(5)还要求理解编译器和操作系统的常见保护。</p>
 <p>地址空间布局随机化ASLR让若干区域的起点在运行间变化，使依赖固定地址的预测更困难。栈保护在重要栈内容与缓冲区之间安排检测值，返回前检查它是否被改动，常称金丝雀值；异常时终止，避免继续沿被破坏的现场返回。不可执行页限制则让作为数据使用的栈、堆页面不能直接执行其中字节。这三者分别增加地址预测难度、检测特定栈破坏、限制数据页执行，作用层次不同，均不保证消除一切越界或攻击。</p>
 <p>这些内容在PPT第160–163页明确列为自学，而且本次作业题2(5)要求回答，故仍需掌握，不能因为标有“自学”就跳过。更深入的攻击构造不列为本次作业的新增要求。</p>
-<section class="homework-ladder" id="homework-book4-q2-5" data-homework="book4-q2-5" data-source="homework/book4-q2-5.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(5)题了！</h4><p>题意：列举防止缓冲区溢出攻击的基本方法，并说明各方法控制哪一个环节。</p>
+<section class="homework-ladder" id="homework-book4-q2-5" data-homework="book4-q2-5" data-source="homework/book4-q2-5.md" data-anchor><h4>读到这里你就可以去做教材第四章第2(5)题了！</h4><blockquote>
+<p>教材原题 · 第四章习题 · 附件PDF第958页。保留原题表述、代码与填空；代码中的空白线长度按网页排版显示。</p>
+</blockquote>
+<ol start="2">
+<li>简单回答下列问题。</li>
+</ol>
+<p>（5）有哪几种防止缓冲区溢出攻击的基本方法？</p>
 <details id="homework-book4-q2-5-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p>先从写入本身检查容量、输入长度与结束符。再把保护机制分成地址预测、栈破坏检测、执行权限三条路线。</p>
 <details id="homework-book4-q2-5-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>对应本节刚讲过的ASLR、金丝雀值、不可执行页。它们分别能降低什么风险，哪些原始越界错误还需要在程序中修复？</p>
 <details id="homework-book4-q2-5-step3" data-homework-step><summary>完整解答与核对</summary><p>程序首先应检查输入长度、对象容量和字符串结束符，使用能表达并遵守容量的接口，避免未受限地写入。比如8字节字符数组要保存以零结尾的普通单字节字符串，最多可容纳7个字符和一个结束符；容量判断应在写入前完成。</p>
@@ -931,4 +1007,4 @@
 <p>提示：进入函数后，p是哪个类型的对象？</p>
 <p>解答：形参是指针，sizeof p只给指针大小，不能携带整个数组容量。应另传有效长度并保证不超过对象容量；函数据此做访问前边界检查。用长度0、1、4分别测试，可检查修正是否真的依据实参长度工作。</p>
 <p>现在，读函数时可以同时跟踪控制流与数据位置。64位过程调用已在3.3按教材4.1.6集中讲解；需要复查指令背景时可回看3.6。按教材第四章的主线，到这里可以转入章末习题。</p>
-</article><footer>冻结文字版本 00f09ada4cd9ac0e · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-manuscript.md">完整文字稿</a> · <a href="../ics-readable-v3/">旧连续版</a> · <a href="../ics-ch2-ch3/">旧四档版</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>
+</article><footer>冻结文字版本 50c7cd66ac7e6068 · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-manuscript.md">完整文字稿</a> · <a href="../ics-readable-v3/">旧连续版</a> · <a href="../ics-ch2-ch3/">旧四档版</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>

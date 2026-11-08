@@ -1,0 +1,63 @@
+{
+  "source_pdf": "uploaded textbook, 1-based PDF page numbers",
+  "questions": [
+    {
+      "source": "homework/book4-q2-1.md",
+      "pdf_pages": "958",
+      "original_question_markdown_sha256": "61cb852b9a6cede69cfb54486ca041638a4929326368d39cd63b3f4bb47115b3"
+    },
+    {
+      "source": "homework/book4-q2-2.md",
+      "pdf_pages": "958",
+      "original_question_markdown_sha256": "94eeb56094b3eb9fc3bb21a361a50707d6a8d07b91cbc2185a4750279cafe9b8"
+    },
+    {
+      "source": "homework/book4-q2-3.md",
+      "pdf_pages": "958",
+      "original_question_markdown_sha256": "03aa965a01a208f5665eded47e5be0011a9d70a266b9cdaa6322d30558c42207"
+    },
+    {
+      "source": "homework/book4-q2-4.md",
+      "pdf_pages": "958",
+      "original_question_markdown_sha256": "8f5f1864f36b4c095bb663f7d2d72b599fda1b84ae002c1a507b3eabae96326c"
+    },
+    {
+      "source": "homework/book4-q2-5.md",
+      "pdf_pages": "958",
+      "original_question_markdown_sha256": "24f108e6baa620589cbf51eb213ed782e65c3a1912eb366dc407fc9094f60ee6"
+    },
+    {
+      "source": "homework/book4-q4.md",
+      "pdf_pages": "959",
+      "original_question_markdown_sha256": "368e8347754bdf358fd5011d77e2277c72dccf9ed17e926be45d0505d991dc70"
+    },
+    {
+      "source": "homework/book4-q5.md",
+      "pdf_pages": "959–960",
+      "original_question_markdown_sha256": "853b835fec4e9deb9a1dd08740c2d165cafb0d229eae67eecaaf2019931cfe01"
+    },
+    {
+      "source": "homework/book4-q7.md",
+      "pdf_pages": "960–961",
+      "original_question_markdown_sha256": "3b2d0cbdc6f7327f148117ec6af46641486a5e9a1f2b749ef24794742115356e"
+    },
+    {
+      "source": "homework/book4-q11.md",
+      "pdf_pages": "962–963",
+      "original_question_markdown_sha256": "ca9b9282027570caa2aa0f1fab893af90863fbcdedbdaa84adb11c213bd48c55"
+    }
+  ],
+  "figure": {
+    "path": "assets/homework/book4-figure-4-29.png",
+    "pdf_page": 961,
+    "clip_points": [
+      77.0,
+      70.0,
+      522.0,
+      387.0
+    ],
+    "width": 890,
+    "height": 634,
+    "sha256": "8cef0476f2de339bfb257f138647bbc69a9071a958d2045070ca5ce824b53ece"
+  }
+}

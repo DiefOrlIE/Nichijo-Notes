@@ -1,7 +1,7 @@
 """Render only frozen prose. Run the A-stage checks and freeze before this script."""
 from pathlib import Path
 from markdown_it import MarkdownIt
-import re,json,hashlib,html
+import re,json,hashlib,html,struct
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
@@ -9,6 +9,7 @@ P=Path(__file__).resolve().parent
 title_map=json.loads((P/'section-titles.json').read_text())
 course=json.loads((P/'course.json').read_text());md=MarkdownIt('commonmark',{'html':False}).enable('table')
 hashes={str(f.relative_to(P)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (P/'manuscripts').glob('*.md')}
+for f in (P/'assets/homework').glob('*.png'):hashes[str(f.relative_to(P))]=hashlib.sha256(f.read_bytes()).hexdigest()
 for f in (P/'homework').glob('*.md'):hashes[str(f.relative_to(P))]=hashlib.sha256(f.read_bytes()).hexdigest()
 for guide_name in ['book4-guide.md','book5-guide.md']:
  if (P/guide_name).exists():hashes[guide_name]=hashlib.sha256((P/guide_name).read_bytes()).hexdigest()
@@ -16,15 +17,15 @@ assert hashes==json.loads((P/'audit/manuscript-hashes.json').read_text()),'A-sta
 assert (P/'all-manuscripts.md').exists() and (P/'audit/A-freeze.json').exists()
 def color_code(match):
  lang=match[1];text=html.unescape(match[2])
- lexer=get_lexer_by_name({'asm':'gas','asm64':'gas','c':'c','sh':'bash'}[lang],stripnl=False,ensurenl=False)
+ lexer=get_lexer_by_name({'asm':'gas','asm64':'gas','c':'c','c-template':'c','sh':'bash'}[lang],stripnl=False,ensurenl=False)
  colored=highlight(text,lexer,HtmlFormatter(nowrap=True,classprefix='tok-'))
  return f'<pre><code class="language-{lang}">{colored}</code></pre>'
 def color_blocks(rendered):
- return re.sub(r'<pre><code class="language-(c|asm|asm64|sh)">(.*?)</code></pre>',color_code,rendered,flags=re.S)
+ return re.sub(r'<pre><code class="language-(c-template|c|asm|asm64|sh)">(.*?)</code></pre>',color_code,rendered,flags=re.S)
 def render_homework(m):
  key=m[1]
  source=P/'homework'/(key+'.md')
- raw=source.read_text();title=raw.splitlines()[0][2:]
+ raw=source.read_text().replace('../assets/homework/','assets/homework/');title=raw.splitlines()[0][2:]
  chunks=re.split(r'^## (.+)\n',raw,flags=re.M)
  assert len(chunks)==7,(key,'Each homework requires two hints and one complete answer')
  intro=re.sub(r'^# [^\n]+\n','',chunks[0],count=1)
@@ -32,7 +33,12 @@ def render_homework(m):
  for step in reversed(range(1,4)):
   label=chunks[2*step-1];body=color_blocks(md.render(chunks[2*step]))
   nested=f'<details id="homework-{key}-step{step}" data-homework-step><summary>{html.escape(label)}</summary>{body}{nested}</details>'
- return f'<section class="homework-ladder" id="homework-{key}" data-homework="{key}" data-source="homework/{key}.md" data-anchor><h4>{html.escape(title)}</h4>{color_blocks(md.render(intro))}{nested}</section>'
+ def source_image(image_match):
+  rel=image_match[1];width,height=struct.unpack('>II',(P/rel).read_bytes()[16:24])
+  return f'<img src="{rel}" width="{width}" height="{height}"'+image_match[2]+'>'
+ question=color_blocks(md.render(intro))
+ question=re.sub(r'<img src="(assets/homework/[a-z0-9.-]+\.png)"([^>]*?)/?>',source_image,question)
+ return f'<section class="homework-ladder" id="homework-{key}" data-homework="{key}" data-source="homework/{key}.md" data-anchor><h4>{html.escape(title)}</h4>{question}{nested}</section>'
 parts=[];nav=[];subsections=0;book4_articles=[];book4_nav=[];book5_articles=[]
 for c in course:
  n=c['number'];chapter=f'第{n}章 {c["title"]}';cid=f'chapter-{n}'
@@ -104,7 +110,7 @@ version=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest()[:
 result=(P/'template.html').read_text().replace('{{NAV}}','\n'.join(nav)).replace('{{BODY}}','\n'.join(parts)).replace('{{HASH}}',version)
 (P/'index.html').write_text(result)
 (P/'verification/build-result.json').write_text(json.dumps({'chapters':[c['number'] for c in course],'source_files':len(hashes),'subsections':subsections,'source_version':version},indent=2))
-print('Built',sum(len(c['files']) for c in course),'frozen manuscripts and',len(hashes)-sum(len(c['files']) for c in course),'auxiliary Markdown sources, version',version)
+print('Built',sum(len(c['files']) for c in course),'frozen manuscripts and',len(hashes)-sum(len(c['files']) for c in course),'auxiliary sources, version',version)
 
 # The textbook route reuses exactly the same rendered article bodies.
 if (P/'book4-guide.md').exists():
