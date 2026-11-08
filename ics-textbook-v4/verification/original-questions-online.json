@@ -1,0 +1,26 @@
+{
+  "initial_content_commit": "0ede1b97cff2a8de86c698d9dc19078e6600e392",
+  "pages_run": 42486843300,
+  "pages_conclusion": "success",
+  "original_question_entries": 9,
+  "question_7_image_loaded": true,
+  "image_native_size": [
+    890,
+    634
+  ],
+  "desktop_client_and_document_width": [
+    1425,
+    1425
+  ],
+  "tablet_client_and_document_width": [
+    805,
+    805
+  ],
+  "tablet_rendered_image_width": 690,
+  "hint_stages": 27,
+  "checked_devices": [
+    "desktop",
+    "tablet"
+  ],
+  "final_source_version": "36fbf23ab6170b89"
+}

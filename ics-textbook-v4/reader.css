@@ -140,3 +140,5 @@ html[data-term-style=c] abbr[title]:hover,html[data-term-style=c] abbr[title]:fo
 .homework-ladder{margin:30px 0;padding:18px 20px;border-left:3px solid var(--accent);background:var(--subtle)}.homework-ladder>h4{margin-top:0;color:var(--accent)}.homework-ladder details{padding:12px 14px}.homework-ladder details details{margin:18px 0 0}.homework-ladder summary{font-weight:600}@media(max-width:600px){.homework-ladder{padding:14px 12px}.homework-ladder details{padding:10px 9px}}
 
 .homework-ladder img{display:block;max-width:100%;height:auto;margin:20px auto;background:#fff}.homework-ladder a:has(>img){display:block}
+
+.homework-ladder>blockquote:first-of-type{font-size:.78em;line-height:1.7;margin:12px 0;border:0;padding:0;background:transparent;color:var(--muted)}
