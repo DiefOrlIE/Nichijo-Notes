@@ -411,7 +411,7 @@
 <p>核对时先圈出赋值号左边究竟是形参本身还是<code>*p</code>。C的参数传递机制始终传值；教材的“按地址”描述的是所传值及访问效果。</p>
 </details></details></details></section>
 <h4>作业准备：把64位乘法分成两个32位部分</h4>
-<p>IA-32一个通用寄存器通常只能容纳32位，但一个64位整数可用高低两半表示。设低半<code>yL</code>、高半<code>yH</code>，则其无符号真值为<code>yL+2^32*yH</code>。用32位无符号<code>x</code>乘它，展开得到<code>x*yL+2^32*(x*yH)</code>；只保留结果低64位时，第二项只需要<code>x*yH</code>的低32位贡献。</p>
+<p>IA-32一个通用寄存器通常只能容纳32位，但一个64位整数可用高低两半表示。以下公式采用数学幂记号，<code>2^32</code>表示2的32次方；C中的<code>^</code>仍表示按位异或。设低半<code>yL</code>、高半<code>yH</code>，则其无符号真值为<code>yL+2^32*yH</code>。用32位无符号<code>x</code>乘它，展开得到<code>x*yL+2^32*(x*yH)</code>；只保留结果低64位时，第二项只需要<code>x*yH</code>的低32位贡献。</p>
 <p><code>mull</code>的单个显式操作数与隐含的<code>EAX</code>相乘，把完整64位积放入<code>EDX:EAX</code>，前者是高半、后者是低半。双操作数<code>imull</code>只把低32位写回目的寄存器；乘法低半的位串不随有符号、无符号解释改变，因此需要的宽度决定采用哪种形式。<code>leal (%ecx,%edx),%edx</code>只计算两个寄存器之和，不沿这个和读取内存。</p>
 <p>例如<code>x=3,yL=5,yH=2</code>，先算<code>x*yL=15</code>，得到高半0、低半15；再把<code>x*yH=6</code>并入高半，结果高半6、低半15。通过一个指针保存它时，起始地址写低四字节，地址加4写高四字节。先跟这份分解算一遍，再去读题5的寄存器安排，就能知道每次覆盖了哪个中间量。</p>
 <section class="homework-ladder" id="homework-book4-q5" data-homework="book4-q5" data-source="homework/book4-q5.md" data-anchor><h4>读到这里你就可以去做教材第四章第5题了！</h4><p>题意：<code>void product(num_type *d, unsigned x, num_type y) { *d=x*y; }</code>采用下面IA-32函数体。逐条注释并判断<code>num_type</code>。参数沿用题设的带<code>EBP</code>栈帧布局。</p>
@@ -425,7 +425,7 @@
 <span class="tok-nf">movl</span><span class="tok-w"> </span><span class="tok-nv">%edx</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">4</span><span class="tok-p">(</span><span class="tok-nv">%ecx</span><span class="tok-p">)</span>
 </code></pre>
 <details id="homework-book4-q5-step1" data-homework-step><summary>提示1：先确定分析对象</summary><p><code>d</code>与<code>x</code>各占一个四字节参数槽。请检查<code>y</code>占了几个槽，以及通过<code>d</code>一共写了几字节。<code>mull</code>隐含的输入和输出寄存器必须一起记录。</p>
-<details id="homework-book4-q5-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>写<code>y=yL+2^32*yH</code>。<code>x*yL</code>产生64位高低半，<code>x*yH</code>只取能贡献到最终低64位的部分。第3条的<code>ECX</code>临时积不会被第4条覆盖，但<code>EDX:EAX</code>会被第4条重新产生。</p>
+<details id="homework-book4-q5-step2" data-homework-step><summary>提示2：把关键步骤展开</summary><p>先采用数学幂记号，<code>2^32</code>表示2的32次方；这里没有执行C的<code>^</code>运算符。写<code>y=yL+2^32*yH</code>。<code>x*yL</code>产生64位高低半，<code>x*yH</code>只取能贡献到最终低64位的部分。第3条的<code>ECX</code>临时积不会被第4条覆盖，但<code>EDX:EAX</code>会被第4条重新产生。</p>
 <details id="homework-book4-q5-step3" data-homework-step><summary>完整解答与核对</summary><p>先按无符号64位解释建立一份完整且对所有输入有定义的答案：<code>typedef unsigned long long num_type;</code>，在题设IA-32模型中它占8字节。<code>d</code>在<code>EBP+8</code>，<code>x</code>在<code>+12</code>，<code>y</code>低32位在<code>+16</code>、高32位在<code>+20</code>；末尾两次四字节写入共同保存一个64位对象。</p>
 <table>
 <thead>
@@ -931,4 +931,4 @@
 <p>提示：进入函数后，p是哪个类型的对象？</p>
 <p>解答：形参是指针，sizeof p只给指针大小，不能携带整个数组容量。应另传有效长度并保证不超过对象容量；函数据此做访问前边界检查。用长度0、1、4分别测试，可检查修正是否真的依据实参长度工作。</p>
 <p>现在，读函数时可以同时跟踪控制流与数据位置。64位过程调用已在3.3按教材4.1.6集中讲解；需要复查指令背景时可回看3.6。按教材第四章的主线，到这里可以转入章末习题。</p>
-</article><footer>冻结文字版本 59cee1463a6c8789 · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-manuscript.md">完整文字稿</a> · <a href="../ics-readable-v3/">旧连续版</a> · <a href="../ics-ch2-ch3/">旧四档版</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>
+</article><footer>冻结文字版本 00f09ada4cd9ac0e · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/book4-manuscript.md">完整文字稿</a> · <a href="../ics-readable-v3/">旧连续版</a> · <a href="../ics-ch2-ch3/">旧四档版</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>

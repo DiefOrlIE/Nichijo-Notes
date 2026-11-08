@@ -13,3 +13,5 @@
 独立代码/边界核验与最终网页检查分别记录在verification/homework-answer-checks.json、homework-ui.json及homework-release.md。未做真实初学者试读。
 
 A阶段行为核验：题4/5/7/11原始32位函数体已真实汇编并在Unicorn中执行；题解给出的64位汇编与C骨架在宿主运行并启用未定义行为检查，结果与独立模型一致。逐项数量见homework-answer-checks.json。
+
+最终顺读另明确部分积公式中的2^32为数学幂记号，避免与C的异或运算符混淆；公式数值与代码未变，重新冻结并核对源码完整性。后续界面验收只覆盖电脑和平板。
