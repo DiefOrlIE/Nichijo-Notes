@@ -1,0 +1,64 @@
+{
+  "content_commit": "c558980a50ed3dc1b4299dca11fc652745bd01e6",
+  "pages_run": 42483328873,
+  "pages_conclusion": "success",
+  "source_version": "59cee1463a6c8789",
+  "assets": {
+    "book4.html": {
+      "sha256": "bf7cf38a5a26a952170b800f13aa90c765da6d5d96df34fbdb1b101fed26bb9e",
+      "matches_local": true
+    },
+    "book5.html": {
+      "sha256": "51e9ffc998a04a8c74294698bc0f374b120fe2484d38df22d395d11d9117d905",
+      "matches_local": true
+    },
+    "index.html": {
+      "sha256": "e66ddd11c887ed6e25a5513ba676a167fa6aa413baea6cec6cef5f43adfe5cc9",
+      "matches_local": true
+    },
+    "reader.css": {
+      "sha256": "547628e8dc9eaeb2ee03a2802b7c8be2a7277d7425e194c8dd9dab5af2ff71c0",
+      "matches_local": true
+    },
+    "reader.js": {
+      "sha256": "020aeb4ff0418b8ba1374d43f00326ac7a001c1cf1a6323030844c980b3d87f8",
+      "matches_local": true
+    },
+    "fonts/regular.woff2": {
+      "sha256": "b3d8e8c150dd75a81155e046a371c53eed65563f1d67c142de46a0d300a4c221",
+      "matches_local": true
+    },
+    "fonts/bold.woff2": {
+      "sha256": "555eb97d679b63898e8a2082f93d0e0fb5f6dcffa4642e89b373dc34107dd1da",
+      "matches_local": true
+    }
+  },
+  "chrome": {
+    "book4_toc_entries_without_page_numbers": 16,
+    "book5_toc_entries_without_page_numbers": 22,
+    "body_printed_and_ppt_references_retained": true,
+    "homework_cards": 9,
+    "nested_stages": 27,
+    "default_closed": true,
+    "successive_reveal_checked": true,
+    "answer_visible_after_last_step": true,
+    "refresh_preserves_levels": [
+      true,
+      true,
+      true
+    ],
+    "other_question_remains_closed": true,
+    "center_margins_px": [
+      194,
+      194
+    ],
+    "tablet_client_width": 805,
+    "desktop_client_width": 1425,
+    "tablet_and_desktop_no_page_overflow": true
+  },
+  "future_viewport_scope": [
+    "desktop",
+    "tablet"
+  ],
+  "real_beginner_trial": false
+}
