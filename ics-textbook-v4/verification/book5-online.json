@@ -1,0 +1,77 @@
+{
+  "content_commit": "5b807d2c0b6eac068ff5448d28e0cc236a16c2ff",
+  "pages_run": 42480113611,
+  "pages_conclusion": "success",
+  "source_version": "ff0e959f25a90459",
+  "assets": {
+    "book5.html": {
+      "bytes": 100411,
+      "sha256": "dbd3e30953bf31cb0a51f816eece3d09ef23635b0960918f4e2d8cac1f94fc88",
+      "matches_local": true
+    },
+    "book4.html": {
+      "bytes": 92832,
+      "sha256": "0441000049d65a9c17f4937e2369c5e6f945581592eb33502e25d1a7c4f09f66",
+      "matches_local": true
+    },
+    "index.html": {
+      "bytes": 291548,
+      "sha256": "8cc91b90db85f960aceb5877b889fe2cc5783fb9487d5205d7e26a75b168f849",
+      "matches_local": true
+    },
+    "reader.css": {
+      "bytes": 31660,
+      "sha256": "4986ba4e70f88bf995aebf8904b1059eac8d1d4207a1351a6059139e9c123fa2",
+      "matches_local": true
+    },
+    "reader.js": {
+      "bytes": 11722,
+      "sha256": "c583b7951dec2206b7c3f5aa927095219698b6f4b1e6b32a9505b9ff2b96d282",
+      "matches_local": true
+    },
+    "fonts/regular.woff2": {
+      "bytes": 424292,
+      "sha256": "60986b02b4cde0fcc8a9c712d4e08e981dcecdda5ee633c5a7c087170bbf2486",
+      "matches_local": true
+    },
+    "fonts/bold.woff2": {
+      "bytes": 440800,
+      "sha256": "9c4b01fae027db860fb8b613347e5078040dc1e0bcd35615366b63f438eb9367",
+      "matches_local": true
+    }
+  },
+  "chrome": {
+    "textbook_headings": 22,
+    "body_center_margins_px": [
+      194,
+      194
+    ],
+    "code_monospace": true,
+    "syntax_highlights": true,
+    "font_stepper_and_glossary_choices": true,
+    "resume_stable_heading_top_before_after": [
+      394.578125,
+      394.578125
+    ],
+    "nominal_iframe_viewports": [
+      390,
+      820,
+      1440
+    ],
+    "actual_client_widths": [
+      375,
+      805,
+      1425
+    ],
+    "whole_page_horizontal_overflow": [
+      false,
+      false,
+      false
+    ],
+    "phone_tablet_menu_links": true,
+    "page_errors": [],
+    "environment_extension_metadata_error": true
+  },
+  "real_beginner_trial": false,
+  "safari_or_mobile_hardware_test": false
+}
