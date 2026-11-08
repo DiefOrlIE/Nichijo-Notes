@@ -1,0 +1,17 @@
+{
+  "original_ia32_bodies_emulated": [
+    4,
+    5,
+    7,
+    11
+  ],
+  "operate_cases": 1003,
+  "choice_cases": 1060,
+  "product_cases": 1003,
+  "narrow_argument_machine_cases": 1003,
+  "narrow_argument_defined_C_cases": 840,
+  "displayed_amd64_and_C_runtime_match": true,
+  "C_runtime_UBsan_enabled": true,
+  "signed_unsigned_64bit_product_identical_text": true,
+  "undefined_C_overflow_inputs_not_used_as_portable_results": true
+}

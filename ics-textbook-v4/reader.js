@@ -47,7 +47,12 @@ $$('nav a').forEach(a=>a.addEventListener('click',()=>{$('#nav').classList.remov
 $$('main table').forEach(t=>{let w=document.createElement('div');w.className='table-scroll';t.replaceWith(w);w.append(t)});
 // Only explicitly labelled exercise solutions are folded; worked examples stay visible.
 const foldInstances=new Map();
-$$('article p').filter(p=>/^(解答|提示)：/.test(p.textContent)).forEach((p,i)=>{let d=document.createElement('details'),s=document.createElement('summary');s.textContent=p.textContent.startsWith('提示：')?'展开提示':'展开本题解答与核对';let hash=2166136261;for(const c of p.textContent)hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;const stem='answer-'+p.closest('article').id+'-'+hash.toString(36),instance=(foldInstances.get(stem)||0)+1;foldInstances.set(stem,instance);d.id=stem+'-'+instance;const legacy='answer-text-'+hash.toString(36);if(state.answers[d.id]===undefined&&state.answers[legacy]!==undefined)state.answers[d.id]=state.answers[legacy];p.replaceWith(d);d.append(s,p);d.open=!!state.answers?.[d.id];d.addEventListener('toggle',()=>{state.answers??={};state.answers[d.id]=d.open;store()})});
+$$('article p').filter(p=>!p.closest('[data-homework]')&&/^(解答|提示)：/.test(p.textContent)).forEach((p,i)=>{let d=document.createElement('details'),s=document.createElement('summary');s.textContent=p.textContent.startsWith('提示：')?'展开提示':'展开本题解答与核对';let hash=2166136261;for(const c of p.textContent)hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;const stem='answer-'+p.closest('article').id+'-'+hash.toString(36),instance=(foldInstances.get(stem)||0)+1;foldInstances.set(stem,instance);d.id=stem+'-'+instance;const legacy='answer-text-'+hash.toString(36);if(state.answers[d.id]===undefined&&state.answers[legacy]!==undefined)state.answers[d.id]=state.answers[legacy];p.replaceWith(d);d.append(s,p);d.open=!!state.answers?.[d.id];d.addEventListener('toggle',()=>{state.answers??={};state.answers[d.id]=d.open;store()})});
+// Each homework hint reveals only the next stage; all stages remember their own state.
+$$('details[data-homework-step]').forEach(d=>{
+ d.open=!!state.answers[d.id];
+ d.addEventListener('toggle',()=>{state.answers[d.id]=d.open;store()});
+});
 let restoring=true;const anchors=$$('[data-anchor]');
 const pageKey=location.pathname.replace(/index\.html$/,'');
 state.positions??={};

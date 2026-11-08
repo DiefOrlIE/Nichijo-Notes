@@ -8,7 +8,10 @@ assert len(soup.select('article'))==18
 assert [x['id'] for x in soup.select('.course-chapter')]==['chapter-2','chapter-3','chapter-4','chapter-5']
 checks=[]
 for article in soup.select('article'):
+ article=BeautifulSoup(str(article),'html.parser').article
+ for extra in article.select('[data-homework]'):extra.decompose()
  f=P/article['data-source'];source=BeautifulSoup(md.render(f.read_text()),'html.parser')
+ for a in source.select('a[href^="../homework/"]'):a.parent.decompose()
  assert [x.text for x in article.select('.section-lead')]==[(x.text.split('——',1)[-1] if f.stem in ['04-symbols','04-archives','04-relocation','04-dynamic','05-execution'] else x.text) for x in source.select('h2')],f.name
  for selector in ['pre','td','th','li']:
   assert [x.get_text() for x in source.select(selector)]==[x.get_text() for x in article.select(selector)],(f.name,selector)

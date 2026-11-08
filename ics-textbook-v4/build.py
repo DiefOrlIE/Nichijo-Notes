@@ -9,6 +9,7 @@ P=Path(__file__).resolve().parent
 title_map=json.loads((P/'section-titles.json').read_text())
 course=json.loads((P/'course.json').read_text());md=MarkdownIt('commonmark',{'html':False}).enable('table')
 hashes={str(f.relative_to(P)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (P/'manuscripts').glob('*.md')}
+for f in (P/'homework').glob('*.md'):hashes[str(f.relative_to(P))]=hashlib.sha256(f.read_bytes()).hexdigest()
 for guide_name in ['book4-guide.md','book5-guide.md']:
  if (P/guide_name).exists():hashes[guide_name]=hashlib.sha256((P/guide_name).read_bytes()).hexdigest()
 assert hashes==json.loads((P/'audit/manuscript-hashes.json').read_text()),'A-stage source has changed; review and freeze it first'
@@ -20,6 +21,18 @@ def color_code(match):
  return f'<pre><code class="language-{lang}">{colored}</code></pre>'
 def color_blocks(rendered):
  return re.sub(r'<pre><code class="language-(c|asm|asm64|sh)">(.*?)</code></pre>',color_code,rendered,flags=re.S)
+def render_homework(m):
+ key=m[1]
+ source=P/'homework'/(key+'.md')
+ raw=source.read_text();title=raw.splitlines()[0][2:]
+ chunks=re.split(r'^## (.+)\n',raw,flags=re.M)
+ assert len(chunks)==7,(key,'Each homework requires two hints and one complete answer')
+ intro=re.sub(r'^# [^\n]+\n','',chunks[0],count=1)
+ nested=''
+ for step in reversed(range(1,4)):
+  label=chunks[2*step-1];body=color_blocks(md.render(chunks[2*step]))
+  nested=f'<details id="homework-{key}-step{step}" data-homework-step><summary>{html.escape(label)}</summary>{body}{nested}</details>'
+ return f'<section class="homework-ladder" id="homework-{key}" data-homework="{key}" data-source="homework/{key}.md" data-anchor><h4>{html.escape(title)}</h4>{color_blocks(md.render(intro))}{nested}</section>'
 parts=[];nav=[];subsections=0;book4_articles=[];book4_nav=[];book5_articles=[]
 for c in course:
  n=c['number'];chapter=f'第{n}章 {c["title"]}';cid=f'chapter-{n}'
@@ -72,6 +85,7 @@ for c in course:
    fields.append(status)
    return '<p class="textbook-ref">'+html.escape(' · '.join(fields))+'</p>'
   rendered=re.sub(r'<p class="textbook-ref">(.*?)</p>',short_ref,rendered,flags=re.S)
+  rendered=re.sub(r'<p><a href="\.\./homework/([a-z0-9-]+)\.md">[^<]+</a></p>',render_homework,rendered)
   # Keep old external subsection links valid after the textbook reordering.
   aliases={'04-archives':{'unit-04-archives-s2':'unit-04-archives-s1'},'04-relocation':{'unit-04-relocation-s3':'unit-04-relocation-s2'},'05-execution':{'unit-05-execution-s5':'unit-05-execution-s4','unit-05-execution-s6':'unit-05-execution-s4'}}
   for old,target in aliases.get(name,{}).items():
@@ -90,7 +104,7 @@ version=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest()[:
 result=(P/'template.html').read_text().replace('{{NAV}}','\n'.join(nav)).replace('{{BODY}}','\n'.join(parts)).replace('{{HASH}}',version)
 (P/'index.html').write_text(result)
 (P/'verification/build-result.json').write_text(json.dumps({'chapters':[c['number'] for c in course],'source_files':len(hashes),'subsections':subsections,'source_version':version},indent=2))
-print('Built',sum(len(c['files']) for c in course),'frozen manuscripts and',len(hashes)-sum(len(c['files']) for c in course),'guide, version',version)
+print('Built',sum(len(c['files']) for c in course),'frozen manuscripts and',len(hashes)-sum(len(c['files']) for c in course),'auxiliary Markdown sources, version',version)
 
 # The textbook route reuses exactly the same rendered article bodies.
 if (P/'book4-guide.md').exists():
@@ -102,7 +116,7 @@ if (P/'book4-guide.md').exists():
  template=template.replace('ics-textbook-v4/all-manuscripts.md','ics-textbook-v4/book4-manuscript.md')
  template=template.replace('ics-textbook-v4/audit/text-review.md','ics-textbook-v4/audit/book4-followalong-review.md').replace('ics-textbook-v4/audit/exercise-reverse-map.md','ics-textbook-v4/book4-guide.md')
  booklinks=re.findall(r'\|\[(4\.\d\.\d+ [^\]]+)\]\((#[^)]+)\)\|([^|]+)\|',(P/'book4-guide.md').read_text())
- bnav='<a href="#start">教材第四章跟读目录与作业</a>'+''.join(f'<a href="{href}">{html.escape(label)} · 纸书{html.escape(pages)}页</a>' for label,href,pages in booklinks)+'<a href="index.html#chapter-3">完整讲义与先修回查</a>'
+ bnav='<a href="#start">教材第四章跟读目录与作业</a>'+''.join(f'<a href="{href}">{html.escape(label)}</a>' for label,href,pages in booklinks)+'<a href="index.html#chapter-3">完整讲义与先修回查</a>'
  result=template.replace('{{NAV}}',bnav).replace('{{BODY}}',''.join(book4_articles)).replace('{{HASH}}',version)
  (P/'book4.html').write_text(result)
 
@@ -115,6 +129,6 @@ if (P/'book5-guide.md').exists():
  template=template.replace('ics-textbook-v4/all-manuscripts.md','ics-textbook-v4/book5-manuscript.md')
  template=template.replace('ics-textbook-v4/audit/text-review.md','ics-textbook-v4/audit/book5-followalong-review.md').replace('ics-textbook-v4/audit/exercise-reverse-map.md','ics-textbook-v4/book5-guide.md')
  booklinks=re.findall(r'\|\[(5\.\d\.\d+ [^\]]+)\]\((#[^)]+)\)\|([^|]+)\|',(P/'book5-guide.md').read_text())
- bnav='<a href="#start">教材第五章跟读目录与习题</a>'+''.join(f'<a href="{href}">{html.escape(label)} · 纸书{html.escape(pages)}页</a>' for label,href,pages in booklinks)+'<a href="index.html#chapter-4">完整讲义与课程目录</a>'
+ bnav='<a href="#start">教材第五章跟读目录与习题</a>'+''.join(f'<a href="{href}">{html.escape(label)}</a>' for label,href,pages in booklinks)+'<a href="index.html#chapter-4">完整讲义与课程目录</a>'
  result=template.replace('{{NAV}}',bnav).replace('{{BODY}}',''.join(book5_articles)).replace('{{HASH}}',version)
  (P/'book5.html').write_text(result)

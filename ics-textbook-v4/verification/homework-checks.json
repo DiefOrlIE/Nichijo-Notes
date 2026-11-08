@@ -1,0 +1,20 @@
+{
+  "book4.html": {
+    "homework_ladders": 9,
+    "nested_steps": 27,
+    "toc_without_page_numbers": true
+  },
+  "index.html": {
+    "homework_ladders": 9,
+    "nested_steps": 27,
+    "toc_without_page_numbers": true
+  },
+  "book5.html": {
+    "homework_ladders": 0,
+    "nested_steps": 0,
+    "toc_without_page_numbers": true
+  },
+  "source_prose_matches": true,
+  "correct_placement": true,
+  "font_coverage": true
+}

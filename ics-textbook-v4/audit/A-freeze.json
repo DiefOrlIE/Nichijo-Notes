@@ -20,5 +20,6 @@
   ],
   "book4_revision": "2026-11-05: section-level printed/PDF pages, textbook order, PPT scope and assignments 2/4/5/7/11; reviewed before rebuilding.",
   "book5_revision": "2026-11-08: textbook 5.1.1–5.7.4 in order; 22 subsections, printed/PPT references, expanded prose/examples and suggested textbook exercises; A-stage reviewed and example tests passed before HTML rendering.",
-  "book5_real_beginner_trial": false
+  "book5_real_beginner_trial": false,
+  "book4_homework_revision": "2026-11-08: nine placed homework ladders, all assigned questions and subparts, original figures visually reviewed, IA-32 emulation and AMD64/C comparison passed before rendering."
 }

@@ -1,0 +1,103 @@
+{
+  "chapter": 4,
+  "assigned_questions": [
+    2,
+    4,
+    5,
+    7,
+    11
+  ],
+  "question_2_subparts": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "placements": [
+    {
+      "id": "book4-q2-1",
+      "source": "homework/book4-q2-1.md",
+      "after_section": "unit-03-function-call-s10",
+      "stages": 3,
+      "source_pdf_pages": [
+        958
+      ]
+    },
+    {
+      "id": "book4-q5",
+      "source": "homework/book4-q5.md",
+      "after_section": "unit-03-function-call-s10",
+      "stages": 3,
+      "source_pdf_pages": [
+        959,
+        960
+      ]
+    },
+    {
+      "id": "book4-q2-2",
+      "source": "homework/book4-q2-2.md",
+      "after_section": "unit-03-function-call-s11",
+      "stages": 3,
+      "source_pdf_pages": [
+        958
+      ]
+    },
+    {
+      "id": "book4-q2-3",
+      "source": "homework/book4-q2-3.md",
+      "after_section": "unit-03-function-call-s12",
+      "stages": 3,
+      "source_pdf_pages": [
+        958
+      ]
+    },
+    {
+      "id": "book4-q4",
+      "source": "homework/book4-q4.md",
+      "after_section": "unit-03-function-call-s14",
+      "stages": 3,
+      "source_pdf_pages": [
+        959
+      ]
+    },
+    {
+      "id": "book4-q11",
+      "source": "homework/book4-q11.md",
+      "after_section": "unit-03-function-call-s14",
+      "stages": 3,
+      "source_pdf_pages": [
+        962,
+        963
+      ]
+    },
+    {
+      "id": "book4-q7",
+      "source": "homework/book4-q7.md",
+      "after_section": "unit-03-control-flow-s5",
+      "stages": 3,
+      "source_pdf_pages": [
+        960,
+        961
+      ]
+    },
+    {
+      "id": "book4-q2-4",
+      "source": "homework/book4-q2-4.md",
+      "after_section": "unit-03-objects-s7",
+      "stages": 3,
+      "source_pdf_pages": [
+        958
+      ]
+    },
+    {
+      "id": "book4-q2-5",
+      "source": "homework/book4-q2-5.md",
+      "after_section": "unit-03-objects-s10",
+      "stages": 3,
+      "source_pdf_pages": [
+        958
+      ]
+    }
+  ]
+}
