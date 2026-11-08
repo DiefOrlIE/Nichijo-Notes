@@ -953,7 +953,7 @@
 </section>
 <section class="course-chapter" id="chapter-4" data-anchor><h1>第4章 程序的链接</h1><p class="chapter-lead">让分开的模块合成一次运行</p><p class="chapter-source">课程PPT第4章 · 教材第五章5.1–5.5；5.6仅选读</p>
 <article id="unit-04-symbols" data-source="manuscripts/04-symbols.md" data-anchor><h2>4.1 编译、目标文件与符号解析</h2><p class="unit-lead">为每个引用找到定义</p><p>本篇按教材第五章5.1至5.3.2的顺序学习。只要求会C中的变量、数组和简单函数；编译阶段、目标文件、节、段、外部名字都在这里逐项建立。示例使用Linux常见C工具链，目录中保留课程第四章的对应关系。</p>
-<h3 id="unit-04-symbols-s1" data-anchor>5.1.1 编译和汇编<span class="heading-source">（教材 5.1.1；PPT 第4章）</span></h3><p class="section-lead">编译和汇编</p>
+<h3 id="unit-04-symbols-s1" data-anchor>5.1.1 编译和汇编<span class="heading-source">（教材 5.1.1；PPT 第4章）</span></h3><p class="section-lead">把一份C源码逐步变成机器代码</p>
 <p class="textbook-ref">纸书 184 页 · PPT 第4章 4–9 页 · 需掌握</p>
 <p>假设<code>main.c</code>想打印一个由<code>sum.c</code>计算出的和。<code>main.c</code>知道函数<code>sum</code>接收两个<code>int</code>并返回<code>int</code>，却不知道<code>sum</code>最终会被放在哪个地址。<code>sum.c</code>则负责定义这个函数。分开编译可以让两个人独立修改各自文件，但最终机器指令调用<code>sum</code>时仍须找到真正入口。</p>
 <p>先写一个完整的小程序。<code>main.c</code>内容如下：</p>
@@ -983,7 +983,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>题目：漏写一个分号、把<code>sum.o</code>遗漏在最终命令之外、运行时缺少共享库，分别应该先检查哪一阶段？</p>
 <p>提示：按“C文本是否有效—目标模块是否齐全—运行依赖是否可找到”依次判断。</p>
 <p>解答：分号错误先在编译阶段修复；遗漏<code>sum.o</code>使链接阶段找不到外部定义；缺少共享库属于运行时加载依赖问题。重新检查这三种错误各自还没有得到哪个产物，便能避免用重新声明函数去修复缺少机器实现的问题。</p>
-<h3 id="unit-04-symbols-s2" data-anchor>5.1.2 可执行文件的生成<span class="heading-source">（教材 5.1.2；PPT 第4章）</span></h3><p class="section-lead">可执行文件的生成</p>
+<h3 id="unit-04-symbols-s2" data-anchor>5.1.2 可执行文件的生成<span class="heading-source">（教材 5.1.2；PPT 第4章）</span></h3><p class="section-lead">把分开的引用与实现连在一起</p>
 <p class="textbook-ref">纸书 185–186 页 · PPT 第4章 9–14 页 · 需掌握</p>
 <p>链接的两项主要任务由此产生。符号解析回答“这个名字引用哪一个定义”；重定位回答“定义落在哪个位置，引用处应填什么数”。两者有依赖：先知道<code>sum</code>指向哪个函数，再按该函数的位置计算调用字段。</p>
 <p>若只执行<code>cc main.o -o demo</code>，通常会报告<code>undefined reference</code>，即未定义引用；编译<code>main.c</code>成功只说明这一模块通过相应检查，没有保证最终存在<code>sum</code>实现。若只改<code>sum.c</code>，通常只需重编<code>sum.o</code>再链接，<code>main.o</code>可复用。模块化和增量构建正是链接的重要用途。</p>
@@ -993,13 +993,13 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>解答：每份源文件经预处理、编译、汇编生成可重定位文件，再把相关目标文件和所需库模块交给链接器。链接器进行符号解析与重定位。好处包括模块划分、代码复用、单独编译和只重建修改部分。头文件提供声明等文本，不会自动给<code>main.o</code>补上另一个目标文件中的机器代码。</p>
 <p>还可以用反汇编验证连接到底改变了什么。<code>objdump -d main.o</code>中的地址通常按当前输入节显示，函数起点可能为0；它没有宣告该函数最终要占据虚拟地址0。<code>objdump -d demo</code>显示的是链接结果的地址布局。编译器或链接器还可能加入启动代码、对齐字节和运行库信息，因此两个目标文件的长度相加通常不能直接得到可执行文件的长度。</p>
 <p>运行<code>./demo</code>最终取得8，只验证了这次生成的程序。为了检查模块化是否真的生效，可以只把<code>sum.c</code>中的<code>a+b</code>改成<code>a+b+1</code>，重编<code>sum.o</code>后再链接，不重新生成<code>main.o</code>；输出随实现变成9。做完请把实现改回原来的加法。调用接口未变时，未修改模块的目标文件可以复用；若接口发生变化，调用者也可能需要重编。</p>
-<h3 id="unit-04-symbols-s3" data-anchor>5.2.1 ELF目标文件格式<span class="heading-source">（教材 5.2.1；PPT 第4章）</span></h3><p class="section-lead">ELF目标文件格式</p>
+<h3 id="unit-04-symbols-s3" data-anchor>5.2.1 ELF目标文件格式<span class="heading-source">（教材 5.2.1；PPT 第4章）</span></h3><p class="section-lead">让后续工具读懂目标文件</p>
 <p class="textbook-ref">纸书 188 页 · PPT 第4章 15–18 页 · 需掌握</p>
 <p>刚才的<code>.o</code>已经包含机器指令，却还需要告诉链接器哪些字节属于代码、哪个名字尚未定义、哪些字段等待修补。如果把这些信息随意混在一起，下一个工具就无法可靠地读取。因此目标文件要采用约定好的二进制格式。</p>
 <p>ELF是Executable and Linkable Format，可执行与可链接格式。Linux中常见的可重定位文件、可执行文件、共享目标均可采用ELF。文件头说明位宽、字节序、目标机器和文件类型，并给出后续表的位置。看到ELF不能立即推出它可以独立启动：文件类型和所含装入信息还要继续检查。</p>
 <p>链接器关心“把哪些输入材料合成输出”，按节组织内容；加载器关心“把哪些文件范围映射到哪里、允许怎样访问”，按段组织运行布局。两张视图服务不同任务。可以先把它们想成同一份档案的两张索引：节头表按内容分类，程序头表按装入需求分类。它们描述的是同一文件里的字节，不能因此认为每个节必须单独对应一个段。</p>
 <p>用<code>readelf -h main.o</code>和<code>readelf -h demo</code>比较文件类型，再用<code>readelf -S main.o</code>查看节，最后用<code>readelf -l demo</code>查看装入段。这里<code>readelf</code>只读取和解释文件，不会执行它。输出顺序和地址随工具链改变，先认字段的职责，再对照数值。</p>
-<h3 id="unit-04-symbols-s4" data-anchor>5.2.2 可重定位文件格式<span class="heading-source">（教材 5.2.2；PPT 第4章）</span></h3><p class="section-lead">可重定位文件格式</p>
+<h3 id="unit-04-symbols-s4" data-anchor>5.2.2 可重定位文件格式<span class="heading-source">（教材 5.2.2；PPT 第4章）</span></h3><p class="section-lead">找出代码、数据与尚待连接的信息</p>
 <p class="textbook-ref">纸书 189–191 页 · PPT 第4章 18–26 页 · 需掌握</p>
 <p>现在集中看一个尚未链接的模块。<code>.text</code>通常保存函数机器代码，<code>.rodata</code>通常保存只读常量，<code>.data</code>保存有初始内容的可写静态对象，<code>.bss</code>为零初始化或未显式初始化的静态存储对象保留空间。普通自动局部变量随调用建立，它的值通常位于栈或寄存器，不能因为源代码里有一个名字就给它分配一个静态数据节。</p>
 <p>例如把<code>int ready=7;</code>、<code>int idle;</code>和<code>static int hidden=2;</code>写在文件作用域。常见工具链会把7和2的内容字节放在<code>.data</code>，把<code>idle</code>的零初始化需求放在<code>.bss</code>。字符串常量可能进入<code>.rodata</code>，函数指令进入<code>.text</code>。编译优化和符号生成选项会影响具体结果，观察时要写明使用的命令。</p>
@@ -1009,7 +1009,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>题目：一个模块声明<code>extern int other;</code>并在函数里读取它，还定义<code>int ready=7;</code>和自动局部变量<code>int temp</code>。分别说明<code>other</code>、<code>ready</code>和<code>temp</code>能否仅靠本模块确定静态地址，以及它们与符号表、数据节的关系。</p>
 <p>提示：先判断“本模块提供定义”“引用别处定义”“随调用存在”，再判断存储位置。</p>
 <p>解答：被实际引用的<code>other</code>需要一个未定义外部符号记录，其存储由定义模块提供；<code>ready</code>在本模块提供静态对象定义，常见情况下属于<code>.data</code>，可重定位阶段记录节内值；<code>temp</code>通常由栈偏移或寄存器描述，不参与这类普通跨模块符号解析。调试信息中可能记录<code>temp</code>，这与普通链接符号是两种用途。</p>
-<h3 id="unit-04-symbols-s5" data-anchor>5.2.3 可执行文件格式<span class="heading-source">（教材 5.2.3；PPT 第4章）</span></h3><p class="section-lead">可执行文件格式</p>
+<h3 id="unit-04-symbols-s5" data-anchor>5.2.3 可执行文件格式<span class="heading-source">（教材 5.2.3；PPT 第4章）</span></h3><p class="section-lead">从文件范围建立可装入的布局</p>
 <p class="textbook-ref">纸书 192–193 页 · PPT 第4章 27–32 页 · 需掌握</p>
 <p>将各模块连接后，可执行文件仍然可以保留<code>.text</code>、<code>.data</code>等节。但启动程序时，加载器首先需要的是装入段：从文件哪一处开始，取多少字节，映射到哪个虚拟地址，剩下多少字节置零，设置哪些权限。这些要求由程序头表描述。</p>
 <p>对一个<code>PT_LOAD</code>表项，<code>p_offset</code>是源文件偏移，<code>p_vaddr</code>是目标虚拟地址，<code>p_filesz</code>是来自文件的字节数，<code>p_memsz</code>是运行时区域大小，权限标志说明可读、可写、可执行等要求。文件头中的入口地址指出建立初始环境后从哪里开始执行。它通常指向启动代码，不能直接当成C函数<code>main</code>的地址。</p>
@@ -1019,7 +1019,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>题目：上述文件偏移0x470应映射到哪里？文件偏移0x490能否直接套用同一映射公式？</p>
 <p>提示：先检查文件内容范围，再计算相对段起点的位移。</p>
 <p>解答：0x470在有效文件区间内，位移0x70，对应0x8048470。0x490超过该表项的<code>p_filesz</code>范围，不能据此认为存在来自该位置的文件字节；映像尾部的零填充也不要求从文件0x490读取。范围检查比先代公式更重要。</p>
-<h3 id="unit-04-symbols-s6" data-anchor>5.2.4 可执行文件的存储器映像<span class="heading-source">（教材 5.2.4；PPT 第4章）</span></h3><p class="section-lead">可执行文件的存储器映像</p>
+<h3 id="unit-04-symbols-s6" data-anchor>5.2.4 可执行文件的存储器映像<span class="heading-source">（教材 5.2.4；PPT 第4章）</span></h3><p class="section-lead">分清磁盘中的字节和进程中的地址</p>
 <p class="textbook-ref">纸书 194 页 · PPT 第4章 12、30、33–34、76–78 页 · 需掌握</p>
 <p>程序现在获得了一套运行地址。虚拟存储器映像描述代码、只读数据、可写数据、零初始化区域等在进程虚拟地址空间中的安排；它还会与运行时堆、共享库映射、用户栈等区域共同构成运行环境。虚拟地址首先属于当前进程的地址空间，不直接等同于磁盘偏移或物理内存位置。</p>
 <p>教材用典型老32位Linux布局展示只读代码段和可读写数据段，代码映像常以0x8048000一带为例。做题时应遵循题目指定的布局；实际系统可采用多个具有不同权限的装入段，并通过位置无关可执行文件和地址随机化改变基址。不能把教材图中的一个具体起点背成所有程序共有的地址。</p>
@@ -1029,7 +1029,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>题目：解释上面28字节的差，并判断它是否意味着文件缺失了数据。</p>
 <p>提示：把“文件提供的内容长度”和“运行时必须存在的区域长度”分开。</p>
 <p>解答：差值是零初始化等运行时需求，通常包括<code>.bss</code>内容，长度为0x1C。它由加载语义保证，不能仅凭两种长度不等判定文件损坏。用0xE8+0x1C=0x104回算长度，再检查两段虚拟区间首尾连续，就能独立核对。</p>
-<h3 id="unit-04-symbols-s7" data-anchor>5.3.1 符号和符号表<span class="heading-source">（教材 5.3.1；PPT 第4章）</span></h3><p class="section-lead">符号和符号表</p>
+<h3 id="unit-04-symbols-s7" data-anchor>5.3.1 符号和符号表<span class="heading-source">（教材 5.3.1；PPT 第4章）</span></h3><p class="section-lead">以当前模块为参照辨认每一个名字</p>
 <p class="textbook-ref">纸书 195–198 页 · PPT 第4章 36–39 页 · 需掌握</p>
 <p>考虑模块<code>a.c</code>：</p>
 <pre><code class="language-c"><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">shared</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">7</span><span class="tok-p">;</span>
@@ -1048,7 +1048,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>按上面的<code>a.c</code>，在不假设优化消除对象的条件下，分别判断<code>shared</code>、<code>local</code>、<code>other</code>、<code>calc</code>、<code>times</code>、<code>temp</code>是否属于需要链接器处理的符号，以及定义位置。</p>
 <p>提示：先判断对象是否有静态存储期或是否为函数，再区分本地定义与外部引用。变量的“局部作用域”并不必然意味着“在栈上”。</p>
 <p>解答：<code>shared</code>在<code>a.o</code>定义，通常.data；<code>local</code>在<code>a.o</code>内部定义，通常.data；<code>other</code>在<code>a.o</code>为未定义外部引用，节归属由定义模块决定；<code>calc</code>在<code>a.o</code>定义于.text；<code>times</code>在<code>a.o</code>内部定义，零初始化通常.bss，编译器可能给它带后缀的符号名；<code>temp</code>为自动局部对象，不参与这类跨模块符号解析。<code>times</code>虽然只在函数内可见，却需要跨多次调用保留状态。</p>
-<h3 id="unit-04-symbols-s8" data-anchor>5.3.2 符号解析<span class="heading-source">（教材 5.3.2；PPT 第4章）</span></h3><p class="section-lead">符号解析</p>
+<h3 id="unit-04-symbols-s8" data-anchor>5.3.2 符号解析<span class="heading-source">（教材 5.3.2；PPT 第4章）</span></h3><p class="section-lead">为引用选择合适且可见的定义</p>
 <p class="textbook-ref">纸书 199–201 页 · PPT 第4章 40–49 页 · 需掌握</p>
 <p>先不把整个系统库一起搬上纸，只追踪本例由我们编写的两个名字。读<code>main.o</code>时，<code>main</code>属于已经找到的定义，<code>sum</code>属于已经被引用却尚未找到的名字。再读<code>sum.o</code>，遇到<code>sum</code>的定义，就把<code>main.o</code>中记录的<code>sum</code>引用指向它。<code>printf</code>也需要定义，但由后续系统库提供；编译驱动通常还加入启动文件等输入，这正是推荐用<code>cc</code>完成普通C程序链接而不随意直接调用<code>ld</code>的原因。</p>
 <p>对一个引用，链接器查符号绑定与可见性以决定可选择范围。<code>main.o</code>中的外部<code>sum</code>可以由另一个模块提供；若<code>sum.c</code>把定义写成<code>static</code>，该名字只在自己的模块内部可用，<code>main</code>的外部引用仍未解决。这样就能解释“文件里明明有同名函数为什么仍报未定义”：拼写相同只是候选条件，还要检查是否对外提供。</p>
@@ -1072,7 +1072,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>题5与题7把类型、字节布局和符号解析放在一起。先用链接规则找出每个引用最终落在哪个对象，再按实际访问宽度追踪字节。若一个模块将同名对象声明为不兼容类型，链接成功不代表C语义有效，也不能把某次机器上观察到的输出说成可移植保证。题7涉及把函数入口的机器字节当数据观察，应按题给平台与反汇编解释；不要把函数名相同理解成类型检查已经通过。</p>
 </article>
 <article id="unit-04-archives" data-source="manuscripts/04-archives.md" data-anchor><h2>4.2 与静态库的链接</h2><p class="unit-lead">按当前需求选择成员</p><p>已有定义不一定直接写在命令中的独立目标文件里。接下来把它放进归档，观察未解决需求怎样决定成员是否进入结果。</p>
-<span id="unit-04-archives-s2" class="legacy-anchor"></span><h3 id="unit-04-archives-s1" data-anchor>5.3.3 与静态库的链接<span class="heading-source">（教材 5.3.3；PPT 第4章）</span></h3><p class="section-lead">与静态库的链接</p>
+<span id="unit-04-archives-s2" class="legacy-anchor"></span><h3 id="unit-04-archives-s1" data-anchor>5.3.3 与静态库的链接<span class="heading-source">（教材 5.3.3；PPT 第4章）</span></h3><p class="section-lead">沿未解决需求逐步抽取归档成员</p>
 <p class="textbook-ref">纸书 202–203 页 · PPT 第4章 50–58 页 · 需掌握</p>
 <p>静态库通常是若干目标成员的归档，例如<code>libsum.a</code>里含<code>sum.o</code>。用<code>ar rcs libsum.a sum.o</code>创建，再用<code>cc main.o libsum.a -o demo</code>链接。链接器无需把整个归档一律复制进结果，而是按未解决的符号需求抽取相关成员；成员粒度与节垃圾回收等选项还会影响最终保留内容。</p>
 <p>按传统从左至右扫描的教学模型，先遇<code>main.o</code>便把<code>sum</code>加入“尚未解决”集合。扫描<code>libsum.a</code>时发现它能定义<code>sum</code>，于是抽取<code>sum.o</code>，需求得到解决。如果库先出现，扫描时还没有<code>sum</code>需求，成员可能不被抽取；后面遇<code>main.o</code>才产生需求，就会失败。某些工具链或选项会重扫库，分析题应坚持题设的扫描模型。</p>
@@ -1096,7 +1096,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>成员被选出以后，名字已有定义，调用字段却仍未填好。下一节把地址计算落实到真正的四个字节。</p>
 </article>
 <article id="unit-04-relocation" data-source="manuscripts/04-relocation.md" data-anchor><h2>4.3 重定位</h2><p class="unit-lead">把符号与字段落实到字节</p><p>本篇固定采用教材的IA-32重定位模型，明确区分节内偏移、虚拟地址、指令起点、字段起点和后继地址。其他平台的类型和加数规则需要重新确认。</p>
-<h3 id="unit-04-relocation-s1" data-anchor>5.4.1 重定位信息<span class="heading-source">（教材 5.4.1；PPT 第4章）</span></h3><p class="section-lead">重定位信息</p>
+<h3 id="unit-04-relocation-s1" data-anchor>5.4.1 重定位信息<span class="heading-source">（教材 5.4.1；PPT 第4章）</span></h3><p class="section-lead">先查清字段位置、符号与计算类型</p>
 <p class="textbook-ref">纸书 205 页 · PPT 第4章 59–66 页 · 需掌握</p>
 <p>符号解析让引用有了身份，但机器指令最终需要可计算的位移或地址。链接器还必须知道应该修改哪几个字节；在同一段机器代码中搜索函数名已经没有意义，因为名字通常存放在符号表，指令字段里只留着数值。</p>
 <p>一条重定位记录至少要关联三件事：待修改字段在输入节中的偏移、引用的符号、采用的重定位类型。IA-32教材中的<code>Elf32_Rel</code>把字段偏移放在<code>r_offset</code>，把符号表索引和类型编码在<code>r_info</code>。类型决定怎样计算，符号索引决定用哪个定义，偏移决定把结果写到哪里。三者缺少任意一个，都不能可靠完成修补。</p>
@@ -1106,7 +1106,7 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>题目：若只知道符号<code>sum</code>，却不知道字段偏移，能否完成重定位？若只知道偏移，不知道类型呢？</p>
 <p>提示：分别追问“写到哪里”和“写什么数”。</p>
 <p>解答：前者无法定位要覆盖的字节，后者无法确定采用绝对值还是相对值等计算规则。重定位需要符号、类型、字段位置共同成立；读题应先把这三列抄全，随后才代入地址。</p>
-<span id="unit-04-relocation-s3" class="legacy-anchor"></span><h3 id="unit-04-relocation-s2" data-anchor>5.4.2 重定位过程<span class="heading-source">（教材 5.4.2；PPT 第4章）</span></h3><p class="section-lead">重定位过程</p>
+<span id="unit-04-relocation-s3" class="legacy-anchor"></span><h3 id="unit-04-relocation-s2" data-anchor>5.4.2 重定位过程<span class="heading-source">（教材 5.4.2；PPT 第4章）</span></h3><p class="section-lead">从原字段算到最终四个字节</p>
 <p class="textbook-ref">纸书 206–208 页 · PPT 第4章 67–75 页 · 需掌握</p>
 <p>链接器先安排输入节在输出中的位置，得到每个被引用符号的地址，再按重定位表修补引用字段。重定位记录至少要让链接器知道：改哪里、用哪个符号、按什么计算规则。</p>
 <p>以32位ELF <code>REL</code>重定位为例，令<code>S</code>为符号最终地址，<code>A</code>为原字段中的加数，<code>P</code>为待修改字段自己的最终地址。<code>R_386_32</code>的计算为<code>S+A</code>，常用于绝对地址；<code>R_386_PC32</code>为<code>S+A−P</code>，形成相对地址。<code>REL</code>把加数放在待修改字节中，<code>RELA</code>则用独立字段显式给出加数。名称里的386指此处讨论的32位x86规则，不可未经检查套到所有架构。</p>
@@ -1128,12 +1128,12 @@ cc<span class="tok-w"> </span>-c<span class="tok-w"> </span>main.s<span class="t
 <p>解答：<code>P=0x4001</code>，<code>S+A-P=0x3FF0-4-0x4001=-0x15</code>。按32位补码写成<code>EB FF FF FF</code>；处理器从0x4005加−0x15得到0x3FF0。若误用操作码地址作<code>P</code>，会产生一个字节偏差。两条独立计算路线应当相等。</p>
 </article>
 <article id="unit-04-dynamic" data-source="manuscripts/04-dynamic.md" data-anchor><h2>4.4 动态链接与库打桩</h2><p class="unit-lead">把共享实现接入运行环境</p><p>按教材5.5再到5.6的顺序阅读。共享库、加载时链接、运行时接口和PIC分别解决不同问题；库打桩单独标为未覆盖的选读内容。</p>
-<h3 id="unit-04-dynamic-s1" data-anchor>5.5.1 动态链接的特性<span class="heading-source">（教材 5.5.1；PPT 第4章）</span></h3><p class="section-lead">动态链接的特性</p>
+<h3 id="unit-04-dynamic-s1" data-anchor>5.5.1 动态链接的特性<span class="heading-source">（教材 5.5.1；PPT 第4章）</span></h3><p class="section-lead">让多个程序复用同一份库实现</p>
 <p class="textbook-ref">纸书 210 页 · PPT 第4章 82–84 页 · 需掌握</p>
 <p>静态库按需抽取解决了“只使用部分函数”的问题，但多个程序仍可能各自带上同一段实现。共享库把可复用的代码放在独立目标里，使多个程序能够依赖同一份库文件；操作系统在条件允许时还可让它们映射复用只读代码页。可写库数据和进程特定表项通常仍有各自状态，因此共享代码不能推出所有全局变量也在进程之间共享。</p>
 <p>这种连接可以在加载时完成，也可以由程序运行后主动请求。前者适合启动时已经确定的依赖，后者适合插件等按需功能。两者都需要解决名字、地址与接口一致性：找到一个同名函数还不够，参数和返回值约定也必须匹配。</p>
 <p>共享库更新后，不必把实现重新复制进每个使用者的文件。但这项便利有条件：ABI需要兼容，所需库必须能够被找到，依赖版本必须匹配。位置无关代码解决的是地址安排，不能替代版本管理。接下来先做一次普通加载时链接，再看运行时主动加载，最后解释为什么代码能放到不同基址。</p>
-<h3 id="unit-04-dynamic-s2" data-anchor>5.5.2 程序加载时的动态链接<span class="heading-source">（教材 5.5.2；PPT 第4章）</span></h3><p class="section-lead">程序加载时的动态链接</p>
+<h3 id="unit-04-dynamic-s2" data-anchor>5.5.2 程序加载时的动态链接<span class="heading-source">（教材 5.5.2；PPT 第4章）</span></h3><p class="section-lead">在启动路径上找到并连接依赖</p>
 <p class="textbook-ref">纸书 210–211 页 · PPT 第4章 83、85–86 页 · 掌握加载时链接的基本过程；85–86页为补充跳转页</p>
 <p>若每个可执行文件都复制一份同样的库函数代码，磁盘和内存可能重复存储。共享库把可复用机器代码放在独立目标中，可执行文件记录依赖与必要动态信息。加载时动态链接器寻找库、建立映射、解析所需符号并完成必要修补；也可以在程序运行后显式打开某个库。</p>
 <p>可以直接复用本章5.1.1的<code>main.c</code>与<code>sum.c</code>做一次共享库构建。采用Linux常见GNU工具链，先执行下列命令；三个命令各占一行。</p>
@@ -1149,7 +1149,7 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>题目：链接命令使用<code>-L.</code>成功生成程序，随后运行却报告找不到<code>libsum.so</code>。为什么编译成功仍不能保证启动成功？</p>
 <p>提示：分别指出链接器和运行时动态链接器搜索发生的时刻。</p>
 <p>解答：构建时找到了库以记录依赖和校验相应连接信息；启动时仍要按运行时规则定位实际文件。应核对部署目录及运行搜索路径，不能把<code>-L.</code>当成运行环境的永久设置。用<code>readelf -d</code>检查依赖和路径信息，再对照实际文件位置，是可执行的诊断顺序。</p>
-<h3 id="unit-04-dynamic-s3" data-anchor>5.5.3 程序运行时的动态链接<span class="heading-source">（教材 5.5.3；PPT 第4章）</span></h3><p class="section-lead">程序运行时的动态链接</p>
+<h3 id="unit-04-dynamic-s3" data-anchor>5.5.3 程序运行时的动态链接<span class="heading-source">（教材 5.5.3；PPT 第4章）</span></h3><p class="section-lead">需要某项功能时再打开它</p>
 <p class="textbook-ref">纸书 212 页 · PPT 第4章 87 页 · 需掌握</p>
 <p>有些程序启动时并不知道以后要启用哪一个插件。若把所有可能功能都设成固定启动依赖，用户即使不用该功能，也可能因为少装一个库而无法启动。运行时动态链接允许程序在需要时通过接口打开库、查询符号，再按正确接口调用。</p>
 <p><code>dlopen</code>返回库句柄，用来标识本次打开的目标；<code>dlsym</code>在相应查找范围内寻找一个名字；<code>dlerror</code>报告错误；<code>dlclose</code>释放这次打开的关联引用。句柄与函数地址承担不同任务：句柄用于后续查询，函数地址才供调用。关闭句柄后也不能继续假定先前取得的函数地址永久有效。</p>
@@ -1187,7 +1187,7 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>题目：可选导出功能依赖一个插件，而主程序的基础功能不依赖它。插件不存在时，怎样安排控制流才能保留基础功能？</p>
 <p>提示：检查打开结果，并在得到可用函数地址之前阻止调用。</p>
 <p>解答：基础路径正常启动；用户请求导出时才打开插件，失败则给出该功能不可用的结果，返回基础路径。打开成功后还要检查符号查询与接口版本。把错误检查放在调用之后，已经无法阻止无效调用。</p>
-<h3 id="unit-04-dynamic-s4" data-anchor>5.5.4 位置无关代码<span class="heading-source">（教材 5.5.4；PPT 第4章）</span></h3><p class="section-lead">位置无关代码</p>
+<h3 id="unit-04-dynamic-s4" data-anchor>5.5.4 位置无关代码<span class="heading-source">（教材 5.5.4；PPT 第4章）</span></h3><p class="section-lead">改变基址后仍保持正确访问</p>
 <p class="textbook-ref">纸书 213–217 页 · PPT 第4章 88–94 页 · 需掌握</p>
 <p>现在考虑共享库被放到不同基址的情况。代码里的一个固定绝对地址若随基址改变，就可能需要修改每个使用者的代码页，妨碍共享。PIC是Position-Independent Code，即位置无关代码。它尽量把可共享的指令保持为同一组字节，将必须随运行地址变化的内容放入适合修补的数据位置。</p>
 <p>先看模块内部的相对调用。源和目标一起平移时，两者之差保持不变。假设调用后继原为0x105、目标0x120，位移0x1B；整个模块平移0x1000后，后继0x1105、目标0x1120，相减仍是0x1B。这直接延续了5.4.2的重定位核对。</p>
@@ -1200,16 +1200,16 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>题目：第一轮调用结束后，0x6000处保存什么？第二轮是否仍到0x5000？这能否推出另一进程的同一槽位也已被修改？</p>
 <p>提示：分别记录入口地址、槽位地址、槽位内容，最后再考虑进程边界。</p>
 <p>解答：槽位保存0x9000；第二轮仍可从0x5000进入并经槽位跳到0x9000。不能推出另一进程的可写状态也改变，它可有独立映射与绑定状态。核对第一次和第二次路径中唯一被省去的解析工作，就能解释延迟绑定的缓存作用。</p>
-<h3 id="unit-04-dynamic-s5" data-anchor>5.6.1 编译时打桩<span class="heading-source">（教材 5.6.1；PPT未涉及）</span></h3><p class="section-lead">编译时打桩</p>
+<h3 id="unit-04-dynamic-s5" data-anchor>5.6.1 编译时打桩<span class="heading-source">（教材 5.6.1；PPT未涉及）</span></h3><p class="section-lead">选读：在源码翻译前接入包装层</p>
 <p class="textbook-ref">纸书 218 页 · PPT未涉及 · 无需掌握（选读）</p>
 <p>本节及5.6.2、5.6.3未在上传的课程第四章与第五章PPT中出现，按当前范围无需掌握。以下保留翻书时能辨认概念的选读说明，不把它作为后续必需先修。</p>
 <p>库打桩是在目标调用外加一层封装，以记录、统计或替换行为。编译时打桩在源代码进入后续翻译前改变调用：例如通过宏把<code>malloc</code>调用重命名成包装函数。包装函数记录申请大小，再按正确方式调用原分配函数。</p>
 <p>它需要重新编译相应调用者，并受头文件、宏作用域等条件约束。若包装函数里的真实调用又被同一宏替换，便会重新进入自己，造成递归。阅读此类程序时先圈出哪些源码受到宏替换，再追踪包装函数如何到达原实现。</p>
-<h3 id="unit-04-dynamic-s6" data-anchor>5.6.2 链接时打桩<span class="heading-source">（教材 5.6.2；PPT未涉及）</span></h3><p class="section-lead">链接时打桩</p>
+<h3 id="unit-04-dynamic-s6" data-anchor>5.6.2 链接时打桩<span class="heading-source">（教材 5.6.2；PPT未涉及）</span></h3><p class="section-lead">选读：在链接阶段改变引用的去向</p>
 <p class="textbook-ref">纸书 219 页 · PPT未涉及 · 无需掌握（选读）</p>
 <p>链接时打桩利用链接器的符号重定向规则，在生成结果时把某些引用改接到包装实现。GNU链接器的<code>--wrap</code>机制是一个具体例子：对某名字的未解决引用可以转向相应<code>__wrap_</code>实现，包装层再使用约定的<code>__real_</code>名字访问原目标。</p>
 <p>它影响的是符合规则的链接引用，不能保证捕获被内联的调用，或已经在其他位置完成内部绑定的路径。与编译时打桩相比，改变发生在后续连接阶段；核对重点从宏展开转成“这个引用最终关联哪个定义”。本节只需作为教材选读定位。</p>
-<h3 id="unit-04-dynamic-s7" data-anchor>5.6.3 运行时打桩<span class="heading-source">（教材 5.6.3；PPT未涉及）</span></h3><p class="section-lead">运行时打桩</p>
+<h3 id="unit-04-dynamic-s7" data-anchor>5.6.3 运行时打桩<span class="heading-source">（教材 5.6.3；PPT未涉及）</span></h3><p class="section-lead">选读：利用运行时的符号解析环境</p>
 <p class="textbook-ref">纸书 220–221 页 · PPT未涉及 · 无需掌握（选读）</p>
 <p>运行时打桩在动态符号解析环境允许的条件下，使某个包装实现先被选中，再由包装层查找和调用实际实现。常见示例涉及动态加载器的查找顺序，但效果受安全执行模式、符号可见性、绑定时机和调用是否已被优化等条件限制。</p>
 <p>这三种方法可按介入时机区分：预处理或编译时改写调用、链接时改变引用关联、运行时影响动态解析。它们共同要求接口一致，并需要防止包装层再次调用自身。无论在哪个阶段，找错签名或绕过错误检查都可能破坏程序；仅掌握普通静态链接并不自动保证能安全实现所有包装。</p>
@@ -1217,7 +1217,7 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 </section>
 <section class="course-chapter" id="chapter-5" data-anchor><h1>第5章 程序的执行</h1><p class="chapter-lead">让指令与任务持续推进</p><p class="chapter-source">课程PPT第5章 · 教材第五章5.7；第五章简化版课件</p>
 <article id="unit-05-execution" data-source="manuscripts/05-execution.md" data-anchor><h2>5.1 可执行文件的加载和执行</h2><p class="unit-lead">从入口开始跟踪机器状态</p><p>这里对应教材第五章5.7，课程第四章PPT的加载部分以及课程第五章PPT的指令执行部分。先修仍只要求前文已经建立的地址、寄存器、节与段；每条指令的地址和操作数地址在正文分别计算。</p>
-<h3 id="unit-05-execution-s1" data-anchor>5.7.1 可执行文件的加载<span class="heading-source">（教材 5.7.1；PPT 第4章）</span></h3><p class="section-lead">可执行文件的加载</p>
+<h3 id="unit-05-execution-s1" data-anchor>5.7.1 可执行文件的加载<span class="heading-source">（教材 5.7.1；PPT 第4章）</span></h3><p class="section-lead">把文件中的布局变成运行映像</p>
 <p class="textbook-ref">纸书 222 页 · PPT 第4章 77–80 页 · 需掌握</p>
 <p>链接把多个目标文件中的定义与引用连接，加载为程序建立运行所需的地址空间和映射，并把控制交给入口代码。入口代码完成必要初始化后才调用<code>main</code>，<code>main</code>通常并非处理器直接开始的第一条指令。关于目标文件的符号、重定位和动态链接，属于课程第四章；这里补充的是理解执行所需的接口。</p>
 <p>源文件里写了<code>main</code>，链接结果却通常以启动代码为入口。操作系统先为程序建立地址空间，安排初始栈等启动信息；若依赖动态链接器，还要按约定先完成相应加载解析工作。启动代码把环境准备好，调用<code>main</code>；<code>main</code>返回后，经运行时退出路径交回操作系统。把<code>main</code>当成整个机器从零开始的第一条指令，会漏掉这一段建立前提的工作。</p>
@@ -1234,7 +1234,7 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>解答：位移3FF0H−4−4001H=−15H，四字节EB FF FF FF；后继4005H加−15H得到3FF0H。零填充差60H=96字节。前半题用运行时地址，后半题用长度，不要把段起始文件偏移混入长度相减。两个结果都有独立反查路线。</p>
 <p>到这里，前文的链接结果已经变成可供取指、取数的运行映像。接下来要追踪的是处理器怎样使用这些地址完成一条指令。</p>
 <p>从加载转向执行，还要确认入口属于已建立的可执行映射，并且初始栈等启动信息符合接口。<code>execve</code>成功会替换当前进程的程序映像；创建进程与替换映像是不同动作，不能因为常见shell先创建子进程再执行文件，就认为每次加载都自动等于创建一个全新进程。</p>
-<h3 id="unit-05-execution-s2" data-anchor>5.7.2 程序和指令的执行过程<span class="heading-source">（教材 5.7.2；PPT 第5章）</span></h3><p class="section-lead">程序和指令的执行过程</p>
+<h3 id="unit-05-execution-s2" data-anchor>5.7.2 程序和指令的执行过程<span class="heading-source">（教材 5.7.2；PPT 第5章）</span></h3><p class="section-lead">分开跟踪取指、取数、写回与后继</p>
 <p class="textbook-ref">纸书 223–224 页 · PPT 第5章 30–38 页 · 需掌握</p>
 <p>设当前指令<code>addl 4(%eax),%edx</code>，<code>EAX=1000</code>，<code>EDX=7</code>，内存1004起四字节存0x05、0x00、0x00、0x00。处理器先依据指令指针取得编码字节，译码确定32位加法、源为内存、目的为EDX。</p>
 <p>随后计算有效地址1000+4=1004，从那里读四字节并按小端重组为5。运算部件计算7+5=12，把0000000C写入EDX，同时更新相应标志。若无异常且无控制流转移，后继指令地址取当前地址加本条长度。核对最终状态：EAX保持1000，源内存保持5，EDX由7变12；没有额外指令就不应修改其他通用寄存器。</p>
@@ -1249,7 +1249,7 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>题目：保持正文的编码、寄存器和指令地址，仅把1004起的四字节改成<code>09 00 00 00</code>。求最终<code>EDX</code>和顺序后继；再将其改成<code>FE FF FF FF</code>，重新判断结果与所列四个标志。</p>
 <p>提示：先读编码得到规则，再读操作数得到本次输入，最后按32位运算更新。</p>
 <p>解答：第一种源值9，<code>EDX=7+9=16</code>，后继仍2003，<code>CF=OF=SF=ZF=0</code>。第二种源位串为<code>0xFFFFFFFE</code>，有符号解释为−2，与7相加保留5；无符号和越过32位，<code>CF=1</code>，有符号结果在范围内，<code>OF=0</code>，并且<code>SF=ZF=0</code>。两种情况下<code>EAX</code>和源内存保持给定内容，编码不变便不改变三字节长度。用“取指地址2000、取数地址1004”分开核对，能发现把地址当数值的错误。</p>
-<h3 id="unit-05-execution-s3" data-anchor>5.7.3 CPU的基本功能和基本组成<span class="heading-source">（教材 5.7.3；PPT 第5章）</span></h3><p class="section-lead">CPU的基本功能和基本组成</p>
+<h3 id="unit-05-execution-s3" data-anchor>5.7.3 CPU的基本功能和基本组成<span class="heading-source">（教材 5.7.3；PPT 第5章）</span></h3><p class="section-lead">让各部件按正确顺序协同工作</p>
 <p class="textbook-ref">纸书 225 页 · PPT 第5章 36–39 页 · 需掌握</p>
 <p>刚才一条加法需要完成取指、译码、算地址、取数、运算、写回和选择后继。CPU需要把这些动作组织起来：寄存器保存当前可用状态，ALU完成算术逻辑变换，数据通路提供传送路线，控制器决定何时选择哪条路线、允许哪个位置写入。</p>
 <p>在简单教学模型里，PC保存指令控制位置，<code>IR</code>暂存读到的指令，<code>MAR</code>暂存本次访问的地址，<code>MDR</code>暂存从内存读回或准备写出的数据。跟踪上一节例子时，先令地址通路使用2000去取编码；稍后改用1004去取操作数5。<code>MDR</code>的两次内容承担不同职责，<code>IR</code>中保留的编码则告诉控制器这次需要做加法。</p>
@@ -1259,7 +1259,7 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>题目：运算部件正确得到了12，但<code>EDX</code>仍为7；另一种故障是<code>EDX</code>变12，后继却为2001。分别应检查什么？</p>
 <p>提示：把“产生结果”“允许写回”和“选择下一取指地址”分开。</p>
 <p>解答：前者检查寄存器目的选择与写使能等写回控制；后者检查三字节长度和后继控制，顺序地址应为2003。2001落在原指令内部，从那里取指可能改变后续译码。单独核对最终加法值不足以证明整条执行正确。</p>
-<span id="unit-05-execution-s5" class="legacy-anchor"></span><span id="unit-05-execution-s6" class="legacy-anchor"></span><h3 id="unit-05-execution-s4" data-anchor>5.7.4 打断程序正常执行的事件<span class="heading-source">（教材 5.7.4；PPT 第5章）</span></h3><p class="section-lead">打断程序正常执行的事件</p>
+<span id="unit-05-execution-s5" class="legacy-anchor"></span><span id="unit-05-execution-s6" class="legacy-anchor"></span><h3 id="unit-05-execution-s4" data-anchor>5.7.4 打断程序正常执行的事件<span class="heading-source">（教材 5.7.4；PPT 第5章）</span></h3><p class="section-lead">按触发原因判断处理与恢复路径</p>
 <p class="textbook-ref">纸书 226 页 · PPT 第5章 13、36–38 页 · 需掌握</p>
 <p>若地址对应的内存尚未就绪或不允许访问，处理器可能发生与当前指令相关的异常。若发生整数除零，也需要转交异常处理。外部设备完成操作或计时器到时，可产生中断请求。异常通常与当前指令同步，中断通常来自外部异步事件。</p>
 <p>操作系统处理事件需要保存足够的恢复信息，再转到处理代码。不同事件恢复点不同：某些故障修复后重新执行原指令，某些陷阱从后继继续，严重错误可能终止进程。因此不能把所有事件一律画成“跳过去再回来”。系统调用是程序主动请求操作系统服务，使用体系结构规定的入口机制进入内核。</p>
@@ -1332,4 +1332,4 @@ cc<span class="tok-w"> </span>main.c<span class="tok-w"> </span>-L.<span class="
 <p>现在可以从一个源程序开始讲完整故事：数值按第二章规则编码，表达式与对象按第三章规则变成指令和内存访问，第四章把分开的引用接到定义并修补地址，加载再建立运行映射。第五章的处理器按控制流执行这些指令，操作系统保存、恢复和调度各条执行活动。遇到错误时，先判断在哪一层发生：编码误读、类型转换、寻址越界、链接未定义、装入问题还是线程数据竞争。层次分清后，再用本层的状态和前提检查，就能把陌生程序拆成可追踪的小步。</p>
 <p>这条主线提供了继续学习存储层次、异常控制流和输入输出的基础。它没有要求读者记住每台机器的内部细节，而是让每个推断都能指出依据、复算过程和适用边界。</p>
 </article>
-</section><footer>冻结文字版本 1ccb6999deed850a · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/all-manuscripts.md">完整文字稿</a> · <a href="../ics-readable-v3/">旧连续版</a> · <a href="../ics-ch2-ch3/">旧四档版</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>
+</section><footer>冻结文字版本 ff0e959f25a90459 · <a href="https://github.com/DiefOrlIE/Nichijo-Notes/blob/main/ics-textbook-v4/all-manuscripts.md">完整文字稿</a> · <a href="../ics-readable-v3/">旧连续版</a> · <a href="../ics-ch2-ch3/">旧四档版</a></footer></main><dialog id="terms"><form method="dialog"><button>关闭</button></form><label>查缩写或中文含义 <input id="term-search" type="search"></label><div id="term-list"></div></dialog></body></html>

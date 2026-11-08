@@ -53,7 +53,8 @@ for c in course:
    if code==previous[0]:return f'<p id="{sid}" data-anchor class="section-lead">{m[1]}</p>'
    previous[0]=code
    section_nav.append(f'<a class="minor" href="#{sid}">{html.escape(formal)}</a>')
-   return f'<h3 id="{sid}" data-anchor>{html.escape(formal)}{label}</h3><p class="section-lead">{m[1]}</p>'
+   section_lead=m[1].split('——',1)[-1] if name in ['04-symbols','04-archives','04-relocation','04-dynamic','05-execution'] else m[1]
+   return f'<h3 id="{sid}" data-anchor>{html.escape(formal)}{label}</h3><p class="section-lead">{section_lead}</p>'
   rendered=re.sub(r'<h2>(.*?)</h2>',sub,rendered);subsections+=i[0]
   def short_ref(m):
    text=html.unescape(re.sub(r'<[^>]+>','',m[1]))

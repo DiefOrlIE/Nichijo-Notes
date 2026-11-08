@@ -9,7 +9,7 @@ assert [x['id'] for x in soup.select('.course-chapter')]==['chapter-2','chapter-
 checks=[]
 for article in soup.select('article'):
  f=P/article['data-source'];source=BeautifulSoup(md.render(f.read_text()),'html.parser')
- assert [x.text for x in article.select('.section-lead')]==[x.text for x in source.select('h2')],f.name
+ assert [x.text for x in article.select('.section-lead')]==[(x.text.split('——',1)[-1] if f.stem in ['04-symbols','04-archives','04-relocation','04-dynamic','05-execution'] else x.text) for x in source.select('h2')],f.name
  for selector in ['pre','td','th','li']:
   assert [x.get_text() for x in source.select(selector)]==[x.get_text() for x in article.select(selector)],(f.name,selector)
  original=[x.get_text() for x in source.select('p') if not x.text.startswith('教材对照：')]
