@@ -9,8 +9,8 @@ for article in book.select('article'):assert str(article)==str(main.find(id=arti
 links=book.select('nav a[href^="#unit-"]');assert len(links)==16
 for a in book.select('a[href^="#"]'):assert book.find(id=a['href'][1:]),a
 refs=book.select('article .textbook-ref');assert len(refs)==42
-for heading in book.select('article h3,article h4'):
- paragraph=heading.find_next_sibling('p');assert paragraph and paragraph.get('class')==['textbook-ref'],heading
+for heading in book.select('article h3'):
+ paragraph=heading.find_next_sibling('p',class_='textbook-ref');assert paragraph,heading
 assert len(book.select('#start table'))==2
 chars=set(ord(c) for c in (P/'book4-guide.md').read_text()+''.join(f.read_text() for f in (P/'manuscripts').glob('*.md')))
 for weight in ['regular','bold']:

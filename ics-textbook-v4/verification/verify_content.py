@@ -1,8 +1,8 @@
 from pathlib import Path
 import re, tempfile, subprocess, struct, json, hashlib
 P=Path(__file__).resolve().parents[1]
-def command(args):
- r=subprocess.run(args,text=True,capture_output=True)
+def command(args,cwd=None):
+ r=subprocess.run(args,text=True,capture_output=True,cwd=cwd)
  assert r.returncode==0,(args,r.stdout,r.stderr)
  return r.stdout
 counts={'c_blocks_compiled':0,'assembly_blocks_assembled':0}
@@ -17,9 +17,12 @@ with tempfile.TemporaryDirectory(prefix='ics-v4-') as t:
     extra=[]
     if f.stem=='04-symbols':
      support=t/'sum.c';support.write_text('int sum(int a,int b){return a+b;}');extra=[str(support)]
-    command(['cc',str(base.with_suffix('.c')),*extra,'-o',str(base)])
-    out=command([str(base)])
-    expected={'03-function-call':'8\n','03-operations':'415A0000 13\n','04-symbols':'8\n'}
+    if '#include <dlfcn.h>' in c:
+     support=t/'sum-plugin.c';support.write_text('int sum(int a,int b){return a+b;}')
+     command(['cc','-fPIC','-shared',str(support),'-o',str(t/'libsum.so')]);extra=['-ldl']
+    command(['cc','-std=c11',str(base.with_suffix('.c')),*extra,'-o',str(base)])
+    out=command([str(base)],cwd=t)
+    expected={'03-function-call':'8\n','03-operations':'415A0000 13\n','04-symbols':'8\n','04-dynamic':'8\n'}
     if f.stem in expected: assert out==expected[f.stem],(f,out)
   for i,(language,c) in enumerate(re.findall(r'```(asm|asm64)\n(.*?)```',src,re.S)):
    a=t/(f.stem+str(i)+'.s');a.write_text('.text\n'+c+'\n')

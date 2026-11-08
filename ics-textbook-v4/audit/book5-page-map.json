@@ -1,0 +1,206 @@
+{
+  "isbn": "9787111738824",
+  "page_source": "https://www.cmpedu.com/books/book/5607911.htm",
+  "printed_range_rule": "Subsection start through next subsection start minus one; overlapping starts share the boundary page.",
+  "pdf_note": "1-based ebook file pages, first complete occurrence; repeated parent sections exist.",
+  "sections": {
+    "5.1.1": {
+      "title": "编译和汇编",
+      "paper": "184",
+      "pdf": "975–976",
+      "ppt_chapter": 4,
+      "ppt_pages": "4–9",
+      "required": true,
+      "anchor": "#unit-04-symbols-s1"
+    },
+    "5.1.2": {
+      "title": "可执行文件的生成",
+      "paper": "185–186",
+      "pdf": "976–978",
+      "ppt_chapter": 4,
+      "ppt_pages": "9–14",
+      "required": true,
+      "anchor": "#unit-04-symbols-s2"
+    },
+    "5.2.1": {
+      "title": "ELF目标文件格式",
+      "paper": "188",
+      "pdf": "987",
+      "ppt_chapter": 4,
+      "ppt_pages": "15–18",
+      "required": true,
+      "anchor": "#unit-04-symbols-s3"
+    },
+    "5.2.2": {
+      "title": "可重定位文件格式",
+      "paper": "189–191",
+      "pdf": "988–993",
+      "ppt_chapter": 4,
+      "ppt_pages": "18–26",
+      "required": true,
+      "anchor": "#unit-04-symbols-s4"
+    },
+    "5.2.3": {
+      "title": "可执行文件格式",
+      "paper": "192–193",
+      "pdf": "994–996",
+      "ppt_chapter": 4,
+      "ppt_pages": "27–32",
+      "required": true,
+      "anchor": "#unit-04-symbols-s5"
+    },
+    "5.2.4": {
+      "title": "可执行文件的存储器映像",
+      "paper": "194",
+      "pdf": "997–998",
+      "ppt_chapter": 4,
+      "ppt_pages": "12、30、33–34、76–78",
+      "required": true,
+      "anchor": "#unit-04-symbols-s6"
+    },
+    "5.3.1": {
+      "title": "符号和符号表",
+      "paper": "195–198",
+      "pdf": "1047–1049",
+      "ppt_chapter": 4,
+      "ppt_pages": "36–39",
+      "required": true,
+      "anchor": "#unit-04-symbols-s7"
+    },
+    "5.3.2": {
+      "title": "符号解析",
+      "paper": "199–201",
+      "pdf": "1050–1052",
+      "ppt_chapter": 4,
+      "ppt_pages": "40–49",
+      "required": true,
+      "anchor": "#unit-04-symbols-s8"
+    },
+    "5.3.3": {
+      "title": "与静态库的链接",
+      "paper": "202–203",
+      "pdf": "1053–1055",
+      "ppt_chapter": 4,
+      "ppt_pages": "50–58",
+      "required": true,
+      "anchor": "#unit-04-archives-s1"
+    },
+    "5.4.1": {
+      "title": "重定位信息",
+      "paper": "205",
+      "pdf": "1083–1084",
+      "ppt_chapter": 4,
+      "ppt_pages": "59–66",
+      "required": true,
+      "anchor": "#unit-04-relocation-s1"
+    },
+    "5.4.2": {
+      "title": "重定位过程",
+      "paper": "206–208",
+      "pdf": "1083–1088",
+      "ppt_chapter": 4,
+      "ppt_pages": "67–75",
+      "required": true,
+      "anchor": "#unit-04-relocation-s2"
+    },
+    "5.5.1": {
+      "title": "动态链接的特性",
+      "paper": "210",
+      "pdf": "1101",
+      "ppt_chapter": 4,
+      "ppt_pages": "82–84",
+      "required": true,
+      "anchor": "#unit-04-dynamic-s1"
+    },
+    "5.5.2": {
+      "title": "程序加载时的动态链接",
+      "paper": "210–211",
+      "pdf": "1101–1103",
+      "ppt_chapter": 4,
+      "ppt_pages": "83、85–86",
+      "required": true,
+      "anchor": "#unit-04-dynamic-s2"
+    },
+    "5.5.3": {
+      "title": "程序运行时的动态链接",
+      "paper": "212",
+      "pdf": "1104–1105",
+      "ppt_chapter": 4,
+      "ppt_pages": "87",
+      "required": true,
+      "anchor": "#unit-04-dynamic-s3"
+    },
+    "5.5.4": {
+      "title": "位置无关代码",
+      "paper": "213–217",
+      "pdf": "1106–1112",
+      "ppt_chapter": 4,
+      "ppt_pages": "88–94",
+      "required": true,
+      "anchor": "#unit-04-dynamic-s4"
+    },
+    "5.6.1": {
+      "title": "编译时打桩",
+      "paper": "218",
+      "pdf": "1161",
+      "ppt_chapter": 4,
+      "ppt_pages": null,
+      "required": false,
+      "anchor": "#unit-04-dynamic-s5"
+    },
+    "5.6.2": {
+      "title": "链接时打桩",
+      "paper": "219",
+      "pdf": "1162–1163",
+      "ppt_chapter": 4,
+      "ppt_pages": null,
+      "required": false,
+      "anchor": "#unit-04-dynamic-s6"
+    },
+    "5.6.3": {
+      "title": "运行时打桩",
+      "paper": "220–221",
+      "pdf": "1163–1164",
+      "ppt_chapter": 4,
+      "ppt_pages": null,
+      "required": false,
+      "anchor": "#unit-04-dynamic-s7"
+    },
+    "5.7.1": {
+      "title": "可执行文件的加载",
+      "paper": "222",
+      "pdf": "1177",
+      "ppt_chapter": 4,
+      "ppt_pages": "77–80",
+      "required": true,
+      "anchor": "#unit-05-execution-s1"
+    },
+    "5.7.2": {
+      "title": "程序和指令的执行过程",
+      "paper": "223–224",
+      "pdf": "1177–1179",
+      "ppt_chapter": 5,
+      "ppt_pages": "30–38",
+      "required": true,
+      "anchor": "#unit-05-execution-s2"
+    },
+    "5.7.3": {
+      "title": "CPU的基本功能和基本组成",
+      "paper": "225",
+      "pdf": "1179–1180",
+      "ppt_chapter": 5,
+      "ppt_pages": "36–39",
+      "required": true,
+      "anchor": "#unit-05-execution-s3"
+    },
+    "5.7.4": {
+      "title": "打断程序正常执行的事件",
+      "paper": "226",
+      "pdf": "1181",
+      "ppt_chapter": 5,
+      "ppt_pages": "13、36–38",
+      "required": true,
+      "anchor": "#unit-05-execution-s4"
+    }
+  }
+}

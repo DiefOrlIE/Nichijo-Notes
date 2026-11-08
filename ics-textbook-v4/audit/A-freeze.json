@@ -15,7 +15,10 @@
   "pages_recheck": "First Pages build interpreted adjacent braces in matrix initializer as Liquid. Added harmless C whitespace in Markdown and combined text, reran content checks and froze again.",
   "final_dependency_review": "Before first pointer use in 2.3, added explicit address/value/dereference primer and full xor_swap with alias runtime check; clarified casts, rank and constants before mixed C expressions; signed/unsigned jump conditions derived in prose.",
   "auxiliary_sources": [
-    "book4-guide.md"
+    "book4-guide.md",
+    "book5-guide.md"
   ],
-  "book4_revision": "2026-11-05: section-level printed/PDF pages, textbook order, PPT scope and assignments 2/4/5/7/11; reviewed before rebuilding."
+  "book4_revision": "2026-11-05: section-level printed/PDF pages, textbook order, PPT scope and assignments 2/4/5/7/11; reviewed before rebuilding.",
+  "book5_revision": "2026-11-08: textbook 5.1.1–5.7.4 in order; 22 subsections, printed/PPT references, expanded prose/examples and suggested textbook exercises; A-stage reviewed and example tests passed before HTML rendering.",
+  "book5_real_beginner_trial": false
 }

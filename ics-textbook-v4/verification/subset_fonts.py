@@ -5,7 +5,8 @@ import argparse
 arg=argparse.ArgumentParser();arg.add_argument('--font-dir',required=True);args=arg.parse_args()
 p=Path(__file__).resolve().parents[1]
 text=''.join(f.read_text() for f in (p/'manuscripts').glob('*.md'))+''.join((p/f).read_text() for f in ['template.html','reader.js','course.json','terms.json'])
-if (p/'book4-guide.md').exists():text+=(p/'book4-guide.md').read_text()
+for guide in ['book4-guide.md','book5-guide.md','section-titles.json']:
+ if (p/guide).exists():text+=(p/guide).read_text()
 chars=set(map(ord,text))|set(range(32,127))
 for weight in ['regular','bold']:
  font=TTFont(Path(args.font_dir)/(weight+'.otf'));missing={x for x in chars-set(font.getBestCmap()) if 0x3400<=x<=0x9fff};assert not missing,missing

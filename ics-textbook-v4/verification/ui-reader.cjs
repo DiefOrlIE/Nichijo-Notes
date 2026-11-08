@@ -1,5 +1,5 @@
 const {JSDOM}=require('jsdom'),fs=require('fs'),path=require('path'),assert=require('assert');
-(async()=>{const root=path.resolve(__dirname,'..');for(const page of ['index.html','book4.html']){
+(async()=>{const root=path.resolve(__dirname,'..');for(const page of ['index.html','book4.html','book5.html']){
 const dom=new JSDOM(fs.readFileSync(path.join(root,page),'utf8'),{url:'https://example.test/'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
 w.document.fonts={ready:Promise.resolve()};w.fetch=async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(root+'/terms.json'))});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=function(){};w.localStorage.setItem('nichijo-ics-textbook-v4',JSON.stringify({fontSize:22}));
 const before=d.querySelector('main').textContent;w.eval(fs.readFileSync(root+'/reader.js','utf8'));await new Promise(r=>setTimeout(r,80));

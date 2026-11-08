@@ -17,5 +17,6 @@ async function open(page,hash,state){
  const c=await open('book4.html',hash,saved);assert.equal(c.d.getElementById(id).getBoundingClientRect().top,-328);c.w.close();
  const legacy=await open('book4.html','',{position:{id,offset:120}});assert.equal(legacy.d.getElementById(id).getBoundingClientRect().top,-120);legacy.w.close();
  const main=await open('index.html','',initial);assert.equal(main.d.getElementById('chapter-2').getBoundingClientRect().top,-44);main.w.close();
+ const fifthPath='/ics-textbook-v4/book5.html',fifthId='unit-04-dynamic-s3';const fifth=await open('book5.html','',{positions:{...initial.positions,[fifthPath]:{id:fifthId,offset:210,urlHash:''}}});assert.equal(fifth.d.getElementById(fifthId).getBoundingClientRect().top,-210);fifth.w.dispatchEvent(new fifth.w.Event('pagehide'));assert.deepEqual(JSON.parse(fifth.w.localStorage.getItem(key)).positions[book],initial.positions[book]);fifth.w.close();
  console.log('Passed: resume exact section offset, same-hash reopen, entry link, explicit new chapter, separate routes, pagehide save, legacy migration');
 })().catch(e=>{console.error(e);process.exit(1)});

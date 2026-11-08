@@ -1,0 +1,11 @@
+{
+  "textbook_subsections": 22,
+  "annotated_subsections": 22,
+  "same_article_bodies_as_main": true,
+  "printed_and_ppt_references_match": true,
+  "optional_ppt_absent_sections": 3,
+  "code_blocks_highlighted": true,
+  "legacy_anchors_retained": true,
+  "font_coverage": true,
+  "real_beginner_trial": false
+}

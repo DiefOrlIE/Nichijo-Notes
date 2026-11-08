@@ -1,0 +1,13 @@
+{
+  "preprocess_compile_assemble_link": true,
+  "incremental_relink_8_to_9": true,
+  "runtime_plugin_success": true,
+  "missing_library_failure": true,
+  "missing_symbol_failure": true,
+  "backwards_pc32_bytes": "e8 eb ff ff ff",
+  "exact_execution_encoding": "03 50 04",
+  "archive_minimum_file_arguments": 5,
+  "archive_shorter_sequences_exhausted": 340,
+  "zero_fill_and_alignment": true,
+  "execution_variants": 3
+}

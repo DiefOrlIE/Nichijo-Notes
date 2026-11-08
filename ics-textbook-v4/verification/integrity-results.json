@@ -19,8 +19,9 @@
     "05-execution.md",
     "05-processes.md"
   ],
-  "unique_anchors": 148,
+  "unique_anchors": 163,
   "paragraph_code_table_list_match": true,
+  "all_source_section_leads_preserved": true,
   "chapter_numbers": [
     2,
     3,
